@@ -1,18 +1,93 @@
 /* ORBIT · Design Tokens (Canônicos) */
 
 :root {
-  /* Backgrounds */
-  --bg-base: #030303;
-  --bg-surface: #0a0a0a;
-  --bg-elevated: #141414;
+  /* ═══════════════════════════════════════════════════════════════
+     BACKGROUNDS (Neomorphic Depth — 5 camadas)
+     ═══════════════════════════════════════════════════════════════ */
   
-  /* Colors */
-  --color-cyan: #00ffff;
-  --color-gold: #ffaa00;
-  --color-red: #ff003c;
+  --bg-base:           #000000;        /* Absolute black */
+  --bg-primary:        #0D1117;        /* Deep dark navy — main bg */
+  --bg-card:           #0F1419;        /* Card background */
+  --bg-hover:          #1A1F2E;        /* Hover state */
+  --bg-active:         #252D3D;        /* Active state */
   
-  /* Shadows */
-  --shadow-glow-cyan: 0 0 20px rgba(0, 255, 255, 0.3);
-  --shadow-glow-gold: 0 0 20px rgba(255, 170, 0, 0.3);
-  --shadow-glow-red: 0 0 20px rgba(255, 0, 60, 0.3);
+  /* ═══════════════════════════════════════════════════════════════
+     BORDERS (Ultra-thin, 1px, Crisp)
+     ═══════════════════════════════════════════════════════════════ */
+  
+  --border-default:    #1F2937;        /* Subtle border */
+  --border-glow-cyan:  #00FFFF;        /* Neon cyan glow */
+  --border-glow-red:   #FF4136;        /* Neon red glow */
+  --border-glow-gold:  #FFC300;        /* Warning gold */
+  
+  /* ═══════════════════════════════════════════════════════════════
+     TEXT (Hierarchy)
+     ═══════════════════════════════════════════════════════════════ */
+  
+  --text-primary:      #FFFFFF;        /* Pure white — main text */
+  --text-secondary:    #CCCCCC;        /* Light grey — secondary */
+  --text-muted:        #999999;        /* Muted grey */
+  
+  /* ═══════════════════════════════════════════════════════════════
+     NEON COLORS (Glow Effects)
+     ═══════════════════════════════════════════════════════════════ */
+  
+  --neon-cyan:         #00FFFF;        /* Positive/Success */
+  --neon-red:          #FF4136;        /* Negative/Error */
+  --neon-gold:         #FFC300;        /* Warning */
+  --neon-green:        #00FF00;        /* Expansion */
+  
+  /* ═══════════════════════════════════════════════════════════════
+     SHADOWS (Glow Effects)
+     ═══════════════════════════════════════════════════════════════ */
+  
+  --shadow-glow-cyan:  0 0 20px rgba(0, 255, 255, 0.3);
+  --shadow-glow-red:   0 0 20px rgba(255, 65, 54, 0.3);
+  --shadow-glow-gold:  0 0 20px rgba(255, 195, 0, 0.3);
+  --shadow-sm:         0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md:         0 4px 6px rgba(0, 0, 0, 0.5);
+  --shadow-lg:         0 10px 15px rgba(0, 0, 0, 0.5);
+  
+  /* ═══════════════════════════════════════════════════════════════
+     TYPOGRAPHY
+     ═══════════════════════════════════════════════════════════════ */
+  
+  --font-family:       'Segoe UI', 'Helvetica Neue', sans-serif;
+  --font-mono:         'JetBrains Mono', 'Courier New', monospace;
+  --font-weight-normal: 400;
+  --font-weight-bold:  700;
+  --font-size-base:    16px;
+  --font-size-sm:      14px;
+  --font-size-lg:      18px;
+  --font-size-xl:      20px;
+  --line-height-base:  1.5;
+  
+  /* ═══════════════════════════════════════════════════════════════
+     TRANSITIONS
+     ═══════════════════════════════════════════════════════════════ */
+  
+  --transition-fast:   150ms ease-in-out;
+  --transition-base:   300ms ease-in-out;
+  --transition-slow:   500ms ease-in-out;
+  
+  /* ═══════════════════════════════════════════════════════════════
+     SPACING
+     ═══════════════════════════════════════════════════════════════ */
+  
+  --space-1:           4px;
+  --space-2:           8px;
+  --space-3:           12px;
+  --space-4:           16px;
+  --space-5:           20px;
+  --space-6:           24px;
+  --space-8:           32px;
+  
+  /* ═══════════════════════════════════════════════════════════════
+     BORDER RADIUS
+     ═══════════════════════════════════════════════════════════════ */
+  
+  --radius-sm:         4px;
+  --radius-md:         8px;
+  --radius-lg:         12px;
+  --radius-pill:       9999px;
 }
