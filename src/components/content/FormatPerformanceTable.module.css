@@ -1,0 +1,52 @@
+/* FormatPerformanceTable.module.css */
+
+.wrapper {
+  display:        flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size:      9px;
+  letter-spacing: 2px;
+  color:          var(--text-dim);
+  font-weight:    var(--font-weight-bold);
+  text-transform: uppercase;
+  margin-bottom:  var(--space-4);
+}
+
+.table {
+  width:           100%;
+  border-collapse: collapse;
+}
+
+.th {
+  font-size:      9px;
+  color:          var(--text-dim);
+  letter-spacing: 2px;
+  text-align:     left;
+  padding:        0 0 var(--space-3);
+  border-bottom:  var(--border-width) solid var(--border-default);
+  font-weight:    var(--font-weight-bold);
+  text-transform: uppercase;
+}
+
+.tr {
+  border-bottom: var(--border-width) solid rgba(31, 41, 55, 0.5);
+}
+
+.tr:last-child {
+  border-bottom: none;
+}
+
+.td {
+  font-size:   var(--font-size-sm);
+  color:       var(--text-secondary);
+  padding:     var(--space-3) 0;
+  font-family: var(--font-mono);
+}
+
+.tdFormat {
+  font-family: var(--font-family);
+  color:       var(--text-primary);
+  font-size:   var(--font-size-base);
+}

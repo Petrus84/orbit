@@ -1,0 +1,76 @@
+/* ==========================================================================
+   ORBIT · Design System — QualityScoresPanel Layout (Sprint 1 SSOT)
+   Caminho: src/components/content/QualityScoresPanel.module.css
+   Responsabilidade: Governança do grid 2x2 sem colisão de espaçamento.
+   ========================================================================== */
+
+.panelTitle {
+  font-size:      9px;
+  letter-spacing: 2px;
+  color:          var(--text-dim);
+  font-weight:    var(--font-weight-bold);
+  text-transform: uppercase;
+  margin-bottom:  var(--space-4);
+}
+
+/* Score box */
+
+.scoreBox {
+  background:    var(--bg-hover);
+  border:        var(--border-width) solid var(--border-default);
+  border-radius: var(--border-radius-md);
+  padding:       var(--space-3) var(--space-4);
+  transition:    border-color var(--transition-fast);
+}
+
+.boxCyan {
+  border-color: rgba(0, 255, 255, 0.25);
+}
+
+.boxRed {
+  border-color: rgba(255, 65, 54, 0.25);
+}
+
+.boxNeutral {
+  border-color: var(--border-default);
+}
+
+.scoreLabel {
+  font-size:      9px;
+  letter-spacing: 1.5px;
+  color:          var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom:  var(--space-2);
+}
+
+.scoreValue {
+  margin-bottom: var(--space-2);
+  line-height:   1;
+}
+
+.naValue {
+  font-family: var(--font-mono);
+  font-size:   var(--font-size-2xl);
+  color:       var(--text-muted);
+}
+
+/* Status text variants */
+
+.statusText {
+  font-size:  var(--font-size-xs);
+  display:    flex;
+  align-items: center;
+  gap:        var(--space-1);
+}
+
+.statusOk {
+  color: var(--neon-cyan);
+}
+
+.statusWarn {
+  color: var(--neon-red);
+}
+
+.statusNeutral {
+  color: var(--text-dim);
+}

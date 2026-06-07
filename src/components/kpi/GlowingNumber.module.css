@@ -1,0 +1,50 @@
+/* GlowingNumber.module.css */
+
+.wrapper {
+  display:     inline-flex;
+  align-items: baseline;
+  gap:         var(--space-1);
+}
+
+.number {
+  font-family:    var(--font-mono);
+  font-weight:    var(--font-weight-bold);
+  letter-spacing: -0.5px;
+  line-height:    1;
+}
+
+/* Tamanhos */
+.sizeSm { font-size: var(--font-size-xl);  }
+.sizeMd { font-size: var(--font-size-2xl); }
+.sizeLg { font-size: var(--font-size-3xl); }
+.sizeXl { font-size: var(--font-size-4xl); }
+
+/* Cores + glow */
+.cyan {
+  color:       var(--neon-cyan);
+  text-shadow: 0 0 12px rgba(0, 255, 255, 0.6), 0 0 24px rgba(0, 255, 255, 0.2);
+}
+
+.red {
+  color:       var(--neon-red);
+  text-shadow: 0 0 12px rgba(255, 65, 54, 0.6), 0 0 24px rgba(255, 65, 54, 0.2);
+}
+
+.gold {
+  color:       var(--neon-gold);
+  text-shadow: 0 0 12px rgba(255, 195, 0, 0.6), 0 0 24px rgba(255, 195, 0, 0.2);
+}
+
+.muted {
+  color:       var(--text-muted);
+  text-shadow: none;
+}
+
+/* Unidade */
+.unit {
+  font-size:   var(--font-size-xs);
+  color:       var(--text-dim);
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: 0.5px;
+}

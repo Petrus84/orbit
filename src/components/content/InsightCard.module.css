@@ -1,0 +1,29 @@
+/* InsightCard.module.css */
+
+.card {
+  display:       flex;
+  align-items:   flex-start;
+  gap:           var(--space-3);
+  background:    var(--bg-hover);
+  border:        var(--border-width) solid rgba(0, 255, 255, 0.2);
+  border-radius: var(--border-radius-md);
+  padding:       var(--space-3) var(--space-4);
+  margin-top:    auto;
+}
+
+.icon {
+  font-size:  var(--font-size-base);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.text {
+  font-size:   var(--font-size-sm);
+  color:       var(--text-secondary);
+  line-height: 1.5;
+}
+
+.label {
+  color:       var(--neon-cyan);
+  font-weight: var(--font-weight-bold);
+}

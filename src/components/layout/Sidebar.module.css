@@ -1,0 +1,169 @@
+/* Sidebar.module.css */
+
+.sidebar {
+  width:          var(--sidebar-width);
+  min-width:      var(--sidebar-width);
+  background:     var(--bg-card);
+  border-right:   var(--border-width) solid var(--border-default);
+  padding:        var(--space-5) var(--space-4);
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-1);
+  overflow-y:     auto;
+  height:         100%;
+}
+
+/* Logo */
+
+.logo {
+  display:       flex;
+  align-items:   center;
+  gap:           var(--space-2);
+  padding-bottom: var(--space-5);
+  border-bottom: var(--border-width) solid var(--border-default);
+  margin-bottom: var(--space-2);
+}
+
+.logoBadge {
+  width:           28px;
+  height:          28px;
+  border-radius:   var(--border-radius-md);
+  background:      rgba(0, 255, 255, 0.1);
+  border:          var(--border-width) solid rgba(0, 255, 255, 0.3);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  font-size:       11px;
+  font-weight:     var(--font-weight-bold);
+  color:           var(--neon-cyan);
+  text-shadow:     0 0 8px var(--neon-cyan);
+  flex-shrink:     0;
+}
+
+.logoName {
+  font-size:      13px;
+  font-weight:    var(--font-weight-bold);
+  color:          var(--text-primary);
+  letter-spacing: 2px;
+}
+
+.logoSub {
+  font-size:      8px;
+  color:          var(--text-dim);
+  letter-spacing: 2px;
+  margin-top:     1px;
+}
+
+/* Cliente ativo */
+
+.clientBox {
+  background:    var(--bg-hover);
+  border:        var(--border-width) solid var(--border-default);
+  border-radius: var(--border-radius-md);
+  padding:       var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.clientLabel {
+  font-size:      8px;
+  color:          var(--text-dim);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom:  var(--space-1);
+}
+
+.clientName {
+  display:     flex;
+  align-items: center;
+  gap:         var(--space-2);
+  font-size:   var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color:       var(--text-primary);
+}
+
+.clientDot {
+  width:         6px;
+  height:        6px;
+  border-radius: 50%;
+  background:    var(--neon-green);
+  box-shadow:    0 0 6px var(--neon-green);
+  margin-left:   auto;
+}
+
+/* Seção label */
+
+.sectionLabel {
+  font-size:      8px;
+  color:          var(--text-dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding:        var(--space-4) var(--space-2) var(--space-2);
+}
+
+/* Nav */
+
+.navList {
+  list-style:     none;
+  display:        flex;
+  flex-direction: column;
+  gap:            2px;
+}
+
+.navItem {
+  display:       flex;
+  align-items:   center;
+  gap:           var(--space-2);
+  padding:       var(--space-2) var(--space-3);
+  border-radius: var(--border-radius-md);
+  font-size:     var(--font-size-sm);
+  color:         var(--text-muted);
+  text-decoration: none;
+  transition:    background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+  border-left:   2px solid transparent;
+}
+
+.navItem:hover {
+  background: var(--bg-hover);
+  color:      var(--text-primary);
+}
+
+.navItemActive {
+  background:   var(--bg-hover);
+  color:        var(--text-primary);
+  border-left:  2px solid var(--neon-cyan);
+}
+
+.navIcon {
+  font-size:   var(--font-size-base);
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.navLabel {
+  flex: 1;
+  min-width: 0;
+  overflow:   hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Badges */
+
+.badge {
+  margin-left:   auto;
+  border:        var(--border-width) solid var(--border-default);
+  border-radius: var(--border-radius-sm);
+  font-size:     9px;
+  padding:       1px 5px;
+  font-family:   var(--font-mono);
+  flex-shrink:   0;
+}
+
+.badgeDefault {
+  color: var(--text-dim);
+}
+
+.badgeAlert {
+  border-color: var(--border-glow-gold);
+  color:        var(--neon-gold);
+}

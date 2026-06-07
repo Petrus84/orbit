@@ -1,0 +1,56 @@
+/* CriticalAlert.module.css */
+
+.card {
+  display:       flex;
+  align-items:   flex-start;
+  gap:           var(--space-3);
+  border:        var(--border-width) solid var(--border-default);
+  border-radius: var(--border-radius-lg);
+  padding:       var(--space-4) var(--space-5);
+  width:         100%;
+}
+
+/* Severidade: critical */
+.critical {
+  background:  linear-gradient(135deg, rgba(255, 65, 54, 0.08), rgba(255, 65, 54, 0.03));
+  border-color: var(--border-glow-red);
+  box-shadow:   0 0 24px rgba(255, 65, 54, 0.1);
+}
+
+/* Severidade: warning */
+.warning {
+  background:  linear-gradient(135deg, rgba(255, 195, 0, 0.08), rgba(255, 195, 0, 0.03));
+  border-color: var(--border-glow-gold);
+  box-shadow:   0 0 24px rgba(255, 195, 0, 0.1);
+}
+
+/* Severidade: info */
+.info {
+  background:  linear-gradient(135deg, rgba(0, 255, 255, 0.06), rgba(0, 255, 255, 0.02));
+  border-color: var(--border-glow-cyan);
+  box-shadow:   0 0 24px rgba(0, 255, 255, 0.08);
+}
+
+.icon {
+  font-size:   var(--font-size-lg);
+  flex-shrink: 0;
+  margin-top:  1px;
+}
+
+.content {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-1);
+}
+
+.title {
+  font-size:   var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color:       var(--text-primary);
+}
+
+.body {
+  font-size:   var(--font-size-xs);
+  color:       var(--text-muted);
+  line-height: 1.5;
+}

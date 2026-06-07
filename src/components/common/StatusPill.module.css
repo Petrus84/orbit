@@ -1,0 +1,33 @@
+/* StatusPill.module.css */
+
+.pill {
+  display:        inline-block;
+  border-radius:  var(--border-radius-sm);
+  padding:        2px 8px;
+  font-size:      var(--font-size-xs);
+  font-family:    var(--font-family);
+  font-weight:    var(--font-weight-bold);
+  letter-spacing: 0.5px;
+  white-space:    nowrap;
+}
+
+.cyan {
+  background:  rgba(0, 255, 255, 0.1);
+  border:      var(--border-width) solid rgba(0, 255, 255, 0.4);
+  color:       var(--neon-cyan);
+  text-shadow: 0 0 6px rgba(0, 255, 255, 0.4);
+}
+
+.red {
+  background:  rgba(255, 65, 54, 0.1);
+  border:      var(--border-width) solid rgba(255, 65, 54, 0.4);
+  color:       var(--neon-red);
+  text-shadow: 0 0 6px rgba(255, 65, 54, 0.4);
+}
+
+.gold {
+  background:  rgba(255, 195, 0, 0.1);
+  border:      var(--border-width) solid rgba(255, 195, 0, 0.4);
+  color:       var(--neon-gold);
+  text-shadow: 0 0 6px rgba(255, 195, 0, 0.4);
+}
