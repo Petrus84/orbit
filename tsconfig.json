@@ -18,19 +18,24 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
-    "plugins": [
+     "plugins": [
       {
         "name": "next"
       }
+    ],
+    "types": [
+      "node"
     ],
     "paths": {
       "@/*": [
         "./src/*"
       ]
     }
+
   },
   "include": [
     "src/**/*",
+    "scripts/**/*",
     "styles/**/*",
     "next-env.d.ts",
     ".next/types/**/*.ts",

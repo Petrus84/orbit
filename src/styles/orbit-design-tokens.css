@@ -1,93 +1,151 @@
-/* ORBIT · Design Tokens (Canônicos) */
+/* ==========================================================================
+   ORBIT · Design Tokens (Canônicos)
+   Versão: 1.1.0  |  Data: 2026-06-07
+
+   MUDANÇAS v1.1 — todos os aliases adicionados sem remover nenhum token existente:
+   - --border-width (usado em 6 CSS Modules, não existia)
+   - --border-radius-* aliases de --radius-* (usados em todos os CSS Modules)
+   - --shadow-outer-* aliases de --shadow-* (GlassCard.module.css)
+   - --shadow-inner-* aliases de --shadow-glow-* (GlassCard.module.css)
+   - --font-size-xs, --font-size-2xl, --font-size-3xl, --font-size-4xl (faltavam)
+   - --text-dim (usado em 4 CSS Modules, não existia)
+   - --sidebar-width, --header-height (Sidebar.module.css, Header.module.css)
+   - --neon-cyan-dark (orbit-globals.css a:hover, Header.module.css tabActive:hover)
+   - --space-12 (InstagramOverviewPage.module.css .stateCenter)
+   ========================================================================== */
 
 :root {
+
   /* ═══════════════════════════════════════════════════════════════
      BACKGROUNDS (Neomorphic Depth — 5 camadas)
      ═══════════════════════════════════════════════════════════════ */
-  
+
   --bg-base:           #000000;        /* Absolute black */
   --bg-primary:        #0D1117;        /* Deep dark navy — main bg */
   --bg-card:           #0F1419;        /* Card background */
   --bg-hover:          #1A1F2E;        /* Hover state */
   --bg-active:         #252D3D;        /* Active state */
-  
+
   /* ═══════════════════════════════════════════════════════════════
-     BORDERS (Ultra-thin, 1px, Crisp)
+     BORDERS
      ═══════════════════════════════════════════════════════════════ */
-  
-  --border-default:    #1F2937;        /* Subtle border */
-  --border-glow-cyan:  #00FFFF;        /* Neon cyan glow */
-  --border-glow-red:   #FF4136;        /* Neon red glow */
-  --border-glow-gold:  #FFC300;        /* Warning gold */
-  
+
+  --border-default:    #1F2937;
+  --border-glow-cyan:  #00FFFF;
+  --border-glow-red:   #FF4136;
+  --border-glow-gold:  #FFC300;
+
+  /* NOVO v1.1 — usado em SemaphoreIndicator, Sidebar, StatusPill, GlassCard */
+  --border-width:      1px;
+
+  /* ═══════════════════════════════════════════════════════════════
+     BORDER RADIUS
+     — tokens originais mantidos
+     — aliases --border-radius-* adicionados (usados nos CSS Modules)
+     ═══════════════════════════════════════════════════════════════ */
+
+  --radius-sm:         4px;
+  --radius-md:         8px;
+  --radius-lg:         12px;
+  --radius-pill:       9999px;
+
+  /* NOVO v1.1 — aliases para os CSS Modules existentes */
+  --border-radius-sm:  var(--radius-sm);
+  --border-radius-md:  var(--radius-md);
+  --border-radius-lg:  var(--radius-lg);
+
   /* ═══════════════════════════════════════════════════════════════
      TEXT (Hierarchy)
      ═══════════════════════════════════════════════════════════════ */
-  
-  --text-primary:      #FFFFFF;        /* Pure white — main text */
-  --text-secondary:    #CCCCCC;        /* Light grey — secondary */
-  --text-muted:        #999999;        /* Muted grey */
-  
+
+  --text-primary:      #FFFFFF;
+  --text-secondary:    #CCCCCC;
+  --text-muted:        #999999;
+
+  /* NOVO v1.1 — usado em KPICard, Sidebar, Header, GlowingNumber, DeltaText */
+  --text-dim:          #555F6E;
+
   /* ═══════════════════════════════════════════════════════════════
-     NEON COLORS (Glow Effects)
+     NEON COLORS
      ═══════════════════════════════════════════════════════════════ */
-  
-  --neon-cyan:         #00FFFF;        /* Positive/Success */
-  --neon-red:          #FF4136;        /* Negative/Error */
-  --neon-gold:         #FFC300;        /* Warning */
-  --neon-green:        #00FF00;        /* Expansion */
-  
+
+  --neon-cyan:         #00FFFF;
+  --neon-red:          #FF4136;
+  --neon-gold:         #FFC300;
+  --neon-green:        #00FF00;
+
+  /* NOVO v1.1 — usado em orbit-globals.css a:hover e Header.module.css */
+  --neon-cyan-dark:    #00CCCC;
+
   /* ═══════════════════════════════════════════════════════════════
-     SHADOWS (Glow Effects)
+     SHADOWS
+     — tokens originais mantidos
+     — aliases --shadow-outer-* e --shadow-inner-* adicionados
      ═══════════════════════════════════════════════════════════════ */
-  
+
   --shadow-glow-cyan:  0 0 20px rgba(0, 255, 255, 0.3);
   --shadow-glow-red:   0 0 20px rgba(255, 65, 54, 0.3);
   --shadow-glow-gold:  0 0 20px rgba(255, 195, 0, 0.3);
   --shadow-sm:         0 1px 2px rgba(0, 0, 0, 0.5);
   --shadow-md:         0 4px 6px rgba(0, 0, 0, 0.5);
   --shadow-lg:         0 10px 15px rgba(0, 0, 0, 0.5);
-  
+
+  /* NOVO v1.1 — aliases outer (GlassCard.module.css) */
+  --shadow-outer-sm:   var(--shadow-sm);
+  --shadow-outer-md:   var(--shadow-md);
+  --shadow-outer-lg:   var(--shadow-lg);
+
+  /* NOVO v1.1 — aliases inner = glow colorido (GlassCard.module.css) */
+  --shadow-inner-cyan: var(--shadow-glow-cyan);
+  --shadow-inner-red:  var(--shadow-glow-red);
+  --shadow-inner-gold: var(--shadow-glow-gold);
+
   /* ═══════════════════════════════════════════════════════════════
      TYPOGRAPHY
      ═══════════════════════════════════════════════════════════════ */
-  
-  --font-family:       'Segoe UI', 'Helvetica Neue', sans-serif;
-  --font-mono:         'JetBrains Mono', 'Courier New', monospace;
+
+  --font-family:        'Segoe UI', 'Helvetica Neue', sans-serif;
+  --font-mono:          'JetBrains Mono', 'Courier New', monospace;
   --font-weight-normal: 400;
-  --font-weight-bold:  700;
-  --font-size-base:    16px;
+  --font-weight-bold:   700;
+  --line-height-base:   1.5;
+
+  /* Escala tipográfica completa */
+  --font-size-xs:      11px;   /* NOVO v1.1 — DeltaText, Header subtitle, StatusPill */
   --font-size-sm:      14px;
+  --font-size-base:    16px;
   --font-size-lg:      18px;
   --font-size-xl:      20px;
-  --line-height-base:  1.5;
-  
+  --font-size-2xl:     22px;   /* NOVO v1.1 — GlowingNumber sizeMd */
+  --font-size-3xl:     28px;   /* NOVO v1.1 — GlowingNumber sizeLg */
+  --font-size-4xl:     36px;   /* NOVO v1.1 — GlowingNumber sizeXl */
+
   /* ═══════════════════════════════════════════════════════════════
      TRANSITIONS
      ═══════════════════════════════════════════════════════════════ */
-  
+
   --transition-fast:   150ms ease-in-out;
   --transition-base:   300ms ease-in-out;
   --transition-slow:   500ms ease-in-out;
-  
+
   /* ═══════════════════════════════════════════════════════════════
      SPACING
      ═══════════════════════════════════════════════════════════════ */
-  
-  --space-1:           4px;
-  --space-2:           8px;
-  --space-3:           12px;
-  --space-4:           16px;
-  --space-5:           20px;
-  --space-6:           24px;
-  --space-8:           32px;
-  
+
+  --space-1:    4px;
+  --space-2:    8px;
+  --space-3:    12px;
+  --space-4:    16px;
+  --space-5:    20px;
+  --space-6:    24px;
+  --space-8:    32px;
+  --space-12:   48px;   /* NOVO v1.1 — InstagramOverviewPage.module.css .stateCenter */
+
   /* ═══════════════════════════════════════════════════════════════
-     BORDER RADIUS
+     LAYOUT — dimensões fixas de componentes estruturais
      ═══════════════════════════════════════════════════════════════ */
-  
-  --radius-sm:         4px;
-  --radius-md:         8px;
-  --radius-lg:         12px;
-  --radius-pill:       9999px;
+
+  /* NOVO v1.1 — Sidebar.module.css e Header.module.css */
+  --sidebar-width:     240px;
+  --header-height:     60px;
 }
