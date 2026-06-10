@@ -1,8 +1,23 @@
 /* ==========================================================================
-   ORBIT · Design System — QualityScoresPanel Layout (Sprint 1 SSOT)
-   Caminho: src/components/content/QualityScoresPanel.module.css
-   Responsabilidade: Governança do grid 2x2 sem colisão de espaçamento.
+   ORBIT · Design System — QualityScoresPanel Layout
+   Versão: 1.0.1  |  Data: 2026-06-07
+
+   MUDANÇA v1.0.1:
+   - Adicionado .grid (estava ausente — o TSX usava styles.grid mas a classe não existia)
+   - Adicionado .boxGold (a TAXA DE SALVAMENTO usa glowColor:'gold', sem essa classe ficava sem borda colorida)
+   - .panel removido (padding duplicado com GlassCard — corrigido em sessão anterior)
    ========================================================================== */
+
+/* ── Grid 2×2 ───────────────────────────────────────────────────────────── */
+/* NOVO v1.0.1 — classe usada em QualityScoresPanel.tsx mas ausente no CSS  */
+
+.grid {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   var(--space-3);
+}
+
+/* ── Título do painel ────────────────────────────────────────────────────── */
 
 .panelTitle {
   font-size:      9px;
@@ -13,7 +28,7 @@
   margin-bottom:  var(--space-4);
 }
 
-/* Score box */
+/* ── Score box — base ────────────────────────────────────────────────────── */
 
 .scoreBox {
   background:    var(--bg-hover);
@@ -23,6 +38,8 @@
   transition:    border-color var(--transition-fast);
 }
 
+/* ── Score box — variantes de cor ────────────────────────────────────────── */
+
 .boxCyan {
   border-color: rgba(0, 255, 255, 0.25);
 }
@@ -31,9 +48,16 @@
   border-color: rgba(255, 65, 54, 0.25);
 }
 
+/* NOVO v1.0.1 — usado por TAXA DE SALVAMENTO (glowColor: 'gold') */
+.boxGold {
+  border-color: rgba(255, 195, 0, 0.25);
+}
+
 .boxNeutral {
   border-color: var(--border-default);
 }
+
+/* ── Conteúdo interno do score box ──────────────────────────────────────── */
 
 .scoreLabel {
   font-size:      9px;
@@ -54,13 +78,13 @@
   color:       var(--text-muted);
 }
 
-/* Status text variants */
+/* ── Status text ─────────────────────────────────────────────────────────── */
 
 .statusText {
-  font-size:  var(--font-size-xs);
-  display:    flex;
+  font-size:   var(--font-size-xs);
+  display:     flex;
   align-items: center;
-  gap:        var(--space-1);
+  gap:         var(--space-1);
 }
 
 .statusOk {
