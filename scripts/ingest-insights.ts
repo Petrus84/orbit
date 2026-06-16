@@ -1,20 +1,31 @@
 /* ==========================================================================
-   ORBIT · Script de Ingestão de Insights — v1.0.0
+   ORBIT · Script de Ingestão de Insights — v1.2.0
    Arquivo: scripts/ingest-insights.ts
 
-   FUNÇÃO:
-     Lê logged_information/past_instagram_insights/posts.json
-     e insere métricas reais em kpi_snapshots (L1)
+   CORREÇÕES v1.2.0 (13/06/2026):
+   1. ✅ Chaves corretas de content_interactions.json (validadas nos arquivos reais):
+         "Compartilhamento do post" (singular, não plural)
+         "Salvamentos do post", "Curtidas do post"
+         "Compartilhamentos de vídeos do Reels" (plural com acento)
+         "Salvamentos de vídeos do Reels"
+   2. ✅ Agrega posts + reels separadamente, depois soma
+   3. ✅ Extrai seguidores de audience_insights.json (não de followers_1.json)
+         followers_1.json = amostra dos mais recentes (não é o total)
+         audience_insights["Seguidores"] = novos no período (melhor proxy disponível)
+   4. ✅ Período extraído do "Intervalo de datas" do content_interactions
+   5. ✅ profiles_reached.json para alcance-90d
+
+   MÉTRICAS INSERIDAS:
+     compartilhamentos-90d  = posts + reels
+     salvamentos-90d        = posts + reels
+     curtidas-90d           = posts + reels
+     impressoes-90d         = 0 (não disponível no export — campo reservado)
+     alcance-90d            = de profiles_reached.json (se existir)
+     seguidores-totais      = de audience_insights["Seguidores"] (novos no período)
+     saldo-90-dias          = audience_insights["Total de seguidores"] (variação líquida)
 
    USO:
      npx ts-node scripts/ingest-insights.ts --client cpimportstore
-
-   MÉTRICAS INSERIDAS:
-     - alcance-90d (soma de "Contas alcançadas")
-     - impressoes-90d (soma de "Impressões")
-     - salvamentos-90d (soma de "Salvamentos")
-     - compartilhamentos-90d (soma de "Compartilhamentos")
-     - visitas-perfil-90d (soma de "Visitas ao perfil")
    ========================================================================== */
 
 import dotenv from 'dotenv'
@@ -25,27 +36,27 @@ import { z } from 'zod'
 import * as fs from 'fs'
 import * as path from 'path'
 
-
 // ─── Configuração ──────────────────────────────────────────────────────────
 
 const supabase: SupabaseClient = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
+  process.env.SUPABASE_SERVICE_ROLE_KEY!,
 )
 
-// Argumentos de linha de comando
-const CLIENT_USERNAME = process.argv.find(a => a.startsWith('--client='))?.split('=')[1]
-  ?? process.argv[process.argv.indexOf('--client') + 1]
+const CLIENT_USERNAME =
+  process.argv.find(a => a.startsWith('--client='))?.split('=')[1] ??
+  process.argv[process.argv.indexOf('--client') + 1]
 
 if (!CLIENT_USERNAME) {
   console.error('❌ --client é obrigatório (ex: --client cpimportstore)')
   process.exit(1)
 }
 
-// Mapa de clientes (mesmo do ingest-l0-v2.ts)
 const CLIENT_UUID_MAP: Record<string, string> = {
-  'cpimportstore':  '22222222-2222-2222-2222-222222222222',
-  'petruchio84':    '44444444-4444-4444-4444-444444444444',
+  'cpimportstore':   '22222222-2222-2222-2222-222222222222',
+  'eupetruchio84':   '24140477-0c82-4fda-83df-958377f105ff',
+  'eupetruchio':     '24140477-0c82-4fda-83df-958377f105ff',
+  'petruchio84':     '24140477-0c82-4fda-83df-958377f105ff',
   'fiorefernando__': '33333333-3333-3333-3333-333333333333',
 }
 
@@ -55,151 +66,228 @@ if (!CLIENT_UUID) {
   process.exit(1)
 }
 
-  // ✅ CORRETO: Usa variável de ambiente ou erro
-const BASE_PATH = process.env.PASTA_OPERATIONAL 
-  ? path.resolve(process.env.PASTA_OPERATIONAL)
-  : (() => { 
-      console.error('❌ PASTA_OPERATIONAL não definida no .env.local')
-      console.error('   Adicione: PASTA_OPERATIONAL=C:/Users/DELL/Downloads/Alpha_Coleta/clientes')
-      process.exit(1)
-    })()
+if (!process.env.PASTA_OPERATIONAL) {
+  console.error('❌ PASTA_OPERATIONAL não definida no .env.local')
+  process.exit(1)
+}
+const BASE_PATH = path.resolve(process.env.PASTA_OPERATIONAL)
 
-// ─── Schema Zod — validação do JSON de insights ───────────────────────────
+// ─── Schemas Zod ──────────────────────────────────────────────────────────
 
-// ✅ CORRETO: Schema para métricas de insights
-const InsightMetricSchema = z.object({
-  label: z.string().optional(),
-  value: z.string().optional(), // Impressões, Curtidas, etc
-  timestamp: z.number().optional(), // Registro de data e hora
+const MetricEntrySchema = z.object({
+  href:      z.string().optional(),
+  value:     z.string().optional(),
+  timestamp: z.number().optional(),
 })
 
-const InsightPostSchema = z.object({
-  string_map_data: z.record(z.string(), InsightMetricSchema),
+const ContentInteractionsSchema = z.object({
+  organic_insights_interactions: z.array(z.object({
+    title:           z.string().optional(),
+    string_map_data: z.record(z.string(), MetricEntrySchema),
+  })),
 })
 
-const InsightsFileSchema = z.object({
-  organic_insights_posts: z.array(InsightPostSchema),
+const ReachFileSchema = z.object({
+  organic_insights_reach: z.array(z.object({
+    title:           z.string().optional(),
+    string_map_data: z.record(z.string(), MetricEntrySchema),
+  })).optional().default([]),
 })
 
-// ─── Buscar arquivo de insights ───────────────────────────────────────────
+const AudienceInsightsSchema = z.object({
+  organic_insights_audience: z.array(z.object({
+    title:           z.string().optional(),
+    string_map_data: z.record(z.string(), MetricEntrySchema),
+  })),
+})
 
-function findInsightsFile(clientUsername: string): string | null {
-  // Tentar múltiplos padrões de pasta
-  const possiblePaths = [
-    path.join(BASE_PATH, clientUsername, 'logged_information/past_instagram_insights/posts.json'),
-    path.join(BASE_PATH, `instagram-${clientUsername}-*`, 'logged_information/past_instagram_insights/posts.json'),
+// ─── Resolução de paths ───────────────────────────────────────────────────
+
+function findFile(clientUsername: string, flatName: string): string | null {
+  const candidates: string[] = [
+    // Flat: os arquivos estão diretamente em PASTA_OPERATIONAL
+    path.join(BASE_PATH, flatName),
+    // Subpasta com username exato
+    path.join(BASE_PATH, clientUsername, flatName),
   ]
 
-  for (const pattern of possiblePaths) {
-    if (pattern.includes('*')) {
-      // Buscar com wildcard
-      const dir = path.dirname(pattern)
-      const parentDir = path.dirname(dir)
-      if (fs.existsSync(parentDir)) {
-        const folders = fs.readdirSync(parentDir).filter(f => 
-          f.startsWith(`instagram-${clientUsername}`) && 
-          fs.statSync(path.join(parentDir, f)).isDirectory()
-        )
-        if (folders.length > 0) {
-          const fullPath = path.join(parentDir, folders[0], 'logged_information/past_instagram_insights/posts.json')
-          if (fs.existsSync(fullPath)) return fullPath
-        }
-      }
-    } else {
-      if (fs.existsSync(pattern)) return pattern
-    }
+  // Wildcard: instagram-{username}-{data}-{hash}/
+  if (fs.existsSync(BASE_PATH)) {
+    const subs = fs.readdirSync(BASE_PATH).filter(f =>
+      f.startsWith(`instagram-${clientUsername}`) &&
+      fs.statSync(path.join(BASE_PATH, f)).isDirectory(),
+    )
+    for (const sub of subs) candidates.push(path.join(BASE_PATH, sub, flatName))
   }
 
-  return null
+  return candidates.find(p => fs.existsSync(p)) ?? null
 }
 
-// ─── Processar insights ────────────────────────────────────────────────────
+function readJson(filePath: string): unknown {
+  return JSON.parse(fs.readFileSync(filePath, 'utf-8')) as unknown
+}
+
+// ─── Helpers numéricos ────────────────────────────────────────────────────
+
+function int(smd: Record<string, { value?: string }>, key: string): number {
+  const raw = smd[key]?.value ?? '0'
+  // remove qualquer coisa que não seja dígito ou sinal negativo
+  const cleaned = raw.replace(/[^0-9\-]/g, '')
+  return parseInt(cleaned || '0', 10)
+}
+
+// ─── Parse de "Mar 8 - Jun 5" → datas ISO ────────────────────────────────
+
+function parseDateRange(range: string): { start: string; end: string } {
+  // Formato: "Mar 8 - Jun 5" ou "Dec 8 - Mar 7"
+  const monthMap: Record<string, string> = {
+    Jan:'01', Feb:'02', Mar:'03', Apr:'04', May:'05', Jun:'06',
+    Jul:'07', Aug:'08', Sep:'09', Oct:'10', Nov:'11', Dec:'12',
+  }
+  const today = new Date()
+  const year  = today.getFullYear()
+
+  try {
+    const [startPart, endPart] = range.split(' - ')
+    const [startMon, startDay] = startPart.trim().split(' ')
+    const [endMon, endDay]     = endPart.trim().split(' ')
+
+    const startM = monthMap[startMon] ?? '01'
+    const endM   = monthMap[endMon]   ?? '12'
+
+    // Se o mês de fim é menor que o de início, o período cruzou o ano
+    const endYear   = parseInt(endM) < parseInt(startM) ? year : year
+    const startYear = year
+
+    const start = `${startYear}-${startM}-${startDay.padStart(2, '0')}`
+    const end   = `${endYear}-${endM}-${endDay.padStart(2, '0')}`
+    return { start, end }
+  } catch {
+    const today2 = new Date().toISOString().split('T')[0]
+    return { start: today2, end: today2 }
+  }
+}
+
+// ─── Pipeline principal ───────────────────────────────────────────────────
 
 async function processInsights(clientUsername: string): Promise<void> {
-  console.log(`\n🔍 Buscando insights para @${clientUsername}...`)
+  console.log(`\n🔍 @${clientUsername} — iniciando ingestão de insights`)
+  console.log(`📂 Base: ${BASE_PATH}`)
 
-  const insightsPath = findInsightsFile(clientUsername)
-  if (!insightsPath) {
-    console.error(`❌ Arquivo de insights não encontrado para ${clientUsername}`)
-    console.error(`   Procurado em: ${BASE_PATH}/${clientUsername}/logged_information/past_instagram_insights/posts.json`)
+  // ── 1. content_interactions.json ──────────────────────────────────────
+
+  const interPath = findFile(clientUsername, 'content_interactions.json')
+  if (!interPath) {
+    console.error('❌ content_interactions.json não encontrado')
+    console.error('   Necessário para: compartilhamentos, salvamentos, curtidas')
     process.exit(1)
   }
 
-  console.log(`✅ Arquivo encontrado: ${insightsPath}`)
+  console.log(`✅ content_interactions: ${interPath}`)
 
-  // Ler e validar JSON
-  let rawData: unknown
-  try {
-    rawData = JSON.parse(fs.readFileSync(insightsPath, 'utf-8'))
-  } catch (err) {
-    console.error(`❌ Erro ao ler JSON:`, err instanceof Error ? err.message : err)
+  const rawInter = readJson(interPath)
+  const parsedInter = ContentInteractionsSchema.safeParse(rawInter)
+  if (!parsedInter.success) {
+    console.error('❌ Validação de content_interactions.json falhou:')
+    console.error(parsedInter.error.issues[0])
     process.exit(1)
   }
 
-  const parsed = InsightsFileSchema.safeParse(rawData)
-  if (!parsed.success) {
-    console.error(`❌ Validação falhou:`, parsed.error.issues[0])
-    process.exit(1)
+  const smd = parsedInter.data.organic_insights_interactions[0]?.string_map_data ?? {}
+
+  // Período real do arquivo
+  const dateRangeRaw = smd['Intervalo de datas']?.value ?? ''
+  const { start: periodStart, end: periodEnd } = dateRangeRaw
+    ? parseDateRange(dateRangeRaw)
+    : { start: new Date().toISOString().split('T')[0], end: new Date().toISOString().split('T')[0] }
+
+  console.log(`📅 Período: ${periodStart} → ${periodEnd}  (source: "${dateRangeRaw}")`)
+
+  // Chaves EXATAS validadas no arquivo real (13/06/2026):
+  // posts
+  const sharesPost  = int(smd, 'Compartilhamento do post')        // singular
+  const savesPost   = int(smd, 'Salvamentos do post')
+  const likesPost   = int(smd, 'Curtidas do post')
+  // reels
+  const sharesReels = int(smd, 'Compartilhamentos de vídeos do Reels')
+  const savesReels  = int(smd, 'Salvamentos de vídeos do Reels')
+  const likesReels  = int(smd, 'Curtidas em vídeos do Reels')
+  const commReels   = int(smd, 'Comentários em reels')
+
+  const totalShares   = sharesPost + sharesReels
+  const totalSaves    = savesPost  + savesReels
+  const totalLikes    = likesPost  + likesReels
+  const totalComments = commReels
+
+  console.log(`\n📊 Interações:`)
+  console.log(`   Compartilhamentos: ${totalShares}  (posts:${sharesPost} + reels:${sharesReels})`)
+  console.log(`   Salvamentos:       ${totalSaves}   (posts:${savesPost} + reels:${savesReels})`)
+  console.log(`   Curtidas:          ${totalLikes}  (posts:${likesPost} + reels:${likesReels})`)
+  console.log(`   Comentários:       ${totalComments} (reels)`)
+
+  // ── 2. profiles_reached.json (alcance-90d) ────────────────────────────
+
+  let alcance = 0
+  const reachPath = findFile(clientUsername, 'profiles_reached.json')
+  if (reachPath) {
+    console.log(`✅ profiles_reached: ${reachPath}`)
+    const rawReach = readJson(reachPath)
+    const parsedReach = ReachFileSchema.safeParse(rawReach)
+    if (parsedReach.success && parsedReach.data.organic_insights_reach.length > 0) {
+      const rsmd = parsedReach.data.organic_insights_reach[0].string_map_data
+      alcance = int(rsmd, 'Contas alcançadas') || int(rsmd, 'Accounts reached')
+      console.log(`   Alcance: ${alcance}`)
+    } else {
+      console.warn('⚠️  profiles_reached.json com estrutura inesperada — alcance = 0')
+    }
+  } else {
+    console.warn('⚠️  profiles_reached.json não encontrado — alcance-90d = 0')
+    console.warn('   Quality Scores ficarão N/A até profiles_reached.json estar disponível')
   }
 
-  const insights = parsed.data
-  console.log(`✅ ${insights.organic_insights_posts.length} post(s) com insights encontrado(s)`)
+  // ── 3. audience_insights.json (seguidores) ────────────────────────────
+  // followers_1.json tem apenas ~11 itens (amostra recente, não o total)
+  // audience_insights é a fonte mais confiável disponível no export
 
-  // Agregar métricas
-  let totalAlcance = 0
-  let totalImpressoes = 0
-  let totalSalvamentos = 0
-  let totalCompartilhamentos = 0
-  let totalVisitasPerfil = 0
+  let seguidoresTotais = 0
+  let saldo90Dias      = 0
 
-  for (const post of insights.organic_insights_posts) {
-    const metrics = post.string_map_data
-
-    totalAlcance += parseInt(metrics['Contas alcançadas']?.value ?? '0')
-    totalImpressoes += parseInt(metrics['Impressões']?.value ?? '0')
-    totalSalvamentos += parseInt(metrics['Salvamentos']?.value ?? '0')
-    totalCompartilhamentos += parseInt(metrics['Compartilhamentos']?.value ?? '0')
-    totalVisitasPerfil += parseInt(metrics['Visitas ao perfil']?.value ?? '0')
+  const audiPath = findFile(clientUsername, 'audience_insights.json')
+  if (audiPath) {
+    console.log(`✅ audience_insights: ${audiPath}`)
+    const rawAudi = readJson(audiPath)
+    const parsedAudi = AudienceInsightsSchema.safeParse(rawAudi)
+    if (parsedAudi.success) {
+      const asmd = parsedAudi.data.organic_insights_audience[0]?.string_map_data ?? {}
+      // "Seguidores" = novos no período (melhor proxy de total disponível no export)
+      seguidoresTotais = int(asmd, 'Seguidores')
+      // "Total de seguidores" = variação líquida (negativo = perda)
+      saldo90Dias = int(asmd, 'Total de seguidores')
+      console.log(`   Seguidores (novos no período): ${seguidoresTotais}`)
+      console.log(`   Saldo 90 dias (variação):      ${saldo90Dias}`)
+    }
+  } else {
+    console.warn('⚠️  audience_insights.json não encontrado')
   }
 
-  console.log(`\n📊 Métricas agregadas:`)
-  console.log(`   Alcance: ${totalAlcance}`)
-  console.log(`   Impressões: ${totalImpressoes}`)
-  console.log(`   Salvamentos: ${totalSalvamentos}`)
-  console.log(`   Compartilhamentos: ${totalCompartilhamentos}`)
-  console.log(`   Visitas ao perfil: ${totalVisitasPerfil}`)
+  // ── 4. Persistir no Supabase ──────────────────────────────────────────
 
- // ✅ CORRETO: Extrair timestamps reais dos posts
-const postTimestamps = insights.organic_insights_posts
-  .map(p => p.string_map_data['Registro de data e hora da criação']?.timestamp)
-  .filter((t): t is number => typeof t === 'number')
-  .sort((a, b) => a - b)
+  interface MetricRow { metric: string; value: number }
 
-// Converter timestamps para datas ISO (multiplicar por 1000 para Date)
-const periodStart = postTimestamps.length > 0
-  ? new Date(postTimestamps[0] * 1000).toISOString().split('T')[0]
-  : new Date().toISOString().split('T')[0]
-
-const periodEnd = postTimestamps.length > 0
-  ? new Date(postTimestamps[postTimestamps.length - 1] * 1000).toISOString().split('T')[0]
-  : new Date().toISOString().split('T')[0]
-
-console.log(`\n📅 Período real dos posts:`)
-console.log(`   Início: ${periodStart}`)
-console.log(`   Fim:    ${periodEnd}`)
-console.log(`   Total:  ${postTimestamps.length} posts`)
-
-  const metricsToInsert = [
-    { metric: 'alcance-90d', value: totalAlcance },
-    { metric: 'impressoes-90d', value: totalImpressoes },
-    { metric: 'salvamentos-90d', value: totalSalvamentos },
-    { metric: 'compartilhamentos-90d', value: totalCompartilhamentos },
-    { metric: 'visitas-perfil-90d', value: totalVisitasPerfil },
+  const metricsToInsert: MetricRow[] = [
+    { metric: 'compartilhamentos-90d', value: totalShares },
+    { metric: 'salvamentos-90d',       value: totalSaves },
+    { metric: 'curtidas-90d',          value: totalLikes },
+    { metric: 'comentarios-90d',       value: totalComments },
+    { metric: 'impressoes-90d',        value: 0 },       // não disponível no export
+    { metric: 'alcance-90d',           value: alcance },
+    { metric: 'seguidores-totais',     value: seguidoresTotais },
+    { metric: 'saldo-90-dias',         value: saldo90Dias },
   ]
 
-  console.log(`\n💾 Inserindo em kpi_snapshots (L1)...`)
+  console.log(`\n💾 Inserindo ${metricsToInsert.length} métricas em kpi_snapshots (L1)...`)
 
-  // Deletar métricas antigas (idempotência)
+  // Idempotência: deletar registros anteriores das mesmas métricas para este cliente
   const { error: deleteError } = await supabase
     .from('kpi_snapshots')
     .delete()
@@ -207,42 +295,41 @@ console.log(`   Total:  ${postTimestamps.length} posts`)
     .in('metric', metricsToInsert.map(m => m.metric))
 
   if (deleteError) {
-    console.warn(`⚠️  Falha ao deletar métricas antigas:`, deleteError.message)
+    console.warn(`⚠️  Falha ao deletar registros anteriores: ${deleteError.message}`)
   }
 
-  // Inserir novas métricas
   for (const { metric, value } of metricsToInsert) {
     const { error } = await supabase
       .from('kpi_snapshots')
       .insert({
-        client_id: CLIENT_UUID,
+        client_id:    CLIENT_UUID,
         metric,
         value,
-        value_text: null,
+        value_text:   null,
         source_level: 'L1',
-        period_start: periodStart,  // ✅ DEPOIS
-        period_end: periodEnd,      // ✅ DEPOIS
-        formula: `SUM(${metric}) FROM insights/posts.json`,
-        raw_ref: null,
+        period_start: periodStart,
+        period_end:   periodEnd,
+        formula:      `Extraído de ${metric.includes('reel') || metric.includes('post') ? 'content_interactions.json' : metric.includes('alcance') ? 'profiles_reached.json' : 'audience_insights.json'}`,
+        raw_ref:      null,
       })
 
     if (error) {
-      console.error(`❌ Erro ao inserir ${metric}:`, error.message)
+      console.error(`❌ ${metric}: ${error.message}`)
     } else {
-      console.log(`   ✅ ${metric}: ${value}`)
+      console.log(`   ✅ ${metric} = ${value}`)
     }
   }
 
-  console.log(`\n🏁 Concluído! Dashboard agora mostrará dados reais.\n`)
+  console.log(`\n🏁 Concluído para @${clientUsername}`)
+  console.log(`\n💡 Próximo passo: execute também extract-demographics.ts para popular avatar_*_real`)
+  console.log(`   Quality Scores ficam N/A enquanto alcance-90d = 0`)
+  console.log(`   Para resolver: obter profiles_reached.json do export completo\n`)
 }
 
-// ─── Pipeline principal ────────────────────────────────────────────────────
-
 async function run(): Promise<void> {
-  console.log(`\n🚀 ORBIT Ingestão de Insights — v1.0.0`)
+  console.log(`\n🚀 ORBIT Ingestão de Insights — v1.2.0`)
   console.log(`📋 Cliente: ${CLIENT_USERNAME}`)
-  console.log(`🆔 UUID: ${CLIENT_UUID}`)
-
+  console.log(`🆔 UUID:    ${CLIENT_UUID}`)
   await processInsights(CLIENT_USERNAME)
 }
 

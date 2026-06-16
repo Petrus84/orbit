@@ -1,0 +1,171 @@
+
+==============================================================================
+  ORBIT Dashboard — Migração de Screens — 2026-06-16 13:14:44
+==============================================================================
+
+==============================================================================
+  [0/6] Validando ambiente
+==============================================================================
+  ✅ Projeto encontrado: C:\Users\DELL\Downloads\Alpha\orbit-dashboard
+  ✅ Pasta bck/ encontrada: C:\Users\DELL\Downloads\Alpha\bck
+  ✅ src/components/common/ encontrada
+  ✅ src/components/screens/ encontrada
+
+==============================================================================
+  [1/6] Inventariando src/components/common/
+==============================================================================
+  📦 27 componentes encontrados em common/:
+     - AlertCard
+     - AlertIcon
+     - AlignmentBar
+     - AlignmentBars
+     - AlignmentFormula
+     - AvatarCard
+     - AvatarComparison
+     - Badge
+     - CampaignRow
+     - CampaignTable
+     - ClientCard
+     - DiagnosticAlert
+     - FatigueFormula
+     - FatigueIndicator
+     - FunnelChart
+     - FunnelResult
+     - FunnelSimulator
+     - FunnelStep
+     - GlassCard
+     - KPICard
+     - PerformanceTable
+     - QualityScoreCard
+     - RecommendationAlert
+     - SectionHead
+     - Semaphore
+     - Slider
+     - StatusPill
+
+==============================================================================
+  [2/6] Arquivos a processar
+==============================================================================
+  ✅ Encontrado: FunnelScreen.tsx → FunnelScreen.tsx
+  ✅ Encontrado: CarteiraScreen (1).tsx → CarteiraScreen.tsx
+  ✅ Encontrado: AlertasScreen.tsx → AlertasScreen.tsx
+  ✅ Encontrado: IGOverviewScreen.tsx → IGOverviewScreen.tsx
+  ✅ Encontrado: MetaAdsScreen.tsx → MetaAdsScreen.tsx
+  ✅ Encontrado: AvatarScreen.tsx → AvatarScreen.tsx
+
+==============================================================================
+  [3/6] Backup de segurança
+==============================================================================
+  📁 Backup dir: C:\Users\DELL\Downloads\Alpha\orbit-dashboard\.orbit-backup-20260616-131444
+  💾 Backup de existente: FunnelScreen.tsx
+  💾 Backup de existente: CarteiraScreen.tsx
+  💾 Backup de existente: AlertasScreen.tsx
+  💾 Backup de existente: IGOverviewScreen.tsx
+  💾 Backup de existente: MetaAdsScreen.tsx
+  💾 Backup de existente: AvatarScreen.tsx
+
+==============================================================================
+  [4/6] Copiando e corrigindo imports
+==============================================================================
+
+  ── Processando: FunnelScreen.tsx
+     🔧 Correções aplicadas:
+        - import type path: ./common -> ../common
+        - default->named: SectionHead from ./common/SectionHead
+        - default->named: FunnelChart from ./common/FunnelChart
+        - default->named: FunnelSimulator from ./common/FunnelSimulator
+     ⚠️  Possíveis TS7006 (revisar manualmente — tipo não adivinhado por segurança):
+          - Possivel TS7006: parametro 'i' em .map(...) sem tipo explicito
+     ✅ Copiado com correções → C:\Users\DELL\Downloads\Alpha\orbit-dashboard\src\components\screens\FunnelScreen.tsx
+
+  ── Processando: CarteiraScreen (1).tsx
+     ℹ️  Nenhum import './common/...' encontrado para corrigir
+     ⚠️  Possíveis TS7006 (revisar manualmente — tipo não adivinhado por segurança):
+          - Possivel TS7006: parametro 'i' em .map(...) sem tipo explicito
+          - Possivel TS7006: parametro 'a' em .filter(...) sem tipo explicito
+          - Possivel TS7006: parametro 'i' em .map(...) sem tipo explicito
+          - Possivel TS7006: parametro 'client' em .map(...) sem tipo explicito
+          - Possivel TS7006: parametro 'alert' em .map(...) sem tipo explicito
+     ✅ Copiado sem alterações necessárias → C:\Users\DELL\Downloads\Alpha\orbit-dashboard\src\components\screens\CarteiraScreen.tsx
+
+  ── Processando: AlertasScreen.tsx
+     ℹ️  Nenhum import './common/...' encontrado para corrigir
+     ⚠️  Possíveis TS7006 (revisar manualmente — tipo não adivinhado por segurança):
+          - Possivel TS7006: parametro 'a' em .filter(...) sem tipo explicito
+          - Possivel TS7006: parametro 'a' em .filter(...) sem tipo explicito
+          - Possivel TS7006: parametro 'a' em .filter(...) sem tipo explicito
+          - Possivel TS7006: parametro 'a' em .filter(...) sem tipo explicito
+          - Possivel TS7006: parametro 'tab' em .map(...) sem tipo explicito
+          - Possivel TS7006: parametro 'i' em .map(...) sem tipo explicito
+          - Possivel TS7006: parametro 'alert' em .map(...) sem tipo explicito
+     ✅ Copiado sem alterações necessárias → C:\Users\DELL\Downloads\Alpha\orbit-dashboard\src\components\screens\AlertasScreen.tsx
+
+  ── Processando: IGOverviewScreen.tsx
+     ℹ️  Nenhum import './common/...' encontrado para corrigir
+     ⚠️  Possíveis TS7006 (revisar manualmente — tipo não adivinhado por segurança):
+          - Possivel TS7006: parametro 'i' em .map(...) sem tipo explicito
+          - Possivel TS7006: parametro 'i' em .map(...) sem tipo explicito
+          - Possivel TS7006: parametro 'kpi' em .map(...) sem tipo explicito
+          - Possivel TS7006: parametro 'i' em .map(...) sem tipo explicito
+          - Possivel TS7006: parametro 'score' em .map(...) sem tipo explicito
+          - Possivel TS7006: parametro 'i' em .map(...) sem tipo explicito
+     ✅ Copiado sem alterações necessárias → C:\Users\DELL\Downloads\Alpha\orbit-dashboard\src\components\screens\IGOverviewScreen.tsx
+
+  ── Processando: MetaAdsScreen.tsx
+     ℹ️  Nenhum import './common/...' encontrado para corrigir
+     ⚠️  Possíveis TS7006 (revisar manualmente — tipo não adivinhado por segurança):
+          - Possivel TS7006: parametro 'i' em .map(...) sem tipo explicito
+          - Possivel TS7006: parametro 'i' em .map(...) sem tipo explicito
+          - Possivel TS7006: parametro 'kpi' em .map(...) sem tipo explicito
+     ✅ Copiado sem alterações necessárias → C:\Users\DELL\Downloads\Alpha\orbit-dashboard\src\components\screens\MetaAdsScreen.tsx
+
+  ── Processando: AvatarScreen.tsx
+     ℹ️  Nenhum import './common/...' encontrado para corrigir
+     ✅ Copiado sem alterações necessárias → C:\Users\DELL\Downloads\Alpha\orbit-dashboard\src\components\screens\AvatarScreen.tsx
+
+==============================================================================
+  [5/6] Validando referências contra common/ real
+==============================================================================
+  ✅ FunnelScreen.tsx -> '../common/SectionHead' existe
+  ✅ FunnelScreen.tsx -> '../common/FunnelChart' existe
+  ✅ FunnelScreen.tsx -> '../common/FunnelSimulator' existe
+  ✅ FunnelScreen.tsx -> '../common/FunnelResult' existe
+  ✅ CarteiraScreen.tsx -> '../common/SectionHead' existe
+  ✅ CarteiraScreen.tsx -> '../common/ClientCard' existe
+  ✅ CarteiraScreen.tsx -> '../common/AlertCard' existe
+  ✅ AlertasScreen.tsx -> '../common/SectionHead' existe
+  ✅ AlertasScreen.tsx -> '../common/AlertCard' existe
+  ✅ IGOverviewScreen.tsx -> '../common/SectionHead' existe
+  ✅ IGOverviewScreen.tsx -> '../common/KPICard' existe
+  ✅ IGOverviewScreen.tsx -> '../common/QualityScoreCard' existe
+  ✅ IGOverviewScreen.tsx -> '../common/PerformanceTable' existe
+  ✅ IGOverviewScreen.tsx -> '../common/DiagnosticAlert' existe
+  ✅ MetaAdsScreen.tsx -> '../common/SectionHead' existe
+  ✅ MetaAdsScreen.tsx -> '../common/KPICard' existe
+  ✅ MetaAdsScreen.tsx -> '../common/CampaignTable' existe
+  ✅ MetaAdsScreen.tsx -> '../common/FatigueFormula' existe
+  ✅ MetaAdsScreen.tsx -> '../common/CampaignRow' existe
+
+==============================================================================
+  [6/6] Validação TypeScript (tsc --noEmit)
+==============================================================================
+  🔍 Rodando: npx tsc --noEmit ...
+  ⚠️  tsc reportou erros:
+  (Nenhum TS2307/TS7006 — outros erros podem existir, ver saida completa abaixo)
+
+  --- Saída completa do tsc ---
+npm error could not determine executable to run
+npm error A complete log of this run can be found in: C:\Users\DELL\AppData\Local\npm-cache\_logs\2026-06-16T16_14_44_872Z-debug-0.log
+
+
+==============================================================================
+  📋 Resumo da Migração
+==============================================================================
+
+  Arquivos processados: 6 / 6
+  ⚠️  FunnelScreen.tsx — 4 correcao(oes) de import, 1 aviso(s) de tipo
+  ⚠️  CarteiraScreen.tsx — 0 correcao(oes) de import, 5 aviso(s) de tipo
+  ⚠️  AlertasScreen.tsx — 0 correcao(oes) de import, 7 aviso(s) de tipo
+  ⚠️  IGOverviewScreen.tsx — 0 correcao(oes) de import, 6 aviso(s) de tipo
+  ⚠️  MetaAdsScreen.tsx — 0 correcao(oes) de import, 3 aviso(s) de tipo
+  ✅ AvatarScreen.tsx — 0 correcao(oes) de import, 0 aviso(s) de tipo

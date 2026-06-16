@@ -26,11 +26,12 @@ const TABS: TabDefinition[] = [
 
 // ─── Helpers ──────────────────────────────────────────────────────────────
 
-function formatDateRange(from: string, to: string): string {
+function formatDateRange(start: Date, end: Date): string {
+
   const opts: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'short', year: 'numeric' }
   const locale = 'pt-BR'
-  const f = new Date(from).toLocaleDateString(locale, opts)
-  const t = new Date(to).toLocaleDateString(locale, opts)
+  const f = new Date(start).toLocaleDateString(locale, opts)
+  const t = new Date(end).toLocaleDateString(locale, opts)
   return `${f} – ${t}`
 }
 
@@ -42,7 +43,7 @@ export function Header() {
   const meta = data?.meta
 
   const dateLabel = meta
-    ? formatDateRange(meta.dateRange.from, meta.dateRange.to)
+    ? formatDateRange(meta.dateRange.start, meta.dateRange.end)
     : '—'
 
   return (

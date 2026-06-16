@@ -1,155 +1,363 @@
-/* ==========================================================================
-   ORBIT · Hook — useInstagramOverview
-   Caminho definitivo: src/hooks/useInstagramOverview.ts
-   Responsabilidade: Orquestrar fetch, estado, cache e realtime (Sem Erros ESLint).
-   Aplica resolução estrita baseada no Blueprint Técnico e Relatório de PRD.
-   Versão: 1.0.1 | Data: 2026-06-02
-   ========================================================================== */
+// src/hooks/useInstagramOverview.ts
+// ORBIT · Hook — Instagram Visão Geral
+// Versão: 1.0.1
+//
+// Features:
+//   ✅ Retry com backoff exponencial (máx 3 tentativas)
+//   ✅ Polling opcional (pollingIntervalMs)
+//   ✅ Realtime Supabase opcional (enableRealtime)
+//   ✅ isMountedRef — safe em React 18 StrictMode
+//   ✅ refetch() manual
+//   ✅ lastUpdated: Date | null
+//   ✅ Strict TypeScript (sem any)
+//
+// v1.0.1 — buildPrototypeData() atualizado para o shape unificado de tipos:
+//   statusVariant: 'ok' | 'warn' | 'neutral'  (era 'success' | 'warning' | 'danger')
+//   criticalAlerts: CriticalAlertData[]        (era string[])
 
-import { useState, useEffect, useCallback, useRef } from 'react'
-import { supabase } from '../lib/supabaseClient'
-import { fetchInstagramOverview } from '../repositories/instagramOverviewRepository'
-import type {
-  InstagramOverviewData,
+import { useCallback, useEffect, useRef, useState } from "react";
+import { RealtimeChannel } from "@supabase/supabase-js";
+import { supabase } from "../lib/supabaseClient";
+import {fetchInstagramOverview} from "../lib/repositories/instagramRepository";
+import {
   AsyncState,
-  FetchStatus
-} from '../types/orbit'
+  FetchStatus,
+  IGOverviewData,
+} from "../types/instagram";
 
 // ─────────────────────────────────────────────
-// Parâmetros do hook (Contratos de Entrada)
+// Configuração
 // ─────────────────────────────────────────────
+
+const MAX_RETRIES       = 3;
+const BACKOFF_BASE_MS   = 800;   // 800 ms → 1.6 s → 3.2 s
+
+// ─────────────────────────────────────────────
+// Tipos do hook
+// ─────────────────────────────────────────────
+
 export interface UseInstagramOverviewParams {
-  clientId: string
-  periodStart: string
-  periodEnd: string
-  /** true = usa dados hardcoded (Sprint 1); false = Supabase real */
-  usePrototypeData?: boolean
-  /** Intervalo de polling em ms. 0 = sem polling. Default: 0 */
-  pollingIntervalMs?: number
-  /** true = habilita subscription realtime Supabase */
-  enableRealtime?: boolean
+  clientId:            string
+  periodStart:         Date
+  periodEnd:           Date
+  /** Se true, usa dados de protótipo em vez de chamar o Supabase */
+  usePrototypeData?:   boolean
+  /** Intervalo em ms para polling automático. null = sem polling. */
+  pollingIntervalMs?:  number | null
+  /** Se true, abre canal Realtime no Supabase para kpi_snapshots */
+  enableRealtime?:     boolean
+}
+
+export interface UseInstagramOverviewReturn extends AsyncState<IGOverviewData | null> {
+  /** Recarrega os dados manualmente (reseta o contador de retries) */
+  refetch:      () => void
+  /** Timestamp do último fetch bem-sucedido */
+  lastUpdated:  Date | null
 }
 
 // ─────────────────────────────────────────────
-// Retorno do hook (Contratos de Saída)
+// Dados de protótipo (evita chamada real ao Supabase)
 // ─────────────────────────────────────────────
-export interface UseInstagramOverviewReturn extends AsyncState<InstagramOverviewData> {
-  refetch: () => Promise<void>
-  lastUpdated: Date | null
+
+function buildPrototypeData(clientId: string): IGOverviewData {
+  const now   = new Date();
+  const start = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+
+  return {
+    meta: {
+      clientHandle: "@prototype",
+      periodLabel:  "Últimos 90 dias",
+      dateRange:    { start, end: now },
+    },
+    kpis: [
+      {
+        id:         `${clientId}-reach`,
+        label:      "Alcance 90d",
+        value:      48_320,
+        unit:       "",
+        delta:      12.4,
+        deltaLabel: "vs período anterior",
+        semaphore:  "verde",
+        glowColor:  "cyan",
+        subtitle:   "Contas únicas alcançadas",
+      },
+      {
+        id:         `${clientId}-link-clicks`,
+        label:      "Cliques no Link",
+        value:      1_240,
+        unit:       "",
+        delta:      -8.2,
+        deltaLabel: "vs período anterior",
+        semaphore:  "ambar",
+        glowColor:  "gold",
+        subtitle:   "Cliques na bio + stories",
+      },
+      {
+        id:         `${clientId}-followers`,
+        label:      "Seguidores Totais",
+        value:      12_870,
+        unit:       "",
+        delta:      3.1,
+        deltaLabel: "crescimento",
+        semaphore:  "verde",
+        glowColor:  "cyan",
+        subtitle:   "Base acumulada",
+      },
+      {
+        id:         `${clientId}-balance`,
+        label:      "Saldo 90 Dias",
+        value:      -320,
+        unit:       "",
+        delta:      -14.6,
+        deltaLabel: "ganhos - perdas",
+        semaphore:  "vermelho",
+        glowColor:  "red",
+        subtitle:   "Novos − cancelamentos",
+      },
+    ],
+    qualityScores: [
+      {
+        id:            `${clientId}-utility`,
+        label:         "Utilidade",
+        value:         7.8,
+        unit:          "/10",
+        statusText:    "Bom",
+        statusVariant: "ok",
+        glowColor:     "cyan",
+      },
+      {
+        id:            `${clientId}-relevance`,
+        label:         "Relevância",
+        value:         6.2,
+        unit:          "/10",
+        statusText:    "Atenção",
+        statusVariant: "warn",
+        glowColor:     "gold",
+      },
+      {
+        id:            `${clientId}-authenticity`,
+        label:         "Autenticidade",
+        value:         8.5,
+        unit:          "/10",
+        statusText:    "Excelente",
+        statusVariant: "ok",
+        glowColor:     "cyan",
+      },
+      {
+        id:            `${clientId}-coherence`,
+        label:         "Coerência",
+        value:         5.1,
+        unit:          "/10",
+        statusText:    "Crítico",
+        statusVariant: "warn",
+        glowColor:     "red",
+      },
+    ],
+    formatPerformance: [
+      { id: "fp-1", format: "Reels",      posts: 24, shares: 312, trendLabel: "+18%", trendColor: "cyan" },
+      { id: "fp-2", format: "Carrosséis", posts: 18, shares: 198, trendLabel: "+6%",  trendColor: "gold" },
+      { id: "fp-3", format: "Stories",    posts: 60, shares:  44, trendLabel: "-3%",  trendColor: "red"  },
+      { id: "fp-4", format: "Estáticas",  posts: 12, shares:  88, trendLabel: "+2%",  trendColor: "cyan" },
+    ],
+    insights: [
+      { id: "i-1", text: "Saldo 90 Dias está em nível crítico (−14.6% vs período anterior)." },
+      { id: "i-2", text: "Cliques no Link requer atenção — variação de −8.2%." },
+    ],
+    criticalAlerts: [
+      {
+        id:       "alert-balance",
+        title:    "Saldo 90 Dias",
+        body:     "−14.6% vs período anterior — intervenção necessária.",
+        severity: "critical",
+      },
+    ],
+  };
 }
 
 // ─────────────────────────────────────────────
-// Hook Engine
+// Utilitários
 // ─────────────────────────────────────────────
-export function useInstagramOverview(
-  params: UseInstagramOverviewParams
-): UseInstagramOverviewReturn {
-  const {
-    clientId,
-    periodStart,
-    periodEnd,
-    usePrototypeData = true,
-    pollingIntervalMs = 0,
-    enableRealtime = false
-  } = params
 
-  const [state, setState] = useState<AsyncState<InstagramOverviewData>>({
-    data: null,
-    status: 'idle',
-    error: null
-  })
+/** Aguarda `ms` milissegundos. */
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
-  const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
-  
-  // Tipagem explícita para evitar referências any implícitas do NodeJS.Timeout
-  const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null)
-  const isMountedRef = useRef<boolean>(true)
+/** Calcula delay exponencial com jitter simples. */
+function backoffDelay(attempt: number): number {
+  return BACKOFF_BASE_MS * Math.pow(2, attempt) + Math.random() * 200;
+}
 
-  // ─── Fetch principal (Transformação de Linhas Brutas) ───────────────────────
-  const loadData = useCallback(async () => {
-    if (!isMountedRef.current) return
+// ─────────────────────────────────────────────
+// Hook principal
+// ─────────────────────────────────────────────
 
-    setState((prev) => ({ ...prev, status: 'loading' as FetchStatus, error: null }))
+export function useInstagramOverview({
+  clientId,
+  periodStart,
+  periodEnd,
+  usePrototypeData   = false,
+  pollingIntervalMs  = null,
+  enableRealtime     = false,
+}: UseInstagramOverviewParams): UseInstagramOverviewReturn {
 
-    try {
-      // Chama diretamente a função exportada do repositório do programador
-      const dataPayload = await fetchInstagramOverview({
-        clientId,
-        periodStart,
-        periodEnd,
-        usePrototypeData
-      })
+  const [data,        setData]        = useState<IGOverviewData | null>(null);
+  const [status,      setStatus]      = useState<FetchStatus>("idle");
+  const [error,       setError]       = useState<string | null>(null);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
-      if (!isMountedRef.current) return
+  // Guarda para evitar setState em componente desmontado (StrictMode safe)
+  const isMountedRef    = useRef(true);
+  // Permite cancelar polling ao desmontar
+  const pollingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Canal Realtime
+  const realtimeRef     = useRef<RealtimeChannel | null>(null);
+  // Trigger de refetch manual (incrementar força novo useEffect run)
+  const [fetchTick, setFetchTick] = useState(0);
 
-      setState({ data: dataPayload, status: 'success' as FetchStatus, error: null })
-      setLastUpdated(new Date())
-    } catch (err: unknown) {
-      if (!isMountedRef.current) return
+  // ── fetch com retry ────────────────────────────────────────────────────
 
-      const message = err instanceof Error ? err.message : 'Erro desconhecido'
+  const fetchWithRetry = useCallback(async (): Promise<void> => {
+    if (!isMountedRef.current) return;
 
-      setState((prev) => ({ ...prev, status: 'error' as FetchStatus, error: message }))
-      console.error('[useInstagramOverview] Fetch falhou:', message)
+    setStatus("loading");
+    setError(null);
+
+    let attempt = 0;
+
+    while (attempt <= MAX_RETRIES) {
+      try {
+        let result: IGOverviewData;
+
+        if (usePrototypeData) {
+          // Simula latência de rede em modo protótipo
+          await sleep(400);
+          result = buildPrototypeData(clientId);
+        } else {
+          result = await fetchInstagramOverview(clientId, periodStart, periodEnd);
+        }
+
+        if (!isMountedRef.current) return;
+
+        setData(result);
+        setStatus("success");
+        setLastUpdated(new Date());
+        return; // sucesso — sair do loop
+
+      } catch (err: unknown) {
+        attempt++;
+
+        if (attempt > MAX_RETRIES) {
+          if (!isMountedRef.current) return;
+
+          const message =
+            err instanceof Error ? err.message : "Erro desconhecido ao buscar dados do Instagram.";
+
+          console.error(
+            `[useInstagramOverview] Falhou após ${MAX_RETRIES} tentativas:`,
+            message
+          );
+
+          setStatus("error");
+          setError(message);
+          return;
+        }
+
+        const delay = backoffDelay(attempt - 1);
+        console.warn(
+          `[useInstagramOverview] Tentativa ${attempt}/${MAX_RETRIES} falhou. Retry em ${Math.round(delay)}ms.`
+        );
+        await sleep(delay);
+      }
     }
-  }, [clientId, periodStart, periodEnd, usePrototypeData])
+  }, [clientId, periodStart, periodEnd, usePrototypeData]);
 
+  // ── efeito principal — fetch + polling ────────────────────────────────
 
-    // ─── Efeito Principal & Polling (Corrigido contra Cascading Renders) ───
   useEffect(() => {
     isMountedRef.current = true;
 
-    // 💡 A SACADA: Executa o fetch inicial descolado do fluxo síncrono do efeito
-    // Isso joga a execução para a Fila de Microtarefas, impedindo o loop de renders.
-    Promise.resolve().then(() => {
-      if (isMountedRef.current) {
-        loadData();
-      }
-    });
+       // Fetch imediato (Adiado para evitar cascading renders)
+    setTimeout(() => {
+      void fetchWithRetry();
+    }, 0);
 
-    if (pollingIntervalMs > 0) {
-      pollingRef.current = setInterval(loadData, pollingIntervalMs);
+    // Polling
+    if (pollingIntervalMs && pollingIntervalMs > 0) {
+      const schedule = (): void => {
+        pollingTimerRef.current = setTimeout(async () => {
+          if (!isMountedRef.current) return;
+          await fetchWithRetry();
+          if (isMountedRef.current) schedule(); // re-agenda
+        }, pollingIntervalMs);
+      };
+      schedule();
     }
+
 
     return () => {
       isMountedRef.current = false;
-      if (pollingRef.current) {
-        clearInterval(pollingRef.current);
+      if (pollingTimerRef.current !== null) {
+        clearTimeout(pollingTimerRef.current);
+        pollingTimerRef.current = null;
       }
     };
-  }, [loadData, pollingIntervalMs]);
+  }, [fetchWithRetry, pollingIntervalMs, fetchTick]);
 
-  // ─── Realtime Supabase Channels (Regra SPRINT 2) ───────────
+  // ── Realtime Supabase ─────────────────────────────────────────────────
+
   useEffect(() => {
-    if (!enableRealtime || usePrototypeData) return
+    if (!enableRealtime || usePrototypeData) return;
 
+    // Inscreve no canal de kpi_snapshots do cliente
     const channel = supabase
-      .channel(`kpi_snapshots_${clientId}`)
+      .channel(`ig-overview:${clientId}`)
       .on(
-        'postgres_changes',
+        "postgres_changes",
         {
-          event: '*',
-          schema: 'public',
-          table: 'kpi_snapshots',
-          filter: `client_id=eq.${clientId}`
+          event:  "*",
+          schema: "public",
+          table:  "kpi_snapshots",
+          filter: `client_id=eq.${clientId}`,
         },
-        () => {
-          // Invalidação de cache assíncrona: Re-busca tudo sob demanda
-          loadData()
+        (payload) => {
+          console.log("[useInstagramOverview] Realtime update:", payload.eventType);
+          if (isMountedRef.current) {
+            void fetchWithRetry();
+          }
         }
       )
-      .subscribe()
+      .subscribe((subscriptionStatus) => {
+        if (subscriptionStatus === "CHANNEL_ERROR") {
+          console.error("[useInstagramOverview] Realtime subscription error.");
+        }
+      });
+
+    realtimeRef.current = channel;
 
     return () => {
-      supabase.removeChannel(channel)
-    }
-  }, [enableRealtime, usePrototypeData, clientId, loadData])
+      if (realtimeRef.current) {
+        void supabase.removeChannel(realtimeRef.current);
+        realtimeRef.current = null;
+      }
+    };
+  }, [clientId, enableRealtime, usePrototypeData, fetchWithRetry]);
+
+  // ── refetch manual ────────────────────────────────────────────────────
+
+  const refetch = useCallback((): void => {
+    setFetchTick((t) => t + 1);
+  }, []);
+
+  // ─────────────────────────────────────────────
+  // Return
+  // ─────────────────────────────────────────────
 
   return {
-    data: state.data,
-    status: state.status,
-    error: state.error,
-    refetch: loadData,
-    lastUpdated
-  }
+    data,
+    status,
+    error,
+    refetch,
+    lastUpdated,
+  };
 }

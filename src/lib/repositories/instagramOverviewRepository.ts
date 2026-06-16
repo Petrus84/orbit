@@ -148,7 +148,7 @@ try {
   const meta: DashboardHeaderMeta = {
     clientHandle: `@${handle}`,
     periodLabel: 'Métricas da Extração',
-    dateRange: { start: new Date(realStart), end: new Date(realEnd) }
+    dateRange: { from: realStart, to: realEnd }
   }
 
   return {
@@ -262,7 +262,7 @@ function generateInsights(formats: FormatPerformanceRow[]): InsightData[] {
 
 function getPrototypeData(clientId: string, start: string, end: string): InstagramOverviewData {
   return {
-    meta: { clientHandle: '@mock_store', periodLabel: '90 dias', dateRange: { start: new Date(start), end: new Date(end) } },
+    meta: { clientHandle: '@mock_store', periodLabel: '90 dias', dateRange: { from: start, to: end } },
     kpis: [],
     qualityScores: [],
     formatPerformance: [],

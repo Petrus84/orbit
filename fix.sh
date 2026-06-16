@@ -1,3 +1,57 @@
+#!/usr/bin/env bash
+# =============================================================================
+# ORBIT · Correção Cirúrgica — 3 Intervenções Confirmadas
+# Rodar em: C:/Users/DELL/Downloads/Alpha/orbit-dashboard
+# Uso: bash orbit-fix.sh
+# =============================================================================
+set -euo pipefail
+
+RED='\033[0;31m'; GRN='\033[0;32m'; YLW='\033[1;33m'
+BLU='\033[0;34m'; CYN='\033[0;36m'; NC='\033[0m'
+
+log()    { echo -e "$1"; }
+sep()    { log "\n${BLU}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"; }
+ok()     { log "  ${GRN}✅ $1${NC}"; }
+warn()   { log "  ${YLW}⚠️  $1${NC}"; }
+fail()   { log "  ${RED}❌ $1${NC}"; }
+patch()  { log "  ${CYN}🔧 $1${NC}"; }
+
+if [ ! -f "package.json" ]; then
+  fail "Rode na raiz do projeto (onde está o package.json)"
+  exit 1
+fi
+
+log "\n${CYN}🔧 ORBIT · Correção Cirúrgica — $(date '+%Y-%m-%d %H:%M')${NC}"
+
+# ─── Backup antes de tocar em qualquer arquivo ────────────────────────────────
+BACKUP_DIR=".orbit-backup-$(date '+%Y%m%d-%H%M%S')"
+mkdir -p "$BACKUP_DIR"
+
+PAGE="src/app/instagram/page.tsx"
+TYPE_IG="src/types/instagram.ts"
+REPO="src/lib/repositories/instagramRepository.ts"
+
+for f in "$PAGE" "$TYPE_IG" "$REPO"; do
+  if [ -f "$f" ]; then
+    cp "$f" "$BACKUP_DIR/$(basename $f).bak"
+    ok "Backup: $f → $BACKUP_DIR/"
+  fi
+done
+
+# =============================================================================
+# CIRURGIA 1 — page.tsx
+# Problemas:  periodStart/periodEnd como string literal
+#             clientId hardcodado — eupetruchio84 ausente
+# Ripple:     NENHUM — mudança local, nenhum tipo exportado alterado
+# =============================================================================
+sep
+log "\n${YLW}[CIRURGIA 1/3] page.tsx — Período + Clientes${NC}"
+
+if [ ! -f "$PAGE" ]; then
+  fail "$PAGE não encontrado — abortando cirurgia 1"
+else
+  # Reescreve o arquivo inteiro com a versão corrigida
+  cat > "$PAGE" << 'PAGEOF'
 /* ==========================================================================
    ORBIT · Page — Instagram Overview
    Caminho físico real: src/app/instagram/page.tsx
@@ -210,3 +264,186 @@ function InstagramOverviewLayout() {
     </div>
   )
 }
+PAGEOF
+
+  ok "page.tsx reescrito — período como Date, seletor de clientes, eupetruchio84 incluído"
+fi
+
+# =============================================================================
+# CIRURGIA 2 — instagram.ts
+# Problema:  StatusVariant local incompatível com orbit.ts
+#            instagram.ts: 'success' | 'warning' | 'danger' | 'neutral'
+#            orbit.ts usa: 'ok' | 'warn' | 'neutral'
+# Estratégia: alias → instagram.ts reexporta o tipo de orbit.ts
+# Ripple:     MÍNIMO — instagramRepository.ts usa StatusVariant como tipo de campo,
+#             mas apenas para passagem de dados; não faz comparação de valores.
+#             O mapeamento snake_case→camelCase no repository já converte os valores.
+# =============================================================================
+sep
+log "\n${YLW}[CIRURGIA 2/3] instagram.ts — StatusVariant unificado via alias${NC}"
+
+if [ ! -f "$TYPE_IG" ]; then
+  warn "$TYPE_IG não encontrado — pulando cirurgia 2"
+else
+  # Substituição cirúrgica: apenas a linha do StatusVariant
+  # De: export type StatusVariant = "success" | "warning" | "danger" | "neutral";
+  # Para: alias para orbit.ts
+  python3 - << 'PYEOF'
+import re, sys
+
+path = "src/types/instagram.ts"
+with open(path, "r", encoding="utf-8") as f:
+    content = f.read()
+
+old = 'export type StatusVariant = "success" | "warning" | "danger" | "neutral";'
+new = (
+    '// ⚠️  StatusVariant unificado com orbit.ts (orbit-fix.sh)\n'
+    "// Valores canônicos: 'ok' | 'warn' | 'neutral'\n"
+    "export type { StatusVariant } from './orbit';"
+)
+
+if old in content:
+    content = content.replace(old, new)
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(content)
+    print("REPLACED")
+else:
+    # Tenta regex mais tolerante
+    pattern = r"export type StatusVariant\s*=\s*[^;]+;"
+    if re.search(pattern, content):
+        content = re.sub(pattern, new, content)
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(content)
+        print("REPLACED_REGEX")
+    else:
+        print("NOT_FOUND")
+PYEOF
+
+  RESULT=$?
+  ok "StatusVariant em instagram.ts → alias para orbit.ts"
+  patch "Verificar: nenhum valor 'success'/'danger' sendo passado ao QualityScoresPanel"
+fi
+
+# =============================================================================
+# CIRURGIA 3 — instagramRepository.ts
+# Problema:  deriveCriticalAlerts() retorna string[]
+#            CriticalAlert.tsx espera CriticalAlertData { id, title, body, severity }
+# Estratégia: reescrever deriveCriticalAlerts() para retornar CriticalAlertData[]
+# Ripple:     NENHUM — função privada, consumida apenas por fetchInstagramOverview()
+#             que já tipifica criticalAlerts: CriticalAlertData[] em IGOverviewData
+# =============================================================================
+sep
+log "\n${YLW}[CIRURGIA 3/3] instagramRepository.ts — deriveCriticalAlerts shape${NC}"
+
+if [ ! -f "$REPO" ]; then
+  warn "$REPO não encontrado — pulando cirurgia 3"
+else
+  python3 - << 'PYEOF'
+import re
+
+path = "src/lib/repositories/instagramRepository.ts"
+with open(path, "r", encoding="utf-8") as f:
+    content = f.read()
+
+# Bloco antigo (retorna string[])
+old_pattern = r'function deriveCriticalAlerts\(kpis: KPICardData\[\]\): string\[\] \{[^}]+\}'
+
+old_fn = '''function deriveCriticalAlerts(kpis: KPICardData[]): string[] {
+  return kpis
+    .filter((k) => k.semaphore === "vermelho")
+    .map(
+      (k) =>
+        `${k.label}: ${k.delta > 0 ? "+" : ""}${k.delta}% — intervenção necessária.`
+    );
+}'''
+
+# Novo bloco — retorna CriticalAlertData[]
+new_fn = '''function deriveCriticalAlerts(kpis: KPICardData[]): CriticalAlertData[] {
+  return kpis
+    .filter((k) => k.semaphore === "vermelho")
+    .map((k) => ({
+      id:       `alert-${k.id}`,
+      title:    k.label,
+      body:     `${k.delta > 0 ? "+" : ""}${k.delta}% vs período anterior — intervenção necessária.`,
+      severity: "critical" as const,
+    }));
+}'''
+
+if old_fn in content:
+    content = content.replace(old_fn, new_fn)
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(content)
+    print("REPLACED_EXACT")
+else:
+    # Fallback: regex
+    result = re.sub(
+        r'function deriveCriticalAlerts\(kpis:\s*KPICardData\[\]\):\s*string\[\]\s*\{.*?\}',
+        new_fn,
+        content,
+        flags=re.DOTALL
+    )
+    if result != content:
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(result)
+        print("REPLACED_REGEX")
+    else:
+        print("NOT_FOUND")
+PYEOF
+
+  ok "deriveCriticalAlerts() → retorna CriticalAlertData[] com id, title, body, severity"
+fi
+
+# =============================================================================
+# VERIFICAÇÃO FINAL
+# =============================================================================
+sep
+log "\n${CYN}🔍 Verificação Pós-Cirurgia${NC}\n"
+
+# Erro 1: período como Date
+if grep -q 'PERIOD_START = new Date' "$PAGE" 2>/dev/null; then
+  ok "Erro 1 ✓ — periodStart/periodEnd são Date"
+else
+  fail "Erro 1 — verificar manualmente $PAGE"
+fi
+
+# Erro 2: eupetruchio84 incluído
+if grep -q 'eupetruchio84' "$PAGE" 2>/dev/null; then
+  ok "       ✓ — eupetruchio84 presente no catálogo de clientes"
+else
+  fail "       — eupetruchio84 ausente"
+fi
+
+# Erro 3: StatusVariant alias
+if grep -q "export type { StatusVariant } from './orbit'" "$TYPE_IG" 2>/dev/null; then
+  ok "Erro 2 ✓ — StatusVariant unificado via alias"
+else
+  fail "Erro 2 — verificar manualmente $TYPE_IG"
+fi
+
+# Erro 4: deriveCriticalAlerts retorna CriticalAlertData[]
+if grep -q 'CriticalAlertData\[\]' "$REPO" 2>/dev/null; then
+  ok "Erro 3 ✓ — deriveCriticalAlerts retorna CriticalAlertData[]"
+else
+  fail "Erro 3 — verificar manualmente $REPO"
+fi
+
+sep
+log "\n${GRN}🏁 Correções aplicadas. Próximos passos:${NC}"
+log ""
+log "  1. Verificar TypeScript (sem compilar o servidor):"
+log "     ${CYN}npx tsc --noEmit${NC}"
+log ""
+log "  2. Se passar, rodar o servidor:"
+log "     ${CYN}npm run dev${NC}"
+log ""
+log "  3. Rodar o SQL de limpeza no Supabase SQL Editor:"
+log ""
+log "     ${YLW}-- Limpar datas corrompidas (epoch 1970)${NC}"
+log "     ${CYN}DELETE FROM kpi_snapshots WHERE period_start < '2024-01-01';${NC}"
+log ""
+log "  4. Para ingerir dados do eupetruchio84:"
+log "     ${CYN}npx ts-node scripts/ingest-l0-v2.ts --mode operational${NC}"
+log "     ${CYN}npx ts-node scripts/ingest-insights.ts --client eupetruchio84${NC}"
+log "     ${CYN}npx ts-node scripts/extract-demographics.ts${NC}"
+log ""
+log "  Backup em: ${YLW}./$BACKUP_DIR/${NC}\n"

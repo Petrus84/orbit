@@ -1,9 +1,7 @@
 /* ==========================================================================
    ORBIT · Context — OrbitDashboardContext
-   Camada: [Hook] ➔ [Context] ➔ [Componentes de tela]
-   Responsabilidade: disponibilizar dados e estado para a árvore de componentes.
-   Versão: 1.2.0  |  Data: 2026-06-08
-   Engenharia Sprint 2: Chaveamento dinâmico + eliminação de prop-drilling
+   Versão: 1.4.0  |  Data: 2026-06-11
+   Responsabilidade: Orquestrar dados do Repositório + estado da UI
    ========================================================================== */
 
 'use client'
@@ -23,14 +21,14 @@ import {
 import type { TabId } from '../types/orbit'
 
 // ─────────────────────────────────────────────
-// Shape do contexto (ESTENDIDO COM usePrototypeData)
+// Interface do contexto
 // ─────────────────────────────────────────────
 
 interface OrbitDashboardContextValue extends UseInstagramOverviewReturn {
-  activeTab:           TabId
-  setActiveTab:        (tab: TabId) => void
-  clientId:            string
-  usePrototypeData:    boolean
+  activeTab: TabId
+  setActiveTab: (tab: TabId) => void
+  clientId: string
+  usePrototypeData: boolean
   setUsePrototypeData: (value: boolean) => void
 }
 
@@ -46,7 +44,7 @@ const OrbitDashboardContext = createContext<OrbitDashboardContextValue | null>(n
 
 export interface OrbitDashboardProviderProps
   extends UseInstagramOverviewParams {
-  children:         ReactNode
+  children: ReactNode
   initialActiveTab?: TabId
 }
 
@@ -61,30 +59,30 @@ export function OrbitDashboardProvider({
 }: OrbitDashboardProviderProps) {
   const [activeTab, setActiveTab] = useState<TabId>(initialActiveTab)
   
-  // ✅ FIX v1.2.0: RESPEITA a prop inicial enviada pela page.tsx
-  // Se page.tsx passa usePrototypeData={false}, o estado inicia como false
-  // Se não passar nada, fallback para true (segurança)
+  // ✅ CRÍTICO: Inicializa com false para usar dados REAIS do Supabase
+  // useState(true) ativaria mocks de prototypeConstants.ts
   const [usePrototypeData, setUsePrototypeData] = useState(
-    hookParams.usePrototypeData ?? true
+    hookParams.usePrototypeData ?? false
   )
 
-  // 💡 PROPAGAÇÃO CRÍTICA: Passa usePrototypeData para o hook
-  // Garante que useInstagramOverview herde o estado dinâmico
+  // ✅ FIX v1.4.0: REMOVE duplicação de lógica
+  // O hook useInstagramOverview já busca dados do repositório
+  // Não precisa fazer await supabase aqui
   const overviewState = useInstagramOverview({
     ...hookParams,
-    usePrototypeData, // ← LINHA CRÍTICA: Propagação do estado dinâmico
+    usePrototypeData,  // ← Propaga o estado dinâmico
   })
 
   const value = useMemo<OrbitDashboardContextValue>(
     () => ({
-      ...overviewState,
+      ...overviewState,  // ← Dados reais já vêm daqui
       activeTab,
       setActiveTab,
       clientId: hookParams.clientId,
       usePrototypeData,
       setUsePrototypeData,
     }),
-    [overviewState, activeTab, hookParams.clientId, usePrototypeData],
+    [overviewState, activeTab, hookParams.clientId, usePrototypeData]
   )
 
   return (
@@ -95,7 +93,7 @@ export function OrbitDashboardProvider({
 }
 
 // ─────────────────────────────────────────────
-// Consumer hook — uso nos componentes de tela
+// Hook de consumo
 // ─────────────────────────────────────────────
 
 export function useOrbitDashboard(): OrbitDashboardContextValue {
@@ -103,9 +101,13 @@ export function useOrbitDashboard(): OrbitDashboardContextValue {
 
   if (!ctx) {
     throw new Error(
-      '[useOrbitDashboard] Deve ser usado dentro de <OrbitDashboardProvider>.',
+      '[useOrbitDashboard] Deve ser usado dentro de <OrbitDashboardProvider>.'
     )
   }
 
   return ctx
 }
+
+
+
+

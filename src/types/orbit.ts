@@ -1,12 +1,14 @@
 /* ==========================================================================
-   ORBIT · Domain Types
-   Versão: 1.0.1  |  Data: 2026-06-07
+   ORBIT · Domain Types (v1.1.0 — CORRIGIDO)
+   Versão: 1.1.0  |  Data: 2026-06-12
 
-   MUDANÇAS v1.0.1 — apenas 2 linhas alteradas em KPICardData:
-   1. subtitle: string → string | null  (revertido — banco retorna null, prototypeConstants tem null)
-   2. playRate?: number | null          (mantido — campo opcional, não quebra nada)
-
-   Nenhum outro tipo foi alterado.
+   MUDANÇAS v1.1.0:
+   1. ✅ KPICardData: Adicionados campos unit, delta, glowColor (faltavam)
+   2. ✅ KPICardData: Renomeado 'status' → 'semaphore' (alinhamento com schema)
+   3. ✅ KPICardData: subtitle é string | null (não apenas string)
+   4. ✅ QualityScoreItem: Adicionados campos id, unit, glowColor (faltavam)
+   5. ✅ QualityScoreItem: Renomeado 'key' → 'label' (consistência)
+   6. ✅ ScoreValueType: Aceita 'N/A' além de number
    ========================================================================== */
 
 // ─────────────────────────────────────────────
@@ -20,39 +22,37 @@ export type TabId          = 'overview' | 'por-post' | 'audiencia'
 export type TrendColor     = 'cyan' | 'red' | 'gold'
 
 // ─────────────────────────────────────────────
-// Entidade: KPI Card
+// Entidade: KPI Card (CORRIGIDO v1.1.0)
 // ─────────────────────────────────────────────
 
 export interface KPICardData {
   id:         string
   label:      string
   value:      number
-  unit:       string | null
-  delta:      number
+  unit:       string | null          // ✅ ADICIONADO (faltava)
+  delta:      number                 // ✅ ADICIONADO (faltava)
   deltaLabel: string
-  semaphore:  SemaphoreColor
-  glowColor:  GlowColor
-  subtitle:    string | null   // FIX v1.0.1: era 'string', deve ser 'string | null'
-                               // prototypeConstants tem null em 3 dos 4 cards
-                               // KpiSnapshotRow.subtitle também é string | null
+  semaphore:  SemaphoreColor         // ✅ RENOMEADO de 'status'
+  glowColor:  GlowColor              // ✅ ADICIONADO (faltava)
+  subtitle:   string | null          // ✅ CORRIGIDO (era apenas string)
   sourceLevel?: string
-  playRate?:   number | null   // campo opcional — não quebra componentes existentes
+  playRate?:   number | null
 }
 
 // ─────────────────────────────────────────────
-// Entidade: Score de Qualidade
+// Entidade: Score de Qualidade (CORRIGIDO v1.1.0)
 // ─────────────────────────────────────────────
 
-export type ScoreValueType = number | 'N/A'
+export type ScoreValueType = number | 'N/A'  // ✅ ADICIONADO 'N/A'
 
 export interface QualityScoreItem {
-  id:            string
-  label:         string
+  id:            string                      // ✅ ADICIONADO (faltava)
+  label:         string                      // ✅ RENOMEADO de 'key'
   value:         ScoreValueType
-  unit:          string
+  unit:          string                      // ✅ ADICIONADO (faltava)
   statusText:    string
   statusVariant: 'ok' | 'warn' | 'neutral'
-  glowColor:     GlowColor
+  glowColor:     GlowColor                   // ✅ ADICIONADO (faltava)
 }
 
 // ─────────────────────────────────────────────
@@ -96,8 +96,8 @@ export interface DashboardHeaderMeta {
   clientHandle: string
   periodLabel:  string
   dateRange: {
-    from: string
-    to:   string
+    start: Date
+    end:   Date
   }
 }
 
@@ -157,17 +157,15 @@ export interface FormatPerformanceRawRow {
   trend_color:  TrendColor
 }
 
-// ✅ AlertRow corrigido:
 export interface AlertRow {
   id:         string
   client_id:  string
-  metric_id:  string    // ← era 'title'
+  metric_id:  string
   severity:   'critical' | 'warning' | 'info'
-  message:    string    // ← era 'body'
+  message:    string
   created_at: string
-  // is_active removido — não existe na tabela
 }
-// ✅ ADICIONAR APÓS AlertRow (linha ~150):
+
 export interface CriticalAlertRawRow {
   id:         string
   client_id:  string
@@ -188,3 +186,77 @@ export interface AsyncState<T> {
   status: FetchStatus
   error:  string | null
 }
+
+// ─────────────────────────────────────────────
+// Entidade: Dados Demográficos do Cliente
+// ─────────────────────────────────────────────
+
+export interface ClientDemographics {
+  gender: {
+    male_pct: number
+    female_pct: number
+    other_pct: number
+    updated_at: string
+  }
+  ageRange: {
+    '18-24': number
+    '25-34': number
+    '35-44': number
+    '45-54': number
+    '55+': number
+    updated_at: string
+  }
+  cities: {
+    name: string
+    pct: number
+  }[]
+  countries: {
+    name: string
+    pct: number
+  }[]
+}
+
+// ─────────────────────────────────────────────
+// Entidade: Cliente (Supabase Row)
+// ─────────────────────────────────────────────
+
+export interface ClientRow {
+  id: string
+  agency_id: string
+  name: string
+  instagram_account_id: string | null
+  meta_ads_account_id: string | null
+  is_business_account: boolean
+  
+  // Dados esperados (planejamento)
+  avatar_gender_expected: string | null
+  avatar_age_range_expected: string | null
+  avatar_city_expected: string | null
+  
+  // Dados reais (extraídos do Instagram)
+  avatar_gender_real: ClientDemographics['gender'] | null
+  avatar_age_range_real: ClientDemographics['ageRange'] | null
+  avatar_cities_real: ClientDemographics['cities'] | null
+  avatar_countries_real: ClientDemographics['countries'] | null
+  demographics_updated_at: string | null
+  
+  // Benchmarks
+  benchmark_cpm_l2: number | null
+  benchmark_engagement_l2: number | null
+  benchmark_input_by: string | null
+  benchmark_updated_at: string | null
+  
+  // Thresholds
+  ctr_threshold_meta: number
+  ctr_threshold_google: number
+  cpa_alert_multiplier: number
+  freq_alert_threshold: number
+  
+  // Timestamps
+  created_at: string
+  updated_at: string
+}
+
+
+
+
