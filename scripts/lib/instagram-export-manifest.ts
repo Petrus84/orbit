@@ -1,59 +1,65 @@
-import fs from 'fs';
-import path from 'path';
+/* ============================================================
+   ORBIT · Instagram Export Manifest Resolver
+   Arquivo: scripts/lib/instagram-export-manifest.ts
+   ============================================================ */
 
-// Definição rígida do contrato de cada arquivo baseado na arquitetura de dados
-export interface FileSpec {
-  fileName: string;
-  required: boolean;
-  targetTable: 'kpi_raw_ingestion' | 'kpi_snapshots' | 'clients';
-  scriptOwner: 'ingest-l0-v2' | 'ingest-insights' | 'extract-demographics';
-}
-
-// Catálogo oficial de metadados dos 9 arquivos do ecossistema Orbit (Sprint 3)
-const INSTAGRAM_FILE_SPECS: FileSpec[] = [
-  { fileName: 'posts.json', required: true, targetTable: 'kpi_raw_ingestion', scriptOwner: 'ingest-l0-v2' },
-  { fileName: 'posts_1.json', required: false, targetTable: 'kpi_raw_ingestion', scriptOwner: 'ingest-l0-v2' },
-  { fileName: 'reels.json', required: false, targetTable: 'kpi_raw_ingestion', scriptOwner: 'ingest-l0-v2' },
-  { fileName: 'content_interactions.json', required: true, targetTable: 'kpi_snapshots', scriptOwner: 'ingest-insights' },
-  { fileName: 'profiles_reached.json', required: false, targetTable: 'kpi_snapshots', scriptOwner: 'ingest-insights' },
-  { fileName: 'live_videos.json', required: false, targetTable: 'kpi_snapshots', scriptOwner: 'ingest-insights' },
-  { fileName: 'audience_insights.json', required: true, targetTable: 'clients', scriptOwner: 'extract-demographics' },
-  { fileName: 'followers_1.json', required: true, targetTable: 'kpi_snapshots', scriptOwner: 'extract-demographics' },
-  { fileName: 'personal_information.json', required: true, targetTable: 'clients', scriptOwner: 'extract-demographics' }
-];
+import * as fs from 'fs'
+import * as path from 'path'
 
 export interface ManifestResolution {
-  found: string[];
-  missing: string[];
-  specs: FileSpec[];
+  found: string[]
+  missing: string[]
+  source: 'instagram_export' | 'scraper' | 'unknown'
 }
 
-/**
- * Escaneia a pasta física do cliente e filtra quais arquivos pertencem ao script solicitante.
- * Bloqueia a execução imediatamente se um arquivo obrigatório (required: true) estiver ausente.
- */
-export function resolveManifest(
-  clientFolderPath: string,
-  scriptName: 'ingest-l0-v2' | 'ingest-insights' | 'extract-demographics'
-): ManifestResolution {
-  const targetSpecs = INSTAGRAM_FILE_SPECS.filter(spec => spec.scriptOwner === scriptName);
-  const found: string[] = [];
-  const missing: string[] = [];
+const MANIFEST_SPECS: Record<string, Record<string, string[]>> = {
+  instagram_export: {
+    'ingest-l0-v2': [
+      'posts_1.json',
+      'posts.json',
+    ],
+    'extract-demographics': [
+      'audience_insights.json',           
+      'personal_information.json',      
+      'followers_1.json',                 
+    ],
+    'ingest-insights': [
+      'content_interactions.json',      
+      'profiles_reached.json',           
+    ],
+  },
+  scraper: {
+    'ingest-l0-v2': [
+      'fio_data.json',
+      'scraper_output.json',
+    ],
+  },
+}
 
-  for (const spec of targetSpecs) {
-    const fullPath = path.join(clientFolderPath, spec.fileName);
+export function resolveManifest(
+  folderPath: string,
+  scriptName: string
+): ManifestResolution {
+  const found: string[] = []
+  const missing: string[] = []
+  let source: 'instagram_export' | 'scraper' | 'unknown' = 'unknown'
+
+  if (fs.existsSync(path.join(folderPath, 'your_instagram_activity'))) {
+    source = 'instagram_export'
+  } else if (fs.existsSync(path.join(folderPath, 'fio_data.json'))) {
+    source = 'scraper'
+  }
+
+  const specs = MANIFEST_SPECS[source]?.[scriptName] ?? []
+
+  for (const spec of specs) {
+    const fullPath = path.join(folderPath, spec)
     if (fs.existsSync(fullPath)) {
-      found.push(spec.fileName);
+      found.push(spec)
     } else {
-      missing.push(spec.fileName);
-      
-      // Regra 8 do Checklist: Bloqueia com exit(1) apenas se for obrigatório para o script
-      if (spec.required) {
-        console.error(`\n❌ [MANIFEST CRÍTICO] Arquivo obrigatório ausente: ${spec.fileName} em ${clientFolderPath}`);
-        process.exit(1);
-      }
+      missing.push(spec)
     }
   }
 
-  return { found, missing, specs: targetSpecs };
+  return { found, missing, source }
 }
