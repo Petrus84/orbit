@@ -1,53 +1,25 @@
 // src/types/funnel.ts
-// ORBIT · Domain Types — Funil Interativo + Simulador
-// Versão: 1.0.0
+// ORBIT · Domain Types — Funnel Metrics (Studio Lara MKT)
+// Versão: 3.0.0 (Patched)
 
-// ─────────────────────────────────────────────
-// Primitivos de estado assíncrono
-// ─────────────────────────────────────────────
-
-export type FetchStatus = 'idle' | 'loading' | 'success' | 'error'
-
-export interface AsyncState<T> {
-  data:   T
-  status: FetchStatus
-  error:  string | null
-}
 
 // ─────────────────────────────────────────────
 // Entidade: Funil (dados reais do período)
 // ─────────────────────────────────────────────
 
-export interface FunnelData {
+export interface FunnelMetrics {
   /** Total de contas únicas alcançadas no período */
-  alcance:  number
+  alcance:   number
   /** Visitas ao perfil / landing page */
-  visitas:  number
+  visitas:   number
   /** Cliques no link da bio ou CTA */
-  cliques:  number
+  cliques:   number
   /** Conversões / vendas confirmadas */
-  vendas:   number
+  vendas:    number
   /** CTR bio real (%) — cliques / alcance × 100 */
-  ctrBio:   number
+  ctrBio:    number
   /** Taxa de conversão real (%) — vendas / cliques × 100 */
-  taxaConv: number
-}
-
-// ─────────────────────────────────────────────
-// Entidade: Passo do Funil (para renderizar cada nível)
-// ─────────────────────────────────────────────
-
-export interface FunnelStep {
-  /** Identificador único do passo (ex: 'alcance', 'visitas') */
-  id:         string
-  /** Rótulo visível (ex: 'Alcance', 'Visitas ao Perfil') */
-  label:      string
-  /** Valor absoluto do passo */
-  value:      number
-  /** Percentual relativo ao passo anterior (taxa de passagem) */
-  percentage: number
-  /** Ícone representativo (nome de emoji ou identifier) */
-  icon:       string
+  taxaConv:  number
 }
 
 // ─────────────────────────────────────────────
@@ -80,8 +52,8 @@ export interface SliderConfig {
 export interface SimulatedFunnelResult {
   /** Parâmetros usados no cálculo */
   inputs:      { ctr: number; conv: number; alcance: number }
-  /** FunnelData calculado com os parâmetros simulados */
-  funnel:      FunnelData
+  /** FunnelMetrics calculado com os parâmetros simulados */
+  funnel:      FunnelMetrics
   /** Variação de vendas vs funil real (%) */
   deltaVendas: number
 }
@@ -91,7 +63,7 @@ export interface SimulatedFunnelResult {
 // ─────────────────────────────────────────────
 
 export interface FunnelScreenData {
-  real:      FunnelData
+  real:      FunnelMetrics
   simulated: SimulatedFunnelResult | null
   sliders:   SliderConfig[]
 }
@@ -100,7 +72,7 @@ export interface FunnelScreenData {
 // Supabase Row Shape (raw — antes de transformar)
 // ─────────────────────────────────────────────
 
-export interface FunnelDataRow {
+export interface FunnelMetricsRow {
   id:           string
   client_id:    string
   alcance:      number

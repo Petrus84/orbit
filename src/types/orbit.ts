@@ -136,6 +136,7 @@ export interface IGOverviewData {
 // ADIÇÕES v2.1: FUNIL INTERATIVO (+ PATCH C-2)
 // ─────────────────────────────────────────────
 
+
 export interface FunnelStep {
   id:         string    // ✅ PATCH C-2: ADICIONADO (necessário para React key)
   label:      string    // "Alcance total", "Visitas ao perfil"
@@ -231,48 +232,6 @@ export interface ClientCard {
   }
   alerts:  number
 }
-
-// ─────────────────────────────────────────────
-// ADIÇÕES v2.1: META ADS (+ PATCH C-4 + C-6)
-// ─────────────────────────────────────────────
-
-export interface Campaign {
-  id:              string
-  name:            string
-  objective:       string
-  roas:            number | null
-  ctr:             number
-  frequency:       number
-  fatiguePercent:  number
-  fatigueStatus:   'healthy' | 'warning' | 'critical'
-  diagnosis:       'saudavel' | 'saturacao_criativo' | 'problema_segmentacao'
-  actionRequired:  string
-  cpl?:            number    // ✅ PATCH C-6 BÔNUS: ADICIONADO (custo por lead)
-}
-
-export interface MetaAdsKPI {
-  id:         string
-  label:      string
-  value:      number
-  unit:       string
-  delta:      number        // ✅ PATCH C-4: ADICIONADO (variação vs período anterior)
-  deltaLabel: string        // ✅ PATCH C-4: ADICIONADO (ex: '+0.3 vs. mês anterior')
-  status:     'ok' | 'warn' | 'error'
-  benchmark?: number
-}
-
-export interface Creative {
-  id:            string
-  name:          string
-  clientId:      string
-  format:        string
-  ctr:           number
-  roas?:         number
-  fatiguePercent: number
-  status:        'healthy' | 'warning' | 'critical'
-  action:        'manter' | 'monitorar' | 'substituir' | 'pausar'
-}
-
 // ─────────────────────────────────────────────
 // ADIÇÕES v2.1: GOOGLE ADS
 // ─────────────────────────────────────────────
@@ -291,6 +250,82 @@ export interface SearchQuery {
   clicks:       number
   conversions:  number
   cpa:          number
+}
+// ─────────────────────────────────────────────
+// Entidade: Campanha (Meta Ads) - SSOT v3.0
+// ─────────────────────────────────────────────
+
+// ─────────────────────────────────────────────
+// Sub-Tipos Auxiliares (Meta Ads)
+// ─────────────────────────────────────────────
+
+export type CampaignObjective = 
+  | 'OUTREACH' 
+  | 'TRAFFIC' 
+  | 'ENGAGEMENT' 
+  | 'LEADS' 
+  | 'APP_PROMOTION' 
+  | 'SALES';
+
+export type CampaignStatus = 'ACTIVE' | 'PAUSED' | 'ARCHIVED';
+
+// ─────────────────────────────────────────────
+// Entidade: Campanha (Meta Ads) - SSOT v3.0
+// ─────────────────────────────────────────────
+
+export interface Campaign {
+  /** Identificador único da campanha */
+  id:              string
+  /** Nome da campanha */
+  name:            string
+  /** Objetivo configurado no Meta Ads Manager */
+  objective:       CampaignObjective
+  /** Return on Ad Spend (ex: 2.5 = 2.5x) - Aceita null para campanhas sem conversão */
+  roas:            number | null
+  /** Click-through rate (%) */
+  ctr:             number
+  /** Frequência média de exibição por usuário alcançado */
+  frequency:       number
+  /** Índice de fadiga do criativo (0–100) — Padronizado para o novo sistema */
+  fatiguePercent:  number
+  /** Status textual ou semáforo de fadiga */
+  fatigueStatus:   string
+  /** Status de saúde da campanha (verde/âmbar/vermelho) */
+  status:          CampaignStatus
+  /** Custo por lead (R$) */
+  cpl:             number
+  /** Diagnóstico automatizado gerado para a UI */
+  diagnosis?:      string
+  /** Ação recomendada para mitigar fadiga/erro */
+  actionRequired?: string
+}
+
+
+export interface Campaign {
+  /** Identificador único da campanha */
+  id:              string
+  /** Nome da campanha */
+  name:            string
+  /** Objetivo configurado no Meta Ads Manager */
+  objective:       CampaignObjective
+  /** Return on Ad Spend (ex: 2.5 = 2.5x) - Aceita null para campanhas sem conversão */
+  roas:            number | null
+  /** Click-through rate (%) */
+  ctr:             number
+  /** Frequência média de exibição por usuário alcançado */
+  frequency:       number
+  /** Índice de fadiga do criativo (0–100) — Padronizado para o novo sistema */
+  fatiguePercent:  number
+  /** Status textual ou semáforo de fadiga */
+  fatigueStatus:   string
+  /** Status de saúde da campanha (verde/âmbar/vermelho) */
+  status:          CampaignStatus
+  /** Custo por lead (R$) */
+  cpl:             number
+  /** Diagnóstico automatizado gerado para a UI */
+  diagnosis?:      string
+  /** Ação recomendada para mitigar fadiga/erro */
+  actionRequired?: string
 }
 
 // ─────────────────────────────────────────────
