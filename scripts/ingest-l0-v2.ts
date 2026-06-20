@@ -14,7 +14,7 @@ import * as path from 'path'
 import { z } from 'zod'
 
 // IMPORTAÇÃO EXPLICITA DO MANIFESTO CENTRALIZADO (RESOLVE CHECKLIST ITEM 3)
-import { resolveManifest } from './lib/instagram-export-manifest'
+import { resolveManifest } from './lib/instagram-export-manifest.ts'
 
 // ─── VALIDAÇÃO DE AMBIENTE ─────────────────────────────────────────────────
 const requiredEnv = ['NEXT_PUBLIC_SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY']

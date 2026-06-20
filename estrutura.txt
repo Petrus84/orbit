@@ -1,16 +1,12 @@
 Listagem de caminhos de pasta
-O número de série do volume é 00000099 DC57:B74F
+O número de série do volume é 0000004E DC57:B74F
 C:.
 |   .env.local
 |   .gitignore
 |   AGENTS.md
-|   Audit.sh
-|   auditoria_avancada_l2_l5.txt
-|   auditoria_qualidade_arquitetura.txt
 |   CLAUDE.md
 |   eslint.config.mjs
 |   estrutura.txt
-|   mapa_imports_exports.txt
 |   next-env.d.ts
 |   next.config.ts
 |   package-lock.json
@@ -22,403 +18,619 @@ C:.
 |   tsconfig.json
 |   tsconfig.tsbuildinfo
 |   
-+---.next
-|   \---dev
-|       |   build-manifest.json
-|       |   fallback-build-manifest.json
-|       |   lock
-|       |   package.json
-|       |   prerender-manifest.json
-|       |   routes-manifest.json
-|       |   trace
-|       |   
-|       +---build
-|       |   |   package.json
-|       |   |   postcss.js
-|       |   |   postcss.js.map
-|       |   |   
-|       |   \---chunks
-|       |           node_modules_13sb.px._.js
-|       |           node_modules_13sb.px._.js.map
-|       |           [root-of-the-server]__0d-m0h0._.js
-|       |           [root-of-the-server]__0d-m0h0._.js.map
-|       |           [root-of-the-server]__0ubbtyl._.js
-|       |           [root-of-the-server]__0ubbtyl._.js.map
-|       |           [turbopack-node]_transforms_postcss_ts_06e.r3r._.js
-|       |           [turbopack-node]_transforms_postcss_ts_06e.r3r._.js.map
-|       |           [turbopack]_runtime.js
-|       |           [turbopack]_runtime.js.map
-|       |           
-|       +---cache
-|       |   |   .rscinfo
-|       |   |   next-devtools-config.json
-|       |   |   
-|       |   \---turbopack
-|       |       \---ee6e79b1
-|       |               00000001.sst
-|       |               00000002.sst
-|       |               00000003.sst
-|       |               00000004.sst
-|       |               00000005.meta
-|       |               00000006.meta
-|       |               00000007.meta
-|       |               00000008.meta
-|       |               00000009.sst
-|       |               00000010.sst
-|       |               00000011.sst
-|       |               00000012.sst
-|       |               00000013.sst
-|       |               00000014.sst
-|       |               00000015.sst
-|       |               00000016.meta
-|       |               00000017.meta
-|       |               00000018.meta
-|       |               00000019.meta
-|       |               00000020.sst
-|       |               00000021.sst
-|       |               00000022.sst
-|       |               00000023.sst
-|       |               00000024.sst
-|       |               00000025.sst
-|       |               00000026.sst
-|       |               00000027.meta
-|       |               00000028.meta
-|       |               00000029.meta
-|       |               00000030.meta
-|       |               00000031.sst
-|       |               00000032.sst
-|       |               00000033.sst
-|       |               00000034.meta
-|       |               00000035.meta
-|       |               00000036.meta
-|       |               00000037.sst
-|       |               00000038.sst
-|       |               00000039.sst
-|       |               00000040.meta
-|       |               00000041.meta
-|       |               00000042.meta
-|       |               00000043.sst
-|       |               00000044.sst
-|       |               00000045.sst
-|       |               00000046.meta
-|       |               00000047.meta
-|       |               00000048.meta
-|       |               00000049.sst
-|       |               00000050.sst
-|       |               00000051.sst
-|       |               00000052.meta
-|       |               00000053.meta
-|       |               00000054.meta
-|       |               00000055.sst
-|       |               00000056.sst
-|       |               00000057.sst
-|       |               00000058.meta
-|       |               00000059.meta
-|       |               00000060.meta
-|       |               00000061.sst
-|       |               00000062.sst
-|       |               00000063.sst
-|       |               00000064.meta
-|       |               00000065.meta
-|       |               00000066.meta
-|       |               00000067.sst
-|       |               00000068.sst
-|       |               00000069.sst
-|       |               00000070.meta
-|       |               00000071.meta
-|       |               00000072.meta
-|       |               00000073.sst
-|       |               00000074.sst
-|       |               00000075.sst
-|       |               00000076.meta
-|       |               00000077.meta
-|       |               00000078.meta
-|       |               00000079.sst
-|       |               00000080.sst
-|       |               00000081.sst
-|       |               00000082.meta
-|       |               00000083.meta
-|       |               00000084.meta
-|       |               00000085.sst
-|       |               00000086.sst
-|       |               00000087.sst
-|       |               00000088.meta
-|       |               00000089.meta
-|       |               00000090.meta
-|       |               00000091.sst
-|       |               00000092.sst
-|       |               00000093.sst
-|       |               00000094.meta
-|       |               00000095.meta
-|       |               00000096.meta
-|       |               00000097.sst
-|       |               00000098.sst
-|       |               00000099.sst
-|       |               00000100.meta
-|       |               00000101.meta
-|       |               00000102.meta
-|       |               00000103.sst
-|       |               00000104.sst
-|       |               00000105.sst
-|       |               00000106.meta
-|       |               00000107.meta
-|       |               00000108.meta
-|       |               00000109.sst
-|       |               00000110.sst
-|       |               00000111.sst
-|       |               00000112.meta
-|       |               00000113.meta
-|       |               00000114.meta
-|       |               00000115.sst
-|       |               00000116.sst
-|       |               00000117.sst
-|       |               00000118.meta
-|       |               00000119.meta
-|       |               00000120.meta
-|       |               00000121.sst
-|       |               00000122.sst
-|       |               00000123.sst
-|       |               00000124.meta
-|       |               00000125.meta
-|       |               00000126.meta
-|       |               00000127.sst
-|       |               00000128.sst
-|       |               00000129.sst
-|       |               00000130.meta
-|       |               00000131.meta
-|       |               00000132.meta
-|       |               00000133.sst
-|       |               00000134.sst
-|       |               00000135.sst
-|       |               00000136.meta
-|       |               00000137.meta
-|       |               00000138.meta
-|       |               00000139.sst
-|       |               00000140.sst
-|       |               00000141.sst
-|       |               00000142.meta
-|       |               00000143.meta
-|       |               00000144.meta
-|       |               00000145.sst
-|       |               00000146.sst
-|       |               00000147.sst
-|       |               00000148.meta
-|       |               00000149.meta
-|       |               00000150.meta
-|       |               CURRENT
-|       |               LOG
-|       |               
-|       +---logs
-|       |       next-development.log
++---.git
+|   |   COMMIT_EDITMSG
+|   |   config
+|   |   description
+|   |   HEAD
+|   |   index
+|   |   
+|   +---hooks
+|   |       applypatch-msg.sample
+|   |       commit-msg.sample
+|   |       fsmonitor-watchman.sample
+|   |       post-update.sample
+|   |       pre-applypatch.sample
+|   |       pre-commit.sample
+|   |       pre-merge-commit.sample
+|   |       pre-push.sample
+|   |       pre-rebase.sample
+|   |       pre-receive.sample
+|   |       prepare-commit-msg.sample
+|   |       push-to-checkout.sample
+|   |       sendemail-validate.sample
+|   |       update.sample
+|   |       
+|   +---info
+|   |       exclude
+|   |       
+|   +---logs
+|   |   |   HEAD
+|   |   |   
+|   |   \---refs
+|   |       \---heads
+|   |               master
+|   |               
+|   +---objects
+|   |   +---00
+|   |   |       4145cddf3f9db91b57b9cb596683c8eb420862
+|   |   |       
+|   |   +---01
+|   |   |       ed7299ed9f0404105500a40962e7df728b4135
+|   |   |       
+|   |   +---03
+|   |   |       cd79c23d2158f55f692d42b0ef092a0a0fcb55
+|   |   |       
+|   |   +---05
+|   |   |       e726d1b4201bc8c7716d2b058279676582e8c0
+|   |   |       
+|   |   +---07
+|   |   |       d962f6ee607c3cbae3d05e48fea0f8af48ab2f
+|   |   |       ec46ed108668efb750c48223abe47a53854603
+|   |   |       
+|   |   +---08
+|   |   |       3420ceda0b4817a6d8e4a4e67a04b376e39c9d
+|   |   |       
+|   |   +---10
+|   |   |       f40409e1d6c6b3b5f8056dc69d55db3c2a1e58
+|   |   |       
+|   |   +---11
+|   |   |       d8fe8f0871e204b181e91458326852b800ce24
+|   |   |       
+|   |   +---12
+|   |   |       d1fd9d8f99506b5e6c6fb437f9c73878f8da55
+|   |   |       
+|   |   +---15
+|   |   |       325640cafb75e878df3a19b24bc0c95fa0badc
+|   |   |       
+|   |   +---16
+|   |   |       5edda231363f939ce56525e96d2ab2ee9bf4f1
+|   |   |       
+|   |   +---17
+|   |   |       c05142d4ef7eae2c56f8b9bdb6ee4f305db0de
+|   |   |       
+|   |   +---19
+|   |   |       6a30ab50f1bcee33b871e83e53d277dd1c7046
+|   |   |       
+|   |   +---1a
+|   |   |       9cf9c1f16e9274e4da2c32c0851e89d841c4d0
+|   |   |       
+|   |   +---1b
+|   |   |       6f7cd0983f45630a2e54be2fe4fbc4292e8576
+|   |   |       c4000764788cfcc2f488ac336a5025c27da147
+|   |   |       
+|   |   +---1e
+|   |   |       38b7dd18c9c927acd16130fa482f6674e0e8e7
+|   |   |       
+|   |   +---20
+|   |   |       f1c50fbad6dd344172ac042f380d349202695f
+|   |   |       
+|   |   +---21
+|   |   |       6fc0dfcd73f3851ef1ff7cd0a2de690cda5773
+|   |   |       
+|   |   +---22
+|   |   |       c06016f05d8f97a8be1acc60b436e1717051a5
+|   |   |       
+|   |   +---24
+|   |   |       215a1bc736fc48c42580b659305c42aef28818
+|   |   |       ec35d0a1d52c0b7659afccdfb35196a8201b8f
+|   |   |       
+|   |   +---25
+|   |   |       55d0749b50dd97be1f80dce4803bfcc3eae96e
+|   |   |       c02cbb294fba56da8bfc766b7b49ecb985fe4d
+|   |   |       
+|   |   +---27
+|   |   |       4a0ab6ad894d9579c61d0a825a18a032f37713
+|   |   |       f3d0ce8f3bb3cb70bbacf460106f0bf6dc208f
+|   |   |       f84b39ba4bfed8221accb2e9876c625d337558
+|   |   |       
+|   |   +---29
+|   |   |       640bd0c6ba905265756c6016a37681a55f306a
+|   |   |       
+|   |   +---2b
+|   |   |       610dfdad33628f56362452de10ef1cfd2f6aaa
+|   |   |       
+|   |   +---2d
+|   |   |       da6aecfe91b956998807335c6e4c8acc8a9ff5
+|   |   |       e470576ad7b527877d52cb0aaeb0a0cb034283
+|   |   |       
+|   |   +---2f
+|   |   |       fe3863b431ed73c2c8783420c765d8e45062a5
+|   |   |       
+|   |   +---31
+|   |   |       6184c6c61e25c19afdd88c73ae32519a83505e
+|   |   |       6db5e45cee4800b38cb8dd59d177d514ad0450
+|   |   |       f77e4151315346729155e10ae19c057386104d
+|   |   |       
+|   |   +---33
+|   |   |       44ee9632964a8c64256bbae94b18d3727e079a
+|   |   |       
+|   |   +---34
+|   |   |       0c62b0e6f7f485ec473c8c8c212e35c1072cdc
+|   |   |       
+|   |   +---35
+|   |   |       32c2290c0d3ee9929fe03aa454cb0dddf81325
+|   |   |       
+|   |   +---36
+|   |   |       d2b562540a3247ffa30819befea39e6f54939c
+|   |   |       
+|   |   +---39
+|   |   |       725387ba4901a743b0f99c37c78fc5637c5cbf
+|   |   |       a2c08c3e9d478d168d1a23ac63fd3d9044d39f
+|   |   |       f90c541ff3ddfea278f0c4ebf513f119113848
+|   |   |       
+|   |   +---3b
+|   |   |       0c3b8502dfd19e3a1fd0a91334d3ef0b5fe710
+|   |   |       f39df2990bed531d37f19830285cfd62cdd580
+|   |   |       
+|   |   +---3f
+|   |   |       36f7c5c4cfb7fb3c745bfd7d38b2d21a8c441d
+|   |   |       3bc1838ec0d399c8ed83719439f917620e55f4
+|   |   |       
+|   |   +---41
+|   |   |       67468d3e0a576a30ac678cecf09b85fe940820
+|   |   |       c060b280096652b00530bc2e5fd42ddbdc4c7d
+|   |   |       
+|   |   +---42
+|   |   |       e23e92085d7f0e3f9df5d1e1a58c07f04e9db4
+|   |   |       
+|   |   +---43
+|   |   |       1c2529599114fd6e8d91aeb55594a05e759a01
+|   |   |       86ed6dae52cb17f2ce98d58b19d8dadb20cdf4
+|   |   |       c994c2d3617f947bcb5adf1933e21dabe46bb5
+|   |   |       
+|   |   +---44
+|   |   |       a3ed306bf96d744b45adf66062cb625e61a91f
+|   |   |       
+|   |   +---45
+|   |   |       a4ced916c116920b3365b8def728a180b310fb
+|   |   |       
+|   |   +---46
+|   |   |       b0063f0eb89e265f57e0a1ad235255c97314cc
+|   |   |       ca4b2c017eb66d85e6a34f95fec834e97e8201
+|   |   |       
+|   |   +---47
+|   |   |       14665b2f14c1dad51b2a7819102b48107d5405
+|   |   |       3f3273437038c5472e19105c0a041b9c65ada2
+|   |   |       a35dd2cec55285b5a56686f8f82b5b7dda69eb
+|   |   |       a786655834c59f89efbf31667d0945c5602b5e
+|   |   |       bdc6a9d3d46dd1b5ca6d0a2dcb96635a40df67
+|   |   |       c91b6482cc0ca094fadd91b0392487bcaa1efe
+|   |   |       
+|   |   +---48
+|   |   |       fccd35e00450d7c22dffa2df9d446310ad3723
+|   |   |       
+|   |   +---49
+|   |   |       b911da33c9ff296a87e7f3d276ee3dbf8f5ee7
+|   |   |       
+|   |   +---4b
+|   |   |       c83d8439e84ab412410cda436d0305b3d581e8
+|   |   |       
+|   |   +---4c
+|   |   |       44a023b03e4f58e8e06ed1323e2f2e45830269
+|   |   |       57c2475d2ac52cf6778637fdf1bbbc5cd0407e
+|   |   |       
+|   |   +---4d
+|   |   |       3458624cabe379fe554eb2b03db77c0b684643
+|   |   |       553f951a0e6550a0389505378b072c4b5b0f6a
+|   |   |       
+|   |   +---4e
+|   |   |       60e57da8d48dc608e7b3ef1673ed658dabc859
+|   |   |       9f8f5381ad11445d4f0731d2f62457b9345154
+|   |   |       
+|   |   +---4f
+|   |   |       c5e12e04cac7064f1e9ea4b59fa4c1bff1e361
+|   |   |       
+|   |   +---50
+|   |   |       2805c2cfab3d4908cb191cb33e96fcb90a72b6
+|   |   |       44f398c722a7599f8dc9787cb54d607679d96c
+|   |   |       
+|   |   +---51
+|   |   |       74b28c565c285e3e312ec5178be64fbeca8398
+|   |   |       
+|   |   +---52
+|   |   |       0a6378500902b888f6d381a0d32211d45b5047
+|   |   |       
+|   |   +---53
+|   |   |       23d61e90c46db0fbc92c10e33d498e640b64fa
+|   |   |       
+|   |   +---54
+|   |   |       2240fc03473eeaa6803c280e2bd34ebd9179b4
+|   |   |       
+|   |   +---55
+|   |   |       06c5bdad3a47c690027ab3fae3b24988766a7a
+|   |   |       0c3cd339d93d0b0e7e895141991be9fc1f1adb
+|   |   |       
+|   |   +---56
+|   |   |       6fc999d99db64d8d3e4f85e8f3c9c4dbf07cda
+|   |   |       7f17b0d7c7fb662c16d4357dd74830caf2dccb
+|   |   |       9e81e59aa7c015879122fa719b4fe27a4a5bc3
+|   |   |       
+|   |   +---59
+|   |   |       0f0fe57f669a6947144cf88f2d122553c281f1
+|   |   |       5807b3f3849e547802c1bf5591a7f850ee7ae9
+|   |   |       8e55968611524d3ca83c873f0ebefbac7c3925
+|   |   |       
+|   |   +---5a
+|   |   |       c4dd03fbf6657aac8eab2a0e11a7df603387fd
+|   |   |       
+|   |   +---5c
+|   |   |       24573bd3ee7958d71ca69e96f707368842abe1
+|   |   |       e50b37eeddc63fd80be962301fe8f5d9ab74e3
+|   |   |       
+|   |   +---5d
+|   |   |       3b6d83f95d4b88b24e1b625495a270c12fca17
+|   |   |       945379e2cfab5ac8df22bba10a402af1578c84
+|   |   |       
+|   |   +---5e
+|   |   |       f6a520780202a1d6addd833d800ccb1ecac0bb
+|   |   |       
+|   |   +---5f
+|   |   |       cfa66ccddadf6801c2f011cf81534b1f5fbc24
+|   |   |       e0d9b30dd3cd0e54a322cbaf0131f8f1c93c39
+|   |   |       
+|   |   +---61
+|   |   |       5d72e7406a9bfc088b8eb53766027ac0fcd982
+|   |   |       d3410019a508cbc5e6164e76e4792125b99531
+|   |   |       e36849cf7cfa9f1f71b4a3964a4953e3e243d3
+|   |   |       
+|   |   +---64
+|   |   |       c73ceb38d39ed5fe83ff6eb91fd978ec7aa438
+|   |   |       
+|   |   +---69
+|   |   |       03795e3f9eabe2b78da1565aa7ac438bd16bcb
+|   |   |       b395dedd1d393d07efd6b9ebd311984af5a95c
+|   |   |       fc17fd19738848fe301d166490f6e8a835a4f1
+|   |   |       
+|   |   +---6a
+|   |   |       a2184c3a4517a947bac7e4f5e36c1cddabd7be
+|   |   |       
+|   |   +---6d
+|   |   |       c63fc337b2c3c7700a72159f040e6ddd3e6436
+|   |   |       
+|   |   +---6e
+|   |   |       27c1f286856ddbf4d9cbeb61e7089bc95d56b3
+|   |   |       
+|   |   +---70
+|   |   |       4af8402c8c0470b7a753d92fd201fe70980c3a
+|   |   |       
+|   |   +---71
+|   |   |       8d6fea4835ec2d246af9800eddb7ffb276240c
+|   |   |       
+|   |   +---72
+|   |   |       36de16aaa68a84312b030d8a216f682291ec81
+|   |   |       c56d20d53d95498a98dc820e8c06c5c648e57a
+|   |   |       
+|   |   +---74
+|   |   |       226a95108c4bca2019f8c8772ccb08274d713b
+|   |   |       
+|   |   +---76
+|   |   |       5c5d09b96a3b17c045b5165e9e0a9bb7476367
+|   |   |       ccaad6e1d1371c1e55bebdbf40555366fbd53a
+|   |   |       
+|   |   +---77
+|   |   |       053960334e2e34dc584dea8019925c3b4ccca9
+|   |   |       de92f56e8210cf03c97203d9c61e7c90afe134
+|   |   |       
+|   |   +---79
+|   |   |       38a1e011a4800447ac03c85ef9557115a13d89
+|   |   |       fd960ef07fe0c62a8146b9df78ff3ed17501df
+|   |   |       
+|   |   +---7a
+|   |   |       edb10f79c98c564d3776126e1a1f91ecd8fd90
+|   |   |       
+|   |   +---7d
+|   |   |       39b737acd41a9deee3f8119bc9da56415535c1
+|   |   |       626821e132304dba2a5e945f25ca3d297e1c54
+|   |   |       da2d95c7dadc98c603c8a46b5917208b23f04c
+|   |   |       
+|   |   +---7e
+|   |   |       86fbe11a1885e7e02f6d6431fa4962fbb17548
+|   |   |       
+|   |   +---80
+|   |   |       fbed98316645acb910efd0e13313eec046012a
+|   |   |       
+|   |   +---81
+|   |   |       71ba78b85502042c6ee9741cd58b33a7b1835e
+|   |   |       
+|   |   +---83
+|   |   |       2aaee28b651e3ae3f7e58fc17818c792452946
+|   |   |       
+|   |   +---84
+|   |   |       88f941efaf451b6598450a77a0920a961de10b
+|   |   |       a82d8d4ab49906693d352f8b3ef89e80ad8028
+|   |   |       d97b163fd639faabd87cec3541107616ae2903
+|   |   |       
+|   |   +---85
+|   |   |       63d7c49a7aa08ff40904b90244fda7d0b27475
+|   |   |       
+|   |   +---86
+|   |   |       3cc29fece800fe083d312344574acd4a7468db
+|   |   |       6d70e18042d57b338fea794d55da855c0f99de
+|   |   |       
+|   |   +---88
+|   |   |       6c0d2db7a5b638687b6ccad7fd750f79a6cb41
+|   |   |       eb735a22d407543bebce1ec19cec01e209b9a9
+|   |   |       ec8aeb5b513594601997112124b7332065a849
+|   |   |       
+|   |   +---89
+|   |   |       26ed54a42ed48860a35cc2b8a59a4ff0fd53bb
+|   |   |       
+|   |   +---8a
+|   |   |       319770c7feb4c7fef81ef04aebc023e61109c9
+|   |   |       
+|   |   +---8b
+|   |   |       d0e39085d5260e7f8faffcad2fdc45e10aef33
+|   |   |       
+|   |   +---8c
+|   |   |       c4869b99fec378bad3579cf7ee55a4e0ed0024
+|   |   |       
+|   |   +---8d
+|   |   |       34758d7d6e4ce54265966c14071dae6d9fb070
+|   |   |       
+|   |   +---8e
+|   |   |       7ef5478064f8c19feabb7f1e3a6842ba9bcce3
+|   |   |       d16e0d21b7ce3e97fc33ee5ea9597dd73c4781
+|   |   |       
+|   |   +---8f
+|   |   |       8d07d25a701cc0879222fe43f135f700c03654
+|   |   |       
+|   |   +---90
+|   |   |       7674d01675e7fac7f49c98e81880498e81d7ea
+|   |   |       
+|   |   +---92
+|   |   |       3df751e93a2452a0344a6d5e751c1989f13829
+|   |   |       4d181215bc59c7008eba9b1f42a4c185aaafe6
+|   |   |       
+|   |   +---93
+|   |   |       4bcc5e9eea9c8657974463df89f50c6edda50c
+|   |   |       5fc3c75c619fa6724c53ff110d1445b6aaae75
+|   |   |       
+|   |   +---95
+|   |   |       4db4dac371cf35cdf7502a97e8ea10c02e62f7
+|   |   |       ad568f200aceeaf7e2836bebc610bd83f9adce
+|   |   |       eb86d7d8d34230096aab7965c66918960ff22b
+|   |   |       
+|   |   +---96
+|   |   |       40f655d810d33834a5973ef4489854ce14bb72
+|   |   |       
+|   |   +---97
+|   |   |       6eb90df142ef2c4f3f39cee8b0e4c4f4771b62
+|   |   |       8d18c616ded94fcbf003316f28df972ab4e91b
+|   |   |       
+|   |   +---98
+|   |   |       d59b0a880b3010369cd17c1e6cf12ed5e3a49a
+|   |   |       
+|   |   +---99
+|   |   |       6271696911e0a7ebbb3b56008a66a89169ca14
+|   |   |       9670511ede60c86b87d043bd9c4cd09b1a8934
+|   |   |       
+|   |   +---9a
+|   |   |       cf2feac79a64ef119381e52bd71e9d9ed7d499
+|   |   |       
+|   |   +---9d
+|   |   |       04b68d7e9965e8f43f610c6885332b5226d1a8
+|   |   |       830e920f8b8eb201c5010778112365a8be1e78
+|   |   |       c6a60c4dbaa7d3ca023f91ee46323ad9fc3f40
+|   |   |       
+|   |   +---9e
+|   |   |       19c8c627d48f8264ec0c750c1d0060f29122d9
+|   |   |       a9e2ce1f5f07d84be095375a3dafe28959de6f
+|   |   |       
+|   |   +---9f
+|   |   |       2257adcf138c8f64fc04fda8c90f44f950406a
+|   |   |       
+|   |   +---a1
+|   |   |       dbe679d4be16468155a229a3aa7d8c684e6bc0
+|   |   |       
+|   |   +---a2
+|   |   |       dc41ecee5ec435200fe7cba2bde4107f823774
+|   |   |       
+|   |   +---a3
+|   |   |       4cbe8c27d9d8b640bbe7840af20b3100fdb724
+|   |   |       6a22074929ea703bec229ba4ebfd19c6a151b2
+|   |   |       d5c7d9712d7c32e81daccd36d4563398d9ff3b
+|   |   |       
+|   |   +---a4
+|   |   |       679232814d65df4c030a8c755673a379a510cd
+|   |   |       
+|   |   +---a5
+|   |   |       a863c8705ea0bc918def9e7fe95422c116833b
+|   |   |       dac621d898cd21d6326bf054a1f9d2f00edc51
+|   |   |       
+|   |   +---ac
+|   |   |       0cf4f58209eff3a7d39f56e4f32f5a9a159ad8
+|   |   |       2f83400a0bf80761da74fe7c9056f44fac3983
+|   |   |       
+|   |   +---ae
+|   |   |       521bb05f2a6b9c000ca9fa5c129e89fad7fdf5
+|   |   |       
+|   |   +---b1
+|   |   |       c8931583174cb8beab824f94cd40f98092bca8
+|   |   |       
+|   |   +---b2
+|   |   |       6ab409eb7fac8fed8368e46950f76df9360ebf
+|   |   |       b2a44f6ebc70c450043c05a002e7a93ba5d651
+|   |   |       f18946cc367556fecd87a77742f4ed6285aa69
+|   |   |       fe7f981e3af484e7e5ca53a12e12c9911b00e0
+|   |   |       
+|   |   +---b3
+|   |   |       2f0ebc6c2015782e1dd0bd26a59c8afc8b1736
+|   |   |       
+|   |   +---b4
+|   |   |       2f150fd286846a613fb9d03650a4c9c25c3d2f
+|   |   |       86a2c4f6d23f40d9d9ce320b1f8d385b6b0a52
+|   |   |       
+|   |   +---b6
+|   |   |       575ce1a40ca884c686213db90a9720145e09c6
+|   |   |       687fe8b9d49d10f559855c742582fa73e9578c
+|   |   |       86bec43c8edc0e029560a3a95e377c0677de51
+|   |   |       
+|   |   +---b7
+|   |   |       2d70b9d37eece2a8009355bf868479de50e7b4
+|   |   |       
+|   |   +---b8
+|   |   |       8695b417f5e6bc6be2a62f1e465c58db8f5911
+|   |   |       
+|   |   +---b9
+|   |   |       6415db179c6d0a41ce9f4439b5e7d205222cca
+|   |   |       
+|   |   +---ba
+|   |   |       3a2f36895f29bc363a213fcc2b61712de23d81
+|   |   |       4fcf2c482acdeb906fb52bd51c0afa3fa1eda4
+|   |   |       b22064bf14243c6ab5e9b7448f31220d328c48
+|   |   |       
+|   |   +---bb
+|   |   |       8ce3afc6da92ac76a0fc63734c7459bec73640
+|   |   |       
+|   |   +---bc
+|   |   |       07475d63d115bf5995b78003dbd7ba7596aa57
+|   |   |       
+|   |   +---bd
+|   |   |       a46c082ca75a0335c6016a65299047a9c9865b
+|   |   |       fdfef992a92fbb5303ff3735e015a97b563e19
+|   |   |       
+|   |   +---be
+|   |   |       533aaa2d5438bfcc45a426bbb1eb1079c5df36
+|   |   |       7a08a8a402574fc972080c25daf06eabc4a5d3
+|   |   |       
+|   |   +---c1
+|   |   |       42ae3825e21922613d1df6026c6c6a7c6ee30d
+|   |   |       
+|   |   +---c3
+|   |   |       58ff889aa0e32defae2a24ae448582eb38ba83
+|   |   |       b54f4e0d2f970a9521678f2af62ed341371486
+|   |   |       d5ee6d8909637283f324238f657337e9e14cfa
+|   |   |       f60b6cd820d1ab099b7f6a9132d35ee28c9683
+|   |   |       
+|   |   +---c4
+|   |   |       572d110013e3fbbce65525e3bc5100ab33b8d0
+|   |   |       
+|   |   +---c6
+|   |   |       2673bc5bb5dee59d78bac75ccfe6b822618216
+|   |   |       89bf1c794d0cda29ade945ca27bd9e2326a239
+|   |   |       ce3d137dc9fe4c46c77028220ca8dc35cfeffe
+|   |   |       
+|   |   +---c8
+|   |   |       8f389de09f418da376598c42e8788d4fb6d172
+|   |   |       a6e4ca553e01387fbece84d842723dc3616a5c
+|   |   |       
+|   |   +---cd
+|   |   |       332121c30c639ea2e34e48771f708f6726fbae
+|   |   |       6f48146961c23f14132965c9b25592f61b08e3
+|   |   |       
+|   |   +---cf
+|   |   |       504719ce9c3807d25ed3fa0517fd33efa38ce9
+|   |   |       9c65d3e0676a0169374d827f7abb97497789ef
+|   |   |       
+|   |   +---d2
+|   |   |       109790010da2736c2b791d0eb263c80b7b3bff
+|   |   |       5d931936fa4e280fe7563535bed393fd1fa9d6
+|   |   |       
+|   |   +---d3
+|   |   |       47c6165b6b785ef2256a7c4b70c081e1fcd54f
+|   |   |       8bc53864b76acf5e03a0d5d794ebd56bb52a89
+|   |   |       
+|   |   +---d4
+|   |   |       95d52552da9530136df3b26ea973139bf21c4f
+|   |   |       a69f83c8daaeff056ce18447c953c2379eb84f
+|   |   |       
+|   |   +---d5
+|   |   |       3fb6c544f515c98d5872d4bf8428ad31dee272
+|   |   |       
+|   |   +---d6
+|   |   |       0f5904d67867c0de87603c67184ad9c2e555ed
+|   |   |       
+|   |   +---d7
+|   |   |       5afbfa180759401fae2bf2b64d13c7cecfbacf
+|   |   |       6fa3632426b17d118717c02094419e0d5a4e57
+|   |   |       
+|   |   +---d8
+|   |   |       2aaba665efe334f563bd6d5745de8aa179f55d
+|   |   |       85e284ab6bbc1cc36161af3df330e792a397c5
+|   |   |       
+|   |   +---d9
+|   |   |       4c4ef16410485b3e2d4058fd91771b9ab93776
+|   |   |       
+|   |   +---db
+|   |   |       cab1540104aca052d43d3be3bb081edd5c5a8d
+|   |   |       
+|   |   +---dd
+|   |   |       d84035648de87b1cb0d70119caf39bd5afd1ff
+|   |   |       
+|   |   +---df
+|   |   |       12ddd1e4bd8b9ef8ebbfa552f5ac875e741ee4
+|   |   |       1897f662ea89e905a1db9b351281a7de80d960
+|   |   |       
+|   |   +---e1
+|   |   |       9ee2276fb93c75fb744c504c25976bfe3adb8c
+|   |   |       
+|   |   +---e2
+|   |   |       15bc4ccf138bbc38ad58ad57e92135484b3c0f
+|   |   |       6b267c1ddff32556bce2619ec2f79fa5ca10c9
+|   |   |       b3454ec8e37484ecf0814f2669d7c59886546d
+|   |   |       
+|   |   +---e4
+|   |   |       7173e23acb003c096eed6fa7fbd783dba59a1f
+|   |   |       
+|   |   +---e6
+|   |   |       9de29bb2d1d6434b8b29ae775ad8c2e48c5391
+|   |   |       
+|   |   +---e7
+|   |   |       bf963967100467f0f9c70d306d8c78c8c4f793
+|   |   |       
+|   |   +---e9
+|   |   |       ffa3083ad279ecf95fd8eae59cb253e9a539c4
+|   |   |       
+|   |   +---eb
+|   |   |       a5adf91bb77c2772caf72bc4e0253dd2981fdc
+|   |   |       
+|   |   +---ec
+|   |   |       39c9ecb442f531a005beec178e63d98c1e261a
+|   |   |       
+|   |   +---ed
+|   |   |       7bef82e8be8bc88f6f27a92894ee4c8836b924
+|   |   |       b83172ee092913fb92942dc87075af3c03255c
+|   |   |       e18a871d0f39a156f3c5e7532b8defd3dda884
+|   |   |       
+|   |   +---f0
+|   |   |       51a258124b03995cd478aa7bebdd16cb8dcf9e
+|   |   |       
+|   |   +---f1
+|   |   |       ae6b5902078f1176a9ececaf7463935a1d476e
+|   |   |       
+|   |   +---f6
+|   |   |       005987fa790f89ef6f559631648aefe9710c17
+|   |   |       
+|   |   +---f8
+|   |   |       712bdf496f3eed793d8802dced80855ddb0d65
+|   |   |       
+|   |   +---f9
+|   |   |       6529c905a4468042d36719ed74f4e47a780d0b
+|   |   |       f16dcfa04126e7db8acb0bb8742c284d570c7b
+|   |   |       
+|   |   +---fb
+|   |   |       4c88b2139f65416270f46d355973db2d477932
+|   |   |       
+|   |   +---fc
+|   |   |       0f65d0a5bd7cad458c2ccbc0f3fb86bdfaa74b
+|   |   |       
+|   |   +---fd
+|   |   |       d3eec78253655eb1907cabd47cd23439ccf261
+|   |   |       
+|   |   +---fe
+|   |   |       89f3d48ba932f81f687af7d64ff08b90bd1b17
+|   |   |       
+|   |   +---info
+|   |   \---pack
+|   \---refs
+|       +---heads
+|       |       master
 |       |       
-|       +---server
-|       |   |   app-paths-manifest.json
-|       |   |   interception-route-rewrite-manifest.js
-|       |   |   middleware-build-manifest.js
-|       |   |   middleware-manifest.json
-|       |   |   next-font-manifest.js
-|       |   |   next-font-manifest.json
-|       |   |   pages-manifest.json
-|       |   |   server-reference-manifest.js
-|       |   |   server-reference-manifest.json
-|       |   |   
-|       |   +---app
-|       |   |   |   page.js
-|       |   |   |   page.js.map
-|       |   |   |   page_client-reference-manifest.js
-|       |   |   |   
-|       |   |   +---instagram
-|       |   |   |   |   page.js
-|       |   |   |   |   page.js.map
-|       |   |   |   |   page_client-reference-manifest.js
-|       |   |   |   |   
-|       |   |   |   \---page
-|       |   |   |           app-paths-manifest.json
-|       |   |   |           build-manifest.json
-|       |   |   |           next-font-manifest.json
-|       |   |   |           react-loadable-manifest.json
-|       |   |   |           server-reference-manifest.json
-|       |   |   |           
-|       |   |   +---page
-|       |   |   |       app-paths-manifest.json
-|       |   |   |       build-manifest.json
-|       |   |   |       next-font-manifest.json
-|       |   |   |       react-loadable-manifest.json
-|       |   |   |       server-reference-manifest.json
-|       |   |   |       
-|       |   |   \---_not-found
-|       |   |       |   page.js
-|       |   |       |   page.js.map
-|       |   |       |   page_client-reference-manifest.js
-|       |   |       |   
-|       |   |       \---page
-|       |   |               app-paths-manifest.json
-|       |   |               build-manifest.json
-|       |   |               next-font-manifest.json
-|       |   |               react-loadable-manifest.json
-|       |   |               server-reference-manifest.json
-|       |   |               
-|       |   \---chunks
-|       |       \---ssr
-|       |               node_modules_023nw1p._.js
-|       |               node_modules_023nw1p._.js.map
-|       |               node_modules_09w7yel._.js
-|       |               node_modules_09w7yel._.js.map
-|       |               node_modules_0c1_-g0._.js
-|       |               node_modules_0c1_-g0._.js.map
-|       |               node_modules_0phu-fi._.js
-|       |               node_modules_0phu-fi._.js.map
-|       |               node_modules_0q8pu0i._.js
-|       |               node_modules_0q8pu0i._.js.map
-|       |               node_modules_@supabase_auth-js_dist_module_11m62rv._.js
-|       |               node_modules_@supabase_auth-js_dist_module_11m62rv._.js.map
-|       |               node_modules_@supabase_postgrest-js_dist_index_mjs_0q.pfp5._.js
-|       |               node_modules_@supabase_postgrest-js_dist_index_mjs_0q.pfp5._.js.map
-|       |               node_modules_next_0o61c40._.js
-|       |               node_modules_next_0o61c40._.js.map
-|       |               node_modules_next_dist_0yh1sr3._.js
-|       |               node_modules_next_dist_0yh1sr3._.js.map
-|       |               node_modules_next_dist_client_components_0inhx6q._.js
-|       |               node_modules_next_dist_client_components_0inhx6q._.js.map
-|       |               node_modules_next_dist_client_components_builtin_forbidden_0ghu-f7.js
-|       |               node_modules_next_dist_client_components_builtin_forbidden_0ghu-f7.js.map
-|       |               node_modules_next_dist_client_components_builtin_global-error_0lgvd_..js
-|       |               node_modules_next_dist_client_components_builtin_global-error_0lgvd_..js.map
-|       |               node_modules_next_dist_client_components_builtin_unauthorized_0cjv-23.js
-|       |               node_modules_next_dist_client_components_builtin_unauthorized_0cjv-23.js.map
-|       |               node_modules_next_dist_compiled_07ho8ku._.js
-|       |               node_modules_next_dist_compiled_07ho8ku._.js.map
-|       |               node_modules_next_dist_esm_0gybpgt._.js
-|       |               node_modules_next_dist_esm_0gybpgt._.js.map
-|       |               node_modules_next_dist_server_route-modules_app-page_0f6k0sl._.js
-|       |               node_modules_next_dist_server_route-modules_app-page_0f6k0sl._.js.map
-|       |               node_modules_zod_v4_1239rri._.js
-|       |               node_modules_zod_v4_1239rri._.js.map
-|       |               src_05kee4o._.js
-|       |               src_05kee4o._.js.map
-|       |               [externals]_next_dist_0yew8f-._.js
-|       |               [externals]_next_dist_0yew8f-._.js.map
-|       |               [externals]__0n13xf4._.js
-|       |               [externals]__0n13xf4._.js.map
-|       |               [root-of-the-server]__05etucg._.js
-|       |               [root-of-the-server]__05etucg._.js.map
-|       |               [root-of-the-server]__05p4ngc._.js
-|       |               [root-of-the-server]__05p4ngc._.js.map
-|       |               [root-of-the-server]__0a08wgh._.js
-|       |               [root-of-the-server]__0a08wgh._.js.map
-|       |               [root-of-the-server]__0vjvp1_._.js
-|       |               [root-of-the-server]__0vjvp1_._.js.map
-|       |               [turbopack]_runtime.js
-|       |               [turbopack]_runtime.js.map
-|       |               _next-internal_server_app_instagram_page_actions_0d1-4mh.js
-|       |               _next-internal_server_app_instagram_page_actions_0d1-4mh.js.map
-|       |               _next-internal_server_app_page_actions_09-gtaw.js
-|       |               _next-internal_server_app_page_actions_09-gtaw.js.map
-|       |               _next-internal_server_app__not-found_page_actions_0eq97pa.js
-|       |               _next-internal_server_app__not-found_page_actions_0eq97pa.js.map
-|       |               
-|       +---static
-|       |   +---chunks
-|       |   |       node_modules_0~nocf2._.js
-|       |   |       node_modules_0~nocf2._.js.map
-|       |   |       node_modules_@supabase_auth-js_dist_module_0.pzobh._.js
-|       |   |       node_modules_@supabase_auth-js_dist_module_0.pzobh._.js.map
-|       |   |       node_modules_@supabase_postgrest-js_dist_index_mjs_0eu3ylr._.js
-|       |   |       node_modules_@supabase_postgrest-js_dist_index_mjs_0eu3ylr._.js.map
-|       |   |       node_modules_@swc_helpers_cjs_0-4ujiy._.js
-|       |   |       node_modules_@swc_helpers_cjs_0-4ujiy._.js.map
-|       |   |       node_modules_next_dist_0tt2wve._.js
-|       |   |       node_modules_next_dist_0tt2wve._.js.map
-|       |   |       node_modules_next_dist_115brz8._.js
-|       |   |       node_modules_next_dist_115brz8._.js.map
-|       |   |       node_modules_next_dist_build_polyfills_polyfill-nomodule.js
-|       |   |       node_modules_next_dist_build_polyfills_polyfill-nomodule.js.map
-|       |   |       node_modules_next_dist_client_0fhqo1d._.js
-|       |   |       node_modules_next_dist_client_0fhqo1d._.js.map
-|       |   |       node_modules_next_dist_client_components_builtin_global-error_0sa0ho5.js
-|       |   |       node_modules_next_dist_compiled_0rpq4pf._.js
-|       |   |       node_modules_next_dist_compiled_0rpq4pf._.js.map
-|       |   |       node_modules_next_dist_compiled_next-devtools_index_0553esy.js
-|       |   |       node_modules_next_dist_compiled_next-devtools_index_0553esy.js.map
-|       |   |       node_modules_next_dist_compiled_react-dom_058-ah~._.js
-|       |   |       node_modules_next_dist_compiled_react-dom_058-ah~._.js.map
-|       |   |       node_modules_next_dist_compiled_react-server-dom-turbopack_0p3wegg._.js
-|       |   |       node_modules_next_dist_compiled_react-server-dom-turbopack_0p3wegg._.js.map
-|       |   |       node_modules_zod_v4_03-ei25._.js
-|       |   |       node_modules_zod_v4_03-ei25._.js.map
-|       |   |       src_07t6aa9._.js
-|       |   |       src_07t6aa9._.js.map
-|       |   |       src_12u~1h4._.css
-|       |   |       src_12u~1h4._.css.map
-|       |   |       src_app_instagram_InstagramOverviewPage_module_css_0w3-wzy._.single.css
-|       |   |       src_app_instagram_InstagramOverviewPage_module_css_0w3-wzy._.single.css.map
-|       |   |       src_app_instagram_page_tsx_0sa0ho5._.js
-|       |   |       src_app_layout_tsx_004glpo._.js
-|       |   |       src_components_common_GlassCard_module_css_0w3-wzy._.single.css
-|       |   |       src_components_common_GlassCard_module_css_0w3-wzy._.single.css.map
-|       |   |       src_components_common_StatusPill_module_css_0w3-wzy._.single.css
-|       |   |       src_components_common_StatusPill_module_css_0w3-wzy._.single.css.map
-|       |   |       src_components_content_CriticalAlert_module_css_0w3-wzy._.single.css
-|       |   |       src_components_content_CriticalAlert_module_css_0w3-wzy._.single.css.map
-|       |   |       src_components_content_FormatPerformanceTable_module_css_0w3-wzy._.single.css
-|       |   |       src_components_content_FormatPerformanceTable_module_css_0w3-wzy._.single.css.map
-|       |   |       src_components_content_InsightCard_module_css_0w3-wzy._.single.css
-|       |   |       src_components_content_InsightCard_module_css_0w3-wzy._.single.css.map
-|       |   |       src_components_content_QualityScoresPanel_module_css_0w3-wzy._.single.css
-|       |   |       src_components_content_QualityScoresPanel_module_css_0w3-wzy._.single.css.map
-|       |   |       src_components_kpi_DeltaText_module_css_0w3-wzy._.single.css
-|       |   |       src_components_kpi_DeltaText_module_css_0w3-wzy._.single.css.map
-|       |   |       src_components_kpi_GlowingNumber_module_css_0w3-wzy._.single.css
-|       |   |       src_components_kpi_GlowingNumber_module_css_0w3-wzy._.single.css.map
-|       |   |       src_components_kpi_KPICard_module_css_0w3-wzy._.single.css
-|       |   |       src_components_kpi_KPICard_module_css_0w3-wzy._.single.css.map
-|       |   |       src_components_kpi_SemaphoreIndicator_module_css_0w3-wzy._.single.css
-|       |   |       src_components_kpi_SemaphoreIndicator_module_css_0w3-wzy._.single.css.map
-|       |   |       src_components_layout_Header_module_css_0w3-wzy._.single.css
-|       |   |       src_components_layout_Header_module_css_0w3-wzy._.single.css.map
-|       |   |       src_components_layout_Sidebar_module_css_0w3-wzy._.single.css
-|       |   |       src_components_layout_Sidebar_module_css_0w3-wzy._.single.css.map
-|       |   |       src_styles_orbit-globals_css_0w3-wzy._.single.css
-|       |   |       src_styles_orbit-globals_css_0w3-wzy._.single.css.map
-|       |   |       turbopack-_0p44nws._.js
-|       |   |       [next]_internal_font_google_geist_a71539c9_module_css_0w3-wzy._.single.css
-|       |   |       [next]_internal_font_google_geist_a71539c9_module_css_0w3-wzy._.single.css.map
-|       |   |       [next]_internal_font_google_geist_mono_8d43a2aa_module_css_0w3-wzy._.single.css
-|       |   |       [next]_internal_font_google_geist_mono_8d43a2aa_module_css_0w3-wzy._.single.css.map
-|       |   |       [root-of-the-server]__111zn_o._.css
-|       |   |       [root-of-the-server]__111zn_o._.css.map
-|       |   |       [turbopack]_browser_dev_hmr-client_hmr-client_ts_0yjw1oe._.js
-|       |   |       [turbopack]_browser_dev_hmr-client_hmr-client_ts_0yjw1oe._.js.map
-|       |   |       [turbopack]_browser_dev_hmr-client_hmr-client_ts_10mygs7._.js
-|       |   |       [turbopack]_browser_dev_hmr-client_hmr-client_ts_10z625~._.js
-|       |   |       [turbopack]_browser_dev_hmr-client_hmr-client_ts_10z625~._.js.map
-|       |   |       _0p44nws._.js.map
-|       |   |       _0rqeker._.js
-|       |   |       
-|       |   +---development
-|       |   |       _buildManifest.js
-|       |   |       _clientMiddlewareManifest.js
-|       |   |       _ssgManifest.js
-|       |   |       
-|       |   \---media
-|       |           4fa387ec64143e14-s.0wkzw~je483f-.woff2
-|       |           53b9e256198e5412-s.0-wfv7uh4i7h9.woff2
-|       |           5ce348bf30bf5439-s.0zgw-jeven.3w.woff2
-|       |           6306c77e7c8268e4-s.0rhz0arwfsn~5.woff2
-|       |           7178b3e590c64307-s.0nx0ww8fni_q3.woff2
-|       |           797e433ab948586e-s.p.08e28id.o-okb.woff2
-|       |           7d817b4c03b0c5f1-s.0l76wvqk9d84w.woff2
-|       |           8a480f0b521d4e75-s.0jzbimsg8vl84.woff2
-|       |           bbc41e54d2fcbd21-s.0k4k9394f2q-k.woff2
-|       |           caa3a2e1cccd8315-s.p.09~u27dqhyhd6.woff2
-|       |           favicon.0x3dzn~oxb6tn.ico
-|       |           fef07dbb0973bf53-s.12tyk43_3sh9u.woff2
-|       |           
-|       \---types
-|               cache-life.d.ts
-|               routes.d.ts
-|               validator.ts
+|       \---tags
+|               v2.2.0
 |               
++---C?Projetos
 +---node_modules
 |   |   .package-lock.json
 |   |   
@@ -3671,6 +3883,20 @@ C:.
 |   |   |       package.json
 |   |   |       README.md
 |   |   |       
+|   |   +---history
+|   |   |       createBrowserHistory.d.ts
+|   |   |       createHashHistory.d.ts
+|   |   |       createMemoryHistory.d.ts
+|   |   |       createTransitionManager.d.ts
+|   |   |       DOMUtils.d.ts
+|   |   |       ExecutionEnvironment.d.ts
+|   |   |       index.d.ts
+|   |   |       LICENSE
+|   |   |       LocationUtils.d.ts
+|   |   |       package.json
+|   |   |       PathUtils.d.ts
+|   |   |       README.md
+|   |   |       
 |   |   +---json-schema
 |   |   |       index.d.ts
 |   |   |       LICENSE
@@ -3792,27 +4018,42 @@ C:.
 |   |   |           jsx-dev-runtime.d.ts
 |   |   |           jsx-runtime.d.ts
 |   |   |           
-|   |   \---react-dom
-|   |       |   canary.d.ts
-|   |       |   client.d.ts
-|   |       |   experimental.d.ts
-|   |       |   index.d.ts
-|   |       |   LICENSE
-|   |       |   package.json
-|   |       |   README.md
-|   |       |   server.browser.d.ts
-|   |       |   server.bun.d.ts
-|   |       |   server.d.ts
-|   |       |   server.edge.d.ts
-|   |       |   server.node.d.ts
-|   |       |   static.browser.d.ts
-|   |       |   static.d.ts
-|   |       |   static.edge.d.ts
-|   |       |   static.node.d.ts
-|   |       |   
-|   |       \---test-utils
-|   |               index.d.ts
-|   |               
+|   |   +---react-dom
+|   |   |   |   canary.d.ts
+|   |   |   |   client.d.ts
+|   |   |   |   experimental.d.ts
+|   |   |   |   index.d.ts
+|   |   |   |   LICENSE
+|   |   |   |   package.json
+|   |   |   |   README.md
+|   |   |   |   server.browser.d.ts
+|   |   |   |   server.bun.d.ts
+|   |   |   |   server.d.ts
+|   |   |   |   server.edge.d.ts
+|   |   |   |   server.node.d.ts
+|   |   |   |   static.browser.d.ts
+|   |   |   |   static.d.ts
+|   |   |   |   static.edge.d.ts
+|   |   |   |   static.node.d.ts
+|   |   |   |   
+|   |   |   \---test-utils
+|   |   |           index.d.ts
+|   |   |           
+|   |   +---react-router
+|   |   |   |   index.d.ts
+|   |   |   |   LICENSE
+|   |   |   |   package.json
+|   |   |   |   README.md
+|   |   |   |   
+|   |   |   \---ts4.6
+|   |   |           index.d.ts
+|   |   |           
+|   |   \---react-router-dom
+|   |           index.d.ts
+|   |           LICENSE
+|   |           package.json
+|   |           README.md
+|   |           
 |   +---@typescript-eslint
 |   |   +---eslint-plugin
 |   |   |   |   index.d.ts
@@ -23481,6 +23722,205 @@ C:.
 |   |           react-is.development.js
 |   |           react-is.production.min.js
 |   |           
+|   +---react-router
+|   |   |   CHANGELOG.md
+|   |   |   LICENSE.md
+|   |   |   package.json
+|   |   |   README.md
+|   |   |   
+|   |   +---dist
+|   |   |   +---development
+|   |   |   |   |   browser-B2PdsXXH.d.ts
+|   |   |   |   |   browser-DBmQ1yAR.d.mts
+|   |   |   |   |   chunk-4ZMWKKQ3.mjs
+|   |   |   |   |   chunk-E4MTK73K.mjs
+|   |   |   |   |   chunk-U7ORXROY.js
+|   |   |   |   |   chunk-WW7PN6QI.js
+|   |   |   |   |   chunk-YL5M26XI.js
+|   |   |   |   |   context-CeD5LmaF.d.mts
+|   |   |   |   |   data-CjO11-hU.d.ts
+|   |   |   |   |   data-DEjBmEfD.d.mts
+|   |   |   |   |   dom-export.d.mts
+|   |   |   |   |   dom-export.d.ts
+|   |   |   |   |   dom-export.js
+|   |   |   |   |   dom-export.mjs
+|   |   |   |   |   index-react-server-client-3ykjivgQ.d.ts
+|   |   |   |   |   index-react-server-client-CACgcj2J.d.mts
+|   |   |   |   |   index-react-server-client.d.mts
+|   |   |   |   |   index-react-server-client.d.ts
+|   |   |   |   |   index-react-server-client.js
+|   |   |   |   |   index-react-server-client.mjs
+|   |   |   |   |   index-react-server.d.mts
+|   |   |   |   |   index-react-server.d.ts
+|   |   |   |   |   index-react-server.js
+|   |   |   |   |   index-react-server.mjs
+|   |   |   |   |   index.d.mts
+|   |   |   |   |   index.d.ts
+|   |   |   |   |   index.js
+|   |   |   |   |   index.mjs
+|   |   |   |   |   instrumentation-Dkmpzd13.d.ts
+|   |   |   |   |   register-CmkRspdl.d.mts
+|   |   |   |   |   register-roq_0qYo.d.ts
+|   |   |   |   |   
+|   |   |   |   \---lib
+|   |   |   |       \---types
+|   |   |   |               internal.d.mts
+|   |   |   |               internal.d.ts
+|   |   |   |               internal.js
+|   |   |   |               internal.mjs
+|   |   |   |               
+|   |   |   \---production
+|   |   |       |   browser-B2PdsXXH.d.ts
+|   |   |       |   browser-DBmQ1yAR.d.mts
+|   |   |       |   chunk-3Z6WS2WZ.js
+|   |   |       |   chunk-BIP66BKV.js
+|   |   |       |   chunk-EGOTSXNH.mjs
+|   |   |       |   chunk-IUPBOWYO.js
+|   |   |       |   chunk-M7NGGUU6.mjs
+|   |   |       |   context-CeD5LmaF.d.mts
+|   |   |       |   data-CjO11-hU.d.ts
+|   |   |       |   data-DEjBmEfD.d.mts
+|   |   |       |   dom-export.d.mts
+|   |   |       |   dom-export.d.ts
+|   |   |       |   dom-export.js
+|   |   |       |   dom-export.mjs
+|   |   |       |   index-react-server-client-3ykjivgQ.d.ts
+|   |   |       |   index-react-server-client-CACgcj2J.d.mts
+|   |   |       |   index-react-server-client.d.mts
+|   |   |       |   index-react-server-client.d.ts
+|   |   |       |   index-react-server-client.js
+|   |   |       |   index-react-server-client.mjs
+|   |   |       |   index-react-server.d.mts
+|   |   |       |   index-react-server.d.ts
+|   |   |       |   index-react-server.js
+|   |   |       |   index-react-server.mjs
+|   |   |       |   index.d.mts
+|   |   |       |   index.d.ts
+|   |   |       |   index.js
+|   |   |       |   index.mjs
+|   |   |       |   instrumentation-Dkmpzd13.d.ts
+|   |   |       |   register-CmkRspdl.d.mts
+|   |   |       |   register-roq_0qYo.d.ts
+|   |   |       |   
+|   |   |       \---lib
+|   |   |           \---types
+|   |   |                   internal.d.mts
+|   |   |                   internal.d.ts
+|   |   |                   internal.js
+|   |   |                   internal.mjs
+|   |   |                   
+|   |   \---docs
+|   |       |   index.md
+|   |       |   
+|   |       +---explanation
+|   |       |       backend-for-frontend.md
+|   |       |       code-splitting.md
+|   |       |       concurrency.md
+|   |       |       form-vs-fetcher.md
+|   |       |       hot-module-replacement.md
+|   |       |       hydration.md
+|   |       |       index-query-param.md
+|   |       |       index.md
+|   |       |       lazy-route-discovery.md
+|   |       |       location.md
+|   |       |       progressive-enhancement.md
+|   |       |       race-conditions.md
+|   |       |       react-transitions.md
+|   |       |       route-matching.md
+|   |       |       server-client-execution.md
+|   |       |       sessions-and-cookies.md
+|   |       |       special-files.md
+|   |       |       state-management.md
+|   |       |       styling.md
+|   |       |       type-safety.md
+|   |       |       
+|   |       +---how-to
+|   |       |       accessibility.md
+|   |       |       client-data.md
+|   |       |       data-strategy.md
+|   |       |       error-boundary.md
+|   |       |       error-reporting.md
+|   |       |       fetchers.md
+|   |       |       file-route-conventions.md
+|   |       |       file-uploads.md
+|   |       |       form-validation.md
+|   |       |       headers.md
+|   |       |       index.md
+|   |       |       instrumentation.md
+|   |       |       meta.md
+|   |       |       middleware.md
+|   |       |       navigation-blocking.md
+|   |       |       optimize-revalidation.md
+|   |       |       pre-rendering.md
+|   |       |       presets.md
+|   |       |       react-server-components.md
+|   |       |       resource-routes.md
+|   |       |       route-module-type-safety.md
+|   |       |       search-params.md
+|   |       |       security.md
+|   |       |       server-bundles.md
+|   |       |       spa.md
+|   |       |       status.md
+|   |       |       suspense.md
+|   |       |       using-handle.md
+|   |       |       view-transitions.md
+|   |       |       webhook.md
+|   |       |       
+|   |       +---start
+|   |       |   |   index.md
+|   |       |   |   modes.md
+|   |       |   |   
+|   |       |   +---data
+|   |       |   |       actions.md
+|   |       |   |       custom.md
+|   |       |   |       data-loading.md
+|   |       |   |       index.md
+|   |       |   |       installation.md
+|   |       |   |       navigating.md
+|   |       |   |       pending-ui.md
+|   |       |   |       route-object.md
+|   |       |   |       routing.md
+|   |       |   |       testing.md
+|   |       |   |       
+|   |       |   +---declarative
+|   |       |   |       index.md
+|   |       |   |       installation.md
+|   |       |   |       navigating.md
+|   |       |   |       routing.md
+|   |       |   |       url-values.md
+|   |       |   |       
+|   |       |   \---framework
+|   |       |           actions.md
+|   |       |           data-loading.md
+|   |       |           deploying.md
+|   |       |           index.md
+|   |       |           installation.md
+|   |       |           navigating.md
+|   |       |           pending-ui.md
+|   |       |           rendering.md
+|   |       |           route-module.md
+|   |       |           routing.md
+|   |       |           testing.md
+|   |       |           
+|   |       \---upgrading
+|   |               component-routes.md
+|   |               future.md
+|   |               index.md
+|   |               remix.md
+|   |               router-provider.md
+|   |               v6.md
+|   |               
+|   +---react-router-dom
+|   |   |   LICENSE.md
+|   |   |   package.json
+|   |   |   README.md
+|   |   |   
+|   |   \---dist
+|   |           index.d.mts
+|   |           index.d.ts
+|   |           index.js
+|   |           index.mjs
+|   |           
 |   +---reflect.getprototypeof
 |   |   |   .eslintrc
 |   |   |   .nycrc
@@ -23871,6 +24311,14 @@ C:.
 |   |   |   
 |   |   \---bin
 |   |           semver.js
+|   |           
+|   +---set-cookie-parser
+|   |   |   LICENSE
+|   |   |   package.json
+|   |   |   README.md
+|   |   |   
+|   |   \---lib
+|   |           set-cookie.js
 |   |           
 |   +---set-function-length
 |   |   |   .eslintrc
@@ -26066,20 +26514,37 @@ C:.
 |   |       OrbitDashboardContext.tsx
 |   |       
 |   +---hooks
+|   |       useAlerts.ts
+|   |       useAvatar.ts
+|   |       useClients.ts
+|   |       useFunnel.ts
 |   |       useInstagramOverview.ts
+|   |       useMetaAds.ts
 |   |       
 |   +---lib
-|   |       prototypeConstants.ts
-|   |       supabaseClient.ts
-|   |       
-|   +---repositories
-|   |       instagramOverviewRepository.ts
-|   |       
+|   |   |   prototypeConstants.ts
+|   |   |   supabaseClient.ts
+|   |   |   
+|   |   \---repositories
+|   |           alertsRepository.ts
+|   |           avatarRepository.ts
+|   |           clientsRepository.ts
+|   |           funnelRepository.ts
+|   |           instagramOverviewRepository.ts
+|   |           instagramRepository.ts
+|   |           metaAdsRepository.ts
+|   |           
 |   +---styles
 |   |       orbit-design-tokens.css
 |   |       orbit-globals.css
 |   |       
 |   \---types
+|           alert.ts
+|           avatar.ts
+|           client.ts
+|           funnel.ts
+|           instagram.ts
+|           metaAds.ts
 |           orbit.ts
 |           
 +---styles
