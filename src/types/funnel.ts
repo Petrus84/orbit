@@ -1,7 +1,18 @@
 // src/types/funnel.ts
-// ORBIT · Domain Types — Funnel Metrics (Studio Lara MKT)
-// Versão: 3.0.0 (Patched)
+// ORBIT · Domain Types — Funil Interativo + Simulador
+// Versão: 1.0.0
 
+// ─────────────────────────────────────────────
+// Primitivos de estado assíncrono
+// ─────────────────────────────────────────────
+
+export type FetchStatus = 'idle' | 'loading' | 'success' | 'error'
+
+export interface AsyncState<T> {
+  data:   T
+  status: FetchStatus
+  error:  string | null
+}
 
 // ─────────────────────────────────────────────
 // Entidade: Funil (dados reais do período)
@@ -9,19 +20,18 @@
 
 export interface FunnelMetrics {
   /** Total de contas únicas alcançadas no período */
-  alcance:   number
+  alcance:  number
   /** Visitas ao perfil / landing page */
-  visitas:   number
+  visitas:  number
   /** Cliques no link da bio ou CTA */
-  cliques:   number
+  cliques:  number
   /** Conversões / vendas confirmadas */
-  vendas:    number
+  vendas:   number
   /** CTR bio real (%) — cliques / alcance × 100 */
-  ctrBio:    number
+  ctrBio:   number
   /** Taxa de conversão real (%) — vendas / cliques × 100 */
-  taxaConv:  number
+  taxaConv: number
 }
-
 // ─────────────────────────────────────────────
 // Entidade: Configuração de Slider do Simulador
 // ─────────────────────────────────────────────

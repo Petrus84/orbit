@@ -5,7 +5,8 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { fetchMetaCampaigns, fetchCampaignMetrics } from '../lib/repositories/metaAdsRepository';
-import type { Campaign, FetchStatus, MetaAdsKPI } from '../types/metaAds';
+import type { Campaign, FetchStatus } from '../types/orbit';
+import type { MetaAdsKPI } from '../types/metaAds';
 
 // ─── Public shape ─────────────────────────────────────────────────────────────
 

@@ -135,8 +135,6 @@ export default function CarteiraScreen({ useClients }: CarteiraScreenProps): Rea
               <AlertCard
                 key={alert.id}
                 alert={alert}
-                onAction={(id) => console.info('action', id)}
-                onDismiss={(id) => console.info('dismiss', id)}
               />
             ))}
           </div>

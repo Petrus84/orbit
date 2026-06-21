@@ -4,7 +4,12 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { fetchFunnelData } from '../lib/repositories/funnelRepository'
-import type { AsyncState, FetchStatus, FunnelData } from '../types/funnel'
+
+// ✅ 1. Importa os estados de carregamento do almoxarifado global
+import type { AsyncState, FetchStatus } from '../types/orbit'
+
+// ✅ 2. Importa a estrutura de métricas matemáticas que você criou na oficina do funil
+import type { FunnelMetrics } from '../types/funnel'
 
 // ─────────────────────────────────────────────
 // Configuração de retry
@@ -28,7 +33,7 @@ function wait(ms: number): Promise<void> {
 // Tipo de retorno do hook
 // ─────────────────────────────────────────────
 
-export interface UseFunnelResult extends AsyncState<FunnelData | null> {
+export interface UseFunnelResult extends AsyncState<FunnelMetrics | null> {
   /** Timestamp da última atualização bem-sucedida (null se nunca carregou) */
   lastUpdated: Date | null
   /** Refaz a busca manualmente, reiniciando o ciclo de retries */
@@ -58,7 +63,7 @@ export function useFunnel(
   periodStart: string,
   periodEnd: string
 ): UseFunnelResult {
-  const [data, setData]     = useState<FunnelData | null>(null)
+const [data, setData]     = useState<FunnelMetrics | null>(null)
   const [status, setStatus] = useState<FetchStatus>('idle')
   const [error, setError]   = useState<string | null>(null)
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)

@@ -158,7 +158,7 @@ function rowToAvatarAlignment(row: AvatarAlignmentRow): AvatarAlignment {
  */
 export async function fetchAvatarAlignment(clientId: string): Promise<AvatarAlignment> {
   const { data, error } = await supabase
-    .from<'avatar_alignment', AvatarAlignmentRow>('avatar_alignment')
+    .from('avatar_alignment')
     .select(
       [
         'expected_gender_male',
@@ -183,7 +183,12 @@ export async function fetchAvatarAlignment(clientId: string): Promise<AvatarAlig
     throw new Error(error.message);
   }
 
-  return rowToAvatarAlignment(data);
+  if (!data) {
+    // defensive: ensure we have a row before mapping
+    throw new Error('No avatar alignment data returned');
+  }
+
+  return rowToAvatarAlignment(data as unknown as AvatarAlignmentRow);
 }
 
 /**
