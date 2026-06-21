@@ -1,7 +1,11 @@
 /* ==========================================================================
    ORBIT · Context — OrbitDashboardContext
-   Versão: 1.4.0  |  Data: 2026-06-11
-   Responsabilidade: Orquestrar dados do Repositório + estado da UI
+   Versão: 2.0.0  |  Data: 2026-06-20
+
+   v2.0.0:
+   ✅ usePrototypeData removido do estado, da interface e das props
+   ✅ setUsePrototypeData removido
+   ✅ UseInstagramOverviewParams não carrega mais flag de mock
    ========================================================================== */
 
 'use client'
@@ -25,11 +29,9 @@ import type { TabId } from '../types/orbit'
 // ─────────────────────────────────────────────
 
 interface OrbitDashboardContextValue extends UseInstagramOverviewReturn {
-  activeTab: TabId
+  activeTab:    TabId
   setActiveTab: (tab: TabId) => void
-  clientId: string
-  usePrototypeData: boolean
-  setUsePrototypeData: (value: boolean) => void
+  clientId:     string
 }
 
 // ─────────────────────────────────────────────
@@ -42,9 +44,8 @@ const OrbitDashboardContext = createContext<OrbitDashboardContextValue | null>(n
 // Props do Provider
 // ─────────────────────────────────────────────
 
-export interface OrbitDashboardProviderProps
-  extends UseInstagramOverviewParams {
-  children: ReactNode
+export interface OrbitDashboardProviderProps extends UseInstagramOverviewParams {
+  children:          ReactNode
   initialActiveTab?: TabId
 }
 
@@ -58,31 +59,17 @@ export function OrbitDashboardProvider({
   ...hookParams
 }: OrbitDashboardProviderProps) {
   const [activeTab, setActiveTab] = useState<TabId>(initialActiveTab)
-  
-  // ✅ CRÍTICO: Inicializa com false para usar dados REAIS do Supabase
-  // useState(true) ativaria mocks de prototypeConstants.ts
-  const [usePrototypeData, setUsePrototypeData] = useState(
-    hookParams.usePrototypeData ?? false
-  )
 
-  // ✅ FIX v1.4.0: REMOVE duplicação de lógica
-  // O hook useInstagramOverview já busca dados do repositório
-  // Não precisa fazer await supabase aqui
-  const overviewState = useInstagramOverview({
-    ...hookParams,
-    usePrototypeData,  // ← Propaga o estado dinâmico
-  })
+  const overviewState = useInstagramOverview(hookParams)
 
   const value = useMemo<OrbitDashboardContextValue>(
     () => ({
-      ...overviewState,  // ← Dados reais já vêm daqui
+      ...overviewState,
       activeTab,
       setActiveTab,
       clientId: hookParams.clientId,
-      usePrototypeData,
-      setUsePrototypeData,
     }),
-    [overviewState, activeTab, hookParams.clientId, usePrototypeData]
+    [overviewState, activeTab, hookParams.clientId]
   )
 
   return (
@@ -107,7 +94,4 @@ export function useOrbitDashboard(): OrbitDashboardContextValue {
 
   return ctx
 }
-
-
-
 

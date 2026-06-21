@@ -113,6 +113,7 @@ async function dynamicSeeder() {
           ...(targetClientId && { id: targetClientId }),
           agency_id: AGENCY_TEST_ID,
           name: `E-commerce ${clientName.toUpperCase()}`,
+          handle: clientName, // 👈 Adicione esta linha exata
           instagram_account_id: clientName,
           is_business_account: true,
         }

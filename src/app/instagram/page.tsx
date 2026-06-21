@@ -97,7 +97,6 @@ export default function InstagramOverviewPage() {
         clientId={activeClient.id}
         periodStart={PERIOD_START}
         periodEnd={PERIOD_END}
-        usePrototypeData={false}
         initialActiveTab="overview"
       >
         <InstagramOverviewLayout />

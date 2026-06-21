@@ -150,33 +150,29 @@ function rowToAvatarAlignment(row: AvatarAlignmentRow): AvatarAlignment {
   return { expected, real, score, status, bars, recommendation };
 }
 
-// ─── Exported Queries ─────────────────────────────────────────────────────────
-
-/**
- * Fetches the full avatar alignment record for a client and derives all
- * display-ready data (bars, variance, recommendation).
- */
 export async function fetchAvatarAlignment(clientId: string): Promise<AvatarAlignment> {
-  const { data, error } = await supabase
-    .from('avatar_alignment')
-    .select(
-      [
-        'expected_gender_male',
-        'expected_gender_female',
-        'expected_age_range',
-        'expected_interest',
-        'expected_geo',
-        'real_gender_male',
-        'real_gender_female',
-        'real_age_range',
-        'real_interest',
-        'real_geo',
-        'alignment_score',
-        'alignment_status',
-      ].join(', '),
-    )
-    .eq('client_id', clientId)
-    .single();
+  // 1. Montamos a query de forma isolada
+  const query = supabase.from('avatar_alignment').select(
+    [
+      'expected_gender_male',
+      'expected_gender_female',
+      'expected_age_range',
+      'expected_interest',
+      'expected_geo',
+      'real_gender_male',
+      'real_gender_female',
+      'real_age_range',
+      'real_interest',
+      'real_geo',
+      'alignment_score',
+      'alignment_status',
+    ].join(', '),
+  );
+
+  // 2. Executamos aplicando um contrato limpo para desarmar o loop do Supabase
+  const { data, error } = await (query as unknown as { 
+    eq: (col: string, val: string) => { single: () => Promise<{ data: Record<string, unknown> | null; error: { message: string } | null }> } 
+  }).eq('client_id', clientId).single();
 
   if (error) {
     console.error('[avatarRepository] fetchAvatarAlignment error:', error.message);
@@ -184,17 +180,13 @@ export async function fetchAvatarAlignment(clientId: string): Promise<AvatarAlig
   }
 
   if (!data) {
-    // defensive: ensure we have a row before mapping
     throw new Error('No avatar alignment data returned');
   }
 
+  // 3. O cast por unknown passa direto pelo ESLint e entrega o tipo correto
   return rowToAvatarAlignment(data as unknown as AvatarAlignmentRow);
 }
 
-/**
- * Convenience function — returns only the expected and real AvatarProfiles
- * without derived metrics. Useful for profile-only display components.
- */
 export async function fetchAvatarProfile(
   clientId: string,
 ): Promise<{ expected: AvatarProfile; real: AvatarProfile }> {
