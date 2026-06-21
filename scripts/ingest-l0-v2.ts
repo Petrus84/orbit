@@ -1,14 +1,29 @@
 /* ==========================================================================
-   ORBIT · Script de Ingestão L0 — v2.4.5 (Fase 1 Estabilizada)
+   ORBIT · Script de Ingestão L0 — v2.5.0 (Fase 1 Estabilizada)
    Arquivo: scripts/ingest-l0-v2.ts
    CORREÇÕES INTEGRADAS:
-   1. resolveManifest() centralizado substitui resolvePostFiles() local 
+   1. resolveManifest() centralizado substitui resolvePostFiles() local
    2. Unificação e correção semântica do CLIENT_UUID_MAP para evitar Skips
+
+   ✅ CORREÇÃO v2.5.0 (alinhado ao DDL real — sql_de_criacao.pdf):
+   As tabelas `kpi_raw_ingestion` e `lead_raw_ingestion` NÃO existem no
+   schema atual (só existem: agencies, clients, client_metrics,
+   kpi_snapshots, quality_scores, format_performance, ig_audience_snapshots,
+   alerts, funnel_data, avatar_alignment, meta_campaigns). Os dados por post
+   (likes, comments, hashtags, tipo_narrativa, comment_signals etc.) não
+   cabem em kpi_snapshots, que só guarda uma métrica numérica por linha —
+   então, em vez de forçar um schema errado, este script agora:
+     - NÃO grava mais no Supabase
+     - Salva o resultado completo em JSON local, em
+       scripts/output/l0-ingestion/{modo}-{timestamp}.json
+     - A checagem de duplicado passa a ser feita dentro do próprio JSON
+       acumulado (por post_external_id), não mais via SELECT no Supabase.
+   Quando a tabela certa existir no banco, troque writeResultsToDisk() por
+   um insert real.
    ========================================================================== */
 import { fileURLToPath } from 'url'
 import dotenv from 'dotenv'
 dotenv.config({ path: '.env.local' })
-import { createClient, SupabaseClient } from '@supabase/supabase-js'
 import * as fs from 'fs'
 import * as path from 'path'
 import { z } from 'zod'
@@ -16,20 +31,9 @@ import { z } from 'zod'
 // IMPORTAÇÃO EXPLICITA DO MANIFESTO CENTRALIZADO (RESOLVE CHECKLIST ITEM 3)
 import { resolveManifest } from './lib/instagram-export-manifest.ts'
 
-// ─── VALIDAÇÃO DE AMBIENTE ─────────────────────────────────────────────────
-const requiredEnv = ['NEXT_PUBLIC_SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY']
-const missingEnv = requiredEnv.filter(key => !process.env[key])
-if (missingEnv.length > 0) {
- console.error(' ❌ VARIÁVEIS DE AMBIENTE FALTANDO:')
- missingEnv.forEach(key => console.error(` - ${key}`))
- process.exit(1)
-}
-
 // ─── Configuração ──────────────────────────────────────────────────────────
-const supabase: SupabaseClient = createClient(
- process.env.NEXT_PUBLIC_SUPABASE_URL!,
- process.env.SUPABASE_SERVICE_ROLE_KEY!,
-)
+// ✅ CORREÇÃO v2.5.0: cliente Supabase removido — este script não grava mais
+// no banco (ver nota de cabeçalho). Saída vai para JSON local.
 
 const MODE = (
  process.argv.find(a => a.startsWith('--mode='))?.split('=')[1] ??
@@ -56,6 +60,9 @@ const PASTAS: Record<'operational' | 'lead', string> = {
 
 const PASTA_LOCAL = PASTAS[MODE]
 const AGENCY_UUID = process.env.AGENCY_UUID ?? '11111111-1111-1111-1111-111111111111'
+
+// ✅ CORREÇÃO v2.5.0: pasta de saída para os JSONs locais
+const OUTPUT_DIR = path.join(SCRIPT_DIR, '../output/l0-ingestion')
 
 // MAPA CORRIGIDO E SINCRO: EVITA A QUEDA DE COMPATIBILIDADE DE USERNAME
 const CLIENT_UUID_MAP: Record<string, string> = {
@@ -261,6 +268,52 @@ function transformPost(raw: PostRaw) {
  }
 }
 
+// ─── Persistência local (substitui kpi_raw_ingestion / lead_raw_ingestion) ──
+// ✅ CORREÇÃO v2.5.0: essas tabelas não existem no DDL atual. Em vez de
+// gravar no Supabase, acumulamos os posts processados em um JSON local por
+// modo, com checagem de duplicado por post_external_id dentro do próprio
+// arquivo (substitui o SELECT/onConflict que antes ia para o Supabase).
+
+interface StoredRecord {
+  client_id: string
+  agency_id: string
+  ingested_at: string
+  [key: string]: unknown
+}
+
+function ensureOutputDir(): void {
+  if (!fs.existsSync(OUTPUT_DIR)) {
+    fs.mkdirSync(OUTPUT_DIR, { recursive: true })
+  }
+}
+
+function outputFilePath(mode: 'operational' | 'lead'): string {
+  return path.join(OUTPUT_DIR, `${mode}-ingestion.json`)
+}
+
+function loadExistingRecords(mode: 'operational' | 'lead'): StoredRecord[] {
+  const file = outputFilePath(mode)
+  if (!fs.existsSync(file)) return []
+  try {
+    const raw = JSON.parse(fs.readFileSync(file, 'utf-8'))
+    return Array.isArray(raw) ? raw : []
+  } catch {
+    console.warn(` ⚠️ Falha ao ler ${file} — iniciando arquivo novo.`)
+    return []
+  }
+}
+
+function appendRecord(mode: 'operational' | 'lead', record: StoredRecord): void {
+  ensureOutputDir()
+  const records = loadExistingRecords(mode)
+  records.push(record)
+  fs.writeFileSync(outputFilePath(mode), JSON.stringify(records, null, 2), 'utf-8')
+}
+
+function recordExists(mode: 'operational' | 'lead', postExternalId: string): boolean {
+  return loadExistingRecords(mode).some(r => r.post_external_id === postExternalId)
+}
+
 async function ingestOperational(raw: PostRaw): Promise<'ok' | 'skip' | 'error'> {
  const clientUuid = CLIENT_UUID_MAP[raw.ownerUsername ?? 'unknown']
  if (!clientUuid) {
@@ -268,79 +321,75 @@ async function ingestOperational(raw: PostRaw): Promise<'ok' | 'skip' | 'error'>
  return 'skip'
  }
  const base = transformPost(raw)
- const today = new Date().toISOString().split('T')[0]
- const { data: existing } = await supabase.from('kpi_raw_ingestion').select('id').eq('client_id', clientUuid).eq('agency_id', AGENCY_UUID).contains('raw_payload', { post_external_id: base.post_external_id }).maybeSingle()
- if (existing) {
+
+ if (recordExists('operational', base.post_external_id)) {
    console.log(` ⏭ [operational] Post ${raw.id} já existe.`)
    return 'skip'
  }
- const { error } = await supabase.from('kpi_raw_ingestion').insert({
-   client_id: clientUuid,
-   agency_id: AGENCY_UUID,
-   source: 'instagram_graph_api',
-   api_version: 'v19.0',
-   endpoint: '/media/insights',
-   period_start: today,
-   period_end: today,
-   ingestion_status: 'pending',
-   schema_version: 1,
-   product_type: base.product_type_detail,
-   uses_original_audio: base.uses_original_audio,
-   video_duration_s: base.video_duration_s,
-   raw_payload: {
+
+ try {
+   appendRecord('operational', {
+     client_id: clientUuid,
+     agency_id: AGENCY_UUID,
+     ingested_at: new Date().toISOString(),
      post_external_id: base.post_external_id,
      owner_username: base.owner_username,
      product_type: base.product_type,
+     product_type_detail: base.product_type_detail,
      posted_at: base.posted_at,
      likes_count: base.likes_count,
      comments_count: base.comments_count,
      video_play_count: base.video_play_count,
      video_view_count: base.video_view_count,
+     video_duration_s: base.video_duration_s,
      play_rate: base.play_rate,
      is_pinned: base.is_pinned,
      is_coautoria: base.is_coautoria,
      tipo_narrativa: base.tipo_narrativa,
      audio_name: base.audio_name,
+     uses_original_audio: base.uses_original_audio,
      location_name: base.location_name,
      comment_signals: base.comment_signals,
      hashtags: base.hashtags,
      caption_preview: base.caption_text.slice(0, 200),
-   },
- })
- if (error) {
-   console.error(` ❌ [operational] ${raw.id}:`, error.message)
+   })
+ } catch (err) {
+   console.error(` ❌ [operational] ${raw.id}:`, err instanceof Error ? err.message : String(err))
    return 'error'
  }
- console.log(` ✅ [operational] Post ${raw.id} (${raw.ownerUsername}) → kpi_raw_ingestion`)
+
+ console.log(` ✅ [operational] Post ${raw.id} (${raw.ownerUsername}) → ${outputFilePath('operational')}`)
  return 'ok'
  }
 async function ingestLead(raw: PostRaw): Promise<'ok' | 'skip' | 'error'> {
  const base = transformPost(raw)
- const { error } = await supabase.from('lead_raw_ingestion').upsert({
-   ...base,
-   agency_id: AGENCY_UUID,
-   client_id: raw.ownerUsername ?? 'unknown',
-   ingestion_mode: 'lead',
- }, {
-   onConflict: 'post_external_id,client_id',
-   ignoreDuplicates: false
- })
- if (error) {
-   if (error.message.includes('duplicate key')) {
-     console.log(` ⏭ [lead] Post ${raw.id} já existe.`)
-     return 'skip'
-   }
-   console.error(` ❌ [lead] ${raw.id}:`, error.message)
+
+ if (recordExists('lead', base.post_external_id)) {
+   console.log(` ⏭ [lead] Post ${raw.id} já existe.`)
+   return 'skip'
+ }
+
+ try {
+   appendRecord('lead', {
+     ...base,
+     client_id: raw.ownerUsername ?? 'unknown',
+     agency_id: AGENCY_UUID,
+     ingestion_mode: 'lead',
+     ingested_at: new Date().toISOString(),
+   })
+ } catch (err) {
+   console.error(` ❌ [lead] ${raw.id}:`, err instanceof Error ? err.message : String(err))
    return 'error'
  }
- console.log(` ✅ [lead] Post ${raw.id} (${raw.ownerUsername}) → lead_raw_ingestion`)
+ console.log(` ✅ [lead] Post ${raw.id} (${raw.ownerUsername}) → ${outputFilePath('lead')}`)
  return 'ok'
  }
 // Pipeline principal
 async function run(): Promise<void> {
- console.log(`\n 🚀 ORBIT L0 Ingestão — v2.4.5`)
+ console.log(`\n 🚀 ORBIT L0 Ingestão — v2.5.0`)
  console.log(` 📋 Modo: ${MODE.toUpperCase()}`)
- console.log(` 📂 Pasta: ${PASTA_LOCAL}\n`)
+ console.log(` 📂 Pasta: ${PASTA_LOCAL}`)
+ console.log(` 💾 Saída:  ${outputFilePath(MODE)}\n`)
  if (!fs.existsSync(PASTA_LOCAL)) {
    console.error(` ❌ Pasta não encontrada: ${PASTA_LOCAL}`)
    process.exit(1)

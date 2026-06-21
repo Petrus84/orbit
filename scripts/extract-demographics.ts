@@ -1,5 +1,5 @@
 /* ==========================================================================
-   ORBIT · Extract Demographics from Instagram Export — v1.2.0
+   ORBIT · Extract Demographics from Instagram Export — v1.3.0
    Arquivo: scripts/extract-demographics.ts
 
    CORREÇÕES v1.2.0 (13/06/2026 — validadas nos arquivos reais):
@@ -12,6 +12,13 @@
    2. ✅ Parse de faixa etária: suporta 13-17, 55-64, 65+ além de 18-24..55+
    3. ✅ followers_1.json: array direto (confirmado no arquivo real)
    4. ✅ SERVICE_ROLE_KEY (não ANON_KEY) para UPDATE em clients com RLS
+
+   CORREÇÕES v1.3.0 (alinhado ao DDL real — sql_de_criacao.pdf):
+   5. ✅ REMOVIDO `source_level` do insert em kpi_snapshots — coluna não
+         existe no schema atual.
+   6. ✅ TROCADO upsert+onConflict por delete+insert em kpi_snapshots —
+         (client_id, metric, period_start, period_end) não tem UNIQUE
+         constraint no DDL, então onConflict falhava em runtime.
    ========================================================================== */
 
 import dotenv from 'dotenv'
@@ -285,19 +292,38 @@ async function persistClientData(
   const today = new Date().toISOString().split('T')[0]
 
   // Seguidores → kpi_snapshots
+  // ✅ CORREÇÃO v1.3.0 (alinhado ao DDL real):
+  // - REMOVIDO `source_level` — essa coluna não existe em `kpi_snapshots`
+  //   (colunas reais: id, client_id, post_id, ad_id, period_start, period_end,
+  //   metric, value, value_text, delta_pct, semaphore, subtitle,
+  //   calculated_at, created_at). O insert anterior falhava com
+  //   "column kpi_snapshots.source_level does not exist".
+  // - TROCADO upsert+onConflict por delete+insert: a combinação
+  //   (client_id, metric, period_start, period_end) não tem UNIQUE
+  //   constraint no schema, então `onConflict` falhava com
+  //   "no unique or exclusion constraint matching ON CONFLICT specification".
+  //   delete+insert reproduz a mesma idempotência sem exigir constraint nova.
+  const { error: deleteKpiError } = await supabase
+    .from('kpi_snapshots')
+    .delete()
+    .eq('client_id', clientId)
+    .eq('metric', 'seguidores-totais')
+    .eq('period_start', today)
+    .eq('period_end', today)
+
+  if (deleteKpiError) {
+    console.warn(`   ⚠️  Falha ao limpar registro anterior de seguidores: ${deleteKpiError.message}`)
+  }
+
   const { error: kpiError } = await supabase
     .from('kpi_snapshots')
-    .upsert(
-      {
-        client_id:    clientId,
-        metric:       'seguidores-totais',
-        value:        totalFollowers,
-        period_start: today,
-        period_end:   today,
-        source_level: 'L0',
-      },
-      { onConflict: 'client_id,metric,period_start,period_end' },
-    )
+    .insert({
+      client_id:    clientId,
+      metric:       'seguidores-totais',
+      value:        totalFollowers,
+      period_start: today,
+      period_end:   today,
+    })
 
   if (kpiError) console.error(`   ❌ Seguidores: ${kpiError.message}`)
   else          console.log(`   ✅ Seguidores (followers_1): ${totalFollowers}`)

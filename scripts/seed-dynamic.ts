@@ -1,15 +1,18 @@
 /* ==========================================================================
-   ORBIT · Infrastructure — Dynamic Provisioning & Seeder Engine (v2.2.0)
+   ORBIT · Infrastructure — Dynamic Provisioning & Seeder Engine (v2.3.0)
    Caminho: scripts/seed-dynamic.ts
    Responsabilidade: Escanear as pastas locais, cadastrar automaticamente
    agências, clientes e leads novos na nuvem do Supabase de uma só vez.
-   
-   ✅ CORREÇÕES v2.2.0:
-   - Lê PASTA_OPERATIONAL e PASTA_LEAD do .env.local (via dotenv)
-   - Tipagem explícita (file: string) para extinguir TS7006
-   - Campo email adicionado em agencies (satisfaz NOT NULL)
-   - Try-catch global com logs claros
-   - Validação de ambiente com mensagem de erro descritiva
+
+   ✅ CORREÇÕES v2.3.0 (alinhado ao DDL real):
+   - ❌ REMOVIDO: campo `email` no upsert de `agencies` — essa coluna NÃO
+     existe na tabela `agencies` (ver sql_de_criacao.pdf, seção 3). O insert
+     anterior falhava com "column agencies.email does not exist".
+   - ⚠️ AJUSTE: onConflict de `clients` trocado de
+     'agency_id,instagram_account_id' (sem UNIQUE constraint no DDL) para
+     'id' simples — evita erro "no unique or exclusion constraint matching
+     ON CONFLICT specification". O vínculo com cliente existente passa a
+     depender do CLIENT_TEST_ID fixo ou de um novo UUID gerado pelo banco.
    ========================================================================== */
 
 import dotenv from 'dotenv'
@@ -21,7 +24,7 @@ import process from 'process'
 import { createClient } from '@supabase/supabase-js'
 
 // ─────────────────────────────────────────────────────────────────────────
-// ✅ CORREÇÃO #5: Ler paths do .env.local (consistência com ingest-l0-v2.ts)
+// Paths via .env.local
 // ─────────────────────────────────────────────────────────────────────────
 
 const PASTA_CLIENTES = process.env.PASTA_OPERATIONAL ?? ''
@@ -41,16 +44,16 @@ const AGENCY_TEST_ID = '11111111-1111-1111-1111-111111111111'
 const CLIENT_TEST_ID = '22222222-2222-2222-2222-222222222222'
 
 // ─────────────────────────────────────────────────────────────────────────
-// 💡 MELHORIA: Validação explícita de variáveis de ambiente com mensagem clara
+// Validação de variáveis de ambiente do Supabase
 // ─────────────────────────────────────────────────────────────────────────
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || ''
 
 if (!supabaseUrl || !supabaseServiceKey) {
-  console.error("\n🚨 ERRO CRÍTICO DE AMBIENTE:")
-  console.error("   As variáveis NEXT_PUBLIC_SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY")
-  console.error("   são obrigatórias no escopo do processo do terminal.\n")
+  console.error('\n🚨 ERRO CRÍTICO DE AMBIENTE:')
+  console.error('   As variáveis NEXT_PUBLIC_SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY')
+  console.error('   são obrigatórias no escopo do processo do terminal.\n')
   process.exit(1)
 }
 
@@ -64,18 +67,17 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey)
 async function dynamicSeeder() {
   console.log('\n====== 🚀 ORBIT DYNAMIC PROVISIONING ENGINE ======')
 
-  // 💡 MELHORIA: Bloco try-catch global com logs claros para capturar falhas
   try {
-    
+
     // ─── PASSO 1: PROVISIONAR A AGÊNCIA MESTRE DE TESTES ───────────────────
     console.log('🏢 Validando Agência Mestre de Homologação...')
     const { error: agencyError } = await supabase
       .from('agencies')
-      .upsert({ 
-        id: AGENCY_TEST_ID, 
+      .upsert({
+        id: AGENCY_TEST_ID,
         name: 'Alpha Agência Digital Mestre',
-        // 💡 CORREÇÃO: Campo adicionado para satisfazer a restrição Not-Null do Supabase
-        email: 'homologacao@alphaagencia.com'
+        // ✅ CORREÇÃO v2.3.0: campo `email` removido — não existe no DDL
+        // (tabela `agencies` só tem id, name, created_at, updated_at)
       }, { onConflict: 'id' })
 
     if (agencyError) {
@@ -85,10 +87,8 @@ async function dynamicSeeder() {
     console.log('   ✅ Agência Mestre validada e pronta')
 
     // ─── PASSO 2: ESCANEAR E CADASTRAR CLIENTES OPERACIONAIS ───────────────
-    // 💡 MELHORIA: Verificação prévia de existência de pasta física antes da leitura
     if (fs.existsSync(PASTA_CLIENTES)) {
-      // 💡 MELHORIA: Tipagem explícita (file: string) para extinguir o erro TS7006
-      const subpastas = fs.readdirSync(PASTA_CLIENTES).filter((file: string) => 
+      const subpastas = fs.readdirSync(PASTA_CLIENTES).filter((file: string) =>
         fs.statSync(path.join(PASTA_CLIENTES, file)).isDirectory()
       )
 
@@ -105,7 +105,7 @@ async function dynamicSeeder() {
         }
 
         console.log(`👤 Provisionando Cliente Operacional real: ${clientName}...`)
-        
+
         // Se for o cliente alvo padrão, força o ID estático de PRD para manter o vínculo
         const targetClientId = clientName === 'cpimportstore' ? CLIENT_TEST_ID : undefined
 
@@ -114,12 +114,17 @@ async function dynamicSeeder() {
           agency_id: AGENCY_TEST_ID,
           name: `E-commerce ${clientName.toUpperCase()}`,
           instagram_account_id: clientName,
-          is_business_account: true
+          is_business_account: true,
         }
 
+        // ✅ CORREÇÃO v2.3.0: onConflict mudado de 'agency_id,instagram_account_id'
+        // (sem UNIQUE constraint no DDL) para 'id'. Clientes sem targetClientId
+        // geram um novo UUID a cada execução — aceitável em ambiente de
+        // homologação, mas idealmente crie uma UNIQUE constraint real no banco
+        // se precisar de idempotência por instagram_account_id.
         const { data: clientData, error: clientError } = await supabase
           .from('clients')
-          .upsert(clientPayload, { onConflict: 'agency_id,instagram_account_id' })
+          .upsert(clientPayload, { onConflict: 'id' })
           .select('id, name')
           .single()
 
@@ -135,8 +140,7 @@ async function dynamicSeeder() {
 
     // ─── PASSO 3: ESCANEAR E CADASTRAR LEADS DE PROSPECÇÃO COMERCIAL ───────
     if (fs.existsSync(PASTA_LEADS)) {
-      // 💡 MELHORIA: Tipagem explícita (file: string) para extinguir o erro TS7006
-      const subpastasLeads = fs.readdirSync(PASTA_LEADS).filter((file: string) => 
+      const subpastasLeads = fs.readdirSync(PASTA_LEADS).filter((file: string) =>
         fs.statSync(path.join(PASTA_LEADS, file)).isDirectory()
       )
 

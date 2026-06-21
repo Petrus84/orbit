@@ -1,5 +1,5 @@
 /* ==========================================================================
-   ORBIT · Script de Ingestão de Insights — v1.2.0
+   ORBIT · Script de Ingestão de Insights — v1.3.0
    Arquivo: scripts/ingest-insights.ts
 
    CORREÇÕES v1.2.0 (13/06/2026):
@@ -14,6 +14,10 @@
          audience_insights["Seguidores"] = novos no período (melhor proxy disponível)
    4. ✅ Período extraído do "Intervalo de datas" do content_interactions
    5. ✅ profiles_reached.json para alcance-90d
+
+   CORREÇÕES v1.3.0 (alinhado ao DDL real — sql_de_criacao.pdf):
+   6. ✅ REMOVIDOS `source_level`, `formula` e `raw_ref` do insert em
+         kpi_snapshots — nenhuma dessas colunas existe no schema atual.
 
    MÉTRICAS INSERIDAS:
      compartilhamentos-90d  = posts + reels
@@ -299,6 +303,12 @@ async function processInsights(clientUsername: string): Promise<void> {
   }
 
   for (const { metric, value } of metricsToInsert) {
+    // ✅ CORREÇÃO v1.3.0 (alinhado ao DDL real): removidos `source_level`,
+    // `formula` e `raw_ref` — nenhuma dessas colunas existe em kpi_snapshots
+    // (colunas reais: id, client_id, post_id, ad_id, period_start, period_end,
+    // metric, value, value_text, delta_pct, semaphore, subtitle,
+    // calculated_at, created_at). O insert anterior falhava com
+    // "column kpi_snapshots.source_level does not exist".
     const { error } = await supabase
       .from('kpi_snapshots')
       .insert({
@@ -306,11 +316,8 @@ async function processInsights(clientUsername: string): Promise<void> {
         metric,
         value,
         value_text:   null,
-        source_level: 'L1',
         period_start: periodStart,
         period_end:   periodEnd,
-        formula:      `Extraído de ${metric.includes('reel') || metric.includes('post') ? 'content_interactions.json' : metric.includes('alcance') ? 'profiles_reached.json' : 'audience_insights.json'}`,
-        raw_ref:      null,
       })
 
     if (error) {
