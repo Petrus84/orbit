@@ -1,91 +1,150 @@
 // ============================================================================
-// src/lib/repositories/alertsRepository.ts
+// ORBIT · Repository — Alerts (v2.0.0 · Sprint 2)
+//
+// v2.0.0:
+// - Migrado para orbit.alerts (primary)
+//   com fallback para public.alerts (legacy)
+// - orbit.alerts tem: alert_type, severity, metric_name, metric_value,
+//   threshold_value, action_url, is_resolved
+// - public.alerts tem: title, description, severity, read_at (sem metric_*)
+// - Campos clientName/clientHandle: JOIN via orbit.clients (sem client_metrics join)
+// - markAlertAsRead: usa is_resolved + resolved_at (orbit) com fallback read_at (legacy)
 // ============================================================================
 
-import { supabase } from "../supabaseClient";
-import { Alert, AlertSeverity } from "../../types/alert";
+import { supabase, supabaseLegacy } from '../supabaseClient'
+import { Alert, AlertSeverity } from '../../types/alert'
 
-// ── Raw shape returned by Supabase (snake_case) ───────────────────────────
-interface RawAlertRow {
-  id: string;
-  client_id: string;
-  title: string;
-  description: string;
-  severity: AlertSeverity;
-  created_at: string;
+// ── Raw shape from orbit.alerts + orbit.clients JOIN ─────────────────────
+interface OrbitAlertRow {
+  id: string
+  client_id: string
+  alert_type: string
+  severity: AlertSeverity
+  title: string
+  description: string | null
+  metric_name: string | null
+  metric_value: number | null
+  threshold_value: number | null
+  action_url: string | null
+  is_resolved: boolean
+  created_at: string
+  clients: {                             // FK join com orbit.clients
+    name: string
+    handle: string
+  } | null
+}
+
+// ── Raw shape from public.alerts (legacy) ────────────────────────────────
+interface LegacyAlertRow {
+  id: string
+  client_id: string
+  title: string
+  description: string
+  severity: AlertSeverity
+  created_at: string
   clients: {
-    name: string;
-    handle: string;
-  } | null;
+    name: string
+    handle: string
+  } | null
 }
 
-// ── Transform helper ──────────────────────────────────────────────────────
-function toAlert(row: RawAlertRow): Alert {
+function fromOrbitRow(row: OrbitAlertRow): Alert {
   return {
-    id: row.id,
-    clientId: row.client_id,
-    clientName: row.clients?.name ?? "",
-    clientHandle: row.clients?.handle ?? "",
-    title: row.title,
-    description: row.description,
-    severity: row.severity,
-    createdAt: new Date(row.created_at),
-  };
+    id:           row.id,
+    clientId:     row.client_id,
+    clientName:   row.clients?.name   ?? '',
+    clientHandle: row.clients?.handle ?? '',
+    title:        row.title,
+    description:  row.description ?? '',
+    severity:     row.severity,
+    createdAt:    new Date(row.created_at),
+  }
 }
 
-// ── Base query builder ────────────────────────────────────────────────────
-function baseQuery() {
+function fromLegacyRow(row: LegacyAlertRow): Alert {
+  return {
+    id:           row.id,
+    clientId:     row.client_id,
+    clientName:   row.clients?.name   ?? '',
+    clientHandle: row.clients?.handle ?? '',
+    title:        row.title,
+    description:  row.description,
+    severity:     row.severity,
+    createdAt:    new Date(row.created_at),
+  }
+}
+
+// ── Base query — orbit.alerts ─────────────────────────────────────────────
+function orbitBaseQuery() {
   return supabase
-    .from("alerts")
-    .select(
-      `
-      id,
-      client_id,
-      title,
-      description,
-      severity,
-      created_at,
-      clients (
-        name,
-        handle
-      )
-    `
-    )
-    .order("created_at", { ascending: false });
+    .from('alerts')                        // orbit.alerts
+    .select(`
+      id, client_id, alert_type, severity, title, description,
+      metric_name, metric_value, threshold_value, action_url,
+      is_resolved, created_at,
+      clients ( name, handle )
+    `)
+    .eq('is_resolved', false)              // padrão: apenas alertas abertos
+    .order('created_at', { ascending: false })
+}
+
+// ── Base query — public.alerts (legacy fallback) ──────────────────────────
+function legacyBaseQuery() {
+  return supabaseLegacy
+    .from('alerts')
+    .select(`
+      id, client_id, title, description, severity, created_at,
+      clients ( name, handle )
+    `)
+    .order('created_at', { ascending: false })
 }
 
 // ── fetchAlerts ───────────────────────────────────────────────────────────
 export async function fetchAlerts(filter?: AlertSeverity): Promise<Alert[]> {
-  let query = baseQuery();
+  let query = orbitBaseQuery()
+  if (filter !== undefined) query = query.eq('severity', filter)
 
-  if (filter !== undefined) {
-    query = query.eq("severity", filter);
-  }
+  const { data: orbitData, error: orbitError } = await query.returns<OrbitAlertRow[]>()
 
-  const { data, error } = await query.returns<RawAlertRow[]>();
+  if (!orbitError && orbitData) return orbitData.map(fromOrbitRow)
 
-  if (error) {
-    console.error("[alertsRepository] fetchAlerts:", error.message);
-    throw new Error(error.message);
-  }
+  console.warn(`[alertsRepository] orbit.alerts indisponível (${orbitError?.message}). Fallback legacy...`)
 
-  return (data ?? []).map(toAlert);
+  let legacyQuery = legacyBaseQuery()
+  if (filter !== undefined) legacyQuery = legacyQuery.eq('severity', filter)
+
+  const { data, error } = await legacyQuery.returns<LegacyAlertRow[]>()
+  if (error) { console.error('[alertsRepository]', error.message); throw new Error(error.message) }
+  return (data ?? []).map(fromLegacyRow)
 }
 
 // ── fetchCriticalAlerts ───────────────────────────────────────────────────
 export async function fetchCriticalAlerts(): Promise<Alert[]> {
-  return fetchAlerts("critical");
+  return fetchAlerts('critical')
 }
 
-// ── markAlertAsRead ───────────────────────────────────────────────────────
+// ── markAlertAsRead / markAlertResolved ───────────────────────────────────
+// orbit.alerts usa is_resolved (boolean) + resolved_at (timestamp)
+// public.alerts usa read_at (timestamp)
 export async function markAlertAsRead(alertId: string): Promise<void> {
-  const { error } = await supabase
-    .from("alerts")
-    .update({ read_at: new Date().toISOString() })
-    .eq("id", alertId);
+  // Tenta orbit.alerts primeiro
+  const { error: orbitError } = await supabase
+    .from('alerts')
+    .update({
+      is_resolved:  true,
+      resolved_at:  new Date().toISOString(),
+    })
+    .eq('id', alertId)
 
-  if (error) {
-    console.error("[alertsRepository] markAlertAsRead:", error.message);
-    throw new Error(error.message);
-  }
+  if (!orbitError) return
+
+  console.warn(`[alertsRepository] orbit.alerts update falhou. Fallback legacy read_at...`)
+
+  // Fallback: public.alerts.read_at
+  const { error: legacyError } = await supabaseLegacy
+    .from('alerts')
+    .update({ read_at: new Date().toISOString() })
+    .eq('id', alertId)
+
+  if (legacyError) throw new Error(legacyError.message)
 }

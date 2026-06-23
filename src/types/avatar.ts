@@ -61,14 +61,13 @@ export interface AlignmentBar {
  * repository and consumed by the hook.
  */
 export interface AvatarAlignment {
+   id: string;                    // ← ADICIONAR (React key)
+  clientId: string;              // ← ADICIONAR (isolamento de dados)
   expected: AvatarProfile;
   real: AvatarProfile;
-  /** Overall alignment score 0–100 */
   score: number;
   status: AlignmentStatus;
-  /** Pre-computed bars ready to render */
   bars: AlignmentBar[];
-  /** Human-readable recommendation generated from the score */
   recommendation: string;
 }
 

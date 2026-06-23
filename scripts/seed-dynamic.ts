@@ -1,10 +1,10 @@
 /* ==========================================================================
-   ORBIT · Infrastructure — Dynamic Provisioning & Seeder Engine (v2.3.0)
+   ORBIT · Infrastructure — Dynamic Provisioning & Seeder Engine (v2.4.0)
    Caminho: scripts/seed-dynamic.ts
    Responsabilidade: Escanear as pastas locais, cadastrar automaticamente
    agências, clientes e leads novos na nuvem do Supabase de uma só vez.
 
-   ✅ CORREÇÕES v2.3.0 (alinhado ao DDL real):
+   ✅ CORREÇÕES v2.4.0 (alinhado ao DDL real):
    - ❌ REMOVIDO: campo `email` no upsert de `agencies` — essa coluna NÃO
      existe na tabela `agencies` (ver sql_de_criacao.pdf, seção 3). O insert
      anterior falhava com "column agencies.email does not exist".
@@ -34,14 +34,20 @@ if (!PASTA_CLIENTES || !PASTA_LEADS) {
   console.error('\n🚨 ERRO CRÍTICO DE AMBIENTE:')
   console.error('   PASTA_OPERATIONAL e PASTA_LEAD são obrigatórias no .env.local')
   console.error('   Exemplo:')
-  console.error('   PASTA_OPERATIONAL=C:/Users/DELL/Downloads/Alpha_Coleta/clientes')
-  console.error('   PASTA_LEAD=C:/Users/DELL/Downloads/Alpha_Coleta/leads\n')
+  console.error('   PASTA_OPERATIONAL=C:/Users/DELL/Projetos/Alpha_Coleta/clientes')
+  console.error('   PASTA_LEAD=C:/Users/DELL/Projetos/Alpha_Coleta/leads\n')
   process.exit(1)
 }
 
-// IDs Padrão de Homologação (Sua Base de Testes)
-const AGENCY_TEST_ID = '11111111-1111-1111-1111-111111111111'
-const CLIENT_TEST_ID = '22222222-2222-2222-2222-222222222222'
+// IDs Padrão de Homologação (Base Produção)
+// ─── CONTRATO DE IDENTIDADES DE HOMOLOGAÇÃO (DDD) ──────────────────────────
+const METODO75_AGENCY_ID = '11111111-1111-1111-1111-111111111111';
+
+const DOMAIN_CLIENT_MAP: Record<string, string> = {
+  'cpimportstore': '22222222-2222-2222-2222-222222222222',
+  'eupetruchio84': '24140477-0c82-4fda-83df-958377f105ff',
+};
+
 
 // ─────────────────────────────────────────────────────────────────────────
 // Validação de variáveis de ambiente do Supabase
@@ -74,7 +80,7 @@ async function dynamicSeeder() {
     const { error: agencyError } = await supabase
       .from('agencies')
       .upsert({
-        id: AGENCY_TEST_ID,
+        id: METODO75_AGENCY_ID,
         name: 'Alpha Agência Digital Mestre',
         // ✅ CORREÇÃO v2.3.0: campo `email` removido — não existe no DDL
         // (tabela `agencies` só tem id, name, created_at, updated_at)
@@ -107,11 +113,11 @@ async function dynamicSeeder() {
         console.log(`👤 Provisionando Cliente Operacional real: ${clientName}...`)
 
         // Se for o cliente alvo padrão, força o ID estático de PRD para manter o vínculo
-        const targetClientId = clientName === 'cpimportstore' ? CLIENT_TEST_ID : undefined
+        const targetClientId = DOMAIN_CLIENT_MAP[clientName]
 
         const clientPayload = {
           ...(targetClientId && { id: targetClientId }),
-          agency_id: AGENCY_TEST_ID,
+          agency_id: METODO75_AGENCY_ID,
           name: `E-commerce ${clientName.toUpperCase()}`,
           handle: clientName, // 👈 Adicione esta linha exata
           instagram_account_id: clientName,

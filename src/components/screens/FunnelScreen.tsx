@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useParams } from 'next/navigation';
 import SectionHead from '../common/SectionHead';
 import FunnelChart from '../common/FunnelChart';
@@ -116,6 +116,32 @@ function Panel({ title, children }: { title: string; children: React.ReactNode }
 export default function FunnelScreen({ useFunnel }: FunnelScreenProps): React.ReactElement {
   const { clientId = '' } = useParams<{ clientId: string }>();
   const { data, status, error, refetch } = useFunnel(clientId);
+
+  // ─── DEBUG LOGS ────────────────────────────────────────────
+  // Logs estruturados para investigar o carregamento do funil
+  useEffect(() => {
+    console.group('🔍 [FunnelScreen] Estado Atual');
+    console.log('📊 Status:', status);
+    console.log('❌ Erro:', error);
+    console.log('📈 Dados:', data);
+    
+    if (data) {
+      console.log('✅ Dados carregados com sucesso:', {
+        alcance: data.alcance,
+        visitas: data.visitas,
+        cliques: data.cliques,
+        vendas: data.vendas,
+        ctrBio: data.ctrBio,
+        taxaConv: data.taxaConv,
+      });
+    } else if (status === 'loading') {
+      console.warn('⏳ Carregando dados...');
+    } else if (status === 'error') {
+      console.error('🚨 Erro ao carregar:', error);
+    }
+    console.groupEnd();
+  }, [data, status, error]);
+  // ─── FIM DEBUG LOGS ────────────────────────────────────────
 
   const isLoading = status === 'idle' || status === 'loading';
 
