@@ -1,5 +1,5 @@
 Listagem de caminhos de pasta
-O número de série do volume é 0000004E DC57:B74F
+O nï¿½mero de sï¿½rie do volume ï¿½ 0000004E DC57:B74F
 C:.
 |   .env.local
 |   .gitignore
