@@ -2,7 +2,7 @@
 // ORBIT · Repository — Funil Interativo + Simulador
 // Versão: 3.0.0 (Patched)
 
-import { supabase } from '../supabaseClient'
+import { supabase } from '../supabase'
 // ✅ AJUSTE: Removemos a importação ociosa de FunnelData deste repositório
 import type { FunnelMetrics, SimulatedFunnelResult, FunnelMetricsRow } from '../../types/funnel'
 

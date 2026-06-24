@@ -18,7 +18,7 @@
    v3.3.0: deduplicação por métrica
    ========================================================================== */
 
-import { supabase, supabaseLegacy } from '../../lib/supabaseClient'
+import { supabase, supabaseLegacy } from '../../lib/supabase'
 import { z } from 'zod'
 
 import type {

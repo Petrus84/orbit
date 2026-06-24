@@ -11,7 +11,7 @@
 // - markAlertAsRead: usa is_resolved + resolved_at (orbit) com fallback read_at (legacy)
 // ============================================================================
 
-import { supabase, supabaseLegacy } from '../supabaseClient'
+import { supabase, supabaseLegacy } from '../supabase'
 import { Alert, AlertSeverity } from '../../types/alert'
 
 // ── Raw shape from orbit.alerts + orbit.clients JOIN ─────────────────────

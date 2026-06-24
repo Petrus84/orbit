@@ -11,7 +11,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { RealtimeChannel } from '@supabase/supabase-js'
-import { supabase } from '../lib/supabaseClient'
+import { supabase } from '../lib/supabase'
 import { fetchInstagramOverview } from '../lib/repositories/instagramOverviewRepository'
 import type { AsyncState, FetchStatus, IGOverviewData } from '../types/instagram'
 
