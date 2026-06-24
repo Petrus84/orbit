@@ -1,29 +1,16 @@
 /* ==========================================================================
-   ORBIT · Extract Demographics from Instagram Export — v1.3.0
+   ORBIT · Extract Demographics from Instagram Export — v1.3.2 (CORRIGIDO)
    Arquivo: scripts/extract-demographics.ts
 
-   CORREÇÕES v1.2.0 (13/06/2026 — validadas nos arquivos reais):
-   1. ✅ Chaves EXATAS de audience_insights.json:
-         "Porcentagem do total de seguidores para homens"   (não "Gênero")
-         "Porcentagem do total de seguidores para mulheres"
-         "Porcentagem de seguidores por cidade"
-         "Porcentagem de seguidores por país"
-         "Porcentagem de seguidores por idade para todos os gêneros"
-   2. ✅ Parse de faixa etária: suporta 13-17, 55-64, 65+ além de 18-24..55+
-   3. ✅ followers_1.json: array direto (confirmado no arquivo real)
-   4. ✅ SERVICE_ROLE_KEY (não ANON_KEY) para UPDATE em clients com RLS
-
-   CORREÇÕES v1.3.0 (alinhado ao DDL real — sql_de_criacao.pdf):
-   5. ✅ REMOVIDO `source_level` do insert em kpi_snapshots — coluna não
-         existe no schema atual.
-   6. ✅ TROCADO upsert+onConflict por delete+insert em kpi_snapshots —
-         (client_id, metric, period_start, period_end) não tem UNIQUE
-         constraint no DDL, então onConflict falhava em runtime.
+   CORREÇÃO v1.3.2 (24/06/2026 — TypeScript TS2345):
+   ✅ Adicionar guard para CLIENT_USERNAME antes de usar em resolveClientId
+   ✅ Adicionar extensão .js no import para resolver módulo
    ========================================================================== */
 
 import dotenv from 'dotenv'
 dotenv.config({ path: '.env.local' })
 
+import { resolveClientId } from './lib/resolveClientId.js'
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
 import { z } from 'zod'
 import * as fs from 'fs'
@@ -32,7 +19,7 @@ import * as path from 'path'
 // ─── Configuração ──────────────────────────────────────────────────────────
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY   // SERVICE_ROLE para UPDATE
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 
 if (!supabaseUrl || !supabaseKey) {
   console.error('❌ NEXT_PUBLIC_SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY são obrigatórias')
@@ -47,13 +34,26 @@ if (!process.env.PASTA_OPERATIONAL) {
 }
 const CLIENTS_DIR = path.resolve(process.env.PASTA_OPERATIONAL)
 
-const CLIENT_UUID_MAP: Record<string, string> = {
-  'cpimportstore':   '22222222-2222-2222-2222-222222222222',
-  'eupetruchio84':   '24140477-0c82-4fda-83df-958377f105ff',
-  'eupetruchio':     '24140477-0c82-4fda-83df-958377f105ff',
-  'petruchio84':     '24140477-0c82-4fda-83df-958377f105ff',
-  'fiorefernando__': '33333333-3333-3333-3333-333333333333',
+// ✅ CORREÇÃO v1.3.2: Parsear argumentos CLI com guard
+const args = process.argv.slice(2)
+const clientArgIndex = args.indexOf('--client')
+
+// ✅ Validar se --client foi passado
+if (clientArgIndex === -1 || clientArgIndex === args.length - 1) {
+  console.error('❌ Uso: npx ts-node scripts/extract-demographics.ts --client <handle>')
+  process.exit(1)
 }
+
+// ✅ Extrair o valor do argumento --client
+const clientUsername: string = args[clientArgIndex + 1]
+
+if (!clientUsername || clientUsername.startsWith('--')) {
+  console.error('❌ Valor inválido para --client')
+  process.exit(1)
+}
+
+// ✅ Declarar CLIENT_UUID com let (será atribuído em main())
+let CLIENT_UUID: string
 
 // ─── Schemas Zod ──────────────────────────────────────────────────────────
 
@@ -63,7 +63,6 @@ const MetricEntrySchema = z.object({
   timestamp: z.number().optional(),
 })
 
-// followers_1.json: array direto (confirmado)
 const FollowerItemSchema = z.object({
   title:           z.string().optional(),
   media_list_data: z.array(z.unknown()).optional(),
@@ -136,7 +135,6 @@ function parseGenderFromPct(malePctStr: string, femalePctStr: string): Omit<Gend
 }
 
 function parseAgeRange(value: string): Omit<AgeRangeData, 'updated_at'> {
-  // Formato: "13-17: 1.3%, 18-24: 48.2%, 25-34: 34.6%, 35-44: 9.4%, 45-54: 3.8%, 55-64: 1.6%, 65+: 0.8%"
   const result: Omit<AgeRangeData, 'updated_at'> = {
     '18-24': 0,
     '25-34': 0,
@@ -145,14 +143,13 @@ function parseAgeRange(value: string): Omit<AgeRangeData, 'updated_at'> {
     '55+':   0,
   }
 
-  // map dos grupos do export para os campos do schema
   const groupMap: Record<string, keyof Omit<AgeRangeData, 'updated_at'>> = {
     '18-24': '18-24',
     '25-34': '25-34',
     '35-44': '35-44',
     '45-54': '45-54',
     '55-64': '55+',
-    '65+':   '55+',    // agrega em 55+
+    '65+':   '55+',
     '55+':   '55+',
   }
 
@@ -261,7 +258,6 @@ function extractDemographics(clientUsername: string): Demographics | null {
   const smd  = parsed.data.organic_insights_audience[0]?.string_map_data ?? {}
   const now  = new Date().toISOString()
 
-  // Chaves EXATAS validadas no arquivo real (13/06/2026):
   const malePctStr   = smd['Porcentagem do total de seguidores para homens']?.value   ?? '0%'
   const femalePctStr = smd['Porcentagem do total de seguidores para mulheres']?.value ?? '0%'
   const ageStr       = smd['Porcentagem de seguidores por idade para todos os gêneros']?.value ?? ''
@@ -291,18 +287,6 @@ async function persistClientData(
 ): Promise<void> {
   const today = new Date().toISOString().split('T')[0]
 
-  // Seguidores → kpi_snapshots
-  // ✅ CORREÇÃO v1.3.0 (alinhado ao DDL real):
-  // - REMOVIDO `source_level` — essa coluna não existe em `kpi_snapshots`
-  //   (colunas reais: id, client_id, post_id, ad_id, period_start, period_end,
-  //   metric, value, value_text, delta_pct, semaphore, subtitle,
-  //   calculated_at, created_at). O insert anterior falhava com
-  //   "column kpi_snapshots.source_level does not exist".
-  // - TROCADO upsert+onConflict por delete+insert: a combinação
-  //   (client_id, metric, period_start, period_end) não tem UNIQUE
-  //   constraint no schema, então `onConflict` falhava com
-  //   "no unique or exclusion constraint matching ON CONFLICT specification".
-  //   delete+insert reproduz a mesma idempotência sem exigir constraint nova.
   const { error: deleteKpiError } = await supabase
     .from('kpi_snapshots')
     .delete()
@@ -328,7 +312,6 @@ async function persistClientData(
   if (kpiError) console.error(`   ❌ Seguidores: ${kpiError.message}`)
   else          console.log(`   ✅ Seguidores (followers_1): ${totalFollowers}`)
 
-  // Demografia → clients JSONB
   if (demographics) {
     const { error: demoError } = await supabase
       .from('clients')
@@ -356,8 +339,19 @@ async function persistClientData(
 // ─── Main ─────────────────────────────────────────────────────────────────
 
 async function main(): Promise<void> {
-  console.log('\n🔄 ORBIT · Extract Demographics — v1.2.0')
+  console.log('\\n🔄 ORBIT · Extract Demographics — v1.3.2')
   console.log('═'.repeat(55))
+
+  // ✅ CORREÇÃO v1.3.2: Resolver CLIENT_UUID dinamicamente
+  // clientUsername já foi validado acima (não pode ser undefined)
+  try {
+    CLIENT_UUID = await resolveClientId(supabase, clientUsername)
+    console.log(`🆔 UUID resolvido: ${CLIENT_UUID}`)
+    console.log(`📱 Cliente: ${clientUsername}`)
+  } catch (err) {
+    console.error(`❌ Erro ao resolver UUID: ${err instanceof Error ? err.message : String(err)}`)
+    process.exit(1)
+  }
 
   if (!fs.existsSync(CLIENTS_DIR)) {
     console.error(`❌ Pasta não encontrada: ${CLIENTS_DIR}`)
@@ -384,22 +378,14 @@ async function main(): Promise<void> {
     try {
       const folderUsername = extractUsernameFromFolder(folderPath)
       const username       = extractUsername(folderPath, folderUsername)
-      const clientId       = CLIENT_UUID_MAP[username] ?? CLIENT_UUID_MAP[folderUsername]
 
       console.log(`🔍 Pasta: ${path.basename(folderPath)}`)
       console.log(`   Username: ${username}`)
 
-      if (!clientId) {
-        console.log(`   ⚠️  Username "${username}" não encontrado em CLIENT_UUID_MAP`)
-        console.log(`   Adicione: '${username}': '<UUID>'`)
-        console.log('')
-        continue
-      }
-
       const followers    = extractFollowers(username)
       const demographics = extractDemographics(username)
 
-      await persistClientData(clientId, username, followers, demographics)
+      await persistClientData(CLIENT_UUID, username, followers, demographics)
 
     } catch (err: unknown) {
       console.error(`   ❌ ${err instanceof Error ? err.message : String(err)}`)
@@ -409,10 +395,13 @@ async function main(): Promise<void> {
   }
 
   console.log('═'.repeat(55))
-  console.log('✅ Extração concluída\n')
+  console.log('✅ Extração concluída\\n')
 }
 
+// ✅ Chamar main() corretamente
 main().catch(err => {
   console.error('❌ Erro fatal:', err instanceof Error ? err.message : err)
   process.exit(1)
 })
+
+
