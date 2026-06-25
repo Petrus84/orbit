@@ -10,7 +10,7 @@
 // - follower_balance, engagement_real, ctr_link vindos da view calculada
 // ============================================================================
 
-import { supabase, supabaseLegacy } from '../supabase'
+import { supabase, supabaseLegacy } from '@/lib/supabase'
 import { Client, ClientStatus } from '../../types/client'
 
 // ── Raw shape from orbit.v_client_health ─────────────────────────────────

@@ -7,7 +7,7 @@
    ✅ Conforme P0_TASK (C-05: Avatar Alignment Score)
    ========================================================================== */
 
-import { supabase, supabaseLegacy } from '../supabase'
+import { supabase, supabaseLegacy } from '@/lib/supabase'
 import type { AvatarAlignment, AlignmentStatus } from '../../types/avatar'
 
 // ✅ FUNÇÃO EXPORTADA (necessária para useAvatar.ts)

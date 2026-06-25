@@ -3,7 +3,7 @@
 // All Supabase queries for the Meta Ads screen.
 // Assumes src/lib/supabaseClient.ts exports a named `supabase` client.
 
-import { supabase } from '../supabase';
+import { supabase } from '@/lib/supabase';
 import type { Campaign } from '../../types/orbit';
 import type { MetaAdsKPI, CampaignRow } from '../../types/metaAds';
 

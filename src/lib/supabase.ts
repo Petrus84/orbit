@@ -1,12 +1,7 @@
-// src/lib/supabase.ts
 import { createClient } from '@supabase/supabase-js'
 
-// ═══════════════════════════════════════════════════════════════════
-// VALIDAÇÃO DE VARIÁVEIS DE AMBIENTE
-// ═══════════════════════════════════════════════════════════════════
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
 if (!supabaseUrl || !supabaseKey) {
   throw new Error(
@@ -14,49 +9,31 @@ if (!supabaseUrl || !supabaseKey) {
   )
 }
 
-// ═══════════════════════════════════════════════════════════════════
-// CLIENTE PRINCIPAL (schema 'orbit')
-// ═══════════════════════════════════════════════════════════════════
-
+// Sem anotação explícita — TypeScript infere o tipo correto com schema 'orbit'
 export const supabase = createClient(supabaseUrl, supabaseKey, {
   auth: {
-    persistSession: true,
-    autoRefreshToken: true,
-    detectSessionInUrl: false
+    persistSession:     true,
+    autoRefreshToken:   true,
+    detectSessionInUrl: false,
+    storageKey:         'orbit-auth-token',
   },
-  db: {
-    schema: 'orbit'
-  }
+  db: { schema: 'orbit' },
 })
 
-// ═══════════════════════════════════════════════════════════════════
-// CLIENTE SECUNDÁRIO (schema 'public' — fallback legado)
-// ═══════════════════════════════════════════════════════════════════
+// schema() retorna um tipo derivado — também inferido corretamente
+export const supabaseLegacy = supabase.schema('public')
 
-export const supabaseLegacy = createClient(supabaseUrl, supabaseKey, {
-  auth: {
-    persistSession: true,
-    autoRefreshToken: true,
-    detectSessionInUrl: false
-  },
-  db: {
-    schema: 'public'
+// Dev only — inferido dos valores acima, sem any
+declare global {
+  interface Window {
+    __orbit_supabase__:       typeof supabase
+    __orbit_supabaseLegacy__: typeof supabaseLegacy
   }
-})
+}
 
-// ═══════════════════════════════════════════════════════════════════
-// ✅ EXPORTAR GLOBALMENTE PARA window (DESENVOLVIMENTO)
-// Usando type assertion segura em vez de 'any'
-// ═══════════════════════════════════════════════════════════════════
-
-if (typeof window !== 'undefined') {
-  // Usar 'as unknown as Record<string, unknown>' para evitar 'any'
-  const windowObj = window as unknown as Record<string, unknown>
-  
-  windowObj.supabase = supabase
-  windowObj.supabaseLegacy = supabaseLegacy
-  
-  console.log('🔧 Supabase + Supabase Legacy disponíveis em window')
+if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+  window.__orbit_supabase__       = supabase
+  window.__orbit_supabaseLegacy__ = supabaseLegacy
 }
 
 export default supabase

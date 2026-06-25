@@ -1,7 +1,7 @@
 // ============================================================================
 // src/lib/repositories/instagramRepository.ts
 // ============================================================================
-import { supabase } from "../supabase";
+import { supabase } from '@/lib/supabase';
 import {
   CriticalAlertData,
   FormatPerformanceRow,

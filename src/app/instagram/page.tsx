@@ -27,19 +27,17 @@ import type {
   CriticalAlertData as Alert,
 } from '@/types/orbit'
 
-// ─── Catálogo de clientes ─────────────────────────────────────────────────────
-// Para adicionar um novo cliente: inserir uma entrada aqui. Só aqui.
-
 const CLIENTS: Record<string, { id: string; label: string }> = {
   cpimportstore: {
-    id: '22222222-2222-2222-2222-222222222222',
+    id: '2141d077-0d82-4fda-83df-558377f105ff', 
     label: 'CP Import Store',
   },
   eupetruchio84: {
-    id: '24140477-0c82-4fda-83df-958377f105ff',
-    label: 'E-commerce EUPETRUCHIO84',
+    id: 'c4722cfc-cff2-4a03-a457-f14ee8c9e0e7', 
+    label: 'Eupetruchio', // <── Alterado para o nome pessoal limpo!
   },
 }
+
 
 // ─── Janela de análise ────────────────────────────────────────────────────────
 // Ambos os clientes: jan/2026 → hoje (cobre os últimos 6 meses + margem)

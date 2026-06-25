@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 export interface QualityScore {
   label: string;
@@ -68,6 +68,90 @@ export default function QualityScoreCard({ score }: QualityScoreCardProps): Reac
           {score.statusText}
         </span>
       </div>
+    </div>
+  );
+}
+
+// ============================================
+// Hook: useInstagramData (Fetch com JWT)
+// ============================================
+
+interface InstagramDataResponse {
+  qualityScores: QualityScore[];
+  error?: string;
+}
+
+export function useInstagramData() {
+  const [data, setData] = useState<InstagramDataResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchInstagramData = async () => {
+      try {
+        setLoading(true);
+        const token = localStorage.getItem("authToken");
+
+        if (!token) {
+          throw new Error("Token de autenticação não encontrado");
+        }
+
+        const response = await fetch("http://localhost:3000/api/instagram", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Erro ${response.status}: ${errorText}`);
+        }
+
+        const result: InstagramDataResponse = await response.json();
+        setData(result);
+        setError(null);
+      } catch (err) {
+        const message = err instanceof Error ? err.message : "Erro desconhecido";
+        console.error("Falha na requisição Instagram:", message);
+        setError(message);
+        setData(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInstagramData();
+  }, []);
+
+  return { data, loading, error };
+}
+
+// ============================================
+// Componente: InstagramOverviewScreen
+// ============================================
+
+export function InstagramOverviewScreen(): React.ReactElement {
+  const { data, loading, error } = useInstagramData();
+
+  if (loading) {
+    return <div className="p-4 text-zinc-400">⏳ Carregando dados do Instagram...</div>;
+  }
+
+  if (error) {
+    return <div className="p-4 text-red-400">❌ Erro: {error}</div>;
+  }
+
+  if (!data?.qualityScores) {
+    return <div className="p-4 text-zinc-400">📭 Nenhum dado disponível</div>;
+  }
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
+      {data.qualityScores.map((score, idx) => (
+        <QualityScoreCard key={`score-${idx}`} score={score} />
+      ))}
     </div>
   );
 }
