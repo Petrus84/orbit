@@ -1,18 +1,20 @@
 /* ==========================================================================
-   ORBIT · Repository — Instagram Overview (v4.0.0)
+   ORBIT · Repository — Instagram Overview (v4.1.0)
 
-   v4.0.0 (Sprint 2):
+   v4.1.0 (Sprint 2 — REFATORADO):
    - Migrado para schema orbit.*
    - fetchKPIs agora usa orbit.v_kpi_snapshots (primary)
      com fallback para public.kpi_snapshots (legacy Sprint 1)
-   - fetchQualityScores usa orbit.v_quality_scores_calculated (primary)
+   - fetchQualityScores usa orbit.v_quality_scores (primary) — SEM "_calculated"
      com fallback para public.v_quality_scores (legacy)
-   - fetchFormatPerformance usa orbit.v_format_performance_calculated (primary)
+   - fetchFormatPerformance usa orbit.v_format_performance (primary) — SEM "_calculated"
      com fallback para public.v_format_performance (legacy)
    - Header handle: .select('handle') em vez de .select('instagram_account_id')
      (campo correto em orbit.clients — instagram_account_id não existe no orbit)
    - Bounds discovery migrado para orbit.ig_account_snapshots
      com fallback para public.kpi_snapshots
+   - ✅ COMENTÁRIOS CORRIGIDOS (removido "_calculated")
+   - ✅ COLUNAS VALIDADAS contra dados reais do JSON
    
    v3.4.0: 'cliques-no-link' removido de KPI_METRIC_KEYS
    v3.3.0: deduplicação por métrica
@@ -45,8 +47,8 @@ const KPI_METRIC_KEYS = [
 const KpiRowSchema = z.object({
   id:            z.string(),
   client_id:     z.string(),
-  period_start:  z.string(),
-  period_end:    z.string(),
+  period_start:  z.string().optional(),
+  period_end:    z.string().optional(),
   metric_key:    z.string().optional(),
   metric:        z.string().optional(),
   metric_value:  z.union([z.number(), z.string()]).optional(),
@@ -208,7 +210,7 @@ async function fetchKPIs(
 ): Promise<KPICardData[]> {
   // Primary: orbit.v_kpi_snapshots
   const { data: orbitData, error: orbitError } = await supabase
-    .from('v_kpi_snapshots')               // orbit.v_kpi_snapshots
+    .from('v_kpi_snapshots')               // orbit.v_kpi_snapshots (sem _calculated)
     .select('*')
     .eq('client_id', clientId)
     .gte('period_start', start)
@@ -256,9 +258,9 @@ async function fetchQualityScores(
 ): Promise<QualityScoreItem[]> {
   const glowMap: Record<string, GlowColor> = { ok: 'cyan', warn: 'gold', neutral: 'none' }
 
-  // Primary: orbit.v_quality_scores_calculated
+  // Primary: orbit.v_quality_scores (SEM "_calculated")
   const { data: orbitRows, error: orbitError } = await supabase
-    .from('v_quality_scores_calculated')   // orbit.v_quality_scores_calculated
+    .from('v_quality_scores')   // orbit.v_quality_scores (SEM "_calculated")
     .select('id, score_key, score_value, status_text, status_variant')
     .eq('client_id', clientId)
     .returns<RawRow[]>()
@@ -268,9 +270,9 @@ async function fetchQualityScores(
   if (orbitError) {
     console.warn(`[fetchQualityScores] orbit view indisponível (${orbitError.message}). Fallback legacy...`)
 
-    // Fallback: public.v_quality_scores_calculated → public.v_quality_scores
+    // Fallback: public.v_quality_scores (legacy)
     const { data: calcRows, error: calcError } = await supabaseLegacy
-      .from('v_quality_scores_calculated')
+      .from('v_quality_scores')
       .select('id, score_key, score_value, status_text, status_variant')
       .eq('client_id', clientId)
       .returns<RawRow[]>()
@@ -307,9 +309,9 @@ async function fetchFormatPerformance(
   start: string,
   end: string
 ): Promise<FormatPerformanceRow[]> {
-  // Primary: orbit.v_format_performance_calculated
+  // Primary: orbit.v_format_performance (SEM "_calculated")
   const { data: orbitRows, error: orbitError } = await supabase
-    .from('v_format_performance_calculated') // orbit.v_format_performance_calculated
+    .from('v_format_performance') // orbit.v_format_performance (SEM "_calculated")
     .select('id, format_name, post_count, share_count, trend_label, trend_color')
     .eq('client_id', clientId)
     .returns<RawRow[]>()
@@ -320,7 +322,7 @@ async function fetchFormatPerformance(
     console.warn(`[fetchFormatPerformance] orbit view indisponível (${orbitError.message}). Fallback legacy...`)
 
     const { data: calcRows, error: calcError } = await supabaseLegacy
-      .from('v_format_performance_calculated')
+      .from('v_format_performance')
       .select('id, format_name, post_count, share_count, trend_label, trend_color')
       .eq('client_id', clientId)
       .returns<RawRow[]>()
