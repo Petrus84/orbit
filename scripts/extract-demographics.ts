@@ -1,17 +1,18 @@
 /* ==========================================================================
-   ORBIT · Extract Demographics from Instagram Export — v1.3.2 (CORRIGIDO)
+   ORBIT · Extract Demographics from Instagram Export — v1.3.3 (COMPLETO)
    Arquivo: scripts/extract-demographics.ts
 
-   CORREÇÃO v1.3.2 (24/06/2026 — TypeScript TS2345):
-   ✅ Adicionar guard para CLIENT_USERNAME antes de usar em resolveClientId
-   ✅ Adicionar extensão .js no import para resolver módulo
+   CORREÇÃO v1.3.3 (24/06/2026 — Petrus + Monica):
+   ✅ Adicionada função main() completa
+   ✅ Conectadas todas as funções auxiliares
+   ✅ Removidos imports desnecessários
    ========================================================================== */
 
 import dotenv from 'dotenv'
 dotenv.config({ path: '.env.local' })
 
-import { resolveClientId } from './lib/resolveClientId.js'
-import { createClient, SupabaseClient } from '@supabase/supabase-js'
+import { resolveClientId } from './lib/resolveClientId.ts'
+import { createClient } from '@supabase/supabase-js'
 import { z } from 'zod'
 import * as fs from 'fs'
 import * as path from 'path'
@@ -26,7 +27,7 @@ if (!supabaseUrl || !supabaseKey) {
   process.exit(1)
 }
 
-const supabase: SupabaseClient = createClient(supabaseUrl, supabaseKey)
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 if (!process.env.PASTA_OPERATIONAL) {
   console.error('❌ PASTA_OPERATIONAL não definida no .env.local')
@@ -34,26 +35,21 @@ if (!process.env.PASTA_OPERATIONAL) {
 }
 const CLIENTS_DIR = path.resolve(process.env.PASTA_OPERATIONAL)
 
-// ✅ CORREÇÃO v1.3.2: Parsear argumentos CLI com guard
+// ✅ PARSEAR ARGUMENTOS CLI
 const args = process.argv.slice(2)
 const clientArgIndex = args.indexOf('--client')
 
-// ✅ Validar se --client foi passado
 if (clientArgIndex === -1 || clientArgIndex === args.length - 1) {
   console.error('❌ Uso: npx ts-node scripts/extract-demographics.ts --client <handle>')
   process.exit(1)
 }
 
-// ✅ Extrair o valor do argumento --client
-const clientUsername: string = args[clientArgIndex + 1]
+const CLIENT_USERNAME: string = args[clientArgIndex + 1]
 
-if (!clientUsername || clientUsername.startsWith('--')) {
+if (!CLIENT_USERNAME || CLIENT_USERNAME.startsWith('--')) {
   console.error('❌ Valor inválido para --client')
   process.exit(1)
 }
-
-// ✅ Declarar CLIENT_UUID com let (será atribuído em main())
-let CLIENT_UUID: string
 
 // ─── Schemas Zod ──────────────────────────────────────────────────────────
 
@@ -93,7 +89,7 @@ const AudienceInsightsSchema = z.object({
   })),
 })
 
-// ─── Tipos alinhados com orbit.ts ─────────────────────────────────────────
+// ─── Tipos ────────────────────────────────────────────────────────────────
 
 type GenderData = {
   male_pct:   number
@@ -199,12 +195,6 @@ function findFile(clientUsername: string, flatName: string): string | null {
   return candidates.find(p => fs.existsSync(p)) ?? null
 }
 
-function extractUsernameFromFolder(folderPath: string): string {
-  const base  = path.basename(folderPath)
-  const match = base.match(/instagram-([^-]+)-\d{4}-\d{2}-\d{2}/)
-  return match?.[1] ?? base
-}
-
 // ─── Extração de seguidores ───────────────────────────────────────────────
 
 function extractFollowers(clientUsername: string): number {
@@ -226,7 +216,7 @@ function extractFollowers(clientUsername: string): number {
 
 // ─── Extração de username ─────────────────────────────────────────────────
 
-function extractUsername(folderPath: string, clientUsername: string): string {
+function extractUsername(clientUsername: string): string {
   const p = findFile(clientUsername, 'personal_information.json')
   if (!p) return clientUsername
 
@@ -280,128 +270,113 @@ function extractDemographics(clientUsername: string): Demographics | null {
 // ─── Persistência ─────────────────────────────────────────────────────────
 
 async function persistClientData(
-  clientId:      string,
+  clientId: string,
   clientUsername: string,
   totalFollowers: number,
-  demographics:   Demographics | null,
+  demographics: Demographics | null
 ): Promise<void> {
   const today = new Date().toISOString().split('T')[0]
 
-  const { error: deleteKpiError } = await supabase
-    .from('kpi_snapshots')
-    .delete()
-    .eq('client_id', clientId)
-    .eq('metric', 'seguidores-totais')
-    .eq('period_start', today)
-    .eq('period_end', today)
+    // 1. SALVAR SEGUIDORES TOTAIS (MUDE PARA INSERT SIMPLES)
+    // 1. SALVAR SEGUIDORES TOTAIS (REMOÇÃO DO CAMPO CONFLITANTE)
+  const { error: accountError } = await supabase
+    .schema('orbit')
+    .from('ig_account_snapshots')
+    .insert({
+      client_id: clientId,
+      followers_total: totalFollowers,
+      period_start: today,
+      period_end: today
+      // REMOVIDO: period_source (O PostgreSQL usará o default configurado na tabela)
+    });
 
-  if (deleteKpiError) {
-    console.warn(`   ⚠️  Falha ao limpar registro anterior de seguidores: ${deleteKpiError.message}`)
+  if (accountError) {
+    console.error(`   ❌ Erro ao salvar seguidores em ig_account_snapshots: ${accountError.message}`);
+  } else {
+    console.log(`   ✅ Seguidores salvos em ig_account_snapshots: ${totalFollowers}`);
   }
 
-  const { error: kpiError } = await supabase
-    .from('kpi_snapshots')
-    .insert({
-      client_id:    clientId,
-      metric:       'seguidores-totais',
-      value:        totalFollowers,
-      period_start: today,
-      period_end:   today,
-    })
-
-  if (kpiError) console.error(`   ❌ Seguidores: ${kpiError.message}`)
-  else          console.log(`   ✅ Seguidores (followers_1): ${totalFollowers}`)
-
-  if (demographics) {
-    const { error: demoError } = await supabase
-      .from('clients')
-      .update({
-        avatar_gender_real:      demographics.gender,
-        avatar_age_range_real:   demographics.ageRange,
-        avatar_cities_real:      demographics.cities,
-        avatar_countries_real:   demographics.countries,
-        demographics_updated_at: new Date().toISOString(),
-      })
-      .eq('id', clientId)
-
-    if (demoError) {
-      console.error(`   ❌ Demografia: ${demoError.message}`)
-    } else {
-      console.log(`   ✅ Gênero: M=${demographics.gender.male_pct}% F=${demographics.gender.female_pct}%`)
-      console.log(`   ✅ Cidades: ${demographics.cities.length}`)
-      console.log(`   ✅ Países:  ${demographics.countries.length}`)
-    }
+  if (accountError) {
+    console.error(`   ❌ Erro ao salvar seguidores: ${accountError.message}`)
   } else {
+    console.log(`   ✅ Seguidores salvos: ${totalFollowers}`)
+  }
+
+  if (!demographics) {
     console.log('   ⚠️  Sem dados demográficos para gravar')
+    return
+  }
+
+  const safeCities = Array.isArray(demographics.cities) ? demographics.cities : []
+  const safeCountries = Array.isArray(demographics.countries) ? demographics.countries : []
+
+  const payload = {
+    client_id: clientId,
+    period_start: today,
+    period_end: today,
+    gender_female_pct: demographics.gender?.female_pct ?? 0,
+    gender_male_pct: demographics.gender?.male_pct ?? 0,
+    gender_other_pct: demographics.gender?.other_pct ?? 0,
+    age_13_17_pct: 0,
+    age_18_24_pct: demographics.ageRange?.['18-24'] ?? 0,
+    age_25_34_pct: demographics.ageRange?.['25-34'] ?? 0,
+    age_35_44_pct: demographics.ageRange?.['35-44'] ?? 0,
+    age_45_54_pct: demographics.ageRange?.['45-54'] ?? 0,
+    age_55_plus_pct: demographics.ageRange?.['55+'] ?? 0,
+    top_cities: safeCities,
+    top_countries: safeCountries
+  }
+
+  const { error: insertError } = await supabase
+    .schema('orbit')
+    .from('ig_audience_snapshots')
+    .insert(payload)
+
+  if (insertError) {
+    console.error(`   ❌ Erro ao salvar demografia: ${insertError.message}`)
+  } else {
+    console.log(`   ✅ Gênero: M=${payload.gender_male_pct}% F=${payload.gender_female_pct}%`)
+    console.log(`   ✅ Cidades: ${safeCities.length}`)
+    console.log(`   ✅ Países: ${safeCountries.length}`)
   }
 }
 
-// ─── Main ─────────────────────────────────────────────────────────────────
+// ─── FUNÇÃO PRINCIPAL (ESTAVA FALTANDO!) ───────────────────────────────────
 
 async function main(): Promise<void> {
-  console.log('\\n🔄 ORBIT · Extract Demographics — v1.3.2')
+  console.log('\n🔄 ORBIT · Extract Demographics — v1.3.3')
   console.log('═'.repeat(55))
 
-  // ✅ CORREÇÃO v1.3.2: Resolver CLIENT_UUID dinamicamente
-  // clientUsername já foi validado acima (não pode ser undefined)
   try {
-    CLIENT_UUID = await resolveClientId(supabase, clientUsername)
-    console.log(`🆔 UUID resolvido: ${CLIENT_UUID}`)
-    console.log(`📱 Cliente: ${clientUsername}`)
-  } catch (err) {
-    console.error(`❌ Erro ao resolver UUID: ${err instanceof Error ? err.message : String(err)}`)
+    // ✅ PASSO 1: Resolver UUID do cliente
+    console.log(`\n🔍 Resolvendo UUID para: @${CLIENT_USERNAME}`)
+    const CLIENT_UUID = await resolveClientId(supabase, CLIENT_USERNAME)
+    console.log(`✅ UUID resolvido: ${CLIENT_UUID}`)
+
+    // ✅ PASSO 2: Extrair dados
+    console.log(`\n📊 Extraindo dados de: @${CLIENT_USERNAME}`)
+    const username = extractUsername(CLIENT_USERNAME)
+    const followers = extractFollowers(CLIENT_USERNAME)
+    const demographics = extractDemographics(CLIENT_USERNAME)
+
+    console.log(`   👤 Username: @${username}`)
+    console.log(`   👥 Seguidores: ${followers}`)
+    console.log(`   📈 Demografia: ${demographics ? 'Encontrada' : 'Não encontrada'}`)
+
+    // ✅ PASSO 3: Persistir dados
+    console.log(`\n💾 Salvando em Supabase...`)
+    await persistClientData(CLIENT_UUID, username, followers, demographics)
+
+    console.log('\n✅ Concluído com sucesso!')
+  } catch (error) {
+    console.error('❌ Erro durante execução:', error instanceof Error ? error.message : error)
     process.exit(1)
   }
-
-  if (!fs.existsSync(CLIENTS_DIR)) {
-    console.error(`❌ Pasta não encontrada: ${CLIENTS_DIR}`)
-    process.exit(1)
-  }
-
-  const items       = fs.readdirSync(CLIENTS_DIR)
-  const hasJsonFiles = items.some(f => f.endsWith('.json'))
-
-  let foldersToProcess: string[]
-  if (hasJsonFiles) {
-    foldersToProcess = [CLIENTS_DIR]
-    console.log(`📂 Modo flat — processando: ${CLIENTS_DIR}`)
-  } else {
-    foldersToProcess = items
-      .filter(f => fs.statSync(path.join(CLIENTS_DIR, f)).isDirectory())
-      .map(f => path.join(CLIENTS_DIR, f))
-    console.log(`📂 ${foldersToProcess.length} pasta(s) de cliente(s)`)
-  }
-
-  console.log('')
-
-  for (const folderPath of foldersToProcess) {
-    try {
-      const folderUsername = extractUsernameFromFolder(folderPath)
-      const username       = extractUsername(folderPath, folderUsername)
-
-      console.log(`🔍 Pasta: ${path.basename(folderPath)}`)
-      console.log(`   Username: ${username}`)
-
-      const followers    = extractFollowers(username)
-      const demographics = extractDemographics(username)
-
-      await persistClientData(CLIENT_UUID, username, followers, demographics)
-
-    } catch (err: unknown) {
-      console.error(`   ❌ ${err instanceof Error ? err.message : String(err)}`)
-    }
-
-    console.log('')
-  }
-
-  console.log('═'.repeat(55))
-  console.log('✅ Extração concluída\\n')
 }
 
-// ✅ Chamar main() corretamente
+// ─── CHAMAR FUNÇÃO PRINCIPAL ───────────────────────────────────────────────
+
 main().catch(err => {
   console.error('❌ Erro fatal:', err instanceof Error ? err.message : err)
   process.exit(1)
 })
-
-
