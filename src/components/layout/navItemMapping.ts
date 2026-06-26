@@ -1,68 +1,45 @@
 /* ==========================================================================
-   ORBIT · Navigation Mapping (v1.0.0)
-   Caminho físico real: src/components/layout/navItemMapping.ts
-   Responsabilidade: Centralizar mapeamento de item.id → TabId
-   Data: 2026-06-12 - 22:45 (São Paulo)
-   Status: ✅ PRONTO PARA PRODUÇÃO
+   ORBIT · Navigation Mapping
+   Caminho: src/components/layout/navItemMapping.ts
+   Versão: 2.0.0
+
+   v2.0.0:
+   PROBLEMA RAIZ: O mapeamento anterior fazia o Sidebar interceptar os
+   cliques em Funil e Avatar e mudar activeTab em vez de navegar para a rota.
+   O resultado: a URL nunca mudava para /instagram/funil ou /instagram/avatar,
+   e os componentes FunnelScreen/AvatarScreen nunca eram renderizados.
+
+   FIX: Funil e Avatar são ROTAS INDEPENDENTES, não abas da tela /instagram.
+   - Clique em Funil → navega para /instagram/funil (rota real, Next.js)
+   - Clique em Avatar → navega para /instagram/avatar (rota real, Next.js)
+   - Apenas 'visao-geral-ig' continua sendo aba (overview dentro de /instagram)
+
+   O mapa NAV_ITEM_TO_TAB_MAP agora só contém 'visao-geral-ig'.
+   isNavItemActive para funil/avatar usa apenas pathname (sem activeTab).
    ========================================================================== */
 
 import type { TabId } from '../../types/orbit'
 
-/**
- * Mapeamento centralizado de itens de navegação para abas.
- * 
- * BENEFÍCIOS:
- * ✅ Single Source of Truth (SSOT) — evita duplicação
- * ✅ Fácil manutenção — alterar em um lugar afeta tudo
- * ✅ Tipagem segura — TypeScript garante consistência
- * ✅ Testabilidade — funções puras e isoladas
- * 
- * ORIGEM: P0_task_spec.md (Seção 3.1 - Ubiquitous Language)
- */
+// Apenas itens que SÃO abas dentro de /instagram ficam aqui
+// Funil e Avatar foram promovidos para rotas próprias
 export const NAV_ITEM_TO_TAB_MAP: Record<string, TabId> = {
   'visao-geral-ig': 'overview',
-  'funil-simulador': 'por-post',
-  'avatar-alignment': 'audiencia',
+  // 'funil-simulador' → REMOVIDO: é rota /instagram/funil agora
+  // 'avatar-alignment' → REMOVIDO: é rota /instagram/avatar agora
 } as const
 
-/**
- * Obtém a aba correspondente para um item de navegação.
- * 
- * @param itemId - ID do item de navegação (ex: 'funil-simulador')
- * @returns TabId correspondente ou null se não encontrado
- * 
- * @example
- * const tabId = getTabForNavItem('funil-simulador')
- * // Retorna: 'por-post'
- */
 export function getTabForNavItem(itemId: string): TabId | null {
   return NAV_ITEM_TO_TAB_MAP[itemId] ?? null
 }
 
 /**
- * Verifica se um item de navegação está ativo.
- * 
- * LÓGICA:
- * 1. Se o item NÃO mapeia para uma aba → apenas verificar pathname
- * 2. Se o item mapeia para uma aba → verificar AMBAS as condições:
- *    - pathname === itemHref (rota correta)
- *    - activeTab === expectedTab (aba correta)
- * 
- * @param itemId - ID do item de navegação
- * @param pathname - Rota atual (ex: '/instagram/funil')
- * @param itemHref - href do item (ex: '/instagram/funil')
- * @param activeTab - Aba ativa no contexto (ex: 'por-post')
- * @returns true se o item está ativo
- * 
- * @example
- * // Caso 1: Item que mapeia para aba
- * isNavItemActive('funil-simulador', '/instagram/funil', '/instagram/funil', 'por-post')
- * // Retorna: true (rota correta E aba correta)
- * 
- * @example
- * // Caso 2: Item que NÃO mapeia para aba
- * isNavItemActive('carteira', '/carteira', '/carteira', 'overview')
- * // Retorna: true (apenas rota correta)
+ * Determina se um item de nav está ativo.
+ *
+ * Lógica v2.0.0:
+ * - Se o item mapeia para uma aba (visao-geral-ig):
+ *   ativo se pathname === href E activeTab === expectedTab
+ * - Se NÃO mapeia para aba (funil-simulador, avatar-alignment, carteira, alertas):
+ *   ativo apenas se pathname === href (ou começa com href para rotas aninhadas)
  */
 export function isNavItemActive(
   itemId: string,
@@ -71,48 +48,21 @@ export function isNavItemActive(
   activeTab: TabId
 ): boolean {
   const expectedTab = getTabForNavItem(itemId)
-  
-  // Se o item não mapeia para uma aba, apenas verificar pathname
-  if (!expectedTab) {
-    return pathname === itemHref
+
+  if (expectedTab) {
+    // É uma aba — precisa estar na rota E na aba certa
+    return pathname === itemHref && activeTab === expectedTab
   }
-  
-  // Se mapeia para uma aba, verificar AMBAS as condições
-  return pathname === itemHref && activeTab === expectedTab
+
+  // É uma rota — apenas pathname
+  // Usa startsWith para cobrir sub-rotas (ex: /instagram/funil/detail)
+  return pathname === itemHref || pathname.startsWith(itemHref + '/')
 }
 
-/**
- * Obtém o mapeamento completo para fins de debug/logging.
- * 
- * @returns Objeto com todos os mapeamentos
- * 
- * @example
- * const mapping = getNavItemMapping()
- * console.log(mapping)
- * // {
- * //   'visao-geral-ig': 'overview',
- * //   'funil-simulador': 'por-post',
- * //   'avatar-alignment': 'audiencia'
- * // }
- */
 export function getNavItemMapping(): Record<string, TabId> {
   return { ...NAV_ITEM_TO_TAB_MAP }
 }
 
-/**
- * Valida se um itemId é válido (existe no mapeamento).
- * 
- * @param itemId - ID do item a validar
- * @returns true se o itemId existe no mapeamento
- * 
- * @example
- * isValidNavItem('funil-simulador') // true
- * isValidNavItem('item-inexistente') // false
- */
 export function isValidNavItem(itemId: string): boolean {
   return itemId in NAV_ITEM_TO_TAB_MAP
 }
-
-
-
-

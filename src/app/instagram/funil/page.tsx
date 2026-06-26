@@ -1,14 +1,14 @@
 // src/app/instagram/funil/page.tsx
 /**
  * ORBIT · Funil Page (L4 — Rota)
- * Versão: 2.0.0
+ * Versão: 1.0.0
  * Responsabilidade: Renderizar FunnelScreen com seletor de clientes
  * 
  * Fluxo:
  * 1. Recebe CLIENTS (hardcoded)
  * 2. useState para activeClientKey
- * 3. Renderiza OrbitDashboardProvider com clientId + PERIOD_START/END
- * 4. Renderiza FunnelScreen (componente filho) + passa useFunnel hook
+ * 3. Renderiza OrbitDashboardProvider com clientId
+ * 4. Renderiza FunnelScreen (componente filho)
  */
 
 'use client'
@@ -17,7 +17,6 @@ import { useState } from 'react'
 import { CLIENTS, PERIOD_START, PERIOD_END } from '@/lib/constants'
 import { OrbitDashboardProvider } from '@/context/OrbitDashboardContext'
 import FunnelScreen from '@/components/screens/FunnelScreen'
-import { useFunnel } from '@/hooks/useFunnel'
 
 export default function FunnelPage() {
   const clientKeys = Object.keys(CLIENTS) as (keyof typeof CLIENTS)[]
@@ -27,8 +26,8 @@ export default function FunnelPage() {
   return (
     <OrbitDashboardProvider
       clientId={activeClient.id}
-      periodStart={PERIOD_START}        // ✅ Date (não .toISOString())
-      periodEnd={PERIOD_END}            // ✅ Date (não .toISOString())
+      periodStart={PERIOD_START}
+      periodEnd={PERIOD_END}
       usePrototypeData={false}
     >
       <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
@@ -62,9 +61,9 @@ export default function FunnelPage() {
           ))}
         </nav>
 
-        {/* Funel Screen — passa useFunnel hook como prop */}
+        {/* Funel Screen */}
         <div style={{ flex: 1, overflow: 'auto' }}>
-          <FunnelScreen useFunnel={useFunnel} />  {/* ✅ PASSA O HOOK */}
+          <FunnelScreen />
         </div>
       </div>
     </OrbitDashboardProvider>

@@ -1,14 +1,14 @@
-// src/app/instagram/funil/page.tsx
+// src/app/instagram/avatar/page.tsx
 /**
- * ORBIT · Funil Page (L4 — Rota)
- * Versão: 2.0.0
- * Responsabilidade: Renderizar FunnelScreen com seletor de clientes
+ * ORBIT · Avatar Page (L4 — Rota)
+ * Versão: 1.0.0
+ * Responsabilidade: Renderizar AvatarScreen com seletor de clientes
  * 
  * Fluxo:
  * 1. Recebe CLIENTS (hardcoded)
  * 2. useState para activeClientKey
- * 3. Renderiza OrbitDashboardProvider com clientId + PERIOD_START/END
- * 4. Renderiza FunnelScreen (componente filho) + passa useFunnel hook
+ * 3. Renderiza OrbitDashboardProvider com clientId
+ * 4. Renderiza AvatarScreen (componente filho)
  */
 
 'use client'
@@ -16,10 +16,9 @@
 import { useState } from 'react'
 import { CLIENTS, PERIOD_START, PERIOD_END } from '@/lib/constants'
 import { OrbitDashboardProvider } from '@/context/OrbitDashboardContext'
-import FunnelScreen from '@/components/screens/FunnelScreen'
-import { useFunnel } from '@/hooks/useFunnel'
+import AvatarScreen from '@/components/screens/AvatarScreen'
 
-export default function FunnelPage() {
+export default function AvatarPage() {
   const clientKeys = Object.keys(CLIENTS) as (keyof typeof CLIENTS)[]
   const [activeClientKey, setActiveClientKey] = useState<keyof typeof CLIENTS>(clientKeys[0])
   const activeClient = CLIENTS[activeClientKey]
@@ -27,8 +26,8 @@ export default function FunnelPage() {
   return (
     <OrbitDashboardProvider
       clientId={activeClient.id}
-      periodStart={PERIOD_START}        // ✅ Date (não .toISOString())
-      periodEnd={PERIOD_END}            // ✅ Date (não .toISOString())
+      periodStart={PERIOD_START.toISOString()}
+      periodEnd={PERIOD_END.toISOString()}
       usePrototypeData={false}
     >
       <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
@@ -62,9 +61,9 @@ export default function FunnelPage() {
           ))}
         </nav>
 
-        {/* Funel Screen — passa useFunnel hook como prop */}
+        {/* Avatar Screen */}
         <div style={{ flex: 1, overflow: 'auto' }}>
-          <FunnelScreen useFunnel={useFunnel} />  {/* ✅ PASSA O HOOK */}
+          <AvatarScreen />
         </div>
       </div>
     </OrbitDashboardProvider>

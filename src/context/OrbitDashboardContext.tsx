@@ -1,11 +1,12 @@
 /* ==========================================================================
    ORBIT · Context — OrbitDashboardContext
-   Versão: 2.0.0  |  Data: 2026-06-20
+   Caminho: src/context/OrbitDashboardContext.tsx
+   Versão: 2.0.0
 
    v2.0.0:
-   ✅ usePrototypeData removido do estado, da interface e das props
-   ✅ setUsePrototypeData removido
-   ✅ UseInstagramOverviewParams não carrega mais flag de mock
+   - usePrototypeData removido (era flag de mock — removido do hook também)
+   - clientId exposto no contexto para screens que precisam (FunnelScreen, AvatarScreen)
+   - setActiveTab exposto para Sidebar controlar abas sem prop drilling
    ========================================================================== */
 
 'use client'
@@ -24,9 +25,7 @@ import {
 } from '../hooks/useInstagramOverview'
 import type { TabId } from '../types/orbit'
 
-// ─────────────────────────────────────────────
-// Interface do contexto
-// ─────────────────────────────────────────────
+// ─── Interface do contexto ───────────────────────────────────────────────────
 
 interface OrbitDashboardContextValue extends UseInstagramOverviewReturn {
   activeTab:    TabId
@@ -34,24 +33,19 @@ interface OrbitDashboardContextValue extends UseInstagramOverviewReturn {
   clientId:     string
 }
 
-// ─────────────────────────────────────────────
-// Criação do contexto
-// ─────────────────────────────────────────────
+// ─── Criação do contexto ──────────────────────────────────────────────────────
 
 const OrbitDashboardContext = createContext<OrbitDashboardContextValue | null>(null)
 
-// ─────────────────────────────────────────────
-// Props do Provider
-// ─────────────────────────────────────────────
+// ─── Props do Provider ────────────────────────────────────────────────────────
 
 export interface OrbitDashboardProviderProps extends UseInstagramOverviewParams {
   children:          ReactNode
   initialActiveTab?: TabId
+  // usePrototypeData REMOVIDO em v2.0.0
 }
 
-// ─────────────────────────────────────────────
-// Provider
-// ─────────────────────────────────────────────
+// ─── Provider ─────────────────────────────────────────────────────────────────
 
 export function OrbitDashboardProvider({
   children,
@@ -79,9 +73,7 @@ export function OrbitDashboardProvider({
   )
 }
 
-// ─────────────────────────────────────────────
-// Hook de consumo
-// ─────────────────────────────────────────────
+// ─── Hook de consumo ──────────────────────────────────────────────────────────
 
 export function useOrbitDashboard(): OrbitDashboardContextValue {
   const ctx = useContext(OrbitDashboardContext)
@@ -94,4 +86,3 @@ export function useOrbitDashboard(): OrbitDashboardContextValue {
 
   return ctx
 }
-
