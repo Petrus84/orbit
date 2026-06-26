@@ -60,15 +60,16 @@ export interface AlignmentBar {
  * Full alignment data for one client — the top-level shape returned by the
  * repository and consumed by the hook.
  */
+// ✅ DEPOIS:
 export interface AvatarAlignment {
-   id: string;                    // ← ADICIONAR (React key)
-  clientId: string;              // ← ADICIONAR (isolamento de dados)
-  expected: AvatarProfile;
-  real: AvatarProfile;
-  score: number;
-  status: AlignmentStatus;
-  bars: AlignmentBar[];
-  recommendation: string;
+  id:             string           // UUID do registro de alinhamento
+  clientId:       string           // UUID do cliente
+  expected:       AvatarProfile
+  real:           AvatarProfile
+  score:          number
+  status:         AlignmentStatus
+  bars:           AlignmentBar[]
+  recommendation: string
 }
 
 // ─── Display Helpers ──────────────────────────────────────────────────────────

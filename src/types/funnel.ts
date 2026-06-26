@@ -32,6 +32,7 @@ export interface FunnelMetrics {
   /** Taxa de conversão real (%) — vendas / cliques × 100 */
   taxaConv: number
 }
+
 // ─────────────────────────────────────────────
 // Entidade: Configuração de Slider do Simulador
 // ─────────────────────────────────────────────
@@ -76,6 +77,14 @@ export interface FunnelScreenData {
   real:      FunnelMetrics
   simulated: SimulatedFunnelResult | null
   sliders:   SliderConfig[]
+}
+
+export interface UseFunnelResult {
+  data:        FunnelMetrics | null
+  status:      'idle' | 'loading' | 'success' | 'error'
+  error:       string | null
+  lastUpdated: Date | null
+  refetch:     () => void
 }
 
 // ─────────────────────────────────────────────

@@ -16,6 +16,7 @@
 import { useState } from 'react'
 import { CLIENTS, PERIOD_START, PERIOD_END } from '@/lib/constants'
 import { OrbitDashboardProvider } from '@/context/OrbitDashboardContext'
+import { useFunnel } from '@/hooks/useFunnel'
 import FunnelScreen from '@/components/screens/FunnelScreen'
 
 export default function FunnelPage() {
@@ -28,7 +29,6 @@ export default function FunnelPage() {
       clientId={activeClient.id}
       periodStart={PERIOD_START}
       periodEnd={PERIOD_END}
-      usePrototypeData={false}
     >
       <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
         {/* Client Selector Nav */}
@@ -63,7 +63,12 @@ export default function FunnelPage() {
 
         {/* Funel Screen */}
         <div style={{ flex: 1, overflow: 'auto' }}>
-          <FunnelScreen />
+          <FunnelScreen
+            clientId={activeClient.id}
+            periodStart={PERIOD_START.toISOString()}
+            periodEnd={PERIOD_END.toISOString()}
+            useFunnel={useFunnel}
+          />
         </div>
       </div>
     </OrbitDashboardProvider>

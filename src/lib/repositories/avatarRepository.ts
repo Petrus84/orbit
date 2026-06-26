@@ -167,8 +167,17 @@ function rowToAvatarAlignment(row: AvatarAlignmentRow): AvatarAlignment {
   const bars           = buildBars(row)
   const recommendation = buildRecommendation(score, bars)
 
-  return { expected, real, score, status, bars, recommendation }
-}
+  return {
+    id:       crypto.randomUUID(),  // ✅ UUID único por cálculo
+    clientId: row.client_id,        // ✅ vem do próprio row — sem shorthand inválido
+    expected,
+    real,
+    score,
+    status,
+    bars,
+    recommendation,
+  }
+}  // ← ✅ chave de fechamento que estava faltando
 
 // ─── fetchAvatarAlignment ────────────────────────────────────────────────────
 
@@ -183,6 +192,8 @@ export async function fetchAvatarAlignment(clientId: string): Promise<AvatarAlig
         'alignment_score', 'alignment_status',
       ].join(', ')
     )
+
+    
 
     const { data, error } = await (query as unknown as {
       eq: (col: string, val: string) => {

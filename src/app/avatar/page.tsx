@@ -1,18 +1,10 @@
 /* ==========================================================================
-   ORBIT · Avatar Page (L4 — Rota)
+   ORBIT · Avatar Page
    Caminho: src/app/instagram/avatar/page.tsx
-   Versão: 2.0.0
+   Versão: 2.1.0
 
-   FIX 404: Esta rota não existia — Sidebar apontava para /instagram/avatar
-   mas o arquivo não estava no filesystem.
-
-   FIX AvatarScreen: O componente recebe clientId como prop OU lê de useParams.
-   Como a rota não tem [clientId] na URL, passamos via prop explícita.
-
-   FIX usePrototypeData: Removido do OrbitDashboardProvider (v2.0.0).
-
-   FIX periodStart.toISOString(): OrbitDashboardProvider espera Date, não string.
-   Esta versão passa Date diretamente (sem .toISOString()).
+   FIX TS2613: import nomeado { AvatarScreen } — AvatarScreen.tsx não tem default export
+   FIX TS2322: PERIOD_START/END passados como Date (sem .toISOString())
    ========================================================================== */
 
 'use client'
@@ -20,7 +12,7 @@
 import { useState } from 'react'
 import { CLIENTS, PERIOD_START, PERIOD_END, type ClientKey } from '@/lib/constants'
 import { OrbitDashboardProvider } from '@/context/OrbitDashboardContext'
-import { AvatarScreen } from '@/components/screens/AvatarScreen'
+import { AvatarScreen } from '@/components/screens/AvatarScreen'   // ✅ named import
 
 export default function AvatarPage() {
   const clientKeys = Object.keys(CLIENTS) as ClientKey[]
@@ -30,12 +22,11 @@ export default function AvatarPage() {
   return (
     <OrbitDashboardProvider
       clientId={activeClient.id}
-      periodStart={PERIOD_START}   // ✅ Date — não .toISOString()
-      periodEnd={PERIOD_END}       // ✅ Date — não .toISOString()
-      // ✅ usePrototypeData REMOVIDO (v2.0.0 do context)
+      periodStart={PERIOD_START}   // ✅ Date — sem .toISOString()
+      periodEnd={PERIOD_END}       // ✅ Date — sem .toISOString()
     >
       <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: '#0C0C0F' }}>
-        {/* Seletor de cliente */}
+
         <nav
           style={{
             display: 'flex',
@@ -49,6 +40,7 @@ export default function AvatarPage() {
           {clientKeys.map((key) => (
             <button
               key={key}
+              type="button"
               onClick={() => setActiveClientKey(key)}
               aria-pressed={activeClientKey === key}
               style={{
@@ -72,10 +64,10 @@ export default function AvatarPage() {
           ))}
         </nav>
 
-        {/* AvatarScreen com clientId explícito (não depende de useParams) */}
         <div style={{ flex: 1, overflow: 'auto' }}>
           <AvatarScreen clientId={activeClient.id} />
         </div>
+
       </div>
     </OrbitDashboardProvider>
   )

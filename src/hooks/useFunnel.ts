@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { fetchFunnelData } from '../lib/repositories/funnelRepository'
 
 import type { AsyncState, FetchStatus } from '../types/orbit'
-import type { FunnelMetrics } from '../types/funnel'
+import type { FunnelMetrics, UseFunnelResult } from '../types/funnel'
 
 const MAX_RETRIES = 3
 const BASE_DELAY_MS = 1000
@@ -16,11 +16,6 @@ function getRetryDelay(attemptIndex: number): number {
 
 function wait(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms))
-}
-
-export interface UseFunnelResult extends AsyncState<FunnelMetrics | null> {
-  lastUpdated: Date | null
-  refetch: () => void
 }
 
 export function useFunnel(

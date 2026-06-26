@@ -21,17 +21,13 @@ import FunnelSimulator from '@/components/common/FunnelSimulator'
 import type { FunnelData } from '@/components/common/FunnelChart'
 import type { SimulatorState } from '@/components/common/FunnelSimulator'
 import type { SimulationResult } from '@/components/common/FunnelResult'
-
-interface UseFunnelResult {
-  data: FunnelData | null
-  status: 'idle' | 'loading' | 'success' | 'error'
-  error: string | null
-  refetch: () => void
-}
+import type { UseFunnelResult } from '@/types/funnel'
 
 interface FunnelScreenWrapperProps {
   clientId: string
-  useFunnel: (clientId: string) => UseFunnelResult
+  periodStart: string
+  periodEnd: string
+  useFunnel: (clientId: string, periodStart: string, periodEnd: string) => UseFunnelResult
 }
 
 // Fórmula: visitas = alcance × ctrBio/100 · cliques = visitas × ctrLink/100
@@ -94,9 +90,9 @@ function Panel({ title, children }: { title: string; children: React.ReactNode }
   )
 }
 
-export default function FunnelScreenWrapper({ clientId, useFunnel }: FunnelScreenWrapperProps) {
-  // Passa clientId direto — não depende de useParams
-  const { data, status, error, refetch } = useFunnel(clientId)
+export default function FunnelScreenWrapper({ clientId, periodStart, periodEnd, useFunnel }: FunnelScreenWrapperProps) {
+  // Passa clientId + período para o hook useFunnel
+  const { data, status, error, refetch } = useFunnel(clientId, periodStart, periodEnd)
 
   useEffect(() => {
     if (process.env.NODE_ENV === 'development') {
