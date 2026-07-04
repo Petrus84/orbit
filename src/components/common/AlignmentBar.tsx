@@ -1,33 +1,45 @@
-import React from "react";
-import { AlignmentBar as AlignmentBarType } from "../../types/avatar";
+// src/components/common/AlignmentBar.tsx
+
+import React from 'react';
+import { AlignmentBar as AlignmentBarType } from '../../types/avatar';
 
 interface AlignmentBarProps {
   bar: AlignmentBarType;
 }
 
+// ✅ NOVO: Mapear AlignmentColor ('green' | 'amber' | 'red') → STATUS_COLORS
+const COLOR_TO_STATUS = {
+  green: 'healthy',
+  amber: 'warning',
+  red: 'critical',
+} as const;
+
+// ✅ STATUS_COLORS com chaves corretas
 const STATUS_COLORS = {
   critical: {
-    realBar: "bg-rose-500",
-    alignment: "text-rose-400",
-    badge: "bg-rose-500/20 text-rose-300 border-rose-500/30",
-    dot: "bg-rose-500",
+    realBar: 'bg-rose-500',
+    alignment: 'text-rose-400',
+    badge: 'bg-rose-500/20 text-rose-300 border-rose-500/30',
+    dot: 'bg-rose-500',
   },
   warning: {
-    realBar: "bg-amber-500",
-    alignment: "text-amber-400",
-    badge: "bg-amber-500/20 text-amber-300 border-amber-500/30",
-    dot: "bg-amber-500",
+    realBar: 'bg-amber-500',
+    alignment: 'text-amber-400',
+    badge: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
+    dot: 'bg-amber-500',
   },
   healthy: {
-    realBar: "bg-emerald-500",
-    alignment: "text-emerald-400",
-    badge: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
-    dot: "bg-emerald-500",
+    realBar: 'bg-emerald-500',
+    alignment: 'text-emerald-400',
+    badge: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
+    dot: 'bg-emerald-500',
   },
-};
+} as const;
 
 export const AlignmentBar: React.FC<AlignmentBarProps> = ({ bar }) => {
-  const colors = STATUS_COLORS[bar.status];
+  // ✅ CORRETO: Mapear bar.color → status
+  const status = COLOR_TO_STATUS[bar.color];
+  const colors = STATUS_COLORS[status];
 
   // AlignmentBarType não tem campo 'alignment' — é derivado de 'variance'.
   // variance = |esperado - real| (0 = match perfeito, 100 = totalmente divergente)
@@ -44,11 +56,11 @@ export const AlignmentBar: React.FC<AlignmentBarProps> = ({ bar }) => {
         </div>
         <div className="flex items-center gap-3">
           <span className="text-xs text-gray-500">
-            Esperado:{" "}
+            Esperado:{' '}
             <span className="text-violet-400 font-semibold">{bar.expected}%</span>
           </span>
           <span className="text-xs text-gray-500">
-            Real:{" "}
+            Real:{' '}
             <span className={`font-semibold ${colors.alignment}`}>
               {bar.real}%
             </span>
