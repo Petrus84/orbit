@@ -12,7 +12,7 @@
 import { useState } from 'react'
 import { CLIENTS, PERIOD_START, PERIOD_END, type ClientKey } from '@/lib/constants'
 import { OrbitDashboardProvider } from '@/context/OrbitDashboardContext'
-import { AvatarScreen } from '@/components/screens/AvatarScreen'   // ✅ named import
+import { AvatarScreen } from '@/components/screens/AvatarScreen'
 
 export default function AvatarPage() {
   const clientKeys = Object.keys(CLIENTS) as ClientKey[]

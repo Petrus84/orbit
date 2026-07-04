@@ -1,34 +1,34 @@
 // src/app/instagram/avatar/page.tsx
 /**
  * ORBIT · Avatar Page (L4 — Rota)
- * Versão: 1.0.0
+ * Versão: 1.0.1
  * Responsabilidade: Renderizar AvatarScreen com seletor de clientes
  * 
- * Fluxo:
- * 1. Recebe CLIENTS (hardcoded)
- * 2. useState para activeClientKey
- * 3. Renderiza OrbitDashboardProvider com clientId
- * 4. Renderiza AvatarScreen (componente filho)
+ * Correções:
+ * 1. Ajustado o import correto de @/lib/constants.
+ * 2. Corrigida a inicialização do useState usando o array clientKeys.
+ * 3. Passado as datas como objetos Date puros (conforme v2.0.0 do contexto).
  */
 
 'use client'
 
 import { useState } from 'react'
-import { CLIENTS, PERIOD_START, PERIOD_END } from '@/lib/constants'
+import { CLIENTS, PERIOD_START, PERIOD_END } from '@/lib/constants' // ✅ Import corrigido e limpo
+import { AvatarScreen } from '@/components/screens/AvatarScreen'
 import { OrbitDashboardProvider } from '@/context/OrbitDashboardContext'
-import AvatarScreen from '@/components/screens/AvatarScreen'
 
 export default function AvatarPage() {
   const clientKeys = Object.keys(CLIENTS) as (keyof typeof CLIENTS)[]
+  
+  // ✅ Estado inicializado com segurança
   const [activeClientKey, setActiveClientKey] = useState<keyof typeof CLIENTS>(clientKeys[0])
   const activeClient = CLIENTS[activeClientKey]
 
   return (
     <OrbitDashboardProvider
       clientId={activeClient.id}
-      periodStart={PERIOD_START.toISOString()}
-      periodEnd={PERIOD_END.toISOString()}
-      usePrototypeData={false}
+      periodStart={PERIOD_START} // ✅ Correto: Objeto Date puro passado ao Provider
+      periodEnd={PERIOD_END}     // ✅ Correto: Objeto Date puro passado ao Provider
     >
       <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
         {/* Client Selector Nav */}

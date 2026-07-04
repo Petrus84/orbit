@@ -1,11 +1,16 @@
-/* ==========================================================================
-   ORBIT · Extract Demographics from Instagram Export — v1.3.3 (COMPLETO)
-   Arquivo: scripts/extract-demographics.ts
 
-   CORREÇÃO v1.3.3 (24/06/2026 — Petrus + Monica):
-   ✅ Adicionada função main() completa
-   ✅ Conectadas todas as funções auxiliares
-   ✅ Removidos imports desnecessários
+/*============================================================================
+# 3. ARQUIVO: extract-demographics.ts (AJUSTES CRÍTICOS)
+# ============================================================================
+
+extract_demographics_content = '''/* ==========================================================================
+   ORBIT · Extract Demographics from Instagram Export — v1.3.4 (SCHEMA ORBIT)
+   Arquivo: scripts/extract-demographics.ts
+   
+   ✅ CORREÇÕES v1.3.4:
+   - Busca de cliente SEMPRE via .schema('orbit').from('clients')
+   - Todas as tabelas de persistência em schema 'orbit'
+   - Eliminado conflito public vs orbit
    ========================================================================== */
 
 import dotenv from 'dotenv'
@@ -27,7 +32,7 @@ if (!supabaseUrl || !supabaseKey) {
   process.exit(1)
 }
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = createClient(supabaseUrl, supabaseKey)
 
 if (!process.env.PASTA_OPERATIONAL) {
   console.error('❌ PASTA_OPERATIONAL não definida no .env.local')
@@ -119,7 +124,7 @@ type Demographics = {
 // ─── Funções de parse ─────────────────────────────────────────────────────
 
 function parsePct(value: string): number {
-  const match = value.match(/([\d.]+)%/)
+  const match = value.match(/([\\d.]+)%/)
   return match ? parseFloat(match[1]) : 0
 }
 
@@ -149,7 +154,7 @@ function parseAgeRange(value: string): Omit<AgeRangeData, 'updated_at'> {
     '55+':   '55+',
   }
 
-  const regex = /([\d]+[-+][\d]*):\s*([\d.]+)%/g
+  const regex = /([\\d]+[-+][\\d]*):\\s*([\\d.]+)%/g
   let match: RegExpExecArray | null = regex.exec(value)
   while (match !== null) {
     const group  = match[1]
@@ -166,7 +171,7 @@ function parseAgeRange(value: string): Omit<AgeRangeData, 'updated_at'> {
 
 function parseLocations(value: string): LocationEntry[] {
   const entries: LocationEntry[] = []
-  const regex = /([^:,]+):\s*([\d.]+)%/g
+  const regex = /([^:,]+):\\s*([\\d.]+)%/g
   let match: RegExpExecArray | null = regex.exec(value)
   while (match !== null) {
     const name = match[1].trim()
@@ -277,8 +282,7 @@ async function persistClientData(
 ): Promise<void> {
   const today = new Date().toISOString().split('T')[0]
 
-    // 1. SALVAR SEGUIDORES TOTAIS (MUDE PARA INSERT SIMPLES)
-    // 1. SALVAR SEGUIDORES TOTAIS (REMOÇÃO DO CAMPO CONFLITANTE)
+  // 🔑 CORREÇÃO CRÍTICA: Usar .schema('orbit') obrigatoriamente
   const { error: accountError } = await supabase
     .schema('orbit')
     .from('ig_account_snapshots')
@@ -287,19 +291,12 @@ async function persistClientData(
       followers_total: totalFollowers,
       period_start: today,
       period_end: today
-      // REMOVIDO: period_source (O PostgreSQL usará o default configurado na tabela)
-    });
+    })
 
   if (accountError) {
-    console.error(`   ❌ Erro ao salvar seguidores em ig_account_snapshots: ${accountError.message}`);
+    console.error(`   ❌ Erro ao salvar seguidores em ig_account_snapshots: ${accountError.message}`)
   } else {
-    console.log(`   ✅ Seguidores salvos em ig_account_snapshots: ${totalFollowers}`);
-  }
-
-  if (accountError) {
-    console.error(`   ❌ Erro ao salvar seguidores: ${accountError.message}`)
-  } else {
-    console.log(`   ✅ Seguidores salvos: ${totalFollowers}`)
+    console.log(`   ✅ Seguidores salvos em ig_account_snapshots: ${totalFollowers}`)
   }
 
   if (!demographics) {
@@ -327,6 +324,7 @@ async function persistClientData(
     top_countries: safeCountries
   }
 
+  // 🔑 CORREÇÃO CRÍTICA: Usar .schema('orbit') obrigatoriamente
   const { error: insertError } = await supabase
     .schema('orbit')
     .from('ig_audience_snapshots')
@@ -341,20 +339,20 @@ async function persistClientData(
   }
 }
 
-// ─── FUNÇÃO PRINCIPAL (ESTAVA FALTANDO!) ───────────────────────────────────
+// ─── FUNÇÃO PRINCIPAL ───────────────────────────────────────────────────────
 
 async function main(): Promise<void> {
-  console.log('\n🔄 ORBIT · Extract Demographics — v1.3.3')
+  console.log('\\n🔄 ORBIT · Extract Demographics — v1.3.4')
   console.log('═'.repeat(55))
 
   try {
     // ✅ PASSO 1: Resolver UUID do cliente
-    console.log(`\n🔍 Resolvendo UUID para: @${CLIENT_USERNAME}`)
+    console.log(`\\n🔍 Resolvendo UUID para: @${CLIENT_USERNAME}`)
     const CLIENT_UUID = await resolveClientId(supabase, CLIENT_USERNAME)
     console.log(`✅ UUID resolvido: ${CLIENT_UUID}`)
 
     // ✅ PASSO 2: Extrair dados
-    console.log(`\n📊 Extraindo dados de: @${CLIENT_USERNAME}`)
+    console.log(`\\n📊 Extraindo dados de: @${CLIENT_USERNAME}`)
     const username = extractUsername(CLIENT_USERNAME)
     const followers = extractFollowers(CLIENT_USERNAME)
     const demographics = extractDemographics(CLIENT_USERNAME)
@@ -364,10 +362,10 @@ async function main(): Promise<void> {
     console.log(`   📈 Demografia: ${demographics ? 'Encontrada' : 'Não encontrada'}`)
 
     // ✅ PASSO 3: Persistir dados
-    console.log(`\n💾 Salvando em Supabase...`)
+    console.log(`\\n💾 Salvando em Supabase...`)
     await persistClientData(CLIENT_UUID, username, followers, demographics)
 
-    console.log('\n✅ Concluído com sucesso!')
+    console.log('\\n✅ Concluído com sucesso!')
   } catch (error) {
     console.error('❌ Erro durante execução:', error instanceof Error ? error.message : error)
     process.exit(1)

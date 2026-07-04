@@ -1,0 +1,170 @@
+/* ==========================================================================
+   ORBIT · Design Tokens (SSOT Prototype — 100% Aligned)
+   Versão: 2.0.0  |  Data: 2026-07-04
+   
+   Alinhamento 100% com SSOT Prototype HTML/CSS
+   - Cores: Idênticas ao protótipo
+   - Tipografia: DM Sans + DM Mono
+   - Spacing: Sistema 4px
+   - Border radius: r4, r8, r12, r16, r24
+   ========================================================================== */
+
+:root {
+  /* ═══════════════════════════════════════════════════════════════
+     BACKGROUNDS (SSOT — 5 camadas neomorphic)
+     ═══════════════════════════════════════════════════════════════ */
+
+  --bg: #0C0C0F;        /* Absolute black — base */
+  --bg1: #111116;       /* Sidebar background */
+  --bg2: #18181F;       /* Card background */
+  --bg3: #1F1F28;       /* Hover state */
+  --bg4: #26262F;       /* Active state */
+  
+  /* Aliases para compatibilidade com orbit-design-tokens */
+  --bg-base: var(--bg);
+  --bg-primary: var(--bg1);
+  --bg-card: var(--bg2);
+  --bg-hover: var(--bg3);
+  --bg-active: var(--bg4);
+
+  /* ═══════════════════════════════════════════════════════════════
+     BORDERS (SSOT)
+     ═══════════════════════════════════════════════════════════════ */
+
+  --line: #2A2A35;      /* Border default */
+  --line2: #33333F;     /* Border hover */
+  
+  /* Aliases */
+  --border-default: var(--line);
+  --border-glow-cyan: #00FFFF;
+  --border-glow-red: #FF4444;
+  --border-glow-gold: #FFC300;
+  --border-width: 1px;
+
+  /* ═══════════════════════════════════════════════════════════════
+     TEXT (SSOT — Hierarchy com warmth)
+     ═══════════════════════════════════════════════════════════════ */
+
+  --t0: #F0EFE8;        /* Primary text — off-white quente */
+  --t1: #B8B6B0;        /* Secondary text */
+  --t2: #706E6A;        /* Muted text */
+  --t3: #454340;        /* Dim text */
+  
+  /* Aliases */
+  --text-primary: var(--t0);
+  --text-secondary: var(--t1);
+  --text-muted: var(--t2);
+  --text-dim: var(--t3);
+
+  /* ═══════════════════════════════════════════════════════════════
+     ACCENTS & NEONS (SSOT — Unique identity)
+     ═══════════════════════════════════════════════════════════════ */
+
+  --acc: #C8FF57;       /* Lima ácido — ACENTO ÚNICO DO DESIGN */
+  --acc2: #8B5CF6;      /* Roxo secundário */
+  --acc3: #FF6B35;      /* Laranja terciário */
+  
+  /* Status colors */
+  --red: #FF4444;
+  --amber: #FFB020;
+  --green: #2ECC71;
+  --blue: #4A90FF;
+  
+  /* Aliases para neon */
+  --neon-cyan: #00FFFF;
+  --neon-red: #FF4444;
+  --neon-gold: #FFC300;
+  --neon-green: #00FF00;
+
+  /* ═══════════════════════════════════════════════════════════════
+     TYPOGRAPHY (SSOT — DM Sans + DM Mono)
+     ═══════════════════════════════════════════════════════════════ */
+
+  --font: 'DM Sans', sans-serif;
+  --mono: 'DM Mono', monospace;
+  
+  /* Aliases */
+  --font-family: var(--font);
+  --font-mono: var(--mono);
+  --font-weight-normal: 400;
+  --font-weight-bold: 600;
+  --line-height-base: 1.5;
+
+  /* Font sizes (baseado em SSOT) */
+  --font-size-xs: 10px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-lg: 15px;
+  --font-size-xl: 16px;
+  --font-size-2xl: 20px;
+  --font-size-3xl: 26px;
+  --font-size-4xl: 32px;
+
+  /* ═══════════════════════════════════════════════════════════════
+     BORDER RADIUS (SSOT — r4, r8, r12, r16, r24)
+     ═══════════════════════════════════════════════════════════════ */
+
+  --r4: 4px;
+  --r8: 8px;
+  --r12: 12px;
+  --r16: 16px;
+  --r24: 24px;
+  
+  /* Aliases */
+  --border-radius-sm: var(--r4);
+  --border-radius-md: var(--r8);
+  --border-radius-lg: var(--r12);
+  --radius-sm: var(--r4);
+  --radius-md: var(--r8);
+  --radius-lg: var(--r12);
+  --radius-pill: 9999px;
+
+  /* ═══════════════════════════════════════════════════════════════
+     SHADOWS
+     ═══════════════════════════════════════════════════════════════ */
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+  
+  /* Glow shadows */
+  --shadow-glow-cyan: 0 0 20px rgba(0, 255, 255, 0.3);
+  --shadow-glow-red: 0 0 20px rgba(255, 68, 68, 0.3);
+  --shadow-glow-gold: 0 0 20px rgba(255, 195, 0, 0.3);
+
+  /* Aliases */
+  --shadow-outer-sm: var(--shadow-sm);
+  --shadow-outer-md: var(--shadow-md);
+  --shadow-outer-lg: var(--shadow-lg);
+  --shadow-inner-cyan: var(--shadow-glow-cyan);
+  --shadow-inner-red: var(--shadow-glow-red);
+  --shadow-inner-gold: var(--shadow-glow-gold);
+
+  /* ═══════════════════════════════════════════════════════════════
+     TRANSITIONS
+     ═══════════════════════════════════════════════════════════════ */
+
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 300ms ease-in-out;
+  --transition-slow: 500ms ease-in-out;
+
+  /* ═══════════════════════════════════════════════════════════════
+     SPACING (SSOT — múltiplos de 4px)
+     ═══════════════════════════════════════════════════════════════ */
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+
+  /* ═══════════════════════════════════════════════════════════════
+     LAYOUT (SSOT — dimensões fixas)
+     ═══════════════════════════════════════════════════════════════ */
+
+  --sidebar-width: 220px;
+  --header-height: 52px;
+}

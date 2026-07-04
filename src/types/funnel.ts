@@ -1,106 +1,25 @@
+// ============================================================================
 // src/types/funnel.ts
-// ORBIT · Domain Types — Funil Interativo + Simulador
-// Versão: 1.0.0
+// RE-EXPORT BARREL — não declare tipos aqui.
+// Fonte canônica única: src/types/orbit.ts
+//
+// Antes deste arquivo declarava FetchStatus e AsyncState<T> localmente
+// (1 das 5 duplicações identificadas no mapeamento). Agora vêm de orbit.ts.
+//
+// Nota: FunnelStep e FunnelData (usados no funil visual) só existiam em
+// orbit.ts, não aqui — se algum componente precisar deles importando de
+// '@/types/funnel', adicione-os à lista abaixo.
+//
+// Manutenção: adicione tipos novos em orbit.ts e re-exporte aqui.
+// ============================================================================
 
-// ─────────────────────────────────────────────
-// Primitivos de estado assíncrono
-// ─────────────────────────────────────────────
-
-export type FetchStatus = 'idle' | 'loading' | 'success' | 'error'
-
-export interface AsyncState<T> {
-  data:   T
-  status: FetchStatus
-  error:  string | null
-}
-
-// ─────────────────────────────────────────────
-// Entidade: Funil (dados reais do período)
-// ─────────────────────────────────────────────
-
-export interface FunnelMetrics {
-  /** Total de contas únicas alcançadas no período */
-  alcance:  number
-  /** Visitas ao perfil / landing page */
-  visitas:  number
-  /** Cliques no link da bio ou CTA */
-  cliques:  number
-  /** Conversões / vendas confirmadas */
-  vendas:   number
-  /** CTR bio real (%) — cliques / alcance × 100 */
-  ctrBio:   number
-  /** Taxa de conversão real (%) — vendas / cliques × 100 */
-  taxaConv: number
-}
-
-// ─────────────────────────────────────────────
-// Entidade: Configuração de Slider do Simulador
-// ─────────────────────────────────────────────
-
-export interface SliderConfig {
-  /** Identificador do slider (ex: 'ctr', 'conv', 'alcance') */
-  id:        string
-  /** Rótulo visível */
-  label:     string
-  /** Valor atual editado pelo usuário */
-  current:   number
-  /** Valor mínimo permitido */
-  min:       number
-  /** Valor máximo permitido */
-  max:       number
-  /** Granularidade do passo */
-  step:      number
-  /** Valor de referência real (vindo do banco) */
-  benchmark: number
-  /** Unidade de exibição (ex: '%', 'k') */
-  unit:      string
-}
-
-// ─────────────────────────────────────────────
-// Entidade: Resultado do Simulador
-// ─────────────────────────────────────────────
-
-export interface SimulatedFunnelResult {
-  /** Parâmetros usados no cálculo */
-  inputs:      { ctr: number; conv: number; alcance: number }
-  /** FunnelMetrics calculado com os parâmetros simulados */
-  funnel:      FunnelMetrics
-  /** Variação de vendas vs funil real (%) */
-  deltaVendas: number
-}
-
-// ─────────────────────────────────────────────
-// Aggregate: tudo que a FunnelScreen precisa
-// ─────────────────────────────────────────────
-
-export interface FunnelScreenData {
-  real:      FunnelMetrics
-  simulated: SimulatedFunnelResult | null
-  sliders:   SliderConfig[]
-}
-
-export interface UseFunnelResult {
-  data:        FunnelMetrics | null
-  status:      'idle' | 'loading' | 'success' | 'error'
-  error:       string | null
-  lastUpdated: Date | null
-  refetch:     () => void
-}
-
-// ─────────────────────────────────────────────
-// Supabase Row Shape (raw — antes de transformar)
-// ─────────────────────────────────────────────
-
-export interface FunnelMetricsRow {
-  id:           string
-  client_id:    string
-  alcance:      number
-  visitas:      number
-  cliques:      number
-  vendas:       number
-  ctr_bio:      number
-  taxa_conv:    number
-  period_start: string
-  period_end:   string
-  created_at:   string
-}
+export type {
+  FetchStatus,
+  AsyncState,
+  FunnelMetrics,
+  SliderConfig,
+  SimulatedFunnelResult,
+  FunnelScreenData,
+  UseFunnelResult,
+  FunnelMetricsRow,
+} from './orbit'

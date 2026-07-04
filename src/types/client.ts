@@ -1,28 +1,18 @@
 // ============================================================================
 // src/types/client.ts
+// RE-EXPORT BARREL — não declare tipos aqui.
+// Fonte canônica única: src/types/orbit.ts
+//
+// Antes deste arquivo declarava FetchStatus e AsyncState<T> localmente
+// (1 das 5 duplicações identificadas no mapeamento). Agora vêm de orbit.ts.
+//
+// Manutenção: adicione tipos novos em orbit.ts e re-exporte aqui.
 // ============================================================================
 
-export type ClientStatus = "critical" | "warning" | "healthy";
-
-export type FetchStatus = "idle" | "loading" | "success" | "error";
-
-export interface AsyncState<T> {
-  data: T;
-  status: FetchStatus;
-  error: string | null;
-}
-
-export interface ClientMetrics {
-  follower_balance: number;
-  engagement_real: number;
-  ctr_link: number;
-}
-
-export interface Client {
-  id: string;
-  name: string;
-  handle: string;
-  avatarUrl: string | null;
-  status: ClientStatus;
-  metrics: ClientMetrics;
-}
+export type {
+  ClientStatus,
+  FetchStatus,
+  AsyncState,
+  ClientMetrics,
+  Client,
+} from './orbit'

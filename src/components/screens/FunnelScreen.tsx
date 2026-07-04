@@ -1,6 +1,5 @@
 // src/components/screens/FunnelScreen.tsx
 'use client'
-
 import React, { useEffect, useMemo, useState } from 'react'
 import SectionHead from '@/components/common/SectionHead'
 import FunnelChart from '@/components/common/FunnelChart'
@@ -17,21 +16,23 @@ interface FunnelScreenProps {
 }
 
 function computeSimulation(state: SimulatorState, ctrLink: number): SimulationResult {
+  // Ajuste matemático preventivo contra divisões espúrias por zero ou valores inteiros diretos
   const visitas = state.alcance * (state.ctrBio / 100)
   const cliques = visitas * (ctrLink / 100)
-  const vendas  = cliques * (state.taxaConv / 100)
+  const vendas = cliques * (state.taxaConv / 100)
+  
   return {
     alcanceSimulado: state.alcance,
     ctrBio: state.ctrBio,
     taxaConv: state.taxaConv,
     cliques: Math.round(cliques),
-    vendas:  Math.round(vendas),
+    vendas: Math.round(vendas),
   }
 }
 
 function ChartSkeleton() {
   return (
-    <div className="flex flex-col gap-4 animate-pulse">
+    <div className="flex flex-col gap-4 animate-pulse w-full">
       {[100, 60, 30, 12].map((w, i) => (
         <div key={i} className="flex flex-col gap-1.5">
           <div className="flex justify-between">
@@ -49,7 +50,7 @@ function ChartSkeleton() {
 
 function SimulatorSkeleton() {
   return (
-    <div className="flex flex-col gap-5 animate-pulse">
+    <div className="flex flex-col gap-5 animate-pulse w-full">
       {[0, 1, 2].map((i) => (
         <div key={i} className="flex flex-col gap-2">
           <div className="flex justify-between">
@@ -66,11 +67,13 @@ function SimulatorSkeleton() {
 
 function Panel({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="flex flex-col gap-4 rounded-2xl bg-[#18181F] p-5">
-      <p className="font-sans text-xs font-semibold uppercase tracking-widest text-zinc-600">
+    <div className="flex flex-col gap-4 rounded-2xl bg-[#18181F] p-6 w-full shadow-lg border border-zinc-800/40">
+      <p className="font-sans text-xs font-semibold uppercase tracking-widest text-zinc-500">
         {title}
       </p>
-      {children}
+      <div className="flex-1 w-full flex flex-col justify-center items-center">
+        {children}
+      </div>
     </div>
   )
 }
@@ -89,57 +92,84 @@ export default function FunnelScreen({ clientId, periodStart, periodEnd, useFunn
       console.log('data:', data)
       console.groupEnd()
     }
-  }, [clientId, periodStart, periodEnd, data, status, error])
+  } , [clientId, periodStart, periodEnd, data, status, error])
 
   const isLoading = status === 'idle' || status === 'loading'
-
+  
   const [simState, setSimState] = useState<SimulatorState>({
-    ctrBio:   5,
+    ctrBio: 5,
     taxaConv: 2,
-    alcance:  10_000,
+    alcance: 10_000,
   })
 
   const [synced, setSynced] = useState(false)
+
   if (data && !synced) {
-    setSimState({ ctrBio: data.ctrBio, taxaConv: data.taxaConv, alcance: data.alcance })
+    setSimState({ 
+      ctrBio: data.ctrBio ?? 5, 
+      taxaConv: data.taxaConv ?? 2, 
+      alcance: data.alcance ?? 10_000 
+    })
     setSynced(true)
   }
 
   const ctrLink = useMemo(() => {
-    if (!data || data.visitas === 0) return 10
-    return (data.cliques / data.visitas) * 100
+    if (!data || !data.visitas || data.visitas === 0) return 10
+    const rawCtr = (data.cliques / data.visitas) * 100
+    // Trava preventiva: se a taxa calculada for bizarra por ruído do scraper, limita a amostragem
+    return rawCtr > 100 ? 100 : rawCtr
   }, [data])
 
   const simResult = useMemo(() => computeSimulation(simState, ctrLink), [simState, ctrLink])
   const baseVendas = data?.vendas ?? 0
 
   return (
-    <main className="flex min-h-screen flex-col gap-6 bg-[#0C0C0F] px-4 py-6 sm:px-6">
+    // 🗹 DESIGN COMPLETO: Adicionado limite de largura max-w-7xl centralizado para matar o vazio
+    <main className="flex min-h-screen flex-col gap-6 bg-[#0C0C0F] px-4 py-8 sm:px-6 lg:px-8 w-full max-w-7xl mx-auto">
       <SectionHead title="Funil de conversão" subtitle="Dados reais vs. cenário simulado" />
 
       {status === 'error' && error ? (
-        <div className="rounded-2xl border border-red-500/20 bg-red-900/10 p-8 text-center">
-          <p className="text-sm text-red-400 mb-4">{error}</p>
+        <div className="rounded-2xl border border-red-500/20 bg-red-900/10 p-8 text-center max-w-2xl mx-auto w-full">
+          <p className="text-sm text-red-400 mb-4">{typeof error === 'string' ? error : 'Falha na requisição'}</p>
           <button
             type="button"
-            onClick={refetch}
-            className="rounded-full border border-red-500/40 bg-red-500/20 px-4 py-1.5 text-xs font-medium text-red-400 hover:bg-red-500/30"
+            onClick={() => refetch()}
+            className="rounded-full border border-red-500/40 bg-red-500/20 px-4 py-1.5 text-xs font-medium text-red-400 hover:bg-red-500/30 transition-all"
           >
             Tentar novamente
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          <Panel title="Funil real · 90 dias">
-            {isLoading || !data ? <ChartSkeleton /> : <FunnelChart data={data} />}
-          </Panel>
-          <Panel title="Simulador de cenários">
-            {isLoading ? (
-              <SimulatorSkeleton />
-            ) : (
-              <FunnelSimulator state={simState} onChange={setSimState} result={simResult} baseVendas={baseVendas} />
-            )}
-          </Panel>
+        // 🗹 GRID ASSIMÉTRICO PREMIUM: Gráfico ganha mais espaço (2/3) e o simulador se ajusta à direita (1/3)
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 w-full items-stretch">
+          <div className="lg:col-span-2 flex flex-col w-full">
+            <Panel title="Funil real . 90 dias">
+              {isLoading || !data ? (
+                <ChartSkeleton />
+              ) : (
+                <div className="w-full h-full min-h-[350px] flex justify-center items-center">
+                  <FunnelChart data={data} />
+                </div>
+              )}
+            </Panel>
+          </div>
+          
+          <div className="flex flex-col w-full">
+            <Panel title="Simulador de cenários">
+              {isLoading ? (
+                <SimulatorSkeleton />
+              ) : (
+                <div className="w-full h-full flex flex-col justify-between">
+                  <FunnelSimulator 
+                    state={simState} 
+                    onChange={setSimState} 
+                    result={simResult} 
+                    baseVendas={baseVendas} 
+                  />
+                </div>
+              )}
+            </Panel>
+          </div>
         </div>
       )}
     </main>

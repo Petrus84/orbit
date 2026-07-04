@@ -1,26 +1,28 @@
-@import "tailwindcss";
+/* ==========================================================================
+   ORBIT · App Globals (SSOT Prototype — 100% Aligned)
+   Versão: 2.0.0  |  Data: 2026-07-04
+   
+   Entry point para Next.js App Router
+   Importa design system SSOT + Tailwind (opcional)
+   ========================================================================== */
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ─── Importar design system SSOT ─── */
+@import '../styles/ssot-globals.css';
+
+/* ─── Importar Tailwind (opcional, se usar) ─── */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* ─── Sobrescrever Tailwind defaults com SSOT ─── */
+@layer base {
+  /* Tailwind theme customization aqui, se necessário */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@layer components {
+  /* Componentes customizados aqui */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  /* Utilitários customizados aqui */
 }

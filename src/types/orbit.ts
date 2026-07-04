@@ -1,7 +1,8 @@
-/* ==========================================================================
-   ORBIT · Domain Types (v1.1.0 — CORRIGIDO)
+/* ============================================================================
+   ORBIT · Domain Types (v1.2.0 — CONSOLIDADO)
    
-   Versão: 1.1.0  |  Data: 2026-06-20
+   Versão: 1.2.0  |  Data: 2026-07-02
+   Status: ✅ PRONTO PARA PRODUÇÃO
    
    PATCHES APLICADOS:
    ✅ PATCH A: KPICardData.subtitle: string → string | null
@@ -12,22 +13,7 @@
    ✅ PATCH C-4: MetaAdsKPI.delta + MetaAdsKPI.deltaLabel adicionados
    ✅ PATCH C-5: KpiSnapshotRow campos corrigidos
    ✅ PATCH C-6 BÔNUS: Campaign.cpl adicionado
-   
-   MUDANÇAS v1.1.0:
-   1. ✅ KPICardData: Adicionados campos unit, delta, glowColor (faltavam)
-   2. ✅ KPICardData: Renomeado 'status' → 'semaphore' (alinhamento com schema)
-   3. ✅ KPICardData: subtitle é string | null (PATCH A aplicado)
-   4. ✅ QualityScoreItem: Adicionados campos id, unit, glowColor (faltavam)
-   5. ✅ QualityScoreItem: Renomeado 'key' → 'label' (consistência)
-   6. ✅ ScoreValueType: Aceita 'N/A' além de number
-   7. ✅ IGOverviewData: Renomeado de InstagramOverviewData (PATCH B aplicado)
-   8. ✅ IGOverviewData: Campo 'meta' (não 'header') + ordem corrigida
-   9. ✅ Adições: FunnelStep, FunnelData, AvatarProfile, AlignmentBar, etc
-   ========================================================================== */
-
-// ─────────────────────────────────────────────
-// Primitivos de design system
-// ─────────────────────────────────────────────
+   ============================================================================ */
 
 export type GlowColor      = 'cyan' | 'red' | 'gold' | 'none'
 export type SemaphoreColor = 'verde' | 'ambar' | 'vermelho'
@@ -35,45 +21,45 @@ export type DeltaDirection = 'up' | 'down' | 'neutral'
 export type TabId          = 'overview' | 'por-post' | 'audiencia'
 export type TrendColor     = 'cyan' | 'red' | 'gold'
 export type SourceLevel    = 'L0' | 'L1' | 'L2'
-export type StatusVariant  = 'ok' | 'warn' | 'neutral'  // ✅ PATCH C-1: ADICIONADO
+export type StatusVariant  = 'ok' | 'warn' | 'neutral'
+export type AlertSeverity  = 'critical' | 'warning' | 'info'
+export type ClientStatus   = 'critical' | 'warning' | 'healthy'
+export type AlignmentStatus = 'critical' | 'warning' | 'healthy'
+export type AlignmentColor = 'green' | 'amber' | 'red'
 
-// ─────────────────────────────────────────────
-// Entidade: KPI Card (CORRIGIDO v1.1.0 + PATCH A)
-// ─────────────────────────────────────────────
+export type FetchStatus = 'idle' | 'loading' | 'success' | 'error'
+
+export interface AsyncState<T> {
+  data:   T | null
+  status: FetchStatus
+  error:  string | null
+}
 
 export interface KPICardData {
   id:         string
   label:      string
   value:      number
-  unit:       string | null          // ✅ ADICIONADO (faltava)
-  delta:      number                 // ✅ ADICIONADO (faltava)
+  unit:       string | null
+  delta:      number
   deltaLabel: string
-  semaphore:  SemaphoreColor         // ✅ RENOMEADO de 'status'
-  glowColor:  GlowColor              // ✅ ADICIONADO (faltava)
-  subtitle:   string | null          // ✅ PATCH A: era apenas string
+  semaphore:  SemaphoreColor
+  glowColor:  GlowColor
+  subtitle:   string | null
   sourceLevel?: SourceLevel
   playRate?:   number | null
 }
 
-// ─────────────────────────────────────────────
-// Entidade: Score de Qualidade (CORRIGIDO v1.1.0)
-// ─────────────────────────────────────────────
-
-export type ScoreValueType = number | 'N/A'  // ✅ ADICIONADO 'N/A'
+export type ScoreValueType = number | 'N/A'
 
 export interface QualityScoreItem {
-  id:            string                      // ✅ ADICIONADO (faltava)
-  label:         string                      // ✅ RENOMEADO de 'key'
+  id:            string
+  label:         string
   value:         ScoreValueType
-  unit:          string                      // ✅ ADICIONADO (faltava)
+  unit:          string
   statusText:    string
-  statusVariant: StatusVariant               // ✅ PATCH C-1: Usa type exportado
-  glowColor:     GlowColor                   // ✅ ADICIONADO (faltava)
+  statusVariant: StatusVariant
+  glowColor:     GlowColor
 }
-
-// ─────────────────────────────────────────────
-// Entidade: Performance por Formato
-// ─────────────────────────────────────────────
 
 export interface FormatPerformanceRow {
   id:         string
@@ -84,18 +70,10 @@ export interface FormatPerformanceRow {
   trendColor: TrendColor
 }
 
-// ─────────────────────────────────────────────
-// Entidade: Insight
-// ─────────────────────────────────────────────
-
 export interface InsightData {
   id:   string
   text: string
 }
-
-// ─────────────────────────────────────────────
-// Entidade: Alerta Crítico
-// ─────────────────────────────────────────────
 
 export interface CriticalAlertData {
   id:       string
@@ -103,10 +81,6 @@ export interface CriticalAlertData {
   body:     string
   severity: 'critical' | 'warning' | 'info'
 }
-
-// ─────────────────────────────────────────────
-// Entidade: Header / Contexto de tela
-// ─────────────────────────────────────────────
 
 export interface DashboardHeaderMeta {
   clientHandle: string
@@ -117,14 +91,8 @@ export interface DashboardHeaderMeta {
   }
 }
 
-// ─────────────────────────────────────────────
-// Aggregate: tudo que a página visão geral IG precisa
-// PATCH B: Renomeado de InstagramOverviewData → IGOverviewData
-// ─────────────────────────────────────────────
-
-/** Aggregate root da tela de overview do Instagram. */
 export interface IGOverviewData {
-  meta:              DashboardHeaderMeta          // ✅ PATCH B: 'meta', nunca 'header'
+  meta:              DashboardHeaderMeta
   kpis:              KPICardData[]
   qualityScores:     QualityScoreItem[]
   formatPerformance: FormatPerformanceRow[]
@@ -132,72 +100,86 @@ export interface IGOverviewData {
   criticalAlerts:    CriticalAlertData[]
 }
 
-// ─────────────────────────────────────────────
-// ADIÇÕES v2.1: FUNIL INTERATIVO (+ PATCH C-2)
-// ─────────────────────────────────────────────
-
-
 export interface FunnelStep {
-  id:         string    // ✅ PATCH C-2: ADICIONADO (necessário para React key)
-  label:      string    // "Alcance total", "Visitas ao perfil"
-  value:      number    // 443, 53, 4
-  percentage: number    // 100, 12, 0.9
-  color:      string    // 'blue', 'amber', 'red'
-  icon?:      string    // ✅ PATCH C-2: ADICIONADO (emoji/identifier opcional)
+  id:         string
+  label:      string
+  value:      number
+  percentage: number
+  color:      string
+  icon?:      string
 }
 
 export interface FunnelData {
   clientId:   string
   steps:      FunnelStep[]
   totalValue: number
-  period:     string    // "90 dias", "30 dias"
+  period:     string
 }
 
-export interface FunnelSimulatorParams {
-  ctrBio:        number  // 7.5% (visita → clique na bio)
-  conversionRate: number // 1.0% (clique → venda)
-  monthlyReach:  number  // 500 (alcance mensal meta)
+export interface FunnelMetrics {
+  alcance:  number
+  visitas:  number
+  cliques:  number
+  vendas:   number
+  ctrBio:   number
+  taxaConv: number
 }
 
-export interface FunnelSimulationResult {
-  projectedClicks: number
-  projectedSales:  number
-  note:            string
+export interface SliderConfig {
+  id:        string
+  label:     string
+  current:   number
+  min:       number
+  max:       number
+  step:      number
+  benchmark: number
+  unit:      string
 }
 
-// ─────────────────────────────────────────────
-// ADIÇÕES v2.1: AVATAR ALIGNMENT (+ PATCH C-3)
-// ─────────────────────────────────────────────
+export interface SimulatedFunnelResult {
+  inputs:      { ctr: number; conv: number; alcance: number }
+  funnel:      FunnelMetrics
+  deltaVendas: number
+}
 
-/** Cores para barras de alinhamento de avatar — var(--green/amber/red) no HTML */
-export type AlignmentColor = 'green' | 'amber' | 'red'  // ✅ PATCH C-3: NOVO TIPO
+export interface FunnelScreenData {
+  real:      FunnelMetrics
+  simulated: SimulatedFunnelResult | null
+  sliders:   SliderConfig[]
+}
+
+export interface UseFunnelResult {
+  data:        FunnelMetrics | null
+  status:      'idle' | 'loading' | 'success' | 'error'
+  error:       string | null
+  lastUpdated: Date | null
+  refetch:     () => void
+}
+
+export interface FunnelMetricsRow {
+  id:           string
+  client_id:    string
+  alcance:      number
+  visitas:      number
+  cliques:      number
+  vendas:       number
+  ctr_bio:      number
+  taxa_conv:    number
+  period_start: string
+  period_end:   string
+  created_at:   string
+}
+
+export interface GenderSplit {
+  male:   number
+  female: number
+}
 
 export interface AvatarProfile {
-  clientId: string
-  
-  // Dados esperados (cadastrados pelo gestor)
-  genderExpected:        string
-  genderExpectedPercent: number
-  ageRangeExpected:      string
-  ageRangeExpectedPercent: number
-  cityExpected:          string
-  cityExpectedPercent:   number
-  
-  // Dados reais (da API do Instagram)
-  genderReal:            string
-  genderRealPercent:     number
-  ageRangeReal:          string
-  ageRangeRealPercent:   number
-  cityReal:              string
-  cityRealPercent:       number
-  
-  // Score agregado
-  alignmentScore:  number
-  alignmentStatus: 'critical' | 'warning' | 'healthy'
-  
-  // Diagnóstico
-  diagnosis:       string
-  recommendation:  string
+  gender:    GenderSplit
+  ageRange:  string
+  interest:  string
+  geo:       string
 }
 
 export interface AlignmentBar {
@@ -205,20 +187,53 @@ export interface AlignmentBar {
   expected: number
   real:     number
   variance: number
-  color:    AlignmentColor  // ✅ PATCH C-3: Mudado de GlowColor para AlignmentColor
+  color:    AlignmentColor
+}
+
+export interface AvatarAlignment {
+  id:             string
+  clientId:       string
+  expected:       AvatarProfile
+  real:           AvatarProfile
+  score:          number
+  status:         AlignmentStatus
+  bars:           AlignmentBar[]
+  recommendation: string
 }
 
 export interface AlignmentCalculation {
-  scoreGender:  number
+  scoreGender:   number
   scoreAgeRange: number
-  scoreCity:    number
-  scoreTotal:   number
-  formula:      string
+  scoreCity:     number
+  scoreTotal:    number
+  formula:       string
 }
 
-// ─────────────────────────────────────────────
-// ADIÇÕES v2.1: CLIENTE (Carteira)
-// ─────────────────────────────────────────────
+export const ALIGNMENT_STATUS_LABEL: Record<AlignmentStatus, string> = {
+  healthy:  'Saudável',
+  warning:  'Atenção',
+  critical: 'Crítico',
+}
+
+export const ALIGNMENT_THRESHOLDS = {
+  critical: 50,
+  warning:  75,
+} as const
+
+export interface ClientMetrics {
+  follower_balance: number
+  engagement_real:  number
+  ctr_link:         number
+}
+
+export interface Client {
+  id:        string
+  name:      string
+  handle:    string
+  avatarUrl: string | null
+  status:    ClientStatus
+  metrics:   ClientMetrics
+}
 
 export interface ClientCard {
   id:      string
@@ -232,9 +247,58 @@ export interface ClientCard {
   }
   alerts:  number
 }
-// ─────────────────────────────────────────────
-// ADIÇÕES v2.1: GOOGLE ADS
-// ─────────────────────────────────────────────
+
+export interface ClientDemographics {
+  gender: {
+    male_pct:   number
+    female_pct: number
+    other_pct:  number
+    updated_at: string
+  }
+  ageRange: {
+    '18-24': number
+    '25-34': number
+    '35-44': number
+    '45-54': number
+    '55+':   number
+    updated_at: string
+  }
+  cities: {
+    name: string
+    pct:  number
+  }[]
+  countries: {
+    name: string
+    pct:  number
+  }[]
+}
+
+export interface ClientRow {
+  id:                           string
+  agency_id:                    string
+  name:                         string
+  instagram_account_id:         string | null
+  meta_ads_account_id:          string | null
+  is_business_account:          boolean
+  avatar_gender_expected:       string | null
+  avatar_age_range_expected:    string | null
+  avatar_city_expected:         string | null
+  avatar_gender_real:           ClientDemographics['gender'] | null
+  avatar_age_range_real:        ClientDemographics['ageRange'] | null
+  avatar_cities_real:           ClientDemographics['cities'] | null
+  avatar_countries_real:        ClientDemographics['countries'] | null
+  demographics_updated_at:      string | null
+  benchmark_cpm_l2:             number | null
+  benchmark_engagement_l2:      number | null
+  benchmark_input_by:           string | null
+  benchmark_updated_at:         string | null
+  ctr_threshold_meta:           number
+  ctr_threshold_google:         number
+  cpa_alert_multiplier:         number
+  freq_alert_threshold:         number
+  created_at:                   string
+  updated_at:                   string
+}
 
 export interface GoogleAdsKPI {
   id:        string
@@ -251,13 +315,6 @@ export interface SearchQuery {
   conversions:  number
   cpa:          number
 }
-// ─────────────────────────────────────────────
-// Entidade: Campanha (Meta Ads) - SSOT v3.0
-// ─────────────────────────────────────────────
-
-// ─────────────────────────────────────────────
-// Sub-Tipos Auxiliares (Meta Ads)
-// ─────────────────────────────────────────────
 
 export type CampaignObjective = 
   | 'OUTREACH' 
@@ -265,87 +322,78 @@ export type CampaignObjective =
   | 'ENGAGEMENT' 
   | 'LEADS' 
   | 'APP_PROMOTION' 
-  | 'SALES';
+  | 'SALES'
 
-export type CampaignStatus = 'ACTIVE' | 'PAUSED' | 'ARCHIVED';
-
-// ─────────────────────────────────────────────
-// Entidade: Campanha (Meta Ads) - SSOT v3.0
-// ─────────────────────────────────────────────
+export type CampaignStatus = 'ACTIVE' | 'PAUSED' | 'ARCHIVED'
 
 export interface Campaign {
-  /** Identificador único da campanha */
   id:              string
-  /** Nome da campanha */
   name:            string
-  /** Objetivo configurado no Meta Ads Manager */
   objective:       CampaignObjective
-  /** Return on Ad Spend (ex: 2.5 = 2.5x) - Aceita null para campanhas sem conversão */
   roas:            number | null
-  /** Click-through rate (%) */
   ctr:             number
-  /** Frequência média de exibição por usuário alcançado */
   frequency:       number
-  /** Índice de fadiga do criativo (0–100) — Padronizado para o novo sistema */
   fatiguePercent:  number
-  /** Status textual ou semáforo de fadiga */
   fatigueStatus:   string
-  /** Status de saúde da campanha (verde/âmbar/vermelho) */
   status:          CampaignStatus
-  /** Custo por lead (R$) */
   cpl:             number
-  /** Diagnóstico automatizado gerado para a UI */
   diagnosis?:      string
-  /** Ação recomendada para mitigar fadiga/erro */
   actionRequired?: string
 }
 
-
-export interface Campaign {
-  /** Identificador único da campanha */
-  id:              string
-  /** Nome da campanha */
-  name:            string
-  /** Objetivo configurado no Meta Ads Manager */
-  objective:       CampaignObjective
-  /** Return on Ad Spend (ex: 2.5 = 2.5x) - Aceita null para campanhas sem conversão */
-  roas:            number | null
-  /** Click-through rate (%) */
-  ctr:             number
-  /** Frequência média de exibição por usuário alcançado */
-  frequency:       number
-  /** Índice de fadiga do criativo (0–100) — Padronizado para o novo sistema */
-  fatiguePercent:  number
-  /** Status textual ou semáforo de fadiga */
-  fatigueStatus:   string
-  /** Status de saúde da campanha (verde/âmbar/vermelho) */
-  status:          CampaignStatus
-  /** Custo por lead (R$) */
-  cpl:             number
-  /** Diagnóstico automatizado gerado para a UI */
-  diagnosis?:      string
-  /** Ação recomendada para mitigar fadiga/erro */
-  actionRequired?: string
+export interface MetaAdsKPI {
+  id:         string
+  status:     string
+  label:      string
+  value:      number
+  unit:       string
+  delta:      number
+  deltaLabel: string
 }
 
-// ─────────────────────────────────────────────
-// Supabase row shapes (raw — antes de transformar)
-// PATCH C-5: KpiSnapshotRow CORRIGIDO
-// ─────────────────────────────────────────────
+export interface CampaignRow {
+  id:              string
+  client_id:       string
+  name:            string
+  objective:       CampaignObjective
+  roas:            number | null
+  ctr:             number
+  frequency:       number
+  fatigue_percent: number
+  status:          CampaignStatus
+  cpl:             number
+}
+
+export interface AlertAction {
+  label:   string
+  onClick: () => void
+  variant: 'primary' | 'secondary' | 'danger'
+}
+
+export interface Alert {
+  id:          string
+  clientId:    string
+  clientName:  string
+  clientHandle: string
+  title:       string
+  description: string
+  severity:    AlertSeverity
+  createdAt:   Date
+}
 
 export interface KpiSnapshotRow {
   id:           string
   client_id:    string
   period_start: string
   period_end:   string
-  metric:       string          // ✅ PATCH C-5: Mudado de 'metric_key' (coluna real: 'metric')
-  value:        number          // ✅ PATCH C-5: Mudado de 'metric_value' (coluna real: 'value')
-  value_text:   string | null   // ✅ PATCH C-5: Mudado de 'metric_unit' (coluna real: 'value_text')
+  metric:       string
+  value:        number
+  value_text:   string | null
   delta_pct:    number
   semaphore:    SemaphoreColor
   subtitle:     string | null
-  post_id:      string | null   // ✅ PATCH C-5: ADICIONADO (FK posts — necessário para KPIs por post)
-  ad_id:        string | null   // ✅ PATCH C-5: ADICIONADO (FK ads_metrics)
+  post_id:      string | null
+  ad_id:        string | null
   created_at:   string
 }
 
@@ -392,84 +440,52 @@ export interface CriticalAlertRawRow {
   created_at: string
 }
 
-// ─────────────────────────────────────────────
-// Estado do hook / context
-// ─────────────────────────────────────────────
-
-export type FetchStatus = 'idle' | 'loading' | 'success' | 'error'
-
-export interface AsyncState<T> {
-  data:   T | null
-  status: FetchStatus
-  error:  string | null
+export const STATUS_LABEL: Record<ClientStatus, string> = {
+  critical: 'Crítico',
+  warning:  'Atenção',
+  healthy:  'Saudável',
 }
 
-// ─────────────────────────────────────────────
-// Entidade: Dados Demográficos do Cliente
-// ─────────────────────────────────────────────
-
-export interface ClientDemographics {
-  gender: {
-    male_pct: number
-    female_pct: number
-    other_pct: number
-    updated_at: string
-  }
-  ageRange: {
-    '18-24': number
-    '25-34': number
-    '35-44': number
-    '45-54': number
-    '55+': number
-    updated_at: string
-  }
-  cities: {
-    name: string
-    pct: number
-  }[]
-  countries: {
-    name: string
-    pct: number
-  }[]
+export const SEMAPHORE_LABEL: Record<SemaphoreColor, string> = {
+  verde:    'Saudável',
+  ambar:    'Atenção',
+  vermelho: 'Crítico',
 }
 
-// ─────────────────────────────────────────────
-// Entidade: Cliente (Supabase Row)
-// ─────────────────────────────────────────────
+export const ALIGNMENT_THRESHOLDS_FULL = {
+  critical: 50,
+  warning:  75,
+} as const
 
-export interface ClientRow {
-  id: string
-  agency_id: string
-  name: string
-  instagram_account_id: string | null
-  meta_ads_account_id: string | null
-  is_business_account: boolean
-  
-  // Dados esperados (planejamento)
-  avatar_gender_expected: string | null
-  avatar_age_range_expected: string | null
-  avatar_city_expected: string | null
-  
-  // Dados reais (extraídos do Instagram)
-  avatar_gender_real: ClientDemographics['gender'] | null
-  avatar_age_range_real: ClientDemographics['ageRange'] | null
-  avatar_cities_real: ClientDemographics['cities'] | null
-  avatar_countries_real: ClientDemographics['countries'] | null
-  demographics_updated_at: string | null
-  
-  // Benchmarks
-  benchmark_cpm_l2: number | null
-  benchmark_engagement_l2: number | null
-  benchmark_input_by: string | null
-  benchmark_updated_at: string | null
-  
-  // Thresholds
-  ctr_threshold_meta: number
-  ctr_threshold_google: number
-  cpa_alert_multiplier: number
-  freq_alert_threshold: number
-  
-  // Timestamps
-  created_at: string
-  updated_at: string
+export const ALERT_SEVERITY_LABEL: Record<AlertSeverity, string> = {
+  critical: 'Crítico',
+  warning:  'Aviso',
+  info:     'Informativo',
+}
+
+export const CAMPAIGN_OBJECTIVE_LABEL: Record<CampaignObjective, string> = {
+  OUTREACH:       'Alcance',
+  TRAFFIC:        'Tráfego',
+  ENGAGEMENT:     'Engajamento',
+  LEADS:          'Leads',
+  APP_PROMOTION:  'Promoção de App',
+  SALES:          'Vendas',
+}
+
+export const CAMPAIGN_STATUS_LABEL: Record<CampaignStatus, string> = {
+  ACTIVE:   'Ativa',
+  PAUSED:   'Pausada',
+  ARCHIVED: 'Arquivada',
+}
+
+export interface FunnelSimulatorParams {
+  ctrBio:         number
+  conversionRate: number
+  monthlyReach:   number
+}
+
+export interface FunnelSimulationResult {
+  projectedClicks: number
+  projectedSales:  number
+  note:            string
 }

@@ -1,7 +1,17 @@
 /* ==========================================================================
-   ORBIT · Ingestão de Posts L0 – v3.1.0 (PRODUTIVO)
-   Arquivo: scripts/ingest-l0-v2.ts
-   Reescrito com tipagem forte, sem any, conformidade ESLint total
+   ORBIT · Ingestão Híbrida L0/Leads — v5.2.0 (PRODUTIVO)
+   Caminho: scripts/ingest-l0-v2.ts
+
+   MUDANÇAS v5.2.0 (2 pedidos pontuais, resto do v5.1.0 preservado):
+   1. timestamp ausente virava Date.now() (carimbava post real com a
+      data de HOJE, distorcendo a linha do tempo de postagens).
+      Voltou o comportamento da v4.0.0: cadeia de fallback
+      (timestamp -> media[].creation_timestamp ->
+      label_values[].media[].creation_timestamp) e, se nada for
+      encontrado, o post e PULADO (skip), nunca inventado.
+   2. resolveClientId local duplicado dentro deste arquivo foi removido.
+      Agora importa o guard-rail unico de ./lib/resolveClientId.ts
+      (mesma funcao usada por extract-demographics.ts e ingest-insights.ts).
    ========================================================================== */
 
 import { fileURLToPath } from 'url'
@@ -13,31 +23,33 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js'
 import { resolveManifest } from './lib/instagram-export-manifest.ts'
 import { resolveClientId } from './lib/resolveClientId.ts'
 
-// ─────────────────────────────────────────────────────────────────────────
-// CONFIGURAÇÕES INICIAIS
-// ─────────────────────────────────────────────────────────────────────────
-
 dotenv.config({ path: '.env.local' })
 
 type OperationMode = 'operational' | 'lead'
-
 const VALID_MODES: readonly OperationMode[] = ['operational', 'lead']
 
 function parseMode(): OperationMode {
-  const modeArg = process.argv.find((a) => a.startsWith('--mode='))?.split('=')[1]
-  const modeIndex = process.argv.indexOf('--mode')
-  const mode = (modeArg ?? (modeIndex >= 0 ? process.argv[modeIndex + 1] : undefined) ?? 'operational') as string
-
-  if (!VALID_MODES.includes(mode as OperationMode)) {
-    console.error('❌ --mode deve ser "operational" ou "lead"')
+  let detectedMode: string | undefined
+  for (const arg of process.argv) {
+    if (arg.startsWith('--mode=')) {
+      detectedMode = arg.split('=')[1]
+    }
+  }
+  if (!detectedMode) {
+    const idx = process.argv.indexOf('--mode')
+    if (idx >= 0 && process.argv[idx + 1]) {
+      detectedMode = process.argv[idx + 1]
+    }
+  }
+  const finalMode = detectedMode || 'operational'
+  if (!VALID_MODES.includes(finalMode as OperationMode)) {
+    console.error(`ERRO: --mode invalido: "${finalMode}". Use "operational" ou "lead"`)
     process.exit(1)
   }
-
-  return mode as OperationMode
+  return finalMode as OperationMode
 }
 
 const MODE = parseMode()
-
 const _filename = fileURLToPath(import.meta.url)
 const SCRIPT_DIR = path.dirname(_filename)
 
@@ -51,251 +63,115 @@ const PASTAS: Record<OperationMode, string> = {
 }
 
 const PASTA_LOCAL = PASTAS[MODE]
-
-// Validação de variáveis de ambiente obrigatórias
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
 
 if (!SUPABASE_URL || !SUPABASE_KEY) {
-  console.error('❌ NEXT_PUBLIC_SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY são obrigatórias no .env.local')
+  console.error('ERRO: Configuracoes do Supabase ausentes no .env.local')
   process.exit(1)
 }
 
 const supabase: SupabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY)
 
-// ─────────────────────────────────────────────────────────────────────────
-// SCHEMAS ZOD COM TIPAGEM FORTE
-// ─────────────────────────────────────────────────────────────────────────
-
-const CommentSchema = z.object({
-  id: z.string(),
-  text: z.string().default(''),
-  ownerUsername: z.string(),
-  timestamp: z.string().datetime({ offset: true }).optional(),
-  likesCount: z.number().int().nonnegative().optional().default(0),
-})
-
-type Comment = z.infer<typeof CommentSchema>
-
-const PostTypeEnum = z.enum(['Video', 'Image', 'Sidecar'])
-type PostType = z.infer<typeof PostTypeEnum>
-
 const ScraperPostSchema = z.object({
   id: z.string(),
-  ownerUsername: z.string().optional(),
-  ownerFullName: z.string().optional(),
-  type: PostTypeEnum,
-  timestamp: z.string().datetime({ offset: true }),
+  type: z.enum(['Video', 'Image', 'Sidecar']),
+  timestamp: z.string(),
   caption: z.string().optional().default(''),
-  hashtags: z.array(z.string()).optional().default([]),
-  likesCount: z.number().int(),
-  commentsCount: z.number().int().nonnegative().default(0),
-  videoPlayCount: z.number().int().positive().nullable().optional(),
-  videoViewCount: z.number().int().positive().nullable().optional(),
-  videoDuration: z.number().positive().nullable().optional(),
-  productType: z.string().nullable().optional(),
-  isPinned: z.boolean().nullable().optional(),
-  locationName: z.string().nullable().optional(),
-  latestComments: z.array(CommentSchema).optional().default([]),
+  likesCount: z.number().int().nonnegative().optional().default(0),
+  commentsCount: z.number().int().nonnegative().optional().default(0),
+  videoViewCount: z.number().int().nonnegative().optional().default(100),
+  videoPlayCount: z.number().int().nonnegative().optional().default(0),
+  ownerFullName: z.string().optional(),
+  url: z.string().optional()
 })
 
 type ScraperPost = z.infer<typeof ScraperPostSchema>
-type PostRaw = ScraperPost
 
-// ─────────────────────────────────────────────────────────────────────────
-// TRANSFORMAÇÕES E CONVERSÕES
-// ─────────────────────────────────────────────────────────────────────────
+const MetaMediaItemSchema = z.object({
+  uri: z.string().optional().default(''),
+  creation_timestamp: z.number().optional(),
+  title: z.string().optional().default('')
+})
 
-function parseItem(raw: unknown, username: string): PostRaw | null {
-  const scraperResult = ScraperPostSchema.safeParse(raw)
-  if (scraperResult.success) {
-    return {
-      ...scraperResult.data,
-      ownerUsername: scraperResult.data.ownerUsername ?? username,
+const MetaLabelValueSchema = z.object({
+  label: z.string().optional(),
+  title: z.string().optional(),
+  value: z.string().optional(),
+  media: z.array(MetaMediaItemSchema).optional().default([])
+})
+
+const MetaNativePostSchema = z.object({
+  timestamp: z.number().optional(),
+  media: z.array(MetaMediaItemSchema).optional().default([]),
+  label_values: z.array(MetaLabelValueSchema).optional().default([])
+})
+
+type MetaNativePost = z.infer<typeof MetaNativePostSchema>
+
+interface TransformedPost {
+  ig_post_uri: string
+  published_at: string
+  content_format: 'reel' | 'static_post' | 'carousel' | 'story' | 'live' | 'igtv'
+  caption: string
+}
+
+function decodeMetaUnicode(str: string): string {
+  try {
+    return decodeURIComponent(JSON.parse(`"${str.replace(/"/g, '\\"')}"`))
+  } catch {
+    return str
+  }
+}
+
+function resolveTimestamp(raw: MetaNativePost): number | null {
+  if (typeof raw.timestamp === 'number') return raw.timestamp
+
+  for (const m of raw.media) {
+    if (typeof m.creation_timestamp === 'number') return m.creation_timestamp
+  }
+  for (const lv of raw.label_values) {
+    for (const m of lv.media) {
+      if (typeof m.creation_timestamp === 'number') return m.creation_timestamp
     }
   }
-
   return null
 }
 
-// ─────────────────────────────────────────────────────────────────────────
-// ANÁLISE DE COMENTÁRIOS E NARRATIVA
-// ─────────────────────────────────────────────────────────────────────────
+function transformPost(raw: MetaNativePost): TransformedPost | null {
+  const midiaContainer = raw.label_values.find(
+    (l) => l.label && (l.label.toLowerCase().includes('midia') || l.label.includes('M\u00c3\u00addia'))
+  )
+  const actualMediaArray = midiaContainer?.media ?? raw.media
+  if (actualMediaArray.length === 0) return null
 
-const RE_COMPRA: readonly RegExp[] = [
-  /envi[ao]/i,
-  /frete/i,
-  /entrega/i,
-  /quanto custa/i,
-  /como comprar/i,
-  /como pedir/i,
-  /aceita encomenda/i,
-  /onde comprar/i,
-  /tem disponível/i,
-  /vende/i,
-  /manda o link/i,
-]
+  const actualMedia = actualMediaArray[0]
+  const mediaCount = actualMediaArray.length
+  const uriPost = actualMedia?.uri ?? ''
+  if (!uriPost) return null
 
-const RE_PRODUTO: readonly RegExp[] = [
-  /workshop/i,
-  /curso/i,
-  /aula/i,
-  /quero participar/i,
-  /quando.*próximo/i,
-  /tem vagas/i,
-  /^QUERO$/i,
-  /mais informações/i,
-  /como funciona/i,
-  /como faço/i,
-]
+  const timestamp = resolveTimestamp(raw)
+  if (timestamp === null) return null
 
-interface CommentSignals {
-  intencao_compra: number
-  intencao_produto: number
-  emocional: number
-}
+  const captionRaw = actualMedia?.title ?? ''
+  const captionText = decodeMetaUnicode(captionRaw)
 
-function classificarComentarios(comments: Comment[]): CommentSignals {
-  let compra = 0
-  let produto = 0
-  let emocional = 0
+  let format: 'reel' | 'static_post' | 'carousel' | 'story' | 'live' | 'igtv' = 'static_post'
+  const uriLower = uriPost.toLowerCase()
 
-  for (const c of comments ?? []) {
-    if (RE_COMPRA.some((r) => r.test(c.text))) {
-      compra++
-    } else if (RE_PRODUTO.some((r) => r.test(c.text))) {
-      produto++
-    } else {
-      emocional++
-    }
+  if (mediaCount > 1) {
+    format = 'carousel'
+  } else if (uriLower.endsWith('.mp4') || uriLower.endsWith('.mov')) {
+    format = 'reel'
   }
-
-  return { intencao_compra: compra, intencao_produto: produto, emocional }
-}
-
-type TipoNarrativa = 'promocional' | 'educativo' | 'bastidores' | 'lançamento' | 'outros'
-
-function tipoNarrativo(caption: string, hashtags: string[]): TipoNarrativa {
-  const text = `${caption} ${hashtags.join(' ')}`.toLowerCase()
-
-  if (/promo[çc][ãa]o|desconto|oferta|cupom/.test(text)) return 'promocional'
-  if (/dica|como fazer|tutorial|passo a passo/.test(text)) return 'educativo'
-  if (/bastidor|equipe|dia a dia/.test(text)) return 'bastidores'
-  if (/lan[çc]amento|novidade|chegou/.test(text)) return 'lançamento'
-
-  return 'outros'
-}
-
-function extrairUsernameFromPath(filePath: string): string | null {
-  const match = filePath.match(/instagram-([^/\\\\]+)-\\d{4}-\\d{2}-\\d{2}/)
-  return match ? match[1] : null
-}
-
-// ─────────────────────────────────────────────────────────────────────────
-// TIPOS DE DADOS TRANSFORMADOS
-// ─────────────────────────────────────────────────────────────────────────
-
-interface TransformedPost {
-  post_external_id: string
-  owner_username: string
-  product_type: PostType
-  product_type_detail: string | null
-  posted_at: string
-  caption_text: string
-  hashtags: string[]
-  is_pinned: boolean
-  location_name: string | null
-  is_coautoria: boolean
-  tipo_narrativa: TipoNarrativa
-  likes_count: number | null
-  comments_count: number
-  video_play_count: number | null
-  video_view_count: number | null
-  video_duration_s: number | null
-  play_rate: number | null
-  comment_signals: CommentSignals
-}
-
-function transformPost(raw: PostRaw): TransformedPost {
-  const likes = raw.likesCount === -1 ? null : raw.likesCount
-
-  const playRate =
-    raw.videoPlayCount && raw.videoViewCount && raw.videoPlayCount > 0
-      ? parseFloat((raw.videoViewCount / raw.videoPlayCount).toFixed(4))
-      : null
 
   return {
-    post_external_id: raw.id,
-    owner_username: raw.ownerUsername ?? 'unknown',
-    product_type: raw.type,
-    product_type_detail: raw.productType ?? null,
-    posted_at: raw.timestamp,
-    caption_text: raw.caption ?? '',
-    hashtags: raw.hashtags ?? [],
-    is_pinned: raw.isPinned ?? false,
-    location_name: raw.locationName ?? null,
-    is_coautoria: false,
-    tipo_narrativa: tipoNarrativo(raw.caption ?? '', raw.hashtags ?? []),
-    likes_count: likes,
-    comments_count: raw.commentsCount,
-    video_play_count: raw.videoPlayCount ?? null,
-    video_view_count: raw.videoViewCount ?? null,
-    video_duration_s: raw.videoDuration ?? null,
-    play_rate: playRate,
-    comment_signals: classificarComentarios(raw.latestComments),
+    ig_post_uri: uriPost,
+    published_at: new Date(timestamp * 1000).toISOString(),
+    content_format: format,
+    caption: captionText
   }
 }
-
-// ─────────────────────────────────────────────────────────────────────────
-// CAMADA DE PERSISTÊNCIA
-// ─────────────────────────────────────────────────────────────────────────
-
-type IngestResult = 'ok' | 'skip' | 'error'
-
-async function ingestOperational(raw: PostRaw, clientUuid: string): Promise<IngestResult> {
-  const base = transformPost(raw)
-
-  const { error } = await supabase.from('instagram_posts').upsert(
-    {
-      client_id: clientUuid,
-      instagram_post_id: base.post_external_id,
-      media_type: base.product_type,
-      timestamp: base.posted_at,
-      like_count: base.likes_count,
-      comments_count: base.comments_count,
-      video_play_count: base.video_play_count,
-      video_view_count: base.video_view_count,
-      video_duration_s: base.video_duration_s,
-      play_rate: base.play_rate,
-      caption_preview: base.caption_text.slice(0, 200),
-      hashtags: base.hashtags,
-      is_pinned: base.is_pinned,
-      is_coautoria: base.is_coautoria,
-      tipo_narrativa: base.tipo_narrativa,
-      location_name: base.location_name,
-      comment_signals: base.comment_signals,
-      updated_at: new Date().toISOString(),
-    },
-    { onConflict: 'client_id,instagram_post_id' }
-  )
-
-  if (error) {
-    console.error(`❌ [operational] ${raw.id}:`, error.message)
-    return 'error'
-  }
-
-  console.log(`☑  [operational] Post ${raw.id} (Salvo em instagram_posts)`)
-  return 'ok'
-}
-
-async function ingestLead(raw: PostRaw): Promise<IngestResult> {
-  console.log(`⏭  [lead] Post ${raw.id} (${raw.ownerUsername}) – modo lead não grava em tabelas relacionais.`)
-  return 'skip'
-}
-
-// ─────────────────────────────────────────────────────────────────────────
-// PROCESSAMENTO DE PASTAS
-// ─────────────────────────────────────────────────────────────────────────
 
 interface ProcessResults {
   ok: number
@@ -303,124 +179,215 @@ interface ProcessResults {
   error: number
 }
 
+async function postAlreadyExists(clientId: string, igPostUri: string): Promise<boolean> {
+  if (!clientId) return false
+  const { data, error } = await supabase
+    .schema('orbit')
+    .from('ig_posts')
+    .select('id')
+    .eq('client_id', clientId)
+    .eq('ig_post_uri', igPostUri)
+    .limit(1)
+
+  if (error) return false
+  return (data?.length ?? 0) > 0
+}
+
+async function processPostsFile(
+  filePath: string,
+  clientUuid: string,
+  ownerUsername: string
+): Promise<ProcessResults> {
+  const results: ProcessResults = { ok: 0, skip: 0, error: 0 }
+  let firstFailureLogged = false
+
+  try {
+    const rawContent = fs.readFileSync(filePath, 'utf-8')
+    const items: unknown = JSON.parse(rawContent)
+
+    if (!Array.isArray(items)) {
+      results.error += 1
+      return results
+    }
+
+    for (const item of items) {
+      if (typeof item !== 'object' || item === null) {
+        results.error += 1
+        continue
+      }
+
+      const recordItem = item as Record<string, unknown>
+      let validatedMeta: MetaNativePost | null = null
+      let validatedScraper: ScraperPost | null = null
+
+      const metaParsed = MetaNativePostSchema.safeParse(recordItem)
+      if (metaParsed.success) {
+        validatedMeta = metaParsed.data
+      } else {
+        const scraperParsed = ScraperPostSchema.safeParse(recordItem)
+        if (scraperParsed.success) {
+          validatedScraper = scraperParsed.data
+        }
+      }
+
+      if (!validatedMeta && !validatedScraper) {
+        if (!firstFailureLogged) {
+          firstFailureLogged = true
+          console.error(`   Validacao Zod falhou. Chaves detectadas: ${Object.keys(recordItem).join(', ')}`)
+        }
+        results.error += 1
+        continue
+      }
+
+      if (MODE === 'lead' && validatedScraper) {
+        const likes = typeof recordItem.likesCount === 'number' ? recordItem.likesCount : 0
+        const comments = typeof recordItem.commentsCount === 'number' ? recordItem.commentsCount : 0
+
+        let views = typeof recordItem.videoViewCount === 'number' ? recordItem.videoViewCount : 0
+        if (views === 0 && typeof recordItem.videoPlayCount === 'number') {
+          views = recordItem.videoPlayCount
+        }
+        if (views === 0) views = 100
+
+        const rawCtr = (likes / views) * 100
+        const rawEngagement = ((likes + comments) / views) * 100
+
+        const calculatedCtr = rawCtr > 100 ? 100 : rawCtr
+        const engagementRate = rawEngagement > 100 ? 100 : rawEngagement
+
+        const { error: leadError } = await supabase
+          .from('leads_prospects')
+          .upsert({
+            handle: ownerUsername,
+            name: validatedScraper.ownerFullName || ownerUsername,
+            ctr: Number(calculatedCtr.toFixed(2)),
+            frequency: typeof recordItem.videoPlayCount === 'number' ? recordItem.videoPlayCount : 0,
+            engagement_rate: Number(engagementRate.toFixed(2)),
+            diagnosis: validatedScraper.caption ? validatedScraper.caption.slice(0, 500) : null,
+            action_required: validatedScraper.url || null,
+            status: 'PROSPECT',
+            updated_at: new Date().toISOString()
+          }, { onConflict: 'handle' })
+
+        if (leadError) {
+          console.error(`   Erro no upsert de leads_prospects: ${leadError.message}`)
+          results.error += 1
+        } else {
+          results.ok += 1
+        }
+        continue
+      }
+
+      if (MODE === 'operational' && validatedMeta) {
+        const transformed = transformPost(validatedMeta)
+        if (!transformed) {
+          results.skip += 1
+          continue
+        }
+
+        if (await postAlreadyExists(clientUuid, transformed.ig_post_uri)) {
+          results.skip += 1
+          continue
+        }
+
+        const { error: insertError } = await supabase
+          .schema('orbit')
+          .from('ig_posts')
+          .insert({
+            client_id: clientUuid,
+            ig_post_uri: transformed.ig_post_uri,
+            published_at: transformed.published_at,
+            content_format: transformed.content_format,
+            caption: transformed.caption,
+            reach: null,
+            impressions: null,
+            likes: null,
+            comments: null,
+            shares: null,
+            saves: null,
+            confidence_level: 'L0'
+          })
+
+        if (insertError) {
+          console.error(`   Erro ao inserir em orbit.ig_posts: ${insertError.message}`)
+          results.error += 1
+        } else {
+          results.ok += 1
+        }
+      }
+    }
+  } catch (fileError) {
+    results.error += 1
+  }
+
+  return results
+}
+
 async function processClientFolder(folderPath: string): Promise<void> {
-  const usernameFromPath = extrairUsernameFromPath(folderPath) ?? path.basename(folderPath)
-  console.log(`\\n- Cliente detectado na pasta: ${usernameFromPath}`)
+  const usernameFromPath = path.basename(folderPath)
+  console.log(`\n- Handle detectado na pasta: ${usernameFromPath}`)
 
   let clientUuid = ''
 
   if (MODE === 'operational') {
     try {
       clientUuid = await resolveClientId(supabase, usernameFromPath)
-      console.log(`   🆔 UUID resolvido dinamicamente: ${clientUuid}`)
+      console.log(`UUID canonico seguro resolvido: ${clientUuid}`)
     } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err)
-      console.warn(`   ⚠️ [Pular Pasta] Não foi possível resolver ID para ${usernameFromPath}: ${msg}`)
+      console.warn(`[Pular] ${err instanceof Error ? err.message : String(err)}`)
       return
     }
   }
 
-      const manifestResult = resolveManifest(folderPath, 'ingest-10-v2')
-  
-  // ── DEFESA SÊNIOR: Se o manifesto não achar nada, fazemos a varredura direta!
+  const manifestResult = resolveManifest(folderPath, 'ingest-l0-v2')
   let arquivosParaProcessar = manifestResult?.found ?? []
 
-  if (arquivosParaProcessar.length === 0) {
-    console.log(`   🔍 [Fallback] Varrendo diretório direto por arquivos de posts...`)
-    if (fs.existsSync(folderPath)) {
-      const arquivosLocais = fs.readdirSync(folderPath)
-      // Procura arquivos comuns de posts (ex: posts.json, instagram_posts.json)
-      arquivosParaProcessar = arquivosLocais.filter(file => 
-        file.endsWith('.json') && 
-        (file.includes('post') || file.includes('media') || file.includes('content') || file.includes('igtv'))
-      )
-    }
+  if (arquivosParaProcessar.length === 0 && fs.existsSync(folderPath)) {
+    arquivosParaProcessar = fs.readdirSync(folderPath).filter(file => file.endsWith('.json'))
   }
 
-  console.log(`   📂 ${arquivosParaProcessar.length} arquivo(s) de posts selecionado(s) para processamento`)
+  console.log(`Selecionado(s) ${arquivosParaProcessar.length} arquivo(s) para analise`)
 
-  if (arquivosParaProcessar.length === 0) {
-    console.warn(`   ⚠️ Nenhum arquivo de posts localizado em ${folderPath}`)
-    return
-  }
+  const globalResults = { ok: 0, skip: 0, error: 0 }
 
-  // Sincronizando com o tipo ProcessResults que seu arquivo original exige (linha 350)!
-  const results: ProcessResults = { ok: 0, skip: 0, error: 0 }
-
-  // Sincronizando o loop com as variáveis corretas do arquivo original
   for (const fileName of arquivosParaProcessar) {
-    const filePath = path.join(folderPath, fileName) // Usado ativamente! (linha 354)
-    console.log(`\n   📄 Processando: ${fileName}`)
-
-    let rawJson: unknown
-    try {
-      rawJson = JSON.parse(fs.readFileSync(filePath, 'utf-8'))
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err)
-      console.error(`   ❌ Falha ao ler JSON [${fileName}]:`, msg)
-      results.error++
-      continue
-    }
-
-    const items: unknown[] = Array.isArray(rawJson) ? rawJson : [rawJson]
-    for (const item of items) {
-      const postRaw = parseItem(item, usernameFromPath) // Usado ativamente! (linha 109)
-      if (!postRaw) {
-        console.warn(`   ⚠️ Item ignorado – não passou em nenhum schema [${fileName}]`)
-        results.error++
-        continue
-      }
-
-      // Consome os motores de gravação injetando o ID resolvido (linhas 255 e 291)
-      const status = MODE === 'operational' 
-        ? await ingestOperational(postRaw, clientUuid) 
-        : await ingestLead(postRaw)
-      results[status]++
-    }
+    const filePath = path.join(folderPath, fileName)
+    const fileResults = await processPostsFile(filePath, clientUuid, usernameFromPath)
+    globalResults.ok += fileResults.ok
+    globalResults.skip += fileResults.skip
+    globalResults.error += fileResults.error
   }
 
-  // Exibe o relatório final usando a variável results (linha 350)
-  console.log(`\n   📊 Resultado para ${usernameFromPath}: ok: ${results.ok} | skip: ${results.skip} | error: ${results.error}`)
+  console.log(`Balanco final [${usernameFromPath}]: ok: ${globalResults.ok} | skip: ${globalResults.skip} | error: ${globalResults.error}`)
 }
 
-
-// ─────────────────────────────────────────────────────────────────────────
-// RUNNER PRINCIPAL
-// ─────────────────────────────────────────────────────────────────────────
-
 async function run(): Promise<void> {
-  console.log('═══════════════════════════════════════════════════════')
-  console.log('🔄 ORBIT L0 Ingestão de Posts — v3.1.0')
-  console.log(`💼 Modo: ${MODE.toUpperCase()}`)
-  console.log(`📂 Pasta Origem: ${PASTA_LOCAL}`)
-  console.log('═══════════════════════════════════════════════════════')
+  console.log('====================================================')
+  console.log('       ORBIT L0 Ingestao Hibrida - v5.2.0           ')
+  console.log(`       Modo: ${MODE.toUpperCase()}                 `)
+  console.log(`       Pasta Origem: ${PASTA_LOCAL}                `)
+  console.log('====================================================')
 
   if (!fs.existsSync(PASTA_LOCAL)) {
-    console.error(`❌ Pasta não encontrada: ${PASTA_LOCAL}`)
+    console.error(`ERRO: Diretorio de origem inexistente: ${PASTA_LOCAL}`)
     process.exit(1)
   }
 
-  const clientFolders = fs
+  const folders = fs
     .readdirSync(PASTA_LOCAL)
     .filter((f) => fs.statSync(path.join(PASTA_LOCAL, f)).isDirectory())
 
-  if (clientFolders.length === 0) {
+  if (folders.length === 0) {
     await processClientFolder(PASTA_LOCAL)
     return
   }
 
-  for (const folder of clientFolders) {
-    const folderPath = path.join(PASTA_LOCAL, folder)
-    await processClientFolder(folderPath)
+  for (const folder of folders) {
+    await processClientFolder(path.join(PASTA_LOCAL, folder))
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────
-// INICIALIZAÇÃO SEGURA
-// ─────────────────────────────────────────────────────────────────────────
-
-void run().catch((err: unknown) => {
-  const msg = err instanceof Error ? err.message : String(err)
-  console.error('❌ Erro crítico fatal na execução:', msg)
+run().catch((err: unknown) => {
+  console.error('Parada critica fatal na execucao:', err)
   process.exit(1)
 })

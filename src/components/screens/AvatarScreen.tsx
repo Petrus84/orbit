@@ -1,5 +1,21 @@
+/* ==========================================================================
+   ORBIT · AvatarScreen
+   Caminho: src/components/screens/AvatarScreen.tsx
+
+   FIX (bug 2 da dupla causa do "Cliente não identificado"):
+   - A rota real é "/instagram/avatar" (sem segmento dinâmico [clientId]),
+     então useParams<{ clientId: string }>() SEMPRE retorna undefined
+     aqui. E o AvatarPage.tsx não passa <AvatarScreen clientId={...} />.
+   - Resultado: este componente nunca enxergava o clientId que o
+     OrbitDashboardProvider (em volta dele, no page.tsx) já tinha correto.
+   - Troca: lê clientId direto do contexto compartilhado
+     (useOrbitDashboard()), que é a mesma fonte que o FunnelScreen já usa
+     com sucesso. propClientId continua funcionando como override manual,
+     caso algum dia exista uma rota dinâmica de verdade.
+   ========================================================================== */
+
 import React from "react";
-import { useParams } from "next/navigation";
+import { useOrbitDashboard } from "../../context/OrbitDashboardContext";
 import { useAvatar } from "../../hooks/useAvatar";
 import { AvatarComparison } from "../common/AvatarComparison";
 import { AlignmentBars } from "../common/AlignmentBars";
@@ -28,12 +44,12 @@ const AvatarScreenSkeleton: React.FC = () => (
 );
 
 export const AvatarScreen: React.FC<AvatarScreenProps> = ({ clientId: propClientId }) => {
-  // ✅ PASSO 1: Extrair clientId
-  const params = useParams<{ clientId: string }>();
-  const clientId = propClientId || params?.clientId;
+  // ✅ PASSO 1: clientId vem do contexto compartilhado (mesma fonte que o
+  // FunnelScreen já usa corretamente), com propClientId como override manual.
+  const { clientId: contextClientId } = useOrbitDashboard();
+  const clientId = propClientId || contextClientId;
 
   // ✅ PASSO 2: Chamar hook (ANTES de guards)
-  // ✅ IMPORTANTE: Usar 'status' (não 'loading')
   const { data, status, error } = useAvatar(clientId || "");
   const isLoading = status === 'loading';
 

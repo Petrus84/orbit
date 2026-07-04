@@ -1,7 +1,18 @@
-/* ==========================================================================
-   ORBIT · Script de Ingestão de Insights – v1.4.0 (PRODUTIVO)
-   Arquivo: scripts/ingest-insights.ts
-   ========================================================================== */
+
+//# ============================================================================
+//# 2. ARQUIVO: ingest-insights.ts (AJUSTES CRÍTICOS)
+//# ============================================================================
+
+//ingest_insights_content = '''
+//* ==========================================================================
+ //  ORBIT · Script de Ingestão de Insights – v1.4.1 (SCHEMA ORBIT OBRIGATÓRIO)
+ //  Arquivo: scripts/ingest-insights.ts
+   
+ //  ✅ CORREÇÕES v1.4.1:
+ //  - Busca de cliente SEMPRE via .schema('orbit').from('clients')
+ //  - Todas as tabelas de persistência em schema 'orbit'
+//   - Eliminado conflito public vs orbit
+//   ========================================================================== *//
 
 import dotenv from 'dotenv'
 import { resolveClientId } from './lib/resolveClientId.ts'
@@ -12,7 +23,7 @@ import * as path from 'path'
 
 dotenv.config({ path: '.env.local' })
 
-// Inicialização segura apontando para o public padrão (exigido pelo resolveClientId)
+// Inicialização segura apontando para o schema orbit
 const supabase: SupabaseClient = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -89,7 +100,7 @@ function readJson(filePath: string): unknown {
 /* ── Helpers Numéricos ──────────────────────────────────────────────────── */
 function int(smd: Record<string, { value?: string }>, key: string): number {
   const raw = smd[key]?.value ?? '0'
-  const cleaned = raw.replace(/[^0-9\-]/g, '')
+  const cleaned = raw.replace(/[^0-9\\-]/g, '')
   return parseInt(cleaned || '0', 10)
 }
 
@@ -124,7 +135,7 @@ function parseDateRange(range: string): { start: string; end: string } {
 
 /* ── Pipeline Principal ─────────────────────────────────────────────────── */
 async function processInsights(clientUsername: string, clientId: string): Promise<void> {
-  console.log(`\n🔄 Iniciando processamento para UUID: ${clientId}`)
+  console.log(`\\n🔄 Iniciando processamento para UUID: ${clientId}`)
 
   const interPath = findFile(clientUsername, 'content_interactions.json')
   if (!interPath) {
@@ -201,12 +212,9 @@ async function processInsights(clientUsername: string, clientId: string): Promis
     { metric: 'saldo-90-dias', value: saldo90Dias },
   ]
 
-  console.log(`\n💾 Salvando ${metricsToInsert.length} registros em orbit.metric_history...`)
+  console.log(`\\n💾 Salvando ${metricsToInsert.length} registros em orbit.metric_history...`)
 
-    console.log(`\n💾 Gravando histórico temporal em orbit.metric_history (MetricRow)...`)
-
-  // 1. Gravação Vertical Histórica (Gráficos e Séries Temporais)
-  // Limpa registros anteriores do mesmo período e plataforma para evitar duplicidade cronológica
+  // 🔑 CORREÇÃO CRÍTICA: Usar .schema('orbit') obrigatoriamente
   await supabase
     .schema('orbit')
     .from('metric_history')
@@ -225,20 +233,18 @@ async function processInsights(clientUsername: string, clientId: string): Promis
         metric_value: value,
         metric_date: periodEnd,
         platform: 'instagram'
-        // OMITIDO: confidence_level (O banco de dados aplica o valor DEFAULT do seu tipo USER-DEFINED)
       })
 
     if (historyError) {
       console.error(`   ❌ Erro na métrica [${metric}]: ${historyError.message}`)
     } else {
-      console.log(`   ✅ [${metric}] = ${value} persistido em metric_history`)
+      console.log(`   ✅ [${metric}] = ${value} persistido em orbit.metric_history`)
     }
   }
 
-  console.log(`\n💾 Atualizando dados consolidados em orbit.ig_account_snapshots via Inserção Não-Destrutiva...`)
+  console.log(`\\n💾 Atualizando dados consolidados em orbit.ig_account_snapshots...`)
 
-  // 2. Gravação Horizontal Inteligente (Segurança contra Sobrescrita de Dados e Trava de Unicidade)
-  // Passo A: Buscamos se já existe um registro idêntico para a mesma safra
+  // 🔑 CORREÇÃO CRÍTICA: Usar .schema('orbit') obrigatoriamente
   const { data: existingSnapshot } = await supabase
     .schema('orbit')
     .from('ig_account_snapshots')
@@ -248,24 +254,19 @@ async function processInsights(clientUsername: string, clientId: string): Promis
     .eq('period_end', periodEnd)
     .maybeSingle()
 
-  // Passo B: Mesclagem Defensiva. Se o processamento atual resultou em 0 (ex: alcance ou seguidores),
-  // nós PRESERVAMOS o número legítimo já salvo por outros robôs para não zerar o seu painel!
   const finalPayload = {
     client_id: clientId,
     period_start: periodStart,
     period_end: periodEnd,
     followers_total: seguidoresTotais > 0 ? seguidoresTotais : (existingSnapshot?.followers_total ?? 0),
     reach_total: alcance > 0 ? alcance : (existingSnapshot?.reach_total ?? 0),
-    impressions_total: existingSnapshot?.impressions_total ?? 0, // Protege o dado de outros scripts
+    impressions_total: existingSnapshot?.impressions_total ?? 0,
     interactions_likes: totalLikes > 0 ? totalLikes : (existingSnapshot?.interactions_likes ?? 0),
     interactions_comments: totalComments > 0 ? totalComments : (existingSnapshot?.interactions_comments ?? 0),
     interactions_shares: totalShares > 0 ? totalShares : (existingSnapshot?.interactions_shares ?? 0),
     interactions_saves: totalSaves > 0 ? totalSaves : (existingSnapshot?.interactions_saves ?? 0)
-    // OMITIDO: period_source e followers_confidence (O banco injeta os ENUMs padrões nativamente)
   }
 
-  // Passo C: Tomada de decisão inteligente. Se existir, faz UPDATE direcionado na linha via ID único. 
-  // Se for inédito, executa um INSERT limpo. Isso anula o erro de unique constraint do Postgres!
   if (existingSnapshot) {
     const { error: updateError } = await supabase
       .schema('orbit')
@@ -274,7 +275,7 @@ async function processInsights(clientUsername: string, clientId: string): Promis
       .eq('id', existingSnapshot.id)
 
     if (updateError) console.error(`   ❌ Erro ao atualizar ig_account_snapshots: ${updateError.message}`)
-    else console.log(`   ✅ Snapshots consolidados atualizados com sucesso mantendo colunas vizinhas protegidas!`)
+    else console.log(`   ✅ Snapshots consolidados atualizados com sucesso!`)
   } else {
     const { error: insertError } = await supabase
       .schema('orbit')
@@ -285,29 +286,28 @@ async function processInsights(clientUsername: string, clientId: string): Promis
     else console.log(`   ✅ Novo snapshot consolidado criado com sucesso!`)
   }
 
-  console.log(`\n🎉 Ingestão de insights concluída com sucesso para @${clientUsername}!`)
+  console.log(`\\n🎉 Ingestão de insights concluída com sucesso para @${clientUsername}!`)
 }
-
 
 /* ── Execução Assíncrona Centralizada ────────────────────────────────────── */
 async function run(): Promise<void> {
   console.log('═══════════════════════════════════════════════════════')
-  console.log(`🔄 ORBIT · Ingest Insights — v1.4.0`)
+  console.log(`🔄 ORBIT · Ingest Insights — v1.4.1`)
   console.log(`📱 Cliente: ${CLIENT_USERNAME}`)
   console.log('═══════════════════════════════════════════════════════')
 
   try {
-    // Resolução dinâmica com cache integrado
+    // 🔑 CORREÇÃO CRÍTICA: resolveClientId já usa .schema('orbit') internamente
     const clientId = await resolveClientId(supabase, CLIENT_USERNAME)
-    console.log(`🆔 UUID resolvido com sucesso: ${clientId}`)
+    console.log(`🔑 UUID resolvido com sucesso: ${clientId}`)
     
     await processInsights(CLIENT_USERNAME, clientId)
-    } catch (err: unknown) {
-    const errorMessage = err instanceof Error ? err.message : String(err);
-    console.error(`❌ Erro fatal na execução: ${errorMessage}`);
-    process.exit(1);
+  } catch (err: unknown) {
+    const errorMessage = err instanceof Error ? err.message : String(err)
+    console.error(`❌ Erro fatal na execução: ${errorMessage}`)
+    process.exit(1)
   }
 }
 
-// Invoca o runner quando o script é executado diretamente
-void run();
+void run()
+
