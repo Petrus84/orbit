@@ -1,4 +1,3 @@
-// src/components/common/AlignmentBar.tsx
 
 import React from 'react';
 import { AlignmentBar as AlignmentBarType } from '../../types/avatar';
@@ -7,7 +6,7 @@ interface AlignmentBarProps {
   bar: AlignmentBarType;
 }
 
-// ✅ NOVO: Mapear AlignmentColor ('green' | 'amber' | 'red') → STATUS_COLORS
+// ✅ Mapear AlignmentColor ('green' | 'amber' | 'red') → STATUS_COLORS
 const COLOR_TO_STATUS = {
   green: 'healthy',
   amber: 'warning',
@@ -37,13 +36,34 @@ const STATUS_COLORS = {
 } as const;
 
 export const AlignmentBar: React.FC<AlignmentBarProps> = ({ bar }) => {
-  // ✅ CORRETO: Mapear bar.color → status
-  const status = COLOR_TO_STATUS[bar.color];
-  const colors = STATUS_COLORS[status];
+  // ✅ DEBUG: Log para ver o que está chegando
+  console.log('AlignmentBar received:', { 
+    label: bar.label, 
+    color: bar.color,
+    variance: bar.variance,
+    expected: bar.expected,
+    real: bar.real,
+  });
 
-  // AlignmentBarType não tem campo 'alignment' — é derivado de 'variance'.
-  // variance = |esperado - real| (0 = match perfeito, 100 = totalmente divergente)
-  // alignment = inverso: 100 = match perfeito, 0 = totalmente divergente
+  // ✅ SEGURANÇA: Validar e fazer fallback
+  const status = COLOR_TO_STATUS[bar.color as keyof typeof COLOR_TO_STATUS] ?? 'healthy';
+  
+  console.log('Mapped status:', status);
+  
+  const colors = STATUS_COLORS[status];
+  
+  console.log('Colors object:', colors);
+
+  if (!colors) {
+    // ✅ CORRIGIDO: Usar template literals
+    console.error(`❌ ERRO: colors é undefined para status: "${status}"`);
+    return (
+      <div className="p-4 bg-red-900/20 border border-red-500 rounded text-red-300">
+        Erro ao renderizar barra: status inválido &quot;{status}&quot;
+      </div>
+    );
+  }
+
   const alignmentPct = Math.max(0, Math.round(100 - bar.variance));
 
   return (
