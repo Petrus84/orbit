@@ -3,16 +3,20 @@ import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 
 const eslintConfig = defineConfig([
-  ...nextVitals,
-  ...nextTs,
-  // Override default ignores of eslint-config-next.
+  // 🛡️ TRAVA 1: Isola o lixo de cache, builds e bibliotecas antes de rodar o linter
   globalIgnores([
-    // Default ignores of eslint-config-next:
+    "node_modules/**",
     ".next/**",
     "out/**",
     "build/**",
+    "dist/**",
+    "**/.turbo/**",
     "next-env.d.ts",
   ]),
+
+  // Aplica as validações estritamente sobre o código limpo que sobrou
+  ...nextVitals,
+  ...nextTs,
 ]);
 
 export default eslintConfig;

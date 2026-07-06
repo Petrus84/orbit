@@ -1,19 +1,25 @@
 /* ==========================================================================
-   ORBIT · Sidebar
+   ORBIT · Sidebar (v2.0.0 — ALINHADO ÀS 11 RNs DO SSOT)
    Caminho: src/components/layout/Sidebar.tsx
-   Versão: 1.3.0
+   Versão: 2.0.0 | Data: 2026-07-05
 
-   v1.3.0:
-   FIX RAIZ: Funil e Avatar são ROTAS, não abas.
-   O Sidebar v1.2.2 interceptava TODOS os cliques da seção Instagram e
-   chamava setActiveTab() em vez de deixar o Next.js navegar.
-   Resultado: /instagram/funil e /instagram/avatar nunca eram visitados.
+   GOVERNANÇA RÍGIDA APLICADA:
+   ✅ R-01: Visão unificada de carteira — semáforo de saúde → /carteira
+   ✅ R-02: Alerta proativo com threshold configurável → /alertas
+   ✅ R-04: Funil interativo com simulador de cenário → /instagram/funil
+   ✅ R-07: Visão unificada orgânico + pago → /instagram (overview)
+   ✅ R-11: Auditoria de consistência de avatar → /instagram/avatar
 
-   FIX: handleItemClick só intercepta itens que estão no NAV_ITEM_TO_TAB_MAP.
-   Funil e Avatar não estão mais no map → e.preventDefault() não é chamado
-   → Link do Next.js navega normalmente → rota renderiza.
+   MUDANÇAS v2.0.0:
+   • Removido hardcoding de cliente — agora vem do contexto OrbitDashboardContext
+   • Documentação alinhada às 11 RNs para cada item de menu
+   • Badges dinâmicas (alertas) derivadas do contexto, não hardcoded
+   • Estrutura de tipos refatorada para máxima clareza
+   • Zero ruído de "Estudo de Mercado" ou features fantasmas
+   • Comentários removidos que mencionavam v1.2.2 (obsoleto)
 
-   Cliente ativo: ainda hardcoded como "CP Import Store" — futuro: usar contexto
+   NOTA: Estilização mantém conformidade com ssot-design-tokens.css
+   (nenhuma classe Orbit redundante adicionada)
    ========================================================================== */
 
 'use client'
@@ -26,71 +32,99 @@ import { useOrbitDashboard } from '../../context/OrbitDashboardContext'
 import { NAV_ITEM_TO_TAB_MAP, isNavItemActive } from './navItemMapping'
 import type { TabId } from '../../types/orbit'
 
+/**
+ * Representa um item de navegação da sidebar.
+ * Cada item mapeia a uma regra de negócio (RN) específica.
+ */
 interface NavItem {
   id:            string
   label:         string
   href:          string
   icon:          string
+  section:       'visao-geral' | 'instagram'
+  ruleNumber?:   string  // Rastreabilidade: qual RN este item atende
   badge?:        number
   badgeVariant?: 'default' | 'alert'
-  section:       'visao-geral' | 'instagram'
 }
 
+/**
+ * WHITELIST OFICIAL DE ITENS DE NAVEGAÇÃO
+ * Alinhados às 11 RNs do SSOT. Nenhum ruído de "Estudo de Mercado".
+ */
 const NAV_ITEMS: NavItem[] = [
-  // ── Visão geral ────────────────────────────────────────────────────────────
+  // ── SEÇÃO: Visão Geral ─────────────────────────────────────────────────────
   {
-    id:           'carteira',
-    label:        'Carteira',
-    href:         '/carteira',
-    icon:         '📁',
-    badge:        2,
-    badgeVariant: 'default',
-    section:      'visao-geral',
+    id:          'carteira',
+    label:       'Carteira',
+    href:        '/carteira',
+    icon:        '📁',
+    section:     'visao-geral',
+    ruleNumber:  'R-01',  // Visão unificada de carteira — semáforo de saúde
   },
   {
-    id:           'alertas',
-    label:        'Alertas',
-    href:         '/alertas',
-    icon:         '🔔',
-    badge:        3,
+    id:          'alertas',
+    label:       'Alertas',
+    href:        '/alertas',
+    icon:        '🔔',
+    section:     'visao-geral',
+    ruleNumber:  'R-02',  // Alerta proativo com threshold configurável
+    badge:       undefined,  // Dinâmico: vem do contexto
     badgeVariant: 'alert',
-    section:      'visao-geral',
   },
 
-  // ── Instagram ──────────────────────────────────────────────────────────────
+  // ── SEÇÃO: Instagram ───────────────────────────────────────────────────────
   {
-    id:      'visao-geral-ig',
-    label:   'Visão geral IG',
-    href:    '/instagram',
-    icon:    '📊',
-    section: 'instagram',
+    id:         'visao-geral-ig',
+    label:      'Visão geral IG',
+    href:       '/instagram',
+    icon:       '📊',
+    section:    'instagram',
+    ruleNumber: 'R-07',  // Visão unificada orgânico + pago
   },
   {
-    id:      'funil-simulador',
-    label:   'Funil + Simulador',
-    href:    '/instagram/funil',   // ← ROTA REAL (não aba)
-    icon:    '🌀',
-    section: 'instagram',
+    id:         'funil-simulador',
+    label:      'Funil + Simulador',
+    href:       '/instagram/funil',
+    icon:       '🌀',
+    section:    'instagram',
+    ruleNumber: 'R-04',  // Funil interativo com simulador de cenário
   },
   {
-    id:      'avatar-alignment',
-    label:   'Avatar Alignment',
-    href:    '/instagram/avatar',  // ← ROTA REAL (não aba)
-    icon:    '👤',
-    section: 'instagram',
+    id:         'avatar-alignment',
+    label:      'Avatar Alignment',
+    href:       '/instagram/avatar',
+    icon:       '👤',
+    section:    'instagram',
+    ruleNumber: 'R-11',  // Auditoria de consistência de avatar
   },
 ]
 
+/**
+ * Sidebar: Navegação principal do ORBIT
+ * 
+ * Renderiza itens de menu baseando-se estritamente no mapeamento oficial (NAV_ITEMS).
+ * Badges de alertas são dinâmicos, derivados do contexto OrbitDashboardContext.
+ * Nenhum elemento visual, botão ou link estático para "Estudo de Mercado".
+ */
 export function Sidebar() {
-  const pathname  = usePathname()
-  const { activeTab, setActiveTab } = useOrbitDashboard()
+  const pathname = usePathname()
+  const { activeTab, setActiveTab, currentClient, alertCount } = useOrbitDashboard()
 
+  // Separar itens por seção
   const visaoGeralItems = NAV_ITEMS.filter(i => i.section === 'visao-geral')
-  const instagramItems  = NAV_ITEMS.filter(i => i.section === 'instagram')
+  const instagramItems = NAV_ITEMS.filter(i => i.section === 'instagram')
+
+  // Enriquecer itens com badges dinâmicos
+  const visaoGeralItemsEnriched = visaoGeralItems.map(item => {
+    if (item.id === 'alertas') {
+      return { ...item, badge: alertCount ?? 0 }
+    }
+    return item
+  })
 
   return (
-    <aside className={styles.sidebar} aria-label="Navegação principal">
-      {/* Logo */}
+    <aside className={styles.sidebar} aria-label="Navegação principal do ORBIT">
+      {/* ── Logo ────────────────────────────────────────────────────────────── */}
       <div className={styles.logo}>
         <div className={styles.logoBadge} aria-hidden="true">O</div>
         <div>
@@ -99,20 +133,26 @@ export function Sidebar() {
         </div>
       </div>
 
-      {/* Cliente ativo */}
-      <div className={styles.clientBox}>
-        <p className={styles.clientLabel}>CLIENTE ATIVO</p>
-        <div className={styles.clientName}>
-          <span>CP Import Store</span>
-          <span className={styles.clientDot} aria-label="Ativo" />
+      {/* ── Cliente Ativo (Dinâmico) ────────────────────────────────────────── */}
+      {currentClient && (
+        <div className={styles.clientBox}>
+          <p className={styles.clientLabel}>CLIENTE ATIVO</p>
+          <div className={styles.clientName}>
+            <span>{currentClient.name}</span>
+            <span
+              className={styles.clientDot}
+              data-status={currentClient.status}
+              aria-label={`Status: ${currentClient.status}`}
+            />
+          </div>
         </div>
-      </div>
+      )}
 
-      {/* Seção: Visão Geral */}
+      {/* ── Seção: Visão Geral ──────────────────────────────────────────────── */}
       <p className={styles.sectionLabel}>VISÃO GERAL</p>
-      <nav>
+      <nav aria-label="Navegação de visão geral">
         <ul className={styles.navList} role="list">
-          {visaoGeralItems.map(item => (
+          {visaoGeralItemsEnriched.map(item => (
             <NavItemRow
               key={item.id}
               item={item}
@@ -123,12 +163,17 @@ export function Sidebar() {
         </ul>
       </nav>
 
-      {/* Seção: Instagram */}
+      {/* ── Seção: Instagram ────────────────────────────────────────────────── */}
       <p className={styles.sectionLabel}>INSTAGRAM</p>
-      <nav>
+      <nav aria-label="Navegação de Instagram">
         <ul className={styles.navList} role="list">
           {instagramItems.map(item => {
-            const itemIsActive = isNavItemActive(item.id, pathname, item.href, activeTab)
+            const itemIsActive = isNavItemActive(
+              item.id,
+              pathname,
+              item.href,
+              activeTab
+            )
             return (
               <NavItemRow
                 key={item.id}
@@ -144,44 +189,69 @@ export function Sidebar() {
   )
 }
 
-// ─── NavItemRow ───────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// NavItemRow: Componente de linha de item de navegação
+// ─────────────────────────────────────────────────────────────────────────────
 
 interface NavItemRowProps {
-  item:        NavItem
-  isActive:    boolean
-  onTabClick:  (tabId: TabId) => void
+  item:       NavItem
+  isActive:   boolean
+  onTabClick: (tabId: TabId) => void
 }
 
+/**
+ * NavItemRow: Renderiza uma linha de item de navegação.
+ * 
+ * Lógica de clique (v2.0.0):
+ * - Se o item está em NAV_ITEM_TO_TAB_MAP (aba dentro de /instagram):
+ *   → Intercepta clique, chama setActiveTab(), previne navegação padrão
+ * - Se o item NÃO está no mapa (rota independente):
+ *   → Permite navegação padrão do Next.js
+ * 
+ * @param item - Definição do item de navegação
+ * @param isActive - Se o item está ativo (baseado em pathname + activeTab)
+ * @param onTabClick - Callback para mudar aba (apenas para itens em NAV_ITEM_TO_TAB_MAP)
+ */
 function NavItemRow({ item, isActive, onTabClick }: NavItemRowProps) {
-  const handleItemClick = (e: React.MouseEvent) => {
-    // FIX v1.3.0: Só intercepta se o item está no mapa de abas.
-    // Funil e Avatar NÃO estão no mapa → e.preventDefault() não é chamado
-    // → Link navega normalmente para a rota real.
+  const handleItemClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // Intercepta APENAS se o item está no mapa de abas
+    // Funil e Avatar NÃO estão no mapa → navegação normal do Next.js
     if (item.section === 'instagram' && item.id in NAV_ITEM_TO_TAB_MAP) {
       e.preventDefault()
       const tabId = NAV_ITEM_TO_TAB_MAP[item.id]
       onTabClick(tabId)
     }
-    // Para funil-simulador e avatar-alignment: não interceptar → navegação normal
   }
 
   return (
     <li>
       <Link
         href={item.href}
-        className={[styles.navItem, isActive ? styles.navItemActive : ''].join(' ')}
+        className={[
+          styles.navItem,
+          isActive ? styles.navItemActive : '',
+        ]
+          .filter(Boolean)
+          .join(' ')}
         aria-current={isActive ? 'page' : undefined}
+        data-rule={item.ruleNumber}
         onClick={handleItemClick}
       >
-        <span className={styles.navIcon} aria-hidden="true">{item.icon}</span>
+        <span className={styles.navIcon} aria-hidden="true">
+          {item.icon}
+        </span>
         <span className={styles.navLabel}>{item.label}</span>
-        {item.badge !== undefined && (
+        {item.badge !== undefined && item.badge > 0 && (
           <span
             className={[
               styles.badge,
-              item.badgeVariant === 'alert' ? styles.badgeAlert : styles.badgeDefault,
-            ].join(' ')}
-            aria-label={`${item.badge} notificações`}
+              item.badgeVariant === 'alert'
+                ? styles.badgeAlert
+                : styles.badgeDefault,
+            ]
+              .filter(Boolean)
+              .join(' ')}
+            aria-label={`${item.badge} ${item.id === 'alertas' ? 'alertas' : 'notificações'}`}
           >
             {item.badge}
           </span>
