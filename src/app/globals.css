@@ -11,7 +11,7 @@
 @import 'tailwindcss';
 
 /* ─── Tokens legados (CSS Modules antigos) ─── */
-@import '../styles/orbit-design-tokens.css';
+@import '../styles/ssot-design-tokens.css';
 
 /* ─── Design system SSOT (Tailwind + componentes novos) ─── */
 @import '../styles/ssot-globals.css';
