@@ -1,92 +1,239 @@
-// =============================================================================
-// ORBIT · Repository — Funil Interativo + Simulador
-// Caminho: src/lib/repositories/funnelRepository.ts
-// Versão: 4.0.0
-//
-// v4.0.0:
-// - Usa supabaseLegacy (public.funnel_data) pois orbit.* não tem tabela funnel_data ainda
-// - Fallback hardcoded com dados do @cpimportstore quando DB retorna vazio
-//   (evita tela de erro no lugar de dados reais do cliente que já conhecemos)
-// - periodStart/periodEnd aceita Date | string (normalizado internamente)
-// =============================================================================
+/* ==========================================================================
+   ORBIT · Repository - Funnel (v2 Final — 5 Argumentos + Quality Score)
 
-import { supabaseLegacy } from '../supabase'
-import type { FunnelMetrics, FunnelMetricsRow } from '../../types/funnel'
+   Assinatura de calculateSimulatedFunnel (5 argumentos):
+   1. simulatedParams: { alcance, ctrBio, taxaConv }
+   2. ctrLink: number | null
+   3. alcanceRealHistorico: number (âncora de escala)
+   4. segmento: 'ECOMMERCE_COMMODITY' | 'PROFESSIONAL_SERVICES'
+   5. erRealNativo: number | null (ER Real da View via FK)
+   ========================================================================== */
 
-type FunnelDataSelect = Pick<
-  FunnelMetricsRow,
-  'alcance' | 'visitas' | 'cliques' | 'vendas' | 'ctr_bio' | 'taxa_conv'
->
+import { supabase } from '../supabase'
+import type { FunnelMetrics } from '../../types/funnel'
 
-function mapRowToFunnelMetrics(row: FunnelDataSelect): FunnelMetrics {
-  return {
-    alcance:  row.alcance,
-    visitas:  row.visitas,
-    cliques:  row.cliques,
-    vendas:   row.vendas,
-    ctrBio:   row.ctr_bio,
-    taxaConv: row.taxa_conv,
-  }
+interface SimulatedParams {
+  alcance: number
+  ctrBio: number
+  taxaConv: number
 }
 
-// Dados reais verificados de @cpimportstore (Feb-Mai 2026)
-// Usados como fallback quando funnel_data está vazio no banco
-// Thresholds: CTR bio real = 7.5% (4 cliques / 53 visitas)
-const FALLBACK_CPIMPORTSTORE: FunnelMetrics = {
-  alcance:  443,
-  visitas:  53,
-  cliques:  4,
-  vendas:   0,
-  ctrBio:   7.5,    // 4/53 × 100 ← dado real do export
+// ✅ TIPO DISCRIMINADO: Garante .data quando status === 'success'
+export type CalculationResult =
+  | { status: 'success'; data: FunnelMetrics }
+  | { status: 'error'; reason: 'missing_ctr_link' | 'invalid_params'; message: string }
+
+// ─── UTILITIES ─────────────────────────────────────────────────────────────
+
+const createNullState = (): FunnelMetrics => ({
+  alcance: 0,
+  visitas: 0,
+  cliques: null,
+  vendas: null,
+  ctrBio: 0,
   taxaConv: 0,
-}
+  erReal: null,
+})
 
-const FALLBACK_DEFAULT: FunnelMetrics = {
-  alcance:  1000,
-  visitas:  120,
-  cliques:  12,
-  vendas:   2,
-  ctrBio:   12,
-  taxaConv: 16.7,
-}
+// ─── CAMADA 1: FETCH ──────────────────────────────────────────────────────
 
-function toISOString(date: Date | string): string {
-  if (typeof date === 'string') return date
-  return date.toISOString()
-}
-
-export async function fetchFunnelData(
-  clientId: string,
-  periodStart: Date | string,
-  periodEnd: Date | string
-): Promise<FunnelMetrics> {
+/**
+ * ✅ Busca métricas reais do funil
+ * Fonte: orbit.funnel_data (schema SSOT)
+ */
+export async function fetchFunnelMetrics(clientId: string): Promise<FunnelMetrics> {
   try {
-    const { data, error } = await supabaseLegacy
+    console.log(`[funnelRepository] Buscando métricas para: ${clientId}`)
+
+    const { data, error } = await supabase
+      .schema('orbit')
       .from('funnel_data')
-      .select('alcance, visitas, cliques, vendas, ctr_bio, taxa_conv')
+      .select('id, alcance, visitas, cliques, vendas, ctr_bio, taxa_conv, period_start, period_end, created_at')
       .eq('client_id', clientId)
-      .gte('period_start', toISOString(periodStart))
-      .lte('period_end', toISOString(periodEnd))
-      .order('period_end', { ascending: false })
+      .order('created_at', { ascending: false })
       .limit(1)
       .maybeSingle()
 
     if (error) {
-      console.warn('[funnelRepository] Supabase error — usando fallback:', error.message)
-      return clientId.includes('c4722cfc') ? FALLBACK_CPIMPORTSTORE : FALLBACK_DEFAULT
+      console.error(
+        `[funnelRepository] [DB ERROR] Falha ao buscar para ${clientId}:`,
+        error.message
+      )
+      return createNullState()
     }
 
     if (!data) {
-      console.warn('[funnelRepository] Sem dados no banco — usando fallback para', clientId)
-      return clientId.includes('c4722cfc') ? FALLBACK_CPIMPORTSTORE : FALLBACK_DEFAULT
+      console.warn(`[funnelRepository] [NO DATA] Sem registro no banco para: ${clientId}`)
+      return createNullState()
     }
 
-    return mapRowToFunnelMetrics(data as FunnelDataSelect)
+    console.log(`[funnelRepository] ✅ Sucesso: Métricas carregadas para ${clientId}`)
+
+    return {
+      alcance: data.alcance ?? 0,
+      visitas: data.visitas ?? 0,
+      cliques: data.cliques,
+      vendas: data.vendas,
+      ctrBio: Number(data.ctr_bio),
+      taxaConv: Number(data.taxa_conv),
+      erReal: null,
+    }
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Erro desconhecido'
-    console.warn('[funnelRepository] Exception — usando fallback:', message)
-    return clientId.includes('c4722cfc') ? FALLBACK_CPIMPORTSTORE : FALLBACK_DEFAULT
+    const errorMessage = err instanceof Error ? err.message : 'Erro desconhecido'
+    console.error(
+      `[funnelRepository] [EXCEPTION] Erro crítico para ${clientId}:`,
+      errorMessage
+    )
+    return createNullState()
   }
 }
 
-export { calculateSimulatedFunnel } from './funnelRepository.calc'
+// ─── CAMADA 3: CÁLCULO (Simulação com Lei dos Rendimentos Decrescentes) ────
+
+/**
+ * ✅ Calcula funil simulado com inteligência elástica
+ *
+ * ASSINATURA: 5 ARGUMENTOS
+ * 1. simulatedParams: { alcance, ctrBio, taxaConv }
+ * 2. ctrLink: number | null
+ * 3. alcanceRealHistorico: number (âncora de escala)
+ * 4. segmento: 'ECOMMERCE_COMMODITY' | 'PROFESSIONAL_SERVICES'
+ * 5. erRealNativo: number | null (ER Real da View via FK)
+ */
+export function calculateSimulatedFunnel(
+  simulatedParams: SimulatedParams,
+  ctrLink: number | null,
+  alcanceRealHistorico: number,
+  segmento: 'ECOMMERCE_COMMODITY' | 'PROFESSIONAL_SERVICES',
+  erRealNativo: number | null
+): CalculationResult {
+  // ✅ Validação 1: CTR Link
+  if (ctrLink === null || ctrLink === undefined) {
+    console.error('[funnelRepository] ❌ CTR Link ausente — não há dados reais do banco')
+    return {
+      status: 'error',
+      reason: 'missing_ctr_link',
+      message: 'Dados de CTR do link em bio não disponíveis.',
+    }
+  }
+
+  if (typeof ctrLink !== 'number' || isNaN(ctrLink) || ctrLink < 0 || ctrLink > 100) {
+    console.error(`[funnelRepository] ❌ CTR Link inválido: ${ctrLink}`)
+    return {
+      status: 'error',
+      reason: 'invalid_params',
+      message: `CTR Link deve estar entre 0 e 100. Recebido: ${ctrLink}`,
+    }
+  }
+
+  // ✅ Validação 2: Parâmetros simulados
+  if (!simulatedParams || typeof simulatedParams !== 'object') {
+    console.error('[funnelRepository] ❌ Parâmetros simulados inválidos')
+    return {
+      status: 'error',
+      reason: 'invalid_params',
+      message: 'Parâmetros simulados não fornecidos',
+    }
+  }
+
+  const { alcance, ctrBio, taxaConv } = simulatedParams
+
+  if (
+    typeof alcance !== 'number' ||
+    alcance < 0 ||
+    typeof ctrBio !== 'number' ||
+    ctrBio < 0 ||
+    ctrBio > 100 ||
+    typeof taxaConv !== 'number' ||
+    taxaConv < 0 ||
+    taxaConv > 100
+  ) {
+    console.error('[funnelRepository] ❌ Parâmetros fora do intervalo válido', {
+      alcance,
+      ctrBio,
+      taxaConv,
+    })
+    return {
+      status: 'error',
+      reason: 'invalid_params',
+      message: 'Parâmetros devem ser números entre 0 e 100',
+    }
+  }
+
+  // ✅ INTELIGÊNCIA ELÁSTICA: Lei dos Rendimentos Decrescentes
+  const limits = {
+    ECOMMERCE_COMMODITY: { maxCTR: 3.0, maxConv: 2.0, alpha: 0.15 },
+    PROFESSIONAL_SERVICES: { maxCTR: 10.0, maxConv: 6.0, alpha: 0.45 },
+  }[segmento]
+
+  // Razão de escala em relação à âncora histórica
+  const razaoEscala = alcance / (alcanceRealHistorico || 1)
+
+  let ctrBioAjustado = ctrBio
+  let taxaConvAjustada = taxaConv
+
+  if (razaoEscala > 1) {
+    const scoreQualidade = erRealNativo ?? 1.0
+    const fatorFriccao = Math.pow(razaoEscala, limits.alpha - scoreQualidade * 0.02)
+
+    ctrBioAjustado = ctrBio / fatorFriccao
+    taxaConvAjustada = taxaConv / fatorFriccao
+
+    console.log(
+      `[funnelRepository] 📊 Fricção aplicada: razão=${razaoEscala.toFixed(2)}, fator=${fatorFriccao.toFixed(3)}, scoreQualidade=${scoreQualidade}`
+    )
+  }
+
+  // Trava os sliders nos limites que o nicho suporta
+  const ctrBioFinal = Math.min(ctrBioAjustado, limits.maxCTR)
+  const taxaConvFinal = Math.min(taxaConvAjustada, limits.maxConv)
+
+  // Cálculo linear final
+  const visitas = alcance * (ctrBioFinal / 100)
+  const cliques = visitas * ((ctrLink ?? 10) / 100)
+  const vendas = cliques * (taxaConvFinal / 100)
+
+  const result: FunnelMetrics = {
+    alcance: Math.round(alcance),
+    visitas: Math.round(visitas),
+    cliques: Math.round(cliques),
+    vendas: Math.round(vendas),
+    ctrBio: parseFloat(ctrBioFinal.toFixed(2)),
+    taxaConv: parseFloat(taxaConvFinal.toFixed(2)),
+    erReal: erRealNativo,
+  }
+
+  console.log('[funnelRepository] ✅ Funil simulado calculado com sucesso', {
+    alcance: result.alcance,
+    visitas: result.visitas,
+    cliques: result.cliques,
+    vendas: result.vendas,
+    ctrBioFinal: result.ctrBio,
+    taxaConvFinal: result.taxaConv,
+  })
+
+  return {
+    status: 'success',
+    data: result,
+  }
+}
+
+/**
+ * ✅ Versão simplificada (retorna null em caso de erro)
+ */
+export function calculateSimulatedFunnelOrNull(
+  simulatedParams: SimulatedParams,
+  ctrLink: number | null,
+  alcanceRealHistorico: number,
+  segmento: 'ECOMMERCE_COMMODITY' | 'PROFESSIONAL_SERVICES',
+  erRealNativo: number | null
+): FunnelMetrics | null {
+  const result = calculateSimulatedFunnel(
+    simulatedParams,
+    ctrLink,
+    alcanceRealHistorico,
+    segmento,
+    erRealNativo
+  )
+  return result.status === 'success' ? result.data : null
+}

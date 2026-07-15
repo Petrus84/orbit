@@ -1,7 +1,7 @@
 /* ============================================================================
-   ORBIT · Domain Types (v1.2.0 — CONSOLIDADO)
+   ORBIT · Domain Types (v1.2.1 — CONSOLIDADO + PENDING STATE)
    
-   Versão: 1.2.0  |  Data: 2026-07-02
+   Versão: 1.2.1  |  Data: 2026-07-14
    Status: ✅ PRONTO PARA PRODUÇÃO
    
    PATCHES APLICADOS:
@@ -13,6 +13,7 @@
    ✅ PATCH C-4: MetaAdsKPI.delta + MetaAdsKPI.deltaLabel adicionados
    ✅ PATCH C-5: KpiSnapshotRow campos corrigidos
    ✅ PATCH C-6 BÔNUS: Campaign.cpl adicionado
+   ✅ PATCH D: AlignmentStatus + 'pending' adicionado (v1.2.1)
    ============================================================================ */
 
 export type GlowColor      = 'cyan' | 'red' | 'gold' | 'none'
@@ -24,7 +25,7 @@ export type SourceLevel    = 'L0' | 'L1' | 'L2'
 export type StatusVariant  = 'ok' | 'warn' | 'neutral'
 export type AlertSeverity  = 'critical' | 'warning' | 'info'
 export type ClientStatus   = 'critical' | 'warning' | 'healthy'
-export type AlignmentStatus = 'critical' | 'warning' | 'healthy'
+export type AlignmentStatus = 'critical' | 'warning' | 'healthy' | 'pending'
 export type AlignmentColor = 'green' | 'amber' | 'red'
 
 export type FetchStatus = 'idle' | 'loading' | 'success' | 'error'
@@ -66,6 +67,7 @@ export interface FormatPerformanceRow {
   format:     string
   posts:      number
   shares:     number
+  saves:      number
   trendLabel: string
   trendColor: TrendColor
 }
@@ -103,28 +105,27 @@ export interface IGOverviewData {
 export interface FunnelStep {
   id:         string
   label:      string
-  value:      number
+  value:      number | null // ✅ ALTERADO: O valor do degrau pode ser nulo se não medido
   percentage: number
   color:      string
   icon?:      string
 }
-
 export interface FunnelData {
   clientId:   string
   steps:      FunnelStep[]
   totalValue: number
   period:     string
+  erReal:     number | null  // ← ADICIONADO
 }
-
 export interface FunnelMetrics {
   alcance:  number
   visitas:  number
-  cliques:  number
-  vendas:   number
+  cliques:  number | null // ← ALTERADO
+  vendas:   number | null // ← ALTERADO
   ctrBio:   number
   taxaConv: number
+  erReal:   number | null // ← INCLUÍDO (Veja item 2)
 }
-
 export interface SliderConfig {
   id:        string
   label:     string
@@ -150,7 +151,7 @@ export interface FunnelScreenData {
 
 export interface UseFunnelResult {
   data:        FunnelMetrics | null
-  status:      'idle' | 'loading' | 'success' | 'error'
+  status:      FetchStatus  // ← CORRIGIDO: era 'idle' | 'loading' | 'success' | 'error'
   error:       string | null
   lastUpdated: Date | null
   refetch:     () => void
@@ -161,10 +162,11 @@ export interface FunnelMetricsRow {
   client_id:    string
   alcance:      number
   visitas:      number
-  cliques:      number
-  vendas:       number
+  cliques:      number | null
+  vendas:       number | null
   ctr_bio:      number
   taxa_conv:    number
+  er_real_pct?: number | null
   period_start: string
   period_end:   string
   created_at:   string
@@ -191,15 +193,18 @@ export interface AlignmentBar {
 }
 
 export interface AvatarAlignment {
-  id:             string
-  clientId:       string
-  expected:       AvatarProfile
-  real:           AvatarProfile
-  score:          number
-  status:         AlignmentStatus
-  bars:           AlignmentBar[]
-  recommendation: string
+  id:                  string
+  clientId:            string
+  expected:            AvatarProfile
+  real:                AvatarProfile
+  score:               number
+  status:              AlignmentStatus
+  bars:                AlignmentBar[]
+  recommendation:      string
+  unconsciousDesire:   string | null  // ✅ NOVO
+  alignmentHypothesis: string | null  // ✅ NOVO
 }
+
 
 export interface AlignmentCalculation {
   scoreGender:   number
@@ -213,6 +218,7 @@ export const ALIGNMENT_STATUS_LABEL: Record<AlignmentStatus, string> = {
   healthy:  'Saudável',
   warning:  'Atenção',
   critical: 'Crítico',
+  pending:  'Calculando...',
 }
 
 export const ALIGNMENT_THRESHOLDS = {

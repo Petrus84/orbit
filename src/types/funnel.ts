@@ -17,9 +17,13 @@ export type {
   FetchStatus,
   AsyncState,
   FunnelMetrics,
+  FunnelStep,
+  FunnelData,
   SliderConfig,
   SimulatedFunnelResult,
   FunnelScreenData,
-  UseFunnelResult,
+  UseFunnelResult,  // ✅ NOVO: Agora re-exporta
   FunnelMetricsRow,
+  FunnelSimulatorParams,
+  FunnelSimulationResult,
 } from './orbit'

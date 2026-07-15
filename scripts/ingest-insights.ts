@@ -1,18 +1,26 @@
-
 //# ============================================================================
-//# 2. ARQUIVO: ingest-insights.ts (AJUSTES CRÍTICOS)
+//# ARQUIVO: ingest-insights.ts (v1.6.0 — CLIQUES NO LINK + CAMPOS ÓRFÃOS DO REACH)
 //# ============================================================================
-
-//ingest_insights_content = '''
-//* ==========================================================================
- //  ORBIT · Script de Ingestão de Insights – v1.4.1 (SCHEMA ORBIT OBRIGATÓRIO)
- //  Arquivo: scripts/ingest-insights.ts
-   
- //  ✅ CORREÇÕES v1.4.1:
- //  - Busca de cliente SEMPRE via .schema('orbit').from('clients')
- //  - Todas as tabelas de persistência em schema 'orbit'
-//   - Eliminado conflito public vs orbit
-//   ========================================================================== *//
+//# ✅ CORREÇÕES v1.6.0:
+//# - O bloco que lê profiles_reached.json só extraía REACH. O arquivo sempre
+//#   trouxe também "Impressões", "Visitas ao perfil" e "Toques em links
+//#   externos" — só nunca foram lidos. impressoes-90d, inclusive, estava
+//#   HARDCODED em 0 (não era um bug de encoding, era um campo nunca escrito).
+//# - Adiciona extração de IMPRESSIONS, PROFILE_VISITS_FROM e EXTERNAL_LINK_TAPS
+//#   (chave nova no dicionário) do mesmo objeto rsmd já usado para REACH.
+//# - Propaga profile_visits e link_clicks para orbit.ig_account_snapshots.
+//#   Isso importa além do valor em si: link_ctr_pct é coluna GENERATED como
+//#   (link_clicks / profile_visits) * 100 — sem profile_visits preenchido,
+//#   link_ctr_pct continua NULL mesmo com link_clicks correto.
+//# - Novas linhas em metric_history: 'impressoes-90d' (agora real, não 0),
+//#   'visitas-perfil-90d', 'cliques-link-90d'.
+//#
+//# ✅ CORREÇÕES v1.5.0 (mantidas):
+//# - Remove a lista local de variantes de mojibake (intWithFallback + arrays
+//#   hardcoded). Passa a consumir lib/metric-key-dictionary.ts, a mesma fonte
+//#   usada por extract-demographics.ts e ingest-l0-v2.ts.
+//# - Type-safe sem 'any'
+//# ============================================================================
 
 import dotenv from 'dotenv'
 import { resolveClientId } from './lib/resolveClientId.ts'
@@ -20,6 +28,11 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js'
 import { z } from 'zod'
 import * as fs from 'fs'
 import * as path from 'path'
+import {
+  resolveIntMetric,
+  resolveStringMetric,
+  logMissingKey,
+} from './lib/metric-key-dictionary.ts'
 
 dotenv.config({ path: '.env.local' })
 
@@ -97,13 +110,6 @@ function readJson(filePath: string): unknown {
   return JSON.parse(fs.readFileSync(filePath, 'utf-8')) as unknown
 }
 
-/* ── Helpers Numéricos ──────────────────────────────────────────────────── */
-function int(smd: Record<string, { value?: string }>, key: string): number {
-  const raw = smd[key]?.value ?? '0'
-  const cleaned = raw.replace(/[^0-9\\-]/g, '')
-  return parseInt(cleaned || '0', 10)
-}
-
 /* ── Parse de Datas ISO ─────────────────────────────────────────────────── */
 function parseDateRange(range: string): { start: string; end: string } {
   const monthMap: Record<string, string> = {
@@ -133,9 +139,8 @@ function parseDateRange(range: string): { start: string; end: string } {
   }
 }
 
-/* ── Pipeline Principal ─────────────────────────────────────────────────── */
 async function processInsights(clientUsername: string, clientId: string): Promise<void> {
-  console.log(`\\n🔄 Iniciando processamento para UUID: ${clientId}`)
+  console.log(`\n🔄 Iniciando processamento para UUID: ${clientId}`)
 
   const interPath = findFile(clientUsername, 'content_interactions.json')
   if (!interPath) {
@@ -144,9 +149,26 @@ async function processInsights(clientUsername: string, clientId: string): Promis
   }
 
   console.log(`   ✅ Arquivo de interações localizado: ${interPath}`)
+
+  // ✅ DIAGNÓSTICO: Verificar se profiles_reached.json existe
+  console.log(`\n🔍 [DIAGNÓSTICO] Procurando profiles_reached.json...`)
+  const reachPath = findFile(clientUsername, 'profiles_reached.json')
+  console.log(`   Resultado: ${reachPath ? '✅ ENCONTRADO' : '❌ NÃO ENCONTRADO'}`)
+  if (reachPath) {
+    console.log(`   Caminho: ${reachPath}`)
+  } else {
+    console.log(`   Procurou em:`)
+    console.log(`      1. ${path.join(BASE_PATH, 'profiles_reached.json')}`)
+    console.log(`      2. ${path.join(BASE_PATH, clientUsername, 'profiles_reached.json')}`)
+    if (fs.existsSync(BASE_PATH)) {
+      const items = fs.readdirSync(BASE_PATH).slice(0, 15)
+      console.log(`   Arquivos/pastas em BASE_PATH: ${items.join(', ')}`)
+    }
+  }
+
   const rawInter = readJson(interPath)
   const parsedInter = ContentInteractionsSchema.safeParse(rawInter)
-  
+
   if (!parsedInter.success) {
     console.error('❌ Erro na validação estrutural do content_interactions.json:')
     console.error(parsedInter.error.issues[0])
@@ -154,39 +176,47 @@ async function processInsights(clientUsername: string, clientId: string): Promis
   }
 
   const smd = parsedInter.data.organic_insights_interactions[0]?.string_map_data ?? {}
-  const dateRangeRaw = smd['Intervalo de datas']?.value ?? ''
+  const dateRangeRaw = resolveStringMetric(smd, 'DATE_RANGE')
   const { start: periodStart, end: periodEnd } = dateRangeRaw
     ? parseDateRange(dateRangeRaw)
     : { start: new Date().toISOString().split('T')[0], end: new Date().toISOString().split('T')[0] }
 
   console.log(`   📊 Período detectado: ${periodStart} ──> ${periodEnd}`)
 
-  // Extração das métricas brutas
-  const sharesPost  = int(smd, 'Compartilhamento do post')
-  const savesPost   = int(smd, 'Salvamentos do post')
-  const likesPost   = int(smd, 'Curtidas do post')
+  // ✅ v1.5.0: Extração via dicionário compartilhado (lib/metric-key-dictionary.ts)
+  const sharesPost = resolveIntMetric(smd, 'SHARES_POST', logMissingKey)
+  const savesPost = resolveIntMetric(smd, 'SAVES_POST', logMissingKey)
+  const likesPost = resolveIntMetric(smd, 'LIKES_POST', logMissingKey)
 
-  const sharesReels = int(smd, 'Compartilhamentos de vídeos do Reels')
-  const savesReels  = int(smd, 'Salvamentos de vídeos do Reels')
-  const likesReels  = int(smd, 'Curtidas em vídeos do Reels')
-  const commReels   = int(smd, 'Comentários em reels')
+  const sharesReels = resolveIntMetric(smd, 'SHARES_REELS', logMissingKey)
+  const savesReels = resolveIntMetric(smd, 'SAVES_REELS', logMissingKey)
+  const likesReels = resolveIntMetric(smd, 'LIKES_REELS', logMissingKey)
+  const commReels = resolveIntMetric(smd, 'COMMENTS_REELS', logMissingKey)
 
-  const totalShares   = sharesPost + sharesReels
-  const totalSaves    = savesPost + savesReels
-  const totalLikes    = likesPost + likesReels
+  const totalShares = sharesPost + sharesReels
+  const totalSaves = savesPost + savesReels
+  const totalLikes = likesPost + likesReels
   const totalComments = commReels
 
+  // ✅ v1.6.0: profiles_reached.json tem REACH, IMPRESSIONS, PROFILE_VISITS_FROM
+  // e EXTERNAL_LINK_TAPS no mesmo objeto rsmd — antes só REACH era extraído.
   let alcance = 0
-  const reachPath = findFile(clientUsername, 'profiles_reached.json')
+  let impressoes = 0
+  let visitasPerfil = 0
+  let cliquesLink = 0
   if (reachPath) {
     const rawReach = readJson(reachPath)
     const parsedReach = ReachFileSchema.safeParse(rawReach)
     if (parsedReach.success && parsedReach.data.organic_insights_reach.length > 0) {
       const rsmd = parsedReach.data.organic_insights_reach[0].string_map_data
-      alcance = int(rsmd, 'Contas alcançadas') || int(rsmd, 'Accounts reached')
+      alcance = resolveIntMetric(rsmd, 'REACH', logMissingKey)
+      impressoes = resolveIntMetric(rsmd, 'IMPRESSIONS', logMissingKey)
+      visitasPerfil = resolveIntMetric(rsmd, 'PROFILE_VISITS_FROM', logMissingKey)
+      cliquesLink = resolveIntMetric(rsmd, 'EXTERNAL_LINK_TAPS', logMissingKey)
     }
   }
 
+  // ✅ v1.5.0: Busca de seguidores via dicionário compartilhado
   let seguidoresTotais = 0
   let saldo90Dias = 0
   const audiPath = findFile(clientUsername, 'audience_insights.json')
@@ -195,24 +225,30 @@ async function processInsights(clientUsername: string, clientId: string): Promis
     const parsedAudi = AudienceInsightsSchema.safeParse(rawAudi)
     if (parsedAudi.success) {
       const asmd = parsedAudi.data.organic_insights_audience[0]?.string_map_data ?? {}
-      seguidoresTotais = int(asmd, 'Seguidores')
-      saldo90Dias = int(asmd, 'Total de seguidores')
+      seguidoresTotais = resolveIntMetric(asmd, 'FOLLOWERS', logMissingKey)
+      saldo90Dias = resolveIntMetric(asmd, 'TOTAL_FOLLOWERS', logMissingKey)
     }
   }
 
-  interface MetricRow { metric: string; value: number }
+  interface MetricRow {
+    metric: string
+    value: number
+  }
+
   const metricsToInsert: MetricRow[] = [
     { metric: 'compartilhamentos-90d', value: totalShares },
     { metric: 'salvamentos-90d', value: totalSaves },
     { metric: 'curtidas-90d', value: totalLikes },
     { metric: 'comentarios-90d', value: totalComments },
-    { metric: 'impressoes-90d', value: 0 },
+    { metric: 'impressoes-90d', value: impressoes },
     { metric: 'alcance-90d', value: alcance },
+    { metric: 'visitas-perfil-90d', value: visitasPerfil },
+    { metric: 'cliques-link-90d', value: cliquesLink },
     { metric: 'seguidores-totais', value: seguidoresTotais },
     { metric: 'saldo-90-dias', value: saldo90Dias },
   ]
 
-  console.log(`\\n💾 Salvando ${metricsToInsert.length} registros em orbit.metric_history...`)
+  console.log(`\n💾 Salvando ${metricsToInsert.length} registros em orbit.metric_history...`)
 
   // 🔑 CORREÇÃO CRÍTICA: Usar .schema('orbit') obrigatoriamente
   await supabase
@@ -242,7 +278,7 @@ async function processInsights(clientUsername: string, clientId: string): Promis
     }
   }
 
-  console.log(`\\n💾 Atualizando dados consolidados em orbit.ig_account_snapshots...`)
+  console.log(`\n💾 Atualizando dados consolidados em orbit.ig_account_snapshots...`)
 
   // 🔑 CORREÇÃO CRÍTICA: Usar .schema('orbit') obrigatoriamente
   const { data: existingSnapshot } = await supabase
@@ -260,7 +296,12 @@ async function processInsights(clientUsername: string, clientId: string): Promis
     period_end: periodEnd,
     followers_total: seguidoresTotais > 0 ? seguidoresTotais : (existingSnapshot?.followers_total ?? 0),
     reach_total: alcance > 0 ? alcance : (existingSnapshot?.reach_total ?? 0),
-    impressions_total: existingSnapshot?.impressions_total ?? 0,
+    impressions_total: impressoes > 0 ? impressoes : (existingSnapshot?.impressions_total ?? 0),
+    // v1.6.0 — antes nunca escritos. profile_visits alimenta a coluna GENERATED
+    // link_ctr_pct (= link_clicks / profile_visits * 100): sem isto, link_ctr_pct
+    // continua NULL mesmo com link_clicks correto.
+    profile_visits: visitasPerfil > 0 ? visitasPerfil : (existingSnapshot?.profile_visits ?? 0),
+    link_clicks: cliquesLink > 0 ? cliquesLink : (existingSnapshot?.link_clicks ?? 0),
     interactions_likes: totalLikes > 0 ? totalLikes : (existingSnapshot?.interactions_likes ?? 0),
     interactions_comments: totalComments > 0 ? totalComments : (existingSnapshot?.interactions_comments ?? 0),
     interactions_shares: totalShares > 0 ? totalShares : (existingSnapshot?.interactions_shares ?? 0),
@@ -286,28 +327,40 @@ async function processInsights(clientUsername: string, clientId: string): Promis
     else console.log(`   ✅ Novo snapshot consolidado criado com sucesso!`)
   }
 
-  console.log(`\\n🎉 Ingestão de insights concluída com sucesso para @${clientUsername}!`)
+  console.log(`\n🎉 Ingestão de insights concluída com sucesso para @${clientUsername}!`)
 }
 
 /* ── Execução Assíncrona Centralizada ────────────────────────────────────── */
 async function run(): Promise<void> {
   console.log('═══════════════════════════════════════════════════════')
-  console.log(`🔄 ORBIT · Ingest Insights — v1.4.1`)
+  console.log(`🔄 ORBIT · Ingest Insights — v1.6.0`)
   console.log(`📱 Cliente: ${CLIENT_USERNAME}`)
   console.log('═══════════════════════════════════════════════════════')
 
   try {
-    // 🔑 CORREÇÃO CRÍTICA: resolveClientId já usa .schema('orbit') internamente
+    // 🔑 resolveClientId já usa .schema('orbit') internamente
     const clientId = await resolveClientId(supabase, CLIENT_USERNAME)
     console.log(`🔑 UUID resolvido com sucesso: ${clientId}`)
-    
+
     await processInsights(CLIENT_USERNAME, clientId)
+    console.log(`\n✅ Script finalizado com sucesso!`)
   } catch (err: unknown) {
     const errorMessage = err instanceof Error ? err.message : String(err)
-    console.error(`❌ Erro fatal na execução: ${errorMessage}`)
+    const errorStack = err instanceof Error ? err.stack : ''
+
+    console.error(`\n❌ ERRO FATAL NA EXECUÇÃO:`)
+    console.error(`   Mensagem: ${errorMessage}`)
+    if (errorStack) {
+      console.error(`   Stack:\n${errorStack}`)
+    }
+
     process.exit(1)
   }
 }
 
-void run()
-
+// ✅ Captura erros não tratados
+void run().catch(err => {
+  console.error('❌ [UNCAUGHT] Erro não capturado:')
+  console.error(err)
+  process.exit(1)
+})

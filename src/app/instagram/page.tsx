@@ -41,7 +41,7 @@ const CLIENTS: Record<string, { id: string; label: string }> = {
 
 // ─── Janela de análise ────────────────────────────────────────────────────────
 // Ambos os clientes: jan/2026 → hoje (cobre os últimos 6 meses + margem)
-const PERIOD_START = new Date('2026-01-01T00:00:00-03:00')
+const PERIOD_START = new Date('2025-01-01T00:00:00-03:00')
 const PERIOD_END   = new Date()   // post mais recente = agora
 
 // ─── Página ───────────────────────────────────────────────────────────────────

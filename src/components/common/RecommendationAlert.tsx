@@ -6,7 +6,25 @@ interface RecommendationAlertProps {
   score: number;
 }
 
-const STATUS_CONFIG = {
+interface Recommendation {
+  icon: string;
+  title: string;
+  desc: string;
+}
+
+interface StatusConfig {
+  icon: string;
+  title: string;
+  borderColor: string;
+  bgColor: string;
+  iconBg: string;
+  titleColor: string;
+  badgeColor: string;
+  badgeLabel: string;
+  recommendations: Recommendation[];
+}
+
+const STATUS_CONFIG: Record<AlignmentStatus, StatusConfig> = {
   critical: {
     icon: "🚨",
     title: "Alinhamento Crítico — Ação Imediata Necessária",
@@ -78,6 +96,28 @@ const STATUS_CONFIG = {
       },
     ],
   },
+  pending: {
+    icon: "⏳",
+    title: "Alinhamento Pendente — Aguardando Cálculo",
+    borderColor: "border-slate-500/60",
+    bgColor: "bg-slate-950/40",
+    iconBg: "bg-slate-500/20",
+    titleColor: "text-slate-400",
+    badgeColor: "bg-slate-500/20 text-slate-300 border-slate-500/30",
+    badgeLabel: "CALCULANDO",
+    recommendations: [
+      {
+        icon: "⚙️",
+        title: "Configurar avatar esperado",
+        desc: "Preencha os campos de avatar esperado em orbit.clients (gênero, faixa etária, localização, interesse).",
+      },
+      {
+        icon: "📊",
+        title: "Gerar snapshot de audiência",
+        desc: "Execute extract-demographics.ts para importar dados de audiência do Instagram e calcular o alinhamento.",
+      },
+    ],
+  },
 };
 
 export const RecommendationAlert: React.FC<RecommendationAlertProps> = ({
@@ -121,7 +161,7 @@ export const RecommendationAlert: React.FC<RecommendationAlertProps> = ({
       {expanded && (
         <div className="px-4 pb-4 space-y-2">
           <div className="h-px bg-gray-700/50 mb-3" />
-          {cfg.recommendations.map((rec, i) => (
+          {cfg.recommendations.map((rec: Recommendation, i: number) => (
             <div
               key={i}
               className="flex gap-3 bg-gray-900/40 rounded-lg p-3 border border-gray-700/30"

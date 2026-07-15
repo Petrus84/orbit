@@ -1,17 +1,16 @@
-
-/*============================================================================
-# 3. ARQUIVO: extract-demographics.ts (AJUSTES CRÍTICOS)
-# ============================================================================
-
-extract_demographics_content = '''/* ==========================================================================
-   ORBIT · Extract Demographics from Instagram Export — v1.3.4 (SCHEMA ORBIT)
-   Arquivo: scripts/extract-demographics.ts
-   
-   ✅ CORREÇÕES v1.3.4:
-   - Busca de cliente SEMPRE via .schema('orbit').from('clients')
-   - Todas as tabelas de persistência em schema 'orbit'
-   - Eliminado conflito public vs orbit
-   ========================================================================== */
+// ═══════════════════════════════════════════════════════════════════════════
+// ORBIT · Extract Demographics from Instagram Export — v1.4.0
+// Arquivo: scripts/extract-demographics.ts
+//
+// ✅ CORREÇÕES v1.4.0:
+// - Remove resolveDemographicKey() local + listas hardcoded de variantes.
+//   Passa a consumir lib/metric-key-dictionary.ts — a mesma fonte usada por
+//   ingest-insights.ts e ingest-l0-v2.ts.
+// - Antes desta versão, homens/mulheres/cidade não tinham NENHUM fallback de
+//   encoding (só a chave "ideal"); agora herdam as variantes centralizadas.
+// - Busca de cliente SEMPRE via .schema('orbit').from('clients')
+// - Todas as tabelas de persistência em schema 'orbit'
+// ═══════════════════════════════════════════════════════════════════════════
 
 import dotenv from 'dotenv'
 dotenv.config({ path: '.env.local' })
@@ -21,6 +20,7 @@ import { createClient } from '@supabase/supabase-js'
 import { z } from 'zod'
 import * as fs from 'fs'
 import * as path from 'path'
+import { resolveStringMetric, logMissingKey } from './lib/metric-key-dictionary.ts'
 
 // ─── Configuração ──────────────────────────────────────────────────────────
 
@@ -121,11 +121,61 @@ type Demographics = {
   countries: LocationEntry[]
 }
 
+type DateRange = {
+  start: string
+  end: string
+}
+
 // ─── Funções de parse ─────────────────────────────────────────────────────
 
+/**
+ * ✅ Parse de percentual com suporte a vírgula decimal (PT-BR)
+ * Substitui vírgula por ponto para parseFloat não ignorar decimais
+ */
 function parsePct(value: string): number {
-  const match = value.match(/([\\d.]+)%/)
+  if (!value) return 0
+  // Substitui vírgula por ponto para o parseFloat não ignorar os decimais
+  const cleanValue = value.replace(',', '.')
+  const match = cleanValue.match(/([\d.]+)%/)
   return match ? parseFloat(match[1]) : 0
+}
+
+/**
+ * ✅ Parse de intervalo de datas do Instagram (ex: "Apr 2 - Jun 30")
+ * Retorna ISO 8601 (YYYY-MM-DD)
+ */
+function parseDateRange(dateRangeStr: string): DateRange {
+  const today = new Date()
+  const currentYear = today.getFullYear()
+
+  // Regex: "Apr 2 - Jun 30" ou "Apr 2, 2024 - Jun 30, 2024"
+  const regex = /(\w+)\s+(\d+)(?:,\s*(\d{4}))?\s*-\s*(\w+)\s+(\d+)(?:,\s*(\d{4}))?/
+  const match = dateRangeStr.match(regex)
+
+  if (!match) {
+    console.warn(`   ⚠️  Não conseguiu parsear intervalo: "${dateRangeStr}". Usando data de hoje.`)
+    const today_iso = new Date().toISOString().split('T')[0]
+    return { start: today_iso, end: today_iso }
+  }
+
+  const [, startMonth, startDay, startYear, endMonth, endDay, endYear] = match
+
+  const startDate = new Date(
+    parseInt(startYear || String(currentYear)),
+    new Date(`${startMonth} 1`).getMonth(),
+    parseInt(startDay)
+  )
+
+  const endDate = new Date(
+    parseInt(endYear || String(currentYear)),
+    new Date(`${endMonth} 1`).getMonth(),
+    parseInt(endDay)
+  )
+
+  return {
+    start: startDate.toISOString().split('T')[0],
+    end: endDate.toISOString().split('T')[0]
+  }
 }
 
 function parseGenderFromPct(malePctStr: string, femalePctStr: string): Omit<GenderData, 'updated_at'> {
@@ -154,7 +204,7 @@ function parseAgeRange(value: string): Omit<AgeRangeData, 'updated_at'> {
     '55+':   '55+',
   }
 
-  const regex = /([\\d]+[-+][\\d]*):\\s*([\\d.]+)%/g
+  const regex = /([\d]+[-+][\d]*):\s*([\d.]+)%/g
   let match: RegExpExecArray | null = regex.exec(value)
   while (match !== null) {
     const group  = match[1]
@@ -171,7 +221,7 @@ function parseAgeRange(value: string): Omit<AgeRangeData, 'updated_at'> {
 
 function parseLocations(value: string): LocationEntry[] {
   const entries: LocationEntry[] = []
-  const regex = /([^:,]+):\\s*([\\d.]+)%/g
+  const regex = /([^:,]+):\s*([\d.]+)%/g
   let match: RegExpExecArray | null = regex.exec(value)
   while (match !== null) {
     const name = match[1].trim()
@@ -230,46 +280,59 @@ function extractUsername(clientUsername: string): string {
   if (!parsed.success) return clientUsername
 
   const smd = parsed.data.profile_user[0]?.string_map_data ?? {}
-  return (
-    smd['Nome de usuário']?.value ??
-    smd['Username']?.value ??
-    clientUsername
-  )
+  return resolveStringMetric(smd, 'USERNAME') || clientUsername
 }
 
 // ─── Extração de demografia ───────────────────────────────────────────────
 
-function extractDemographics(clientUsername: string): Demographics | null {
+/**
+ * ✅ Extrai demografia consumindo o dicionário compartilhado de variantes
+ * de encoding (lib/metric-key-dictionary.ts). Nenhuma variante de mojibake
+ * é mantida localmente neste arquivo — se um export novo trouxer uma chave
+ * diferente, a correção é feita uma única vez no dicionário e vale também
+ * para ingest-insights.ts e ingest-l0-v2.ts.
+ */
+function extractDemographics(clientUsername: string): { demographics: Demographics | null; dateRange: string } {
   const p = findFile(clientUsername, 'audience_insights.json')
-  if (!p) { console.log('   ⚠️  audience_insights.json não encontrado'); return null }
+  if (!p) {
+    console.log('   ⚠️  audience_insights.json não encontrado')
+    return { demographics: null, dateRange: '' }
+  }
 
   const raw: unknown = JSON.parse(fs.readFileSync(p, 'utf-8'))
   const parsed = AudienceInsightsSchema.safeParse(raw)
   if (!parsed.success) {
     console.warn(`   ⚠️  audience_insights.json inválido: ${parsed.error.issues[0]?.message}`)
-    return null
+    return { demographics: null, dateRange: '' }
   }
 
-  const smd  = parsed.data.organic_insights_audience[0]?.string_map_data ?? {}
-  const now  = new Date().toISOString()
+  const smd = parsed.data.organic_insights_audience[0]?.string_map_data ?? {}
+  const now = new Date().toISOString()
 
-  const malePctStr   = smd['Porcentagem do total de seguidores para homens']?.value   ?? '0%'
-  const femalePctStr = smd['Porcentagem do total de seguidores para mulheres']?.value ?? '0%'
-  const ageStr       = smd['Porcentagem de seguidores por idade para todos os gêneros']?.value ?? ''
-  const citiesStr    = smd['Porcentagem de seguidores por cidade']?.value ?? ''
-  const countriesStr = smd['Porcentagem de seguidores por país']?.value ?? ''
+  // ✅ Extrai o período da view (ex: "Apr 2 - Jun 30")
+  const dateRangeStr = parsed.data.organic_insights_audience[0]?.title ?? ''
+
+  console.log('   🔍 Resolvendo chaves de demografia...')
+
+  const malePctStr = resolveStringMetric(smd, 'PCT_MALE', logMissingKey)
+  const femalePctStr = resolveStringMetric(smd, 'PCT_FEMALE', logMissingKey)
+  const ageStr = resolveStringMetric(smd, 'PCT_AGE_ALL_GENDERS', logMissingKey)
+  const citiesStr = resolveStringMetric(smd, 'PCT_CITY', logMissingKey)
+  const countriesStr = resolveStringMetric(smd, 'PCT_COUNTRY', logMissingKey)
 
   if (!malePctStr && !ageStr) {
     console.warn('   ⚠️  Dados demográficos vazios')
-    return null
+    return { demographics: null, dateRange: dateRangeStr }
   }
 
-  return {
+  const demographics: Demographics = {
     gender:    { ...parseGenderFromPct(malePctStr, femalePctStr), updated_at: now },
     ageRange:  { ...parseAgeRange(ageStr), updated_at: now },
     cities:    parseLocations(citiesStr),
     countries: parseLocations(countriesStr),
   }
+
+  return { demographics, dateRange: dateRangeStr }
 }
 
 // ─── Persistência ─────────────────────────────────────────────────────────
@@ -278,25 +341,39 @@ async function persistClientData(
   clientId: string,
   clientUsername: string,
   totalFollowers: number,
-  demographics: Demographics | null
+  demographics: Demographics | null,
+  dateRangeRaw: string
 ): Promise<void> {
-  const today = new Date().toISOString().split('T')[0]
+  // ✅ Extrai o intervalo de datas real do arquivo (ex: "Apr 2 - Jun 30")
+  const { start: periodStart, end: periodEnd } = dateRangeRaw
+    ? parseDateRange(dateRangeRaw)
+    : { start: new Date().toISOString().split('T')[0], end: new Date().toISOString().split('T')[0] }
 
-  // 🔑 CORREÇÃO CRÍTICA: Usar .schema('orbit') obrigatoriamente
+  const ENUM_SOURCE = 'instagram_export'
+
+  console.log(`   📊 Gravando período SSOT: ${periodStart} ──> ${periodEnd}`)
+
+  // 1. Sincronização de Seguidores (ig_account_snapshots)
   const { error: accountError } = await supabase
     .schema('orbit')
     .from('ig_account_snapshots')
-    .insert({
-      client_id: clientId,
-      followers_total: totalFollowers,
-      period_start: today,
-      period_end: today
-    })
+    .upsert(
+      {
+        client_id: clientId,
+        followers_total: totalFollowers,
+        period_start: periodStart,
+        period_end: periodEnd,
+        period_source: ENUM_SOURCE
+      },
+      {
+        onConflict: 'client_id,period_start,period_end,period_source'
+      }
+    )
 
   if (accountError) {
-    console.error(`   ❌ Erro ao salvar seguidores em ig_account_snapshots: ${accountError.message}`)
+    console.error(`   ❌ Falha na SSOT de snapshots: ${accountError.message}`)
   } else {
-    console.log(`   ✅ Seguidores salvos em ig_account_snapshots: ${totalFollowers}`)
+    console.log(`   ✅ Snapshots sincronizados: ${ENUM_SOURCE}`)
   }
 
   if (!demographics) {
@@ -307,10 +384,14 @@ async function persistClientData(
   const safeCities = Array.isArray(demographics.cities) ? demographics.cities : []
   const safeCountries = Array.isArray(demographics.countries) ? demographics.countries : []
 
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 2. Sincronização de Demografia (ig_audience_snapshots) - Retorno ao Insert Seguro
+  // ═══════════════════════════════════════════════════════════════════════════
+
   const payload = {
     client_id: clientId,
-    period_start: today,
-    period_end: today,
+    period_start: periodStart,
+    period_end: periodEnd,
     gender_female_pct: demographics.gender?.female_pct ?? 0,
     gender_male_pct: demographics.gender?.male_pct ?? 0,
     gender_other_pct: demographics.gender?.other_pct ?? 0,
@@ -324,48 +405,48 @@ async function persistClientData(
     top_countries: safeCountries
   }
 
-  // 🔑 CORREÇÃO CRÍTICA: Usar .schema('orbit') obrigatoriamente
+  // 🔑 Mudança para .insert() comum — Remove a cláusula ON CONFLICT que o banco não suporta
   const { error: insertError } = await supabase
     .schema('orbit')
     .from('ig_audience_snapshots')
     .insert(payload)
 
   if (insertError) {
-    console.error(`   ❌ Erro ao salvar demografia: ${insertError.message}`)
+    console.error(` ❌ Erro ao salvar demografia: ${insertError.message}`)
   } else {
-    console.log(`   ✅ Gênero: M=${payload.gender_male_pct}% F=${payload.gender_female_pct}%`)
-    console.log(`   ✅ Cidades: ${safeCities.length}`)
-    console.log(`   ✅ Países: ${safeCountries.length}`)
+    console.log(` ✅ Gênero salvo com sucesso na timeline: M=${payload.gender_male_pct}% F=${payload.gender_female_pct}%`)
+    console.log(` ✅ Demografia sincronizada com o histórico do cliente.`)
   }
 }
 
 // ─── FUNÇÃO PRINCIPAL ───────────────────────────────────────────────────────
 
 async function main(): Promise<void> {
-  console.log('\\n🔄 ORBIT · Extract Demographics — v1.3.4')
+  console.log('\n🔄 ORBIT · Extract Demographics — v1.4.0')
   console.log('═'.repeat(55))
 
   try {
     // ✅ PASSO 1: Resolver UUID do cliente
-    console.log(`\\n🔍 Resolvendo UUID para: @${CLIENT_USERNAME}`)
+    console.log(`\n🔍 Resolvendo UUID para: @${CLIENT_USERNAME}`)
     const CLIENT_UUID = await resolveClientId(supabase, CLIENT_USERNAME)
     console.log(`✅ UUID resolvido: ${CLIENT_UUID}`)
 
     // ✅ PASSO 2: Extrair dados
-    console.log(`\\n📊 Extraindo dados de: @${CLIENT_USERNAME}`)
+    console.log(`\n📊 Extraindo dados de: @${CLIENT_USERNAME}`)
     const username = extractUsername(CLIENT_USERNAME)
     const followers = extractFollowers(CLIENT_USERNAME)
-    const demographics = extractDemographics(CLIENT_USERNAME)
+    const { demographics, dateRange } = extractDemographics(CLIENT_USERNAME)
 
     console.log(`   👤 Username: @${username}`)
     console.log(`   👥 Seguidores: ${followers}`)
     console.log(`   📈 Demografia: ${demographics ? 'Encontrada' : 'Não encontrada'}`)
+    console.log(`   📅 Período: ${dateRange}`)
 
     // ✅ PASSO 3: Persistir dados
-    console.log(`\\n💾 Salvando em Supabase...`)
-    await persistClientData(CLIENT_UUID, username, followers, demographics)
+    console.log(`\n💾 Salvando em Supabase...`)
+    await persistClientData(CLIENT_UUID, username, followers, demographics, dateRange)
 
-    console.log('\\n✅ Concluído com sucesso!')
+    console.log('\n✅ Concluído com sucesso!')
   } catch (error) {
     console.error('❌ Erro durante execução:', error instanceof Error ? error.message : error)
     process.exit(1)

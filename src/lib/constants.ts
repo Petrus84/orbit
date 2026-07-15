@@ -31,5 +31,5 @@ export const CLIENTS = {
 export type ClientKey = keyof typeof CLIENTS
 
 // Janela de análise global — cobre todos os dados ingeridos
-export const PERIOD_START = new Date('2026-01-01T00:00:00-03:00')
+export const PERIOD_START = new Date('2025-01-01T00:00:00-03:00')
 export const PERIOD_END   = new Date()

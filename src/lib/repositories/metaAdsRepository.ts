@@ -1,7 +1,7 @@
 // src/lib/repositories/metaAdsRepository.ts
 // — Meta Ads Repository
 // All Supabase queries for the Meta Ads screen.
-// Assumes src/lib/supabaseClient.ts exports a named `supabase` client.
+// Assumes src/lib/supabase.ts exports a named `supabase` client.
 
 import { supabase } from '@/lib/supabase';
 import type { Campaign } from '../../types/orbit';
@@ -45,7 +45,7 @@ function rowToCampaign(row: MetaCampaignRow): Campaign {
  */
 export async function fetchMetaCampaigns(clientId: string): Promise<Campaign[]> {
   // Desestruturamos usando um cast genérico direto para desarmar o loop profundo de tipos
-  const query = supabase.from('meta_campaigns').select('id, name, objective, roas, ctr, cpc, frequency, fatigue, status, cpl');
+  const query = supabase.from('ads_meta_campaigns').select('id, name, objective, roas, ctr, cpc, frequency, fatigue, status, cpl');
   
   const { data, error } = await (query as unknown as { 
     eq: (col: string, val: string) => Promise<{ data: Record<string, unknown>[] | null; error: { message: string } | null }> 

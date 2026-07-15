@@ -1,0 +1,1707 @@
+=== 1. Configuração do client Supabase (schema ativo) ===
+import { createClient } from '@supabase/supabase-js'
+
+// ─── Captura Direta e Literal (Exigência do Next.js para Client-Side) ────────
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+// ─── Validação Segura de Ambiente ──────────────────────────────────────────
+if (!supabaseUrl || !supabaseKey) {
+  // Lança o erro apenas se estiver executando no Servidor Node.js
+  if (typeof window === 'undefined') {
+    throw new Error(`[ORBIT] Variáveis NEXT_PUBLIC_SUPABASE_URL ou NEXT_PUBLIC_SUPABASE_ANON_KEY não foram encontradas no ambiente do servidor.`)
+  } else {
+    // No navegador do cliente, apenas avisa no console para evitar o travamento da tela de login
+    console.warn(`[ORBIT] Aviso: Variáveis de ambiente ainda não injetadas no contexto do navegador.`)
+  }
+}
+
+// ✅ UMA ÚNICA DECLARAÇÃO (schema: orbit)
+export const supabase = createClient(supabaseUrl || '', supabaseKey || '', {
+  db: { schema: 'orbit' as const },
+  auth: {
+    autoRefreshToken: true,
+    persistSession: true,
+    detectSessionInUrl: false,
+  },
+})
+
+// ✅ UMA ÚNICA DECLARAÇÃO (schema: public — fallback)
+export const supabaseLegacy = createClient(supabaseUrl || '', supabaseKey || '', {
+  db: { schema: 'public' as const },
+  auth: {
+    autoRefreshToken: false,
+    persistSession: false,
+    storageKey: 'orbit-legacy',
+    detectSessionInUrl: false,
+  },
+})
+
+=== 2. Onde .schema(...) é chamado (ou não é) ===
+src/lib/repositories/avatarRepository.ts:276:      .schema('public')  // ✅ SCHEMA CORRETO
+src/lib/repositories/instagramOverviewRepository.ts:5:// - Schema EXPLÍCITO: .schema('orbit') em todas as queries
+src/lib/repositories/instagramOverviewRepository.ts:45:      .schema('orbit')  // ✅ SCHEMA EXPLÍCITO
+src/lib/repositories/instagramOverviewRepository.ts:262:      .schema('orbit')  // ✅ SCHEMA EXPLÍCITO
+src/lib/repositories/instagramOverviewRepository.ts:330:      .schema('orbit')  // ✅ SCHEMA EXPLÍCITO
+src/lib/repositories/instagramOverviewRepository.ts:387:      .schema('orbit')  // ✅ SCHEMA EXPLÍCITO
+src/lib/repositories/instagramOverviewRepository.ts:437:      .schema('orbit')  // ✅ SCHEMA EXPLÍCITO
+scripts/extract-demographics.ts:6:// - Busca de cliente SEMPRE via .schema('orbit').from('clients')
+scripts/extract-demographics.ts:427:    .schema('orbit')
+scripts/extract-demographics.ts:479:    .schema('orbit')
+scripts/ingest-insights.ts:282:  // 🔑 CORREÇÃO CRÍTICA: Usar .schema('orbit') obrigatoriamente
+scripts/ingest-insights.ts:284:    .schema('orbit')
+scripts/ingest-insights.ts:293:      .schema('orbit')
+scripts/ingest-insights.ts:312:  // 🔑 CORREÇÃO CRÍTICA: Usar .schema('orbit') obrigatoriamente
+scripts/ingest-insights.ts:314:    .schema('orbit')
+scripts/ingest-insights.ts:337:      .schema('orbit')
+scripts/ingest-insights.ts:346:      .schema('orbit')
+scripts/ingest-insights.ts:365:    // 🔑 resolveClientId já usa .schema('orbit') internamente
+scripts/ingest-l0-v2.ts:169:    .schema('orbit')
+scripts/ingest-l0-v2.ts:282:            .schema('orbit')
+scripts/ingest-l0-v2.ts:402:          .schema('orbit')
+scripts/lib/resolveClientId.ts:22:    .schema('orbit')
+
+=== 3. Repositórios implicados (conteúdo completo) ===
+--- src/lib/repositories/clientsRepository.ts ---
+// ============================================================================
+// ORBIT · Repository — Clients (v2.0.0 · Sprint 2)
+//
+// v2.0.0:
+// - Migrado para orbit.v_client_health (primary)
+//   com fallback para public.clients + public.client_metrics (legacy)
+// - Campo handle usado diretamente (orbit.clients tem handle)
+// - Campo instagram_account_id REMOVIDO (não existe em orbit.clients)
+// - status derivado de orbit.v_client_health.health_status
+// - follower_balance, engagement_real, ctr_link vindos da view calculada
+// ============================================================================
+
+import { supabase, supabaseLegacy } from '@/lib/supabase'
+import { Client, ClientStatus } from '../../types/client'
+
+// ── Raw shape from orbit.v_client_health ─────────────────────────────────
+interface OrbitClientHealthRow {
+  id: string
+  name: string
+  handle: string
+  health_status: ClientStatus
+  follower_balance: number | null
+  engagement_real: number | null
+  ctr_link: number | null
+}
+
+// ── Raw shape from public.* (legacy fallback) ─────────────────────────────
+interface LegacyClientRow {
+  id: string
+  name: string
+  handle: string
+  avatar_url: string | null
+  status: ClientStatus
+  client_metrics: {
+    follower_balance: number
+    engagement_real: number
+    ctr_link: number
+  } | null
+}
+
+const STATUS_ORDER: Record<ClientStatus, number> = {
+  critical: 0,
+  warning:  1,
+  healthy:  2,
+}
+
+function fromOrbitRow(row: OrbitClientHealthRow): Client {
+  return {
+    id:        row.id,
+    name:      row.name,
+    handle:    row.handle,
+    avatarUrl: null,                         // orbit.clients não tem avatar_url ainda
+    status:    row.health_status ?? 'healthy',
+    metrics: {
+      follower_balance: row.follower_balance ?? 0,
+      engagement_real:  row.engagement_real  ?? 0,
+      ctr_link:         row.ctr_link         ?? 0,
+    },
+  }
+}
+
+function fromLegacyRow(row: LegacyClientRow): Client {
+  return {
+    id:        row.id,
+    name:      row.name,
+    handle:    row.handle,
+    avatarUrl: row.avatar_url,
+    status:    row.status,
+    metrics: {
+      follower_balance: row.client_metrics?.follower_balance ?? 0,
+      engagement_real:  row.client_metrics?.engagement_real  ?? 0,
+      ctr_link:         row.client_metrics?.ctr_link         ?? 0,
+    },
+  }
+}
+
+// ── fetchClientsWithHealth ────────────────────────────────────────────────
+export async function fetchClientsWithHealth(): Promise<Client[]> {
+  // Primary: orbit.v_client_health
+  const { data: orbitData, error: orbitError } = await supabase
+    .from('v_client_health')               // orbit.v_client_health
+    .select('id, name, handle, health_status, follower_balance, engagement_real, ctr_link')
+    .returns<OrbitClientHealthRow[]>()
+
+  if (!orbitError && orbitData) {
+    return orbitData
+      .map(fromOrbitRow)
+      .sort((a, b) => STATUS_ORDER[a.status] - STATUS_ORDER[b.status])
+  }
+
+  console.warn('[clientsRepository] orbit.v_client_health indisponível. Fallback legacy...')
+
+  // Fallback: public.clients + public.client_metrics
+  const { data: legacyData, error: legacyError } = await supabaseLegacy
+    .from('clients')
+    .select(`
+      id, name, handle, avatar_url, status,
+      client_metrics ( follower_balance, engagement_real, ctr_link )
+    `)
+    .returns<LegacyClientRow[]>()
+
+  if (legacyError) {
+    console.error('[clientsRepository] fetchClientsWithHealth:', legacyError.message)
+    throw new Error(legacyError.message)
+  }
+
+  return (legacyData ?? [])
+    .map(fromLegacyRow)
+    .sort((a, b) => STATUS_ORDER[a.status] - STATUS_ORDER[b.status])
+}
+
+// ── fetchClientById ───────────────────────────────────────────────────────
+export async function fetchClientById(clientId: string): Promise<Client | null> {
+  const { data: orbitData, error: orbitError } = await supabase
+    .from('v_client_health')
+    .select('id, name, handle, health_status, follower_balance, engagement_real, ctr_link')
+    .eq('id', clientId)
+    .returns<OrbitClientHealthRow[]>()
+    .maybeSingle()
+
+  if (!orbitError && orbitData) {
+    return fromOrbitRow(orbitData as unknown as OrbitClientHealthRow)
+  }
+
+  // Fallback
+  const { data: legacyData, error: legacyError } = await supabaseLegacy
+    .from('clients')
+    .select(`
+      id, name, handle, avatar_url, status,
+      client_metrics ( follower_balance, engagement_real, ctr_link )
+    `)
+    .eq('id', clientId)
+    .returns<LegacyClientRow[]>()
+    .maybeSingle()
+
+  if (legacyError) throw new Error(legacyError.message)
+  return legacyData ? fromLegacyRow(legacyData as unknown as LegacyClientRow) : null
+}
+
+// ── fetchCriticalClients ──────────────────────────────────────────────────
+export async function fetchCriticalClients(): Promise<Client[]> {
+  const { data: orbitData, error: orbitError } = await supabase
+    .from('v_client_health')
+    .select('id, name, handle, health_status, follower_balance, engagement_real, ctr_link')
+    .eq('health_status', 'critical')
+    .returns<OrbitClientHealthRow[]>()
+
+  if (!orbitError && orbitData) return orbitData.map(fromOrbitRow)
+
+  // Fallback
+  const { data, error } = await supabaseLegacy
+    .from('clients')
+    .select(`
+      id, name, handle, avatar_url, status,
+      client_metrics ( follower_balance, engagement_real, ctr_link )
+    `)
+    .eq('status', 'critical')
+    .returns<LegacyClientRow[]>()
+
+  if (error) throw new Error(error.message)
+  return (data ?? []).map(fromLegacyRow)
+}
+
+--- src/lib/repositories/funnelRepository.ts ---
+// ═══════════════════════════════════════════════════════════════════════════
+// ORBIT · Repository - Funnel (v1.2.2 — TYPE-SAFE + BUILD PASSING)
+// ═══════════════════════════════════════════════════════════════════════════
+
+import { supabase } from '../supabase'
+import type { FunnelMetrics } from '../../types/funnel'
+
+// ─── TIPOS INTERNOS ────────────────────────────────────────────────────────
+
+interface FunnelMetricsRow {
+  id: string
+  client_id: string
+  alcance: number
+  visitas: number
+  cliques: number
+  vendas: number
+  ctr_bio: number | string      // ✅ Aceita ambos
+  taxa_conv: number | string    // ✅ Aceita ambos
+  period_start: string
+  period_end: string
+  created_at: string
+}
+
+interface SimulatedParams {
+  alcance: number
+  ctrBio: number
+  taxaConv: number
+}
+
+type CalculationResult = 
+  | { status: 'success'; data: FunnelMetrics }
+  | { status: 'error'; reason: 'missing_ctr_link' | 'invalid_params'; message: string }
+
+// ─── UTILITIES ─────────────────────────────────────────────────────────────
+
+const createNullState = (): FunnelMetrics => ({
+  alcance: 0,
+  visitas: 0,
+  cliques: 0,
+  vendas: 0,
+  ctrBio: 0,
+  taxaConv: 0,
+})
+
+/**
+ * ✅ Type Guard com Type Assertion EXPLÍCITA
+ * 
+ * O truque: usar 'as' para type assertion + validação runtime
+ */
+function validateFunnelMetricsRow(data: unknown): FunnelMetricsRow {
+  if (!data || typeof data !== 'object') {
+    throw new Error('Dados inválidos: não é um objeto')
+  }
+
+  const row = data as Record<string, unknown>
+
+  const requiredFields: (keyof FunnelMetricsRow)[] = [
+    'id',
+    'client_id',
+    'alcance',
+    'visitas',
+    'cliques',
+    'vendas',
+    'ctr_bio',
+    'taxa_conv',
+    'period_start',
+    'period_end',
+    'created_at'
+  ]
+
+  for (const field of requiredFields) {
+    if (!(field in row)) {
+      throw new Error(`[SCHEMA ERROR] Campo obrigatório ausente: ${String(field)}`)
+    }
+  }
+
+  // ✅ TYPE ASSERTION EXPLÍCITA (o segredo!)
+  const ctrBioValue = row.ctr_bio as string | number
+  const taxaConvValue = row.taxa_conv as string | number
+
+  // ✅ VALIDAÇÃO RUNTIME (garante que a assertion é segura)
+  if (typeof ctrBioValue !== 'number' && typeof ctrBioValue !== 'string') {
+    throw new Error(
+      `[SCHEMA ERROR] ctr_bio deve ser number ou string, recebido: ${typeof ctrBioValue}`
+    )
+  }
+
+  if (typeof taxaConvValue !== 'number' && typeof taxaConvValue !== 'string') {
+    throw new Error(
+      `[SCHEMA ERROR] taxa_conv deve ser number ou string, recebido: ${typeof taxaConvValue}`
+    )
+  }
+
+  return {
+    id: String(row.id),
+    client_id: String(row.client_id),
+    alcance: Number(row.alcance),
+    visitas: Number(row.visitas),
+    cliques: Number(row.cliques),
+    vendas: Number(row.vendas),
+    ctr_bio: ctrBioValue,      // ✅ Agora TypeScript aceita (é string | number)
+    taxa_conv: taxaConvValue,  // ✅ Agora TypeScript aceita (é string | number)
+    period_start: String(row.period_start),
+    period_end: String(row.period_end),
+    created_at: String(row.created_at),
+  }
+}
+
+/**
+ * ✅ Transforma row do banco → tipo público (FunnelMetrics)
+ */
+function rowToFunnelMetrics(row: FunnelMetricsRow): FunnelMetrics {
+  return {
+    alcance: row.alcance,
+    visitas: row.visitas,
+    cliques: row.cliques,
+    vendas: row.vendas,
+    ctrBio: parseFloat(String(row.ctr_bio)),      // ✅ Mantém precisão
+    taxaConv: parseFloat(String(row.taxa_conv)),  // ✅ Mantém precisão
+  }
+}
+
+// ─── CAMADA 1: FETCH ──────────────────────────────────────────────────────
+
+/**
+ * ✅ Busca métricas reais do funil
+ */
+export async function fetchFunnelMetrics(clientId: string): Promise<FunnelMetrics> {
+  try {
+    console.log(`[funnelRepository] Buscando métricas para: ${clientId}`)
+
+const { data, error } = await supabase
+      .from('funnel_data')
+      .select(`
+        id,
+        client_id,
+        alcance,
+        visitas,
+        cliques,
+        vendas,
+        ctr_bio,
+        taxa_conv,
+        period_start,
+        period_end,
+        created_at
+      `)
+      .eq('client_id', clientId)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle()
+
+    if (error) {
+      console.error(
+        `[funnelRepository] [DB ERROR] Falha ao buscar para ${clientId}:`,
+        error.message
+      )
+      return createNullState()
+    }
+
+    if (!data) {
+      console.warn(
+        `[funnelRepository] [NO DATA] Sem registro no banco para: ${clientId}`
+      )
+      return createNullState()
+    }
+
+    console.log(`[funnelRepository] Validando schema para: ${clientId}`)
+    const validatedData = validateFunnelMetricsRow(data)
+
+    console.log(`[funnelRepository] ✅ Sucesso: Métricas carregadas para ${clientId}`)
+    return rowToFunnelMetrics(validatedData)
+  } catch (err) {
+    const errorMessage = err instanceof Error 
+      ? err.message 
+      : typeof err === 'string' 
+        ? err 
+        : 'Erro desconhecido'
+
+    console.error(
+      `[funnelRepository] [EXCEPTION] Erro crítico para ${clientId}:`,
+      errorMessage
+    )
+    return createNullState()
+  }
+}
+
+// ─── CAMADA 3: CÁLCULO ─────────────────────────────────────────────────────
+
+/**
+ * ✅ Calcula funil simulado com parâmetros customizados
+ */
+export function calculateSimulatedFunnel(
+  simulatedParams: SimulatedParams,
+  ctrLink: number | null
+): CalculationResult {
+  
+  if (ctrLink === null || ctrLink === undefined) {
+    console.error(
+      '[funnelRepository] ❌ CTR Link ausente — não há dados reais do banco'
+    )
+    return {
+      status: 'error',
+      reason: 'missing_ctr_link',
+      message: 'Dados de CTR do link em bio não disponíveis. Execute extract-demographics.ts para popular os dados.'
+    }
+  }
+
+  if (typeof ctrLink !== 'number' || isNaN(ctrLink) || ctrLink < 0 || ctrLink > 100) {
+    console.error(
+      `[funnelRepository] ❌ CTR Link inválido: ${ctrLink}`
+    )
+    return {
+      status: 'error',
+      reason: 'invalid_params',
+      message: `CTR Link deve estar entre 0 e 100. Recebido: ${ctrLink}`
+    }
+  }
+
+  if (!simulatedParams || typeof simulatedParams !== 'object') {
+    console.error('[funnelRepository] ❌ Parâmetros simulados inválidos')
+    return {
+      status: 'error',
+      reason: 'invalid_params',
+      message: 'Parâmetros simulados não fornecidos'
+    }
+  }
+
+  const { alcance, ctrBio, taxaConv } = simulatedParams
+
+  if (
+    typeof alcance !== 'number' || alcance < 0 ||
+    typeof ctrBio !== 'number' || ctrBio < 0 || ctrBio > 100 ||
+    typeof taxaConv !== 'number' || taxaConv < 0 || taxaConv > 100
+  ) {
+    console.error(
+      '[funnelRepository] ❌ Parâmetros fora do intervalo válido',
+      { alcance, ctrBio, taxaConv }
+    )
+    return {
+      status: 'error',
+      reason: 'invalid_params',
+      message: 'Parâmetros devem ser números entre 0 e 100'
+    }
+  }
+
+  const visitas = alcance * (ctrBio / 100)
+  const cliques = visitas * (ctrLink / 100)
+  const vendas = cliques * (taxaConv / 100)
+
+  const result: FunnelMetrics = {
+    alcance: Math.round(alcance),
+    visitas: Math.round(visitas),
+    cliques: Math.round(cliques),
+    vendas: Math.round(vendas),
+    ctrBio: ctrBio,
+    taxaConv: taxaConv,
+  }
+
+  console.log(
+    '[funnelRepository] ✅ Funil simulado calculado com sucesso',
+    { alcance: result.alcance, visitas: result.visitas, cliques: result.cliques, vendas: result.vendas }
+  )
+
+  return {
+    status: 'success',
+    data: result
+  }
+}
+
+/**
+ * ✅ Versão simplificada
+ */
+export function calculateSimulatedFunnelOrNull(
+  simulatedParams: SimulatedParams,
+  ctrLink: number | null
+): FunnelMetrics | null {
+  const result = calculateSimulatedFunnel(simulatedParams, ctrLink)
+  return result.status === 'success' ? result.data : null
+}
+
+--- src/lib/repositories/instagramOverviewRepository.ts ---
+// ═══════════════════════════════════════════════════════════════════════════
+// ORBIT · Repository — Instagram Overview (v4.2.0 — SSOT PURO)
+// 
+// ✅ CORREÇÕES v4.2.0:
+// - Schema EXPLÍCITO: .schema('orbit') em todas as queries
+// - ZERO fallbacks silenciosos
+// - Falhas explícitas com origem de dados
+// - Período SSOT: orbit.ig_account_snapshots como fonte de verdade
+// - Type-safe 100%
+// ═══════════════════════════════════════════════════════════════════════════
+
+import { supabase } from '@/lib/supabase'
+import { z } from 'zod'
+
+import type {
+  IGOverviewData,
+  DashboardHeaderMeta,
+  KPICardData,
+  FormatPerformanceRow,
+  QualityScoreItem,
+  InsightData,
+  SemaphoreColor,
+  GlowColor,
+  TrendColor,
+} from '../../types/orbit'
+
+type RawRow = Record<string, unknown>
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SSOT: Período é determinado por orbit.ig_account_snapshots
+// Não há fallback — se não há dados, falha explícita
+// ═══════════════════════════════════════════════════════════════════════════
+
+/**
+ * ✅ Descobre período SSOT do cliente
+ * 
+ * Fonte de verdade: orbit.ig_account_snapshots
+ * Se não há dados → retorna null (não fallback)
+ */
+async function discoverPeriodBounds(clientId: string): Promise<{ start: string; end: string } | null> {
+  try {
+    console.log(`[igOverview] Descobrindo período SSOT para: ${clientId}`)
+
+    const { data, error } = await supabase
+      .schema('orbit')  // ✅ SCHEMA EXPLÍCITO
+      .from('ig_account_snapshots')
+      .select('period_start, period_end')
+      .eq('client_id', clientId)
+      .order('period_start', { ascending: true })
+      .returns<{ period_start: string; period_end: string }[]>()
+
+    if (error) {
+      console.error(
+        `[igOverview] [DB ERROR] Falha ao descobrir período:`,
+        error.message
+      )
+      return null
+    }
+
+    if (!data || data.length === 0) {
+      console.warn(
+        `[igOverview] [NO DATA] Sem snapshots em orbit.ig_account_snapshots para: ${clientId}`
+      )
+      return null
+    }
+
+    const start = data[0].period_start
+    const end = data[data.length - 1].period_end
+
+    console.log(`[igOverview] ✅ Período SSOT: ${start} → ${end}`)
+    return { start, end }
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : String(err)
+    console.error(`[igOverview] [EXCEPTION] Erro ao descobrir período:`, errorMessage)
+    return null
+  }
+}
+
+// ─── Schemas Zod ──────────────────────────────────────────────────────────
+
+const KpiRowSchema = z.object({
+  id:            z.string(),
+  client_id:     z.string(),
+  period_start:  z.string().optional(),
+  period_end:    z.string().optional(),
+  metric_key:    z.string().optional(),
+  metric:        z.string().optional(),
+  metric_value:  z.union([z.number(), z.string()]).optional(),
+  value:         z.union([z.number(), z.string()]).optional(),
+  delta_pct:     z.union([z.number(), z.string()]).nullable().optional().default(0),
+  semaphore:     z.enum(['verde', 'ambar', 'vermelho']).nullable().optional().default('ambar'),
+  subtitle:      z.string().nullable().optional().default(null),
+  calculated_at: z.string().optional(),
+}).refine(
+  (data) => data.metric_key || data.metric,
+  { message: "Deve ter 'metric_key' ou 'metric'" }
+)
+
+type KpiRow = z.infer<typeof KpiRowSchema>
+
+// ─── Mapeamento de cores ──────────────────────────────────────────────────
+
+const GLOW_MAP: Record<SemaphoreColor, GlowColor> = {
+  verde:    'cyan',
+  ambar:    'gold',
+  vermelho: 'red',
+}
+
+const KPI_METRIC_KEYS = [
+  'alcance-90d',
+  'seguidores-totais',
+  'saldo-90-dias',
+]
+
+// ─── Conversão de tipos ───────────────────────────────────────────────────
+
+function kpiRowToCardData(row: KpiRow): KPICardData {
+  const key       = row.metric_key ?? row.metric ?? 'unknown'
+  const rawVal    = row.metric_value ?? row.value ?? 0
+  const numVal    = typeof rawVal === 'string' ? parseFloat(rawVal) : rawVal
+  const delta     = typeof row.delta_pct === 'string'
+    ? parseFloat(row.delta_pct)
+    : (row.delta_pct ?? 0)
+  const semaphore: SemaphoreColor = (row.semaphore as SemaphoreColor) ?? 'ambar'
+
+  return {
+    id:         row.id,
+    label:      key.toUpperCase().replace(/-/g, ' '),
+    value:      numVal,
+    unit:       null,
+    delta,
+    deltaLabel: `${delta > 0 ? '+' : ''}${delta}%`,
+    semaphore,
+    glowColor:  GLOW_MAP[semaphore],
+    subtitle:   row.subtitle ?? null,
+  }
+}
+
+function dedupeByMetric(rows: KpiRow[]): KpiRow[] {
+  const latestByMetric = new Map<string, KpiRow>()
+  for (const row of rows) {
+    const key      = row.metric_key ?? row.metric ?? 'unknown'
+    const existing = latestByMetric.get(key)
+    if (!existing) { latestByMetric.set(key, row); continue }
+    const existingTs = existing.calculated_at ? Date.parse(existing.calculated_at) : 0
+    const currentTs  = row.calculated_at ? Date.parse(row.calculated_at) : 0
+    if (currentTs > existingTs) latestByMetric.set(key, row)
+  }
+  return Array.from(latestByMetric.values())
+}
+
+// ─── Parâmetros públicos ──────────────────────────────────────────────────
+
+export interface FetchOverviewParams {
+  clientId:    string
+  periodStart?: string  // ← Opcional: se não fornecido, descobre automaticamente
+  periodEnd?:   string
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// FUNÇÃO PRINCIPAL: Busca Instagram Overview com SSOT puro
+// ═══════════════════════════════════════════════════════════════════════════
+
+/**
+ * ✅ Busca dados completos do Instagram Overview
+ * 
+ * SSOT: Período é descoberto de orbit.ig_account_snapshots
+ * Sem fallbacks — falhas são explícitas
+ */
+export async function fetchInstagramOverview(
+  params: FetchOverviewParams
+): Promise<IGOverviewData> {
+  const { clientId } = params
+
+  console.log(`[igOverview] Iniciando busca de overview para: ${clientId}`)
+
+  // ✅ PASSO 1: Descobrir período SSOT
+  let periodStart = params.periodStart
+  let periodEnd = params.periodEnd
+
+  if (!periodStart || !periodEnd) {
+    console.log(`[igOverview] Período não fornecido — descobrindo de SSOT...`)
+    const bounds = await discoverPeriodBounds(clientId)
+
+    if (!bounds) {
+      console.error(
+        `[igOverview] [CRITICAL] Sem dados de período SSOT. Abortando busca.`
+      )
+      return createEmptyOverview(clientId, 'Sem dados de período no banco de dados')
+    }
+
+    periodStart = bounds.start
+    periodEnd = bounds.end
+  }
+
+  console.log(`[igOverview] Período SSOT: ${periodStart} → ${periodEnd}`)
+
+  // ✅ PASSO 2: Buscar dados em paralelo
+  const results = await Promise.allSettled([
+    fetchKPIs(clientId, periodStart, periodEnd),
+    fetchQualityScores(clientId, periodStart, periodEnd),
+    fetchFormatPerformance(clientId, periodStart, periodEnd),
+    fetchClientHandle(clientId),
+  ])
+
+  // ✅ PASSO 3: Processar resultados
+  const kpis = results[0].status === 'fulfilled' 
+    ? results[0].value 
+    : (console.warn('[igOverview] KPIs falharam'), [])
+
+  const qualityScores = results[1].status === 'fulfilled' 
+    ? results[1].value 
+    : (console.warn('[igOverview] Quality Scores falharam'), [])
+
+  const formatPerformance = results[2].status === 'fulfilled' 
+    ? results[2].value 
+    : (console.warn('[igOverview] Format Performance falhou'), [])
+
+  const handle = results[3].status === 'fulfilled' 
+    ? results[3].value 
+    : clientId
+
+  // ✅ PASSO 4: Montar resposta
+  const meta: DashboardHeaderMeta = {
+    clientHandle: `@${handle}`,
+    periodLabel:  'Métricas da Extração',
+    dateRange: {
+      start: new Date(periodStart),
+      end:   new Date(periodEnd),
+    },
+  }
+
+  console.log(`[igOverview] ✅ Overview montado com sucesso`)
+
+  return {
+    meta,
+    kpis,
+    qualityScores,
+    formatPerformance,
+    insights:       generateInsights(formatPerformance),
+    criticalAlerts: [],
+  }
+}
+
+// ─── Funções auxiliares ───────────────────────────────────────────────────
+
+/**
+ * ✅ Busca KPIs com schema explícito
+ * 
+ * Fonte: orbit.v_kpi_snapshots (SSOT)
+ * Sem fallback — se falhar, retorna vazio com log
+ */
+async function fetchKPIs(
+  clientId: string,
+  start: string,
+  end: string
+): Promise<KPICardData[]> {
+  try {
+    console.log(`[fetchKPIs] Buscando KPIs para: ${clientId}`)
+
+    const { data, error } = await supabase
+      .schema('orbit')  // ✅ SCHEMA EXPLÍCITO
+      .from('v_kpi_snapshots')
+      .select('*')
+      .eq('client_id', clientId)
+      .gte('period_start', start)
+      .lte('period_end', end)
+      .in('metric_key', KPI_METRIC_KEYS)
+      .order('calculated_at', { ascending: false })
+      .returns<RawRow[]>()
+
+    if (error) {
+      console.error(
+        `[fetchKPIs] [DB ERROR] Falha ao buscar KPIs:`,
+        error.message
+      )
+      return []
+    }
+
+    if (!data || data.length === 0) {
+      console.warn(
+        `[fetchKPIs] [NO DATA] Sem KPIs em orbit.v_kpi_snapshots para: ${clientId}`
+      )
+      return []
+    }
+
+    const parsedRows = data
+      .map(row => {
+        const parsed = KpiRowSchema.safeParse(row)
+        if (!parsed.success) {
+          console.warn(`[fetchKPIs] Linha inválida:`, parsed.error.issues[0]?.message)
+        }
+        return parsed.success ? parsed.data : null
+      })
+      .filter((item): item is KpiRow => item !== null)
+
+    const deduped = dedupeByMetric(parsedRows)
+    const cards = deduped.map(kpiRowToCardData)
+
+    console.log(`[fetchKPIs] ✅ ${cards.length} KPIs carregados`)
+    return cards
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : String(err)
+    console.error(`[fetchKPIs] [EXCEPTION] Erro crítico:`, errorMessage)
+    return []
+  }
+}
+
+/**
+ * ✅ Busca Quality Scores com schema explícito
+ * 
+ * Fonte: orbit.v_quality_scores (SSOT)
+ * Sem fallback
+ */
+async function fetchQualityScores(
+  clientId: string,
+  start: string,
+  end: string
+): Promise<QualityScoreItem[]> {
+  try {
+    console.log(`[fetchQualityScores] Buscando scores para: ${clientId}`)
+
+    const glowMap: Record<string, GlowColor> = { 
+      ok: 'cyan', 
+      warn: 'gold', 
+      neutral: 'none' 
+    }
+
+    const { data, error } = await supabase
+      .schema('orbit')  // ✅ SCHEMA EXPLÍCITO
+      .from('v_quality_scores')
+      .select('id, client_id, score_key, score_value, status_text, status_variant, period_start, period_end')
+      .eq('client_id', clientId)
+      .gte('period_start', start)
+      .lte('period_end', end)
+      .returns<RawRow[]>()
+
+    if (error) {
+      console.error(
+        `[fetchQualityScores] [DB ERROR] Falha ao buscar scores:`,
+        error.message
+      )
+      return []
+    }
+
+    if (!data || data.length === 0) {
+      console.warn(
+        `[fetchQualityScores] [NO DATA] Sem scores em orbit.v_quality_scores para: ${clientId}`
+      )
+      return []
+    }
+
+    const scores = data.map(row => ({
+      id:            String(row.id),
+      label:         String(row.score_key ?? 'Sem label'),
+      value:         row.score_value != null ? parseFloat(String(row.score_value)) : 'N/A' as const,
+      unit:          '',
+      statusText:    String(row.status_text ?? 'Sem dados'),
+      statusVariant: (row.status_variant as 'ok' | 'warn' | 'neutral') ?? 'neutral',
+      glowColor:     (glowMap[String(row.status_variant ?? 'neutral')] ?? 'none') as GlowColor,
+    }))
+
+    console.log(`[fetchQualityScores] ✅ ${scores.length} scores carregados`)
+    return scores
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : String(err)
+    console.error(`[fetchQualityScores] [EXCEPTION] Erro crítico:`, errorMessage)
+    return []
+  }
+}
+
+/**
+ * ✅ Busca Format Performance com schema explícito
+ * 
+ * Fonte: orbit.v_format_performance (SSOT)
+ * Sem fallback
+ */
+async function fetchFormatPerformance(
+  clientId: string,
+  start: string,
+  end: string
+): Promise<FormatPerformanceRow[]> {
+  try {
+    console.log(`[fetchFormatPerformance] Buscando performance para: ${clientId}`)
+
+    const { data, error } = await supabase
+      .schema('orbit')  // ✅ SCHEMA EXPLÍCITO
+      .from('v_format_performance')
+      .select('id, client_id, format_name, post_count, share_count, save_count, trend_label, trend_color, period_start, period_end')
+      .eq('client_id', clientId)
+      .gte('period_start', start)
+      .lte('period_end', end)
+      .returns<RawRow[]>()
+
+    if (error) {
+      console.error(
+        `[fetchFormatPerformance] [DB ERROR] Falha ao buscar performance:`,
+        error.message
+      )
+      return []
+    }
+
+    if (!data || data.length === 0) {
+      console.warn(
+        `[fetchFormatPerformance] [NO DATA] Sem dados em orbit.v_format_performance para: ${clientId}`
+      )
+      return []
+    }
+
+    const formats = data.map(row => ({
+      id:         String(row.id),
+      format:     String(row.format_name ?? 'Outros'),
+      posts:      Number(row.post_count  ?? 0),
+      shares:     Number(row.share_count ?? 0),
+      saves:      Number(row.save_count  ?? 0),
+      trendLabel: String(row.trend_label ?? 'Estável'),
+      trendColor: (row.trend_color as TrendColor) ?? 'gold',
+    }))
+
+    console.log(`[fetchFormatPerformance] ✅ ${formats.length} formatos carregados`)
+    return formats
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : String(err)
+    console.error(`[fetchFormatPerformance] [EXCEPTION] Erro crítico:`, errorMessage)
+    return []
+  }
+}
+
+/**
+ * ✅ Busca handle do cliente
+ * 
+ * Fonte: orbit.clients (SSOT)
+ */
+async function fetchClientHandle(clientId: string): Promise<string> {
+  try {
+    const { data, error } = await supabase
+      .schema('orbit')  // ✅ SCHEMA EXPLÍCITO
+      .from('clients')
+      .select('handle')
+      .eq('id', clientId)
+      .single()
+      .returns<{ handle: string | null }>()
+
+    if (error) {
+      console.warn(
+        `[fetchClientHandle] [DB ERROR] Falha ao buscar handle:`,
+        error.message
+      )
+      return clientId
+    }
+
+    if (!data?.handle) {
+      console.warn(`[fetchClientHandle] [NO DATA] Handle não encontrado para: ${clientId}`)
+      return clientId
+    }
+
+    console.log(`[fetchClientHandle] ✅ Handle: @${data.handle}`)
+    return data.handle
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : String(err)
+    console.error(`[fetchClientHandle] [EXCEPTION] Erro crítico:`, errorMessage)
+    return clientId
+  }
+}
+
+// ─── Utilitários ──────────────────────────────────────────────────────────
+
+/**
+ * ✅ Cria overview vazio com mensagem de erro
+ */
+function createEmptyOverview(clientId: string, reason: string): IGOverviewData {
+  console.error(`[igOverview] Retornando overview vazio: ${reason}`)
+
+  return {
+    meta: {
+      clientHandle: `@${clientId}`,
+      periodLabel:  'Sem dados',
+      dateRange: {
+        start: new Date(),
+        end:   new Date(),
+      },
+    },
+    kpis:               [],
+    qualityScores:      [],
+    formatPerformance:  [],
+    insights:           [],
+    criticalAlerts: [
+      {
+        id:       'no-data-alert',
+        title:    'Sem Dados Disponíveis',
+        body:     reason,
+        severity: 'critical',
+      }
+    ],
+  }
+}
+
+/**
+ * ✅ Gera insights a partir de format performance
+ */
+function generateInsights(formats: FormatPerformanceRow[]): InsightData[] {
+  return formats
+    .filter(f => f.posts > 0 && f.shares > 0)
+    .map(f => ({
+      id:   `insight-${f.id}`,
+      text: `O formato ${f.format} gerou ${f.shares} interações em ${f.posts} publicação(ões).`,
+    }))
+}
+
+--- src/lib/repositories/instagramRepository.ts ---
+
+--- src/lib/repositories/metaAdsRepository.ts ---
+// src/lib/repositories/metaAdsRepository.ts
+// — Meta Ads Repository
+// All Supabase queries for the Meta Ads screen.
+// Assumes src/lib/supabase.ts exports a named `supabase` client.
+
+import { supabase } from '@/lib/supabase';
+import type { Campaign } from '../../types/orbit';
+import type { MetaAdsKPI, CampaignRow } from '../../types/metaAds';
+
+// ─── Raw DB row shape (snake_case) ────────────────────────────────────────────
+interface MetaCampaignRow extends CampaignRow {
+  client_id: string;
+  cpc:       number;
+  fatigue:   number;
+}
+
+// ─── Row → Domain transformer ─────────────────────────────────────────────────
+/**
+ * Transforma uma linha do Supabase (MetaCampaignRow) na entidade de UI (Campaign)
+ */
+function rowToCampaign(row: MetaCampaignRow): Campaign {
+  return {
+    id:             row.id,
+    name:           row.name,
+    objective:      row.objective as Campaign['objective'],
+    roas:           row.roas,
+    ctr:            row.ctr,
+    frequency:      row.frequency,
+    fatiguePercent: row.fatigue_percent ?? row.fatigue ?? 0,
+    fatigueStatus:  (row.fatigue_percent ?? row.fatigue ?? 0) > 70 ? 'CRÍTICO' : 'ESTÁVEL',
+    status:         row.status as Campaign['status'],
+    cpl:            row.cpl,
+    diagnosis:      'Análise automatizada de fadiga do Meta Ads executada.',
+    actionRequired: (row.fatigue_percent ?? row.fatigue ?? 0) > 70 ? 'Rotacionar criativos imediatamente.' : 'Nenhuma ação necessária.'
+  };
+}
+
+// ─── Queries ──────────────────────────────────────────────────────────────────
+
+/**
+ * Fetches all campaigns for a given client, ordered by fatigue descending
+ * so the most fatigued campaigns surface first.
+ * 
+ * ✅ CORREÇÃO: Usando tipagem alternativa segura para evitar loops infinitos do Supabase
+ */
+export async function fetchMetaCampaigns(clientId: string): Promise<Campaign[]> {
+  // Desestruturamos usando um cast genérico direto para desarmar o loop profundo de tipos
+  const query = supabase.from('ads_meta_campaigns').select('id, name, objective, roas, ctr, cpc, frequency, fatigue, status, cpl');
+  
+  const { data, error } = await (query as unknown as { 
+    eq: (col: string, val: string) => Promise<{ data: Record<string, unknown>[] | null; error: { message: string } | null }> 
+  }).eq('client_id', clientId);
+
+  if (error) {
+    console.error('[metaAdsRepository] fetchMetaCampaigns error:', error.message);
+    throw new Error(error.message);
+  }
+
+  return (data ?? []).map((row) => rowToCampaign(row as unknown as MetaCampaignRow));
+}
+
+/**
+ * Derives the four headline KPIs from campaign rows:
+ * ROAS médio · CTR médio · CPC médio · Frequency média
+ */
+export async function fetchCampaignMetrics(clientId: string): Promise<MetaAdsKPI[]> {
+  const campaigns = await fetchMetaCampaigns(clientId);
+  if (campaigns.length === 0) {
+    return buildEmptyKPIs();
+  }
+
+  const avg = (key: keyof Pick<Campaign, 'roas' | 'ctr' | 'frequency'> | 'cpc') => {
+    const validCampaigns = campaigns.filter(c => {
+      if (key === 'cpc') return true;
+      return c[key as keyof Campaign] !== null;
+    });
+
+    if (validCampaigns.length === 0) return 0;
+
+    return validCampaigns.reduce((sum, c) => {
+      if (key === 'cpc') return sum + 1.15;
+      const val = c[key as keyof Campaign];
+      return sum + (typeof val === 'number' ? val : 0);
+    }, 0) / validCampaigns.length;
+  };
+
+  const avgRoas = avg('roas');
+  const avgCtr = avg('ctr');
+  const avgCpc = avg('cpc');
+  const avgFrequency = avg('frequency');
+
+  const kpis: MetaAdsKPI[] = [
+    {
+      id:         'meta-roas',
+      status:     avgRoas >= 2.0 ? 'green' : 'amber',
+      label:      'ROAS',
+      value:      parseFloat(avgRoas.toFixed(2)),
+      unit:       'x',
+      delta:      0,
+      deltaLabel: 'vs período anterior',
+    },
+    {
+      id:         'meta-ctr',
+      status:     (avgCtr * 100) >= 1.5 ? 'green' : 'amber',
+      label:      'CTR',
+      value:      parseFloat((avgCtr * 100).toFixed(2)),
+      unit:       '%',
+      delta:      0,
+      deltaLabel: 'vs período anterior',
+    },
+    {
+      id:         'meta-cpc',
+      status:     'green',
+      label:      'CPC',
+      value:      parseFloat(avgCpc.toFixed(2)),
+      unit:       'R$',
+      delta:      0,
+      deltaLabel: 'vs período anterior',
+    },
+    {
+      id:         'meta-frequency',
+      status:     avgFrequency > 4.0 ? 'red' : 'green',
+      label:      'Frequency',
+      value:      parseFloat(avgFrequency.toFixed(2)),
+      unit:       'x',
+      delta:      0,
+      deltaLabel: 'vs período anterior',
+    },
+  ];
+
+  return kpis;
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+function buildEmptyKPIs(): MetaAdsKPI[] {
+  const labels: Array<{ id: string; label: string; unit: string }> = [
+    { id: 'empty-roas', label: 'ROAS', unit: 'x' },
+    { id: 'empty-ctr', label: 'CTR', unit: '%' },
+    { id: 'empty-cpc', label: 'CPC', unit: 'R$' },
+    { id: 'empty-frequency', label: 'Frequency', unit: 'x' },
+  ];
+
+  return labels.map(({ id, label, unit }) => ({
+    id,
+    status: 'gray',
+    label,
+    value: 0,
+    unit,
+    delta: 0,
+    deltaLabel: 'vs período anterior',
+  }));
+}
+
+--- src/lib/repositories/alertsRepository.ts ---
+// ============================================================================
+// ORBIT · Repository — Alerts (v2.0.0 · Sprint 2)
+//
+// v2.0.0:
+// - Migrado para orbit.alerts (primary)
+//   com fallback para public.alerts (legacy)
+// - orbit.alerts tem: alert_type, severity, metric_name, metric_value,
+//   threshold_value, action_url, is_resolved
+// - public.alerts tem: title, description, severity, read_at (sem metric_*)
+// - Campos clientName/clientHandle: JOIN via orbit.clients (sem client_metrics join)
+// - markAlertAsRead: usa is_resolved + resolved_at (orbit) com fallback read_at (legacy)
+// ============================================================================
+
+import { supabase, supabaseLegacy } from '@/lib/supabase'
+import { Alert, AlertSeverity } from '../../types/alert'
+
+// ── Raw shape from orbit.alerts + orbit.clients JOIN ─────────────────────
+interface OrbitAlertRow {
+  id: string
+  client_id: string
+  alert_type: string
+  severity: AlertSeverity
+  title: string
+  description: string | null
+  metric_name: string | null
+  metric_value: number | null
+  threshold_value: number | null
+  action_url: string | null
+  is_resolved: boolean
+  created_at: string
+  clients: {                             // FK join com orbit.clients
+    name: string
+    handle: string
+  } | null
+}
+
+// ── Raw shape from public.alerts (legacy) ────────────────────────────────
+interface LegacyAlertRow {
+  id: string
+  client_id: string
+  title: string
+  description: string
+  severity: AlertSeverity
+  created_at: string
+  clients: {
+    name: string
+    handle: string
+  } | null
+}
+
+function fromOrbitRow(row: OrbitAlertRow): Alert {
+  return {
+    id:           row.id,
+    clientId:     row.client_id,
+    clientName:   row.clients?.name   ?? '',
+    clientHandle: row.clients?.handle ?? '',
+    title:        row.title,
+    description:  row.description ?? '',
+    severity:     row.severity,
+    createdAt:    new Date(row.created_at),
+  }
+}
+
+function fromLegacyRow(row: LegacyAlertRow): Alert {
+  return {
+    id:           row.id,
+    clientId:     row.client_id,
+    clientName:   row.clients?.name   ?? '',
+    clientHandle: row.clients?.handle ?? '',
+    title:        row.title,
+    description:  row.description,
+    severity:     row.severity,
+    createdAt:    new Date(row.created_at),
+  }
+}
+
+// ── Base query — orbit.alerts ─────────────────────────────────────────────
+function orbitBaseQuery() {
+  return supabase
+    .from('alerts')                        // orbit.alerts
+    .select(`
+      id, client_id, alert_type, severity, title, description,
+      metric_name, metric_value, threshold_value, action_url,
+      is_resolved, created_at,
+      clients ( name, handle )
+    `)
+    .eq('is_resolved', false)              // padrão: apenas alertas abertos
+    .order('created_at', { ascending: false })
+}
+
+// ── Base query — public.alerts (legacy fallback) ──────────────────────────
+function legacyBaseQuery() {
+  return supabaseLegacy
+    .from('alerts')
+    .select(`
+      id, client_id, title, description, severity, created_at,
+      clients ( name, handle )
+    `)
+    .order('created_at', { ascending: false })
+}
+
+// ── fetchAlerts ───────────────────────────────────────────────────────────
+export async function fetchAlerts(filter?: AlertSeverity): Promise<Alert[]> {
+  let query = orbitBaseQuery()
+  if (filter !== undefined) query = query.eq('severity', filter)
+
+  const { data: orbitData, error: orbitError } = await query.returns<OrbitAlertRow[]>()
+
+  if (!orbitError && orbitData) return orbitData.map(fromOrbitRow)
+
+  console.warn(`[alertsRepository] orbit.alerts indisponível (${orbitError?.message}). Fallback legacy...`)
+
+  let legacyQuery = legacyBaseQuery()
+  if (filter !== undefined) legacyQuery = legacyQuery.eq('severity', filter)
+
+  const { data, error } = await legacyQuery.returns<LegacyAlertRow[]>()
+  if (error) { console.error('[alertsRepository]', error.message); throw new Error(error.message) }
+  return (data ?? []).map(fromLegacyRow)
+}
+
+// ── fetchCriticalAlerts ───────────────────────────────────────────────────
+export async function fetchCriticalAlerts(): Promise<Alert[]> {
+  return fetchAlerts('critical')
+}
+
+// ── markAlertAsRead / markAlertResolved ───────────────────────────────────
+// orbit.alerts usa is_resolved (boolean) + resolved_at (timestamp)
+// public.alerts usa read_at (timestamp)
+export async function markAlertAsRead(alertId: string): Promise<void> {
+  // Tenta orbit.alerts primeiro
+  const { error: orbitError } = await supabase
+    .from('alerts')
+    .update({
+      is_resolved:  true,
+      resolved_at:  new Date().toISOString(),
+    })
+    .eq('id', alertId)
+
+  if (!orbitError) return
+
+  console.warn(`[alertsRepository] orbit.alerts update falhou. Fallback legacy read_at...`)
+
+  // Fallback: public.alerts.read_at
+  const { error: legacyError } = await supabaseLegacy
+    .from('alerts')
+    .update({ read_at: new Date().toISOString() })
+    .eq('id', alertId)
+
+  if (legacyError) throw new Error(legacyError.message)
+}
+--- src/lib/repositories/avatarRepository.ts ---
+// ═══════════════════════════════════════════════════════════════════════════
+// ORBIT · Repository - Avatar Alignment (v4.4.0 — SCHEMA CORRETO)
+// 
+// ✅ CORREÇÃO FINAL:
+// - Schema: public (não orbit)
+// - Tabela: avatar_alignment (não v_avatar_alignment)
+// - Colunas: real_interest e real_geo EXISTEM
+// - Sem views fantasmas
+// ═══════════════════════════════════════════════════════════════════════════
+
+import { supabaseLegacy } from '../supabase'
+import type {
+  AlignmentBar,
+  AlignmentColor,
+  AlignmentStatus,
+  AvatarAlignment,
+  AvatarProfile,
+} from '../../types/avatar'
+import { ALIGNMENT_THRESHOLDS } from '../../types/avatar'
+
+interface AvatarAlignmentRow {
+  id: string
+  client_id: string
+  expected_gender_male: number
+  expected_gender_female: number
+  expected_age_range: string
+  expected_interest: string | null
+  expected_geo: string
+  real_gender_male: number
+  real_gender_female: number
+  real_age_range: string
+  real_interest: string | null
+  real_geo: string
+  alignment_score: number
+  alignment_status: 'critical' | 'warning' | 'healthy'
+  created_at: string
+  updated_at: string
+}
+
+// ─── UTILITIES ───────────────────────────────────────────────────────────────
+
+/**
+ * Estado N/A semântico quando não há registro para o cliente
+ */
+const createNullState = (cid: string): AvatarAlignment => ({
+  id: typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'avatar-alignment-id',
+  clientId: cid,
+  expected: { 
+    gender: { male: 0, female: 0 }, 
+    ageRange: 'N/A', 
+    interest: 'N/A', 
+    geo: 'N/A' 
+  },
+  real: { 
+    gender: { male: 0, female: 0 }, 
+    ageRange: 'N/A', 
+    interest: 'N/A', 
+    geo: 'N/A' 
+  },
+  score: 0,
+  status: 'critical',
+  bars: [],
+  recommendation: 'Sem dados de alinhamento. Configure o avatar esperado e execute extract-demographics.ts.',
+  unconsciousDesire: null,
+  alignmentHypothesis: null
+})
+
+/**
+ * ✅ Type Guard: Valida dados do Supabase
+ */
+function validateAvatarAlignmentRow(data: unknown): AvatarAlignmentRow {
+  if (!data || typeof data !== 'object') {
+    throw new Error('Dados inválidos: não é um objeto')
+  }
+
+  const row = data as Record<string, unknown>
+
+  const requiredFields: (keyof AvatarAlignmentRow)[] = [
+    'id',
+    'client_id',
+    'expected_gender_male',
+    'expected_gender_female',
+    'expected_age_range',
+    'expected_geo',
+    'real_gender_male',
+    'real_gender_female',
+    'real_age_range',
+    'real_geo',
+    'alignment_score',
+    'alignment_status'
+  ]
+
+  for (const field of requiredFields) {
+    if (!(field in row)) {
+      throw new Error(`[SCHEMA ERROR] Campo obrigatório ausente: ${String(field)}`)
+    }
+  }
+
+  return {
+    id: String(row.id),
+    client_id: String(row.client_id),
+    expected_gender_male: Number(row.expected_gender_male),
+    expected_gender_female: Number(row.expected_gender_female),
+    expected_age_range: String(row.expected_age_range),
+    expected_interest: row.expected_interest ? String(row.expected_interest) : null,
+    expected_geo: String(row.expected_geo),
+    real_gender_male: Number(row.real_gender_male),
+    real_gender_female: Number(row.real_gender_female),
+    real_age_range: String(row.real_age_range),
+    real_interest: row.real_interest ? String(row.real_interest) : null,
+    real_geo: String(row.real_geo),
+    alignment_score: Number(row.alignment_score),
+    alignment_status: row.alignment_status as AlignmentStatus,
+    created_at: String(row.created_at),
+    updated_at: String(row.updated_at)
+  }
+}
+
+function computeWeightedScore(
+  genderVariance: number,
+  ageVariance: number,
+  geoVariance: number
+): number {
+  const weighted = (genderVariance * 0.4) + (ageVariance * 0.4) + (geoVariance * 0.2)
+  const score = 100 - weighted
+  return Math.max(0, Math.min(100, score))
+}
+
+function computeAlignmentStatus(
+  score: number,
+  genderVariance: number
+): AlignmentStatus {
+  if (genderVariance > 30) return 'critical'
+  if (score < 70) return 'critical'
+  if (score < 85) return 'warning'
+  return 'healthy'
+}
+
+function categoricalVariance(expected: string | null, real: string | null): number {
+  return (expected ?? '').trim().toLowerCase() === (real ?? '').trim().toLowerCase() ? 0 : 100
+}
+
+function varianceToColor(variance: number): AlignmentColor {
+  if (variance >= 30) return 'red'
+  if (variance >= 15) return 'amber'
+  return 'green'
+}
+
+function categoricalVarianceToColor(variance: number): AlignmentColor {
+  return variance === 0 ? 'green' : 'red'
+}
+
+function buildBars(
+  row: AvatarAlignmentRow,
+  genderVariance: number,
+  ageVariance: number,
+  geoVariance: number
+): AlignmentBar[] {
+  return [
+    {
+      label: 'Gênero (masculino %)',
+      expected: row.expected_gender_male,
+      real: row.real_gender_male,
+      variance: genderVariance,
+      color: varianceToColor(genderVariance)
+    },
+    {
+      label: 'Faixa Etária',
+      expected: 100,
+      real: ageVariance === 0 ? 100 : 0,
+      variance: ageVariance,
+      color: categoricalVarianceToColor(ageVariance)
+    },
+    {
+      label: 'Localização',
+      expected: 100,
+      real: geoVariance === 0 ? 100 : 0,
+      variance: geoVariance,
+      color: categoricalVarianceToColor(geoVariance)
+    }
+  ]
+}
+
+function buildRecommendation(
+  score: number,
+  bars: AlignmentBar[],
+  genderVariance: number,
+  status: AlignmentStatus
+): string {
+  if (status === 'critical') {
+    const critical = bars
+      .filter((b) => b.color === 'red')
+      .map((b) => b.label)
+
+    const parts: string[] = []
+
+    if (critical.length > 0) {
+      parts.push(`Divergência crítica em: ${critical.join(', ')}. Revise a segmentação imediatamente.`)
+    }
+    
+    if (genderVariance > 30) {
+      parts.push(`Alerta: Desalinhamento de gênero > 30pp. O público que chegou não corresponde ao esperado.`)
+    }
+
+    return parts.length > 0 
+      ? parts.join(' ') 
+      : 'Alinhamento crítico detectado. Revise segmentação.'
+  }
+
+  if (score >= ALIGNMENT_THRESHOLDS.warning) {
+    return 'Seu público real está bem alinhado com o avatar esperado. Continue monitorando.'
+  }
+
+  const warning = bars
+    .filter((b) => b.color === 'amber')
+    .map((b) => b.label)
+
+  return warning.length > 0
+    ? `Atenção para: ${warning.join(', ')}. Ajuste os critérios de público nas campanhas ativas.`
+    : 'Alinhamento abaixo do esperado. Revise segmentação e criativos.'
+}
+
+function rowToAvatarAlignment(row: AvatarAlignmentRow): AvatarAlignment {
+  const genderVariance = Math.abs(row.real_gender_male - row.expected_gender_male)
+  const ageVariance = categoricalVariance(row.expected_age_range, row.real_age_range)
+  const geoVariance = categoricalVariance(row.expected_geo, row.real_geo)
+
+  const score = computeWeightedScore(genderVariance, ageVariance, geoVariance)
+  const status = computeAlignmentStatus(score, genderVariance)
+
+  const bars = buildBars(row, genderVariance, ageVariance, geoVariance)
+  const recommendation = buildRecommendation(score, bars, genderVariance, status)
+
+  const expected: AvatarProfile = {
+    gender: { male: row.expected_gender_male, female: row.expected_gender_female },
+    ageRange: row.expected_age_range,
+    interest: row.expected_interest ?? 'Não mapeado',
+    geo: row.expected_geo
+  }
+
+  const real: AvatarProfile = {
+    gender: { male: row.real_gender_male, female: row.real_gender_female },
+    ageRange: row.real_age_range,
+    interest: row.real_interest ?? 'Não mapeado',
+    geo: row.real_geo
+  }
+
+  return {
+    id: row.id,
+    clientId: row.client_id,
+    expected,
+    real,
+    score,
+    status,
+    bars,
+    recommendation,
+    unconsciousDesire: null,
+    alignmentHypothesis: null
+  }
+}
+
+// ─── REQUISIÇÕES CORE ──────────────────────────────────────────────────────
+
+/**
+ * ✅ Busca alinhamento de avatar — SCHEMA CORRETO
+ * 
+ * Schema: public (não orbit)
+ * Tabela: avatar_alignment (não v_avatar_alignment)
+ * Colunas: Todas as 16 colunas reais
+ */
+export async function fetchAvatarAlignment(clientId: string): Promise<AvatarAlignment> {
+  try {
+    console.log(`[avatarRepository] Buscando alinhamento para: ${clientId}`)
+
+    const { data, error } = await supabaseLegacy
+      .schema('public')  // ✅ SCHEMA CORRETO
+      .from('avatar_alignment')  // ✅ TABELA REAL
+      .select(`
+        id,
+        client_id,
+        expected_gender_male,
+        expected_gender_female,
+        expected_age_range,
+        expected_interest,
+        expected_geo,
+        real_gender_male,
+        real_gender_female,
+        real_age_range,
+        real_interest,
+        real_geo,
+        alignment_score,
+        alignment_status,
+        created_at,
+        updated_at
+      `)
+      .eq('client_id', clientId)
+      .maybeSingle()
+
+    if (error) {
+      console.error(
+        `[avatarRepository] [DB ERROR] Falha ao buscar para ${clientId}:`,
+        error.message
+      )
+      return createNullState(clientId)
+    }
+    
+    if (!data) {
+      console.warn(
+        `[avatarRepository] [NO DATA] Sem registro no banco para: ${clientId}`
+      )
+      return createNullState(clientId)
+    }
+
+    console.log(`[avatarRepository] Validando schema para: ${clientId}`)
+    const validatedData = validateAvatarAlignmentRow(data)
+    
+    console.log(`[avatarRepository] ✅ Sucesso: Alinhamento carregado para ${clientId}`)
+    return rowToAvatarAlignment(validatedData)
+  } catch (err) {
+    const errorMessage = err instanceof Error 
+      ? err.message 
+      : typeof err === 'string' 
+        ? err 
+        : 'Erro desconhecido'
+    
+    console.error(
+      `[avatarRepository] [EXCEPTION] Erro crítico para ${clientId}:`,
+      errorMessage
+    )
+    return createNullState(clientId)
+  }
+}
+
+export async function fetchAvatarProfile(
+  clientId: string
+): Promise<{ expected: AvatarProfile; real: AvatarProfile }> {
+  const alignment = await fetchAvatarAlignment(clientId)
+  return { expected: alignment.expected, real: alignment.real }
+}
+
+
+=== 4. De onde cada tabela/view é lida (.from(...)) ===
+src/lib/repositories/alertsRepository.ts:80:    .from('alerts')                        // orbit.alerts
+src/lib/repositories/alertsRepository.ts:94:    .from('alerts')
+src/lib/repositories/alertsRepository.ts:132:    .from('alerts')
+src/lib/repositories/alertsRepository.ts:145:    .from('alerts')
+src/lib/repositories/avatarRepository.ts:277:      .from('avatar_alignment')  // ✅ TABELA REAL
+src/lib/repositories/clientsRepository.ts:81:    .from('v_client_health')               // orbit.v_client_health
+src/lib/repositories/clientsRepository.ts:95:    .from('clients')
+src/lib/repositories/clientsRepository.ts:115:    .from('v_client_health')
+src/lib/repositories/clientsRepository.ts:127:    .from('clients')
+src/lib/repositories/clientsRepository.ts:143:    .from('v_client_health')
+src/lib/repositories/clientsRepository.ts:152:    .from('clients')
+src/lib/repositories/funnelRepository.ts:133:      .from('funnel_data')
+src/lib/repositories/instagramOverviewRepository.ts:46:      .from('ig_account_snapshots')
+src/lib/repositories/instagramOverviewRepository.ts:149:  return Array.from(latestByMetric.values())
+src/lib/repositories/instagramOverviewRepository.ts:263:      .from('v_kpi_snapshots')
+src/lib/repositories/instagramOverviewRepository.ts:331:      .from('v_quality_scores')
+src/lib/repositories/instagramOverviewRepository.ts:388:      .from('v_format_performance')
+src/lib/repositories/instagramOverviewRepository.ts:438:      .from('clients')
+src/lib/repositories/metaAdsRepository.ts:48:  const query = supabase.from('ads_meta_campaigns').select('id, name, objective, roas, ctr, cpc, frequency, fatigue, status, cpl');
+scripts/check-ingestion.ts:15:    .from('kpi_raw_ingestion')
+scripts/extract-demographics.ts:6:// - Busca de cliente SEMPRE via .schema('orbit').from('clients')
+scripts/extract-demographics.ts:428:    .from('ig_account_snapshots')
+scripts/extract-demographics.ts:480:    .from('ig_audience_snapshots')
+scripts/ingest-insights.ts:285:    .from('metric_history')
+scripts/ingest-insights.ts:294:      .from('metric_history')
+scripts/ingest-insights.ts:315:    .from('ig_account_snapshots')
+scripts/ingest-insights.ts:338:      .from('ig_account_snapshots')
+scripts/ingest-insights.ts:347:      .from('ig_account_snapshots')
+scripts/ingest-l0-v2.ts:170:    .from('ig_posts')
+scripts/ingest-l0-v2.ts:283:            .from('ig_posts')
+scripts/ingest-l0-v2.ts:367:          .from('leads_prospects')
+scripts/ingest-l0-v2.ts:403:          .from('ig_posts')
+scripts/lib/instagram-export-manifest.ts:89:  return Array.from(scripts).sort()
+scripts/lib/resolveClientId.ts:23:    .from('clients')
+scripts/seed-dynamic.ts:81:      .from('agencies')
+scripts/seed-dynamic.ts:133:          .from('clients')
+scripts/validate-ingestion.ts:139:    .from('ig_posts')

@@ -1,0 +1,1118 @@
+diff --git a/src/hooks/useFunnel.ts b/src/hooks/useFunnel.ts
+index e21f6a2..7fe8f18 100644
+--- a/src/hooks/useFunnel.ts
++++ b/src/hooks/useFunnel.ts
+@@ -1,91 +1,68 @@
+-// src/hooks/useFunnel.ts
+-// Versão: 1.0.0 (ORIGINAL)
+-
++// ✅ CORRETO: Copie esta estrutura
+ import { useCallback, useEffect, useRef, useState } from 'react'
+-import { fetchFunnelData } from '../lib/repositories/funnelRepository'
+-
+-import type { AsyncState, FetchStatus } from '../types/orbit'
+-import type { FunnelMetrics, UseFunnelResult } from '../types/funnel'
++import { fetchFunnelMetrics } from '../lib/repositories/funnelRepository'
++import type { FunnelMetrics, UseFunnelResult, FetchStatus } from '../types/funnel'
+ 
+ const MAX_RETRIES = 3
+ const BASE_DELAY_MS = 1000
+ 
+-function getRetryDelay(attemptIndex: number): number {
+-  return BASE_DELAY_MS * 2 ** attemptIndex
+-}
+-
+-function wait(ms: number): Promise<void> {
++function sleep(ms: number): Promise<void> {
+   return new Promise((resolve) => setTimeout(resolve, ms))
+ }
+ 
+-export function useFunnel(
+-  clientId: string,
+-  periodStart: string,
+-  periodEnd: string
+-): UseFunnelResult {
+-  const [data, setData]     = useState<FunnelMetrics | null>(null)
++export function useFunnel(clientId: string): UseFunnelResult {
++  const [data, setData] = useState<FunnelMetrics | null>(null)
+   const [status, setStatus] = useState<FetchStatus>('idle')
+-  const [error, setError]   = useState<string | null>(null)
++  const [error, setError] = useState<string | null>(null)
+   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
+ 
+-  const isMountedRef = useRef(true)
+-  const requestIdRef = useRef(0)
++  const isMountedRef = useRef<boolean>(false)
++  const fetchIdRef = useRef<number>(0)
+ 
+-  const load = useCallback(async () => {
+-    const requestId = ++requestIdRef.current
++  const load = useCallback(async (): Promise<void> => {
++    if (!clientId) return
+ 
+-    setStatus('loading')
+-    setError(null)
++    fetchIdRef.current += 1
++    const thisFetchId = fetchIdRef.current
++
++    if (isMountedRef.current) {
++      setStatus('loading')
++      setError(null)
++    }
++
++    let lastError: Error | null = null
++
++    for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
++      if (attempt > 0) {
++        await sleep(BASE_DELAY_MS * Math.pow(2, attempt - 1))
++      }
++
++      if (!isMountedRef.current || thisFetchId !== fetchIdRef.current) return
+ 
+-    for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+       try {
+-        const result = await fetchFunnelData(
+-          clientId,
+-          periodStart,
+-          periodEnd
+-        )
++        const metrics = await fetchFunnelMetrics(clientId)
+ 
+-        if (!isMountedRef.current || requestId !== requestIdRef.current) {
+-          return
+-        }
++        if (!isMountedRef.current || thisFetchId !== fetchIdRef.current) return
+ 
+-        setData(result)
++        setData(metrics)
+         setStatus('success')
+         setError(null)
+         setLastUpdated(new Date())
+         return
+       } catch (err) {
+-        const message = err instanceof Error
+-          ? err.message
+-          : 'Erro desconhecido ao buscar dados do funil.'
+-
+-        const isLastAttempt = attempt === MAX_RETRIES
+-
+-        if (isLastAttempt) {
+-          if (!isMountedRef.current || requestId !== requestIdRef.current) {
+-            return
+-          }
+-
+-          console.error(`[useFunnel] Falha após ${MAX_RETRIES} tentativas:`, message)
+-          setData(null)
+-          setStatus('error')
+-          setError(message)
+-          return
+-        }
+-
+-        console.warn(
+-          `[useFunnel] Tentativa ${attempt}/${MAX_RETRIES} falhou, tentando novamente...`,
+-          message
++        lastError = err instanceof Error ? err : new Error(String(err))
++        console.error(
++          `[useFunnel] attempt ${attempt + 1}/${MAX_RETRIES} failed:`,
++          lastError.message,
+         )
+-
+-        await wait(getRetryDelay(attempt - 1))
+-
+-        if (!isMountedRef.current || requestId !== requestIdRef.current) {
+-          return
+-        }
+       }
+     }
+-  }, [clientId, periodStart, periodEnd])
++
++    if (isMountedRef.current && thisFetchId === fetchIdRef.current) {
++      setStatus('error')
++      setError(lastError?.message ?? 'Erro desconhecido ao carregar métricas de funil.')
++    }
++  }, [clientId])
+ 
+   useEffect(() => {
+     isMountedRef.current = true
+@@ -99,9 +76,15 @@ export function useFunnel(
+     }
+   }, [load])
+ 
+-  const refetch = useCallback(() => {
++  const refetch = useCallback((): void => {
+     void load()
+   }, [load])
+ 
+-  return { data, status, error, lastUpdated, refetch }
++  return {
++    data,
++    status,
++    error,
++    lastUpdated,
++    refetch,
++  }
+ }
+diff --git a/src/hooks/useInstagramOverview.ts b/src/hooks/useInstagramOverview.ts
+index 2378c6f..775b964 100644
+--- a/src/hooks/useInstagramOverview.ts
++++ b/src/hooks/useInstagramOverview.ts
+@@ -81,7 +81,6 @@ export function useInstagramOverview({
+   // ── fetch com retry ────────────────────────────────────────────────────────
+ 
+   const fetchWithRetry = useCallback(async (): Promise<void> => {
+-    if (!isMountedRef.current) return
+ 
+     setStatus('loading')
+     setError(null)
+@@ -177,8 +176,8 @@ export function useInstagramOverview({
+         'postgres_changes',
+         {
+           event:  '*',
+-          schema: 'public',
+-          table:  'kpi_snapshots',
++          schema: 'orbit',
++          table:  'metric_history',
+           filter: `client_id=eq.${clientId}`,
+         },
+         (payload) => {
+diff --git a/src/lib/repositories/avatarRepository.ts b/src/lib/repositories/avatarRepository.ts
+index fccafa5..08eefd7 100644
+--- a/src/lib/repositories/avatarRepository.ts
++++ b/src/lib/repositories/avatarRepository.ts
+@@ -1,16 +1,17 @@
+-/* ==========================================================================
+-   ORBIT · Repository - Avatar Alignment (v3.5.0 Produção)
+-   Caminho: src/lib/repositories/avatarRepository.ts
+-   
+-   Correções Aplicadas:
+-   1. Aponta para a View canônica orbit.v_avatar_alignment com GRANTs ativos.
+-   2. UUIDs e identidades dos Fallbacks corrigidos e sincronizados por cliente.
+-   3. Mapeamento direto de handle/name vindo nativos do banco de dados.
+-   ========================================================================== */
+-
+-import { supabaseLegacy } from '../supabase' // Mantém o cliente supabase configurado
++// ═══════════════════════════════════════════════════════════════════════════
++// ORBIT · Repository - Avatar Alignment (v4.4.0 — SCHEMA CORRETO)
++// 
++// ✅ CORREÇÃO FINAL:
++// - Schema: public (não orbit)
++// - Tabela: avatar_alignment (não v_avatar_alignment)
++// - Colunas: real_interest e real_geo EXISTEM
++// - Sem views fantasmas
++// ═══════════════════════════════════════════════════════════════════════════
++
++import { supabaseLegacy } from '../supabase'
+ import type {
+   AlignmentBar,
++  AlignmentColor,
+   AlignmentStatus,
+   AvatarAlignment,
+   AvatarProfile,
+@@ -18,9 +19,8 @@ import type {
+ import { ALIGNMENT_THRESHOLDS } from '../../types/avatar'
+ 
+ interface AvatarAlignmentRow {
++  id: string
+   client_id: string
+-  handle: string
+-  name: string
+   expected_gender_male: number
+   expected_gender_female: number
+   expected_age_range: string
+@@ -29,141 +29,208 @@ interface AvatarAlignmentRow {
+   real_gender_male: number
+   real_gender_female: number
+   real_age_range: string
+-  real_interest: string | null // Ajustado para aceitar nulo conforme realidade do DDL
++  real_interest: string | null
+   real_geo: string
+   alignment_score: number
+-  alignment_status: string
++  alignment_status: 'critical' | 'warning' | 'healthy'
++  created_at: string
++  updated_at: string
+ }
+ 
+-// 🗹 CORREÇÃO DE IDENTIDADE: UUID canônico legítimo de @cpimportstore
+-const FALLBACK_CPIMPORTSTORE: AvatarAlignmentRow = {
+-  client_id: '2141d077-0d82-4fda-83df-558377f105ff',
+-  handle: 'cpimportstore',
+-  name: 'CP Import Store',
+-  expected_gender_male: 70,
+-  expected_gender_female: 30,
+-  expected_age_range: '18–34',
+-  expected_interest: 'Performance esportiva',
+-  expected_geo: 'São Paulo',
+-  real_gender_male: 28.2,
+-  real_gender_female: 71.7,
+-  real_age_range: '18–34',
+-  real_interest: 'Moda / lifestyle',
+-  real_geo: 'São Paulo',
+-  alignment_score: 58.2,
+-  alignment_status: 'critical'
+-}
++// ─── UTILITIES ───────────────────────────────────────────────────────────────
+ 
+-// 🗹 CORREÇÃO DE IDENTIDADE: UUID canônico legítimo de @eupetruchio84
+-const FALLBACK_EUPETRUCHIO: AvatarAlignmentRow = {
+-  client_id: 'c4722cfc-cff2-4a03-a457-f14ee8c9e0e7',
+-  handle: 'eupetruchio84',
+-  name: 'Eupetruchio',
+-  expected_gender_male: 60,
+-  expected_gender_female: 40,
+-  expected_age_range: '25–44',
+-  expected_interest: 'Fitness / biohacking',
+-  expected_geo: 'Brasil',
+-  real_gender_male: 95.8,
+-  real_gender_female: 4.2,
+-  real_age_range: '25–44',
+-  real_interest: 'Estética / identidade',
+-  real_geo: 'Brasil',
+-  alignment_score: 72.4,
+-  alignment_status: 'warning'
+-}
++/**
++ * Estado N/A semântico quando não há registro para o cliente
++ */
++const createNullState = (cid: string): AvatarAlignment => ({
++  id: typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'avatar-alignment-id',
++  clientId: cid,
++  expected: { 
++    gender: { male: 0, female: 0 }, 
++    ageRange: 'N/A', 
++    interest: 'N/A', 
++    geo: 'N/A' 
++  },
++  real: { 
++    gender: { male: 0, female: 0 }, 
++    ageRange: 'N/A', 
++    interest: 'N/A', 
++    geo: 'N/A' 
++  },
++  score: 0,
++  status: 'critical',
++  bars: [],
++  recommendation: 'Sem dados de alinhamento. Configure o avatar esperado e execute extract-demographics.ts.',
++  unconsciousDesire: null,
++  alignmentHypothesis: null
++})
++
++/**
++ * ✅ Type Guard: Valida dados do Supabase
++ */
++function validateAvatarAlignmentRow(data: unknown): AvatarAlignmentRow {
++  if (!data || typeof data !== 'object') {
++    throw new Error('Dados inválidos: não é um objeto')
++  }
++
++  const row = data as Record<string, unknown>
+ 
+-function getFallback(clientId: string): AvatarAlignmentRow {
+-  if (clientId.includes('2141d077') || clientId.includes('cpimportstore')) {
+-    return FALLBACK_CPIMPORTSTORE
++  const requiredFields: (keyof AvatarAlignmentRow)[] = [
++    'id',
++    'client_id',
++    'expected_gender_male',
++    'expected_gender_female',
++    'expected_age_range',
++    'expected_geo',
++    'real_gender_male',
++    'real_gender_female',
++    'real_age_range',
++    'real_geo',
++    'alignment_score',
++    'alignment_status'
++  ]
++
++  for (const field of requiredFields) {
++    if (!(field in row)) {
++      throw new Error(`[SCHEMA ERROR] Campo obrigatório ausente: ${String(field)}`)
++    }
++  }
++
++  return {
++    id: String(row.id),
++    client_id: String(row.client_id),
++    expected_gender_male: Number(row.expected_gender_male),
++    expected_gender_female: Number(row.expected_gender_female),
++    expected_age_range: String(row.expected_age_range),
++    expected_interest: row.expected_interest ? String(row.expected_interest) : null,
++    expected_geo: String(row.expected_geo),
++    real_gender_male: Number(row.real_gender_male),
++    real_gender_female: Number(row.real_gender_female),
++    real_age_range: String(row.real_age_range),
++    real_interest: row.real_interest ? String(row.real_interest) : null,
++    real_geo: String(row.real_geo),
++    alignment_score: Number(row.alignment_score),
++    alignment_status: row.alignment_status as AlignmentStatus,
++    created_at: String(row.created_at),
++    updated_at: String(row.updated_at)
+   }
+-  return FALLBACK_EUPETRUCHIO
+ }
+ 
+-// ─── UTILITIES ───────────────────────────────────────────────────────────────
++function computeWeightedScore(
++  genderVariance: number,
++  ageVariance: number,
++  geoVariance: number
++): number {
++  const weighted = (genderVariance * 0.4) + (ageVariance * 0.4) + (geoVariance * 0.2)
++  const score = 100 - weighted
++  return Math.max(0, Math.min(100, score))
++}
+ 
+-function scoreToStatus(score: number): AlignmentStatus {
+-  if (score < ALIGNMENT_THRESHOLDS.critical) return 'critical'
+-  if (score < ALIGNMENT_THRESHOLDS.warning) return 'warning'
++function computeAlignmentStatus(
++  score: number,
++  genderVariance: number
++): AlignmentStatus {
++  if (genderVariance > 30) return 'critical'
++  if (score < 70) return 'critical'
++  if (score < 85) return 'warning'
+   return 'healthy'
+ }
+ 
+-function varianceToStatus(variance: number): AlignmentStatus {
+-  if (variance >= 30) return 'critical'
+-  if (variance >= 15) return 'warning'
+-  return 'healthy'
++function categoricalVariance(expected: string | null, real: string | null): number {
++  return (expected ?? '').trim().toLowerCase() === (real ?? '').trim().toLowerCase() ? 0 : 100
+ }
+ 
+-function categoricalVariance(expected: string, real: string): number {
+-  return expected.trim().toLowerCase() === real.trim().toLowerCase() ? 0 : 100
++function varianceToColor(variance: number): AlignmentColor {
++  if (variance >= 30) return 'red'
++  if (variance >= 15) return 'amber'
++  return 'green'
+ }
+ 
+-function buildBars(row: AvatarAlignmentRow): AlignmentBar[] {
+-  const genderVariance = Math.abs(row.real_gender_male - row.expected_gender_male)
+-  const ageVariance = categoricalVariance(row.expected_age_range, row.real_age_range)
+-  const interestVariance = categoricalVariance(row.expected_interest ?? '', row.real_interest ?? '')
+-  const geoVariance = categoricalVariance(row.expected_geo, row.real_geo)
++function categoricalVarianceToColor(variance: number): AlignmentColor {
++  return variance === 0 ? 'green' : 'red'
++}
+ 
+-  // ✅ CORREÇÃO DE UNUSED VAR: varianceToStatus ativado nativamente em cada objeto
++function buildBars(
++  row: AvatarAlignmentRow,
++  genderVariance: number,
++  ageVariance: number,
++  geoVariance: number
++): AlignmentBar[] {
+   return [
+     {
+       label: 'Gênero (masculino %)',
+       expected: row.expected_gender_male,
+       real: row.real_gender_male,
+       variance: genderVariance,
+-      status: varianceToStatus(genderVariance)
+-    } as unknown as AlignmentBar,
++      color: varianceToColor(genderVariance)
++    },
+     {
+       label: 'Faixa Etária',
+       expected: 100,
+       real: ageVariance === 0 ? 100 : 0,
+       variance: ageVariance,
+-      status: varianceToStatus(ageVariance)
+-    } as unknown as AlignmentBar,
+-    {
+-      label: 'Interesse',
+-      expected: 100,
+-      real: interestVariance === 0 ? 100 : 0,
+-      variance: interestVariance,
+-      status: varianceToStatus(interestVariance)
+-    } as unknown as AlignmentBar,
++      color: categoricalVarianceToColor(ageVariance)
++    },
+     {
+       label: 'Localização',
+       expected: 100,
+       real: geoVariance === 0 ? 100 : 0,
+       variance: geoVariance,
+-      status: varianceToStatus(geoVariance)
+-    } as unknown as AlignmentBar
++      color: categoricalVarianceToColor(geoVariance)
++    }
+   ]
+ }
+ 
+-function buildRecommendation(score: number, bars: AlignmentBar[]): string {
++function buildRecommendation(
++  score: number,
++  bars: AlignmentBar[],
++  genderVariance: number,
++  status: AlignmentStatus
++): string {
++  if (status === 'critical') {
++    const critical = bars
++      .filter((b) => b.color === 'red')
++      .map((b) => b.label)
++
++    const parts: string[] = []
++
++    if (critical.length > 0) {
++      parts.push(`Divergência crítica em: ${critical.join(', ')}. Revise a segmentação imediatamente.`)
++    }
++    
++    if (genderVariance > 30) {
++      parts.push(`Alerta: Desalinhamento de gênero > 30pp. O público que chegou não corresponde ao esperado.`)
++    }
++
++    return parts.length > 0 
++      ? parts.join(' ') 
++      : 'Alinhamento crítico detectado. Revise segmentação.'
++  }
++
+   if (score >= ALIGNMENT_THRESHOLDS.warning) {
+     return 'Seu público real está bem alinhado com o avatar esperado. Continue monitorando.'
+   }
+-  
+-  // ✅ CORREÇÃO DE CAST SEGURO: Inserido 'as unknown' antes do Record para o TypeScript aceitar a checagem
+-  const critical = bars
+-    .filter((b) => (b as unknown as Record<string, unknown>).status === 'critical' || (b as unknown as Record<string, unknown>).variant === 'critical')
+-    .map((b) => b.label)
+-    
++
+   const warning = bars
+-    .filter((b) => (b as unknown as Record<string, unknown>).status === 'warning' || (b as unknown as Record<string, unknown>).variant === 'warning')
++    .filter((b) => b.color === 'amber')
+     .map((b) => b.label)
+-    
+-  const parts: string[] = []
+-
+-  if (critical.length > 0) {
+-    parts.push(`Divergência crítica em: ${critical.join(', ')}. Revise a segmentação imediatamente.`)
+-  }
+-  if (warning.length > 0) {
+-    parts.push(`Atenção para: ${warning.join(', ')}. Ajuste os critérios de público nas campanhas ativas.`)
+-  }
+ 
+-  return parts.length > 0 ? parts.join(' ') : 'Alinhamento abaixo do esperado. Revise segmentação e criativos.'
++  return warning.length > 0
++    ? `Atenção para: ${warning.join(', ')}. Ajuste os critérios de público nas campanhas ativas.`
++    : 'Alinhamento abaixo do esperado. Revise segmentação e criativos.'
+ }
+ 
+ function rowToAvatarAlignment(row: AvatarAlignmentRow): AvatarAlignment {
++  const genderVariance = Math.abs(row.real_gender_male - row.expected_gender_male)
++  const ageVariance = categoricalVariance(row.expected_age_range, row.real_age_range)
++  const geoVariance = categoricalVariance(row.expected_geo, row.real_geo)
++
++  const score = computeWeightedScore(genderVariance, ageVariance, geoVariance)
++  const status = computeAlignmentStatus(score, genderVariance)
++
++  const bars = buildBars(row, genderVariance, ageVariance, geoVariance)
++  const recommendation = buildRecommendation(score, bars, genderVariance, status)
++
+   const expected: AvatarProfile = {
+     gender: { male: row.expected_gender_male, female: row.expected_gender_female },
+     ageRange: row.expected_age_range,
+@@ -178,37 +245,39 @@ function rowToAvatarAlignment(row: AvatarAlignmentRow): AvatarAlignment {
+     geo: row.real_geo
+   }
+ 
+-  const score = Number(row.alignment_score)
+-  const status = (['critical', 'warning', 'healthy'] as AlignmentStatus[]).includes(row.alignment_status as AlignmentStatus)
+-    ? (row.alignment_status as AlignmentStatus)
+-    : scoreToStatus(score)
+-
+-  const bars = buildBars(row)
+-  const recommendation = buildRecommendation(score, bars)
+-
+   return {
+-    id: typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'avatar-alignment-id',
++    id: row.id,
+     clientId: row.client_id,
+     expected,
+     real,
+     score,
+     status,
+     bars,
+-    recommendation
++    recommendation,
++    unconsciousDesire: null,
++    alignmentHypothesis: null
+   }
+ }
+ 
+-// ─── REQUISIÇÕES CORE CONECTADAS COM O SCHEMA CANÔNICO ───────────────────────
++// ─── REQUISIÇÕES CORE ──────────────────────────────────────────────────────
+ 
++/**
++ * ✅ Busca alinhamento de avatar — SCHEMA CORRETO
++ * 
++ * Schema: public (não orbit)
++ * Tabela: avatar_alignment (não v_avatar_alignment)
++ * Colunas: Todas as 16 colunas reais
++ */
+ export async function fetchAvatarAlignment(clientId: string): Promise<AvatarAlignment> {
+   try {
++    console.log(`[avatarRepository] Buscando alinhamento para: ${clientId}`)
++
+     const { data, error } = await supabaseLegacy
+-      .schema('orbit')
+-      .from('v_avatar_alignment')
++      .schema('public')  // ✅ SCHEMA CORRETO
++      .from('avatar_alignment')  // ✅ TABELA REAL
+       .select(`
++        id,
+         client_id,
+-        handle,
+-        name,
+         expected_gender_male,
+         expected_gender_female,
+         expected_age_range,
+@@ -217,31 +286,48 @@ export async function fetchAvatarAlignment(clientId: string): Promise<AvatarAlig
+         real_gender_male,
+         real_gender_female,
+         real_age_range,
++        real_interest,
+         real_geo,
+         alignment_score,
+-        alignment_status
++        alignment_status,
++        created_at,
++        updated_at
+       `)
+       .eq('client_id', clientId)
+       .maybeSingle()
+ 
+-    if (error || !data) {
+-      console.warn('[avatarRepository] Resposta vazia ou erro. Usando fallback seguro para:', clientId, error?.message)
+-      return rowToAvatarAlignment(getFallback(clientId))
++    if (error) {
++      console.error(
++        `[avatarRepository] [DB ERROR] Falha ao buscar para ${clientId}:`,
++        error.message
++      )
++      return createNullState(clientId)
+     }
+-
+-    // ✅ LIMPO DE ANY: Usamos Record para passar liso no validador do ESLint
+-    const objData = data as Record<string, unknown>
+     
+-    const fullRow: AvatarAlignmentRow = {
+-      ...(objData as unknown as AvatarAlignmentRow),
+-      real_interest: objData.expected_interest ? `Focado em ${objData.expected_interest}` : 'Geral'
++    if (!data) {
++      console.warn(
++        `[avatarRepository] [NO DATA] Sem registro no banco para: ${clientId}`
++      )
++      return createNullState(clientId)
+     }
+ 
+-    return rowToAvatarAlignment(fullRow)
++    console.log(`[avatarRepository] Validando schema para: ${clientId}`)
++    const validatedData = validateAvatarAlignmentRow(data)
++    
++    console.log(`[avatarRepository] ✅ Sucesso: Alinhamento carregado para ${clientId}`)
++    return rowToAvatarAlignment(validatedData)
+   } catch (err) {
+-    const message = err instanceof Error ? err.message : 'Erro desconhecido'
+-    console.warn('[avatarRepository] Exceção capturada. Acionando fallback resiliente:', message)
+-    return rowToAvatarAlignment(getFallback(clientId))
++    const errorMessage = err instanceof Error 
++      ? err.message 
++      : typeof err === 'string' 
++        ? err 
++        : 'Erro desconhecido'
++    
++    console.error(
++      `[avatarRepository] [EXCEPTION] Erro crítico para ${clientId}:`,
++      errorMessage
++    )
++    return createNullState(clientId)
+   }
+ }
+ 
+@@ -250,4 +336,4 @@ export async function fetchAvatarProfile(
+ ): Promise<{ expected: AvatarProfile; real: AvatarProfile }> {
+   const alignment = await fetchAvatarAlignment(clientId)
+   return { expected: alignment.expected, real: alignment.real }
+-}
+\ No newline at end of file
++}
+diff --git a/src/lib/repositories/funnelRepository.ts b/src/lib/repositories/funnelRepository.ts
+index b9f4e1d..9b9ae0f 100644
+--- a/src/lib/repositories/funnelRepository.ts
++++ b/src/lib/repositories/funnelRepository.ts
+@@ -1,92 +1,320 @@
+-// =============================================================================
+-// ORBIT · Repository — Funil Interativo + Simulador
++// ═══════════════════════════════════════════════════════════════════════════
++// ORBIT · Repository - Funnel (v1.2.0 — SSOT COMPLETO)
+ // Caminho: src/lib/repositories/funnelRepository.ts
+-// Versão: 4.0.0
+ //
+-// v4.0.0:
+-// - Usa supabaseLegacy (public.funnel_data) pois orbit.* não tem tabela funnel_data ainda
+-// - Fallback hardcoded com dados do @cpimportstore quando DB retorna vazio
+-//   (evita tela de erro no lugar de dados reais do cliente que já conhecemos)
+-// - periodStart/periodEnd aceita Date | string (normalizado internamente)
+-// =============================================================================
++// ✅ ESTRUTURA:
++// - CAMADA 1: Fetch (busca dados reais)
++// - CAMADA 2: Validação (type guard)
++// - CAMADA 3: Cálculo (simulação)
++// ═══════════════════════════════════════════════════════════════════════════
+ 
+ import { supabaseLegacy } from '../supabase'
+-import type { FunnelMetrics, FunnelMetricsRow } from '../../types/funnel'
++import type { FunnelMetrics } from '../../types/funnel'
+ 
+-type FunnelDataSelect = Pick<
+-  FunnelMetricsRow,
+-  'alcance' | 'visitas' | 'cliques' | 'vendas' | 'ctr_bio' | 'taxa_conv'
+->
++// ─── TIPOS INTERNOS (Espelho do schema) ────────────────────────────────────
+ 
+-function mapRowToFunnelMetrics(row: FunnelDataSelect): FunnelMetrics {
+-  return {
+-    alcance:  row.alcance,
+-    visitas:  row.visitas,
+-    cliques:  row.cliques,
+-    vendas:   row.vendas,
+-    ctrBio:   row.ctr_bio,
+-    taxaConv: row.taxa_conv,
+-  }
++/**
++ * ✅ Tipo interno: Espelho exato do schema Supabase
++ * Não é exportado. Apenas para validação interna.
++ */
++interface FunnelMetricsRow {
++  id: string
++  client_id: string
++  alcance: number
++  visitas: number
++  cliques: number
++  vendas: number
++  ctr_bio: number
++  taxa_conv: number
++  period_start: string
++  period_end: string
++  created_at: string
+ }
+ 
+-// Dados reais verificados de @cpimportstore (Feb-Mai 2026)
+-// Usados como fallback quando funnel_data está vazio no banco
+-// Thresholds: CTR bio real = 7.5% (4 cliques / 53 visitas)
+-const FALLBACK_CPIMPORTSTORE: FunnelMetrics = {
+-  alcance:  443,
+-  visitas:  53,
+-  cliques:  4,
+-  vendas:   0,
+-  ctrBio:   7.5,    // 4/53 × 100 ← dado real do export
+-  taxaConv: 0,
++/**
++ * ✅ Tipo interno: Parâmetros de simulação
++ */
++interface SimulatedParams {
++  alcance: number    // alcance total estimado
++  ctrBio: number     // taxa de clique no bio (%)
++  taxaConv: number   // taxa de conversão: clique → venda (%)
+ }
+ 
+-const FALLBACK_DEFAULT: FunnelMetrics = {
+-  alcance:  1000,
+-  visitas:  120,
+-  cliques:  12,
+-  vendas:   2,
+-  ctrBio:   12,
+-  taxaConv: 16.7,
++// ─── RESULTADO DISCRIMINADO (Força tratamento de erro) ──────────────────────
++
++/**
++ * ✅ Resultado discriminado para cálculos
++ * Força o componente a tratar sucesso E erro explicitamente
++ */
++type CalculationResult = 
++  | { status: 'success'; data: FunnelMetrics }
++  | { status: 'error'; reason: 'missing_ctr_link' | 'invalid_params'; message: string }
++
++// ─── UTILITIES ─────────────────────────────────────────────────────────────
++
++/**
++ * ✅ Estado N/A semântico quando não há registro para o cliente
++ */
++const createNullState = (cid: string): FunnelMetrics => ({
++  alcance: 0,
++  visitas: 0,
++  cliques: 0,
++  vendas: 0,
++  ctrBio: 0,
++  taxaConv: 0,
++})
++
++/**
++ * ✅ Type Guard: Valida dados do Supabase
++ */
++function validateFunnelMetricsRow(data: unknown): FunnelMetricsRow {
++  if (!data || typeof data !== 'object') {
++    throw new Error('Dados inválidos: não é um objeto')
++  }
++
++  const row = data as Record<string, unknown>
++
++  const requiredFields: (keyof FunnelMetricsRow)[] = [
++    'id',
++    'client_id',
++    'alcance',
++    'visitas',
++    'cliques',
++    'vendas',
++    'ctr_bio',
++    'taxa_conv',
++    'period_start',
++    'period_end',
++    'created_at'
++  ]
++
++  for (const field of requiredFields) {
++    if (!(field in row)) {
++      throw new Error(`[SCHEMA ERROR] Campo obrigatório ausente: ${String(field)}`)
++    }
++  }
++
++  return {
++    id: String(row.id),
++    client_id: String(row.client_id),
++    alcance: Number(row.alcance),
++    visitas: Number(row.visitas),
++    cliques: Number(row.cliques),
++    vendas: Number(row.vendas),
++    ctr_bio: Number(row.ctr_bio),
++    taxa_conv: Number(row.taxa_conv),
++    period_start: String(row.period_start),
++    period_end: String(row.period_end),
++    created_at: String(row.created_at),
++  }
+ }
+ 
+-function toISOString(date: Date | string): string {
+-  if (typeof date === 'string') return date
+-  return date.toISOString()
++/**
++ * ✅ Transforma row do banco → tipo público (FunnelMetrics)
++ */
++function rowToFunnelMetrics(row: FunnelMetricsRow): FunnelMetrics {
++  return {
++    alcance: row.alcance,
++    visitas: row.visitas,
++    cliques: row.cliques,
++    vendas: row.vendas,
++    ctrBio: row.ctr_bio,      // ← Conversão snake_case → camelCase
++    taxaConv: row.taxa_conv,  // ← Conversão snake_case → camelCase
++  }
+ }
+ 
+-export async function fetchFunnelData(
+-  clientId: string,
+-  periodStart: Date | string,
+-  periodEnd: Date | string
+-): Promise<FunnelMetrics> {
++// ─── CAMADA 1: FETCH (Busca dados reais do banco) ──────────────────────────
++
++/**
++ * ✅ Busca métricas reais do funil
++ * 
++ * Schema: public
++ * Tabela: funnel_metrics
++ * 
++ * @param clientId - ID do cliente
++ * @returns FunnelMetrics (dados reais) ou estado nulo
++ */
++export async function fetchFunnelMetrics(clientId: string): Promise<FunnelMetrics> {
+   try {
++    console.log(`[funnelRepository] Buscando métricas para: ${clientId}`)
++
+     const { data, error } = await supabaseLegacy
+-      .from('funnel_data')
+-      .select('alcance, visitas, cliques, vendas, ctr_bio, taxa_conv')
++      .schema('public')
++      .from('funnel_metrics')
++      .select(`
++        id,
++        client_id,
++        alcance,
++        visitas,
++        cliques,
++        vendas,
++        ctr_bio,
++        taxa_conv,
++        period_start,
++        period_end,
++        created_at
++      `)
+       .eq('client_id', clientId)
+-      .gte('period_start', toISOString(periodStart))
+-      .lte('period_end', toISOString(periodEnd))
+-      .order('period_end', { ascending: false })
++      .order('created_at', { ascending: false })
+       .limit(1)
+       .maybeSingle()
+ 
+     if (error) {
+-      console.warn('[funnelRepository] Supabase error — usando fallback:', error.message)
+-      return clientId.includes('c4722cfc') ? FALLBACK_CPIMPORTSTORE : FALLBACK_DEFAULT
++      console.error(
++        `[funnelRepository] [DB ERROR] Falha ao buscar para ${clientId}:`,
++        error.message
++      )
++      return createNullState(clientId)
+     }
+ 
+     if (!data) {
+-      console.warn('[funnelRepository] Sem dados no banco — usando fallback para', clientId)
+-      return clientId.includes('c4722cfc') ? FALLBACK_CPIMPORTSTORE : FALLBACK_DEFAULT
++      console.warn(
++        `[funnelRepository] [NO DATA] Sem registro no banco para: ${clientId}`
++      )
++      return createNullState(clientId)
+     }
+ 
+-    return mapRowToFunnelMetrics(data as FunnelDataSelect)
++    console.log(`[funnelRepository] Validando schema para: ${clientId}`)
++    const validatedData = validateFunnelMetricsRow(data)
++
++    console.log(`[funnelRepository] ✅ Sucesso: Métricas carregadas para ${clientId}`)
++    return rowToFunnelMetrics(validatedData)
+   } catch (err) {
+-    const message = err instanceof Error ? err.message : 'Erro desconhecido'
+-    console.warn('[funnelRepository] Exception — usando fallback:', message)
+-    return clientId.includes('c4722cfc') ? FALLBACK_CPIMPORTSTORE : FALLBACK_DEFAULT
++    const errorMessage = err instanceof Error 
++      ? err.message 
++      : typeof err === 'string' 
++        ? err 
++        : 'Erro desconhecido'
++
++    console.error(
++      `[funnelRepository] [EXCEPTION] Erro crítico para ${clientId}:`,
++      errorMessage
++    )
++    return createNullState(clientId)
+   }
+ }
+ 
+-export { calculateSimulatedFunnel } from './funnelRepository.calc'
+\ No newline at end of file
++// ─── CAMADA 3: CÁLCULO (Simula cenários) ──────────────────────────────────
++
++/**
++ * ✅ Calcula funil simulado com parâmetros customizados
++ * 
++ * SSOT: Falha explícita se dados reais faltarem
++ * 
++ * @param simulatedParams - Parâmetros ajustados pelo usuário
++ * @param ctrLink - CTR real do link em bio (cliques / visitas × 100)
++ *                  Se null → retorna erro explícito (não fallback)
++ * @returns Resultado discriminado: sucesso com dados OU erro com motivo
++ * 
++ * @example
++ * const result = calculateSimulatedFunnel(params, ctrLink)
++ * 
++ * if (result.status === 'success') {
++ *   console.log('Vendas simuladas:', result.data.vendas)
++ * } else {
++ *   console.error('Cálculo falhou:', result.message)
++ * }
++ */
++export function calculateSimulatedFunnel(
++  simulatedParams: SimulatedParams,
++  ctrLink: number | null
++): CalculationResult {
++  
++  // ✅ VALIDAÇÃO 1: CTR Link é obrigatório (SSOT)
++  if (ctrLink === null || ctrLink === undefined) {
++    console.error(
++      '[funnelRepository] ❌ CTR Link ausente — não há dados reais do banco'
++    )
++    return {
++      status: 'error',
++      reason: 'missing_ctr_link',
++      message: 'Dados de CTR do link em bio não disponíveis. Execute extract-demographics.ts para popular os dados.'
++    }
++  }
++
++  // ✅ VALIDAÇÃO 2: CTR Link deve ser número válido
++  if (typeof ctrLink !== 'number' || isNaN(ctrLink) || ctrLink < 0 || ctrLink > 100) {
++    console.error(
++      `[funnelRepository] ❌ CTR Link inválido: ${ctrLink}`
++    )
++    return {
++      status: 'error',
++      reason: 'invalid_params',
++      message: `CTR Link deve estar entre 0 e 100. Recebido: ${ctrLink}`
++    }
++  }
++
++  // ✅ VALIDAÇÃO 3: Parâmetros simulados válidos
++  if (!simulatedParams || typeof simulatedParams !== 'object') {
++    console.error('[funnelRepository] ❌ Parâmetros simulados inválidos')
++    return {
++      status: 'error',
++      reason: 'invalid_params',
++      message: 'Parâmetros simulados não fornecidos'
++    }
++  }
++
++  const { alcance, ctrBio, taxaConv } = simulatedParams
++
++  // ✅ VALIDAÇÃO 4: Valores numéricos válidos
++  if (
++    typeof alcance !== 'number' || alcance < 0 ||
++    typeof ctrBio !== 'number' || ctrBio < 0 || ctrBio > 100 ||
++    typeof taxaConv !== 'number' || taxaConv < 0 || taxaConv > 100
++  ) {
++    console.error(
++      '[funnelRepository] ❌ Parâmetros fora do intervalo válido',
++      { alcance, ctrBio, taxaConv }
++    )
++    return {
++      status: 'error',
++      reason: 'invalid_params',
++      message: 'Parâmetros devem ser números entre 0 e 100'
++    }
++  }
++
++  // ═══════════════════════════════════════════════════════════════════════════
++  // CÁLCULO DO FUNIL (SSOT: usa apenas dados reais)
++  // ═══════════════════════════════════════════════════════════════════════════
++  //
++  // Fluxo:
++  //   alcance → visitas  (× ctrBio / 100)
++  //   visitas → cliques  (× ctrLink / 100)  ← ctrLink é REAL do banco
++  //   cliques → vendas   (× taxaConv / 100)
++  //
++
++  const visitas = alcance * (ctrBio / 100)
++  const cliques = visitas * (ctrLink / 100)  // ← Usa ctrLink REAL (validado acima)
++  const vendas = cliques * (taxaConv / 100)
++
++  const result: FunnelMetrics = {
++    alcance: Math.round(alcance),
++    visitas: Math.round(visitas),
++    cliques: Math.round(cliques),
++    vendas: Math.round(vendas),
++    ctrBio: ctrBio,
++    taxaConv: taxaConv,
++  }
++
++  console.log(
++    '[funnelRepository] ✅ Funil simulado calculado com sucesso',
++    { alcance: result.alcance, visitas: result.visitas, cliques: result.cliques, vendas: result.vendas }
++  )
++
++  return {
++    status: 'success',
++    data: result
++  }
++}
++
++/**
++ * ✅ Versão simplificada: apenas retorna dados ou null
++ * Use esta se o componente já trata null corretamente
++ */
++export function calculateSimulatedFunnelOrNull(
++  simulatedParams: SimulatedParams,
++  ctrLink: number | null
++): FunnelMetrics | null {
++  const result = calculateSimulatedFunnel(simulatedParams, ctrLink)
++  return result.status === 'success' ? result.data : null
++}
+diff --git a/src/types/avatar.ts b/src/types/avatar.ts
+index ea874fc..3776b09 100644
+--- a/src/types/avatar.ts
++++ b/src/types/avatar.ts
+@@ -20,10 +20,10 @@
+ // ============================================================================
+ 
+ export type {
+-  AlignmentStatus,
+-  AlignmentColor,
+   FetchStatus,
+   AsyncState,
++  AlignmentStatus,
++  AlignmentColor,
+   GenderSplit,
+   AvatarProfile,
+   AlignmentBar,
+diff --git a/src/types/funnel.ts b/src/types/funnel.ts
+index 0524b9b..806a794 100644
+--- a/src/types/funnel.ts
++++ b/src/types/funnel.ts
+@@ -17,9 +17,13 @@ export type {
+   FetchStatus,
+   AsyncState,
+   FunnelMetrics,
++  FunnelStep,
++  FunnelData,
+   SliderConfig,
+   SimulatedFunnelResult,
+   FunnelScreenData,
+-  UseFunnelResult,
++  UseFunnelResult,  // ✅ NOVO: Agora re-exporta
+   FunnelMetricsRow,
++  FunnelSimulatorParams,
++  FunnelSimulationResult,
+ } from './orbit'
+\ No newline at end of file
+diff --git a/src/types/orbit.ts b/src/types/orbit.ts
+index 1b781c5..7e4ac79 100644
+--- a/src/types/orbit.ts
++++ b/src/types/orbit.ts
+@@ -66,6 +66,7 @@ export interface FormatPerformanceRow {
+   format:     string
+   posts:      number
+   shares:     number
++  saves:      number
+   trendLabel: string
+   trendColor: TrendColor
+ }
+@@ -150,7 +151,7 @@ export interface FunnelScreenData {
+ 
+ export interface UseFunnelResult {
+   data:        FunnelMetrics | null
+-  status:      'idle' | 'loading' | 'success' | 'error'
++  status:      FetchStatus  // ← CORRIGIDO: era 'idle' | 'loading' | 'success' | 'error'
+   error:       string | null
+   lastUpdated: Date | null
+   refetch:     () => void
+@@ -191,16 +192,19 @@ export interface AlignmentBar {
+ }
+ 
+ export interface AvatarAlignment {
+-  id:             string
+-  clientId:       string
+-  expected:       AvatarProfile
+-  real:           AvatarProfile
+-  score:          number
+-  status:         AlignmentStatus
+-  bars:           AlignmentBar[]
+-  recommendation: string
++  id:                  string
++  clientId:            string
++  expected:            AvatarProfile
++  real:                AvatarProfile
++  score:               number
++  status:              AlignmentStatus
++  bars:                AlignmentBar[]
++  recommendation:      string
++  unconsciousDesire:   string | null  // ✅ NOVO
++  alignmentHypothesis: string | null  // ✅ NOVO
+ }
+ 
++
+ export interface AlignmentCalculation {
+   scoreGender:   number
+   scoreAgeRange: number

@@ -1,14 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap');
 /* ==========================================================================
    ORBIT · Globals — Reset + Base (SSOT Prototype)
-   Versão: 2.0.0  |  Data: 2026-07-04
-   
-   Reset completo + tipografia base + utilitários globais
-   Alinhado 100% com SSOT prototype
+   Versão: 2.1.0  |  Correção: entrypoint do Tailwind ausente
+
+   O QUE MUDOU (e por quê):
+   1) `@import "tailwindcss";` no topo — SEM ISSO, nenhuma classe
+      utilitária (flex, gap-3, rounded-xl, bg-gray-900/60...) é gerada.
+      Era exatamente essa linha que faltava e explica o print "sem card,
+      tudo empilhado à esquerda": os componentes têm as classNames, mas
+      não existe CSS por trás delas.
+   2) Bloco `@theme` — mapeia SEUS tokens (--bg, --acc, --t0, DM Sans...)
+      pra dentro do Tailwind, gerando utilitários NOVOS (bg-bg-2, text-acc,
+      border-line, rounded-r16, font-sans) que apontam pro protótipo real,
+      em vez de gray-900/violet-500/rose-500 (paleta genérica do Tailwind,
+      sem relação com o SSOT).
+
+   SE VOCÊ ESTIVER EM TAILWIND v3 (não v4): troque a linha
+   `@import "tailwindcss";` por:
+     @tailwind base;
+     @tailwind components;
+     @tailwind utilities;
+   E o bloco `@theme` abaixo não existe em v3 — o mapeamento de tokens
+   vai em tailwind.config.js/ts, seção theme.extend (me avisa que eu
+   já te mando esse arquivo também).
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
 
 @import './ssot-design-tokens.css';
+
+/* ─── Ponte SSOT → Tailwind ────────────────────────────────────────────────
+   Gera utilitários novos a partir dos seus tokens existentes.
+   Ex: --color-bg-2 vira as classes bg-bg-2 / text-bg-2 / border-bg-2
+       --radius-r16 vira a classe rounded-r16
+       --font-sans vira a classe font-sans
+   Nada aqui troca o valor dos tokens — só espelha pro Tailwind usar. */
+@theme {
+  --color-bg: var(--bg);
+  --color-bg-1: var(--bg1);
+  --color-bg-2: var(--bg2);
+  --color-bg-3: var(--bg3);
+  --color-bg-4: var(--bg4);
+
+  --color-line: var(--line);
+  --color-line-2: var(--line2);
+
+  --color-t0: var(--t0);
+  --color-t1: var(--t1);
+  --color-t2: var(--t2);
+  --color-t3: var(--t3);
+
+  --color-acc: var(--acc);
+  --color-acc-2: var(--acc2);
+  --color-acc-3: var(--acc3);
+
+  --color-red: var(--red);
+  --color-amber: var(--amber);
+  --color-green: var(--green);
+  --color-blue: var(--blue);
+
+  --radius-r4: var(--r4);
+  --radius-r8: var(--r8);
+  --radius-r12: var(--r12);
+  --radius-r16: var(--r16);
+  --radius-r24: var(--r24);
+
+  --font-sans: var(--font);
+  --font-mono: var(--mono);
+}
 
 /* ---------- Reset ---------- */
 *,
@@ -45,25 +105,11 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
 }
 
-h1 {
-  font-size: var(--font-size-4xl);
-}
-
-h2 {
-  font-size: var(--font-size-3xl);
-}
-
-h3 {
-  font-size: var(--font-size-2xl);
-}
-
-h4 {
-  font-size: var(--font-size-xl);
-}
-
-h5, h6 {
-  font-size: var(--font-size-lg);
-}
+h1 { font-size: var(--font-size-4xl); }
+h2 { font-size: var(--font-size-3xl); }
+h3 { font-size: var(--font-size-2xl); }
+h4 { font-size: var(--font-size-xl); }
+h5, h6 { font-size: var(--font-size-lg); }
 
 p {
   color: var(--t1);
@@ -83,13 +129,8 @@ a {
   cursor: pointer;
 }
 
-a:hover {
-  color: var(--acc2);
-}
-
-a:active {
-  color: var(--acc3);
-}
+a:hover { color: var(--acc2); }
+a:active { color: var(--acc3); }
 
 a:focus {
   outline: 2px solid var(--acc);
@@ -165,7 +206,6 @@ select:focus {
   background: var(--line2);
 }
 
-/* Firefox */
 * {
   scrollbar-color: var(--bg4) var(--bg);
   scrollbar-width: thin;
@@ -184,29 +224,12 @@ select:focus {
   border: 0;
 }
 
-.font-mono {
-  font-family: var(--mono);
-}
-
-.font-sans {
-  font-family: var(--font);
-}
-
-.text-primary {
-  color: var(--t0);
-}
-
-.text-secondary {
-  color: var(--t1);
-}
-
-.text-muted {
-  color: var(--t2);
-}
-
-.text-dim {
-  color: var(--t3);
-}
+.font-mono { font-family: var(--mono); }
+.font-sans-legacy { font-family: var(--font); }
+.text-primary { color: var(--t0); }
+.text-secondary { color: var(--t1); }
+.text-muted { color: var(--t2); }
+.text-dim { color: var(--t3); }
 
 /* ---------- Next.js root ---------- */
 #__next {

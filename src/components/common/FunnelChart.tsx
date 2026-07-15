@@ -1,80 +1,82 @@
-import React from 'react';
-import FunnelStep from './FunnelStep';
-import type { FunnelStepData } from './FunnelStep';
+// src/components/common/FunnelChart.tsx
+'use client'
 
-export interface FunnelData {
-  alcance: number;
-  visitas: number;
-  cliques: number;
-  vendas: number;
-  ctrBio: number;
-  taxaConv: number;
-}
+import React from 'react'
+import FunnelStep from './FunnelStep'
+import type { FunnelData, FunnelStep as FunnelStepType } from '@/types/orbit'
+import type { FunnelStepData } from './FunnelStep'
 
 interface FunnelChartProps {
-  data: FunnelData;
+  data: FunnelData
 }
 
-// Blue → Amber → Red degradation palette
-const STEP_COLORS: { color: string; glow: string }[] = [
-  { color: '#4A90FF', glow: 'rgba(74,144,255,0.45)'  }, // alcance  — blue
-  { color: '#C8FF57', glow: 'rgba(200,255,87,0.35)'  }, // visitas  — lime
-  { color: '#FFB020', glow: 'rgba(255,176,32,0.45)'  }, // cliques  — amber
-  { color: '#FF4444', glow: 'rgba(255,68,68,0.45)'   }, // vendas   — red
-];
+/**
+ * ✅ Adapter: Transforma FunnelStep (orbit.ts) → FunnelStepData (FunnelStep.tsx espera)
+ * 
+ * Mapeamento:
+ * - FunnelStep.label (orbit) → FunnelStepData.label
+ * - FunnelStep.value (orbit, null | number) → FunnelStepData.value (number, null → 0)
+ * - FunnelStep.percentage (orbit) → FunnelStepData.percentage
+ * - FunnelStep.color (orbit, hex) → FunnelStepData.color (hex)
+ * - glowColor gerado: hex → rgba com alpha 0.4
+ * 
+ * Descartados:
+ * - FunnelStep.id (não usado em renderização)
+ * - FunnelStep.icon (não usado em renderização)
+ */
+function adaptStepToData(step: FunnelStepType): FunnelStepData {
+  /**
+   * ✅ Converte hex color (#RRGGBB) para rgba(r, g, b, a)
+   * Exemplo: '#8B5CF6' → 'rgba(139, 92, 246, 0.4)'
+   */
+  const hexToRgba = (hex: string, alpha: number = 0.4): string => {
+    // Remove '#' se existir
+    const cleanHex = hex.startsWith('#') ? hex.slice(1) : hex
 
+    // Valida formato hex
+    if (!/^[0-9A-F]{6}$/i.test(cleanHex)) {
+      // Fallback se hex inválido
+      return `rgba(139, 92, 246, ${alpha})`
+    }
+
+    const r = parseInt(cleanHex.slice(0, 2), 16)
+    const g = parseInt(cleanHex.slice(2, 4), 16)
+    const b = parseInt(cleanHex.slice(4, 6), 16)
+
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`
+  }
+
+  return {
+    label: step.label,
+    value: step.value ?? 0, // ✅ null → 0 (FunnelStep.tsx espera number)
+    percentage: step.percentage,
+    color: step.color,
+    glowColor: hexToRgba(step.color, 0.4),
+  }
+}
+
+/**
+ * ✅ FunnelChart renderiza a estrutura canônica baseada em steps[]
+ * Adapta cada step para o formato que FunnelStep.tsx espera
+ */
 export default function FunnelChart({ data }: FunnelChartProps): React.ReactElement {
-  const base = data.alcance || 1; // avoid div-by-zero
-
-  const steps: FunnelStepData[] = [
-    {
-      label:      'Alcance',
-      value:      data.alcance,
-      percentage: 100,
-      color:      STEP_COLORS[0].color,
-      glowColor:  STEP_COLORS[0].glow,
-    },
-    {
-      label:      'Visitas ao perfil',
-      value:      data.visitas,
-      percentage: (data.visitas / base) * 100,
-      color:      STEP_COLORS[1].color,
-      glowColor:  STEP_COLORS[1].glow,
-    },
-    {
-      label:      'Cliques no link',
-      value:      data.cliques,
-      percentage: (data.cliques / base) * 100,
-      color:      STEP_COLORS[2].color,
-      glowColor:  STEP_COLORS[2].glow,
-    },
-    {
-      label:      'Vendas estimadas',
-      value:      data.vendas,
-      percentage: (data.vendas / base) * 100,
-      color:      STEP_COLORS[3].color,
-      glowColor:  STEP_COLORS[3].glow,
-    },
-  ];
-
-  // Conversion rate summary
-  const overallConv = data.alcance > 0
-    ? ((data.vendas / data.alcance) * 100).toFixed(3)
-    : '—';
+  if (!data || data.steps.length === 0) {
+    return (
+      <div className="text-center text-sm text-zinc-500">
+        Sem dados para exibir
+      </div>
+    )
+  }
 
   return (
-    <div className="flex flex-col gap-1">
-      {steps.map((step, i) => (
-        <FunnelStep key={step.label} step={step} isLast={i === steps.length - 1} />
+    <div className="flex flex-col gap-2 w-full">
+      {data.steps.map((step, index) => (
+        <FunnelStep
+          key={step.id}
+          step={adaptStepToData(step)}
+          isLast={index === data.steps.length - 1}
+        />
       ))}
-
-      {/* Footer: overall conversion rate */}
-      <div className="mt-3 flex items-center justify-between rounded-xl border border-zinc-800 bg-zinc-900/40 px-3 py-2">
-        <span className="font-sans text-xs text-zinc-500">Conversão geral</span>
-        <span className="font-mono text-xs font-semibold tabular-nums text-zinc-300">
-          {overallConv}%
-        </span>
-      </div>
     </div>
-  );
+  )
 }

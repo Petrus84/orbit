@@ -17,14 +17,16 @@ export interface ManifestResolution {
 const MANIFEST_SPECS: Record<string, Record<string, string[]>> = {
   instagram_export: {
     'ingest-l0-v2': [
-      'posts_1.json',
-      'posts.json',
+      'posts_media.json',
+      'posts_insights.json'
     ],
+    
     'extract-demographics': [
       'audience_insights.json',
       'personal_information.json',
       'followers_1.json',
     ],
+    
     'ingest-insights': [
       'content_interactions.json',
       'profiles_reached.json',

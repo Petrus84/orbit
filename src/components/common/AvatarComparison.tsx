@@ -31,6 +31,12 @@ const STATUS_CONFIG: Record<
     ring: "ring-emerald-500/50",
     bg: "bg-emerald-500/10",
   },
+  pending: {
+    label: "Calculando",
+    color: "text-slate-400",
+    ring: "ring-slate-500/50",
+    bg: "bg-slate-500/10",
+  },
 };
 
 export const AvatarComparison: React.FC<AvatarComparisonProps> = ({

@@ -20,10 +20,10 @@
 // ============================================================================
 
 export type {
-  AlignmentStatus,
-  AlignmentColor,
   FetchStatus,
   AsyncState,
+  AlignmentStatus,
+  AlignmentColor,
   GenderSplit,
   AvatarProfile,
   AlignmentBar,

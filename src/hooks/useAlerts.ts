@@ -8,7 +8,6 @@ import {
   fetchCriticalAlerts,
 } from "../lib/repositories/alertsRepository";
 import { Alert, AlertSeverity, FetchStatus } from "../types/alert";
-
 // ── Config ────────────────────────────────────────────────────────────────
 const MAX_RETRIES = 3;
 const BASE_BACKOFF_MS = 500; // 500 → 1000 → 2000 ms

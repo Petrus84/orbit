@@ -1,91 +1,68 @@
-// src/hooks/useFunnel.ts
-// Versão: 1.0.0 (ORIGINAL)
-
+// ✅ CORRETO: Copie esta estrutura
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { fetchFunnelData } from '../lib/repositories/funnelRepository'
-
-import type { AsyncState, FetchStatus } from '../types/orbit'
-import type { FunnelMetrics, UseFunnelResult } from '../types/funnel'
+import { fetchFunnelMetrics } from '../lib/repositories/funnelRepository'
+import type { FunnelMetrics, UseFunnelResult, FetchStatus } from '../types/funnel'
 
 const MAX_RETRIES = 3
 const BASE_DELAY_MS = 1000
 
-function getRetryDelay(attemptIndex: number): number {
-  return BASE_DELAY_MS * 2 ** attemptIndex
-}
-
-function wait(ms: number): Promise<void> {
+function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-export function useFunnel(
-  clientId: string,
-  periodStart: string,
-  periodEnd: string
-): UseFunnelResult {
-  const [data, setData]     = useState<FunnelMetrics | null>(null)
+export function useFunnel(clientId: string): UseFunnelResult {
+  const [data, setData] = useState<FunnelMetrics | null>(null)
   const [status, setStatus] = useState<FetchStatus>('idle')
-  const [error, setError]   = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
 
-  const isMountedRef = useRef(true)
-  const requestIdRef = useRef(0)
+  const isMountedRef = useRef<boolean>(false)
+  const fetchIdRef = useRef<number>(0)
 
-  const load = useCallback(async () => {
-    const requestId = ++requestIdRef.current
+  const load = useCallback(async (): Promise<void> => {
+    if (!clientId) return
 
-    setStatus('loading')
-    setError(null)
+    fetchIdRef.current += 1
+    const thisFetchId = fetchIdRef.current
 
-    for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    if (isMountedRef.current) {
+      setStatus('loading')
+      setError(null)
+    }
+
+    let lastError: Error | null = null
+
+    for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+      if (attempt > 0) {
+        await sleep(BASE_DELAY_MS * Math.pow(2, attempt - 1))
+      }
+
+      if (!isMountedRef.current || thisFetchId !== fetchIdRef.current) return
+
       try {
-        const result = await fetchFunnelData(
-          clientId,
-          periodStart,
-          periodEnd
-        )
+        const metrics = await fetchFunnelMetrics(clientId)
 
-        if (!isMountedRef.current || requestId !== requestIdRef.current) {
-          return
-        }
+        if (!isMountedRef.current || thisFetchId !== fetchIdRef.current) return
 
-        setData(result)
+        setData(metrics)
         setStatus('success')
         setError(null)
         setLastUpdated(new Date())
         return
       } catch (err) {
-        const message = err instanceof Error
-          ? err.message
-          : 'Erro desconhecido ao buscar dados do funil.'
-
-        const isLastAttempt = attempt === MAX_RETRIES
-
-        if (isLastAttempt) {
-          if (!isMountedRef.current || requestId !== requestIdRef.current) {
-            return
-          }
-
-          console.error(`[useFunnel] Falha após ${MAX_RETRIES} tentativas:`, message)
-          setData(null)
-          setStatus('error')
-          setError(message)
-          return
-        }
-
-        console.warn(
-          `[useFunnel] Tentativa ${attempt}/${MAX_RETRIES} falhou, tentando novamente...`,
-          message
+        lastError = err instanceof Error ? err : new Error(String(err))
+        console.error(
+          `[useFunnel] attempt ${attempt + 1}/${MAX_RETRIES} failed:`,
+          lastError.message,
         )
-
-        await wait(getRetryDelay(attempt - 1))
-
-        if (!isMountedRef.current || requestId !== requestIdRef.current) {
-          return
-        }
       }
     }
-  }, [clientId, periodStart, periodEnd])
+
+    if (isMountedRef.current && thisFetchId === fetchIdRef.current) {
+      setStatus('error')
+      setError(lastError?.message ?? 'Erro desconhecido ao carregar métricas de funil.')
+    }
+  }, [clientId])
 
   useEffect(() => {
     isMountedRef.current = true
@@ -99,9 +76,15 @@ export function useFunnel(
     }
   }, [load])
 
-  const refetch = useCallback(() => {
+  const refetch = useCallback((): void => {
     void load()
   }, [load])
 
-  return { data, status, error, lastUpdated, refetch }
+  return {
+    data,
+    status,
+    error,
+    lastUpdated,
+    refetch,
+  }
 }

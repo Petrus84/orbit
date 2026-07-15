@@ -1,7 +1,7 @@
 /* ==========================================================================
-   ORBIT · Sidebar (v2.0.0 — ALINHADO ÀS 11 RNs DO SSOT)
+   ORBIT · Sidebar (v2.1.0 — ALINHADO ÀS 11 RNs DO SSOT)
    Caminho: src/components/layout/Sidebar.tsx
-   Versão: 2.0.0 | Data: 2026-07-05
+   Versão: 2.1.0 | Data: 2026-07-08
 
    GOVERNANÇA RÍGIDA APLICADA:
    ✅ R-01: Visão unificada de carteira — semáforo de saúde → /carteira
@@ -9,6 +9,13 @@
    ✅ R-04: Funil interativo com simulador de cenário → /instagram/funil
    ✅ R-07: Visão unificada orgânico + pago → /instagram (overview)
    ✅ R-11: Auditoria de consistência de avatar → /instagram/avatar
+
+   MUDANÇAS v2.1.0 (correção ORBIT-BUG-01):
+   • currentClient agora vem de OrbitDashboardContext (campo adicionado lá)
+   • alertCount NÃO vem mais do OrbitDashboardContext — useAlerts() é global
+     (não depende de clientId), então é chamado direto aqui. Critério
+     escolhido: counts.total (todos os alertas, não só críticos) — revisar
+     com o time se o badge deve refletir apenas 'critical'.
 
    MUDANÇAS v2.0.0:
    • Removido hardcoding de cliente — agora vem do contexto OrbitDashboardContext
@@ -29,6 +36,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import styles from './Sidebar.module.css'
 import { useOrbitDashboard } from '../../context/OrbitDashboardContext'
+import { useAlerts } from '../../hooks/useAlerts'
 import { NAV_ITEM_TO_TAB_MAP, isNavItemActive } from './navItemMapping'
 import type { TabId } from '../../types/orbit'
 
@@ -68,7 +76,7 @@ const NAV_ITEMS: NavItem[] = [
     icon:        '🔔',
     section:     'visao-geral',
     ruleNumber:  'R-02',  // Alerta proativo com threshold configurável
-    badge:       undefined,  // Dinâmico: vem do contexto
+    badge:       undefined,  // Dinâmico: vem de useAlerts()
     badgeVariant: 'alert',
   },
 
@@ -103,12 +111,14 @@ const NAV_ITEMS: NavItem[] = [
  * Sidebar: Navegação principal do ORBIT
  * 
  * Renderiza itens de menu baseando-se estritamente no mapeamento oficial (NAV_ITEMS).
- * Badges de alertas são dinâmicos, derivados do contexto OrbitDashboardContext.
+ * Badges de alertas são dinâmicos, derivados de useAlerts() (global).
  * Nenhum elemento visual, botão ou link estático para "Estudo de Mercado".
  */
 export function Sidebar() {
   const pathname = usePathname()
-  const { activeTab, setActiveTab, currentClient, alertCount } = useOrbitDashboard()
+  const { activeTab, setActiveTab, currentClient } = useOrbitDashboard()
+  const { counts } = useAlerts()
+  const alertCount = counts.total
 
   // Separar itens por seção
   const visaoGeralItems = NAV_ITEMS.filter(i => i.section === 'visao-geral')

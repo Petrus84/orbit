@@ -1,0 +1,20 @@
+[
+  {
+    "client_handle": "desconhecido",
+    "client_id": "22222222-2222-2222-2222-222222222222",
+    "json_posts_count": 6,
+    "json_posts_with_timestamp": 6,
+    "json_posts_without_timestamp": 0,
+    "json_posts_with_metrics": 0,
+    "json_posts_without_metrics": 6
+  },
+  {
+    "client_handle": "desconhecido",
+    "client_id": "24140477-0c82-4fda-83df-958377f105ff",
+    "json_posts_count": 18,
+    "json_posts_with_timestamp": 18,
+    "json_posts_without_timestamp": 0,
+    "json_posts_with_metrics": 0,
+    "json_posts_without_metrics": 18
+  }
+]

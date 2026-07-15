@@ -81,7 +81,6 @@ export function useInstagramOverview({
   // ── fetch com retry ────────────────────────────────────────────────────────
 
   const fetchWithRetry = useCallback(async (): Promise<void> => {
-    if (!isMountedRef.current) return
 
     setStatus('loading')
     setError(null)
@@ -177,8 +176,8 @@ export function useInstagramOverview({
         'postgres_changes',
         {
           event:  '*',
-          schema: 'public',
-          table:  'kpi_snapshots',
+          schema: 'orbit',
+          table:  'metric_history',
           filter: `client_id=eq.${clientId}`,
         },
         (payload) => {

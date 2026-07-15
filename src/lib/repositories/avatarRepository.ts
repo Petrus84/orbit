@@ -1,247 +1,364 @@
-/* ==========================================================================
-   ORBIT · Repository - Avatar Alignment (v3.5.0 Produção)
-   Caminho: src/lib/repositories/avatarRepository.ts
-   
-   Correções Aplicadas:
-   1. Aponta para a View canônica orbit.v_avatar_alignment com GRANTs ativos.
-   2. UUIDs e identidades dos Fallbacks corrigidos e sincronizados por cliente.
-   3. Mapeamento direto de handle/name vindo nativos do banco de dados.
-   ========================================================================== */
+// ═══════════════════════════════════════════════════════════════════════════
+// ORBIT · Repository - Avatar Alignment (v5.0.1 — PENDING STATE ADDED)
+//
+// v5.0.1 (2026-07-14):
+// - ✅ NOVO: AlignmentStatus agora inclui 'pending' (types/orbit.ts v1.2.1)
+// - ✅ NOVO: createNullState usa status: 'pending' (não 'critical')
+// - ✅ NOVO: scoreToStatus retorna 'pending' quando score === null
+// - ✅ NOVO: buildRecommendation usa switch(status) com case 'pending'
+// - 🔧 FIX: Removida duplicação de scoreToStatus() (estava declarada 2x)
+// - ✅ MANTIDO: RPC call a orbit.compute_avatar_alignment() (fonte única)
+// - ✅ MANTIDO: unconsciousDesire / alignmentHypothesis leitura do DB
+//
+// ═══════════════════════════════════════════════════════════════════════════
 
-import { supabaseLegacy } from '../supabase' // Mantém o cliente supabase configurado
+import { supabase } from '../supabase'
 import type {
   AlignmentBar,
+  AlignmentColor,
   AlignmentStatus,
   AvatarAlignment,
   AvatarProfile,
+  GenderSplit,
 } from '../../types/avatar'
 import { ALIGNMENT_THRESHOLDS } from '../../types/avatar'
 
-interface AvatarAlignmentRow {
+// ── Raw shapes das duas fontes (orbit.clients + orbit.ig_audience_snapshots) ─
+
+interface OrbitClientExpectedRow {
+  id: string
+  avatar_expected_gender: 'male' | 'female' | 'non_binary' | 'mixed' | null
+  avatar_expected_gender_pct: number | null
+  avatar_expected_age_min: number | null
+  avatar_expected_age_max: number | null
+  avatar_expected_geo_primary: string | null
+  avatar_expected_geo_pct: number | null
+  avatar_expected_interest: string | null
+  avatar_unconscious_desire: string | null
+  avatar_alignment_hypothesis: string | null
+}
+
+interface OrbitAudienceSnapshotRow {
+  id: string
   client_id: string
-  handle: string
-  name: string
-  expected_gender_male: number
-  expected_gender_female: number
-  expected_age_range: string
-  expected_interest: string | null
-  expected_geo: string
-  real_gender_male: number
-  real_gender_female: number
-  real_age_range: string
-  real_interest: string | null // Ajustado para aceitar nulo conforme realidade do DDL
-  real_geo: string
-  alignment_score: number
-  alignment_status: string
+  period_end: string
+  gender_male_pct: number | null
+  gender_female_pct: number | null
+  age_13_17_pct: number | null
+  age_18_24_pct: number | null
+  age_25_34_pct: number | null
+  age_35_44_pct: number | null
+  age_45_54_pct: number | null
+  age_55_plus_pct: number | null
+  top_cities: { name: string; pct: number }[] | null
 }
 
-// 🗹 CORREÇÃO DE IDENTIDADE: UUID canônico legítimo de @cpimportstore
-const FALLBACK_CPIMPORTSTORE: AvatarAlignmentRow = {
-  client_id: '2141d077-0d82-4fda-83df-558377f105ff',
-  handle: 'cpimportstore',
-  name: 'CP Import Store',
-  expected_gender_male: 70,
-  expected_gender_female: 30,
-  expected_age_range: '18–34',
-  expected_interest: 'Performance esportiva',
-  expected_geo: 'São Paulo',
-  real_gender_male: 28.2,
-  real_gender_female: 71.7,
-  real_age_range: '18–34',
-  real_interest: 'Moda / lifestyle',
-  real_geo: 'São Paulo',
-  alignment_score: 58.2,
-  alignment_status: 'critical'
-}
-
-// 🗹 CORREÇÃO DE IDENTIDADE: UUID canônico legítimo de @eupetruchio84
-const FALLBACK_EUPETRUCHIO: AvatarAlignmentRow = {
-  client_id: 'c4722cfc-cff2-4a03-a457-f14ee8c9e0e7',
-  handle: 'eupetruchio84',
-  name: 'Eupetruchio',
-  expected_gender_male: 60,
-  expected_gender_female: 40,
-  expected_age_range: '25–44',
-  expected_interest: 'Fitness / biohacking',
-  expected_geo: 'Brasil',
-  real_gender_male: 95.8,
-  real_gender_female: 4.2,
-  real_age_range: '25–44',
-  real_interest: 'Estética / identidade',
-  real_geo: 'Brasil',
-  alignment_score: 72.4,
-  alignment_status: 'warning'
-}
-
-function getFallback(clientId: string): AvatarAlignmentRow {
-  if (clientId.includes('2141d077') || clientId.includes('cpimportstore')) {
-    return FALLBACK_CPIMPORTSTORE
-  }
-  return FALLBACK_EUPETRUCHIO
+interface AlignmentScoresRpcResult {
+  gender_score: number | null
+  age_score: number | null
+  geo_score: number | null
+  composite: number | null
 }
 
 // ─── UTILITIES ───────────────────────────────────────────────────────────────
 
-function scoreToStatus(score: number): AlignmentStatus {
+/**
+ * Estado N/A semântico quando não há registro nenhum pro cliente
+ * (nem em orbit.clients, o que não deveria acontecer, nem snapshot de
+ * audiência ainda importado).
+ *
+ * ✅ v5.0.1: status = 'pending' (não 'critical')
+ * Semântica correta: sem dados = pendente, não crítico
+ */
+const createNullState = (cid: string): AvatarAlignment => ({
+  id: typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'avatar-alignment-id',
+  clientId: cid,
+  expected: {
+    gender: { male: 0, female: 0 },
+    ageRange: 'N/A',
+    interest: 'N/A',
+    geo: 'N/A',
+  },
+  real: {
+    gender: { male: 0, female: 0 },
+    ageRange: 'N/A',
+    interest: 'N/A',
+    geo: 'N/A',
+  },
+  score: 0,
+  status: 'pending',
+  bars: [],
+  recommendation: 'Aguardando cálculo de alinhamento. Configure o avatar esperado em orbit.clients e execute extract-demographics.ts para gerar o primeiro snapshot de audiência.',
+  unconsciousDesire: null,
+  alignmentHypothesis: null,
+})
+
+function varianceToColor(alignmentScore: number | null): AlignmentColor {
+  if (alignmentScore === null) return 'red'
+  const variance = 100 - alignmentScore
+  if (variance >= 30) return 'red'
+  if (variance >= 15) return 'amber'
+  return 'green'
+}
+
+/**
+ * Converte enum + percentual único (orbit.clients) num GenderSplit {male,female}.
+ * Limitação honesta: o schema guarda só UM gênero-alvo + UM percentual esperado
+ * pra ele, não os dois lados. Pra 'male'/'female' isso dá pra inferir o
+ * complemento (100 - pct). Pra 'non_binary'/'mixed' não tem como inferir com
+ * precisão — dividimos o restante meio a meio e isso fica registrado aqui,
+ * não escondido.
+ */
+function expectedGenderSplit(
+  gender: OrbitClientExpectedRow['avatar_expected_gender'],
+  pct: number | null
+): GenderSplit {
+  const p = pct ?? 50
+  if (gender === 'male') return { male: p, female: 100 - p }
+  if (gender === 'female') return { male: 100 - p, female: p }
+  // non_binary / mixed / null: sem base pra split binário preciso
+  return { male: 50, female: 50 }
+}
+
+function expectedAgeRange(min: number | null, max: number | null): string {
+  if (min === null && max === null) return 'N/A'
+  if (min !== null && max !== null) return `${min}-${max}`
+  return String(min ?? max)
+}
+
+/**
+ * orbit.ig_audience_snapshots guarda a distribuição etária real como % por
+ * faixa (age_18_24_pct, age_25_34_pct...), não como uma faixa categórica
+ * única. Pra exibir ao lado da faixa "esperada" (que É categórica em
+ * orbit.clients), pegamos a faixa de maior %. Isso é uma simplificação de
+ * exibição, não um dado que o banco guarda pronto — documentado aqui de
+ * propósito, porque é exatamente o tipo de conversão que se perde se
+ * ninguém escrever o porquê.
+ */
+function dominantRealAgeRange(row: OrbitAudienceSnapshotRow): string {
+  const buckets: [string, number | null][] = [
+    ['13-17', row.age_13_17_pct],
+    ['18-24', row.age_18_24_pct],
+    ['25-34', row.age_25_34_pct],
+    ['35-44', row.age_35_44_pct],
+    ['45-54', row.age_45_54_pct],
+    ['55+', row.age_55_plus_pct],
+  ]
+  const known = buckets.filter((b): b is [string, number] => b[1] !== null)
+  if (known.length === 0) return 'N/A'
+  return known.reduce((best, cur) => (cur[1] > best[1] ? cur : best))[0]
+}
+
+function topCity(topCities: OrbitAudienceSnapshotRow['top_cities']): string {
+  if (!topCities || topCities.length === 0) return 'N/A'
+  const sorted = [...topCities].sort((a, b) => (b.pct ?? 0) - (a.pct ?? 0))
+  return sorted[0]?.name ?? 'N/A'
+}
+
+/**
+ * ✅ v5.0.1: Retorna 'pending' quando score === null
+ * (antes retornava 'critical', o que era semanticamente incorreto)
+ */
+function scoreToStatus(score: number | null): AlignmentStatus {
+  if (score === null) return 'pending'
   if (score < ALIGNMENT_THRESHOLDS.critical) return 'critical'
   if (score < ALIGNMENT_THRESHOLDS.warning) return 'warning'
   return 'healthy'
 }
 
-function varianceToStatus(variance: number): AlignmentStatus {
-  if (variance >= 30) return 'critical'
-  if (variance >= 15) return 'warning'
-  return 'healthy'
-}
-
-function categoricalVariance(expected: string, real: string): number {
-  return expected.trim().toLowerCase() === real.trim().toLowerCase() ? 0 : 100
-}
-
-function buildBars(row: AvatarAlignmentRow): AlignmentBar[] {
-  const genderVariance = Math.abs(row.real_gender_male - row.expected_gender_male)
-  const ageVariance = categoricalVariance(row.expected_age_range, row.real_age_range)
-  const interestVariance = categoricalVariance(row.expected_interest ?? '', row.real_interest ?? '')
-  const geoVariance = categoricalVariance(row.expected_geo, row.real_geo)
-
-  // ✅ CORREÇÃO DE UNUSED VAR: varianceToStatus ativado nativamente em cada objeto
+function buildBars(scores: AlignmentScoresRpcResult, expected: AvatarProfile, real: AvatarProfile): AlignmentBar[] {
   return [
     {
       label: 'Gênero (masculino %)',
-      expected: row.expected_gender_male,
-      real: row.real_gender_male,
-      variance: genderVariance,
-      status: varianceToStatus(genderVariance)
-    } as unknown as AlignmentBar,
+      expected: expected.gender.male,
+      real: real.gender.male,
+      variance: scores.gender_score === null ? 100 : 100 - scores.gender_score,
+      color: varianceToColor(scores.gender_score),
+    },
     {
       label: 'Faixa Etária',
       expected: 100,
-      real: ageVariance === 0 ? 100 : 0,
-      variance: ageVariance,
-      status: varianceToStatus(ageVariance)
-    } as unknown as AlignmentBar,
-    {
-      label: 'Interesse',
-      expected: 100,
-      real: interestVariance === 0 ? 100 : 0,
-      variance: interestVariance,
-      status: varianceToStatus(interestVariance)
-    } as unknown as AlignmentBar,
+      real: expected.ageRange === real.ageRange ? 100 : 0,
+      variance: scores.age_score === null ? 100 : 100 - scores.age_score,
+      color: varianceToColor(scores.age_score),
+    },
     {
       label: 'Localização',
       expected: 100,
-      real: geoVariance === 0 ? 100 : 0,
-      variance: geoVariance,
-      status: varianceToStatus(geoVariance)
-    } as unknown as AlignmentBar
+      real: expected.geo === real.geo ? 100 : 0,
+      variance: scores.geo_score === null ? 100 : 100 - scores.geo_score,
+      color: varianceToColor(scores.geo_score),
+    },
   ]
 }
 
-function buildRecommendation(score: number, bars: AlignmentBar[]): string {
-  if (score >= ALIGNMENT_THRESHOLDS.warning) {
-    return 'Seu público real está bem alinhado com o avatar esperado. Continue monitorando.'
-  }
-  
-  // ✅ CORREÇÃO DE CAST SEGURO: Inserido 'as unknown' antes do Record para o TypeScript aceitar a checagem
-  const critical = bars
-    .filter((b) => (b as unknown as Record<string, unknown>).status === 'critical' || (b as unknown as Record<string, unknown>).variant === 'critical')
-    .map((b) => b.label)
-    
-  const warning = bars
-    .filter((b) => (b as unknown as Record<string, unknown>).status === 'warning' || (b as unknown as Record<string, unknown>).variant === 'warning')
-    .map((b) => b.label)
-    
-  const parts: string[] = []
+/**
+ * ✅ v5.0.1: switch(status) com case 'pending' explícito
+ * (antes checava score === null separadamente, sem tratamento de status)
+ *
+ * TypeScript força que todos os casos de AlignmentStatus sejam cobertos.
+ * Se você adicionar um novo status e esquecer aqui, a build quebra.
+ */
+function buildRecommendation(status: AlignmentStatus, score: number | null, bars: AlignmentBar[]): string {
+  switch (status) {
+    case 'pending':
+      return 'Aguardando cálculo de alinhamento. Configure o avatar esperado em orbit.clients e execute extract-demographics.ts para gerar o primeiro snapshot de audiência.'
 
-  if (critical.length > 0) {
-    parts.push(`Divergência crítica em: ${critical.join(', ')}. Revise a segmentação imediatamente.`)
-  }
-  if (warning.length > 0) {
-    parts.push(`Atenção para: ${warning.join(', ')}. Ajuste os critérios de público nas campanhas ativas.`)
-  }
+    case 'critical': {
+      const critical = bars.filter((b) => b.color === 'red').map((b) => b.label)
+      return critical.length > 0
+        ? `Divergência crítica em: ${critical.join(', ')}. Revise a segmentação imediatamente.`
+        : 'Alinhamento crítico detectado. Revise segmentação.'
+    }
 
-  return parts.length > 0 ? parts.join(' ') : 'Alinhamento abaixo do esperado. Revise segmentação e criativos.'
-}
+    case 'healthy':
+      return 'Seu público real está bem alinhado com o avatar esperado. Continue monitorando.'
 
-function rowToAvatarAlignment(row: AvatarAlignmentRow): AvatarAlignment {
-  const expected: AvatarProfile = {
-    gender: { male: row.expected_gender_male, female: row.expected_gender_female },
-    ageRange: row.expected_age_range,
-    interest: row.expected_interest ?? 'Não mapeado',
-    geo: row.expected_geo
-  }
-
-  const real: AvatarProfile = {
-    gender: { male: row.real_gender_male, female: row.real_gender_female },
-    ageRange: row.real_age_range,
-    interest: row.real_interest ?? 'Não mapeado',
-    geo: row.real_geo
-  }
-
-  const score = Number(row.alignment_score)
-  const status = (['critical', 'warning', 'healthy'] as AlignmentStatus[]).includes(row.alignment_status as AlignmentStatus)
-    ? (row.alignment_status as AlignmentStatus)
-    : scoreToStatus(score)
-
-  const bars = buildBars(row)
-  const recommendation = buildRecommendation(score, bars)
-
-  return {
-    id: typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'avatar-alignment-id',
-    clientId: row.client_id,
-    expected,
-    real,
-    score,
-    status,
-    bars,
-    recommendation
+    case 'warning': {
+      const warning = bars.filter((b) => b.color === 'amber').map((b) => b.label)
+      return warning.length > 0
+        ? `Atenção para: ${warning.join(', ')}. Ajuste os critérios de público nas campanhas ativas.`
+        : 'Alinhamento abaixo do esperado. Revise segmentação e criativos.'
+    }
   }
 }
 
-// ─── REQUISIÇÕES CORE CONECTADAS COM O SCHEMA CANÔNICO ───────────────────────
+// ─── REQUISIÇÕES CORE ──────────────────────────────────────────────────────
 
+/**
+ * ✅ Busca alinhamento de avatar — fonte: orbit (schema canônico)
+ *
+ * Duas queries:
+ *  1. orbit.clients        → lado "esperado" (definido manualmente pela agência)
+ *  2. orbit.ig_audience_snapshots (mais recente) → lado "real"
+ *
+ * Scores calculados via RPC: orbit.compute_avatar_alignment(client_id, audience_id)
+ */
 export async function fetchAvatarAlignment(clientId: string): Promise<AvatarAlignment> {
   try {
-    const { data, error } = await supabaseLegacy
+    console.log(`[avatarRepository] Buscando alinhamento (orbit) para: ${clientId}`)
+
+    const { data: clientRow, error: clientError } = await supabase
       .schema('orbit')
-      .from('v_avatar_alignment')
+      .from('clients')
       .select(`
+        id,
+        avatar_expected_gender,
+        avatar_expected_gender_pct,
+        avatar_expected_age_min,
+        avatar_expected_age_max,
+        avatar_expected_geo_primary,
+        avatar_expected_geo_pct,
+        avatar_expected_interest,
+        avatar_unconscious_desire,
+        avatar_alignment_hypothesis
+      `)
+      .eq('id', clientId)
+      .maybeSingle<OrbitClientExpectedRow>()
+
+    if (clientError) {
+      console.error(`[avatarRepository] [DB ERROR] orbit.clients para ${clientId}:`, clientError.message)
+      return createNullState(clientId)
+    }
+
+    if (!clientRow) {
+      console.warn(`[avatarRepository] [NO DATA] Cliente não encontrado em orbit.clients: ${clientId}`)
+      return createNullState(clientId)
+    }
+
+    const { data: snapshotRow, error: snapshotError } = await supabase
+      .schema('orbit')
+      .from('ig_audience_snapshots')
+      .select(`
+        id,
         client_id,
-        handle,
-        name,
-        expected_gender_male,
-        expected_gender_female,
-        expected_age_range,
-        expected_interest,
-        expected_geo,
-        real_gender_male,
-        real_gender_female,
-        real_age_range,
-        real_geo,
-        alignment_score,
-        alignment_status
+        period_end,
+        gender_male_pct,
+        gender_female_pct,
+        age_13_17_pct,
+        age_18_24_pct,
+        age_25_34_pct,
+        age_35_44_pct,
+        age_45_54_pct,
+        age_55_plus_pct,
+        top_cities
       `)
       .eq('client_id', clientId)
-      .maybeSingle()
+      .order('period_end', { ascending: false })
+      .limit(1)
+      .maybeSingle<OrbitAudienceSnapshotRow>()
 
-    if (error || !data) {
-      console.warn('[avatarRepository] Resposta vazia ou erro. Usando fallback seguro para:', clientId, error?.message)
-      return rowToAvatarAlignment(getFallback(clientId))
+    if (snapshotError) {
+      console.error(`[avatarRepository] [DB ERROR] ig_audience_snapshots para ${clientId}:`, snapshotError.message)
+      return createNullState(clientId)
     }
 
-    // ✅ LIMPO DE ANY: Usamos Record para passar liso no validador do ESLint
-    const objData = data as Record<string, unknown>
-    
-    const fullRow: AvatarAlignmentRow = {
-      ...(objData as unknown as AvatarAlignmentRow),
-      real_interest: objData.expected_interest ? `Focado em ${objData.expected_interest}` : 'Geral'
+    if (!snapshotRow) {
+      console.warn(`[avatarRepository] [NO DATA] Sem snapshot de audiência ainda para: ${clientId}`)
+      return createNullState(clientId)
     }
 
-    return rowToAvatarAlignment(fullRow)
+    // ✅ Chama a função no Postgres em vez de reimplementar a fórmula aqui.
+    // Fonte única de verdade pro cálculo continua sendo orbit.compute_avatar_alignment().
+    const { data: scores, error: rpcError } = await supabase
+      .schema('orbit')
+      .rpc('compute_avatar_alignment', {
+        p_client_id: clientId,
+        p_audience_id: snapshotRow.id,
+      })
+      .maybeSingle<AlignmentScoresRpcResult>()
+
+    if (rpcError) {
+      console.error(`[avatarRepository] [RPC ERROR] compute_avatar_alignment para ${clientId}:`, rpcError.message)
+    }
+
+    const resolvedScores: AlignmentScoresRpcResult = scores ?? {
+      gender_score: null,
+      age_score: null,
+      geo_score: null,
+      composite: null,
+    }
+
+    const expected: AvatarProfile = {
+      gender: expectedGenderSplit(clientRow.avatar_expected_gender, clientRow.avatar_expected_gender_pct),
+      ageRange: expectedAgeRange(clientRow.avatar_expected_age_min, clientRow.avatar_expected_age_max),
+      interest: clientRow.avatar_expected_interest ?? 'Não mapeado',
+      geo: clientRow.avatar_expected_geo_primary ?? 'N/A',
+    }
+
+    const real: AvatarProfile = {
+      gender: {
+        male: snapshotRow.gender_male_pct ?? 0,
+        female: snapshotRow.gender_female_pct ?? 0,
+      },
+      ageRange: dominantRealAgeRange(snapshotRow),
+      interest: 'Não mapeado', // orbit.ig_audience_snapshots não rastreia interesse — não existe no export nativo
+      geo: topCity(snapshotRow.top_cities),
+    }
+
+    const score = resolvedScores.composite
+    const status = scoreToStatus(score)
+    const bars = buildBars(resolvedScores, expected, real)
+    const recommendation = buildRecommendation(status, score, bars)
+
+    console.log(`[avatarRepository] ✅ Alinhamento carregado (orbit) para ${clientId} — score: ${score ?? 'null (pendente)'}`)
+
+    return {
+      id: snapshotRow.id,
+      clientId,
+      expected,
+      real,
+      score: score ?? 0,
+      status,
+      bars,
+      recommendation,
+      unconsciousDesire: clientRow.avatar_unconscious_desire,
+      alignmentHypothesis: clientRow.avatar_alignment_hypothesis,
+    }
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Erro desconhecido'
-    console.warn('[avatarRepository] Exceção capturada. Acionando fallback resiliente:', message)
-    return rowToAvatarAlignment(getFallback(clientId))
+    const errorMessage = err instanceof Error ? err.message : typeof err === 'string' ? err : 'Erro desconhecido'
+    console.error(`[avatarRepository] [EXCEPTION] Erro crítico para ${clientId}:`, errorMessage)
+    return createNullState(clientId)
   }
 }
 

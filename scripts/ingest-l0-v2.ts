@@ -1,18 +1,14 @@
-/* ==========================================================================
-   ORBIT · Ingestão Híbrida L0/Leads — v5.2.0 (PRODUTIVO)
-   Caminho: scripts/ingest-l0-v2.ts
-
-   MUDANÇAS v5.2.0 (2 pedidos pontuais, resto do v5.1.0 preservado):
-   1. timestamp ausente virava Date.now() (carimbava post real com a
-      data de HOJE, distorcendo a linha do tempo de postagens).
-      Voltou o comportamento da v4.0.0: cadeia de fallback
-      (timestamp -> media[].creation_timestamp ->
-      label_values[].media[].creation_timestamp) e, se nada for
-      encontrado, o post e PULADO (skip), nunca inventado.
-   2. resolveClientId local duplicado dentro deste arquivo foi removido.
-      Agora importa o guard-rail unico de ./lib/resolveClientId.ts
-      (mesma funcao usada por extract-demographics.ts e ingest-insights.ts).
-   ========================================================================== */
+// ============================================================================
+// ARQUIVO: ingest-l0-v2.ts (v5.3.0 — SSOT DE ENCODING VIA DICIONÁRIO)
+// ============================================================================
+// ✅ CORREÇÕES v5.3.0:
+// - Remove getMetricValue() com chaves hardcoded (que tinham fallback pra
+//   NENHUMA métrica além de REACH, e ainda assim só a variante mojibake).
+//   Passa a consumir lib/metric-key-dictionary.ts — mesma fonte usada por
+//   ingest-insights.ts e extract-demographics.ts.
+// - "Miniatura de mídia" e o label "Mídia" também passam a ser resolvidos
+//   via dicionário, em vez de string literal + heurística local.
+// ============================================================================
 
 import { fileURLToPath } from 'url'
 import dotenv from 'dotenv'
@@ -22,6 +18,12 @@ import { z } from 'zod'
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
 import { resolveManifest } from './lib/instagram-export-manifest.ts'
 import { resolveClientId } from './lib/resolveClientId.ts'
+import {
+  resolveIntMetricOrNull,
+  resolveMapEntry,
+  variantsFor,
+  logMissingKey,
+} from './lib/metric-key-dictionary.ts'
 
 dotenv.config({ path: '.env.local' })
 
@@ -139,8 +141,11 @@ function resolveTimestamp(raw: MetaNativePost): number | null {
 }
 
 function transformPost(raw: MetaNativePost): TransformedPost | null {
+  // ✅ v5.3.0: variantes do label "Mídia" vêm do dicionário compartilhado,
+  // em vez de string literal hardcoded + heurística local ad-hoc.
+  const midiaLabelVariants = variantsFor('MEDIA_LABEL')
   const midiaContainer = raw.label_values.find(
-    (l) => l.label && (l.label.toLowerCase().includes('midia') || l.label.includes('M\u00c3\u00addia'))
+    (l) => l.label && midiaLabelVariants.some(v => l.label!.toLowerCase().includes(v.toLowerCase()))
   )
   const actualMediaArray = midiaContainer?.media ?? raw.media
   if (actualMediaArray.length === 0) return null
@@ -193,6 +198,39 @@ async function postAlreadyExists(clientId: string, igPostUri: string): Promise<b
   return (data?.length ?? 0) > 0
 }
 
+// ✅ FUNÇÃO AUXILIAR PARA EXTRAIR ID NUMÉRICO
+function extractNumericId(uriOrPath: string): string | null {
+  const match = uriOrPath.match(/(\d+)\.\w+$/)
+  return match ? match[1] : null
+}
+
+// 1. Definição do Schema Estrito para o arquivo de Insights com Zod
+// ✅ v5.3.0: media_map_data passa a ser um record livre (em vez de exigir a
+// chave literal mojibake "Miniatura de m\u00c3\u00addia"), permitindo que a
+// variante correta seja resolvida via dicionário logo abaixo.
+const OrganicInsightPostSchema = z.object({
+  media_map_data: z.record(
+    z.string(),
+    z.object({
+      uri: z.string().optional().default(''),
+      creation_timestamp: z.number().optional()
+    })
+  ).optional().default({}),
+  string_map_data: z.record(
+    z.string(),
+    z.object({
+      value: z.string().optional()
+    })
+  ).optional().default({})
+})
+
+const InstagramInsightsFileSchema = z.object({
+  organic_insights_posts: z.array(OrganicInsightPostSchema)
+})
+
+type InstagramInsightsFile = z.infer<typeof InstagramInsightsFileSchema>
+
+// 2. A função processPostsFile com tipagem estrita e zero "any"
 async function processPostsFile(
   filePath: string,
   clientUuid: string,
@@ -200,17 +238,117 @@ async function processPostsFile(
 ): Promise<ProcessResults> {
   const results: ProcessResults = { ok: 0, skip: 0, error: 0 }
   let firstFailureLogged = false
+  const fileName = path.basename(filePath)
 
   try {
     const rawContent = fs.readFileSync(filePath, 'utf-8')
-    const items: unknown = JSON.parse(rawContent)
+    const parsedData: unknown = JSON.parse(rawContent)
 
-    if (!Array.isArray(items)) {
+    /* ── FLUXO B: PROCESSAMENTO DE INSIGHTS (UPDATE) ──────────────────────── */
+    if (fileName === 'posts_insights.json') {
+      if (MODE !== 'operational') return results
+
+      // Validação estrutural em tempo de execução via Zod (Garante tipo seguro)
+      const insightsParsed = InstagramInsightsFileSchema.safeParse(parsedData)
+
+      if (!insightsParsed.success) {
+        console.error(`❌ Falha na validação estrutural do posts_insights.json: ${insightsParsed.error.message}`)
+        results.error += 1
+        return results
+      }
+
+      // Variável agora possui tipagem estrita: InstagramInsightsFile
+      const insightsData: InstagramInsightsFile = insightsParsed.data
+
+      for (const item of insightsData.organic_insights_posts) {
+        try {
+          // ✅ v5.3.0: resolução via dicionário compartilhado — aceita a
+          // chave em UTF-8 correto ou mojibake, sem exigir a variante certa
+          // no schema Zod.
+          const miniatura = resolveMapEntry(item.media_map_data, 'MEDIA_THUMBNAIL')
+          if (!miniatura?.uri) {
+            results.skip += 1
+            continue
+          }
+
+          const numericId = extractNumericId(miniatura.uri)
+
+          if (!numericId) {
+            results.skip += 1
+            continue
+          }
+
+          const stringMap = item.string_map_data
+
+          // ✅ v5.3.0: todas as métricas resolvidas via dicionário compartilhado.
+          // Antes, só REACH tinha fallback (e apenas a variante mojibake); as
+          // demais liam uma única chave literal em inglês/PT sem cascata —
+          // qualquer variante diferente da esperada resultava em null
+          // silencioso. Agora todas seguem o mesmo cascade UTF-8 → mojibake →
+          // inglês do restante do pipeline.
+          const metrics = {
+            reach: resolveIntMetricOrNull(stringMap, 'REACH', logMissingKey),
+            shares: resolveIntMetricOrNull(stringMap, 'SHARES', logMissingKey),
+            saves: resolveIntMetricOrNull(stringMap, 'SAVES', logMissingKey),
+            impressions: resolveIntMetricOrNull(stringMap, 'IMPRESSIONS', logMissingKey),
+            likes: resolveIntMetricOrNull(stringMap, 'LIKES', logMissingKey),
+            comments: resolveIntMetricOrNull(stringMap, 'COMMENTS', logMissingKey),
+            profile_visits_from: resolveIntMetricOrNull(stringMap, 'PROFILE_VISITS_FROM', logMissingKey),
+            follows_from: resolveIntMetricOrNull(stringMap, 'FOLLOWS_FROM_INTERACTION', logMissingKey)
+          }
+
+          if (
+            metrics.reach === null &&
+            metrics.shares === null &&
+            metrics.saves === null &&
+            metrics.impressions === null
+          ) {
+            results.skip += 1
+            continue
+          }
+
+          // ✅ UPDATE usando LIKE com numericId em vez de published_at
+          const { error: updateError, data: updateData } = await supabase
+            .schema('orbit')
+            .from('ig_posts')
+            .update({
+              reach: metrics.reach,
+              shares: metrics.shares,
+              saves: metrics.saves,
+              impressions: metrics.impressions,
+              likes: metrics.likes,
+              comments: metrics.comments,
+              profile_visits_from: metrics.profile_visits_from,
+              follows_from: metrics.follows_from
+            })
+            .eq('client_id', clientUuid)
+            .like('ig_post_uri', `%${numericId}%`)
+            .select('id')
+
+          if (updateError) {
+            console.error(`   Erro ao atualizar insights do id ${numericId}: ${updateError.message}`)
+            results.error += 1
+          } else if (updateData && updateData.length > 0) {
+            results.ok += 1
+          } else {
+            console.warn(`   Nenhuma linha casou para id ${numericId} — post ausente ou não ingerido ainda`)
+            results.skip += 1
+          }
+        } catch (err) {
+          console.error(`   Erro ao processar item de insights: ${err instanceof Error ? err.message : String(err)}`)
+          results.error += 1
+        }
+      }
+      return results
+    }
+
+    /* ── FLUXO A: PROCESSAMENTO DE MÍDIA ORIGINAL (INSERT) ────────────────── */
+    if (!Array.isArray(parsedData)) {
       results.error += 1
       return results
     }
 
-    for (const item of items) {
+    for (const item of parsedData) {
       if (typeof item !== 'object' || item === null) {
         results.error += 1
         continue
@@ -316,7 +454,8 @@ async function processPostsFile(
         }
       }
     }
-  } catch (fileError) {
+  } catch (err) {
+    console.error(`Erro ao processar arquivo ${fileName}: ${err instanceof Error ? err.message : String(err)}`)
     results.error += 1
   }
 
@@ -363,7 +502,7 @@ async function processClientFolder(folderPath: string): Promise<void> {
 
 async function run(): Promise<void> {
   console.log('====================================================')
-  console.log('       ORBIT L0 Ingestao Hibrida - v5.2.0           ')
+  console.log('       ORBIT L0 Ingestao Hibrida - v5.3.0           ')
   console.log(`       Modo: ${MODE.toUpperCase()}                 `)
   console.log(`       Pasta Origem: ${PASTA_LOCAL}                `)
   console.log('====================================================')

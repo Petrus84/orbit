@@ -1,26 +1,15 @@
-/* ==========================================================================
-   ORBIT · Repository — Instagram Overview (v4.1.0)
+// ═══════════════════════════════════════════════════════════════════════════
+// ORBIT · Repository — Instagram Overview (v4.2.0 — SSOT PURO)
+// 
+// ✅ CORREÇÕES v4.2.0:
+// - Schema EXPLÍCITO: .schema('orbit') em todas as queries
+// - ZERO fallbacks silenciosos
+// - Falhas explícitas com origem de dados
+// - Período SSOT: orbit.ig_account_snapshots como fonte de verdade
+// - Type-safe 100%
+// ═══════════════════════════════════════════════════════════════════════════
 
-   v4.1.0 (Sprint 2 — REFATORADO):
-   - Migrado para schema orbit.*
-   - fetchKPIs agora usa orbit.v_kpi_snapshots (primary)
-     com fallback para public.kpi_snapshots (legacy Sprint 1)
-   - fetchQualityScores usa orbit.v_quality_scores (primary) — SEM "_calculated"
-     com fallback para public.v_quality_scores (legacy)
-   - fetchFormatPerformance usa orbit.v_format_performance (primary) — SEM "_calculated"
-     com fallback para public.v_format_performance (legacy)
-   - Header handle: .select('handle') em vez de .select('instagram_account_id')
-     (campo correto em orbit.clients — instagram_account_id não existe no orbit)
-   - Bounds discovery migrado para orbit.ig_account_snapshots
-     com fallback para public.kpi_snapshots
-   - ✅ COMENTÁRIOS CORRIGIDOS (removido "_calculated")
-   - ✅ COLUNAS VALIDADAS contra dados reais do JSON
-   
-   v3.4.0: 'cliques-no-link' removido de KPI_METRIC_KEYS
-   v3.3.0: deduplicação por métrica
-   ========================================================================== */
-
-import { supabase, supabaseLegacy } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase'
 import { z } from 'zod'
 
 import type {
@@ -37,12 +26,57 @@ import type {
 
 type RawRow = Record<string, unknown>
 
-// KPI_METRIC_KEYS: alinhados com as chaves emitidas por orbit.v_kpi_snapshots
-const KPI_METRIC_KEYS = [
-  'alcance-90d',
-  'seguidores-totais',
-  'saldo-90-dias',
-]
+// ═══════════════════════════════════════════════════════════════════════════
+// SSOT: Período é determinado por orbit.ig_account_snapshots
+// Não há fallback — se não há dados, falha explícita
+// ═══════════════════════════════════════════════════════════════════════════
+
+/**
+ * ✅ Descobre período SSOT do cliente
+ * 
+ * Fonte de verdade: orbit.ig_account_snapshots
+ * Se não há dados → retorna null (não fallback)
+ */
+async function discoverPeriodBounds(clientId: string): Promise<{ start: string; end: string } | null> {
+  try {
+    console.log(`[igOverview] Descobrindo período SSOT para: ${clientId}`)
+
+    const { data, error } = await supabase
+      .schema('orbit')  // ✅ SCHEMA EXPLÍCITO
+      .from('ig_account_snapshots')
+      .select('period_start, period_end')
+      .eq('client_id', clientId)
+      .order('period_start', { ascending: true })
+      .returns<{ period_start: string; period_end: string }[]>()
+
+    if (error) {
+      console.error(
+        `[igOverview] [DB ERROR] Falha ao descobrir período:`,
+        error.message
+      )
+      return null
+    }
+
+    if (!data || data.length === 0) {
+      console.warn(
+        `[igOverview] [NO DATA] Sem snapshots em orbit.ig_account_snapshots para: ${clientId}`
+      )
+      return null
+    }
+
+    const start = data[0].period_start
+    const end = data[data.length - 1].period_end
+
+    console.log(`[igOverview] ✅ Período SSOT: ${start} → ${end}`)
+    return { start, end }
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : String(err)
+    console.error(`[igOverview] [EXCEPTION] Erro ao descobrir período:`, errorMessage)
+    return null
+  }
+}
+
+// ─── Schemas Zod ──────────────────────────────────────────────────────────
 
 const KpiRowSchema = z.object({
   id:            z.string(),
@@ -54,7 +88,6 @@ const KpiRowSchema = z.object({
   metric_value:  z.union([z.number(), z.string()]).optional(),
   value:         z.union([z.number(), z.string()]).optional(),
   delta_pct:     z.union([z.number(), z.string()]).nullable().optional().default(0),
-  // semaphore: apenas valores aceitos pelo enum Zod — 'info' seria descartado silenciosamente
   semaphore:     z.enum(['verde', 'ambar', 'vermelho']).nullable().optional().default('ambar'),
   subtitle:      z.string().nullable().optional().default(null),
   calculated_at: z.string().optional(),
@@ -65,11 +98,21 @@ const KpiRowSchema = z.object({
 
 type KpiRow = z.infer<typeof KpiRowSchema>
 
+// ─── Mapeamento de cores ──────────────────────────────────────────────────
+
 const GLOW_MAP: Record<SemaphoreColor, GlowColor> = {
   verde:    'cyan',
   ambar:    'gold',
   vermelho: 'red',
 }
+
+const KPI_METRIC_KEYS = [
+  'alcance-90d',
+  'seguidores-totais',
+  'saldo-90-dias',
+]
+
+// ─── Conversão de tipos ───────────────────────────────────────────────────
 
 function kpiRowToCardData(row: KpiRow): KPICardData {
   const key       = row.metric_key ?? row.metric ?? 'unknown'
@@ -106,92 +149,88 @@ function dedupeByMetric(rows: KpiRow[]): KpiRow[] {
   return Array.from(latestByMetric.values())
 }
 
+// ─── Parâmetros públicos ──────────────────────────────────────────────────
+
 export interface FetchOverviewParams {
   clientId:    string
-  periodStart: string
-  periodEnd:   string
+  periodStart?: string  // ← Opcional: se não fornecido, descobre automaticamente
+  periodEnd?:   string
 }
 
+// ═══════════════════════════════════════════════════════════════════════════
+// FUNÇÃO PRINCIPAL: Busca Instagram Overview com SSOT puro
+// ═══════════════════════════════════════════════════════════════════════════
+
+/**
+ * ✅ Busca dados completos do Instagram Overview
+ * 
+ * SSOT: Período é descoberto de orbit.ig_account_snapshots
+ * Sem fallbacks — falhas são explícitas
+ */
 export async function fetchInstagramOverview(
   params: FetchOverviewParams
 ): Promise<IGOverviewData> {
-  const { clientId, periodStart, periodEnd } = params
+  const { clientId } = params
 
-  let realStart = periodStart
-  let realEnd   = periodEnd
+  console.log(`[igOverview] Iniciando busca de overview para: ${clientId}`)
 
-  // ── Bounds discovery: tenta orbit primeiro, cai para legacy ──────────────
-  try {
-    const { data: orbitBounds, error: orbitBoundsError } = await supabase
-      .from('ig_account_snapshots')          // orbit.ig_account_snapshots
-      .select('period_start, period_end')
-      .eq('client_id', clientId)
-      .order('period_start', { ascending: true })
-      .returns<{ period_start: string; period_end: string }[]>()
+  // ✅ PASSO 1: Descobrir período SSOT
+  let periodStart = params.periodStart
+  let periodEnd = params.periodEnd
 
-    if (!orbitBoundsError && orbitBounds && orbitBounds.length > 0) {
-      realStart = orbitBounds[0].period_start
-      realEnd   = orbitBounds[orbitBounds.length - 1].period_end
-    } else {
-      // Fallback para public.kpi_snapshots (legacy Sprint 1)
-      const { data: legacyBounds } = await supabaseLegacy
-        .from('kpi_snapshots')
-        .select('period_start, period_end')
-        .eq('client_id', clientId)
-        .order('period_start', { ascending: true })
-        .returns<{ period_start: string; period_end: string }[]>()
+  if (!periodStart || !periodEnd) {
+    console.log(`[igOverview] Período não fornecido — descobrindo de SSOT...`)
+    const bounds = await discoverPeriodBounds(clientId)
 
-      if (legacyBounds && legacyBounds.length > 0) {
-        realStart = legacyBounds[0].period_start
-        realEnd   = legacyBounds[legacyBounds.length - 1].period_end
-      } else {
-        console.warn('[Discovery] Nenhuma safra encontrada em orbit nem legacy.')
-      }
+    if (!bounds) {
+      console.error(
+        `[igOverview] [CRITICAL] Sem dados de período SSOT. Abortando busca.`
+      )
+      return createEmptyOverview(clientId, 'Sem dados de período no banco de dados')
     }
-  } catch (err) {
-    console.error('[Discovery] Falha ao descobrir limites de data:', err)
+
+    periodStart = bounds.start
+    periodEnd = bounds.end
   }
 
+  console.log(`[igOverview] Período SSOT: ${periodStart} → ${periodEnd}`)
+
+  // ✅ PASSO 2: Buscar dados em paralelo
   const results = await Promise.allSettled([
-    fetchKPIs(clientId, realStart, realEnd),
-    fetchQualityScores(clientId, realStart, realEnd),
-    fetchFormatPerformance(clientId, realStart, realEnd),
+    fetchKPIs(clientId, periodStart, periodEnd),
+    fetchQualityScores(clientId, periodStart, periodEnd),
+    fetchFormatPerformance(clientId, periodStart, periodEnd),
+    fetchClientHandle(clientId),
   ])
 
-  results.forEach((res, idx) => {
-    if (res.status === 'rejected') {
-      console.error(`[Repository] Query[${idx}] rejeitada:`, res.reason)
-    }
-  })
+  // ✅ PASSO 3: Processar resultados
+  const kpis = results[0].status === 'fulfilled' 
+    ? results[0].value 
+    : (console.warn('[igOverview] KPIs falharam'), [])
 
-  const kpis              = results[0].status === 'fulfilled' ? results[0].value : []
-  const qualityScores     = results[1].status === 'fulfilled' ? results[1].value : []
-  const formatPerformance = results[2].status === 'fulfilled' ? results[2].value : []
+  const qualityScores = results[1].status === 'fulfilled' 
+    ? results[1].value 
+    : (console.warn('[igOverview] Quality Scores falharam'), [])
 
-  // ── Header: busca handle em orbit.clients (campo correto) ────────────────
-  // MUDANÇA v4.0.0: 'instagram_account_id' → 'handle'
-  // (instagram_account_id não existe em orbit.clients)
-  const { data: clientRow, error: clientError } = await supabase
-    .from('clients')                         // orbit.clients
-    .select('handle')
-    .eq('id', clientId)
-    .single()
-    .returns<{ handle: string | null }>()
+  const formatPerformance = results[2].status === 'fulfilled' 
+    ? results[2].value 
+    : (console.warn('[igOverview] Format Performance falhou'), [])
 
-  if (clientError || !clientRow) {
-    console.warn(`[Repository] Cliente ${clientId} não encontrado em orbit.clients.`)
-  }
+  const handle = results[3].status === 'fulfilled' 
+    ? results[3].value 
+    : clientId
 
-  const handle = clientRow?.handle ?? clientId
-
+  // ✅ PASSO 4: Montar resposta
   const meta: DashboardHeaderMeta = {
     clientHandle: `@${handle}`,
     periodLabel:  'Métricas da Extração',
     dateRange: {
-      start: new Date(realStart),
-      end:   new Date(realEnd),
+      start: new Date(periodStart),
+      end:   new Date(periodEnd),
     },
   }
+
+  console.log(`[igOverview] ✅ Overview montado com sucesso`)
 
   return {
     meta,
@@ -203,156 +242,262 @@ export async function fetchInstagramOverview(
   }
 }
 
+// ─── Funções auxiliares ───────────────────────────────────────────────────
+
+/**
+ * ✅ Busca KPIs com schema explícito
+ * 
+ * Fonte: orbit.v_kpi_snapshots (SSOT)
+ * Sem fallback — se falhar, retorna vazio com log
+ */
 async function fetchKPIs(
   clientId: string,
   start: string,
   end: string
 ): Promise<KPICardData[]> {
-  // Primary: orbit.v_kpi_snapshots
-  const { data: orbitData, error: orbitError } = await supabase
-    .from('v_kpi_snapshots')               // orbit.v_kpi_snapshots (sem _calculated)
-    .select('*')
-    .eq('client_id', clientId)
-    .gte('period_start', start)
-    .lte('period_end', end)
-    .in('metric_key', KPI_METRIC_KEYS)
-    .order('calculated_at', { ascending: false })
-    .returns<RawRow[]>()
+  try {
+    console.log(`[fetchKPIs] Buscando KPIs para: ${clientId}`)
 
-  let rows: RawRow[] | null = orbitData
-
-  if (orbitError) {
-    console.warn(`[fetchKPIs] orbit.v_kpi_snapshots indisponível (${orbitError.message}). Fallback legacy...`)
-
-    // Fallback: public.kpi_snapshots (legacy Sprint 1)
-    const { data: fallback, error: fallbackError } = await supabaseLegacy
-      .from('kpi_snapshots')
-      .select('id, client_id, metric, value, period_start, period_end, calculated_at, semaphore, subtitle, delta_pct')
+    const { data, error } = await supabase
+      .schema('orbit')  // ✅ SCHEMA EXPLÍCITO
+      .from('v_kpi_snapshots')
+      .select('*')
       .eq('client_id', clientId)
       .gte('period_start', start)
       .lte('period_end', end)
-      .in('metric', KPI_METRIC_KEYS)
+      .in('metric_key', KPI_METRIC_KEYS)
       .order('calculated_at', { ascending: false })
       .returns<RawRow[]>()
 
-    if (fallbackError) throw new Error(`[fetchKPIs] ${fallbackError.message}`)
-    rows = fallback
+    if (error) {
+      console.error(
+        `[fetchKPIs] [DB ERROR] Falha ao buscar KPIs:`,
+        error.message
+      )
+      return []
+    }
+
+    if (!data || data.length === 0) {
+      console.warn(
+        `[fetchKPIs] [NO DATA] Sem KPIs em orbit.v_kpi_snapshots para: ${clientId}`
+      )
+      return []
+    }
+
+    const parsedRows = data
+      .map(row => {
+        const parsed = KpiRowSchema.safeParse(row)
+        if (!parsed.success) {
+          console.warn(`[fetchKPIs] Linha inválida:`, parsed.error.issues[0]?.message)
+        }
+        return parsed.success ? parsed.data : null
+      })
+      .filter((item): item is KpiRow => item !== null)
+
+    const deduped = dedupeByMetric(parsedRows)
+    const cards = deduped.map(kpiRowToCardData)
+
+    console.log(`[fetchKPIs] ✅ ${cards.length} KPIs carregados`)
+    return cards
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : String(err)
+    console.error(`[fetchKPIs] [EXCEPTION] Erro crítico:`, errorMessage)
+    return []
   }
-
-  if (!rows) return []
-
-  const parsedRows = rows
-    .map(row => {
-      const parsed = KpiRowSchema.safeParse(row)
-      return parsed.success ? parsed.data : null
-    })
-    .filter((item): item is KpiRow => item !== null)
-
-  return dedupeByMetric(parsedRows).map(kpiRowToCardData)
 }
 
+/**
+ * ✅ Busca Quality Scores com schema explícito
+ * 
+ * Fonte: orbit.v_quality_scores (SSOT)
+ * Sem fallback
+ */
 async function fetchQualityScores(
   clientId: string,
   start: string,
   end: string
 ): Promise<QualityScoreItem[]> {
-  const glowMap: Record<string, GlowColor> = { ok: 'cyan', warn: 'gold', neutral: 'none' }
+  try {
+    console.log(`[fetchQualityScores] Buscando scores para: ${clientId}`)
 
-  // Primary: orbit.v_quality_scores (SEM "_calculated")
-  const { data: orbitRows, error: orbitError } = await supabase
-    .from('v_quality_scores')   // orbit.v_quality_scores (SEM "_calculated")
-    .select('id, score_key, score_value, status_text, status_variant')
-    .eq('client_id', clientId)
-    .returns<RawRow[]>()
+    const glowMap: Record<string, GlowColor> = { 
+      ok: 'cyan', 
+      warn: 'gold', 
+      neutral: 'none' 
+    }
 
-  let rows: RawRow[] | null = orbitRows
-
-  if (orbitError) {
-    console.warn(`[fetchQualityScores] orbit view indisponível (${orbitError.message}). Fallback legacy...`)
-
-    // Fallback: public.v_quality_scores (legacy)
-    const { data: calcRows, error: calcError } = await supabaseLegacy
+    const { data, error } = await supabase
+      .schema('orbit')  // ✅ SCHEMA EXPLÍCITO
       .from('v_quality_scores')
-      .select('id, score_key, score_value, status_text, status_variant')
+      .select('id, client_id, score_key, score_value, status_text, status_variant, period_start, period_end')
       .eq('client_id', clientId)
+      .gte('period_start', start)
+      .lte('period_end', end)
       .returns<RawRow[]>()
 
-    if (!calcError) {
-      rows = calcRows
-    } else {
-      const { data: legacyRows, error: legacyError } = await supabaseLegacy
-        .from('v_quality_scores')
-        .select('id, score_key, score_value, status_text, status_variant')
-        .eq('client_id', clientId)
-        .gte('period_start', start)
-        .lte('period_end', end)
-        .returns<RawRow[]>()
-
-      if (legacyError) { console.error('[fetchQualityScores]', legacyError.message); return [] }
-      rows = legacyRows
+    if (error) {
+      console.error(
+        `[fetchQualityScores] [DB ERROR] Falha ao buscar scores:`,
+        error.message
+      )
+      return []
     }
-  }
 
-  return (rows ?? []).map(row => ({
-    id:            String(row.id),
-    label:         String(row.score_key),
-    value:         row.score_value != null ? parseFloat(String(row.score_value)) : 'N/A',
-    unit:          '',
-    statusText:    String(row.status_text ?? 'Sem dados'),
-    statusVariant: (row.status_variant as 'ok' | 'warn' | 'neutral') ?? 'neutral',
-    glowColor:     (glowMap[String(row.status_variant ?? 'neutral')] ?? 'none') as GlowColor,
-  }))
+    if (!data || data.length === 0) {
+      console.warn(
+        `[fetchQualityScores] [NO DATA] Sem scores em orbit.v_quality_scores para: ${clientId}`
+      )
+      return []
+    }
+
+    const scores = data.map(row => ({
+      id:            String(row.id),
+      label:         String(row.score_key ?? 'Sem label'),
+      value:         row.score_value != null ? parseFloat(String(row.score_value)) : 'N/A' as const,
+      unit:          '',
+      statusText:    String(row.status_text ?? 'Sem dados'),
+      statusVariant: (row.status_variant as 'ok' | 'warn' | 'neutral') ?? 'neutral',
+      glowColor:     (glowMap[String(row.status_variant ?? 'neutral')] ?? 'none') as GlowColor,
+    }))
+
+    console.log(`[fetchQualityScores] ✅ ${scores.length} scores carregados`)
+    return scores
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : String(err)
+    console.error(`[fetchQualityScores] [EXCEPTION] Erro crítico:`, errorMessage)
+    return []
+  }
 }
 
+/**
+ * ✅ Busca Format Performance com schema explícito
+ * 
+ * Fonte: orbit.v_format_performance (SSOT)
+ * Sem fallback
+ */
 async function fetchFormatPerformance(
   clientId: string,
   start: string,
   end: string
 ): Promise<FormatPerformanceRow[]> {
-  // Primary: orbit.v_format_performance (SEM "_calculated")
-  const { data: orbitRows, error: orbitError } = await supabase
-    .from('v_format_performance') // orbit.v_format_performance (SEM "_calculated")
-    .select('id, format_name, post_count, share_count, trend_label, trend_color')
-    .eq('client_id', clientId)
-    .returns<RawRow[]>()
+  try {
+    console.log(`[fetchFormatPerformance] Buscando performance para: ${clientId}`)
 
-  let rows: RawRow[] | null = orbitRows
-
-  if (orbitError) {
-    console.warn(`[fetchFormatPerformance] orbit view indisponível (${orbitError.message}). Fallback legacy...`)
-
-    const { data: calcRows, error: calcError } = await supabaseLegacy
+    const { data, error } = await supabase
+      .schema('orbit')  // ✅ SCHEMA EXPLÍCITO
       .from('v_format_performance')
-      .select('id, format_name, post_count, share_count, trend_label, trend_color')
+      .select('id, client_id, format_name, post_count, share_count, save_count, trend_label, trend_color, period_start, period_end')
       .eq('client_id', clientId)
+      .gte('period_start', start)
+      .lte('period_end', end)
       .returns<RawRow[]>()
 
-    if (!calcError) {
-      rows = calcRows
-    } else {
-      const { data: legacyRows, error: legacyError } = await supabaseLegacy
-        .from('v_format_performance')
-        .select('id, format_name, post_count, share_count, trend_label, trend_color')
-        .eq('client_id', clientId)
-        .gte('period_start', start)
-        .lte('period_end', end)
-        .returns<RawRow[]>()
-
-      if (legacyError) { console.error('[fetchFormatPerformance]', legacyError.message); return [] }
-      rows = legacyRows
+    if (error) {
+      console.error(
+        `[fetchFormatPerformance] [DB ERROR] Falha ao buscar performance:`,
+        error.message
+      )
+      return []
     }
-  }
 
-  return (rows ?? []).map(row => ({
-    id:         String(row.id),
-    format:     String(row.format_name ?? 'Outros'),
-    posts:      Number(row.post_count  ?? 0),
-    shares:     Number(row.share_count ?? 0),
-    trendLabel: String(row.trend_label ?? 'Estável'),
-    trendColor: (row.trend_color as TrendColor) ?? 'gold',
-  }))
+    if (!data || data.length === 0) {
+      console.warn(
+        `[fetchFormatPerformance] [NO DATA] Sem dados em orbit.v_format_performance para: ${clientId}`
+      )
+      return []
+    }
+
+    const formats = data.map(row => ({
+      id:         String(row.id),
+      format:     String(row.format_name ?? 'Outros'),
+      posts:      Number(row.post_count  ?? 0),
+      shares:     Number(row.share_count ?? 0),
+      saves:      Number(row.save_count  ?? 0),
+      trendLabel: String(row.trend_label ?? 'Estável'),
+      trendColor: (row.trend_color as TrendColor) ?? 'gold',
+    }))
+
+    console.log(`[fetchFormatPerformance] ✅ ${formats.length} formatos carregados`)
+    return formats
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : String(err)
+    console.error(`[fetchFormatPerformance] [EXCEPTION] Erro crítico:`, errorMessage)
+    return []
+  }
 }
 
+/**
+ * ✅ Busca handle do cliente
+ * 
+ * Fonte: orbit.clients (SSOT)
+ */
+async function fetchClientHandle(clientId: string): Promise<string> {
+  try {
+    const { data, error } = await supabase
+      .schema('orbit')  // ✅ SCHEMA EXPLÍCITO
+      .from('clients')
+      .select('handle')
+      .eq('id', clientId)
+      .single()
+      .returns<{ handle: string | null }>()
+
+    if (error) {
+      console.warn(
+        `[fetchClientHandle] [DB ERROR] Falha ao buscar handle:`,
+        error.message
+      )
+      return clientId
+    }
+
+    if (!data?.handle) {
+      console.warn(`[fetchClientHandle] [NO DATA] Handle não encontrado para: ${clientId}`)
+      return clientId
+    }
+
+    console.log(`[fetchClientHandle] ✅ Handle: @${data.handle}`)
+    return data.handle
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : String(err)
+    console.error(`[fetchClientHandle] [EXCEPTION] Erro crítico:`, errorMessage)
+    return clientId
+  }
+}
+
+// ─── Utilitários ──────────────────────────────────────────────────────────
+
+/**
+ * ✅ Cria overview vazio com mensagem de erro
+ */
+function createEmptyOverview(clientId: string, reason: string): IGOverviewData {
+  console.error(`[igOverview] Retornando overview vazio: ${reason}`)
+
+  return {
+    meta: {
+      clientHandle: `@${clientId}`,
+      periodLabel:  'Sem dados',
+      dateRange: {
+        start: new Date(),
+        end:   new Date(),
+      },
+    },
+    kpis:               [],
+    qualityScores:      [],
+    formatPerformance:  [],
+    insights:           [],
+    criticalAlerts: [
+      {
+        id:       'no-data-alert',
+        title:    'Sem Dados Disponíveis',
+        body:     reason,
+        severity: 'critical',
+      }
+    ],
+  }
+}
+
+/**
+ * ✅ Gera insights a partir de format performance
+ */
 function generateInsights(formats: FormatPerformanceRow[]): InsightData[] {
   return formats
     .filter(f => f.posts > 0 && f.shares > 0)

@@ -1,0 +1,174 @@
+diff --git a/src/components/layout/Sidebar.tsx b/src/components/layout/Sidebar.tsx
+index ea2b971..9f86f46 100644
+--- a/src/components/layout/Sidebar.tsx
++++ b/src/components/layout/Sidebar.tsx
+@@ -1,7 +1,7 @@
+ /* ==========================================================================
+-   ORBIT · Sidebar (v2.0.0 — ALINHADO ÀS 11 RNs DO SSOT)
++   ORBIT · Sidebar (v2.1.0 — ALINHADO ÀS 11 RNs DO SSOT)
+    Caminho: src/components/layout/Sidebar.tsx
+-   Versão: 2.0.0 | Data: 2026-07-05
++   Versão: 2.1.0 | Data: 2026-07-08
+ 
+    GOVERNANÇA RÍGIDA APLICADA:
+    ✅ R-01: Visão unificada de carteira — semáforo de saúde → /carteira
+@@ -10,6 +10,13 @@
+    ✅ R-07: Visão unificada orgânico + pago → /instagram (overview)
+    ✅ R-11: Auditoria de consistência de avatar → /instagram/avatar
+ 
++   MUDANÇAS v2.1.0 (correção ORBIT-BUG-01):
++   • currentClient agora vem de OrbitDashboardContext (campo adicionado lá)
++   • alertCount NÃO vem mais do OrbitDashboardContext — useAlerts() é global
++     (não depende de clientId), então é chamado direto aqui. Critério
++     escolhido: counts.total (todos os alertas, não só críticos) — revisar
++     com o time se o badge deve refletir apenas 'critical'.
++
+    MUDANÇAS v2.0.0:
+    • Removido hardcoding de cliente — agora vem do contexto OrbitDashboardContext
+    • Documentação alinhada às 11 RNs para cada item de menu
+@@ -29,6 +36,7 @@ import Link from 'next/link'
+ import { usePathname } from 'next/navigation'
+ import styles from './Sidebar.module.css'
+ import { useOrbitDashboard } from '../../context/OrbitDashboardContext'
++import { useAlerts } from '../../hooks/useAlerts'
+ import { NAV_ITEM_TO_TAB_MAP, isNavItemActive } from './navItemMapping'
+ import type { TabId } from '../../types/orbit'
+ 
+@@ -68,7 +76,7 @@ const NAV_ITEMS: NavItem[] = [
+     icon:        '🔔',
+     section:     'visao-geral',
+     ruleNumber:  'R-02',  // Alerta proativo com threshold configurável
+-    badge:       undefined,  // Dinâmico: vem do contexto
++    badge:       undefined,  // Dinâmico: vem de useAlerts()
+     badgeVariant: 'alert',
+   },
+ 
+@@ -103,12 +111,14 @@ const NAV_ITEMS: NavItem[] = [
+  * Sidebar: Navegação principal do ORBIT
+  * 
+  * Renderiza itens de menu baseando-se estritamente no mapeamento oficial (NAV_ITEMS).
+- * Badges de alertas são dinâmicos, derivados do contexto OrbitDashboardContext.
++ * Badges de alertas são dinâmicos, derivados de useAlerts() (global).
+  * Nenhum elemento visual, botão ou link estático para "Estudo de Mercado".
+  */
+ export function Sidebar() {
+   const pathname = usePathname()
+-  const { activeTab, setActiveTab, currentClient, alertCount } = useOrbitDashboard()
++  const { activeTab, setActiveTab, currentClient } = useOrbitDashboard()
++  const { counts } = useAlerts()
++  const alertCount = counts.total
+ 
+   // Separar itens por seção
+   const visaoGeralItems = NAV_ITEMS.filter(i => i.section === 'visao-geral')
+@@ -259,4 +269,4 @@ function NavItemRow({ item, isActive, onTabClick }: NavItemRowProps) {
+       </Link>
+     </li>
+   )
+-}
++}
+\ No newline at end of file
+diff --git a/src/context/OrbitDashboardContext.tsx b/src/context/OrbitDashboardContext.tsx
+index 0d21a35..2c624cd 100644
+--- a/src/context/OrbitDashboardContext.tsx
++++ b/src/context/OrbitDashboardContext.tsx
+@@ -1,7 +1,17 @@
+ /* ==========================================================================
+    ORBIT · Context — OrbitDashboardContext
+    Caminho: src/context/OrbitDashboardContext.tsx
+-   Versão: 2.0.0
++   Versão: 2.1.0
++
++   v2.1.0 (correção ORBIT-BUG-01):
++   - currentClient adicionado ao contexto, resolvido via fetchClientById(clientId)
++     (mesmo repositório já usado em outras partes do app — nenhum fetch novo criado)
++   - Nenhum novo Context foi criado: Sidebar já vive dentro da árvore do
++     OrbitDashboardProvider (única árvore que a renderiza hoje), então
++     currentClient cabe aqui sem introduzir CarteiraContext/AlertasContext
++   - alertCount NÃO foi adicionado aqui de propósito: useAlerts() já é global
++     (não depende de clientId) e deve ser chamado direto no componente que
++     precisa do badge — ver Sidebar.tsx
+ 
+    v2.0.0:
+    - usePrototypeData removido (era flag de mock — removido do hook também)
+@@ -14,6 +24,7 @@
+ import React, {
+   createContext,
+   useContext,
++  useEffect,
+   useMemo,
+   useState,
+   type ReactNode,
+@@ -23,14 +34,16 @@ import {
+   type UseInstagramOverviewParams,
+   type UseInstagramOverviewReturn,
+ } from '../hooks/useInstagramOverview'
+-import type { TabId } from '../types/orbit'
++import { fetchClientById } from '../lib/repositories/clientsRepository'
++import type { Client, TabId } from '../types/orbit'
+ 
+ // ─── Interface do contexto ───────────────────────────────────────────────────
+ 
+ interface OrbitDashboardContextValue extends UseInstagramOverviewReturn {
+-  activeTab:    TabId
+-  setActiveTab: (tab: TabId) => void
+-  clientId:     string
++  activeTab:     TabId
++  setActiveTab:  (tab: TabId) => void
++  clientId:      string
++  currentClient: Client | null
+ }
+ 
+ // ─── Criação do contexto ──────────────────────────────────────────────────────
+@@ -53,17 +66,39 @@ export function OrbitDashboardProvider({
+   ...hookParams
+ }: OrbitDashboardProviderProps) {
+   const [activeTab, setActiveTab] = useState<TabId>(initialActiveTab)
++  const [currentClient, setCurrentClient] = useState<Client | null>(null)
+ 
+   const overviewState = useInstagramOverview(hookParams)
+ 
++  // ── Resolve o Client completo a partir do clientId ────────────────────────
++  // fetchClientById já existe em clientsRepository.ts (usado em outros pontos
++  // do app) — nenhuma query nova foi criada para esta correção.
++  useEffect(() => {
++    let cancelled = false
++
++    fetchClientById(hookParams.clientId)
++      .then((client) => {
++        if (!cancelled) setCurrentClient(client)
++      })
++      .catch((err) => {
++        console.error('[OrbitDashboardProvider] Falha ao buscar currentClient:', err)
++        if (!cancelled) setCurrentClient(null)
++      })
++
++    return () => {
++      cancelled = true
++    }
++  }, [hookParams.clientId])
++
+   const value = useMemo<OrbitDashboardContextValue>(
+     () => ({
+       ...overviewState,
+       activeTab,
+       setActiveTab,
+       clientId: hookParams.clientId,
++      currentClient,
+     }),
+-    [overviewState, activeTab, hookParams.clientId]
++    [overviewState, activeTab, hookParams.clientId, currentClient]
+   )
+ 
+   return (
+diff --git a/src/hooks/useAlerts.ts b/src/hooks/useAlerts.ts
+index 595807b..659c852 100644
+--- a/src/hooks/useAlerts.ts
++++ b/src/hooks/useAlerts.ts
+@@ -8,7 +8,6 @@ import {
+   fetchCriticalAlerts,
+ } from "../lib/repositories/alertsRepository";
+ import { Alert, AlertSeverity, FetchStatus } from "../types/alert";
+-
+ // ── Config ────────────────────────────────────────────────────────────────
+ const MAX_RETRIES = 3;
+ const BASE_BACKOFF_MS = 500; // 500 → 1000 → 2000 ms
