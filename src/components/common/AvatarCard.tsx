@@ -1,106 +1,156 @@
-import React from "react";
-import { AvatarProfile } from "../../types/avatar";
+/* ==========================================================================
+   ORBIT · Component — AvatarCard
+   Renderiza um perfil (esperado ou real) dentro de um GlassCard, resolvendo
+   seu próprio glowColor a partir do `status` contratual recebido.
+   Versão: 2.1.0
+   ========================================================================== */
 
-interface AvatarCardProps {
-  profile: AvatarProfile;
-  title: string;
-  variant: "expected" | "real";
+import React from 'react'
+import { GlassCard } from './GlassCard'
+import type { AvatarProfile, AlignmentStatus } from '../../types/avatar'
+import type { GlowColor } from '../../types/orbit'
+import styles from './AvatarCard.module.css'
+
+export interface AvatarCardProps {
+  profile: AvatarProfile
+  title: string
+  variant: 'expected' | 'real'
+  status: AlignmentStatus
+  insightLabel: string
+  insightText: string
 }
 
-const VARIANT_STYLES = {
-  expected: {
-    border: "border-violet-500/40",
-    badge: "bg-violet-500/20 text-violet-300 border border-violet-500/30",
-    accent: "text-violet-400",
-    genderBar: "bg-violet-500",
-    genderBarAlt: "bg-violet-900",
-    icon: "👤",
-  },
-  real: {
-    border: "border-rose-500/40",
-    badge: "bg-rose-500/20 text-rose-300 border border-rose-500/30",
-    accent: "text-rose-400",
-    genderBar: "bg-rose-500",
-    genderBarAlt: "bg-rose-900",
-    icon: "📊",
-  },
-};
+const STATUS_TO_GLOW: Record<AlignmentStatus, GlowColor> = {
+  healthy: 'cyan',
+  warning: 'gold',
+  critical: 'red',
+}
 
-export const AvatarCard: React.FC<AvatarCardProps> = ({
+const VARIANT_ICON: Record<'expected' | 'real', string> = {
+  expected: '👤',
+  real: '📊',
+}
+
+const CONFIDENCE_LABEL: Record<'L0' | 'L1' | 'L2', string> = {
+  L0: 'Não validado',
+  L1: 'Validação parcial',
+  L2: 'Validado com cliente',
+}
+
+const FILL_CLASS: Record<GlowColor, string> = {
+  cyan: styles.fillCyan,
+  gold: styles.fillGold,
+  red: styles.fillRed,
+  none: styles.fillNone,
+}
+
+const TEXT_CLASS: Record<GlowColor, string> = {
+  cyan: styles.textCyan,
+  gold: styles.textGold,
+  red: styles.textRed,
+  none: styles.textNone,
+}
+
+/**
+ * Fallback de governança: nunca renderiza vazio. Se o repositório devolver
+ * string vazia para unconsciousDesireMapped/misalignmentHypothesis, exibe
+ * um estado explícito em vez de um bloco em branco (filosofia N/A do projeto).
+ */
+function resolveInsight(text: string): { text: string; isFallback: boolean } {
+  const trimmed = text.trim()
+  if (trimmed.length > 0) return { text: trimmed, isFallback: false }
+  return {
+    text: 'Governança: dado ainda não mapeado para este cliente.',
+    isFallback: true,
+  }
+}
+
+export function AvatarCard({
   profile,
   title,
   variant,
-}) => {
-  const styles = VARIANT_STYLES[variant];
+  status,
+  insightLabel,
+  insightText,
+}: AvatarCardProps): React.ReactElement {
+  const glowColor = STATUS_TO_GLOW[status]
+  const insight = resolveInsight(insightText)
 
   return (
-    <div
-      className={`flex-1 bg-gray-900/60 border ${styles.border} rounded-xl p-5 backdrop-blur-sm`}
-    >
-      {/* Header */}
-      <div className="flex items-center gap-2 mb-4">
-        <span className="text-lg">{styles.icon}</span>
-        <span className={`text-xs font-semibold uppercase tracking-widest px-2 py-0.5 rounded-md ${styles.badge}`}>
-          {title}
+    <GlassCard glowColor={glowColor} className={styles.card}>
+      <div className={styles.header}>
+        <span aria-hidden="true" className={styles.icon}>
+          {VARIANT_ICON[variant]}
         </span>
+        <span className={styles.titleBadge}>{title}</span>
       </div>
 
-      {/* Gender distribution */}
-      <div className="mb-4">
-        <p className="text-xs text-gray-500 uppercase tracking-wider mb-1.5">
-          Gênero
-        </p>
-        <div className="flex items-center gap-2 mb-1.5">
-          <div className="flex-1 h-2 rounded-full bg-gray-800 overflow-hidden">
-            <div
-              className={`h-full rounded-full transition-all duration-700 ${styles.genderBar}`}
-              style={{ width: `${profile.gender.female}%` }}
-            />
-          </div>
+      {/* Gênero */}
+      <div className={styles.block}>
+        <p className={styles.blockLabel}>Gênero</p>
+        <div className={styles.genderTrack}>
+          <span
+            className={[styles.genderFill, FILL_CLASS[glowColor]].join(' ')}
+            style={{ width: `${profile.gender.female}%` }}
+          />
         </div>
-        <div className="flex justify-between text-xs">
-          <span className="text-gray-400">
-            ♀ Feminino{" "}
-            <span className={`font-bold ${styles.accent}`}>
+        <div className={styles.genderLegend}>
+          <span>
+            ♀ Feminino{' '}
+            <span className={[styles.genderValue, TEXT_CLASS[glowColor]].join(' ')}>
               {profile.gender.female}%
             </span>
           </span>
-          <span className="text-gray-400">
-            ♂ Masculino{" "}
-            <span className={`font-bold ${styles.accent}`}>
+          <span>
+            ♂ Masculino{' '}
+            <span className={[styles.genderValue, TEXT_CLASS[glowColor]].join(' ')}>
               {profile.gender.male}%
             </span>
           </span>
         </div>
       </div>
 
-      {/* Age Range */}
-      <div className="mb-3">
-        <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">
-          Faixa Etária
-        </p>
-        <p className={`text-sm font-semibold ${styles.accent}`}>
-          {profile.ageRange} anos
-        </p>
+      {/* Faixa etária */}
+      <div className={styles.block}>
+        <p className={styles.blockLabel}>Faixa Etária</p>
+        <p className={styles.value}>{profile.ageRange} anos</p>
       </div>
 
-      {/* Interest */}
-      <div className="mb-3">
-        <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">
-          Interesse Principal
+      {/* Interesse */}
+      <div className={styles.block}>
+        <p className={styles.blockLabel}>Interesse Principal</p>
+        <p className={styles.text}>
+          {profile.interest || 'N/A'}
+          {profile.interestConfidence && (
+            <span className={styles.confidenceTag}>
+              {' '}
+              · {CONFIDENCE_LABEL[profile.interestConfidence]}
+            </span>
+          )}
         </p>
-        <p className="text-sm text-gray-200 font-medium">{profile.interest}</p>
       </div>
 
       {/* Geo */}
-      <div>
-        <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">
-          Geolocalização
-        </p>
-        <p className="text-sm text-gray-200 font-medium flex items-center gap-1">
-          <span>📍</span> {profile.geo}
+      <div className={styles.block}>
+        <p className={styles.blockLabel}>Geolocalização</p>
+        <p className={styles.geoRow}>
+          <span aria-hidden="true">📍</span> {profile.geo || 'N/A'}
         </p>
       </div>
-    </div>
-  );
-};
+
+      {/* Insight (unconsciousDesireMapped / misalignmentHypothesis) */}
+      <div className={styles.insightBlock}>
+        <p className={styles.blockLabel}>{insightLabel}</p>
+        <p
+          className={
+            insight.isFallback
+              ? [styles.insightText, styles.insightFallback].join(' ')
+              : styles.insightText
+          }
+        >
+          {insight.text}
+        </p>
+      </div>
+    </GlassCard>
+  )
+}

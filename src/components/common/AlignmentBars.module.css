@@ -1,0 +1,164 @@
+/* AlignmentBars.module.css */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sectionLabel {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--t2);
+}
+
+.card {
+  padding: var(--space-5);
+}
+
+/* Ritmo vertical compacto entre itens */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.itemDivider {
+  padding-top: var(--space-4);
+  border-top: var(--border-width) solid var(--line);
+}
+
+.labelRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.labelLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.label {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--t1);
+}
+
+.metricsRight {
+  display: flex;
+  gap: var(--space-3);
+  font-size: var(--font-size-xs);
+  color: var(--t2);
+}
+
+.metricValue {
+  font-weight: 700;
+  color: var(--t1);
+}
+
+/* ─── Régua compacta — TOLERÂNCIA ZERO acima de 8px ─── */
+.track {
+  position: relative;
+  height: 8px;
+  border-radius: var(--r4);
+  background: var(--bg4);
+  overflow: hidden;
+}
+
+.expectedFill {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  border-radius: var(--r4);
+  background: color-mix(in srgb, var(--acc2) 35%, transparent); /* roxo secundário, via token */
+  transition: width var(--transition-slow);
+}
+
+.realFill {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  border-radius: var(--r4);
+  opacity: 0.9;
+  transition: width var(--transition-slow);
+}
+
+.targetLine {
+  position: absolute;
+  inset-block: 0;
+  width: 2px;
+  background: var(--acc2);
+}
+
+/* Foot row */
+.footRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.alignmentPill {
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  padding: 2px var(--space-2);
+  border-radius: var(--r4);
+  border: var(--border-width) solid transparent;
+}
+
+.legend {
+  display: flex;
+  gap: var(--space-3);
+  font-size: var(--font-size-xs);
+  color: var(--t2);
+}
+
+.legendSwatch,
+.legendSwatchExpected {
+  display: inline-block;
+  width: 10px;
+  height: 4px;
+  border-radius: 2px;
+  margin-right: 4px;
+}
+
+.legendSwatchExpected {
+  background: color-mix(in srgb, var(--acc2) 60%, transparent);
+}
+
+/* Glow classes — mesmo padrão de GlassCard.tsx */
+.dotCyan { background: var(--neon-cyan); }
+.dotGold { background: var(--neon-gold); }
+.dotRed  { background: var(--neon-red); }
+.dotNone { background: var(--t2); }
+
+.fillCyan { background: var(--neon-cyan); }
+.fillGold { background: var(--neon-gold); }
+.fillRed  { background: var(--neon-red); }
+.fillNone { background: var(--t2); }
+
+.pillCyan { color: var(--neon-cyan); border-color: color-mix(in srgb, var(--neon-cyan) 40%, transparent); background: color-mix(in srgb, var(--neon-cyan) 8%, transparent); }
+.pillGold { color: var(--neon-gold); border-color: color-mix(in srgb, var(--neon-gold) 40%, transparent); background: color-mix(in srgb, var(--neon-gold) 8%, transparent); }
+.pillRed  { color: var(--neon-red);  border-color: color-mix(in srgb, var(--neon-red) 40%, transparent); background: color-mix(in srgb, var(--neon-red) 8%, transparent); }
+.pillNone { color: var(--t1);        border-color: var(--line); }

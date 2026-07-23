@@ -1,74 +1,80 @@
-import React from "react";
+/* ==========================================================================
+   ORBIT · Component — AlignmentFormula
+   Painel da fórmula de afinidade matemática, tipografia mono, SSOT de cor.
+   Migrado de Tailwind arbitrário (gray-950, violet-400...) para TOKENS.
+   Versão: 2.0.0 (primeira migração — antes fora do escopo v1/v2 das barras)
+   ========================================================================== */
 
-export const AlignmentFormula: React.FC = () => {
+import React from 'react'
+import { GlassCard } from './GlassCard'
+import styles from './AlignmentFormula.module.css'
+
+interface WeightItem {
+  key: string
+  label: string
+  weight: string
+}
+
+const WEIGHTS: WeightItem[] = [
+  { key: 'alinhamento_genero', label: 'Gênero', weight: '40%' },
+  { key: 'alinhamento_faixa_etaria', label: 'Faixa Etária', weight: '35%' },
+  { key: 'alinhamento_geo', label: 'Geolocalização', weight: '25%' },
+]
+
+export function AlignmentFormula(): React.ReactElement {
   return (
-    <div className="space-y-3">
-      <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">
-        Fórmula de Cálculo
-      </h2>
+    <section className={styles.wrapper}>
+      <span className={styles.sectionLabel}>Fórmula de Cálculo</span>
 
-      <div className="bg-gray-900/60 border border-gray-700/50 rounded-xl p-5 backdrop-blur-sm">
-        {/* Formula display */}
-        <div className="bg-gray-950/80 rounded-lg p-4 font-mono text-sm border border-gray-800 overflow-x-auto">
-          <div className="text-gray-500 mb-1 text-xs">
-            {/* Score de Alinhamento de Avatar */}
+      <GlassCard glowColor="none" className={styles.card}>
+        <div className={styles.codeBlock}>
+          <div className={styles.line}>
+            <span className={styles.varName}>score</span>
+            <span className={styles.operator}> = </span>
+            <span className={styles.paren}>(</span>
           </div>
-          <div>
-            <span className="text-violet-400">score</span>
-            <span className="text-gray-400"> = </span>
-            <span className="text-amber-300">{"("}</span>
+          <div className={`${styles.line} ${styles.indent}`}>
+            <span className={styles.varName}>alinhamento_genero</span>
+            <span className={styles.operator}> × </span>
+            <span className={styles.weight}>0.40</span>
+            <span className={styles.weightComment}>peso 40%</span>
           </div>
-          <div className="pl-4">
-            <span className="text-emerald-400">alinhamento_genero</span>
-            <span className="text-gray-400"> × </span>
-            <span className="text-sky-400">0.40</span>
-            <span className="text-gray-600 ml-1">{"// peso 40%"}</span>
+          <div className={`${styles.line} ${styles.indent}`}>
+            <span className={styles.operator}>+ </span>
+            <span className={styles.varName}>alinhamento_faixa_etaria</span>
+            <span className={styles.operator}> × </span>
+            <span className={styles.weight}>0.35</span>
+            <span className={styles.weightComment}>peso 35%</span>
           </div>
-          <div className="pl-4">
-            <span className="text-gray-500">+ </span>
-            <span className="text-emerald-400">alinhamento_faixa_etaria</span>
-            <span className="text-gray-400"> × </span>
-            <span className="text-sky-400">0.35</span>
-            <span className="text-gray-600 ml-1">{"// peso 35%"}</span>
+          <div className={`${styles.line} ${styles.indent}`}>
+            <span className={styles.operator}>+ </span>
+            <span className={styles.varName}>alinhamento_geo</span>
+            <span className={styles.operator}> × </span>
+            <span className={styles.weight}>0.25</span>
+            <span className={styles.weightComment}>peso 25%</span>
           </div>
-          <div className="pl-4">
-            <span className="text-gray-500">+ </span>
-            <span className="text-emerald-400">alinhamento_geo</span>
-            <span className="text-gray-400"> × </span>
-            <span className="text-sky-400">0.25</span>
-            <span className="text-gray-600 ml-1">{"// peso 25%"}</span>
+          <div className={styles.line}>
+            <span className={styles.paren}>)</span>
           </div>
-          <div>
-            <span className="text-amber-300">{")"}</span>
-          </div>
-          <div className="mt-3 pt-3 border-t border-gray-800 text-xs space-y-1">
-            <div className="flex items-center gap-2">
-              <span className="text-emerald-400">alinhamento_X</span>
-              <span className="text-gray-500">=</span>
-              <span className="text-gray-300">
-                1 − |esperado − real| / 100
-              </span>
+
+          <div className={styles.divider}>
+            <div className={styles.subFormula}>
+              <span className={styles.varName}>alinhamento_X</span>
+              <span className={styles.operator}> = </span>
+              <span className={styles.subExpr}>1 − |esperado − real| / 100</span>
             </div>
           </div>
         </div>
 
-        {/* Weight legend */}
-        <div className="mt-3 grid grid-cols-3 gap-2">
-          {[
-            { label: "Gênero", weight: "40%", color: "text-violet-400" },
-            { label: "Faixa Etária", weight: "35%", color: "text-sky-400" },
-            { label: "Geolocalização", weight: "25%", color: "text-teal-400" },
-          ].map((item) => (
-            <div
-              key={item.label}
-              className="bg-gray-800/50 rounded-lg px-3 py-2 text-center border border-gray-700/50"
-            >
-              <p className={`text-sm font-bold ${item.color}`}>{item.weight}</p>
-              <p className="text-xs text-gray-500 mt-0.5">{item.label}</p>
+        <div className={styles.legendGrid}>
+          {WEIGHTS.map((item) => (
+            <div key={item.key} className={styles.legendTile}>
+              <span className={styles.legendValue}>{item.weight}</span>
+              <span className={styles.legendLabel}>{item.label}</span>
             </div>
           ))}
         </div>
-      </div>
-    </div>
-  );
-};
+      </GlassCard>
+    </section>
+  )
+}

@@ -1,0 +1,42 @@
+.wrap {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-6);
+}
+
+.diagnosticBox {
+  font-family:   var(--font-mono);
+  font-size:     11px;
+  color:         var(--text-muted);
+  padding:       var(--space-2);
+  border:        var(--border-width) solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background:    var(--bg-hover);
+}
+
+.diagnosticStrong {
+  color: var(--text-secondary);
+}
+
+.slidersBlock {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-5);
+}
+
+.degradedHint {
+  font-family: var(--font-mono);
+  font-size:   11px;
+  color:       var(--amber);
+  margin-top:  calc(-1 * var(--space-4));
+}
+
+.saturationAlert {
+  padding:       var(--space-2) var(--space-3);
+  border:        var(--border-width) solid color-mix(in srgb, var(--amber) 30%, transparent);
+  border-radius: var(--radius-lg);
+  background:    color-mix(in srgb, var(--amber) 10%, transparent);
+  font-family:   var(--font-family);
+  font-size:     11px;
+  color:         var(--amber);
+}

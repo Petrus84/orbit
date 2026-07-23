@@ -1,0 +1,144 @@
+.main {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-5);
+  width:          100%;
+  max-width:      1400px;
+  margin:         0 auto;
+  padding:        var(--space-8) var(--space-6);
+}
+
+/* .section-head — título+subtítulo à esquerda, tabs à direita, mesma linha */
+.head {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  gap:             var(--space-4);
+  flex-wrap:       wrap;
+}
+
+.titleBlock {
+  display:        flex;
+  flex-direction: column;
+  gap:            2px;
+}
+
+.title {
+  font-family:    var(--font-family);
+  font-size:      var(--font-size-xl);
+  font-weight:    500;
+  color:          var(--text-primary);
+  letter-spacing: -0.2px;
+}
+
+.subtitle {
+  font-family: var(--font-family);
+  font-size:   var(--font-size-sm);
+  color:       var(--text-muted);
+}
+
+/* Segmented control — mesmo padrão de AlertasScreen.module.css (.tabs/.tab/.tab.on) */
+.tabs {
+  display:       flex;
+  gap:           2px;
+  flex-shrink:   0;
+  padding:       3px;
+  border:        var(--border-width) solid var(--border-default);
+  border-radius: var(--radius-md);
+  background:    var(--bg-hover);
+}
+
+.tab {
+  padding:        5px 14px;
+  border:         none;
+  border-radius:  6px;
+  background:     transparent;
+  font-family:    var(--font-family);
+  font-size:      var(--font-size-sm);
+  color:          var(--text-muted);
+  cursor:         pointer;
+  transition:     all var(--transition-fast);
+}
+
+.tabOn {
+  background:  var(--bg-card);
+  color:       var(--text-primary);
+  font-weight: 500;
+  box-shadow:  var(--shadow-sm);
+}
+
+/* KPI row — .grid4 do protótipo: 4 colunas, gap 12px (--space-3) */
+.kpiRow {
+  display:               grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap:                   var(--space-3);
+}
+
+@media (min-width: 640px)  { .kpiRow { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1200px) { .kpiRow { grid-template-columns: repeat(4, 1fr); } }
+
+/* Scores + performance — .grid2 do protótipo: 2 colunas iguais, gap 16px (--space-4) */
+.midRow {
+  display:               grid;
+  grid-template-columns: 1fr;
+  gap:                   var(--space-4);
+  align-items:           start;
+}
+
+@media (min-width: 1024px) {
+  .midRow { grid-template-columns: 1fr 1fr; }
+}
+
+.rightPanel {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-4);
+}
+
+.insightStack {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-2);
+}
+
+/* Diagnóstico — sub-título de seção sem card ao redor, igual ao protótipo (linha ~832) */
+.diagnosticHead {
+  font-family: var(--font-family);
+  font-size:   var(--font-size-base);
+  font-weight: 500;
+  color:       var(--text-primary);
+}
+
+.alertRow {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-3);
+}
+
+.stateCenter {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  padding:         var(--space-12) 0;
+}
+
+.loadingDot {
+  display:       inline-block;
+  width:         8px;
+  height:        8px;
+  margin:        0 3px;
+  border-radius: 50%;
+  background:    var(--acc);
+  animation:     bounce 1s infinite ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+  40%           { transform: scale(1);   opacity: 1;   }
+}
+
+.errorText {
+  font-family: var(--font-family);
+  font-size:   var(--font-size-sm);
+  color:       var(--red);
+}

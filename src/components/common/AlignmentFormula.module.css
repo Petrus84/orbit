@@ -1,0 +1,110 @@
+/* AlignmentFormula.module.css */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sectionLabel {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--t2);
+}
+
+.card {
+  padding: var(--space-5);
+}
+
+.codeBlock {
+  background: var(--bg);
+  border: var(--border-width) solid var(--line);
+  border-radius: var(--r8);
+  padding: var(--space-4);
+  font-family: var(--mono);
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  overflow-x: auto;
+}
+
+.line {
+  white-space: pre;
+}
+
+.indent {
+  padding-left: var(--space-4);
+}
+
+.varName {
+  color: var(--acc2); /* roxo secundário — identidade da marca */
+}
+
+.operator {
+  color: var(--t1);
+}
+
+.paren {
+  color: var(--acc3); /* laranja terciário */
+}
+
+.weight {
+  color: var(--acc); /* lima — acento único, reservado para o valor-chave */
+  font-weight: var(--font-weight-bold);
+}
+
+.weightComment {
+  color: var(--t2);
+  margin-left: var(--space-2);
+  font-size: var(--font-size-xs);
+}
+
+.divider {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: var(--border-width) solid var(--line);
+}
+
+.subFormula {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+}
+
+.subExpr {
+  color: var(--t1);
+}
+
+/* Legenda de pesos */
+.legendGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.legendTile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-3) var(--space-2);
+  border-radius: var(--r8);
+  background: var(--bg1);
+  border: var(--border-width) solid var(--line);
+  text-align: center;
+}
+
+.legendValue {
+  font-family: var(--mono);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--t0);
+}
+
+.legendLabel {
+  font-size: var(--font-size-xs);
+  color: var(--t2);
+}

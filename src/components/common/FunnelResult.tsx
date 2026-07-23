@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './FunnelResult.module.css';
 
 export interface SimulationResult {
   cliques: number;
@@ -10,7 +11,7 @@ export interface SimulationResult {
 
 interface FunnelResultProps {
   result: SimulationResult;
-  baseVendas: number; // real value to compare against
+  baseVendas: number; // valor real para comparação
 }
 
 function formatValue(v: number): string {
@@ -22,7 +23,8 @@ function formatValue(v: number): string {
 export default function FunnelResult({ result, baseVendas }: FunnelResultProps): React.ReactElement {
   const delta = result.vendas - baseVendas;
   const deltaSign = delta >= 0 ? '+' : '';
-  const deltaColor = delta > 0 ? 'text-emerald-400' : delta < 0 ? 'text-red-400' : 'text-zinc-500';
+  const deltaClass =
+    delta > 0 ? styles.deltaUp : delta < 0 ? styles.deltaDown : styles.deltaNeutral;
 
   const insight =
     result.vendas > baseVendas * 1.5
@@ -34,34 +36,24 @@ export default function FunnelResult({ result, baseVendas }: FunnelResultProps):
       : 'Cenário similar ao atual.';
 
   return (
-    <div className="flex flex-col gap-4 rounded-2xl border border-[#C8FF57]/20 bg-[#C8FF57]/5 p-4">
-      {/* Big number */}
-      <div className="flex flex-col gap-0.5">
-        <span className="font-sans text-[10px] font-semibold uppercase tracking-widest text-zinc-500">
-          Vendas estimadas
-        </span>
-        <div className="flex items-baseline gap-2">
-          <span className="font-mono text-4xl font-bold tabular-nums text-[#C8FF57] leading-none">
-            {formatValue(result.vendas)}
-          </span>
-          <span className={`font-mono text-sm font-semibold tabular-nums ${deltaColor}`}>
-            {deltaSign}{formatValue(delta)}
+    <div className={styles.card}>
+      <div className={styles.headlineBlock}>
+        <span className={styles.headlineLabel}>Vendas estimadas</span>
+        <div className={styles.headlineRow}>
+          <span className={styles.headline}>{formatValue(result.vendas)}</span>
+          <span className={`${styles.delta} ${deltaClass}`}>
+            {deltaSign}
+            {formatValue(delta)}
           </span>
         </div>
       </div>
 
-      {/* Cliques secundário */}
-      <div className="flex items-center justify-between rounded-xl border border-zinc-800 bg-zinc-900/50 px-3 py-2">
-        <span className="font-sans text-xs text-zinc-500">Cliques no link</span>
-        <span className="font-mono text-sm font-bold tabular-nums text-amber-400">
-          {formatValue(result.cliques)}
-        </span>
+      <div className={styles.secondaryRow}>
+        <span className={styles.secondaryLabel}>Cliques no link</span>
+        <span className={styles.secondaryValue}>{formatValue(result.cliques)}</span>
       </div>
 
-      {/* Insight text */}
-      <p className="font-sans text-xs leading-relaxed text-zinc-400 border-t border-zinc-800 pt-3">
-        💡 {insight}
-      </p>
+      <p className={styles.insight}>💡 {insight}</p>
     </div>
   );
 }
