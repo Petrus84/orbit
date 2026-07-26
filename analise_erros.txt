@@ -1,0 +1,22 @@
+=== ANÁLISE DE PERSISTÊNCIA DE ERROS ===
+
+INSTANTE 1: 30 erros em 13 arquivos
+INSTANTE 2: 25 erros em 11 arquivos
+
+ERROS QUE PERSISTEM (NÃO FORAM CORRIGIDOS):
+- metaAdsRepository.ts: 7 erros (roas, ctr, frequency, fatigue_percent, cpl)
+- funnelRepository.ts: 7 erros (tipos unknown em alcance, visitas, cliques, vendas, ctrBio, taxaConv)
+- alertsRepository.ts: 2 erros (Date vs string em createdAt)
+- clientsRepository.ts: 2 erros (ClientMetrics incompleto)
+- types/client.ts + types/instagram.ts: 2 erros (exports faltando)
+
+ERROS RESOLVIDOS:
+- Sidebar.tsx: 1 erro
+- CarteiraScreen.tsx: 4 erros
+
+NOVOS ERROS SURGIDOS:
+- FunnelSimulator.tsx: SetorBenchmark não exportado
+- FormatPerformanceTable.tsx: TrendColor vs GlowColor incompatível
+- FunnelScreen.tsx: FunnelSimulatorProps faltando propriedades
+- useFunnel.ts: lastUpdated não existe em UseFunnelResult
+- avatarRepository.ts: AvatarRecommendation tipo incompatível
