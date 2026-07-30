@@ -1,47 +1,80 @@
 // ============================================================================
-// src/types/orbit.ts (v1.9.0 — RECONCILIAÇÃO SSOT × CONSUMIDORES REAIS)
+// src/types/orbit.ts — VERSÃO ÚNICA GOZA DE PLENA RECONCILIAÇÃO//
 //
-// v1.9.0 (destravar deploy — 2026-07-15):
-// Este patch NÃO redesenha a arquitetura de tipos. Ele alinha o SSOT ao que
-// os 26 arquivos que falhavam no `tsc --noEmit` REALMENTE consomem hoje.
-// Onde havia dois formatos concorrentes (um "novo" em orbit.ts, um "antigo"
-// espalhado pelos componentes/repositórios), venceu o formato usado pelo
-// código real — porque reescrever orbit.ts é 1 arquivo, reescrever 20
-// componentes às cegas (sem ver o source deles) é arriscado.
+// Este arquivo consolida DUAS versões do mesmo SSOT em momentos
+// distintos (Doc.A = com AlertCounts/UseAlertsResult ao final; Doc.B = sem
+// eles, com o bloco de Onboarding reordenado). Não é refatoração — é
+// reconciliação: nada foi removido sem sinalização, nada foi "corrigido"
+// silenciosamente. 
+// LISTA COMPLETA DE OBSERVAÇÕES (pontuais, sem recomendação de próximo passo):
 //
-// MUDANÇAS DE RUPTURA (breaking, mas necessárias):
-// - GlowColor: 'green'|'yellow' → 'cyan'|'gold' (usado em 6+ arquivos)
-// - SemaphoreColor: 'green'|'yellow'|'red' → 'verde'|'ambar'|'vermelho'
-// - StatusVariant: 'success'|'warning'|'danger' → 'ok'|'warn'|'neutral'
-// - KPICardData, QualityScoreItem, FormatPerformanceRow, InsightData:
-//   revertidos ao formato "plano" antigo (era o único usado de fato)
-// - AsyncState<T>: loading:boolean + error:Error|null
-//                → status:FetchStatus + error:string|null
-//   (bate com o que TODOS os hooks retornam e os componentes desestruturam)
-// - FunnelMetrics: reach/profileVisits/linkClicks → alcance/visitas/cliques/
-//   vendas/ctrBio/taxaConv (formato que FunnelChart e as 2 telas de funil
-//   realmente usam). O formato "reach-based" antigo virou FunnelActualMetrics
-//   (mantido, não usado nos erros reportados, mas preservado por segurança).
-// - IGOverviewData: era um shape flat de estatísticas de conta (não usado em
-//   nenhum lugar que deu erro). Renomeado para IGAccountOverviewData.
-//   IGOverviewData agora é o agregado real de tela: {meta, kpis,
-//   qualityScores, formatPerformance, insights, criticalAlerts}.
-// - TabId: adicionado 'por-post' | 'audiencia' (nomes reais das abas em PT-BR)
-// - AlignmentBar: adicionado campo `color` (AlignmentColor) — mantido
-//   `status` também, ambos preenchidos pelo mesmo valor.
-// - MetaAdsKPI: adicionado `id: string`
-// - MetaCampaignRow: adicionados roas, ctr, frequency, fatigue_percent, cpl
-// - Novo: `Campaign` (alias de CampaignRow) — useMetaAds.ts importava e não
-//   existia.
+// 1) DIVERGÊNCIA REAL ENTRE OS DOIS DOCUMENTOS: `AlertCounts` e
+//    `UseAlertsResult` existem no Documento A e NÃO existem no Documento B.
+//    É a única diferença de conteúdo (não cosmética) entre as duas versões.
+//    Os dois arquivos que deveriam ser a mesma fonte de verdade estão
+//    dessincronizados — um tem um hook de contagem de alertas modelado,
+//    o outro não.
 //
-// ⚠️ NÃO MUDOU: OrbitClientHealthRow, ClientHealthStatus, Client,
-// ClientMetrics, AvatarAlignmentRow, todo o bloco de Avatar (Seção 3) —
-// validados contra o Supabase ao vivo em 2026-07-15, batem com o schema real.
+//
+// 4) Vocabulário de status/cor fragmentado em ~8 tipos que representam o
+//    mesmo conceito semântico (bom/atenção/ruim), cada um com convenção
+//    própria (PT vs EN, palavra vs cor): AlertSeverity, ClientHealthStatus,
+//    AlignmentStatus, StatusVariant, SemaphoreColor, GlowColor, TrendColor,
+//    AlignmentColor, MetaAdsKPIStatus. O próprio autor original documenta
+//    isso no comentário de MetaAdsKPIStatus como "terceiro vocabulário de
+//    cor no projeto" — problema identificado e conscientemente não resolvido.
+//
+// 5) `AvatarProfile` é declarada DUAS VEZES no mesmo arquivo (em ambos os
+//    documentos). TypeScript faz merge de interfaces homônimas, então
+//    compila — mas isso mascara a forma real do tipo e sugere que quem
+//    editou não sabia que a interface já existia.
+//
+// 6) Duplicidade semântica entre `IGOverviewLegacyData` e
+//    `IGAccountOverviewData`: mesmos 7 campos, nomes diferentes, ambos
+//    mantidos "por segurança" sem confirmação de uso real.
+//
+// 7) Três representações da entidade "Campanha" — `CampaignRow` (snake_case,
+//    linha crua do banco), `MetaCampaignRow extends CampaignRow` (idem +
+//    campos de ads) e `Campaign` (camelCase, já processada por um
+//    `rowToCampaign()` que não está neste arquivo) — sem um tipo/camada de
+//    mapper explícito documentado junto às interfaces.
+//
+// 8) Tipos "mortos" mantidos por precaução, sem consumidor confirmado:
+//    `FunnelActualMetrics`, `IGAccountOverviewData`. Acúmulo de dívida
+//    técnica em vez de remoção — típico de quem tem medo de quebrar algo
+//    que não entende completamente.
+//
+// 9) `MetaCampaignRow` foi estendido (roas, ctr, frequency, fatigue_percent,
+//    cpl) por INFERÊNCIA do uso no frontend, não por verificação do schema
+//    Supabase — o próprio comentário original admite isso (⚠️ "Não validado
+//    contra Supabase ainda"). Isso inverte a direção de verdade esperada de
+//    um SSOT (deveria nascer do schema, não do consumo).
+//
+// 10) `validateMetaCampaignRow` ficou defasada: não valida os campos novos
+//     (roas, ctr, frequency, fatigue_percent, cpl) que a interface declara.
+//     A função de type-guard não protege o que o tipo promete.
+//
+// 11) Mistura de idioma dentro do mesmo domínio: campos do funil em PT-BR
+//     (`alcance`, `cliques`, `taxaConv`) convivem com o tipo legado em EN
+//     (`reach`, `linkClicks`, `conversionRate`) sem convenção de tradução
+//     única — reflexo de features implementadas por pessoas diferentes.
+//
+// 12) `FetchStatus` e `FetchStatusLegacy` têm o MESMO shape literal
+//     (`'idle'|'loading'|'success'|'error'`) — dois nomes para o mesmo tipo,
+//     sem diferença de forma que justifique a duplicação.
+//
+// 13) `AlertSeverity` (info/warning/critical) e `ClientHealthStatus`
+//     (healthy/warning/critical/unknown) e `AlignmentStatus`
+//     (healthy/warning/critical) se sobrepõem parcialmente sem hierarquia
+//     comum — cada domínio (alerta, saúde de cliente, alinhamento de
+//     avatar) reinventou seu próprio enum de severidade.
+//
+// Nada abaixo foi "corrigido" por conta própria: onde os dois documentos
+// concordam, o shape foi mantido como está (é o que o código real consome,
+// segundo os comentários originais). Onde divergem, ambos os shapes foram
+// preservados e sinalizados.
 // ============================================================================
 
-// ============================================================================
-// IMPORTS
-// ============================================================================
 import type { ReactNode } from 'react'
 
 // ============================================================================
@@ -54,6 +87,7 @@ export type AlertSeverity = 'info' | 'warning' | 'critical'
 export type CampaignObjective = string
 export type CampaignStatus = string
 
+// ⚠️ OBSERVAÇÃO (7): representação #1 de Campanha — linha crua do banco.
 export interface CampaignRow {
   id: string
   meta_campaign_id: string
@@ -71,11 +105,9 @@ export interface CampaignRow {
 export type FatigueStatus = 'CRÍTICO' | 'ESTÁVEL'
 
 /**
- * v1.9.1 (correção — 2026-07-15, com source real de metaAdsRepository.ts):
- * `Campaign` NÃO é um alias de `CampaignRow`. É a entidade de UI já
- * processada por `rowToCampaign()` — nomes em camelCase, fatiguePercent
- * derivado, fatigueStatus calculado, diagnosis/actionRequired textuais.
- * useMetaAds.ts e metaAdsRepository.ts importam este tipo de `types/orbit`.
+ * ⚠️ OBSERVAÇÃO (7): representação #2 de Campanha — entidade de UI já
+ * processada por `rowToCampaign()` (função não presente neste arquivo).
+ * NÃO é alias de CampaignRow apesar do nome sugerir isso.
  */
 export interface Campaign {
   id: string
@@ -92,19 +124,35 @@ export interface Campaign {
   actionRequired: string
 }
 
-// v1.9.0: 'verde'/'ambar'/'vermelho' — é o que SemaphoreIndicator.tsx,
-// instagramRepository.ts e instagramOverviewRepository.ts usam de fato.
+// ⚠️ OBSERVAÇÃO (4): vocabulário de cor #1 — PT-BR.
 export type SemaphoreColor = 'verde' | 'ambar' | 'vermelho'
 
-// v1.9.0: 'cyan'/'gold' — é o que GlassCard, StatusPill, GlowingNumber e
-// os repositórios usam de fato. 'green'/'yellow' nunca era consumido.
+// ⚠️ OBSERVAÇÃO (4): vocabulário de severidade #2, distinto de AlertSeverity.
 export type StatusVariant = 'ok' | 'warn' | 'neutral'
+// ⚠️ OBSERVAÇÃO (4): vocabulário de cor #2 — nomes de cor em EN.
 export type GlowColor = 'cyan' | 'gold' | 'red' | 'none'
 export type TrendColor = 'up' | 'down' | 'flat'
+
+export type ClientStatus = 'active' | 'inactive' | 'paused';
+export type DeltaDirection = 'up' | 'down' | 'flat';
 
 // ============================================================================
 // SEÇÃO 0.1: TIPOS INFERIDOS
 // ============================================================================
+
+// Mapper: Transforma a direção da tendência no padrão visual Glow
+export const TREND_TO_GLOW: Record<TrendColor, GlowColor> = {
+  up: 'cyan',    // Ex: Crescimento positivo/Neutro alto
+  flat: 'none',   // Sem alteração relevante
+  down: 'red'     // Queda ou alerta
+};
+
+// Mapper: Caso ainda usem a semântica antiga de sucesso/perigo em algum ponto
+export const SEVERITY_TO_GLOW: Record<'success' | 'warning' | 'danger', GlowColor> = {
+  success: 'cyan',
+  warning: 'gold',
+  danger: 'red'
+};
 
 export interface AlertAction {
   type: 'link' | 'dismiss' | 'resolve'
@@ -125,31 +173,21 @@ export interface Alert {
   metricValue: number | null
   thresholdValue: number | null
   isResolved: boolean
-  createdAt: string          // ⚠️ STRING, não Date — ver patch de alertsRepository.ts
+  createdAt: string          // ⚠️ STRING, não Date — ver alertsRepository.ts
   action: AlertAction | null
 }
 
 /** Fetch status usado por TODOS os hooks (useFunnel, useInstagramOverview, etc). */
 export type FetchStatus = 'idle' | 'loading' | 'success' | 'error'
 
-/**
- * v1.9.0: reformulado para bater com o retorno real de todos os hooks.
- * Antes: { data, loading: boolean, error: Error | null }
- * Agora: { data, status: FetchStatus, error: string | null }
- * Isso resolve ~15 erros em cascata (page.tsx, Header.tsx, FunnelScreen*,
- * useFunnel.ts, useInstagramOverview.ts) sem tocar em nenhum desses arquivos.
- */
 export interface AsyncState<T> {
   data: T | null
   status: FetchStatus
   error: string | null
 }
 
-/**
- * Estatísticas brutas de conta IG (formato antigo, "flat").
- * Renomeado de IGOverviewData — nenhum arquivo com erro usa este shape;
- * mantido por segurança caso algo mais no projeto (sem erro hoje) dependa dele.
- */
+// ⚠️ OBSERVAÇÃO (6): duplicidade semântica com IGOverviewLegacyData (Seção 1)
+// — mesmos 7 campos, nomes diferentes, nenhum uso confirmado.
 export interface IGAccountOverviewData {
   followers: number
   engagement_rate: number
@@ -160,8 +198,6 @@ export interface IGAccountOverviewData {
   last_updated: string
 }
 
-// v1.9.0: formato real usado por instagramOverviewRepository.ts e
-// instagramRepository.ts ao montar a resposta de fetchInstagramOverview().
 export interface DashboardHeaderMeta {
   clientHandle: string
   periodLabel: string
@@ -171,8 +207,6 @@ export interface DashboardHeaderMeta {
   }
 }
 
-// v1.9.0: revertido ao formato "plano" — é o único usado (KPICard.tsx,
-// instagramRepository.ts, instagramOverviewRepository.ts).
 export interface KPICardData {
   id: string
   label: string
@@ -183,9 +217,13 @@ export interface KPICardData {
   semaphore: SemaphoreColor
   glowColor: GlowColor
   subtitle: string | null
+  // ⚠️ OBSERVAÇÃO (14): campos abaixo só existiam na linhagem v1.0.1 do
+  // arquivo (Documento 4), ausentes nesta linhagem até agora — adição
+  // não-conflitante (superset), sem divergência de shape.
+  sourceLevel?: string
+  playRate?: number | null
 }
 
-// v1.9.0: value aceita number OU 'N/A' (QualityScoresPanel.tsx trata os dois).
 export interface QualityScoreItem {
   id: string
   label: string
@@ -196,7 +234,6 @@ export interface QualityScoreItem {
   glowColor: GlowColor
 }
 
-// v1.9.0: revertido ao formato "plano" — format/posts/shares.
 export interface FormatPerformanceRow {
   id: string
   format: string
@@ -206,14 +243,11 @@ export interface FormatPerformanceRow {
   trendColor: TrendColor
 }
 
-// v1.9.0: revertido — só `text` é consumido (InsightCard.tsx).
 export interface InsightData {
   id: string
   text: string
 }
 
-// v1.9.0: `body` é o campo real consumido (CriticalAlert.tsx). description/
-// actionUrl viram opcionais para não quebrar quem já monta sem eles.
 export interface CriticalAlertData {
   id: string
   title: string
@@ -223,10 +257,6 @@ export interface CriticalAlertData {
   actionUrl?: string | null
 }
 
-/**
- * Agregado real da tela de overview (era chamado IGOverviewData).
- * Formato consumido por instagramOverviewRepository.ts e instagramRepository.ts.
- */
 export interface IGOverviewData {
   meta: DashboardHeaderMeta
   kpis: KPICardData[]
@@ -237,10 +267,8 @@ export interface IGOverviewData {
 }
 
 /**
- * Formato "flat" real do funil, usado por FunnelChart, FunnelScreen,
- * FunnelScreenWrapper e funnelRepository.ts/.calc.ts.
- * Substituiu o antigo FunnelMetrics baseado em reach/profileVisits/linkClicks
- * (preservado abaixo como FunnelActualMetrics).
+ * Formato "flat" real do funil (PT-BR) — ⚠️ OBSERVAÇÃO (11): mistura de
+ * idioma com FunnelActualMetrics abaixo (EN).
  */
 export interface FunnelMetrics {
   alcance: number
@@ -251,10 +279,8 @@ export interface FunnelMetrics {
   taxaConv: number
 }
 
-/**
- * Formato anterior de FunnelMetrics (baseado nos nomes de coluna do banco).
- * Nenhum arquivo com erro depende dele — mantido por segurança/rastreabilidade.
- */
+// ⚠️ OBSERVAÇÃO (8): tipo morto — nenhum arquivo com erro depende dele;
+// mantido "por segurança/rastreabilidade" sem consumidor confirmado.
 export interface FunnelActualMetrics {
   reach: number
   profileVisits: number
@@ -282,14 +308,10 @@ export interface SimulatedFunnelResult {
 /** Alias de compat — barrel funnel.ts exporta este nome. */
 export type FunnelScreenData = FunnelMetrics
 
-/**
- * v1.9.0: data agora é FunnelMetrics (não FunnelScreenData aninhado) —
- * bate com o que useFunnel.ts calcula e com o que os componentes leem
- * direto de `data.ctrBio`, `data.alcance` etc.
- */
 export interface UseFunnelResult extends AsyncState<FunnelMetrics> {
   params: SimulatedFunnelParams
   setParams: (params: SimulatedFunnelParams) => void
+  lastUpdated: Date | null
   refetch: () => void
 }
 
@@ -305,8 +327,6 @@ export interface FunnelMetricsRow {
 // SEÇÃO 1: TIPOS EXISTENTES
 // ============================================================================
 
-// v1.9.0: adicionadas 'por-post' e 'audiencia' (nomes reais das abas em
-// Header.tsx / instagram/page.tsx). Mantidas as antigas por segurança.
 export type TabId =
   | 'overview'
   | 'metrics'
@@ -316,6 +336,7 @@ export type TabId =
   | 'por-post'
   | 'audiencia'
 
+// ⚠️ OBSERVAÇÃO (6): shape idêntico a IGAccountOverviewData (Seção 0.1).
 export interface IGOverviewLegacyData {
   followers: number
   engagement_rate: number
@@ -327,12 +348,13 @@ export interface IGOverviewLegacyData {
 }
 
 /**
- * Status de saúde do cliente.
- * SSOT: orbit.v_client_health (view calculada). Nunca ler clients.health_status
- * (coluna estática, deprecated — R-03).
- * Validado ao vivo em 2026-07-15: metric_count=0 → NULL propagation OK.
+ * SSOT: orbit.v_client_health (view calculada). Nunca ler
+ * clients.health_status (coluna estática, deprecated — R-03).
+ * ⚠️ OBSERVAÇÃO (13): 4º valor 'unknown' não existe em AlignmentStatus,
+ * apesar de ambos modelarem "saúde/status" de forma similar.
  */
 export type ClientHealthStatus = 'healthy' | 'warning' | 'critical' | 'unknown'
+
 
 export interface ClientMetrics {
   engagement_real: number
@@ -362,8 +384,6 @@ export interface Client {
 // ============================================================================
 // SEÇÃO 2: RAW ROW CONTRACTS — REPOSITÓRIOS
 // ============================================================================
-
-// ── 2.1: clientsRepository.ts ──────────────────────────────────────────────
 
 export interface OrbitClientHealthRow {
   client_id: string | null
@@ -406,8 +426,6 @@ export function isReallyCritical(row: OrbitClientHealthRow): boolean {
     row.metric_count > 0
   )
 }
-
-// ── 2.2: alertsRepository.ts ───────────────────────────────────────────────
 
 function isClientsJoinShape(
   value: unknown
@@ -482,8 +500,6 @@ export function validateLegacyAlertRow(row: unknown): row is LegacyAlertRow {
     (r.clients === null || isClientsJoinShape(r.clients))
   )
 }
-
-// ── 2.3: avatarRepository.ts ───────────────────────────────────────────────
 
 export interface AvatarAlignmentRow {
   client_id: string
@@ -561,8 +577,6 @@ export function validateAvatarValidationRow(
   )
 }
 
-// ── 2.3b: clientsRepository.ts — enriquecimento de client card (R-07) ─────
-
 export interface IgAccountSnapshotEnrichmentRow {
   client_id: string
   period_start: string
@@ -622,8 +636,6 @@ export function validateIgAudienceSnapshotRow(
   )
 }
 
-// ── 2.4: funnelRepository.ts / .calc.ts ────────────────────────────────────
-
 export interface SimulatedFunnelParams {
   alcance: number
   ctrBio: number
@@ -646,8 +658,6 @@ export function validateSnapshotSelect(row: unknown): row is SnapshotSelect {
   )
 }
 
-// ── 2.5: instagramOverviewRepository.ts ────────────────────────────────────
-
 export type RawRow = Record<string, unknown>
 
 export interface FetchOverviewParams {
@@ -655,8 +665,6 @@ export interface FetchOverviewParams {
   periodStart: string
   periodEnd: string
 }
-
-// ── 2.6: instagramRepository.ts (legado — ver nota no final do arquivo) ───
 
 export interface RawKPIRow {
   id: string
@@ -751,13 +759,14 @@ export interface DateBounds {
   latest: Date
 }
 
-// ── 2.7: metaAdsRepository.ts ──────────────────────────────────────────────
-
-// v1.9.0: adicionados os campos que metaAdsRepository.ts lê de fato.
-// ⚠️ Não validado contra Supabase ainda — se orbit.meta_campaigns não tiver
-// estas colunas, o SELECT vai quebrar em runtime mesmo com o build passando.
-// Rodar: select column_name from information_schema.columns where
-// table_schema='orbit' and table_name='meta_campaigns' antes de confiar 100%.
+/**
+ * ⚠️ OBSERVAÇÃO (9): campos abaixo (client_id, roas, ctr, cpc, frequency,
+ * fatigue, fatigue_percent, cpl) foram adicionados por inferência do
+ * consumo no frontend, SEM confirmação contra o schema real do Supabase.
+ * ⚠️ OBSERVAÇÃO (10): validateMetaCampaignRow (abaixo) não valida
+ * roas/ctr/frequency/fatigue_percent/cpl — a validação está incompleta
+ * em relação ao que a interface promete.
+ */
 export interface MetaCampaignRow extends CampaignRow {
   client_id: string
   roas: number | null
@@ -780,11 +789,15 @@ export function validateMetaCampaignRow(row: unknown): row is MetaCampaignRow {
 }
 
 // ============================================================================
-// SEÇÃO 3: TIPOS DE AVATAR (inalterado)
+// SEÇÃO 3: TIPOS DE AVATAR
 // ============================================================================
 
 export type AlignmentStatus = 'healthy' | 'warning' | 'critical'
+// ⚠️ OBSERVAÇÃO (4): vocabulário de cor #3 — palavras em EN diferentes de
+// GlowColor e SemaphoreColor, para o mesmo conceito de severidade.
 export type AlignmentColor = 'success' | 'warning' | 'danger'
+// ⚠️ OBSERVAÇÃO (12): shape idêntico a FetchStatus — duplicata sem motivo
+// de forma diferente.
 export type FetchStatusLegacy = 'idle' | 'loading' | 'success' | 'error'
 
 export interface GenderSplit {
@@ -792,6 +805,9 @@ export interface GenderSplit {
   female: number
 }
 
+// ⚠️ OBSERVAÇÃO (5): AvatarProfile é redeclarada logo abaixo (merge de
+// interface). Mantido aqui como está no original — a segunda declaração
+// adiciona interestSource/interestConfidence à primeira.
 export interface AvatarProfile {
   gender: GenderSplit
   ageRange: string
@@ -799,10 +815,6 @@ export interface AvatarProfile {
   geo: string
 }
 
-// v1.9.0: adicionado `color` — AlignmentBar.tsx lê `bar.color`, não
-// `bar.status`. Ambos ficam preenchidos com o mesmo valor mapeado via
-// ALIGNMENT_STATUS_COLOR (ver avatarRepository.ts patch).
-// ✅ 1. ADICIONADO: Interface rica para estruturar os cards de recomendação do HTML
 export interface AvatarRecommendation {
   id: string
   title: string
@@ -811,13 +823,12 @@ export interface AvatarRecommendation {
   type?: AlignmentStatus
 }
 
-// ✅ 2. ATUALIZADO: Incluindo a governança de onboarding diretamente no perfil do camelo
+// ⚠️ OBSERVAÇÃO (5): segunda declaração de AvatarProfile (declaration merging).
 export interface AvatarProfile {
   gender: { male: number; female: number }
   ageRange: string
   interest: string
   geo: string
-  // Rastreabilidade injetada no perfil do avatar real conforme as regras de negócio
   interestSource?: 'instagram_insights' | 'client_feedback' | 'manual' | null
   interestConfidence?: 'L0' | 'L1' | 'L2' | null
 }
@@ -831,7 +842,6 @@ export interface AlignmentBar {
   color: AlignmentColor
 }
 
-// ✅ 3. ATUALIZADO: Expandindo para suportar a lista plural do HTML e as propriedades de onboarding
 export interface AvatarAlignment {
   id: string
   clientId: string
@@ -840,15 +850,10 @@ export interface AvatarAlignment {
   score: number
   status: AlignmentStatus
   bars: AlignmentBar[]
-  
-  // 🎯 AJUSTE DE CONTRATO: Suporta o formato unificado do HTML sem usar any
-  recommendations: AvatarRecommendation[] 
+  recommendations: AvatarRecommendation[]
   recommendation: AvatarRecommendation | null
-  
-  // Mantidos no nível da raiz caso alguma função de auditoria legada faça a leitura direta
   realInterestSource?: 'instagram_insights' | 'client_feedback' | 'manual' | null
   realInterestConfidence?: 'L0' | 'L1' | 'L2' | null
-  // 🎯 CONTRATO EXPANDIDO: Injeção da Inteligência Panksepp e Diagnósticos da UI
   unconsciousDesireMapped: string
   misalignmentHypothesis: string
 }
@@ -871,8 +876,6 @@ export interface RepositoryError {
   message: string
   details?: Record<string, unknown>
 }
-
-// ─── Constantes de Governança mantidas intactas ──────────────────────────────
 
 export const ALIGNMENT_STATUS_LABEL: Record<AlignmentStatus, string> = {
   healthy: 'Bem Alinhado',
@@ -897,7 +900,6 @@ export const VARIANCE_THRESHOLDS = {
   warning: 30,
   critical: 100,
 } as const
-
 
 // ============================================================================
 // SEÇÃO 4: TIPOS DE HOOK
@@ -1074,19 +1076,10 @@ export interface DataTransformStrategy<TInput, TOutput> {
 // ============================================================================
 
 /**
- * v1.9.1 (correção — 2026-07-15, com source real de metaAdsRepository.ts):
- * O shape "agregado de campanha" (campaignId/spend/impressions/...) que
- * estava aqui antes NUNCA foi consumido por nenhum arquivo real — era
- * especulativo. O shape real é o de card de KPI simples, construído em
- * fetchCampaignMetrics()/buildEmptyKPIs().
- *
- * ⚠️ status usa vocabulário próprio ('green'/'amber'/'red'/'gray') — é o
- * TERCEIRO vocabulário de cor no projeto, distinto de SemaphoreColor
- * ('verde'/'ambar'/'vermelho') e de GlowColor ('cyan'/'gold'/'red'/'none').
- * Não normalizei para SemaphoreColor porque não tenho o componente que
- * consome isso (o card de KPI da tela Meta Ads) — mudar o vocabulário aqui
- * sem ver quem lê `status` do lado do componente pode quebrar em runtime
- * mesmo com o build passando. Fica registrado como próxima limpeza.
+ * ⚠️ OBSERVAÇÃO (4): vocabulário de cor #4 — 'green'/'amber'/'red'/'gray',
+ * o próprio autor original chama de "terceiro vocabulário de cor no
+ * projeto" e registra que não normalizou por falta de visibilidade do
+ * componente consumidor.
  */
 export type MetaAdsKPIStatus = 'green' | 'amber' | 'red' | 'gray'
 
@@ -1100,91 +1093,72 @@ export interface MetaAdsKPI {
   deltaLabel: string
 }
 
-// src/types/orbit.ts (adicionar ao final)
-
 // ============================================================================
 // SEÇÃO 10: ONBOARDING — Tipos e Interfaces
+// ✅ RECONCILIADO contra orbit.client_onboarding (schema real, confirmado
+// via information_schema.columns + pg_constraint em 2026-07-28).
 // ============================================================================
 
+export interface BioLink {
+  url: string
+  label: string
+}
+
+export type CTAType = 'link_direto' | 'linktree_multilink' | 'dm_comentario' | 'nenhum'
+
+export type FunnelMaturity =
+  | 'nao_implementado'
+  | 'implementado_fragmentado'
+  | 'implementado_unificado'
+
+export type ProofMechanism =
+  | 'prova_social'
+  | 'autoridade'
+  | 'escassez_urgencia'
+  | 'associacao_marca'
+  | 'resultado_documentado'
+  | 'nenhum_observavel'
+
+/** ⚠️ CORRIGIDO: schema real usa 'PANIC_GRIEF', não 'PANIC'; 'mixed' não
+ * existe na CHECK constraint do banco — removido. */
 export type PankseppSystem =
-  | 'SEEKING'
-  | 'RAGE'
-  | 'FEAR'
-  | 'LUST'
-  | 'CARE'
-  | 'PANIC'
-  | 'PLAY'
-  | 'mixed'
+  | 'SEEKING' | 'RAGE' | 'FEAR' | 'LUST' | 'CARE' | 'PANIC_GRIEF' | 'PLAY'
 
 export interface SchwatzValue {
   value: string
   priority: 'high' | 'medium' | 'low'
 }
 
+export type ValuesAffectSource = 'onboarding' | 'client_feedback' | 'manual'
+
+/** SSOT: orbit.client_onboarding (schema confirmado 2026-07-28). */
 export interface ClientOnboarding {
   client_id: string
-  
-  // Seguidores
   total_followers: number
   total_followers_source: 'manual_print_confirmado' | 'instagram_api' | 'estimate'
-  total_followers_updated_at: string
-  
-  // Bio
-  has_bio_link: boolean
-  bio_link_url: string | null
-  
-  // Perguntas qualitativas
+  bio_links: BioLink[]
+  cta_type: CTAType | null
+  funnel_maturity: FunnelMaturity | null
   q1_engagement_period_notes: string | null
   q2_content_proxy_notes: string | null
   q3_misalignment_notes: string | null
-  
-  // Split de audiência (%)
-  audience_nucleo_fiel_pct: number
-  audience_consumo_passivo_pct: number
-  audience_curiosidade_externa_pct: number
-  audience_alta_rotatividade_pct: number
-  
-  // Evidência bruta (contexto, não fórmula)
-  observed_content_clusters: Record<string, string[]> | null
-  
-  // Eixos com peso real
-  expected_panksepp_system: PankseppSystem
-  real_panksepp_system: PankseppSystem
+  audience_nucleo_fiel_pct: number | null
+  audience_consumo_passivo_pct: number | null
+  audience_curiosidade_externa_pct: number | null
+  audience_alta_rotatividade_pct: number | null
+  // ⚠️ Coluna real é `text`, não jsonb — string livre, não Record.
+  observed_content_clusters: string | null
+  setor_benchmark: SetorBenchmark | null
+  nicho: string | null
+  proof_mechanism: ProofMechanism | null
+  expected_panksepp_system: PankseppSystem | null
+  real_panksepp_system: PankseppSystem | null
   expected_schwartz: Record<string, SchwatzValue> | null
   real_schwartz: Record<string, SchwatzValue> | null
-  
-  // Metadata
+  values_affect_source: ValuesAffectSource
+  values_affect_confidence: 'L0' | 'L1' | 'L2'
   updated_by: string
   updated_at: string
-}
-
-export interface OnboardingFormData {
-  // Step 1: Seguidores
-  total_followers: number
-  total_followers_source: ClientOnboarding['total_followers_source']
-  
-  // Step 2: Bio
-  has_bio_link: boolean
-  bio_link_url: string
-  
-  // Step 3: Perguntas
-  q1_engagement_period_notes: string
-  q2_content_proxy_notes: string
-  q3_misalignment_notes: string
-  
-  // Step 4: Split de Audiência
-  audience_nucleo_fiel_pct: number
-  audience_consumo_passivo_pct: number
-  audience_curiosidade_externa_pct: number
-  audience_alta_rotatividade_pct: number
-  
-  // Step 5: Panksepp
-  expected_panksepp_system: PankseppSystem
-  real_panksepp_system: PankseppSystem
-  
-  // Step 6: Schwartz
-  expected_schwartz: Record<string, SchwatzValue>
-  real_schwartz: Record<string, SchwatzValue>
 }
 
 export interface OnboardingStep {
@@ -1194,23 +1168,223 @@ export interface OnboardingStep {
   icon: string
 }
 
-
 // ============================================================================
-// FIM DO ARQUIVO
+// SEÇÃO 11: ALERTAS — CONTAGEM (⚠️ DIVERGÊNCIA — ver observação 1)
+// Presente apenas no Documento A. Ausente no Documento B. Mantido aqui e
+// sinalizado — decidir se B esqueceu de incorporar, ou se A adicionou algo
+// que ainda não deveria estar em produção, é uma decisão de quem conhece o
+// hook `useAlerts` real; este arquivo apenas expõe o conflito.
 // ============================================================================
-
 
 export interface AlertCounts {
-  critical: number;
-  warning: number;
-  info: number;
+  critical: number
+  warning: number
+  info: number
 }
 
 export interface UseAlertsResult {
-  alerts: CriticalAlertData[];
-  counts: AlertCounts;
-  status: 'idle' | 'loading' | 'success' | 'error';
-  error: string | null;
-  lastUpdated: Date | null;
-  refetch: () => Promise<void> | void;
+  alerts: CriticalAlertData[]
+  counts: AlertCounts
+  status: 'idle' | 'loading' | 'success' | 'error'
+  error: string | null
+  lastUpdated: Date | null
+  refetch: () => Promise<void> | void
 }
+
+// ============================================================================
+// SEÇÃO 12: GAPS RESOLVIDOS PELA LINHAGEM v1.0.1 (Documento 4) + ADRs
+// (rodada de reconciliação nº2 — comparação contra orbit.ts v1.0.1 e o
+// documento de arquitetura com LEI ZERO / ADR1-5). Nada aqui foi fundido
+// silenciosamente com o que já existia nas Seções 0-11; onde há choque de
+// shape, os dois tipos convivem, flagados.
+// ============================================================================
+
+// ⚠️ OBSERVAÇÃO (15) — GAP FECHADO: `SetorBenchmark` era importado por
+// funnelRepository.calc.ts e avatarRepository.ts mas nunca existiu em
+// nenhuma das duas linhagens de orbit.ts (TS2305 no relatório forense).
+// Valores conforme o próprio relatório forense (Documento 6, avatarRepository
+// Erro #2) — não confirmados contra tabela/enum do Supabase.
+export type SetorBenchmark =
+  | 'comercio_direto_ecommerce_social'
+  | 'comissionamento_afiliados'
+  | 'infoprodutor_educador_pago'
+  | 'servico_consultoria_profissional'
+  | 'patrocinio_publicidade_marca'
+  | 'membership_assinatura_comunidade'
+  | 'monetizacao_nativa_plataforma'
+  | 'autoridade_personal_branding_b2b'
+  | 'pre_monetizacao_a_validar'
+
+// ⚠️ OBSERVAÇÃO (16) — GAP FECHADO: `CalculationResult` vivia apenas local
+// em funnelRepository.calc.ts (fora do SSOT). Centralizado aqui conforme o
+// próprio relatório forense recomendava; shape reproduzido como descrito,
+// não verificado contra o arquivo fonte.
+export type CalculationResult =
+  | { status: 'success'; data: FunnelMetrics; isSaturated: boolean; razaoEscala: number }
+  | { status: 'error'; reason: 'missing_ctr_link' | 'invalid_params'; message: string }
+
+/**
+ * ⚠️ OBSERVAÇÃO (17) — GAP FECHADO: nenhuma das duas linhagens tinha um
+ * tipo para rastrear de qual schema um dado veio. LEI ZERO (documento de
+ * arquitetura do usuário): "banco de dados é orbit; qualquer outro é
+ * cemitério" (public.* = legado/Sprint 1). O ADR 5 exige que repositórios
+ * com fallback (ex.: instagramOverviewRepository) retornem `{ data, source }`
+ * — sem este tipo, esse fallback não é tipado, é invisível pro TS.
+ */
+export type DataSource = 'orbit' | 'public'
+
+export interface SourcedResult<T> {
+  data: T
+  source: DataSource
+}
+
+/**
+ * ⚠️ OBSERVAÇÃO (18) — DIVERGÊNCIA NÃO RESOLVIDA: shape real de linha de
+ * alerta segundo a linhagem v1.0.1 (Documento 4, comentário "✅ AlertRow
+ * corrigido: metric_id ← era 'title', message ← era 'body', is_active
+ * removido — não existe na tabela"). Este shape é INCOMPATÍVEL com
+ * `OrbitAlertRow`/`LegacyAlertRow` (Seção 2), que assumem title/description/
+ * metric_name/metric_value/threshold_value/action_url. Um dos dois está
+ * errado em relação ao schema real — não decidido aqui, apenas exposto.
+ */
+export interface AlertRow {
+  id: string
+  client_id: string
+  metric_id: string
+  severity: AlertSeverity
+  message: string
+  created_at: string
+}
+
+// ⚠️ OBSERVAÇÃO (19): duplicata literal de AlertRow, inserida no v1.0.1
+// logo após ("✅ ADICIONAR APÓS AlertRow") — mesmo padrão de duplicação já
+// visto em IGOverviewLegacyData/IGAccountOverviewData (observação 6).
+export interface CriticalAlertRawRow {
+  id: string
+  client_id: string
+  metric_id: string
+  severity: AlertSeverity
+  message: string
+  created_at: string
+}
+
+/**
+ * ⚠️ OBSERVAÇÃO (20) — GAP FECHADO parcialmente: segunda lineage de raw-row
+ * para KPI/Quality/Format, DIVERGENTE de RawKPIRow/RawQualityRow/RawFormatRow
+ * (Seção 2) — nomes de campo diferentes (metric_key/metric_value/created_at
+ * vs metric/value). Nenhuma das duas foi marcada como obsoleta em nenhum
+ * documento recebido; convivem aqui como duas gerações não reconciliadas
+ * do mesmo raw shape.
+ */
+export interface KpiSnapshotRow {
+  id: string
+  client_id: string
+  period_start: string
+  period_end: string
+  metric_key: string
+  metric_value: number
+  metric_unit: string | null
+  delta_pct: number
+  semaphore: SemaphoreColor
+  subtitle: string | null
+  created_at: string
+}
+
+export interface QualityScoreRow {
+  id: string
+  client_id: string
+  period_start: string
+  period_end: string
+  score_key: string
+  score_value: number | null
+  status_text: string
+  status_variant: StatusVariant
+  created_at: string
+  calculated_at?: string
+}
+
+export interface FormatPerformanceRawRow {
+  id: string
+  client_id: string
+  period_start: string
+  period_end: string
+  format_name: string
+  post_count: number
+  share_count: number
+  trend_label: string
+  trend_color: TrendColor
+}
+
+/**
+ * ⚠️ OBSERVAÇÃO (21) — GAP FECHADO: `ClientDemographics`/`ClientRow` não
+ * existiam em nenhuma seção anterior. Trazem uma TERCEIRA representação de
+ * "esperado vs real" de avatar, distinta de `AvatarProfile` (objeto
+ * GenderSplit) e de `ClientOnboarding` (Panksepp/Schwartz) — aqui o
+ * "esperado" é `string | null` solto (avatar_gender_expected) e o "real" é
+ * um objeto estruturado (ClientDemographics['gender']). Três shapes
+ * concorrentes para o mesmo conceito de negócio, nenhum marcado como fonte
+ * de verdade única.
+ */
+export interface ClientDemographics {
+  gender: {
+    male_pct: number
+    female_pct: number
+    other_pct: number
+    updated_at: string
+  }
+  ageRange: {
+    '18-24': number
+    '25-34': number
+    '35-44': number
+    '45-54': number
+    '55+': number
+    updated_at: string
+  }
+  cities: { name: string; pct: number }[]
+  countries: { name: string; pct: number }[]
+}
+
+export interface ClientRow {
+  id: string
+  agency_id: string
+  name: string
+  instagram_account_id: string | null
+  meta_ads_account_id: string | null
+  is_business_account: boolean
+  avatar_gender_expected: string | null
+  avatar_age_range_expected: string | null
+  avatar_city_expected: string | null
+  avatar_gender_real: ClientDemographics['gender'] | null
+  avatar_age_range_real: ClientDemographics['ageRange'] | null
+  avatar_cities_real: ClientDemographics['cities'] | null
+  avatar_countries_real: ClientDemographics['countries'] | null
+  demographics_updated_at: string | null
+  benchmark_cpm_l2: number | null
+  benchmark_engagement_l2: number | null
+  benchmark_input_by: string | null
+  benchmark_updated_at: string | null
+  ctr_threshold_meta: number
+  ctr_threshold_google: number
+  cpa_alert_multiplier: number
+  freq_alert_threshold: number
+  created_at: string
+  updated_at: string
+}
+
+/**
+ * ⚠️ OBSERVAÇÃO (22) — DIVERGÊNCIA NÃO RESOLVIDA: `DashboardHeaderMeta`
+ * já existe na Seção 0.1 com `dateRange: { start: Date; end: Date }`. A
+ * linhagem v1.0.1 usa `dateRange: { from: string; to: string }`. Não
+ * escolhi um — a versão da Seção 0.1 permanece a exportada sob esse nome;
+ * este comentário só registra que a segunda forma existe em produção
+ * (Documento 4) e não foi reconciliada.
+ */
+
+// ⚠️ OBSERVAÇÃO (23): nomes divergentes SEM divergência de shape entre as
+// duas linhagens — alias, não merge.
+export type InstagramOverviewData = IGOverviewData
+export type UseInstagramOverviewReturn = UseInstagramOverviewResult
+
+// ============================================================================
+// FIM DO ARQUIVO (marcador real desta vez — nada é colado depois dele)
+// ============================================================================
