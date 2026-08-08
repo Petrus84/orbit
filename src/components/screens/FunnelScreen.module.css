@@ -1,0 +1,158 @@
+.main {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-6);
+  width:          100%;
+  max-width:      1400px;
+  margin:         0 auto;
+  padding:        var(--space-8) var(--space-6);
+}
+
+.errorBox {
+  max-width:      680px;
+  width:          100%;
+  margin:         0 auto;
+  padding:        var(--space-8);
+  text-align:     center;
+  border:         var(--border-width) solid color-mix(in srgb, var(--red) 25%, transparent);
+  border-radius:  var(--radius-lg);
+  background:     color-mix(in srgb, var(--red) 8%, transparent);
+}
+
+.errorText {
+  font-family:   var(--font-family);
+  font-size:     var(--font-size-sm);
+  color:         var(--red);
+  margin-bottom: var(--space-4);
+}
+
+.retryBtn {
+  font-family:    var(--font-family);
+  font-size:      var(--font-size-xs);
+  font-weight:    500;
+  padding:        var(--space-1) var(--space-4);
+  border-radius:  var(--radius-pill);
+  border:         var(--border-width) solid color-mix(in srgb, var(--red) 40%, transparent);
+  background:     color-mix(in srgb, var(--red) 20%, transparent);
+  color:          var(--red);
+  cursor:         pointer;
+  transition:     background var(--transition-fast);
+}
+
+.retryBtn:hover {
+  background: color-mix(in srgb, var(--red) 30%, transparent);
+}
+
+.grid {
+  display:               grid;
+  grid-template-columns: 1fr;
+  gap:                   var(--space-6);
+  width:                 100%;
+  align-items:           stretch;
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.colStretch {
+  display:        flex;
+  flex-direction: column;
+  width:          100%;
+}
+
+/* Panel — espelha .card do protótipo (bg2 / border line / r16 / padding 18-20px) */
+.panel {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-4);
+  width:          100%;
+  padding:        18px 20px;
+  border:         var(--border-width) solid var(--border-default);
+  border-radius:  var(--r16);
+  background:     var(--bg-card);
+}
+
+.panelTitle {
+  font-family:    var(--font-family);
+  font-size:      11px;
+  font-weight:    500;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color:          var(--text-muted);
+}
+
+.panelBody {
+  flex:            1;
+  width:           100%;
+  display:         flex;
+  flex-direction:  column;
+  justify-content: center;
+  align-items:     center;
+}
+
+.chartWrap {
+  width:      100%;
+  height:     100%;
+  min-height: 350px;
+  display:    flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ── Skeletons ── */
+.skeletonPulse {
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.45; }
+}
+
+.skeletonRows {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-4);
+  width:          100%;
+}
+
+.skeletonRow {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-1);
+}
+
+.skeletonLineRow {
+  display:         flex;
+  justify-content: space-between;
+}
+
+.skeletonLine {
+  height:        10px;
+  border-radius: var(--radius-pill);
+  background:    var(--bg-active);
+}
+
+.skeletonBar {
+  height:        8px;
+  width:         100%;
+  border-radius: var(--radius-pill);
+  background:    var(--bg-active);
+  overflow:      hidden;
+}
+
+.skeletonBarFill {
+  height:        100%;
+  border-radius: var(--radius-pill);
+  background:    var(--line2);
+}
+
+.skeletonBlock {
+  height:        128px;
+  width:         100%;
+  border-radius: var(--radius-lg);
+  background:    var(--bg-active);
+}

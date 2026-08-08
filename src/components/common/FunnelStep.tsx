@@ -1,11 +1,12 @@
 import React from 'react';
+import styles from './FunnelStep.module.css';
 
 export interface FunnelStepData {
   label: string;
   value: number;
-  percentage: number; // relative to first step (alcance = 100%)
-  color: string;      // hex
-  glowColor: string;  // rgba string for box-shadow
+  percentage: number; // relativo à primeira etapa (alcance = 100%)
+  /** Token de cor do design system, ex: 'var(--blue)', 'var(--acc)' — nunca hex solto. */
+  color: string;
 }
 
 interface FunnelStepProps {
@@ -20,37 +21,31 @@ function formatValue(v: number): string {
 }
 
 export default function FunnelStep({ step, isLast = false }: FunnelStepProps): React.ReactElement {
+  // --step-color é a única "cor dinâmica" do componente — e ela sempre chega
+  // como um var(--token), nunca como hex. Isso preserva o SSOT mesmo com dado
+  // variável por etapa (o CSS não pode saber de antemão qual token usar).
+  const stepStyle = { '--step-color': step.color } as React.CSSProperties;
+
   return (
-    <div className="flex flex-col gap-1.5">
-      {/* Label + value row */}
-      <div className="flex items-center justify-between">
-        <span className="font-sans text-xs font-medium text-zinc-400">{step.label}</span>
-        <div className="flex items-baseline gap-1.5">
-          <span className="font-mono text-sm font-bold tabular-nums text-white">
-            {formatValue(step.value)}
-          </span>
-          <span className="font-mono text-[10px] tabular-nums" style={{ color: step.color }}>
+    <div className={styles.step}>
+      <div className={styles.row}>
+        <span className={styles.label}>{step.label}</span>
+        <div className={styles.values}>
+          <span className={styles.value}>{formatValue(step.value)}</span>
+          <span className={styles.percentage} style={stepStyle}>
             {step.percentage.toFixed(1)}%
           </span>
         </div>
       </div>
 
-      {/* Bar */}
-      <div className="relative h-2 w-full overflow-hidden rounded-full bg-zinc-800">
+      <div className={styles.barWrap}>
         <div
-          className="h-full rounded-full transition-all duration-500"
-          style={{
-            width: `${Math.max(step.percentage, 0.5)}%`,
-            backgroundColor: step.color,
-            boxShadow: `0 0 8px 1px ${step.glowColor}`,
-          }}
+          className={styles.barFill}
+          style={{ ...stepStyle, width: `${Math.max(step.percentage, 0.5)}%` }}
         />
       </div>
 
-      {/* Connector line to next step */}
-      {!isLast && (
-        <div className="mx-auto h-3 w-px bg-zinc-800" aria-hidden="true" />
-      )}
+      {!isLast && <div className={styles.connector} aria-hidden="true" />}
     </div>
   );
 }

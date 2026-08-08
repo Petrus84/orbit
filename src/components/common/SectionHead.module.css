@@ -1,0 +1,24 @@
+/* SectionHead.module.css
+   Espelha .section-head / .section-title / .section-sub do protótipo SSOT
+   (gestao_social_prototipo.html, linhas ~181-185) */
+
+.wrap {
+  display:        flex;
+  flex-direction: column;
+  gap:            2px;
+}
+
+.title {
+  font-family: var(--font-family);
+  font-size:   var(--font-size-xl); /* 16px — igual .section-title do protótipo */
+  font-weight: 500;
+  color:       var(--text-primary);
+  letter-spacing: -0.2px;
+}
+
+.subtitle {
+  font-family: var(--font-family);
+  font-size:   var(--font-size-sm); /* 12px — igual .section-sub */
+  color:       var(--text-muted);
+  margin-top:  2px;
+}

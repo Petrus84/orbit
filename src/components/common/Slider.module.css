@@ -1,0 +1,118 @@
+/* Slider.module.css
+   Espelha .slider-wrap/.slider-head/.slider-label/.slider-val e o
+   input[type=range] do protótipo (linhas ~210-217). */
+
+.wrap {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-2);
+}
+
+.head {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+}
+
+.label {
+  font-family: var(--font-family);
+  font-size:   var(--font-size-sm);
+  color:       var(--text-secondary);
+}
+
+.valueDisplay {
+  font-family: var(--font-mono);
+  font-size:   var(--font-size-sm);
+  font-weight: 500;
+  color:       var(--acc);
+  font-variant-numeric: tabular-nums;
+}
+
+.trackRow {
+  position:    relative;
+  display:     flex;
+  align-items: center;
+}
+
+.trackFill {
+  position:      absolute;
+  left:          0;
+  top:           50%;
+  transform:     translateY(-50%);
+  height:        4px;
+  width:         100%;
+  overflow:      hidden;
+  border-radius: var(--radius-pill);
+  background:    var(--bg-active);
+  pointer-events: none;
+}
+
+.trackFillInner {
+  height:         100%;
+  border-radius:  var(--radius-pill);
+  background:     var(--acc);
+  opacity:        0.6;
+  transition:     width 75ms linear;
+}
+
+.input {
+  position:   relative;
+  width:      100%;
+  cursor:     pointer;
+  appearance: none;
+  background: transparent;
+}
+
+.input:focus-visible {
+  outline:        2px solid var(--acc);
+  outline-offset: 3px;
+  border-radius:  var(--radius-pill);
+}
+
+.input::-webkit-slider-runnable-track {
+  height:        4px;
+  border-radius: var(--radius-pill);
+  background:    transparent;
+}
+
+.input::-webkit-slider-thumb {
+  appearance:    none;
+  width:         14px;
+  height:        14px;
+  border-radius: 50%;
+  background:    var(--acc);
+  box-shadow:    0 0 8px 2px color-mix(in srgb, var(--acc) 45%, transparent);
+  cursor:        pointer;
+  transition:    transform var(--transition-fast);
+  margin-top:    -5px;
+}
+
+.input::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.input::-moz-range-track {
+  height:        4px;
+  border-radius: var(--radius-pill);
+  background:    var(--bg-active);
+}
+
+.input::-moz-range-thumb {
+  width:         14px;
+  height:        14px;
+  border:        0;
+  border-radius: 50%;
+  background:    var(--acc);
+  cursor:        pointer;
+}
+
+.rangeLabels {
+  display:         flex;
+  justify-content: space-between;
+}
+
+.rangeLabel {
+  font-family: var(--font-mono);
+  font-size:   9px;
+  color:       var(--text-dim);
+}

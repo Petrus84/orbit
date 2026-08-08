@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './SectionHead.module.css';
 
 interface SectionHeadProps {
   title: string;
@@ -7,13 +8,9 @@ interface SectionHeadProps {
 
 export default function SectionHead({ title, subtitle }: SectionHeadProps): React.ReactElement {
   return (
-    <div className="flex flex-col gap-0.5">
-      <h1 className="font-sans text-xl font-semibold tracking-tight text-white">
-        {title}
-      </h1>
-      {subtitle && (
-        <p className="font-sans text-sm text-zinc-400">{subtitle}</p>
-      )}
+    <div className={styles.wrap}>
+      <h1 className={styles.title}>{title}</h1>
+      {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
     </div>
   );
 }
