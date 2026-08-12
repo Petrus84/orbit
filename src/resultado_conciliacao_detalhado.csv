@@ -1,0 +1,90 @@
+entidade,campo,origem,tipo_db,tipo_ts,is_nullable/optional,classificacao,evidencia
+ads_platform,,enum,"'meta,'google,'tiktok,'linkedin'",,,FANTASMA,enum no DB sem type TS
+alert_severity,'critical,enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no DB não no TS
+alert_severity,'info,enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no DB não no TS
+alert_severity,'success',enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no DB não no TS
+alert_severity,'warning,enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no DB não no TS
+alert_severity,ambar,enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,"critical'
+
+export type campaignobjective = string
+export type campaignstatus = string
+
+// ⚠️ observação (7): representação #1 de campanha — linha crua do banco.
+export interface campaignrow {
+  id: string
+  meta_campaign_id: string
+  name: string
+  objective: campaignobjective
+  status: campaignstatus
+  budget_monthly: number",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,down,enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,"estável'
+
+/**
+ * ⚠️ observação (7): representação #2 de campanha — entidade de ui já
+ * processada por `rowtocampaign()` (função não presente neste arquivo).
+ * não é alias de campaignrow apesar do nome sugerir isso.
+ */
+export interface campaign {
+  id: string
+  name: string
+  objective: campaignobjective
+  roas: number",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,"flat'
+
+export type clientstatus = 'active",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,gold,enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,inactive,enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,info,enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,"neutral'
+// ⚠️ observação (4): vocabulário de cor #2 — nomes de cor em en.
+export type glowcolor = 'cyan",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,"none'
+export type trendcolor = 'up",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,"null
+  budget_lifetime: number",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,"null
+  created_at: string
+  updated_at: string
+}
+
+export type fatiguestatus = 'crítico",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,"null
+  ctr: number",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,"null
+  diagnosis: string
+  actionrequired: string
+}
+
+// ⚠️ observação (4): vocabulário de cor #1 — pt-br.
+export type semaphorecolor = 'verde",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,"null
+  end_date: string",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,"null
+  fatiguepercent: number
+  fatiguestatus: fatiguestatus
+  status: campaignstatus
+  cpl: number",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,"null
+  frequency: number",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,"null
+  start_date: string",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,paused,enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,red,enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,"vermelho'
+
+// ⚠️ observação (4): vocabulário de severidade #2, distinto de alertseverity.
+export type statusvariant = 'ok",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,warn,enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,warning,enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_type,,enum,"'ctr_below_threshold,'engagement_collapse,'avatar_misalignment,'creative_fatigue,'roas_below_minimum,'follower_churn_high,'polemic_score_high,'boost_opportunity,'budget_pace'",,,FANTASMA,enum no DB sem type TS
+asset_status,,enum,"'active,'paused,'archived,'draft,'under_review'",,,FANTASMA,enum no DB sem type TS
+campaign_objective,,enum,"'awareness,'reach,'traffic,'engagement,'leads,'app_promotion,'sales,'video_views'",,,FANTASMA,enum no DB sem type TS
+confidence_level,,enum,"'l0,'l1,'l2'",,,FANTASMA,enum no DB sem type TS
+content_format,,enum,"'reel,'static_post,'carousel,'story,'live,'igtv'",,,FANTASMA,enum no DB sem type TS
+fatigue_cause,,enum,"'creative_saturation,'segmentation_issue,'offer_issue,'healthy'",,,FANTASMA,enum no DB sem type TS
+gender_category,,enum,"'male,'female,'non_binary,'mixed'",,,FANTASMA,enum no DB sem type TS
+health_status,,enum,"'healthy,'warning,'critical,'unknown'",,,FANTASMA,enum no DB sem type TS
+ingest_script,,enum,"'ingest-l0-v2,'ingest-insights,'extract-demographics,'manual'",,,FANTASMA,enum no DB sem type TS
+period_source,,enum,"'instagram_export,'meta_api,'google_ads_api,'ga4_api,'manual_input'",,,FANTASMA,enum no DB sem type TS
