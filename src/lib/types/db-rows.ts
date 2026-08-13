@@ -63,3 +63,15 @@ export interface BenchmarkHistoryRow {
   valid_until?: string | null
   created_at?: string
 }
+
+export interface AlertConfigRow {
+  id: string
+  client_id: string
+  ctr_threshold_meta: number
+  ctr_threshold_google: number
+  cpa_multiplier: number
+  freq_threshold: number
+  alert_email?: string | null
+  alert_slack_webhook?: string | null
+  updated_at?: string
+}
