@@ -82,7 +82,8 @@ import type { ReactNode } from 'react'
 // ============================================================================
 
 // Re-export enums from central SSOT file to keep single source for enums
-export type { AlertSeverity, CampaignObjective } from '../lib/types/enums-orbit'
+import type { AlertSeverity, CampaignObjective } from '../lib/types/enums-orbit'
+export type { AlertSeverity, CampaignObjective }
 export type CampaignStatus = string
 
 // ⚠️ OBSERVAÇÃO (7): representação #1 de Campanha — linha crua do banco.
