@@ -14,8 +14,8 @@ import type {
   AlignmentStatus,
   AvatarAlignment,
   AvatarProfile,
-  AvatarRecommendation,
 } from '../../types/avatar'
+import type { AvatarRecommendation } from '../../types/orbit'
 import { ALIGNMENT_THRESHOLDS } from '../../types/avatar'
 
 interface AvatarAlignmentRow {
