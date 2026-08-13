@@ -11,21 +11,33 @@
 // =============================================================================
 
 import { supabaseLegacy } from '../supabase'
-import type { FunnelMetrics, FunnelMetricsRow } from '../../types/funnel'
+import type { FunnelMetrics } from '../../types/funnel'
+
+// the funnel_data table in legacy exports uses Portuguese column names
+interface FunnelDataRow {
+  alcance: number | null
+  visitas: number | null
+  cliques: number | null
+  vendas: number | null
+  ctr_bio: number | null
+  taxa_conv: number | null
+  period_start?: string
+  period_end?: string
+}
 
 type FunnelDataSelect = Pick<
-  FunnelMetricsRow,
+  FunnelDataRow,
   'alcance' | 'visitas' | 'cliques' | 'vendas' | 'ctr_bio' | 'taxa_conv'
 >
 
 function mapRowToFunnelMetrics(row: FunnelDataSelect): FunnelMetrics {
   return {
-    alcance:  row.alcance,
-    visitas:  row.visitas,
-    cliques:  row.cliques,
-    vendas:   row.vendas,
-    ctrBio:   row.ctr_bio,
-    taxaConv: row.taxa_conv,
+    alcance:  (row.alcance ?? 0) as number,
+    visitas:  (row.visitas ?? 0) as number,
+    cliques:  (row.cliques ?? 0) as number,
+    vendas:   (row.vendas ?? 0) as number,
+    ctrBio:   (row.ctr_bio ?? 0) as number,
+    taxaConv: (row.taxa_conv ?? 0) as number,
   }
 }
 
