@@ -108,7 +108,15 @@ const NAV_ITEMS: NavItem[] = [
  */
 export function Sidebar() {
   const pathname = usePathname()
-  const { activeTab, setActiveTab, currentClient, alertCount } = useOrbitDashboard()
+  const { activeTab, setActiveTab, data } = useOrbitDashboard()
+
+  // Backfill: o hook fornece 'data' (IGOverviewData). A Sidebar espera
+  // um 'currentClient' e um 'alertCount' — construir localmente a partir
+  // do payload do overview para evitar quebrar o contrato visual.
+  const currentClient = data?.meta
+    ? { name: data.meta.clientHandle ?? '—', status: 'unknown' as const }
+    : null
+  const alertCount = data?.criticalAlerts ? data.criticalAlerts.length : 0
 
   // Separar itens por seção
   const visaoGeralItems = NAV_ITEMS.filter(i => i.section === 'visao-geral')
