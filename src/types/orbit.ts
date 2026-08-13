@@ -1447,6 +1447,29 @@ export interface ClientRow {
   updated_at: string
 }
 
+// === DB-aligned row types added (based on schema SQL files) ===
+export interface KpiRawIngestionRow {
+  id: string
+  client_id: string | null
+  agency_id: string
+  source: 'instagram_graph_api' | 'meta_ads_api' | 'meta_ads_export' | 'google_ads_api'
+  api_version: string
+  endpoint: string
+  collected_at: string
+  period_start: string
+  period_end: string
+  raw_payload: unknown
+  payload_size_kb?: number | null
+  ingestion_status: 'pending' | 'processed' | 'error' | 'skipped'
+  error_detail?: string | null
+  schema_version: number
+  created_at: string
+  product_type?: string | null
+  uses_original_audio?: boolean | null
+  video_duration_s?: number | null
+}
+
+
 /**
  * ⚠️ OBSERVAÇÃO (22) — DIVERGÊNCIA NÃO RESOLVIDA: `DashboardHeaderMeta`
  * já existe na Seção 0.1 com `dateRange: { start: Date; end: Date }`. A
