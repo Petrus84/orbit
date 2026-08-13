@@ -75,3 +75,20 @@ export interface AlertConfigRow {
   alert_slack_webhook?: string | null
   updated_at?: string
 }
+
+export interface IgPostsRow {
+  id?: string
+  client_id?: string | null
+  ig_post_uri: string
+  published_at: string
+  content_format: string
+  caption?: string | null
+  reach?: number | null
+  impressions?: number | null
+  likes?: number | null
+  comments?: number | null
+  shares?: number | null
+  saves?: number | null
+  confidence_level?: string | null
+  created_at?: string
+}
