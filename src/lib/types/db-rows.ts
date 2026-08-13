@@ -13,3 +13,16 @@ export interface AdsMetricsRow {
   diagnosis?: unknown
   created_at?: string
 }
+
+export interface DomainEventRow {
+  id: string
+  client_id: string
+  event_type: string
+  previous_state?: unknown | null
+  new_state?: unknown | null
+  triggered_at: string
+  webhook_sent: boolean
+  webhook_url?: string | null
+  webhook_response?: unknown | null
+  created_at?: string
+}
