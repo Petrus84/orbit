@@ -35,7 +35,25 @@ import type {
   TrendColor,
 } from '../../types/orbit'
 
-type RawRow = Record<string, unknown>
+// Raw row shapes used by the view queries
+interface QualityRow {
+  id: string
+  score_key: string
+  score_value: number | string | null
+  status_text?: string | null
+  status_variant?: 'ok' | 'warn' | 'neutral' | null
+  period_start?: string | null
+  period_end?: string | null
+}
+
+interface FormatRow {
+  id: string
+  format_name: string
+  post_count: number | null
+  share_count: number | null
+  trend_label?: string | null
+  trend_color?: 'up' | 'down' | 'flat' | null
+}
 
 // KPI_METRIC_KEYS: alinhados com as chaves emitidas por orbit.v_kpi_snapshots
 const KPI_METRIC_KEYS = [
@@ -217,7 +235,7 @@ async function fetchKPIs(
     .lte('period_end', end)
     .in('metric_key', KPI_METRIC_KEYS)
     .order('calculated_at', { ascending: false })
-    .returns<RawRow[]>()
+        .returns<unknown[]>()
 
   let rows: RawRow[] | null = orbitData
 
@@ -233,7 +251,7 @@ async function fetchKPIs(
       .lte('period_end', end)
       .in('metric', KPI_METRIC_KEYS)
       .order('calculated_at', { ascending: false })
-      .returns<RawRow[]>()
+      .returns<unknown[]>()
 
     if (fallbackError) throw new Error(`[fetchKPIs] ${fallbackError.message}`)
     rows = fallback
@@ -263,9 +281,9 @@ async function fetchQualityScores(
     .from('v_quality_scores')   // orbit.v_quality_scores (SEM "_calculated")
     .select('id, score_key, score_value, status_text, status_variant')
     .eq('client_id', clientId)
-    .returns<RawRow[]>()
+    .returns<QualityRow[]>()
 
-  let rows: RawRow[] | null = orbitRows
+  let rows: QualityRow[] | null = orbitRows
 
   if (orbitError) {
     console.warn(`[fetchQualityScores] orbit view indisponível (${orbitError.message}). Fallback legacy...`)
@@ -275,7 +293,7 @@ async function fetchQualityScores(
       .from('v_quality_scores')
       .select('id, score_key, score_value, status_text, status_variant')
       .eq('client_id', clientId)
-      .returns<RawRow[]>()
+      .returns<QualityRow[]>()
 
     if (!calcError) {
       rows = calcRows
@@ -286,7 +304,7 @@ async function fetchQualityScores(
         .eq('client_id', clientId)
         .gte('period_start', start)
         .lte('period_end', end)
-        .returns<RawRow[]>()
+        .returns<QualityRow[]>()
 
       if (legacyError) { console.error('[fetchQualityScores]', legacyError.message); return [] }
       rows = legacyRows
@@ -314,9 +332,9 @@ async function fetchFormatPerformance(
     .from('v_format_performance') // orbit.v_format_performance (SEM "_calculated")
     .select('id, format_name, post_count, share_count, trend_label, trend_color')
     .eq('client_id', clientId)
-    .returns<RawRow[]>()
+    .returns<FormatRow[]>()
 
-  let rows: RawRow[] | null = orbitRows
+  let rows: FormatRow[] | null = orbitRows
 
   if (orbitError) {
     console.warn(`[fetchFormatPerformance] orbit view indisponível (${orbitError.message}). Fallback legacy...`)
@@ -325,7 +343,7 @@ async function fetchFormatPerformance(
       .from('v_format_performance')
       .select('id, format_name, post_count, share_count, trend_label, trend_color')
       .eq('client_id', clientId)
-      .returns<RawRow[]>()
+      .returns<FormatRow[]>()
 
     if (!calcError) {
       rows = calcRows
@@ -336,7 +354,7 @@ async function fetchFormatPerformance(
         .eq('client_id', clientId)
         .gte('period_start', start)
         .lte('period_end', end)
-        .returns<RawRow[]>()
+        .returns<FormatRow[]>()
 
       if (legacyError) { console.error('[fetchFormatPerformance]', legacyError.message); return [] }
       rows = legacyRows
