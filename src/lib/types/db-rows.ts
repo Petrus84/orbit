@@ -26,3 +26,17 @@ export interface DomainEventRow {
   webhook_response?: unknown | null
   created_at?: string
 }
+
+export interface OAuthTokenRow {
+  id: string
+  agency_id: string
+  provider: 'meta' | 'google'
+  access_token: string
+  token_type: string
+  expires_at: string
+  scope?: string | null
+  meta_user_id?: string | null
+  is_active: boolean
+  created_at?: string
+  updated_at?: string
+}
