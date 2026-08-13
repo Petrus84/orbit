@@ -27,10 +27,16 @@ function countBySeverity(alerts: Alert[]): AlertCounts {
     (acc, a) => {
      switch (a.severity) {
        case 'critical':
+         acc.critical++;
+         break;
        case 'warning':
+         acc.warning++;
+         break;
        case 'info':
+         acc.info++;
+         break;
        case 'success':
-         acc[a.severity]++;
+         acc.success++;
          break;
        default:
          // severidade desconhecida — não contamos em bucket específico
