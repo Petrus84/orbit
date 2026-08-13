@@ -23,6 +23,7 @@ interface OrbitClientHealthRow {
   follower_balance: number | null
   engagement_real: number | null
   ctr_link: number | null
+  last_updated?: string | null
 }
 
 // ── Raw shape from public.* (legacy fallback) ─────────────────────────────
@@ -67,7 +68,7 @@ function fromOrbitRow(row: OrbitClientHealthRow): Client {
         top_city_pct: 0,
       },
     },
-
+    lastUpdated: row.last_updated ?? new Date().toISOString(),
   }
 }
 
@@ -92,7 +93,7 @@ function fromLegacyRow(row: LegacyClientRow): Client {
         top_city_pct: 0,
       },
     },
-
+    lastUpdated: new Date().toISOString(),
   }
 }
 
