@@ -11,14 +11,14 @@
 // ============================================================================
 
 import { supabase, supabaseLegacy } from '@/lib/supabase'
-import { Client, ClientStatus } from '../../types/client'
+import { Client, ClientHealthStatus } from '../../types/client'
 
 // ── Raw shape from orbit.v_client_health ─────────────────────────────────
 interface OrbitClientHealthRow {
   id: string
   name: string
   handle: string
-  health_status: ClientStatus
+  health_status: ClientHealthStatus
   follower_balance: number | null
   engagement_real: number | null
   ctr_link: number | null
@@ -30,7 +30,7 @@ interface LegacyClientRow {
   name: string
   handle: string
   avatar_url: string | null
-  status: ClientStatus
+  status: ClientHealthStatus
   client_metrics: {
     follower_balance: number
     engagement_real: number
@@ -38,7 +38,7 @@ interface LegacyClientRow {
   } | null
 }
 
-const STATUS_ORDER: Record<ClientStatus, number> = {
+const STATUS_ORDER: Record<ClientHealthStatus, number> = {
   critical: 0,
   warning:  1,
   healthy:  2,
