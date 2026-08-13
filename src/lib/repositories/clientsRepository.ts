@@ -51,7 +51,7 @@ function fromOrbitRow(row: OrbitClientHealthRow): Client {
     id:        row.id,
     name:      row.name,
     handle:    row.handle,
-    avatarUrl: null,                         // orbit.clients não tem avatar_url ainda
+    avatar: null,                         // orbit.clients não tem avatar_url ainda
     status:    row.health_status ?? 'healthy',
     metrics: {
       follower_balance: row.follower_balance ?? 0,
@@ -76,7 +76,7 @@ function fromLegacyRow(row: LegacyClientRow): Client {
     id:        row.id,
     name:      row.name,
     handle:    row.handle,
-    avatarUrl: row.avatar_url,
+    avatar: row.avatar_url,
     status:    row.status,
     metrics: {
       follower_balance: row.client_metrics?.follower_balance ?? 0,
