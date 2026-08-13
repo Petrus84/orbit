@@ -16,6 +16,7 @@ const SEVERITY_ICON: Record<CriticalAlertData['severity'], string> = {
   critical: '⚠️',
   warning:  '⚠️',
   info:     'ℹ️',
+  success:  '✅',
 }
 
 export function CriticalAlert({ alert }: CriticalAlertProps) {
