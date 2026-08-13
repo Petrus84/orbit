@@ -11,7 +11,8 @@
 // ============================================================================
 
 import { supabase, supabaseLegacy } from '@/lib/supabase'
-import { Client, ClientHealthStatus } from '../../types/client'
+import { Client } from '../../types/client'
+import type { ClientHealthStatus } from '../../types/orbit'
 
 // ── Raw shape from orbit.v_client_health ─────────────────────────────────
 interface OrbitClientHealthRow {
@@ -42,6 +43,7 @@ const STATUS_ORDER: Record<ClientHealthStatus, number> = {
   critical: 0,
   warning:  1,
   healthy:  2,
+  unknown:  3,
 }
 
 function fromOrbitRow(row: OrbitClientHealthRow): Client {
