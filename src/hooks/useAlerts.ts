@@ -18,6 +18,7 @@ export interface AlertCounts {
   critical: number;
   warning: number;
   info: number;
+  success: number;
   total: number;
 }
 
@@ -28,7 +29,7 @@ function countBySeverity(alerts: Alert[]): AlertCounts {
       acc.total++;
       return acc;
     },
-    { critical: 0, warning: 0, info: 0, total: 0 } as AlertCounts
+   { critical: 0, warning: 0, info: 0, success: 0, total: 0 } as AlertCounts
   );
 }
 
