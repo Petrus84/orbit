@@ -1,0 +1,20 @@
+feat(etapa-2): consolidar correções de tipos em 8 repositórios
+
+- fix(types): STATUS_ORDER completo com 'unknown' em clientsRepository
+- fix(types): Client.metrics com campos faltantes (polemic_score_pct, follower_churn_pct, segment)
+- fix(types): Avatar mapping corrigido (avatar vs avatarUrl)
+- fix(types): Avatar undefined handling com fallback seguro
+- fix(types): lastUpdated adicionado aos mappers de clients
+- fix(ui): Ícone 'success' adicionado em CriticalAlert
+- fix(types): Enums centralizados (CampaignObjective, AlertSeverity)
+- fix(types): instagramOverviewRepository - RawRow → QualityRow/FormatRow
+- fix(types): avatarRepository - Record<string, unknown) → AvatarAlignmentRow
+
+Build: ✅ Passou com placeholder env vars
+
+Próximas ações (ETAPA 2 continuação):
+- Validar com dump_orbit.sql
+- Continuar com ads_* e ig_* repositories
+- Remover Record<string, unknown> dos ~15 repositórios restantes
+
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
