@@ -16,9 +16,9 @@ interface FunnelSimulatorProps {
   onChange: (next: SimulatorState) => void;
   result: SimulationResult;
   baseVendas: number;
-  alcanceRealHistorico: number;
-  erRealNativo: number | null;
-  setor: SetorBenchmark | null;
+  alcanceRealHistorico?: number | null;
+  erRealNativo?: number | null;
+  setor?: SetorBenchmark | null;
 }
 
 export default function FunnelSimulator({
@@ -26,8 +26,9 @@ export default function FunnelSimulator({
   onChange,
   result,
   baseVendas,
-  alcanceRealHistorico,
-  erRealNativo,
+  alcanceRealHistorico = 0,
+  erRealNativo = null,
+  setor = null,
 }: FunnelSimulatorProps): React.ReactElement {
   const razaoEscala = state.alcance / (alcanceRealHistorico || 1);
   const isSaturated = razaoEscala > 1.5;
