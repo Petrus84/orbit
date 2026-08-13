@@ -17,7 +17,7 @@ interface MetaCampaignRow extends CampaignRow {
   frequency?: number | null;
   fatigue_percent?: number | null;
   cpl?:       number | null;
-  status?:    string | null;
+  status:    string;
 }
 
 // ─── Row → Domain transformer ─────────────────────────────────────────────────
