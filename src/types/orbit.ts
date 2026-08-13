@@ -383,6 +383,23 @@ export interface ClientMetrics {
   }
 }
 
+export interface AvatarData {
+  expectedGender?: string | null
+  expectedGenderPct?: number | null
+  expectedAgeMin?: number | null
+  expectedAgeMax?: number | null
+  expectedGeoPrimary?: string | null
+  expectedGeoPct?: number | null
+  expectedInterest?: string | null
+  alignmentHypothesis?: string | null
+}
+
+export interface ConfidenceMetrics {
+  maxConfidenceLevel?: 'L0' | 'L1' | 'L2' | null
+  confidenceLevel?: 'L0' | 'L1' | 'L2' | null
+  interestConfidence?: 'L0' | 'L1' | 'L2' | null
+}
+
 export interface Client {
   id: string
   handle: string
@@ -391,6 +408,53 @@ export interface Client {
   status: ClientHealthStatus
   metrics: ClientMetrics
   lastUpdated: string
+
+  // --- DB-aligned optional fields (expanded per audit)
+  createdAt?: string | null
+  updatedAt?: string | null
+  segment?: string | null
+  instagramUserId?: string | null
+  igUsername?: string | null
+  igDisplayName?: string | null
+
+  // Business and subscription fields
+  businessObjective?: string | null
+  grossMarginPct?: number | null
+  monthlyAdBudget?: number | null
+  subscriptionId?: string | null
+
+  // Avatar / alignment fields
+  avatarData?: AvatarData | null
+  avatarExpectedInterest?: string | null
+  avatarAlignmentHypothesis?: string | null
+
+  // Thresholds & health metrics
+  thresholdCtrBioMin?: number | null
+  thresholdCtrAdsMin?: number | null
+  thresholdCtrSearchMin?: number | null
+  thresholdCpaMaxMultiplier?: number | null
+  thresholdChurnMonthlyMax?: number | null
+  thresholdFatigueCritical?: number | null
+  thresholdFrequencyMax?: number | null
+  thresholdErRealMin?: number | null
+  thresholdPolemicMax?: number | null
+  thresholdUtilityMin?: number | null
+  thresholdAvatarAlignmentMin?: number | null
+
+  healthStatus?: ClientHealthStatus | null
+  healthUpdatedAt?: string | null
+
+  // Confidence metrics
+  confidence?: ConfidenceMetrics | null
+
+  // Optional free-form fields from onboarding / legacy
+  avatarUnconsciousDesire?: string | null
+  avatarExpectedGender?: string | null
+  avatarExpectedGenderPct?: number | null
+  avatarExpectedAgeMin?: number | null
+  avatarExpectedAgeMax?: number | null
+  avatarExpectedGeoPrimary?: string | null
+  avatarExpectedGeoPct?: number | null
 }
 
 // ============================================================================
