@@ -57,7 +57,17 @@ function fromOrbitRow(row: OrbitClientHealthRow): Client {
       follower_balance: row.follower_balance ?? 0,
       engagement_real:  row.engagement_real  ?? 0,
       ctr_link:         row.ctr_link         ?? 0,
+      polemic_score_pct: 0,
+      follower_churn_pct: 0,
+      segment: {
+        gender_dominant: 'mixed',
+        gender_pct: 50,
+        age_range: 'unknown',
+        top_city: 'unknown',
+        top_city_pct: 0,
+      },
     },
+
   }
 }
 
@@ -72,7 +82,17 @@ function fromLegacyRow(row: LegacyClientRow): Client {
       follower_balance: row.client_metrics?.follower_balance ?? 0,
       engagement_real:  row.client_metrics?.engagement_real  ?? 0,
       ctr_link:         row.client_metrics?.ctr_link         ?? 0,
+      polemic_score_pct: 0,
+      follower_churn_pct: 0,
+      segment: {
+        gender_dominant: 'mixed',
+        gender_pct: 50,
+        age_range: 'unknown',
+        top_city: 'unknown',
+        top_city_pct: 0,
+      },
     },
+
   }
 }
 
