@@ -137,9 +137,14 @@ function buildBars(row: AvatarAlignmentRow): AlignmentBar[] {
   ]
 }
 
-function buildRecommendation(score: number, bars: AlignmentBar[]): string {
+function buildRecommendation(score: number, bars: AlignmentBar[]): AvatarRecommendation {
   if (score >= ALIGNMENT_THRESHOLDS.warning) {
-    return 'Seu público real está bem alinhado com o avatar esperado. Continue monitorando.'
+    return {
+      id: `rec-ok-${Date.now()}`,
+      title: 'Bem alinhado',
+      description: 'Seu público real está bem alinhado com o avatar esperado. Continue monitorando.',
+      icon: '🎯',
+    }
   }
   
   // ✅ CORREÇÃO DE CAST SEGURO: Inserido 'as unknown' antes do Record para o TypeScript aceitar a checagem
@@ -160,7 +165,12 @@ function buildRecommendation(score: number, bars: AlignmentBar[]): string {
     parts.push(`Atenção para: ${warning.join(', ')}. Ajuste os critérios de público nas campanhas ativas.`)
   }
 
-  return parts.length > 0 ? parts.join(' ') : 'Alinhamento abaixo do esperado. Revise segmentação e criativos.'
+  return {
+    id: `rec-issue-${Date.now()}`,
+    title: 'Ações recomendadas',
+    description: parts.length > 0 ? parts.join(' ') : 'Alinhamento abaixo do esperado. Revise segmentação e criativos.',
+    icon: '🔄',
+  }
 }
 
 function rowToAvatarAlignment(row: AvatarAlignmentRow): AvatarAlignment {
