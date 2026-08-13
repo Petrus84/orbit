@@ -14,6 +14,7 @@ import type {
   AlignmentStatus,
   AvatarAlignment,
   AvatarProfile,
+  AvatarRecommendation,
 } from '../../types/avatar'
 import { ALIGNMENT_THRESHOLDS } from '../../types/avatar'
 
