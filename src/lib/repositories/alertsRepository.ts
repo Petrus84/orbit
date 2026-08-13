@@ -57,7 +57,7 @@ function fromOrbitRow(row: OrbitAlertRow): Alert {
     title:        row.title,
     description:  row.description ?? '',
     severity:     row.severity,
-    createdAt:    new Date(row.created_at),
+    createdAt:    row.created_at,
   }
 }
 
@@ -70,7 +70,7 @@ function fromLegacyRow(row: LegacyAlertRow): Alert {
     title:        row.title,
     description:  row.description,
     severity:     row.severity,
-    createdAt:    new Date(row.created_at),
+    createdAt:    row.created_at,
   }
 }
 
