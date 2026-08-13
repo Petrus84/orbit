@@ -40,3 +40,13 @@ export interface OAuthTokenRow {
   created_at?: string
   updated_at?: string
 }
+
+export interface MetricHistoryRow {
+  id?: string
+  client_id: string
+  metric_name: string
+  metric_value: number
+  metric_date: string
+  platform: string
+  created_at?: string
+}
