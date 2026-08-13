@@ -7,6 +7,7 @@
 import React from 'react'
 import { StatusPill }                  from '../common/StatusPill'
 import styles                          from './FormatPerformanceTable.module.css'
+import { TREND_TO_GLOW }                from '../../types/orbit'
 import type { FormatPerformanceRow }   from '../../types/orbit'
 
 export interface FormatPerformanceTableProps {
@@ -36,7 +37,7 @@ export function FormatPerformanceTable({ rows }: FormatPerformanceTableProps) {
               <td className={styles.td}>{row.posts}</td>
               <td className={styles.td}>{row.shares}</td>
               <td className={styles.td}>
-                <StatusPill text={row.trendLabel} color={row.trendColor} />
+                <StatusPill text={row.trendLabel} color={TREND_TO_GLOW[row.trendColor]} />
               </td>
             </tr>
           ))}
