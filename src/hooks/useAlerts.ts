@@ -25,10 +25,20 @@ export interface AlertCounts {
 function countBySeverity(alerts: Alert[]): AlertCounts {
   return alerts.reduce(
     (acc, a) => {
-      acc[a.severity]++;
-      acc.total++;
-      return acc;
-    },
+     switch (a.severity) {
+       case 'critical':
+       case 'warning':
+       case 'info':
+       case 'success':
+         acc[a.severity]++;
+         break;
+       default:
+         // severidade desconhecida — não contamos em bucket específico
+         break;
+     }
+     acc.total++;
+     return acc;
+   },
    { critical: 0, warning: 0, info: 0, success: 0, total: 0 } as AlertCounts
   );
 }
