@@ -1469,6 +1469,26 @@ export interface KpiRawIngestionRow {
   video_duration_s?: number | null
 }
 
+export interface LeadRawIngestionRow {
+  id: string
+  post_external_id: string
+  agency_id: string
+  client_id: string
+  ingestion_mode: string
+  product_type?: string | null
+  product_type_detail?: string | null
+  posted_at: string
+  caption_text?: string | null
+  hashtags?: unknown[]
+  is_pinned?: boolean
+  location_name?: string | null
+  uses_original_audio?: boolean
+  audio_name?: string | null
+  owner_username?: string | null
+  owner_full_name?: string | null
+  created_at?: string
+}
+
 
 /**
  * ⚠️ OBSERVAÇÃO (22) — DIVERGÊNCIA NÃO RESOLVIDA: `DashboardHeaderMeta`
