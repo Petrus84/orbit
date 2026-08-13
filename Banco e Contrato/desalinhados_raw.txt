@@ -1,0 +1,27 @@
+alert_severity,'critical,enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no DB não no TS
+alert_severity,'info,enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no DB não no TS
+alert_severity,'success',enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no DB não no TS
+alert_severity,'warning,enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no DB não no TS
+alert_severity,ambar,enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+  budget_monthly: number",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,down,enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+  roas: number",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+export type clientstatus = 'active",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,gold,enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,inactive,enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,info,enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+export type glowcolor = 'cyan",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+export type trendcolor = 'up",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+  budget_lifetime: number",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+export type fatiguestatus = 'crítico",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+  ctr: number",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+export type semaphorecolor = 'verde",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+  end_date: string",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+  cpl: number",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+  frequency: number",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+  start_date: string",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,paused,enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,red,enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+export type statusvariant = 'ok",enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,warn,enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB
+alert_severity,warning,enum_value,alert_severity,AlertSeverity,,DESALINHADO,valor no TS não no DB

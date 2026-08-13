@@ -1,0 +1,56 @@
+Iniciando varredura de tipos e imports...
+Branch atual: backup/antes-master
+Diretório: /c/Projetos/orbit-dashboard
+---------------------------------------------
+🔍 Imports incorretos (import type usado para const):
+
+🔍 Tipos duplicados ou redefinidos:
+
+🔍 Interfaces de Props sem correspondência com tipos globais:
+src/app/funil/FunnelScreenWrapper.tsx:interface FunnelScreenWrapperProps {
+src/app/funil/FunnelScreenWrapper.tsx:interface PanelProps {
+src/components/common/AlertCard.tsx:interface AlertCardProps {
+src/components/common/AlertIcon.tsx:interface AlertIconProps {
+src/components/common/AlignmentBars.tsx:export interface AlignmentBarsProps {
+src/components/common/AvatarCard.tsx:export interface AvatarCardProps {
+src/components/common/AvatarComparison.tsx:export interface AvatarComparisonProps {
+src/components/common/Badge.tsx:interface BadgeProps {
+src/components/common/CampaignRow.tsx:interface CampaignRowProps {
+src/components/common/CampaignTable.tsx:interface CampaignTableProps {
+src/components/common/ClientCard.tsx:interface ClientCardProps {
+src/components/common/ClientCard.tsx:interface MetricColProps {
+src/components/common/DiagnosticAlert.tsx:interface DiagnosticAlertProps {
+src/components/common/FatigueIndicator.tsx:interface FatigueIndicatorProps {
+src/components/common/FunnelChart.tsx:interface FunnelChartProps {
+src/components/common/FunnelResult.tsx:interface FunnelResultProps {
+src/components/common/FunnelSimulator.tsx:interface FunnelSimulatorProps {
+src/components/common/FunnelStep.tsx:interface FunnelStepProps {
+src/components/common/GlassCard.tsx:export interface GlassCardProps {
+src/components/common/KPICard.tsx:interface KPICardProps {
+src/components/common/KPICard.tsx:interface SparklineProps {
+src/components/common/PerformanceTable.tsx:interface PerformanceTableProps {
+src/components/common/QualityScoreCard.tsx:interface QualityScoreCardProps {
+src/components/common/RecommendationAlert.tsx:interface RecommendationAlertProps {
+src/components/common/SectionHead.tsx:interface SectionHeadProps {
+src/components/common/Semaphore.tsx:export interface SemaphoreProps {
+src/components/common/Slider.tsx:interface SliderProps {
+src/components/common/StatusPill.tsx:export interface StatusPillProps {
+src/components/content/CriticalAlert.tsx:export interface CriticalAlertProps {
+src/components/content/FormatPerformanceTable.tsx:export interface FormatPerformanceTableProps {
+src/components/content/InsightCard.tsx:export interface InsightCardProps {
+src/components/content/QualityScoresPanel.tsx:export interface QualityScoresPanelProps {
+src/components/kpi/DeltaText.tsx:export interface DeltaTextProps {
+src/components/kpi/GlowingNumber.tsx:export interface GlowingNumberProps {
+src/components/kpi/KPICard.tsx:export interface KPICardProps {
+src/components/kpi/SemaphoreIndicator.tsx:export interface SemaphoreIndicatorProps {
+src/components/layout/Sidebar.tsx:interface NavItemRowProps {
+src/components/screens/AlertasScreen.tsx:interface AlertasScreenProps {
+src/components/screens/AvatarScreen.tsx:interface AvatarScreenProps {
+src/components/screens/CarteiraScreen.tsx:interface ErrorStateProps {
+src/components/screens/CarteiraScreen.tsx:interface CarteiraScreenProps {
+src/components/screens/FunnelScreen.tsx:interface FunnelScreenProps {
+src/components/screens/IGOverviewScreen.tsx:interface IGOverviewScreenProps {
+src/components/screens/MetaAdsScreen.tsx:interface MetaAdsScreenProps {
+src/context/OrbitDashboardContext.tsx:export interface OrbitDashboardProviderProps extends UseInstagramOverviewParams {
+src/types/orbit.ts:export interface OrbitDashboardProviderProps {
+

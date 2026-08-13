@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forense Visual — 28 Desalinhamentos ORBIT</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0e27;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            min-height: 100vh;
+            gap: 0;
+        }
+        
+        .main {
+            overflow-y: auto;
+            padding: 40px;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+        }
+        
+        .sidebar {
+            background: #0f1629;
+            border-left: 2px solid #2a3f5f;
+            overflow-y: auto;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+        
+        h1 {
+            color: #00ffff;
+            margin-bottom: 10px;
+            font-size: 28px;
+            text-shadow: 0 0 10px rgba(0,255,255,0.3);
+        }
+        
+        .subtitle {
+            color: #a0a0a0;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        /* ═══ CARD DE DESALINHAMENTO ═══ */
+        .desalinhamento-card {
+            border: 2px solid #2a3f5f;
+            border-radius: 8px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .desalinhamento-card:hover {
+            border-color: #00ffff;
+            box-shadow: 0 0 20px rgba(0,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .desalinhamento-card.active {
+            border-color: #ff4444;
+            background: rgba(255,68,68,0.1);
+            box-shadow: 0 0 30px rgba(255,68,68,0.3);
+        }
+        
+        /* ═══ PADRÕES DE HACHURA ═══ */
+        .card-fantasma {
+            background: repeating-linear-gradient(
+                45deg,
+                #1a1f3a,
+                #1a1f3a 10px,
+                rgba(255,68,68,0.05) 10px,
+                rgba(255,68,68,0.05) 20px
+            );
+            border-left: 5px solid #ff6b6b;
+        }
+        
+        .card-desalinhado {
+            background: repeating-linear-gradient(
+                -45deg,
+                #1a1f3a,
+                #1a1f3a 10px,
+                rgba(255,176,32,0.05) 10px,
+                rgba(255,176,32,0.05) 20px
+            );
+            border-left: 5px solid #ffc300;
+        }
+        
+        .card-ok {
+            background: repeating-linear-gradient(
+                90deg,
+                #1a1f3a,
+                #1a1f3a 10px,
+                rgba(46,204,113,0.05) 10px,
+                rgba(46,204,113,0.05) 20px
+            );
+            border-left: 5px solid #2ecc71;
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .badge-fantasma {
+            background: rgba(255,68,68,0.2);
+            color: #ff8080;
+            border: 1px solid rgba(255,68,68,0.4);
+        }
+        
+        .badge-desalinhado {
+            background: rgba(255,176,32,0.2);
+            color: #ffc300;
+            border: 1px solid rgba(255,176,32,0.4);
+        }
+        
+        .badge-ok {
+            background: rgba(46,204,113,0.2);
+            color: #2ecc71;
+            border: 1px solid rgba(46,204,113,0.4);
+        }
+        
+        .card-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #e0e0e0;
+            margin-bottom: 8px;
+        }
+        
+        .card-enum {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #00ffff;
+            background: rgba(0,255,255,0.1);
+            padding: 8px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            word-break: break-all;
+        }
+        
+        .card-desc {
+            font-size: 12px;
+            color: #a0a0a0;
+            margin-bottom: 10px;
+        }
+        
+        .card-impact {
+            font-size: 11px;
+            padding: 8px;
+            border-radius: 4px;
+            background: rgba(255,68,68,0.1);
+            color: #ff8080;
+            border-left: 3px solid #ff4444;
+        }
+        
+        /* ═══ SIDEBAR ═══ */
+        .sidebar-header {
+            color: #00ffff;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #2a3f5f;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 20px;
+            font-size: 12px;
+        }
+        
+        .sidebar-section-title {
+            color: #ffc300;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .sidebar-item {
+            background: rgba(0,255,255,0.05);
+            border-left: 3px solid #00ffff;
+            padding: 8px 10px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            color: #00ffff;
+            word-break: break-all;
+        }
+        
+        .sidebar-value {
+            background: rgba(255,68,68,0.05);
+            border-left: 3px solid #ff4444;
+            padding: 8px 10px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            color: #ff8080;
+            word-break: break-all;
+        }
+        
+        .sidebar-callback {
+            background: rgba(46,204,113,0.05);
+            border-left: 3px solid #2ecc71;
+            padding: 8px 10px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            color: #2ecc71;
+            word-break: break-all;
+        }
+        
+        .sidebar-empty {
+            color: #666;
+            font-style: italic;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: rgba(0,255,255,0.05);
+            border: 1px solid rgba(0,255,255,0.2);
+            border-radius: 8px;
+        }
+        
+        .stat-box {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #00ffff;
+            text-shadow: 0 0 10px rgba(0,255,255,0.3);
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #a0a0a0;
+            margin-top: 5px;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 8px 15px;
+            border: 1px solid #2a3f5f;
+            background: transparent;
+            color: #a0a0a0;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover {
+            border-color: #00ffff;
+            color: #00ffff;
+        }
+        
+        .filter-btn.active {
+            background: rgba(0,255,255,0.2);
+            border-color: #00ffff;
+            color: #00ffff;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #0a0e27;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #2a3f5f;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00ffff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="main">
+        <h1>🔬 Forense Visual — 28 Desalinhamentos ORBIT</h1>
+        <p class="subtitle">Cada card mostra um desalinhamento com hachura CSS. Clique para ver detalhes no sidebar.</p>
+        
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number">11</div>
+                <div class="stat-label">FANTASMA (Enums no DB, não em TS)</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">17</div>
+                <div class="stat-label">DESALINHADO (Valores divergentes)</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">28</div>
+                <div class="stat-label">TOTAL DE PROBLEMAS</div>
+            </div>
+        </div>
+        
+        <div class="filter-buttons">
+            <button class="filter-btn active" onclick="filterCards('todos')">Todos (28)</button>
+            <button class="filter-btn" onclick="filterCards('fantasma')">Fantasma (11)</button>
+            <button class="filter-btn" onclick="filterCards('desalinhado')">Desalinhado (17)</button>
+        </div>
+        
+        <div class="grid-container" id="grid-container"></div>
+    </div>
+    
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">📋 Detalhes do erro</div>
+        <div class="sidebar-empty">Clique em um card para ver detalhes</div>
+    </div>
+</div>
+
+<script>
+const desalinhamentos = [
+    // ═══ FANTASMA (11) ═══
+    { id: 1, tipo: 'fantasma', enum: 'ads_platform', valores: ['meta', 'google', 'tiktok', 'linkedin'], desc: 'Enum no DB, não em orbit.ts', impacto: 'Sem type guard — dados do DB não validáveis', props: 'AdsPlatform', callbacks: 'validateAdsPlatform()', tela: 'Meta Ads / Google Ads' },
+    { id: 2, tipo: 'fantasma', enum: 'alert_type', valores: ['ctr_below_threshold', 'engagement_collapse', 'avatar_misalignment', 'creative_fatigue', 'roas_below_minimum', 'follower_churn_high', 'polemic_score_high', 'boost_opportunity', 'budget_pace'], desc: 'Enum no DB, não em orbit.ts', impacto: 'Alertas não tipados — fallback silencioso', props: 'AlertType', callbacks: 'validateAlertType()', tela: 'Alertas' },
+    { id: 3, tipo: 'fantasma', enum: 'asset_status', valores: ['active', 'paused', 'archived', 'draft', 'under_review'], desc: 'Enum no DB, não em orbit.ts', impacto: 'Criativos sem validação de estado', props: 'AssetStatus', callbacks: 'validateAssetStatus()', tela: 'Criativos' },
+    { id: 4, tipo: 'fantasma', enum: 'campaign_objective', valores: ['awareness', 'reach', 'traffic', 'engagement', 'leads', 'app_promotion', 'sales', 'video_views'], desc: 'Enum no DB, não em orbit.ts', impacto: 'Campanhas sem tipagem de objetivo', props: 'CampaignObjective', callbacks: 'validateCampaignObjective()', tela: 'Meta Ads' },
+    { id: 5, tipo: 'fantasma', enum: 'confidence_level', valores: ['l0', 'l1', 'l2'], desc: 'Enum no DB, não em orbit.ts', impacto: 'Scores de confiança não validáveis', props: 'ConfidenceLevel', callbacks: 'validateConfidenceLevel()', tela: 'Overview IG' },
+    { id: 6, tipo: 'fantasma', enum: 'content_format', valores: ['reel', 'static_post', 'carousel', 'story', 'live', 'igtv'], desc: 'Enum no DB, não em orbit.ts', impacto: 'Formatos de conteúdo não tipados', props: 'ContentFormat', callbacks: 'validateContentFormat()', tela: 'IG Overview' },
+    { id: 7, tipo: 'fantasma', enum: 'fatigue_cause', valores: ['creative_saturation', 'segmentation_issue', 'offer_issue', 'healthy'], desc: 'Enum no DB, não em orbit.ts', impacto: 'Diagnóstico de fadiga sem validação', props: 'FatigueCause', callbacks: 'validateFatigueCause()', tela: 'Meta Ads' },
+    { id: 8, tipo: 'fantasma', enum: 'gender_category', valores: ['male', 'female', 'non_binary', 'mixed'], desc: 'Enum no DB, não em orbit.ts', impacto: 'Avatar alignment sem tipagem', props: 'GenderCategory', callbacks: 'validateGenderCategory()', tela: 'Avatar Alignment' },
+    { id: 9, tipo: 'fantasma', enum: 'health_status', valores: ['healthy', 'warning', 'critical', 'unknown'], desc: 'Enum no DB, não em orbit.ts', impacto: 'Semáforo de saúde sem validação', props: 'HealthStatus', callbacks: 'validateHealthStatus()', tela: 'Carteira' },
+    { id: 10, tipo: 'fantasma', enum: 'ingest_script', valores: ['ingest-l0-v2', 'ingest-insights', 'extract-demographics', 'manual'], desc: 'Enum no DB, não em orbit.ts', impacto: 'Origem de dados não rastreável', props: 'IngestScript', callbacks: 'validateIngestScript()', tela: 'Auditoria' },
+    { id: 11, tipo: 'fantasma', enum: 'period_source', valores: ['instagram_export', 'meta_api', 'google_ads_api', 'ga4_api', 'manual_input'], desc: 'Enum no DB, não em orbit.ts', impacto: 'Fonte de período não validável', props: 'PeriodSource', callbacks: 'validatePeriodSource()', tela: 'Overview' },
+    
+    // ═══ DESALINHADO (17) — alert_severity ═══
+    { id: 12, tipo: 'desalinhado', enum: 'alert_severity', valor_db: 'critical', valor_ts: 'crítico', desc: 'Valor no DB, não em TS', impacto: 'Alertas críticos não renderizam', props: 'AlertSeverity', callbacks: 'onAlertSeverityChange()', tela: 'Alertas' },
+    { id: 13, tipo: 'desalinhado', enum: 'alert_severity', valor_db: 'info', valor_ts: 'informativo', desc: 'Valor no DB, não em TS', impacto: 'Alertas informativos perdidos', props: 'AlertSeverity', callbacks: 'onAlertSeverityChange()', tela: 'Alertas' },
+    { id: 14, tipo: 'desalinhado', enum: 'alert_severity', valor_db: 'success', valor_ts: 'sucesso', desc: 'Valor no DB, não em TS', impacto: 'Confirmações não aparecem', props: 'AlertSeverity', callbacks: 'onAlertSeverityChange()', tela: 'Alertas' },
+    { id: 15, tipo: 'desalinhado', enum: 'alert_severity', valor_db: 'warning', valor_ts: 'aviso', desc: 'Valor no DB, não em TS', impacto: 'Avisos não renderizam', props: 'AlertSeverity', callbacks: 'onAlertSeverityChange()', tela: 'Alertas' },
+    { id: 16, tipo: 'desalinhado', enum: 'alert_severity', valor_ts: 'âmbar', valor_db: '❌ não existe', desc: 'Valor em TS, não no DB', impacto: 'Frontend aceita, DB rejeita com erro', props: 'AlertSeverity', callbacks: 'onAlertSeverityChange()', tela: 'Alertas' },
+    { id: 17, tipo: 'desalinhado', enum: 'alert_severity', valor_ts: 'down', valor_db: '❌ não existe', desc: 'Valor em TS, não no DB', impacto: 'Frontend aceita, DB rejeita com erro', props: 'AlertSeverity', callbacks: 'onAlertSeverityChange()', tela: 'Alertas' },
+    { id: 18, tipo: 'desalinhado', enum: 'alert_severity', valor_ts: 'estável', valor_db: '❌ não existe', desc: 'Valor em TS, não no DB', impacto: 'Frontend aceita, DB rejeita com erro', props: 'AlertSeverity', callbacks: 'onAlertSeverityChange()', tela: 'Alertas' },
+    { id: 19, tipo: 'desalinhado', enum: 'alert_severity', valor_ts: 'flat', valor_db: '❌ não existe', desc: 'Valor em TS, não no DB', impacto: 'Frontend aceita, DB rejeita com erro', props: 'AlertSeverity', callbacks: 'onAlertSeverityChange()', tela: 'Alertas' },
+    { id: 20, tipo: 'desalinhado', enum: 'alert_severity', valor_ts: 'gold', valor_db: '❌ não existe', desc: 'Valor em TS, não no DB', impacto: 'Frontend aceita, DB rejeita com erro', props: 'AlertSeverity', callbacks: 'onAlertSeverityChange()', tela: 'Alertas' },
+    { id: 21, tipo: 'desalinhado', enum: 'alert_severity', valor_ts: 'inactive', valor_db: '❌ não existe', desc: 'Valor em TS, não no DB', impacto: 'Frontend aceita, DB rejeita com erro', props: 'AlertSeverity', callbacks: 'onAlertSeverityChange()', tela: 'Alertas' },
+    { id: 22, tipo: 'desalinhado', enum: 'alert_severity', valor_ts: 'neutral', valor_db: '❌ não existe', desc: 'Valor em TS, não no DB', impacto: 'Frontend aceita, DB rejeita com erro', props: 'AlertSeverity', callbacks: 'onAlertSeverityChange()', tela: 'Alertas' },
+    { id: 23, tipo: 'desalinhado', enum: 'alert_severity', valor_ts: 'none', valor_db: '❌ não existe', desc: 'Valor em TS, não no DB', impacto: 'Frontend aceita, DB rejeita com erro', props: 'AlertSeverity', callbacks: 'onAlertSeverityChange()', tela: 'Alertas' },
+    { id: 24, tipo: 'desalinhado', enum: 'alert_severity', valor_ts: 'paused', valor_db: '❌ não existe', desc: 'Valor em TS, não no DB', impacto: 'Frontend aceita, DB rejeita com erro', props: 'AlertSeverity', callbacks: 'onAlertSeverityChange()', tela: 'Alertas' },
+    { id: 25, tipo: 'desalinhado', enum: 'alert_severity', valor_ts: 'red', valor_db: '❌ não existe', desc: 'Valor em TS, não no DB', impacto: 'Frontend aceita, DB rejeita com erro', props: 'AlertSeverity', callbacks: 'onAlertSeverityChange()', tela: 'Alertas' },
+    { id: 26, tipo: 'desalinhado', enum: 'alert_severity', valor_ts: 'vermelho', valor_db: '❌ não existe', desc: 'Valor em TS, não no DB', impacto: 'Frontend aceita, DB rejeita com erro', props: 'AlertSeverity', callbacks: 'onAlertSeverityChange()', tela: 'Alertas' },
+    { id: 27, tipo: 'desalinhado', enum: 'alert_severity', valor_ts: 'warn', valor_db: '❌ não existe', desc: 'Valor em TS, não no DB', impacto: 'Frontend aceita, DB rejeita com erro', props: 'AlertSeverity', callbacks: 'onAlertSeverityChange()', tela: 'Alertas' },
+];
+
+let filtroAtivo = 'todos';
+let selecionado = null;
+
+function renderCards() {
+    const container = document.getElementById('grid-container');
+    container.innerHTML = '';
+    
+    desalinhamentos.forEach(d => {
+        if (filtroAtivo !== 'todos' && d.tipo !== filtroAtivo) return;
+        
+        const card = document.createElement('div');
+        card.className = `desalinhamento-card card-${d.tipo}`;
+        card.onclick = () => selecionarCard(d);
+        
+        let conteudo = `
+            <div class="card-header">
+                <span class="badge badge-${d.tipo}">${d.tipo.toUpperCase()}</span>
+            </div>
+            <div class="card-title">${d.enum}</div>
+            <div class="card-enum">${d.valor_db || d.valor_ts || d.valores?.join(', ')}</div>
+            <div class="card-desc">${d.desc}</div>
+            <div class="card-impact">⚠ ${d.impacto}</div>
+        `;
+        
+        card.innerHTML = conteudo;
+        container.appendChild(card);
+    });
+}
+
+function selecionarCard(d) {
+    selecionado = d;
+    document.querySelectorAll('.desalinhamento-card').forEach(c => c.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+    
+    const sidebar = document.getElementById('sidebar');
+    
+    let html = `
+        <div class="sidebar-header">📋 ${d.enum.toUpperCase()}</div>
+        
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Tipo de erro</div>
+            <div class="sidebar-item">${d.tipo === 'fantasma' ? '🔴 FANTASMA (Enum no DB, não em TS)' : '🟠 DESALINHADO (Valores divergentes)'}</div>
+        </div>
+        
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Props esperadas</div>
+            <div class="sidebar-item">${d.props}</div>
+        </div>
+        
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Callbacks afetados</div>
+            <div class="sidebar-callback">${d.callbacks}</div>
+        </div>
+        
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Tela afetada</div>
+            <div class="sidebar-item">${d.tela}</div>
+        </div>
+        
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Impacto em cascata</div>
+            <div class="sidebar-value">${d.impacto}</div>
+        </div>
+        
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">O que não vai aparecer</div>
+            <div class="sidebar-value">
+                ${d.tipo === 'fantasma' 
+                    ? `❌ Sem type guard — dados do DB não podem ser validados em tempo de compilação. Componentes que consomem esse tipo vão quebrar em runtime quando receberem dados reais do banco.`
+                    : `❌ Frontend aceita valores que DB rejeita (ou vice-versa) — erro de constraint ao salvar, ou renderização vazia quando o valor esperado não existe no enum do banco.`
+                }
+            </div>
+        </div>
+    `;
+    
+    sidebar.innerHTML = html;
+}
+
+function filterCards(tipo) {
+    filtroAtivo = tipo;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    renderCards();
+}
+
+renderCards();
+</script>
+
+</body>
+</html>

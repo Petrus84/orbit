@@ -1,62 +1,70 @@
-import React from 'react';
+/* ==========================================================================
+   ORBIT · Component — Semaphore (unificado)
+   Fonte única de verdade para indicador de status em toda a UI.
+   Substitui: components/common/Semaphore.tsx (antigo) +
+              components/kpi/SemaphoreIndicator.tsx (antigo)
+   Paleta: neon (decisão de 22/07/2026) — cyan/gold/red/none
+   Versão: 3.0.0
+   ========================================================================== */
 
-export type SemaphoreStatus = 'critical' | 'warning' | 'healthy';
+import React from 'react'
+import styles from './Semaphore.module.css'
+import type { ClientHealthStatus } from '../../types/orbit'
 
-interface SemaphoreProps {
-  status: SemaphoreStatus;
-  /** Mostra o label textual ao lado do dot (default: true) */
-  showLabel?: boolean;
+// Vocabulário canônico único. ClientHealthStatus já cobre os 4 estados
+// reais do produto (healthy/warning/critical/unknown) — todo componente
+// que hoje usa AlertSeverity, AlignmentStatus ou SemaphoreColor para
+// desenhar um "semáforo" deve migrar para este tipo.
+export type SemaphoreStatus = ClientHealthStatus
+
+export interface SemaphoreProps {
+  status: SemaphoreStatus
+  /** Mostra o label textual ao lado do badge (default: false) */
+  showLabel?: boolean
+  size?: 'sm' | 'md'
 }
 
-interface SemaphoreConfig {
-  color: string;
-  glowClass: string;
-  label: string;
+const ICON_MAP: Record<SemaphoreStatus, string> = {
+  healthy: '✓',
+  warning: '⚠',
+  critical: '✕',
+  unknown: '–',
 }
 
-/**
- * Labels reaproveitados pelo Badge para manter o vocabulário
- * consistente entre o dot do semáforo e o badge de status.
- */
+/** Reaproveitado por Badge/AlertCard para manter vocabulário consistente. */
 export const STATUS_LABELS: Record<SemaphoreStatus, string> = {
-  critical: 'Crítico',
-  warning: 'Atenção',
   healthy: 'Saudável',
-};
+  warning: 'Atenção',
+  critical: 'Crítico',
+  unknown: 'Sem dado',
+}
 
-const STATUS_CONFIG: Record<SemaphoreStatus, SemaphoreConfig> = {
-  critical: {
-    color: '#FF4444',
-    glowClass: 'shadow-[0_0_8px_2px_rgba(255,68,68,0.55)]',
-    label: STATUS_LABELS.critical,
-  },
-  warning: {
-    color: '#FFB020',
-    glowClass: 'shadow-[0_0_8px_2px_rgba(255,176,32,0.55)]',
-    label: STATUS_LABELS.warning,
-  },
-  healthy: {
-    color: '#2ECC71',
-    glowClass: 'shadow-[0_0_8px_2px_rgba(46,204,113,0.55)]',
-    label: STATUS_LABELS.healthy,
-  },
-};
+const CLASS_MAP: Record<SemaphoreStatus, string> = {
+  healthy: styles.cyan,
+  warning: styles.gold,
+  critical: styles.red,
+  unknown: styles.none,
+}
 
-export default function Semaphore({ status, showLabel = true }: SemaphoreProps): React.ReactElement {
-  const config = STATUS_CONFIG[status];
+export default function Semaphore({
+  status,
+  showLabel = false,
+  size = 'md',
+}: SemaphoreProps): React.ReactElement {
+  const label = STATUS_LABELS[status]
 
   return (
-    <div className="flex items-center gap-2">
+    <span className={styles.wrapper}>
       <span
-        className={`inline-block h-2.5 w-2.5 rounded-full ${config.glowClass}`}
-        style={{ backgroundColor: config.color }}
-        aria-hidden="true"
-      />
+        className={[styles.badge, CLASS_MAP[status], size === 'sm' ? styles.sm : styles.md].join(' ')}
+        role="img"
+        aria-label={label}
+      >
+        {ICON_MAP[status]}
+      </span>
       {showLabel && (
-        <span className="font-sans text-xs font-medium" style={{ color: config.color }}>
-          {config.label}
-        </span>
+        <span className={[styles.label, CLASS_MAP[status]].join(' ')}>{label}</span>
       )}
-    </div>
-  );
+    </span>
+  )
 }

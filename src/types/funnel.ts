@@ -21,5 +21,6 @@ export type {
   SimulatedFunnelResult,
   FunnelScreenData,
   UseFunnelResult,
+  FunnelData,
   FunnelMetricsRow,
 } from './orbit'

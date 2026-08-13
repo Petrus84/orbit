@@ -1,0 +1,292 @@
+{
+  "Timestamp": "2026-08-09 00:36:37",
+  "Details": [
+    {
+      "Timestamp": "2026-08-09 00:36:36",
+      "Category": "Arquivo Principal",
+      "Status": "PASSED",
+      "Details": "",
+      "Check": "orbit.ts existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:36",
+      "Category": "Tipos Canônicos",
+      "Status": "PASSED",
+      "Details": "",
+      "Check": "Tipo Alert existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:36",
+      "Category": "Tipos Canônicos",
+      "Status": "PASSED",
+      "Details": "",
+      "Check": "Tipo CriticalAlertData existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:36",
+      "Category": "Tipos Canônicos",
+      "Status": "PASSED",
+      "Details": "",
+      "Check": "Tipo ClientHealthStatus existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:36",
+      "Category": "Tipos Canônicos",
+      "Status": "PASSED",
+      "Details": "",
+      "Check": "Tipo AlertSeverity existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:36",
+      "Category": "Interfaces Principais",
+      "Status": "PASSED",
+      "Details": "",
+      "Check": "Alert existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:36",
+      "Category": "Interfaces Principais",
+      "Status": "PASSED",
+      "Details": "",
+      "Check": "Alert.id existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:36",
+      "Category": "Interfaces Principais",
+      "Status": "PASSED",
+      "Details": "",
+      "Check": "Alert.severity existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:36",
+      "Category": "Interfaces Principais",
+      "Status": "WARNING",
+      "Details": "Campo pode estar com nome diferente",
+      "Check": "Alert.message existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:36",
+      "Category": "Interfaces Principais",
+      "Status": "PASSED",
+      "Details": "",
+      "Check": "CriticalAlertData existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:36",
+      "Category": "Interfaces Principais",
+      "Status": "PASSED",
+      "Details": "",
+      "Check": "CriticalAlertData.id existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:36",
+      "Category": "Interfaces Principais",
+      "Status": "PASSED",
+      "Details": "",
+      "Check": "CriticalAlertData.severity existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:36",
+      "Category": "Interfaces Principais",
+      "Status": "FAILED",
+      "Details": "",
+      "Check": "ClientProfile existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:36",
+      "Category": "Interfaces Principais",
+      "Status": "PASSED",
+      "Details": "",
+      "Check": "AvatarProfile existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:36",
+      "Category": "Interfaces Principais",
+      "Status": "WARNING",
+      "Details": "Campo pode estar com nome diferente",
+      "Check": "AvatarProfile.id existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:36",
+      "Category": "Gaps Críticos",
+      "Status": "PASSED",
+      "Details": "Campo já implementado",
+      "Check": "Alert.exportable existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:36",
+      "Category": "Gaps Críticos",
+      "Status": "PASSED",
+      "Details": "Campo já implementado",
+      "Check": "Alert.confidenceLevel existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:36",
+      "Category": "Gaps Críticos",
+      "Status": "PASSED",
+      "Details": "Campo já implementado",
+      "Check": "Alert.personaType existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:36",
+      "Category": "Funções de Validação",
+      "Status": "PASSED",
+      "Details": "",
+      "Check": "Função validateMetaCampaignRow existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:36",
+      "Category": "Funções de Validação",
+      "Status": "WARNING",
+      "Details": "Função não encontrada ou com nome diferente",
+      "Check": "Função validateAlert existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:36",
+      "Category": "Funções de Validação",
+      "Status": "WARNING",
+      "Details": "Função não encontrada ou com nome diferente",
+      "Check": "Função validateClientProfile existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:36",
+      "Category": "Duplicatas",
+      "Status": "PASSED",
+      "Details": "",
+      "Check": "IGOverviewLegacyData vs IGAccountOverviewData"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:36",
+      "Category": "Duplicatas",
+      "Status": "PASSED",
+      "Details": "",
+      "Check": "FetchStatusLegacy vs FetchStatus"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:37",
+      "Category": "Duplicatas",
+      "Status": "WARNING",
+      "Details": "Possível duplicação detectada",
+      "Check": "AvatarProfile vs AvatarProfile"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:37",
+      "Category": "Vocabulário Status/Cor",
+      "Status": "PASSED",
+      "Details": "",
+      "Check": "Tipo AlertSeverity existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:37",
+      "Category": "Vocabulário Status/Cor",
+      "Status": "PASSED",
+      "Details": "",
+      "Check": "Tipo ClientHealthStatus existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:37",
+      "Category": "Vocabulário Status/Cor",
+      "Status": "PASSED",
+      "Details": "",
+      "Check": "Tipo AlignmentStatus existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:37",
+      "Category": "Vocabulário Status/Cor",
+      "Status": "WARNING",
+      "Details": "Tipo não encontrado - pode estar em outro arquivo",
+      "Check": "Tipo StatusLevel existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:37",
+      "Category": "Componentes UI",
+      "Status": "WARNING",
+      "Details": "Componente não encontrado",
+      "Check": "Componente AlertCard.tsx existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:37",
+      "Category": "Componentes UI",
+      "Status": "WARNING",
+      "Details": "Componente não encontrado",
+      "Check": "Componente KPICard.tsx existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:37",
+      "Category": "Componentes UI",
+      "Status": "WARNING",
+      "Details": "Componente não encontrado",
+      "Check": "Componente FunnelSimulator.tsx existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:37",
+      "Category": "Componentes UI",
+      "Status": "WARNING",
+      "Details": "Componente não encontrado",
+      "Check": "Componente RecommendationCard.tsx existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:37",
+      "Category": "Componentes UI",
+      "Status": "WARNING",
+      "Details": "Componente não encontrado",
+      "Check": "Componente CarteiraScreen.tsx existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:37",
+      "Category": "Hooks",
+      "Status": "WARNING",
+      "Details": "Hook não encontrado em orbit.ts",
+      "Check": "Hook useClients existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:37",
+      "Category": "Hooks",
+      "Status": "WARNING",
+      "Details": "Hook não encontrado em orbit.ts",
+      "Check": "Hook useAlerts existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:37",
+      "Category": "Hooks",
+      "Status": "WARNING",
+      "Details": "Hook não encontrado em orbit.ts",
+      "Check": "Hook useFunnel existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:37",
+      "Category": "Hooks",
+      "Status": "WARNING",
+      "Details": "Hook não encontrado em orbit.ts",
+      "Check": "Hook useAvatarProfile existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:37",
+      "Category": "Repositórios",
+      "Status": "WARNING",
+      "Details": "Repositório não encontrado",
+      "Check": "Repositório alertsRepository.ts existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:37",
+      "Category": "Repositórios",
+      "Status": "WARNING",
+      "Details": "Repositório não encontrado",
+      "Check": "Repositório clientsRepository.ts existe"
+    },
+    {
+      "Timestamp": "2026-08-09 00:36:37",
+      "Category": "Repositórios",
+      "Status": "WARNING",
+      "Details": "Repositório não encontrado",
+      "Check": "Repositório funnelRepository.ts existe"
+    }
+  ],
+  "Summary": {
+    "Failed": 1,
+    "Passed": 21,
+    "Warnings": 18,
+    "Total": 40,
+    "SuccessRate": 52.5
+  }
+}
