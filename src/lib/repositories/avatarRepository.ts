@@ -205,7 +205,10 @@ function rowToAvatarAlignment(row: AvatarAlignmentRow): AvatarAlignment {
     score,
     status,
     bars,
-    recommendation
+    recommendations: recommendation ? [recommendation] : [],
+    recommendation,
+    unconsciousDesireMapped: row.expected_interest ?? '',
+    misalignmentHypothesis: recommendation.description ?? '',
   }
 }
 
