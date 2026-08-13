@@ -1,7 +1,8 @@
 import React from 'react';
 import FatigueIndicator from './FatigueIndicator';
 
-export type CampaignObjective = 'awareness' | 'leads' | 'conversion' | 'retargeting';
+import type { CampaignObjective } from '../../lib/types/enums-orbit'
+
 export type CampaignStatus = 'healthy' | 'warning' | 'critical';
 
 export interface Campaign {
@@ -21,17 +22,31 @@ interface CampaignRowProps {
 }
 
 const OBJECTIVE_LABELS: Record<CampaignObjective, string> = {
-  awareness:   'Awareness',
-  leads:       'Leads',
-  conversion:  'Conversão',
-  retargeting: 'Retargeting',
+  awareness:    'Awareness',
+  reach:        'Alcance',
+  traffic:      'Tráfego',
+  engagement:   'Engajamento',
+  leads:        'Leads',
+  app_promotion: 'Promoção App',
+  sales:        'Vendas',
+  video_views:  'Visualizações',
+  conversion:   'Conversão',
+  retargeting:  'Retargeting',
+  other:        'Outro',
 };
 
 const OBJECTIVE_COLORS: Record<CampaignObjective, string> = {
-  awareness:   'text-blue-400',
-  leads:       'text-[#C8FF57]',
-  conversion:  'text-amber-400',
-  retargeting: 'text-purple-400',
+  awareness:    'text-blue-400',
+  reach:        'text-cyan-400',
+  traffic:      'text-teal-300',
+  engagement:   'text-pink-400',
+  leads:        'text-[#C8FF57]',
+  app_promotion: 'text-violet-400',
+  sales:        'text-emerald-300',
+  video_views:  'text-indigo-400',
+  conversion:   'text-amber-400',
+  retargeting:  'text-purple-400',
+  other:        'text-zinc-300',
 };
 
 const STATUS_DIAG: Record<CampaignStatus, { text: string; color: string }> = {
