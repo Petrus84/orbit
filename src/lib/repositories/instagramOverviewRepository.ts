@@ -237,7 +237,7 @@ async function fetchKPIs(
     .order('calculated_at', { ascending: false })
         .returns<unknown[]>()
 
-  let rows: RawRow[] | null = orbitData
+  let rows: unknown[] | null = orbitData
 
   if (orbitError) {
     console.warn(`[fetchKPIs] orbit.v_kpi_snapshots indisponível (${orbitError.message}). Fallback legacy...`)
