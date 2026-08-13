@@ -81,10 +81,8 @@ import type { ReactNode } from 'react'
 // SEÇÃO 0: TIPOS CANÔNICOS COMPARTILHADOS
 // ============================================================================
 
-/** Severidade de alerta. Fonte canônica — types/alert.ts apenas re-exporta. */
-export type AlertSeverity = 'info' | 'warning' | 'critical'
-
-export type CampaignObjective = string
+// Re-export enums from central SSOT file to keep single source for enums
+export type { AlertSeverity, CampaignObjective } from '../lib/types/enums-orbit'
 export type CampaignStatus = string
 
 // ⚠️ OBSERVAÇÃO (7): representação #1 de Campanha — linha crua do banco.
@@ -175,6 +173,20 @@ export interface Alert {
   isResolved: boolean
   createdAt: string          // ⚠️ STRING, não Date — ver alertsRepository.ts
   action: AlertAction | null
+
+  // Campos adicionais presentes no schema orbit.alerts (2026 audit)
+  resolvedAt?: string | null
+  snoozedUntil?: string | null
+  alertType?: string | null
+  igPostId?: string | null
+  metaCreativeId?: string | null
+  metaCampaignId?: string | null
+  googleCampaignId?: string | null
+  snapshotId?: string | null
+  suggestedAction?: string | null
+  actionUrl?: string | null
+  isSnoozed?: boolean
+  resolvedBy?: string | null
 }
 
 /** Fetch status usado por TODOS os hooks (useFunnel, useInstagramOverview, etc). */
