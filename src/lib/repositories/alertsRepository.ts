@@ -54,10 +54,16 @@ function fromOrbitRow(row: OrbitAlertRow): Alert {
     clientId:     row.client_id,
     clientName:   row.clients?.name   ?? '',
     clientHandle: row.clients?.handle ?? '',
-    title:        row.title,
-    description:  row.description ?? '',
+    type:         row.alert_type ?? 'unknown',
     severity:     row.severity,
+    title:        row.title,
+    description:  row.description ?? null,
+    metricName:   row.metric_name ?? null,
+    metricValue:  row.metric_value ?? null,
+    thresholdValue: row.threshold_value ?? null,
+    isResolved:   row.is_resolved,
     createdAt:    row.created_at,
+    action:       row.action_url ? { type: 'link', label: 'Abrir', url: row.action_url } : null,
   }
 }
 
@@ -67,10 +73,16 @@ function fromLegacyRow(row: LegacyAlertRow): Alert {
     clientId:     row.client_id,
     clientName:   row.clients?.name   ?? '',
     clientHandle: row.clients?.handle ?? '',
+    type:         'legacy',
+    severity:     row.severity,
     title:        row.title,
     description:  row.description,
-    severity:     row.severity,
+    metricName:   null,
+    metricValue:  null,
+    thresholdValue: null,
+    isResolved:   false,
     createdAt:    row.created_at,
+    action:       null,
   }
 }
 
