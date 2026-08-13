@@ -236,19 +236,17 @@ export async function fetchAvatarAlignment(clientId: string): Promise<AvatarAlig
         alignment_status
       `)
       .eq('client_id', clientId)
-      .maybeSingle()
+            .returns<AvatarAlignmentRow | null>()
+            .maybeSingle()
 
     if (error || !data) {
       console.warn('[avatarRepository] Resposta vazia ou erro. Usando fallback seguro para:', clientId, error?.message)
       return rowToAvatarAlignment(getFallback(clientId))
     }
 
-    // ✅ LIMPO DE ANY: Usamos Record para passar liso no validador do ESLint
-    const objData = data as Record<string, unknown>
-    
     const fullRow: AvatarAlignmentRow = {
-      ...(objData as unknown as AvatarAlignmentRow),
-      real_interest: objData.expected_interest ? `Focado em ${objData.expected_interest}` : 'Geral'
+      ...(data as AvatarAlignmentRow),
+      real_interest: (data as AvatarAlignmentRow).expected_interest ? `Focado em ${(data as AvatarAlignmentRow).expected_interest}` : 'Geral'
     }
 
     return rowToAvatarAlignment(fullRow)
