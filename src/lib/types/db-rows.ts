@@ -50,3 +50,16 @@ export interface MetricHistoryRow {
   platform: string
   created_at?: string
 }
+
+export interface BenchmarkHistoryRow {
+  id: string
+  client_id: string
+  metric_name: string
+  benchmark_value: number
+  source_level: string
+  input_by: string
+  input_reason?: string | null
+  valid_from: string
+  valid_until?: string | null
+  created_at?: string
+}
