@@ -10,8 +10,14 @@ import type { MetaAdsKPI, CampaignRow } from '../../types/metaAds';
 // ─── Raw DB row shape (snake_case) ────────────────────────────────────────────
 interface MetaCampaignRow extends CampaignRow {
   client_id: string;
-  cpc:       number;
-  fatigue:   number;
+  cpc?:       number | null;
+  fatigue?:   number | null;
+  roas?:      number | null;
+  ctr?:       number | null;
+  frequency?: number | null;
+  fatigue_percent?: number | null;
+  cpl?:       number | null;
+  status?:    string | null;
 }
 
 // ─── Row → Domain transformer ─────────────────────────────────────────────────
