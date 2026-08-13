@@ -4,8 +4,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { fetchFunnelData } from '../lib/repositories/funnelRepository'
 
-import type { AsyncState, FetchStatus } from '../types/orbit'
-import type { FunnelMetrics, UseFunnelResult } from '../types/funnel'
+import type { AsyncState, FetchStatus, FunnelMetrics, UseFunnelResult, SimulatedFunnelParams } from '../types/orbit'
 
 const MAX_RETRIES = 3
 const BASE_DELAY_MS = 1000
@@ -27,6 +26,7 @@ export function useFunnel(
   const [status, setStatus] = useState<FetchStatus>('idle')
   const [error, setError]   = useState<string | null>(null)
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
+  const [params, setParams] = useState<SimulatedFunnelParams>({ alcance: 0, ctrBio: 0, taxaConv: 0 })
 
   const isMountedRef = useRef(true)
   const requestIdRef = useRef(0)
@@ -103,5 +103,5 @@ export function useFunnel(
     void load()
   }, [load])
 
-  return { data, status, error, lastUpdated, refetch }
+  return { data, status, error, lastUpdated, refetch, params, setParams }
 }
