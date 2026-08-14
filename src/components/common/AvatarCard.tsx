@@ -1,14 +1,7 @@
-/* ==========================================================================
-   ORBIT · Component — AvatarCard
-   Renderiza um perfil (esperado ou real) dentro de um GlassCard, resolvendo
-   seu próprio glowColor a partir do `status` contratual recebido.
-   Versão: 2.1.0
-   ========================================================================== */
+// src/components/common/AvatarCard.tsx
 
 import React from 'react'
-import { GlassCard } from './GlassCard'
 import type { AvatarProfile, AlignmentStatus } from '../../types/avatar'
-import type { GlowColor } from '../../types/orbit'
 import styles from './AvatarCard.module.css'
 
 export interface AvatarCardProps {
@@ -20,49 +13,39 @@ export interface AvatarCardProps {
   insightText: string
 }
 
-const STATUS_TO_GLOW: Record<AlignmentStatus, GlowColor> = {
+const STATUS_GLOW_MAP: Record<AlignmentStatus, 'cyan' | 'gold' | 'red' | 'none'> = {
   healthy: 'cyan',
   warning: 'gold',
   critical: 'red',
 }
 
-const VARIANT_ICON: Record<'expected' | 'real', string> = {
+const VARIANT_ICON_MAP: Record<'expected' | 'real', string> = {
   expected: '👤',
   real: '📊',
 }
 
-const CONFIDENCE_LABEL: Record<'L0' | 'L1' | 'L2', string> = {
-  L0: 'Não validado',
-  L1: 'Validação parcial',
-  L2: 'Validado com cliente',
+// ✅ HELPER: Encontrar a faixa etária com maior percentual
+function getMostCommonAgeRange(ageRange: AvatarProfile['ageRange']): string {
+  const entries = Object.entries(ageRange)
+  const [range] = entries.reduce((max, current) =>
+    current[1] > max[1] ? current : max
+  )
+  return range
 }
 
-const FILL_CLASS: Record<GlowColor, string> = {
-  cyan: styles.fillCyan,
-  gold: styles.fillGold,
-  red: styles.fillRed,
-  none: styles.fillNone,
-}
-
-const TEXT_CLASS: Record<GlowColor, string> = {
-  cyan: styles.textCyan,
-  gold: styles.textGold,
-  red: styles.textRed,
-  none: styles.textNone,
-}
-
-/**
- * Fallback de governança: nunca renderiza vazio. Se o repositório devolver
- * string vazia para unconsciousDesireMapped/misalignmentHypothesis, exibe
- * um estado explícito em vez de um bloco em branco (filosofia N/A do projeto).
- */
-function resolveInsight(text: string): { text: string; isFallback: boolean } {
-  const trimmed = text.trim()
-  if (trimmed.length > 0) return { text: trimmed, isFallback: false }
-  return {
-    text: 'Governança: dado ainda não mapeado para este cliente.',
-    isFallback: true,
+// ✅ HELPER: Encontrar a cidade/país com maior percentual
+function getTopLocation(
+  cities: AvatarProfile['topCities'] | undefined,
+  countries: AvatarProfile['topCountries'] | undefined
+): string {
+  // Priorizar cidade, depois país
+  if (cities && cities.length > 0) {
+    return cities[0].name
   }
+  if (countries && countries.length > 0) {
+    return countries[0].name
+  }
+  return 'Não especificado'
 }
 
 export function AvatarCard({
@@ -73,84 +56,78 @@ export function AvatarCard({
   insightLabel,
   insightText,
 }: AvatarCardProps): React.ReactElement {
-  const glowColor = STATUS_TO_GLOW[status]
-  const insight = resolveInsight(insightText)
+  const glowColor = STATUS_GLOW_MAP[status]
+  const icon = VARIANT_ICON_MAP[variant]
+  
+  // ✅ Mapear glow color para classe CSS
+  const fillClass = styles[`fill${glowColor.charAt(0).toUpperCase()}${glowColor.slice(1)}`]
+  const textClass = styles[`text${glowColor.charAt(0).toUpperCase()}${glowColor.slice(1)}`]
+  
+  // ✅ Extrair dados do perfil
+  const topAgeRange = getMostCommonAgeRange(profile.ageRange)
+  const topLocation = getTopLocation(profile.topCities, profile.topCountries)
+  const femalePercentage = profile.gender.female
+  const malePercentage = profile.gender.male
 
   return (
-    <GlassCard glowColor={glowColor} className={styles.card}>
+    <div className={styles.card}>
+      {/* Header: Ícone + Badge */}
       <div className={styles.header}>
-        <span aria-hidden="true" className={styles.icon}>
-          {VARIANT_ICON[variant]}
-        </span>
-        <span className={styles.titleBadge}>{title}</span>
+        <span className={styles.icon}>{icon}</span>
+        <span className={`${styles.titleBadge} ${textClass}`}>{title}</span>
       </div>
 
-      {/* Gênero */}
+      {/* Bloco: Gênero */}
       <div className={styles.block}>
         <p className={styles.blockLabel}>Gênero</p>
+        
+        {/* Trilho de progresso */}
         <div className={styles.genderTrack}>
-          <span
-            className={[styles.genderFill, FILL_CLASS[glowColor]].join(' ')}
-            style={{ width: `${profile.gender.female}%` }}
+          <div
+            className={`${styles.genderFill} ${fillClass}`}
+            style={{ width: `${femalePercentage}%` }}
           />
         </div>
+
+        {/* Legenda */}
         <div className={styles.genderLegend}>
           <span>
             ♀ Feminino{' '}
-            <span className={[styles.genderValue, TEXT_CLASS[glowColor]].join(' ')}>
-              {profile.gender.female}%
+            <span className={`${styles.genderValue} ${textClass}`}>
+              {femalePercentage.toFixed(0)}%
             </span>
           </span>
           <span>
             ♂ Masculino{' '}
-            <span className={[styles.genderValue, TEXT_CLASS[glowColor]].join(' ')}>
-              {profile.gender.male}%
+            <span className={`${styles.genderValue} ${textClass}`}>
+              {malePercentage.toFixed(0)}%
             </span>
           </span>
         </div>
       </div>
 
-      {/* Faixa etária */}
+      {/* Bloco: Faixa Etária */}
       <div className={styles.block}>
-        <p className={styles.blockLabel}>Faixa Etária</p>
-        <p className={styles.value}>{profile.ageRange} anos</p>
+        <p className={styles.blockLabel}>Faixa Etária Principal</p>
+        <p className={`${styles.value} ${textClass}`}>{topAgeRange} anos</p>
       </div>
 
-      {/* Interesse */}
-      <div className={styles.block}>
-        <p className={styles.blockLabel}>Interesse Principal</p>
-        <p className={styles.text}>
-          {profile.interest || 'N/A'}
-          {profile.interestConfidence && (
-            <span className={styles.confidenceTag}>
-              {' '}
-              · {CONFIDENCE_LABEL[profile.interestConfidence]}
-            </span>
-          )}
-        </p>
-      </div>
-
-      {/* Geo */}
+      {/* Bloco: Geolocalização */}
       <div className={styles.block}>
         <p className={styles.blockLabel}>Geolocalização</p>
-        <p className={styles.geoRow}>
-          <span aria-hidden="true">📍</span> {profile.geo || 'N/A'}
-        </p>
+        <div className={styles.geoRow}>
+          <span>📍</span>
+          <span className={styles.text}>{topLocation}</span>
+        </div>
       </div>
 
-      {/* Insight (unconsciousDesireMapped / misalignmentHypothesis) */}
-      <div className={styles.insightBlock}>
-        <p className={styles.blockLabel}>{insightLabel}</p>
-        <p
-          className={
-            insight.isFallback
-              ? [styles.insightText, styles.insightFallback].join(' ')
-              : styles.insightText
-          }
-        >
-          {insight.text}
-        </p>
-      </div>
-    </GlassCard>
+      {/* Insight (no final do card) */}
+      {insightText && (
+        <div className={styles.insightBlock}>
+          <p className={styles.blockLabel}>{insightLabel}</p>
+          <p className={styles.insightText}>{insightText}</p>
+        </div>
+      )}
+    </div>
   )
 }

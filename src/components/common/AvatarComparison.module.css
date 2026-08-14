@@ -1,4 +1,9 @@
-/* AvatarComparison.module.css */
+/* ==========================================================================
+   ORBIT · Component — AvatarComparison
+   Layout lado a lado (Avatar Esperado × Audiência Real) com divisor "VS".
+   Resolve seu próprio glow a partir de `status` — não recebe cor pronta.
+   Versão: 2.1.0
+   ========================================================================== */
 
 .wrapper {
   display: flex;

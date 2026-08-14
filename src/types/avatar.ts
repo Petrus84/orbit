@@ -24,14 +24,7 @@ export type {
   AlignmentColor,
   FetchStatus,
   AsyncState,
-  GenderSplit,
   AvatarProfile,
-  AlignmentBar,
   AvatarAlignment,
-  AlignmentCalculation,
-} from './orbit'
-
-export {
-  ALIGNMENT_STATUS_LABEL,
-  ALIGNMENT_THRESHOLDS,
+  GenderCategory
 } from './orbit'

@@ -27,26 +27,12 @@ interface OrbitAlertRow {
   threshold_value: number | null
   action_url: string | null
   is_resolved: boolean
-  created_at: string
   clients: {                             // FK join com orbit.clients
     name: string
     handle: string
   } | null
 }
 
-// ── Raw shape from public.alerts (legacy) ────────────────────────────────
-interface LegacyAlertRow {
-  id: string
-  client_id: string
-  title: string
-  description: string
-  severity: AlertSeverity
-  created_at: string
-  clients: {
-    name: string
-    handle: string
-  } | null
-}
 
 function fromOrbitRow(row: OrbitAlertRow): Alert {
   return {
@@ -57,22 +43,9 @@ function fromOrbitRow(row: OrbitAlertRow): Alert {
     title:        row.title,
     description:  row.description ?? '',
     severity:     row.severity,
-    createdAt:    new Date(row.created_at),
   }
 }
 
-function fromLegacyRow(row: LegacyAlertRow): Alert {
-  return {
-    id:           row.id,
-    clientId:     row.client_id,
-    clientName:   row.clients?.name   ?? '',
-    clientHandle: row.clients?.handle ?? '',
-    title:        row.title,
-    description:  row.description,
-    severity:     row.severity,
-    createdAt:    new Date(row.created_at),
-  }
-}
 
 // ── Base query — orbit.alerts ─────────────────────────────────────────────
 function orbitBaseQuery() {
@@ -113,9 +86,6 @@ export async function fetchAlerts(filter?: AlertSeverity): Promise<Alert[]> {
   let legacyQuery = legacyBaseQuery()
   if (filter !== undefined) legacyQuery = legacyQuery.eq('severity', filter)
 
-  const { data, error } = await legacyQuery.returns<LegacyAlertRow[]>()
-  if (error) { console.error('[alertsRepository]', error.message); throw new Error(error.message) }
-  return (data ?? []).map(fromLegacyRow)
 }
 
 // ── fetchCriticalAlerts ───────────────────────────────────────────────────
