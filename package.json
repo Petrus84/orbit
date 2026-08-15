@@ -9,8 +9,7 @@
     "lint": "eslint . --ext .ts,.tsx",
     "ingest:l0": "tsx scripts/ingest-l0-v2.ts --mode operational",
     "check:drift": "ts-node src/types/check-schema-drift.ts",
-    "check:db": "tsx scripts/check-ingestion.ts",
-    "db:seed": "tsx scripts/seed-dynamic.ts"
+    "check:db": "tsx scripts/check-ingestion.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.3",
