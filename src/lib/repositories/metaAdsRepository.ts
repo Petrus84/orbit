@@ -4,15 +4,9 @@
 // Assumes src/lib/supabaseClient.ts exports a named `supabase` client.
 
 import { supabase } from '@/lib/supabase';
-import type { Campaign } from '../../types/orbit';
-import type { MetaAdsKPI, CampaignRow } from '../../types/metaAds';
+import type { Campaign, MetaCampaignRow  } from '../../types/orbit';
+import type { MetaAdsKPI } from '../../types/metaAds';
 
-// ─── Raw DB row shape (snake_case) ────────────────────────────────────────────
-interface MetaCampaignRow extends CampaignRow {
-  client_id: string;
-  cpc:       number;
-  fatigue:   number;
-}
 
 // ─── Row → Domain transformer ─────────────────────────────────────────────────
 /**

@@ -114,6 +114,8 @@ export const AvatarScreen: React.FC<AvatarScreenProps> = ({ clientId: propClient
               real={data.real}
               score={data.score}
               status={data.status}
+              unconsciousDesireMapped={data.unconsciousDesireMapped}
+              misalignmentHypothesis={data.misalignmentHypothesis}
             />
 
             <AlignmentBars bars={data.bars} />

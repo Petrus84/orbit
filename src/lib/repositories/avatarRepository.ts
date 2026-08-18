@@ -14,8 +14,9 @@ import type {
   AlignmentStatus,
   AvatarAlignment,
   AvatarProfile,
+  AvatarRecommendation,
 } from '../../types/avatar'
-import { ALIGNMENT_THRESHOLDS } from '../../types/avatar'
+import { ALIGNMENT_THRESHOLDS, ALIGNMENT_STATUS_COLOR } from '../../types/avatar'
 
 interface AvatarAlignmentRow {
   client_id: string
@@ -104,63 +105,91 @@ function buildBars(row: AvatarAlignmentRow): AlignmentBar[] {
   const interestVariance = categoricalVariance(row.expected_interest ?? '', row.real_interest ?? '')
   const geoVariance = categoricalVariance(row.expected_geo, row.real_geo)
 
-  // ✅ CORREÇÃO DE UNUSED VAR: varianceToStatus ativado nativamente em cada objeto
+  // ✅ CORREÇÃO (bug real, não pego pelo tsc por causa do `as unknown`
+  // anterior): AlignmentBar (orbit.ts) exige tanto `status` quanto `color`.
+  // A versão anterior só preenchia `status` e forçava o cast — AlignmentBars.tsx
+  // lê `bar.color` para escolher a cor visual da barra, então toda barra
+  // renderizava sem cor (undefined) em produção. `color` agora vem de
+  // ALIGNMENT_STATUS_COLOR, a mesma tabela oficial usada em outros pontos.
+  const toBar = (label: string, expected: number, real: number, variance: number): AlignmentBar => {
+    const status = varianceToStatus(variance)
+    return { label, expected, real, variance, status, color: ALIGNMENT_STATUS_COLOR[status] }
+  }
+
   return [
-    {
-      label: 'Gênero (masculino %)',
-      expected: row.expected_gender_male,
-      real: row.real_gender_male,
-      variance: genderVariance,
-      status: varianceToStatus(genderVariance)
-    } as unknown as AlignmentBar,
-    {
-      label: 'Faixa Etária',
-      expected: 100,
-      real: ageVariance === 0 ? 100 : 0,
-      variance: ageVariance,
-      status: varianceToStatus(ageVariance)
-    } as unknown as AlignmentBar,
-    {
-      label: 'Interesse',
-      expected: 100,
-      real: interestVariance === 0 ? 100 : 0,
-      variance: interestVariance,
-      status: varianceToStatus(interestVariance)
-    } as unknown as AlignmentBar,
-    {
-      label: 'Localização',
-      expected: 100,
-      real: geoVariance === 0 ? 100 : 0,
-      variance: geoVariance,
-      status: varianceToStatus(geoVariance)
-    } as unknown as AlignmentBar
+    toBar('Gênero (masculino %)', row.expected_gender_male, row.real_gender_male, genderVariance),
+    toBar('Faixa Etária', 100, ageVariance === 0 ? 100 : 0, ageVariance),
+    toBar('Interesse', 100, interestVariance === 0 ? 100 : 0, interestVariance),
+    toBar('Localização', 100, geoVariance === 0 ? 100 : 0, geoVariance),
   ]
 }
 
-function buildRecommendation(score: number, bars: AlignmentBar[]): string {
-  if (score >= ALIGNMENT_THRESHOLDS.warning) {
-    return 'Seu público real está bem alinhado com o avatar esperado. Continue monitorando.'
-  }
-  
-  // ✅ CORREÇÃO DE CAST SEGURO: Inserido 'as unknown' antes do Record para o TypeScript aceitar a checagem
-  const critical = bars
-    .filter((b) => (b as unknown as Record<string, unknown>).status === 'critical' || (b as unknown as Record<string, unknown>).variant === 'critical')
-    .map((b) => b.label)
-    
-  const warning = bars
-    .filter((b) => (b as unknown as Record<string, unknown>).status === 'warning' || (b as unknown as Record<string, unknown>).variant === 'warning')
-    .map((b) => b.label)
-    
-  const parts: string[] = []
+// ─── RECOMENDAÇÕES E TEXTOS NARRATIVOS ────────────────────────────────────
+// AvatarAlignment (orbit.ts) exige `recommendations: AvatarRecommendation[]`,
+// `recommendation: AvatarRecommendation | null`, `unconsciousDesireMapped`
+// e `misalignmentHypothesis` — nenhum dos quatro era preenchido antes (só
+// existia uma string solta, incompatível com o próprio tipo `recommendation`
+// do contrato). Construídos aqui a partir dos mesmos dados já calculados em
+// buildBars(), sem inventar fonte de dado nova.
 
-  if (critical.length > 0) {
-    parts.push(`Divergência crítica em: ${critical.join(', ')}. Revise a segmentação imediatamente.`)
-  }
-  if (warning.length > 0) {
-    parts.push(`Atenção para: ${warning.join(', ')}. Ajuste os critérios de público nas campanhas ativas.`)
+const BAR_ICON: Record<AlignmentStatus, string> = {
+  critical: '🔴',
+  warning: '🟡',
+  healthy: '🟢',
+}
+
+function buildRecommendations(bars: AlignmentBar[]): AvatarRecommendation[] {
+  const problematic = bars.filter((b) => b.status !== 'healthy')
+
+  if (problematic.length === 0) {
+    return [
+      {
+        id: 'alinhamento-saudavel',
+        title: 'Alinhamento saudável',
+        description: 'Seu público real está bem alinhado com o avatar esperado. Continue monitorando.',
+        icon: BAR_ICON.healthy,
+        type: 'healthy',
+      },
+    ]
   }
 
-  return parts.length > 0 ? parts.join(' ') : 'Alinhamento abaixo do esperado. Revise segmentação e criativos.'
+  return problematic.map((bar) => ({
+    id: bar.label
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-'),
+    title: `Revisar ${bar.label}`,
+    description:
+      bar.status === 'critical'
+        ? `Divergência crítica em "${bar.label}" (${bar.variance.toFixed(0)}%). Revise a segmentação imediatamente.`
+        : `Atenção para "${bar.label}" (${bar.variance.toFixed(0)}%). Ajuste os critérios de público nas campanhas ativas.`,
+    icon: BAR_ICON[bar.status],
+    type: bar.status,
+  }))
+}
+
+function pickTopRecommendation(recommendations: AvatarRecommendation[]): AvatarRecommendation | null {
+  const critical = recommendations.find((r) => r.type === 'critical')
+  if (critical) return critical
+  const warning = recommendations.find((r) => r.type === 'warning')
+  if (warning) return warning
+  return null
+}
+
+function buildUnconsciousDesireMapped(row: AvatarAlignmentRow): string {
+  return row.expected_interest
+    ? `O avatar esperado busca "${row.expected_interest}" — esse é o desejo inconsciente mapeado que orienta a segmentação atual.`
+    : 'Nenhum interesse esperado mapeado para este cliente ainda.'
+}
+
+function buildMisalignmentHypothesis(row: AvatarAlignmentRow, bars: AlignmentBar[]): string {
+  if (bars.every((b) => b.status === 'healthy')) {
+    return 'Sem hipótese de desalinhamento relevante — audiência real e esperada convergem nas variáveis monitoradas.'
+  }
+
+  const worst = [...bars].sort((a, b) => b.variance - a.variance)[0]
+  return `A maior divergência está em "${worst.label}" (esperado vs. real). Hipótese: a audiência captada reflete "${row.real_interest ?? 'um interesse não mapeado'}", diferente do avatar esperado — provável desalinhamento de criativo ou segmentação de campanha.`
 }
 
 function rowToAvatarAlignment(row: AvatarAlignmentRow): AvatarAlignment {
@@ -184,7 +213,8 @@ function rowToAvatarAlignment(row: AvatarAlignmentRow): AvatarAlignment {
     : scoreToStatus(score)
 
   const bars = buildBars(row)
-  const recommendation = buildRecommendation(score, bars)
+  const recommendations = buildRecommendations(bars)
+  const recommendation = pickTopRecommendation(recommendations)
 
   return {
     id: typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'avatar-alignment-id',
@@ -194,7 +224,10 @@ function rowToAvatarAlignment(row: AvatarAlignmentRow): AvatarAlignment {
     score,
     status,
     bars,
-    recommendation
+    recommendations,
+    recommendation,
+    unconsciousDesireMapped: buildUnconsciousDesireMapped(row),
+    misalignmentHypothesis: buildMisalignmentHypothesis(row, bars),
   }
 }
 

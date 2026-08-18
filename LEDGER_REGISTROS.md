@@ -17,6 +17,10 @@
 - **2026-08-11, ~03:25 AM** — Reconciliação de enums DB↔TS (CSV de 27 linhas) + matriz de
   decisão de bloqueadores de negócio (INC-001 a INC-008). Gerou LEDGER-011 a LEDGER-013,
   promovidos a `ORB-DEBT-027` a `ORB-DEBT-034` em governança.
+- **2026-08-12 (recebida)** — Conciliação automatizada real DB×TS (script, não levantamento
+  manual) — `resultado_conciliacao.md`. Gerou LEDGER-014 a LEDGER-017, promovidos a
+  `ORB-DEBT-035` a `ORB-DEBT-039`, e **contradiz parcialmente** LEDGER-011 em dois pontos
+  (`alert_severity`, `alert_type`/`health_status`) — ver LEDGER-014.
 
 ---
 
@@ -309,7 +313,144 @@ permanecem como recomendação registrada.
 
 ---
 
-## Resumo de Patches Críticos Pendentes (P0/P1, todas as sessões)
+## Sessão 2026-08-12 — Conciliação Automatizada Real (DB×TS)
+
+**Fonte:** `resultado_conciliacao.md` — saída de script (não levantamento manual como as
+sessões anteriores). Cabeçalho do próprio relatório: `DB: 12 enums, 24 tabelas | TS: 29
+types, 79 interfaces`. Resultado: 62 alinhados, 11 divergentes, 94 fantasmas, 32 sugestões de
+mapeamento não confirmadas.
+
+### LEDGER-014: Escala real do problema — 94 fantasmas, não 25-28
+**Severidade:** 🔴 CRÍTICO (escopo) · **Módulo:** orbit.ts (SSOT)
+**Promovido para:** `ORB-DEBT-035`
+
+**Achado:** as contagens manuais das sessões anteriores (LEDGER-011, "28" ou "25" registros)
+cobriam essencialmente `alert_severity` + 10-11 enums. A conciliação automatizada mede DB×TS
+por completo — enums, tabelas e colunas — e encontra **94 itens fantasma**, uma ordem de
+grandeza maior. As sessões anteriores não estavam erradas em si; estavam **incompletas por
+escopo** (auditaram só enums, não colunas/tabelas).
+
+**⚠️ Duas contradições diretas com LEDGER-011 (11/08), não resolvidas nesta consolidação:**
+
+1. **`alert_severity`:** LEDGER-011 registrou 12 valores no TS sem correspondência no DB
+   (`âmbar`, `down`, `estável`, `flat`, `gold`, `inactive`, `neutral`, `none`, `paused`, `red`,
+   `vermelho`, `warn`). Esta conciliação automatizada lista `critical`/`warning`/`info` como
+   **alinhados** e aponta como única divergência real `success` (existe no DB, ausente no TS)
+   — nenhum dos 12 valores extras aparece em nenhuma das três categorias do relatório
+   (Alinhados/Divergentes/Fantasmas). Ou o `AlertSeverity` de `orbit.ts` já foi enxugado entre
+   as duas sessões, ou o levantamento manual de 11/08 estava incorreto, ou a ferramenta
+   automatizada não captura literais fora de um `export type` nomeado (o que a tornaria
+   cega para os 12 valores, não uma prova de que não existem). **Não decidir sem reler
+   `orbit.ts` diretamente.**
+2. **`alert_type` e `health_status`:** a investigação forense por grep de 11/08 (LEDGER-011,
+   documentos "code_33"/"code_32" da sessão original) concluiu que os dois **já existem** em
+   `orbit.ts` (linhas 418 e 448/470 citadas) e eram falsos positivos da lista de 11 fantasmas
+   original. Esta conciliação automatizada os lista de novo como Fantasma ("enum no DB sem
+   export type ou literal inline correspondente no TS"). As duas fontes não podem estar certas
+   ao mesmo tempo para o mesmo estado de código — reconciliar por leitura direta antes de agir
+   sobre qualquer um dos dois.
+
+**Ressalva sobre o número "62 alinhados":** a seção "Sugestões de Mapeamento" do próprio
+relatório lista 5 pares tabela↔interface (`alerts↔alert`, `avatar_validations↔avatarvalidationrow`,
+`client_onboarding↔clientonboarding`, `clients↔client`, `ig_audience_snapshots↔igaudiencesnapshotrow`)
+como "casados por similaridade de nome, NÃO confirmado". Como esses 5 pares sustentam boa parte
+da lista de 62 campos "alinhados", a confiabilidade desse número específico depende de uma
+confirmação que ainda não aconteceu.
+
+**Status:** `OPEN` — fonte de referência para todos os itens desta sessão.
+
+---
+
+### LEDGER-015: Contrato `alerts` — 19 campos divergentes (12 só no DB, 7 só no TS)
+**Severidade:** 🔴 CRÍTICO · **Módulo:** orbit.ts (SSOT) / Alertas
+**Promovido para:** `ORB-DEBT-036`
+
+**Colunas do DB ausentes do TS (12):** `resolved_at`, `snoozed_until`, `alert_type`,
+`ig_post_id`, `meta_creative_id`, `meta_campaign_id`, `google_campaign_id`, `snapshot_id`,
+`suggested_action`, `action_url`, `is_snoozed`, `resolved_by`.
+
+**Campos do TS ausentes do DB (7):** `clientName`, `clientHandle`, `type`, `action`,
+`exportable`, `confidenceLevel`, `personaType`.
+
+**Relevância:** é evidência concreta e nomeada, campo a campo, para o que `ADR-003`/
+`ORB-DEBT-006` já descrevia de forma mais genérica ("`Alert`/`AlertAction` locais divergem do
+contrato real em quase todos os campos"). Antes só se sabia que divergia; agora se sabe
+exatamente onde.
+
+**Status:** `OPEN`.
+
+---
+
+### LEDGER-016: Contrato `clients` — 34 campos divergentes (30 só no DB, 4 só no TS)
+**Severidade:** 🔴 CRÍTICO · **Módulo:** orbit.ts (SSOT) / Carteira
+**Promovido para:** `ORB-DEBT-037` (amplia `ORB-DEBT-013`)
+
+**Colunas do DB ausentes do TS (30):** `created_at`, `updated_at`, `segment`,
+`instagram_user_id`, `ig_username`, `ig_display_name`, `business_objective`,
+`gross_margin_pct`, `monthly_ad_budget`, `avatar_expected_gender`,
+`avatar_expected_gender_pct`, `avatar_expected_age_min`, `avatar_expected_age_max`,
+`avatar_expected_geo_primary`, `avatar_expected_geo_pct`, `avatar_unconscious_desire`,
+`threshold_ctr_bio_min`, `threshold_ctr_ads_min`, `threshold_ctr_search_min`,
+`threshold_cpa_max_multiplier`, `threshold_churn_monthly_max`, `threshold_fatigue_critical`,
+`threshold_frequency_max`, `threshold_er_real_min`, `threshold_polemic_max`,
+`threshold_utility_min`, `threshold_avatar_alignment_min`, `health_status`,
+`health_updated_at`, `subscription_id`, `avatar_alignment_hypothesis`.
+
+**Campos do TS ausentes do DB (4):** `avatar`, `status`, `metrics`, `lastUpdated`.
+
+**Relevância:** `ORB-DEBT-013` (09/08) registrou só que `Client.status` não aceita
+`'unknown'`. Este achado mostra que a divergência é muito mais ampla — praticamente todos os
+thresholds configuráveis por cliente (usados na matriz de decisão INC-001, ver LEDGER-013) e
+todos os campos de avatar esperado (`avatar_expected_*`) não têm representação no tipo TS
+`Client` — o que significa que qualquer tela que precise ler threshold por cliente
+diretamente do tipo `Client` não tem como, hoje, sem contornar o SSOT.
+
+**Status:** `OPEN`.
+
+---
+
+### LEDGER-017: Contrato `ig_audience_snapshots` — 9 colunas ausentes, inclui os 4 scores de alinhamento de avatar
+**Severidade:** 🔴 CRÍTICO · **Módulo:** orbit.ts (SSOT) / Avatar
+**Promovido para:** `ORB-DEBT-038` (conecta com `ORB-DEBT-034`)
+
+**Colunas do DB ausentes do TS (9):** `id`, `import_session`, `created_at`, `top_countries`,
+`confidence_level`, `avatar_gender_alignment_score`, `avatar_age_alignment_score`,
+`avatar_geo_alignment_score`, `avatar_composite_score`.
+
+**Relevância:** `ORB-DEBT-034` (11/08) já registrava `avatar_composite_score` como `NULL` no
+dado real dos dois clientes. Este achado mostra uma segunda camada do mesmo problema: mesmo
+se o dado existisse, **o campo não está modelado no tipo TS da linha** — então nenhum
+componente conseguiria ler `avatar_composite_score` de forma tipada mesmo depois de a
+ingestão ser corrigida (ORB-DEBT-022/025). São dois bugs empilhados, não um.
+
+**Status:** `OPEN`.
+
+---
+
+### LEDGER-018: 18 tabelas do DB sem interface TS (nem por similaridade de nome)
+**Severidade:** 🟡 MÉDIO · **Módulo:** orbit.ts (SSOT)
+**Promovido para:** `ORB-DEBT-039`
+
+`ads_ga4_landing_pages`, `ads_google_campaigns`, `ads_google_search_terms`,
+`ads_google_snapshots`, `ads_meta_adsets`, `ads_meta_campaigns`, `ads_meta_creatives`,
+`ads_meta_snapshots`, `client_reports`, `funnel_data`, `ig_account_snapshots`,
+`ig_import_sessions`, `ig_posts`, `metric_history`, `raw_ig_ingest`,
+`ref_export_file_catalog`, `ref_thresholds`, `subscriptions`, `user_subscriptions`.
+
+**Notas:**
+- `raw_ig_ingest` e `ig_import_sessions` sem interface já era esperado — essas tabelas nunca
+  são escritas pelo pipeline real (`ORB-DEBT-020`), então nunca precisaram de um tipo de
+  leitura.
+- `ig_posts` sem interface é achado novo: pode ser uma causa adicional (camada de tipos) para
+  os sintomas já registrados em `ORB-DEBT-023` (schema mismatch de `posts.json`) — mesmo se o
+  parser fosse corrigido, não há tipo TS pronto para consumir as linhas.
+- Nenhuma decisão tomada sobre quais dessas 18 tabelas realmente precisam de uma interface
+  própria (algumas podem ser legitimamente internas ao schema, sem necessidade de exposição
+  em TS) — isso é uma pergunta de escopo, não um bug confirmado em todos os 18 casos.
+
+**Status:** `OPEN` — decisão de escopo pendente.
+
+
 
 | # | Arquivo | Problema | Ledger | ORB-DEBT | Prioridade |
 |---|---------|----------|--------|----------|-----------|
@@ -322,6 +463,9 @@ permanecem como recomendação registrada.
 | 7 | orbit.ts | `AlertSeverity` divergente do DB | LEDGER-011 | ORB-DEBT-027 | 🔴 crítico, ver ADR-009 |
 | 8 | orbit.ts | 8 enums sem type TS | LEDGER-011 | ORB-DEBT-028 | 🟡 alto, ver ADR-009 |
 | 9 | avatarRepository.ts / funnelRepository.ts | `FALLBACK_*` mascarando dado ausente | LEDGER-012 | ORB-DEBT-030 | 🔴 crítico |
+| 10 | orbit.ts | Contrato `alerts` diverge em 19 campos | LEDGER-015 | ORB-DEBT-036 | 🔴 crítico |
+| 11 | orbit.ts | Contrato `clients` diverge em 34 campos | LEDGER-016 | ORB-DEBT-037 | 🔴 crítico |
+| 12 | orbit.ts | `ig_audience_snapshots`: 9 colunas ausentes (inclui 4 scores de avatar) | LEDGER-017 | ORB-DEBT-038 | 🔴 crítico |
 
 ---
 
@@ -333,4 +477,11 @@ permanecem como recomendação registrada.
 
 ## Candidatas a ORB-DEBT (histórico — todas já incorporadas em `ORBIT_GOVERNANCE.md` §3)
 
-`ORB-DEBT-020` a `ORB-DEBT-034` — ver tabela acima para o mapeamento Ledger → ORB-DEBT.
+`ORB-DEBT-020` a `ORB-DEBT-039` — ver tabelas acima para o mapeamento Ledger → ORB-DEBT.
+
+## Contradições abertas entre sessões (não resolver sem reler o código atual)
+
+- `alert_severity`: LEDGER-011 (manual, 11/08) vs LEDGER-014 (automatizado, 12/08) — 12 valores
+  extras no TS confirmados ou não confirmados, a depender da fonte.
+- `alert_type` / `health_status`: forense por grep (11/08, dentro de LEDGER-011) os dava como
+  já existentes em `orbit.ts`; LEDGER-014 (automatizado, 12/08) os lista de novo como Fantasma.

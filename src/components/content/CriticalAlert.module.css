@@ -1,56 +1,91 @@
-/* CriticalAlert.module.css */
+/* ============================================================================
+   CriticalAlert.module.css — Refatoração 15/08/2026
+   Todos os valores vêm de ssot-design-tokens.css (var(--token)). Nenhum
+   :root local redeclarado — token duplicado era exatamente a causa da
+   divergência de paleta entre este arquivo e AlertCard.module.css.
+   4 classes de severidade porque AlertSeverity tem 4 valores reais
+   (info|warning|critical|success) — ver orbit.ts.
+   ============================================================================ */
 
 .card {
-  display:       flex;
-  align-items:   flex-start;
-  gap:           var(--space-3);
-  border:        var(--border-width) solid var(--border-default);
-  border-radius: var(--border-radius-lg);
-  padding:       var(--space-4) var(--space-5);
-  width:         100%;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  border: var(--border-width) solid var(--line);
+  border-radius: var(--r12);
+  padding: var(--space-4) var(--space-5);
+  width: 100%;
+  background-color: var(--bg2);
+  font-family: var(--font);
+  transition: all var(--transition-fast);
 }
 
-/* Severidade: critical */
 .critical {
-  background:  linear-gradient(135deg, rgba(255, 65, 54, 0.08), rgba(255, 65, 54, 0.03));
-  border-color: var(--border-glow-red);
-  box-shadow:   0 0 24px rgba(255, 65, 54, 0.1);
+  background: linear-gradient(135deg, rgba(255, 68, 68, 0.08), transparent);
+  border-color: var(--neon-red);
+  box-shadow: var(--shadow-glow-red);
 }
 
-/* Severidade: warning */
 .warning {
-  background:  linear-gradient(135deg, rgba(255, 195, 0, 0.08), rgba(255, 195, 0, 0.03));
-  border-color: var(--border-glow-gold);
-  box-shadow:   0 0 24px rgba(255, 195, 0, 0.1);
+  background: linear-gradient(135deg, rgba(255, 195, 0, 0.08), transparent);
+  border-color: var(--neon-gold);
+  box-shadow: var(--shadow-glow-gold);
 }
 
-/* Severidade: info */
 .info {
-  background:  linear-gradient(135deg, rgba(0, 255, 255, 0.06), rgba(0, 255, 255, 0.02));
-  border-color: var(--border-glow-cyan);
-  box-shadow:   0 0 24px rgba(0, 255, 255, 0.08);
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.06), transparent);
+  border-color: var(--neon-cyan);
+  box-shadow: var(--shadow-glow-cyan);
+}
+
+.success {
+  background: linear-gradient(135deg, rgba(46, 204, 113, 0.06), transparent);
+  border-color: var(--green);
+  /* EXTRAPOLADO: não existe --shadow-glow-green em ssot-design-tokens.css;
+     valor abaixo segue o mesmo padrão (cor do estado, alpha 0.2) dos glows
+     confirmados, mas não está no SSOT. */
+  box-shadow: 0 0 20px rgba(46, 204, 113, 0.2);
 }
 
 .icon {
-  font-size:   var(--font-size-lg);
+  font-size: var(--font-size-lg);
   flex-shrink: 0;
-  margin-top:  1px;
+  margin-top: 1px;
 }
 
 .content {
-  display:        flex;
+  display: flex;
   flex-direction: column;
-  gap:            var(--space-1);
+  gap: var(--space-1);
 }
 
 .title {
-  font-size:   var(--font-size-sm);
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
-  color:       var(--text-primary);
+  color: var(--t0);
 }
 
 .body {
-  font-size:   var(--font-size-xs);
-  color:       var(--text-muted);
-  line-height: 1.5;
+  font-size: var(--font-size-xs);
+  color: var(--t1);
+  line-height: var(--line-height-base);
+}
+
+.action {
+  align-self: flex-start;
+  margin-top: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border: none;
+  border-radius: var(--r4);
+  background: transparent;
+  color: var(--acc);
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color var(--transition-fast);
+}
+
+.action:hover {
+  color: var(--acc2);
 }

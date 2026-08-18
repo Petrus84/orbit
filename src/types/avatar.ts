@@ -24,14 +24,13 @@ export type {
   AlignmentColor,
   FetchStatus,
   AsyncState,
-  GenderSplit,
   AvatarProfile,
-  AlignmentBar,
   AvatarAlignment,
-  AlignmentCalculation,
+  AlignmentBar,
+  AvatarRecommendation,
 } from './orbit'
 
-export {
-  ALIGNMENT_STATUS_LABEL,
-  ALIGNMENT_THRESHOLDS,
-} from './orbit'
+// ALIGNMENT_THRESHOLDS, ALIGNMENT_STATUS_LABEL e ALIGNMENT_STATUS_COLOR são
+// consts (valor em runtime), não tipos — precisam de re-export sem `type`,
+// ao contrário de tudo acima.
+export { ALIGNMENT_THRESHOLDS, ALIGNMENT_STATUS_LABEL, ALIGNMENT_STATUS_COLOR } from './orbit'

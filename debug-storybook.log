@@ -1,0 +1,33 @@
+[08:02:00.391] [INFO] [36mInitializing Storybook[39m
+[08:02:01.422] [DEBUG] Getting package.json info for C:/Projetos/orbit-dashboard/package.json...
+[08:02:01.423] [INFO] Package manager: npm
+[08:02:01.426] [DEBUG] Getting CLI versions from NPM for storybook...
+[08:02:01.426] [DEBUG] Executing command: npm info storybook version
+[08:02:01.427] [DEBUG] Resolved command variation: npm.cmd
+[08:02:05.260] [WARN] This is a pre-release version: 10.6.0-alpha.5
+[08:02:05.262] [DEBUG] Executing command: npm config get min-release-age --workspaces=false --include-workspace-root
+[08:02:05.265] [DEBUG] Resolved command variation: npm.cmd
+[08:02:06.203] [INFO] Installing Storybook for user specified project type: react_scripts
+[08:02:06.205] [DEBUG] Using cached package.json for C:\Projetos\orbit-dashboard\package.json...
+[08:02:06.208] [INFO] Framework detected: react-webpack5
+[08:02:06.209] [DEBUG] Getting installed version for vitest...
+[08:02:06.211] [DEBUG] Executing command: npm ls --json --depth=99
+[08:02:06.212] [DEBUG] Resolved command variation: npm.cmd
+[08:02:07.740] [DEBUG] No installations found for vitest
+[08:02:07.740] [DEBUG] Getting installed version for msw...
+[08:02:07.740] [DEBUG] Executing command: npm ls --json --depth=99
+[08:02:07.742] [DEBUG] Resolved command variation: npm.cmd
+[08:02:08.878] [DEBUG] No installations found for msw
+[08:03:30.938] [PROMPT] New to Storybook? {"choice":true}
+[08:03:31.001] [INFO] Storybook collects completely anonymous usage telemetry. We use it to shape Storybook's roadmap and prioritize features. You can learn more, including how to opt out, at https://storybook.js.org/telemetry
+[08:03:36.307] [ERROR] [38;2;241;97;97mError: It looks like you're trying to initialize Storybook in a CRA project that does not have react-scripts installed.
+Please install it and make sure it's of version 5 or higher, which are the versions supported by Storybook 7.0+.[39m
+    at Object.configure (file:///C:/Users/DELL/AppData/Local/npm-cache/_npx/9d0faa13e7412c63/node_modules/create-storybook/dist/_node-chunks/chunk-JSOZWWZN.js:3540:13)
+    at async GeneratorExecutionCommand.executeProjectGenerator (file:///C:/Users/DELL/AppData/Local/npm-cache/_npx/9d0faa13e7412c63/node_modules/create-storybook/dist/_node-chunks/chunk-JSOZWWZN.js:1507:58)
+    at async GeneratorExecutionCommand.execute (file:///C:/Users/DELL/AppData/Local/npm-cache/_npx/9d0faa13e7412c63/node_modules/create-storybook/dist/_node-chunks/chunk-JSOZWWZN.js:1561:61)
+    at async doInitiate (file:///C:/Users/DELL/AppData/Local/npm-cache/_npx/9d0faa13e7412c63/node_modules/create-storybook/dist/_node-chunks/chunk-JSOZWWZN.js:3727:95)
+    at async file:///C:/Users/DELL/AppData/Local/npm-cache/_npx/9d0faa13e7412c63/node_modules/create-storybook/dist/_node-chunks/chunk-JSOZWWZN.js:3791:20
+    at async withTelemetry (file:///C:/Users/DELL/AppData/Local/npm-cache/_npx/9d0faa13e7412c63/node_modules/storybook/dist/_node-chunks/chunk-3OMJVDCN.js:1786:12)
+    at async initiate (file:///C:/Users/DELL/AppData/Local/npm-cache/_npx/9d0faa13e7412c63/node_modules/create-storybook/dist/_node-chunks/chunk-JSOZWWZN.js:3782:24)
+    at async _Command.<anonymous> (file:///C:/Users/DELL/AppData/Local/npm-cache/_npx/9d0faa13e7412c63/node_modules/create-storybook/dist/_node-chunks/run-B42VOXMU.js:2717:3)
+[08:03:46.001] [PROMPT] Would you like to send anonymous crash reports to improve Storybook and fix bugs faster? {"choice":true}

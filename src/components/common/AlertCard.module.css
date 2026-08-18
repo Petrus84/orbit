@@ -1,0 +1,153 @@
+/* ============================================================================
+   AlertCard.module.css
+   Reconstruído 14/08/2026 no padrão real do projeto (CSS Modules por
+   componente), confirmado contra CriticalAlert.module.css — substitui a
+   entrega anterior (alerts.css global, classes .alert/.alert-crit, tokens
+   extraídos do protótipo HTML). Esse padrão anterior não é o que o projeto
+   usa de verdade; REGRA-07/convenção real pede CSS Module por componente.
+
+   TOKENS CONFIRMADOS (vistos literalmente em CriticalAlert.module.css):
+     --space-1, --space-3, --space-4, --space-5
+     --border-width, --border-default, --border-radius-lg
+     --border-glow-red, --border-glow-gold, --border-glow-cyan
+     --text-primary, --text-muted
+     --font-size-lg, --font-size-sm, --font-size-xs
+     --font-weight-bold
+
+   TOKENS NÃO CONFIRMADOS (usados abaixo por necessidade — AlertCard tem
+   mais elementos que CriticalAlert: métrica comparativa, botões, status).
+   Marcados inline com ⚠️. Não vi nenhum arquivo que confirme o nome real
+   destes — se o token real tiver outro nome, é achar-e-substituir, não
+   reescrever a estrutura.
+   ============================================================================ */
+
+.card {
+  position: relative;
+  display: flex;
+  gap: var(--space-4);
+  border: var(--border-width) solid var(--border-default);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-4) var(--space-5);
+  width: 100%;
+}
+
+.critical {
+  background: linear-gradient(135deg, rgba(255, 65, 54, 0.08), rgba(255, 65, 54, 0.03));
+  border-color: var(--border-glow-red);
+  box-shadow: 0 0 24px rgba(255, 65, 54, 0.1);
+}
+
+.warning {
+  background: linear-gradient(135deg, rgba(255, 195, 0, 0.08), rgba(255, 195, 0, 0.03));
+  border-color: var(--border-glow-gold);
+  box-shadow: 0 0 24px rgba(255, 195, 0, 0.1);
+}
+
+.info {
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.06), rgba(0, 255, 255, 0.02));
+  border-color: var(--border-glow-cyan);
+  box-shadow: 0 0 24px rgba(0, 255, 255, 0.08);
+}
+
+.icon {
+  font-size: var(--font-size-lg);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.text {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ⚠️ --space-2 não confirmado — usei --space-1 (confirmado) como aproximação
+   conservadora até alguém confirmar se --space-2 existe de verdade. */
+.meta {
+  margin-top: var(--space-3);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--border-radius-lg);
+  background: rgba(0, 0, 0, 0.25);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+}
+
+.action {
+  margin-top: var(--space-3);
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* ⚠️ --font-weight-medium e --border-radius-md/full não confirmados.
+   Usei --font-weight-bold (confirmado) e --border-radius-lg (confirmado)
+   até ter o arquivo real de botão pra conferir. */
+.btn {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  padding: var(--space-1) var(--space-4);
+  border-radius: var(--border-radius-lg);
+  cursor: pointer;
+  border: var(--border-width) solid;
+  background: none;
+  transition: opacity 120ms ease;
+}
+.btn:hover { opacity: 0.85; }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.critical .btn {
+  background: rgba(255, 65, 54, 0.15);
+  border-color: var(--border-glow-red);
+  color: var(--text-primary);
+}
+.warning .btn {
+  background: rgba(255, 195, 0, 0.12);
+  border-color: var(--border-glow-gold);
+  color: var(--text-primary);
+}
+.info .btn {
+  background: rgba(0, 255, 255, 0.12);
+  border-color: var(--border-glow-cyan);
+  color: var(--text-primary);
+}
+
+.btnGhost {
+  background: none !important;
+  border-color: var(--border-default) !important;
+  color: var(--text-muted) !important;
+}
+
+.status {
+  margin-top: var(--space-3);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
+.dismiss {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: var(--space-1);
+}
+.dismiss:hover { color: var(--text-primary); }
