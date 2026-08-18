@@ -32,7 +32,6 @@ import type {
   InsightData,
   SemaphoreColor,
   GlowColor,
-  TrendColor,
 } from '../../types/orbit'
 
 type RawRow = Record<string, unknown>
@@ -349,7 +348,7 @@ async function fetchFormatPerformance(
     posts:      Number(row.post_count  ?? 0),
     shares:     Number(row.share_count ?? 0),
     trendLabel: String(row.trend_label ?? 'Estável'),
-    trendColor: (row.trend_color as TrendColor) ?? 'gold',
+    trendColor: (row.trend_color as GlowColor) ?? 'gold',
   }))
 }
 

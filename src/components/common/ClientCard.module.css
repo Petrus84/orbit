@@ -1,0 +1,121 @@
+/* ============================================================================
+   ClientCard.module.css — Refatoração 15/08/2026
+   Substitui Tailwind com valores arbitrários (bg-[#18181F] etc.) por
+   var(--token) do SSOT. Os hex do Tailwind batiam exatamente com os tokens
+   abaixo — nenhum valor novo foi inventado, só referenciado pela fonte
+   única em vez de repetido como literal.
+   ============================================================================ */
+
+.card {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: var(--space-4);
+  border-radius: var(--r16);
+  background-color: var(--bg2);
+  padding: var(--space-4);
+  text-align: left;
+  transition: background-color var(--transition-fast);
+}
+
+.card:hover {
+  background-color: var(--bg3);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 2px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.avatarImage {
+  height: 40px;
+  width: 40px;
+  border-radius: var(--radius-pill);
+  object-fit: cover;
+}
+
+.avatarFallback {
+  display: flex;
+  height: 40px;
+  width: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  background-color: var(--bg4);
+  font-family: var(--font);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--t1);
+}
+
+.identity {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--t0);
+}
+
+.handle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  color: var(--t2);
+}
+
+.divider {
+  height: 1px;
+  width: 100%;
+  background-color: var(--line);
+}
+
+.metricsRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+}
+
+.metricCol {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metricLabel {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--t2);
+}
+
+.metricValue {
+  font-family: var(--mono);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+  color: var(--t0);
+}
+
+.metricValueDimmed {
+  color: var(--t2);
+}

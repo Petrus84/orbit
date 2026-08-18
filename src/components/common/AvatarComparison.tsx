@@ -9,6 +9,7 @@ import React from 'react'
 import { StatusPill } from './StatusPill'
 import { AvatarCard } from './AvatarCard'
 import type { AvatarProfile, AlignmentStatus, AvatarAlignment} from '../../types/avatar'
+import { ALIGNMENT_STATUS_LABEL } from '../../types/avatar'
 import type { GlowColor } from '../../types/orbit'
 import styles from './AvatarComparison.module.css'
 
@@ -36,7 +37,7 @@ export function AvatarComparison({
   misalignmentHypothesis,
 }: AvatarComparisonProps): React.ReactElement {
   const glow = STATUS_TO_GLOW[status]
-  const label = AlignmentStatus [status]
+  const label = ALIGNMENT_STATUS_LABEL[status]
 
   return (
     <section className={styles.wrapper}>

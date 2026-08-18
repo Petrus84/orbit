@@ -1,35 +1,25 @@
 import React, { useCallback, useMemo } from 'react'
 import type { Alert, AlertSeverity, AlertType, AlertAction } from '../../types/alert'
-import './AlertCard.module.css'
+import styles from './AlertCard.module.css'
 
 /**
  * ============================================================================
- * ALERTCARD COMPONENT — reescrito 14/08/2026
+ * ALERTCARD COMPONENT — v3 (14/08/2026)
  * ============================================================================
  *
- * A versão anterior deste componente tinha 4 problemas que impediam
- * compilação contra o `Alert` canônico (src/types/orbit.ts):
+ * v2 → v3: trocado de CSS global (`alerts.css`, classes `.alert-crit` etc,
+ * tokens extraídos do protótipo HTML) para CSS Module — o padrão real do
+ * projeto, confirmado contra `CriticalAlert.module.css` (REGRA-07/convenção
+ * de estilo). `alerts.css` global não existe mais; não importar.
  *
- * 1. Campos em snake_case (`client_id`, `alert_type`, `metric_value`,
- *    `threshold`, `created_at`) que não existem em `Alert` — o contrato
- *    real é camelCase (`clientId`, `type`, `metricValue`, `thresholdValue`,
- *    `createdAt`).
- * 2. `AlertType` local com 8 valores fabricados (low_ctr, high_cpa,
- *    budget_depletion...) sem nenhuma relação com `orbit.alert_type` no
- *    Postgres (9 valores reais — ver dump_orbit.sql).
- * 3. `alert.recommended_action` e um `Record<AlertAction, ...>` tratando
- *    `AlertAction` como enum de string. Na verdade `AlertAction` é uma
- *    interface de objeto (`{ type: 'link'|'dismiss'|'resolve', label,
- *    url? }`) — não dá pra usar como chave de Record. O alerta tem UMA
- *    ação (`alert.action`), não um catálogo de 6 ações fixas.
- * 4. `alert.acknowledged_at` / `alert.dismissed_at` — não existem nem no
- *    `Alert` canônico nem na tabela `orbit.alerts` (que só tem
- *    `is_resolved`/`resolved_at`/`is_snoozed`). O ciclo de vida real é
- *    resolvido/não-resolvido, não um tri-estado acknowledge/dismiss.
- *
- * Estilo: trocado de paleta Tailwind ad-hoc (bg-red-950 etc, sem relação
- * com o design system) para as classes `.alert/.alert-crit/...` extraídas
- * do protótipo real (orbit-prototipo-consolidado-neon.html).
+ * Histórico de correções da v1→v2 (mantidas):
+ * 1. Campos em camelCase (`clientId`, `type`, `metricValue`,
+ *    `thresholdValue`, `createdAt`) — contrato real de `Alert`.
+ * 2. `AlertType` com os 9 valores reais de `orbit.alert_type` (Postgres).
+ * 3. `AlertAction` é objeto (`{type, label, url?}`), não union de string —
+ *    o alerta tem UMA ação (`alert.action`), não um catálogo fixo.
+ * 4. Ciclo de vida real é `isResolved` (boolean) — não existe
+ *    acknowledged_at/dismissed_at nem em `Alert` nem na tabela.
  * ============================================================================
  */
 
@@ -47,19 +37,12 @@ interface AlertCardProps {
 // ============================================================================
 
 const SEVERITY_CLASS: Record<AlertSeverity, string> = {
-  critical: 'alert-crit',
-  warning: 'alert-warn',
-  info: 'alert-info',
+  critical: styles.critical,
+  warning: styles.warning,
+  info: styles.info,
   // 'success' nunca chega até aqui na prática: v_alerts já colapsa para
   // 'info' no banco. Mapeado por segurança de tipo, não porque é esperado.
-  success: 'alert-info',
-}
-
-const SEVERITY_LABEL: Record<AlertSeverity, string> = {
-  critical: 'Crítico',
-  warning: 'Atenção',
-  info: 'Informação',
-  success: 'Informação',
+  success: styles.info,
 }
 
 const ALERT_TYPE_ICON: Record<AlertType, string> = {
@@ -95,16 +78,13 @@ const MetricComparison: React.FC<{
   metricValue: number | null
   thresholdValue: number | null
 }> = ({ metricName, metricValue, thresholdValue }) => {
-  // Nem todo tipo de alerta tem métrica associada (ex.: avatar_misalignment
-  // pode não ter). Os 3 campos são nullable em `Alert` — se faltar
-  // qualquer um, não renderiza a comparação em vez de quebrar/mostrar NaN.
   if (metricName === null || metricValue === null || thresholdValue === null) return null
 
   const isExceeded = metricValue > thresholdValue
   const percentDiff = thresholdValue !== 0 ? (((metricValue - thresholdValue) / thresholdValue) * 100).toFixed(1) : '—'
 
   return (
-    <div className="alert-meta">
+    <div className={styles.meta}>
       <span>
         {metricName}: <strong>{metricValue.toFixed(2)}</strong> / {thresholdValue.toFixed(2)}
       </span>
@@ -118,7 +98,7 @@ const MetricComparison: React.FC<{
 
 const AlertStatus: React.FC<{ isResolved: boolean; createdAt: string }> = ({ isResolved, createdAt }) => {
   return (
-    <div className={isResolved ? 'alert-status alert-status-resolved' : 'alert-status'}>
+    <div className={styles.status}>
       {isResolved ? '✓ Resolvido' : '⚠ Pendente de ação'} ·{' '}
       {new Date(createdAt).toLocaleDateString('pt-BR')}
     </div>
@@ -166,12 +146,6 @@ export const AlertCard: React.FC<AlertCardProps> = ({
     }
   }, [alert.id, onAcknowledge])
 
-  // A ação vem do próprio alerta (`alert.action`), não de um catálogo fixo.
-  // `type: 'link'` abre a URL sugerida; 'dismiss'/'resolve' delegam pros
-  // handlers acima — ambos afetam o mesmo campo real (`is_resolved`), mas
-  // 'resolve' fecha o alerta permanentemente e 'dismiss' só o esconde da
-  // view atual (decisão de produto pendente de confirmação — comportamento
-  // hoje é idêntico ao acknowledge).
   const handleAction = useCallback(async () => {
     if (!alert.action) return
     try {
@@ -197,12 +171,12 @@ export const AlertCard: React.FC<AlertCardProps> = ({
   const isActive = useMemo(() => !alert.isResolved, [alert.isResolved])
 
   return (
-    <div className={`alert ${SEVERITY_CLASS[alert.severity]} ${className ?? ''}`} style={{ position: 'relative' }}>
+    <div className={[styles.card, SEVERITY_CLASS[alert.severity], className ?? ''].join(' ')}>
       {isActive && onDismiss && (
         <button
           onClick={handleDismiss}
           disabled={isActionLoading}
-          className="alert-dismiss"
+          className={styles.dismiss}
           title="Descartar alerta"
           aria-label="Descartar alerta"
         >
@@ -210,12 +184,12 @@ export const AlertCard: React.FC<AlertCardProps> = ({
         </button>
       )}
 
-      <div className="alert-icon">{alertTypeIcon}</div>
+      <div className={styles.icon}>{alertTypeIcon}</div>
 
-      <div className="alert-body">
-        <div className="alert-title">{alertTypeLabel}</div>
-        <p className="alert-text">{alert.title}</p>
-        {alert.description && <p className="alert-text">{alert.description}</p>}
+      <div className={styles.body}>
+        <div className={styles.title}>{alertTypeLabel}</div>
+        <p className={styles.text}>{alert.title}</p>
+        {alert.description && <p className={styles.text}>{alert.description}</p>}
 
         <MetricComparison
           metricName={alert.metricName}
@@ -223,15 +197,15 @@ export const AlertCard: React.FC<AlertCardProps> = ({
           thresholdValue={alert.thresholdValue}
         />
 
-        <div className="alert-action">
+        <div className={styles.action}>
           {isActive && alert.action && (
-            <button className="alert-btn" onClick={handleAction} disabled={isActionLoading}>
+            <button className={styles.btn} onClick={handleAction} disabled={isActionLoading}>
               {alert.action.label}
             </button>
           )}
           {isActive && onAcknowledge && (
             <button
-              className="alert-btn alert-btn-ghost"
+              className={`${styles.btn} ${styles.btnGhost}`}
               onClick={handleAcknowledge}
               disabled={isActionLoading}
             >
@@ -240,9 +214,7 @@ export const AlertCard: React.FC<AlertCardProps> = ({
           )}
         </div>
 
-        <div style={{ marginTop: '8px' }}>
-          <AlertStatus isResolved={alert.isResolved} createdAt={alert.createdAt} />
-        </div>
+        <AlertStatus isResolved={alert.isResolved} createdAt={alert.createdAt} />
       </div>
 
       {isLoading && (

@@ -1,26 +1,33 @@
-import React from 'react';
-import SectionHead from '../common/SectionHead';
-import ClientCard from '../common/ClientCard';
-import AlertCard from '../common/AlertCard';
-import type { Alert } from '../common/AlertCard';
+// src/components/screens/CarteiraScreen.tsx
+//
+// v2.0.0 (integração real — substitui a versão anterior):
+// A versão anterior nunca era renderizada por rota nenhuma (/carteira era
+// placeholder estático) e definia sua própria interface local
+// `UseClientsResult` (`{clients, alerts, status, error, refetch}`) — uma
+// TERCEIRA forma, diferente tanto do UseClientsResult real de orbit.ts
+// quanto de qualquer versão anterior do hook. Também importava `Alert`/
+// `Client` dos componentes de UI (AlertCard/ClientCard) em vez do barrel
+// de tipos, violando o mesmo padrão já corrigido em AlertasScreen.tsx.
+//
+// Consumo agora, alinhado ao padrão real do projeto (mesma injeção de
+// hook via prop que AlertasScreen.tsx/FunnelScreen.tsx já usam):
+// - useClients(): UseClientsResult — data: Client[] | null
+// - useAlerts(filter): UseAlertsReturn — reaproveitado igual está,
+//   filtrado para 'critical'. Não existe hook separado "useClientAlerts";
+//   alertsRepository.ts já não filtra por cliente (é cross-client, mesma
+//   decisão já registrada em app/alertas/page.tsx), então pedir só os
+//   críticos aqui é a forma correta de mostrar "alertas urgentes" na
+//   Carteira sem duplicar lógica de fetch.
 
-// ─── Hook contract (implemented elsewhere) ───────────────────
-// import { useClients } from '../../hooks/useClients';
-// Mocked below for standalone compilation; remove mock in real use.
+import React from 'react'
+import SectionHead from '../common/SectionHead'
+import ClientCard from '../common/ClientCard'
+import AlertCard from '../common/AlertCard'
+import type { Client, UseClientsResult } from '../../types/client'
+import type { Alert } from '../../types/alert'
+import type { UseAlertsReturn } from '../../hooks/useAlerts'
 
-import type { Client } from '../common/ClientCard';
-
-
-
-interface UseClientsResult {
-  clients: Client[];
-  alerts: Alert[];
-  status: 'idle' | 'loading' | 'success' | 'error';
-  error: string | null;
-  refetch: () => void;
-}
-
-// ─── Loading skeleton ────────────────────────────────────────
+// ─── Loading skeletons ───────────────────────────────────────
 
 function CardSkeleton(): React.ReactElement {
   return (
@@ -43,10 +50,8 @@ function CardSkeleton(): React.ReactElement {
         ))}
       </div>
     </div>
-  );
+  )
 }
-
-// ─── Alert skeleton ──────────────────────────────────────────
 
 function AlertSkeleton(): React.ReactElement {
   return (
@@ -58,14 +63,14 @@ function AlertSkeleton(): React.ReactElement {
         <div className="h-6 w-24 rounded-full bg-zinc-800" />
       </div>
     </div>
-  );
+  )
 }
 
 // ─── Error state ─────────────────────────────────────────────
 
 interface ErrorStateProps {
-  message: string;
-  onRetry: () => void;
+  message: string
+  onRetry: () => void
 }
 
 function ErrorState({ message, onRetry }: ErrorStateProps): React.ReactElement {
@@ -80,19 +85,36 @@ function ErrorState({ message, onRetry }: ErrorStateProps): React.ReactElement {
         Tentar novamente
       </button>
     </div>
-  );
+  )
+}
+
+// ─── Empty state ─────────────────────────────────────────────
+
+function EmptyState(): React.ReactElement {
+  return (
+    <div className="flex items-center justify-center rounded-2xl border border-zinc-800 bg-zinc-900/20 py-12">
+      <p className="font-sans text-sm text-zinc-500">Nenhum cliente na carteira.</p>
+    </div>
+  )
 }
 
 // ─── Screen ──────────────────────────────────────────────────
 
 interface CarteiraScreenProps {
-  useClients: () => UseClientsResult;
+  useClients: () => UseClientsResult
+  useAlerts: (filter?: 'critical' | 'warning' | 'info') => UseAlertsReturn
 }
 
-export default function CarteiraScreen({ useClients }: CarteiraScreenProps): React.ReactElement {
-  const { clients, alerts, status, error, refetch } = useClients();
+export default function CarteiraScreen({
+  useClients,
+  useAlerts,
+}: CarteiraScreenProps): React.ReactElement {
+  const { data, status, error, refetch } = useClients()
+  const { data: criticalAlerts, status: alertsStatus } = useAlerts('critical')
 
-  const criticalAlerts = alerts.filter((a) => a.severity === 'critical' || a.severity === 'warning');
+  const clients: Client[] = data ?? []
+  const isLoading = status === 'loading' || status === 'idle'
+  const isAlertsLoading = alertsStatus === 'loading' || alertsStatus === 'idle'
 
   const subtitle =
     status === 'success'
@@ -101,26 +123,33 @@ export default function CarteiraScreen({ useClients }: CarteiraScreenProps): Rea
             ? ` · ${criticalAlerts.length} alerta${criticalAlerts.length !== 1 ? 's' : ''} crítico${criticalAlerts.length !== 1 ? 's' : ''}`
             : ''
         }`
-      : undefined;
+      : undefined
 
   return (
     <main className="flex min-h-screen flex-col gap-6 bg-[#0C0C0F] px-4 py-6 sm:px-6">
-      {/* Header */}
       <SectionHead title="Carteira de clientes" subtitle={subtitle} />
 
-      {/* Client grid */}
+      {/* Grade de clientes */}
       {status === 'error' && error ? (
         <ErrorState message={error} onRetry={refetch} />
+      ) : isLoading ? (
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4" role="status" aria-label="Carregando clientes">
+          {[0, 1, 2, 3].map((i) => (
+            <CardSkeleton key={i} />
+          ))}
+        </div>
+      ) : clients.length === 0 ? (
+        <EmptyState />
       ) : (
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {status === 'loading' || status === 'idle'
-            ? [0, 1, 2, 3].map((i) => <CardSkeleton key={i} />)
-            : clients.map((client) => <ClientCard key={client.id} client={client} />)}
+          {clients.map((client) => (
+            <ClientCard key={client.id} client={client} />
+          ))}
         </div>
       )}
 
-      {/* Critical alerts */}
-      {status === 'loading' || status === 'idle' ? (
+      {/* Alertas críticos */}
+      {isAlertsLoading ? (
         <div className="flex flex-col gap-2">
           <AlertSkeleton />
           <AlertSkeleton />
@@ -131,15 +160,12 @@ export default function CarteiraScreen({ useClients }: CarteiraScreenProps): Rea
             Alertas urgentes
           </p>
           <div className="flex flex-col gap-2">
-            {criticalAlerts.map((alert) => (
-              <AlertCard
-                key={alert.id}
-                alert={alert}
-              />
+            {criticalAlerts.map((alert: Alert) => (
+              <AlertCard key={alert.id} alert={alert} />
             ))}
           </div>
         </section>
       ) : null}
     </main>
-  );
+  )
 }

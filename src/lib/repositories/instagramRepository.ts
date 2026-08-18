@@ -1,5 +1,5 @@
 // ============================================================================
-// src/lib/repositories/instagramRepository.ts
+// src/lib/repositories/instagramRepository.ts — VERSÃO CORRIGIDA
 // ============================================================================
 import { supabase } from '@/lib/supabase';
 import {
@@ -10,39 +10,16 @@ import {
   InsightData,
   KPICardData,
   QualityScoreItem,
+  RawAudienceRow,
+  RawFormatRow,
+  RawKPIRow,
+  RawQualityRow,
   SemaphoreColor,
   StatusVariant,
+  TREND_TO_GLOW,
   TrendColor,
-} from "../../types/instagram";
-
-// ── Raw Supabase row shapes (snake_case) ──────────────────────────────────
-
-interface RawKPIRow {
-  id: string;
-  metric: string;
-  value: number;
-  semaphore: SemaphoreColor;
-  delta_pct: number;
-  period_start: string;
-  period_end: string;
-}
-
-interface RawQualityRow {
-  id: string;
-  score_key: string;
-  score_value: number;
-  status_text: string;
-  status_variant: StatusVariant;
-}
-
-interface RawFormatRow {
-  id: string;
-  format_name: string;
-  post_count: number;
-  share_count: number;
-  trend_label: string;
-  trend_color: TrendColor;
-}
+  DateBounds,
+} from "../../types/orbit";
 
 // ── Label / unit / glow config maps ──────────────────────────────────────
 
@@ -133,6 +110,11 @@ function toQualityScore(row: RawQualityRow): QualityScoreItem {
   };
 }
 
+/**
+ * ✅ PATCH (FE-03 — guia de implantação): 
+ * Converter TrendColor ('up'|'down'|'flat') → GlowColor ('cyan'|'gold'|'red'|'none')
+ * usando o mapper TREND_TO_GLOW importado de orbit.ts
+ */
 function toFormatRow(row: RawFormatRow): FormatPerformanceRow {
   return {
     id: row.id,
@@ -140,7 +122,7 @@ function toFormatRow(row: RawFormatRow): FormatPerformanceRow {
     posts: row.post_count,
     shares: row.share_count,
     trendLabel: row.trend_label,
-    trendColor: row.trend_color,
+    trendColor: TREND_TO_GLOW[row.trend_color],  // ← CORRIGIDO: usar mapper
   };
 }
 
@@ -175,10 +157,9 @@ function deriveCriticalAlerts(kpis: KPICardData[]): CriticalAlertData[] {
       title: k.label,
       body: `${k.delta > 0 ? "+" : ""}${k.delta}% vs período anterior — intervenção necessária.`,
       severity: "critical" as const,
+      exportable: true,  
     }));
 }
-
-// ── fetchInstagramOverview ────────────────────────────────────────────────
 
 export async function fetchInstagramOverview(
   clientId: string,
@@ -270,15 +251,6 @@ export async function fetchIGPerformance(
 // ── fetchIGAudience ───────────────────────────────────────────────────────
 // Shape TBD — returns raw rows until audience types are defined.
 
-export interface RawAudienceRow {
-  id: string;
-  client_id: string;
-  age_range: string;
-  gender_split: number;
-  top_city: string;
-  recorded_at: string;
-}
-
 export async function fetchIGAudience(
   clientId: string,
   periodStart: Date,
@@ -303,11 +275,6 @@ export async function fetchIGAudience(
 
 // ── discoverDateBounds ────────────────────────────────────────────────────
 // Returns the earliest and latest period available for a given client.
-
-export interface DateBounds {
-  earliest: Date;
-  latest: Date;
-}
 
 export async function discoverDateBounds(
   clientId: string

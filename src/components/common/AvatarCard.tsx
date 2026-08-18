@@ -24,28 +24,21 @@ const VARIANT_ICON_MAP: Record<'expected' | 'real', string> = {
   real: '📊',
 }
 
-// ✅ HELPER: Encontrar a faixa etária com maior percentual
+// AvatarProfile.ageRange já é a faixa etária dominante calculada (string,
+// ex.: "18-24"), não uma distribuição por faixa — não há o que reduzir aqui.
+// (Achado novo: a versão anterior chamava Object.entries(ageRange) sobre
+// uma string, o que não quebra a compilação — TS aceita string em Object.
+// entries({}) — mas nunca calculava nada útil em runtime.)
 function getMostCommonAgeRange(ageRange: AvatarProfile['ageRange']): string {
-  const entries = Object.entries(ageRange)
-  const [range] = entries.reduce((max, current) =>
-    current[1] > max[1] ? current : max
-  )
-  return range
+  return ageRange || 'Não especificado'
 }
 
-// ✅ HELPER: Encontrar a cidade/país com maior percentual
-function getTopLocation(
-  cities: AvatarProfile['topCities'] | undefined,
-  countries: AvatarProfile['topCountries'] | undefined
-): string {
-  // Priorizar cidade, depois país
-  if (cities && cities.length > 0) {
-    return cities[0].name
-  }
-  if (countries && countries.length > 0) {
-    return countries[0].name
-  }
-  return 'Não especificado'
+// AvatarProfile real (orbit.ts) não tem topCities/topCountries — o campo
+// equivalente de localização é `geo` (string única, já resolvida no
+// repositório). Substituído por leitura direta, sem inventar um shape que
+// não existe no contrato.
+function getTopLocation(geo: AvatarProfile['geo']): string {
+  return geo || 'Não especificado'
 }
 
 export function AvatarCard({
@@ -65,7 +58,7 @@ export function AvatarCard({
   
   // ✅ Extrair dados do perfil
   const topAgeRange = getMostCommonAgeRange(profile.ageRange)
-  const topLocation = getTopLocation(profile.topCities, profile.topCountries)
+  const topLocation = getTopLocation(profile.geo)
   const femalePercentage = profile.gender.female
   const malePercentage = profile.gender.male
 

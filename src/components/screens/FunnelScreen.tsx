@@ -165,6 +165,22 @@ export default function FunnelScreen({ clientId, periodStart, periodEnd, useFunn
                     onChange={setSimState} 
                     result={simResult} 
                     baseVendas={baseVendas} 
+                    // ✅ CORREÇÃO (L6 — FunnelScreen.tsx): FunnelSimulatorProps
+                    // exige alcanceRealHistorico/erRealNativo/setor.
+                    // alcanceRealHistorico vem de dado real já buscado
+                    // (data.alcance). erRealNativo e setor não têm fonte de
+                    // dado real conectada ainda nesta tela (erRealNativo
+                    // viria do banco de engajamento nativo; setor viria de
+                    // ClientOnboarding.setor_benchmark, um domínio diferente
+                    // — onboarding — não buscado aqui). null é o estado
+                    // legítimo que FunnelSimulator já trata: cai para
+                    // benchmark (1.5%) e mostra "Benchmark" em vez de
+                    // "Banco" no diagnóstico. Não inventar valor — se/quando
+                    // useOnboarding(clientId) for integrado a esta tela, dá
+                    // pra trocar por dado real.
+                    alcanceRealHistorico={data?.alcance ?? 0}
+                    erRealNativo={null}
+                    setor={null}
                   />
                 </div>
               )}

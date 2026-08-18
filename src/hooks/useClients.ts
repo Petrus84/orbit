@@ -1,104 +1,98 @@
-// ============================================================================
 // src/hooks/useClients.ts
-// ============================================================================
+//
+// Hook real de carteira de clientes. Contrato: UseClientsResult, definido
+// em src/types/orbit.ts — única declaração existente, sem tipo concorrente:
+//
+//   export interface UseClientsResult extends AsyncState<Client[]> {
+//     refetch: () => void
+//   }
+//   export interface AsyncState<T> {
+//     data: T | null
+//     status: FetchStatus
+//     error: string | null
+//   }
+//
+// Nada além desse shape é devolvido aqui — sem lastUpdated, sem filtro por
+// parâmetro: UseClientsResult não declara nenhum dos dois. Se a tela
+// precisar disso, é um campo novo em UseClientsResult (orbit.ts), não algo
+// a inventar neste hook.
+//
+// v1.1.0 (alinhamento de padrão): a versão anterior fazia setState direto
+// em load() sem guarda de desmontagem/corrida — useAlerts.ts e
+// useInstagramOverview.ts (os outros dois hooks reais do projeto) já usam
+// isMountedRef + token de requisição + retry com backoff. Replicado aqui
+// pelo mesmo motivo que lá: evita setState em componente desmontado e
+// evita que uma resposta antiga sobrescreva uma mais nova.
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import {
-  fetchClientsWithHealth,
-  fetchCriticalClients,
-} from "../lib/repositories/clientsRepository";
-import { Client, FetchStatus } from "../types/client";
+'use client'
 
-// ── Config ────────────────────────────────────────────────────────────────
-const MAX_RETRIES = 3;
-const BASE_BACKOFF_MS = 500; // doubles each attempt: 500 → 1000 → 2000
+import { useCallback, useEffect, useRef, useState } from 'react'
+import type { Client, UseClientsResult, FetchStatus } from '@/types/orbit'
+import { fetchClientsWithHealth } from '@/lib/repositories/clientsRepository'
 
-// ── Return type ───────────────────────────────────────────────────────────
-export interface UseClientsReturn {
-  data: Client[];
-  status: FetchStatus;
-  error: string | null;
-  lastUpdated: Date | null;
-  refetch: () => void;
-}
+const MAX_RETRIES = 3
+const BASE_BACKOFF_MS = 500 // 500ms → 1000ms → 2000ms
 
-// ── Hook ──────────────────────────────────────────────────────────────────
-export function useClients(
-  filter: "all" | "critical" = "all"
-): UseClientsReturn {
-  const [data, setData] = useState<Client[]>([]);
-  const [status, setStatus] = useState<FetchStatus>("idle");
-  const [error, setError] = useState<string | null>(null);
-  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+export function useClients(): UseClientsResult {
+  const [data, setData] = useState<Client[] | null>(null)
+  const [status, setStatus] = useState<FetchStatus>('idle')
+  const [error, setError] = useState<string | null>(null)
 
-  // Prevents setState calls after unmount (React 18 StrictMode safe)
-  const isMountedRef = useRef(true);
+  const isMountedRef = useRef(true)
+  const fetchTokenRef = useRef(0)
 
-  // Incrementing token — each refetch() bumps it, cancelling previous runs
-  const fetchTokenRef = useRef(0);
-
-  // ── Fetch with exponential-backoff retry ────────────────────────────────
   const load = useCallback(async (token: number): Promise<void> => {
-    if (!isMountedRef.current) return;
+    if (!isMountedRef.current) return
 
-    setStatus("loading");
-    setError(null);
+    setStatus('loading')
+    setError(null)
 
-    let attempt = 0;
-    let lastError: Error | null = null;
+    let attempt = 0
+    let lastError: Error | null = null
 
     while (attempt < MAX_RETRIES) {
-      // Abort if a newer fetch was triggered
-      if (fetchTokenRef.current !== token) return;
+      if (fetchTokenRef.current !== token) return // resposta antiga, uma requisição mais nova já assumiu
 
       try {
-        const result =
-          filter === "critical"
-            ? await fetchCriticalClients()
-            : await fetchClientsWithHealth();
+        const clients = await fetchClientsWithHealth()
 
-        // Final stale-check before committing state
-        if (fetchTokenRef.current !== token || !isMountedRef.current) return;
+        if (fetchTokenRef.current !== token || !isMountedRef.current) return
 
-        setData(result);
-        setStatus("success");
-        setLastUpdated(new Date());
-        return;
+        setData(clients)
+        setStatus('success')
+        return
       } catch (err) {
-        lastError = err instanceof Error ? err : new Error(String(err));
-        attempt++;
+        lastError = err instanceof Error ? err : new Error(String(err))
+        attempt++
 
         if (attempt < MAX_RETRIES) {
-          // Exponential backoff: 500ms, 1000ms, 2000ms
-          const delay = BASE_BACKOFF_MS * Math.pow(2, attempt - 1);
-          await new Promise<void>((resolve) => setTimeout(resolve, delay));
+          const delay = BASE_BACKOFF_MS * Math.pow(2, attempt - 1)
+          await new Promise<void>((resolve) => setTimeout(resolve, delay))
         }
       }
     }
 
-    // All retries exhausted
-    if (fetchTokenRef.current !== token || !isMountedRef.current) return;
+    if (fetchTokenRef.current !== token || !isMountedRef.current) return
 
-    setStatus("error");
-    setError(lastError?.message ?? "Erro desconhecido ao buscar clientes.");
-  }, [filter]);
+    // Nunca mascarar: erro vira mensagem explícita, não fallback silencioso.
+    setError(lastError?.message ?? 'Erro desconhecido ao carregar clientes')
+    setStatus('error')
+  }, [])
 
-  // ── Public refetch ───────────────────────────────────────────────────────
   const refetch = useCallback((): void => {
-    const token = ++fetchTokenRef.current;
-    void load(token);
-  }, [load]);
+    const token = ++fetchTokenRef.current
+    void load(token)
+  }, [load])
 
-  // ── Mount / filter change ────────────────────────────────────────────────
   useEffect(() => {
-    isMountedRef.current = true;
-    const token = ++fetchTokenRef.current;
-    void load(token);
+    isMountedRef.current = true
+    const token = ++fetchTokenRef.current
+    void load(token)
 
     return () => {
-      isMountedRef.current = false;
-    };
-  }, [load]);
+      isMountedRef.current = false
+    }
+  }, [load])
 
-  return { data, status, error, lastUpdated, refetch };
+  return { data, status, error, refetch }
 }

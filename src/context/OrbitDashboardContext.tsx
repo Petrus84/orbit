@@ -27,10 +27,27 @@ import type { TabId } from '../types/orbit'
 
 // ─── Interface do contexto ───────────────────────────────────────────────────
 
+// ✅ CORREÇÃO (L4 — Sidebar.tsx ao vivo): Sidebar consumia `currentClient`/
+// `alertCount`, que não existiam no contexto real (TS2339, quebrava
+// /instagram, o dashboard principal). Os dois campos vêm de dado que já é
+// buscado por useInstagramOverview — nenhuma chamada nova:
+// - currentClient.name: data.meta.clientHandle (já vem da view de overview)
+// - currentClient.status: sinal real derivado da presença de alertas
+//   críticos (não é um health status calculado em lugar nenhum ainda — não
+//   inventado, apenas o sinal mais honesto disponível hoje)
+// - alertCount: data.criticalAlerts.length (mesma lista que já populava
+//   CriticalAlert.tsx em outro ponto da tela)
+interface CurrentClientSummary {
+  name: string
+  status: 'healthy' | 'critical'
+}
+
 interface OrbitDashboardContextValue extends UseInstagramOverviewReturn {
-  activeTab:    TabId
-  setActiveTab: (tab: TabId) => void
-  clientId:     string
+  activeTab:     TabId
+  setActiveTab:  (tab: TabId) => void
+  clientId:      string
+  currentClient: CurrentClientSummary | null
+  alertCount:    number
 }
 
 // ─── Criação do contexto ──────────────────────────────────────────────────────
@@ -62,6 +79,13 @@ export function OrbitDashboardProvider({
       activeTab,
       setActiveTab,
       clientId: hookParams.clientId,
+      currentClient: overviewState.data
+        ? {
+            name: overviewState.data.meta.clientHandle,
+            status: overviewState.data.criticalAlerts.length > 0 ? 'critical' : 'healthy',
+          }
+        : null,
+      alertCount: overviewState.data?.criticalAlerts.length ?? 0,
     }),
     [overviewState, activeTab, hookParams.clientId]
   )

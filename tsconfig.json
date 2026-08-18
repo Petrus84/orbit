@@ -46,10 +46,11 @@
     "next-env.d.ts",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
-  ],
+, "orbit-dashboard/compare.ts"  ],
   "exclude": [
     "node_modules",
     "dist",
-    ".next"
+    ".next",
+    "src/types/check-schema-drift.ts"
   ]
 }

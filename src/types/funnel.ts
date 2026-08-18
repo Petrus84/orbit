@@ -19,6 +19,7 @@ export type {
   FunnelMetrics,
   SliderConfig,
   SimulatedFunnelResult,
+  SimulatedFunnelParams,
   FunnelScreenData,
   UseFunnelResult,
   FunnelData,

@@ -129,6 +129,17 @@ export type AlertType =
 export type ConfidenceLevel = 'L0' | 'L1' | 'L2'
 
 /**
+ * ✅ PATCH (content contract 14/08): espelha `orbit.alert_natureza` no
+ * banco (content_contract_migration.sql). contentContractEngine.ts importa
+ * daqui — não redeclara.
+ */
+export type AlertNatureza = 'tecnica' | 'comunicacao'
+// 'tecnica'     = resolvível com dado (motor de regras decide)
+// 'comunicacao' = resolvível com plano de conversa, não com correção (item 28
+//                 do Content Contract Tree). Nunca inferir na UI — só o
+//                 resolver que gerou o alerta sabe qual dos dois é.
+
+/**
  * ✅ PATCH (perícia enums 14/08): enum `orbit.campaign_objective` tem 8
  * valores; estava como `string` solto (INV-3).
  */
@@ -258,6 +269,22 @@ export interface Alert {
   exportable?: boolean  // 🟢=true, 🟡/🔴=false — TODO: confirmar regra
   confidenceLevel?: 'L0' | 'L1' | 'L2'  // Selo L2
   personaType?: 'ecommerce' | 'creator' | 'agency' | 'infoprodutor'
+  /**
+   * ✅ PATCH (content contract 14/08): campos do Content Contract Tree.
+   */
+  natureza?: AlertNatureza
+  // ausente = ainda não classificado pelo motor (contentContractEngine.ts).
+  // NÃO tratar ausência como 'tecnica' por default em nenhuma camada — é
+  // exatamente o que a coluna correspondente em orbit.alerts evita não
+  // tendo DEFAULT. Ver orbit.alerts.natureza.
+  probableCause?: string | null
+  // causa nomeada pelo resolver, nunca escrita à mão na UI. `null` explícito
+  // = resolver rodou e concluiu que a causa é indeterminável com o dado
+  // atual (não confundir com `undefined` = resolver nem rodou ainda).
+dataSource?: 'real_snapshot' | 'fallback_by_client' | 'fallback_by_error' | 'fallback_by_empty' | 'estimate'
+  // obrigatório expor quando = 'fallback_by_client': é o campo que existe
+  // porque o Funil (funnelRepository.ts) hoje cai em FALLBACK_BY_CLIENT sem
+  // marcar a origem do dado que chega à UI.
 }
 
 
@@ -324,7 +351,14 @@ export interface FormatPerformanceRow {
   posts: number
   shares: number
   trendLabel: string
-  trendColor: TrendColor
+  // ✅ CORREÇÃO (achado novo, mesma causa já documentada em DB-06 para
+  // FormatPerformanceRawRow): v_format_performance.trend_color devolve uma
+  // cor pronta ('cyan'|'gold'|'red'|'none'), não uma direção de tendência
+  // ('up'|'down'|'flat'). O patch DB-06 corrigiu o tipo bruto
+  // (FormatPerformanceRawRow) mas não propagou para este tipo de domínio,
+  // consumido direto por FormatPerformanceTable.tsx via StatusPill (que já
+  // exige GlowColor desde sua própria correção v1.1.0).
+  trendColor: GlowColor
 }
 
 export interface InsightData {
@@ -342,6 +376,15 @@ export interface CriticalAlertData {
   severity: AlertSeverity
   description?: string | null
   actionUrl?: string | null
+  /**
+   * ✅ PATCH (content contract 14/08): mesmo trio de Alert, mesma semântica.
+   * Alert e CriticalAlertData são dois shapes paralelos pro mesmo conceito
+   * (divergência já documentada) — até serem unificados, os dois precisam
+   * do patch em espelho pra não abrir uma nova divergência entre eles.
+   */
+  natureza?: AlertNatureza
+  probableCause?: string | null
+  dataSource?: 'real_snapshot' | 'fallback_by_client' | 'estimate'
 }
 
 export interface IGOverviewData {
