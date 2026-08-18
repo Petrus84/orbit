@@ -51,6 +51,8 @@
     "node_modules",
     "dist",
     ".next",
+      "compare.ts",             // 👈 ADICIONE ESTA LINHA AQUI
+    "orbit-dashboard/compare.ts", // 👈 E ESTA (por garantia por causa da subpasta)
     "src/types/check-schema-drift.ts"
   ]
 }
