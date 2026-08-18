@@ -1,14 +1,14 @@
 /* ==========================================================================
-   ORBIT · Repository - Avatar Alignment (v3.5.0 Produção)
-   Caminho: src/lib/repositories/avatarRepository.ts
+   ORBIT · Repository - Avatar Alignment (v4.0 Sem Fallback Tóxico)
    
-   Correções Aplicadas:
-   1. Aponta para a View canônica orbit.v_avatar_alignment com GRANTs ativos.
-   2. UUIDs e identidades dos Fallbacks corrigidos e sincronizados por cliente.
-   3. Mapeamento direto de handle/name vindo nativos do banco de dados.
+   Mudanças Críticas:
+   1. Elimina fallback silencioso — retorna erro explícito
+   2. Valida estrutura de dados antes de usar
+   3. Diferencia entre "sem dados" e "erro de conexão"
+   4. real_interest vem do banco, não é fabricado
    ========================================================================== */
 
-import { supabaseLegacy } from '../supabase' // Mantém o cliente supabase configurado
+import { supabaseLegacy } from '../supabase'
 import type {
   AlignmentBar,
   AlignmentStatus,
@@ -30,55 +30,108 @@ interface AvatarAlignmentRow {
   real_gender_male: number
   real_gender_female: number
   real_age_range: string
-  real_interest: string | null // Ajustado para aceitar nulo conforme realidade do DDL
+  real_interest: string | null
   real_geo: string
   alignment_score: number
   alignment_status: string
 }
 
-// 🗹 CORREÇÃO DE IDENTIDADE: UUID canônico legítimo de @cpimportstore
-const FALLBACK_CPIMPORTSTORE: AvatarAlignmentRow = {
-  client_id: '2141d077-0d82-4fda-83df-558377f105ff',
-  handle: 'cpimportstore',
-  name: 'CP Import Store',
-  expected_gender_male: 70,
-  expected_gender_female: 30,
-  expected_age_range: '18–34',
-  expected_interest: 'Performance esportiva',
-  expected_geo: 'São Paulo',
-  real_gender_male: 28.2,
-  real_gender_female: 71.7,
-  real_age_range: '18–34',
-  real_interest: 'Moda / lifestyle',
-  real_geo: 'São Paulo',
-  alignment_score: 58.2,
-  alignment_status: 'critical'
-}
+// ─── TIPOS DE ERRO EXPLÍCITOS ─────────────────────────────────────────────
 
-// 🗹 CORREÇÃO DE IDENTIDADE: UUID canônico legítimo de @eupetruchio84
-const FALLBACK_EUPETRUCHIO: AvatarAlignmentRow = {
-  client_id: 'c4722cfc-cff2-4a03-a457-f14ee8c9e0e7',
-  handle: 'eupetruchio84',
-  name: 'Eupetruchio',
-  expected_gender_male: 60,
-  expected_gender_female: 40,
-  expected_age_range: '25–44',
-  expected_interest: 'Fitness / biohacking',
-  expected_geo: 'Brasil',
-  real_gender_male: 95.8,
-  real_gender_female: 4.2,
-  real_age_range: '25–44',
-  real_interest: 'Estética / identidade',
-  real_geo: 'Brasil',
-  alignment_score: 72.4,
-  alignment_status: 'warning'
-}
-
-function getFallback(clientId: string): AvatarAlignmentRow {
-  if (clientId.includes('2141d077') || clientId.includes('cpimportstore')) {
-    return FALLBACK_CPIMPORTSTORE
+export class AvatarRepositoryError extends Error {
+  constructor(
+    public code: 'NO_DATA' | 'VALIDATION_FAILED' | 'NETWORK_ERROR' | 'UNKNOWN',
+    message: string,
+    public details?: Record<string, unknown>
+  ) {
+    super(message)
+    this.name = 'AvatarRepositoryError'
   }
-  return FALLBACK_EUPETRUCHIO
+}
+
+// ─── VALIDAÇÃO DE DADOS ───────────────────────────────────────────────────
+
+function validateAvatarRow(data: unknown): AvatarAlignmentRow {
+  if (!data || typeof data !== 'object') {
+    throw new AvatarRepositoryError(
+      'VALIDATION_FAILED',
+      'Dados recebidos não são um objeto válido',
+      { received: typeof data }
+    )
+  }
+
+  const obj = data as Record<string, unknown>
+
+  // Validar campos obrigatórios
+  const requiredFields = [
+    'client_id',
+    'handle',
+    'name',
+    'expected_gender_male',
+    'expected_gender_female',
+    'expected_age_range',
+    'expected_geo',
+    'real_gender_male',
+    'real_gender_female',
+    'real_age_range',
+    'real_geo',
+    'alignment_score',
+    'alignment_status',
+  ]
+
+  const missing = requiredFields.filter((field) => !(field in obj))
+  if (missing.length > 0) {
+    throw new AvatarRepositoryError(
+      'VALIDATION_FAILED',
+      `Campos obrigatórios faltando: ${missing.join(', ')}`,
+      { missing }
+    )
+  }
+
+  // Validar tipos numéricos
+  if (typeof obj.expected_gender_male !== 'number' || obj.expected_gender_male < 0 || obj.expected_gender_male > 100) {
+    throw new AvatarRepositoryError(
+      'VALIDATION_FAILED',
+      'expected_gender_male deve ser número entre 0-100',
+      { received: obj.expected_gender_male }
+    )
+  }
+
+  if (typeof obj.alignment_score !== 'number' || obj.alignment_score < 0 || obj.alignment_score > 100) {
+    throw new AvatarRepositoryError(
+      'VALIDATION_FAILED',
+      'alignment_score deve ser número entre 0-100',
+      { received: obj.alignment_score }
+    )
+  }
+
+  // Validar status
+  const validStatuses = ['critical', 'warning', 'healthy']
+  if (!validStatuses.includes(String(obj.alignment_status).toLowerCase())) {
+    throw new AvatarRepositoryError(
+      'VALIDATION_FAILED',
+      `alignment_status deve ser um de: ${validStatuses.join(', ')}`,
+      { received: obj.alignment_status }
+    )
+  }
+
+  return {
+    client_id: String(obj.client_id),
+    handle: String(obj.handle),
+    name: String(obj.name),
+    expected_gender_male: Number(obj.expected_gender_male),
+    expected_gender_female: Number(obj.expected_gender_female),
+    expected_age_range: String(obj.expected_age_range),
+    expected_interest: obj.expected_interest ? String(obj.expected_interest) : null,
+    expected_geo: String(obj.expected_geo),
+    real_gender_male: Number(obj.real_gender_male),
+    real_gender_female: Number(obj.real_gender_female),
+    real_age_range: String(obj.real_age_range),
+    real_interest: obj.real_interest ? String(obj.real_interest) : null, // ✅ Vem do banco
+    real_geo: String(obj.real_geo),
+    alignment_score: Number(obj.alignment_score),
+    alignment_status: String(obj.alignment_status),
+  }
 }
 
 // ─── UTILITIES ───────────────────────────────────────────────────────────────
@@ -105,12 +158,6 @@ function buildBars(row: AvatarAlignmentRow): AlignmentBar[] {
   const interestVariance = categoricalVariance(row.expected_interest ?? '', row.real_interest ?? '')
   const geoVariance = categoricalVariance(row.expected_geo, row.real_geo)
 
-  // ✅ CORREÇÃO (bug real, não pego pelo tsc por causa do `as unknown`
-  // anterior): AlignmentBar (orbit.ts) exige tanto `status` quanto `color`.
-  // A versão anterior só preenchia `status` e forçava o cast — AlignmentBars.tsx
-  // lê `bar.color` para escolher a cor visual da barra, então toda barra
-  // renderizava sem cor (undefined) em produção. `color` agora vem de
-  // ALIGNMENT_STATUS_COLOR, a mesma tabela oficial usada em outros pontos.
   const toBar = (label: string, expected: number, real: number, variance: number): AlignmentBar => {
     const status = varianceToStatus(variance)
     return { label, expected, real, variance, status, color: ALIGNMENT_STATUS_COLOR[status] }
@@ -123,14 +170,6 @@ function buildBars(row: AvatarAlignmentRow): AlignmentBar[] {
     toBar('Localização', 100, geoVariance === 0 ? 100 : 0, geoVariance),
   ]
 }
-
-// ─── RECOMENDAÇÕES E TEXTOS NARRATIVOS ────────────────────────────────────
-// AvatarAlignment (orbit.ts) exige `recommendations: AvatarRecommendation[]`,
-// `recommendation: AvatarRecommendation | null`, `unconsciousDesireMapped`
-// e `misalignmentHypothesis` — nenhum dos quatro era preenchido antes (só
-// existia uma string solta, incompatível com o próprio tipo `recommendation`
-// do contrato). Construídos aqui a partir dos mesmos dados já calculados em
-// buildBars(), sem inventar fonte de dado nova.
 
 const BAR_ICON: Record<AlignmentStatus, string> = {
   critical: '🔴',
@@ -197,18 +236,20 @@ function rowToAvatarAlignment(row: AvatarAlignmentRow): AvatarAlignment {
     gender: { male: row.expected_gender_male, female: row.expected_gender_female },
     ageRange: row.expected_age_range,
     interest: row.expected_interest ?? 'Não mapeado',
-    geo: row.expected_geo
+    geo: row.expected_geo,
   }
 
   const real: AvatarProfile = {
     gender: { male: row.real_gender_male, female: row.real_gender_female },
     ageRange: row.real_age_range,
     interest: row.real_interest ?? 'Não mapeado',
-    geo: row.real_geo
+    geo: row.real_geo,
   }
 
   const score = Number(row.alignment_score)
-  const status = (['critical', 'warning', 'healthy'] as AlignmentStatus[]).includes(row.alignment_status as AlignmentStatus)
+  const status = (['critical', 'warning', 'healthy'] as AlignmentStatus[]).includes(
+    row.alignment_status as AlignmentStatus
+  )
     ? (row.alignment_status as AlignmentStatus)
     : scoreToStatus(score)
 
@@ -231,14 +272,23 @@ function rowToAvatarAlignment(row: AvatarAlignmentRow): AvatarAlignment {
   }
 }
 
-// ─── REQUISIÇÕES CORE CONECTADAS COM O SCHEMA CANÔNICO ───────────────────────
+// ─── REQUISIÇÕES CORE SEM FALLBACK TÓXICO ─────────────────────────────────
 
 export async function fetchAvatarAlignment(clientId: string): Promise<AvatarAlignment> {
+  if (!clientId) {
+    throw new AvatarRepositoryError(
+      'VALIDATION_FAILED',
+      'clientId é obrigatório',
+      { received: clientId }
+    )
+  }
+
   try {
     const { data, error } = await supabaseLegacy
       .schema('orbit')
       .from('v_avatar_alignment')
-      .select(`
+      .select(
+        `
         client_id,
         handle,
         name,
@@ -250,31 +300,52 @@ export async function fetchAvatarAlignment(clientId: string): Promise<AvatarAlig
         real_gender_male,
         real_gender_female,
         real_age_range,
+        real_interest,
         real_geo,
         alignment_score,
         alignment_status
-      `)
+      `
+      )
       .eq('client_id', clientId)
       .maybeSingle()
 
-    if (error || !data) {
-      console.warn('[avatarRepository] Resposta vazia ou erro. Usando fallback seguro para:', clientId, error?.message)
-      return rowToAvatarAlignment(getFallback(clientId))
+    // ✅ TRATAMENTO EXPLÍCITO: Sem dados
+    if (!data) {
+      if (error) {
+        throw new AvatarRepositoryError(
+          'NETWORK_ERROR',
+          `Erro ao consultar banco de dados: ${error.message}`,
+          { supabaseError: error }
+        )
+      }
+
+      throw new AvatarRepositoryError(
+        'NO_DATA',
+        `Nenhum alinhamento de avatar encontrado para clientId: ${clientId}`,
+        { clientId }
+      )
     }
 
-    // ✅ LIMPO DE ANY: Usamos Record para passar liso no validador do ESLint
-    const objData = data as Record<string, unknown>
-    
-    const fullRow: AvatarAlignmentRow = {
-      ...(objData as unknown as AvatarAlignmentRow),
-      real_interest: objData.expected_interest ? `Focado em ${objData.expected_interest}` : 'Geral'
-    }
+    // ✅ VALIDAÇÃO: Estrutura de dados
+    const validatedRow = validateAvatarRow(data)
 
-    return rowToAvatarAlignment(fullRow)
+    // ✅ CONVERSÃO: Sem fabricação de dados
+    return rowToAvatarAlignment(validatedRow)
   } catch (err) {
+    // Se já é AvatarRepositoryError, relança como está
+    if (err instanceof AvatarRepositoryError) {
+      console.error(`[avatarRepository] ${err.code}: ${err.message}`, err.details)
+      throw err
+    }
+
+    // Outros erros são UNKNOWN
     const message = err instanceof Error ? err.message : 'Erro desconhecido'
-    console.warn('[avatarRepository] Exceção capturada. Acionando fallback resiliente:', message)
-    return rowToAvatarAlignment(getFallback(clientId))
+    console.error(`[avatarRepository] UNKNOWN: ${message}`, err)
+    throw new AvatarRepositoryError(
+      'UNKNOWN',
+      `Erro inesperado ao buscar alinhamento de avatar: ${message}`,
+      { originalError: err }
+    )
   }
 }
 
