@@ -45,14 +45,15 @@
     "styles/**/*",
     "next-env.d.ts",
     ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts"
-, "orbit-dashboard/compare.ts"  ],
+    ".next/dev/types/**/*.ts",
+    "orbit-dashboard/compare.ts"
+  ],
   "exclude": [
     "node_modules",
     "dist",
     ".next",
-      "compare.ts",             // 👈 ADICIONE ESTA LINHA AQUI
-    "orbit-dashboard/compare.ts", // 👈 E ESTA (por garantia por causa da subpasta)
+    "compare.ts",
+    "orbit-dashboard/compare.ts",
     "src/types/check-schema-drift.ts"
   ]
 }

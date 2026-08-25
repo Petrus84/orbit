@@ -176,6 +176,32 @@ Formato: `[DATA] ID — Título` · Contexto · Decisão · Status
   protótipo (09/08) reafirma um achado de "RLS `anon_read_*` sem escopo em 6 tabelas" como
   `Crítico, confirmado` — precisa reconciliação para confirmar se descreve o estado PRÉ-migration
   (já corrigido por esta ADR) ou um gap remanescente. Ver ORB-DEBT-008.
+- **Atualização (2026-08-12):** verificação completa ao vivo (`pg_policies`, `pg_roles`, `pg_class`
+  do projeto `smifhuvzroznlmbrvhaj`, consultados diretamente via Supabase MCP) — a Decisão foi
+  aplicada exatamente como descrito: `user_subscriptions` com 2 linhas (era 0 no Contexto original),
+  `subscriptions` com 1 linha, os 2 clientes reais com `subscription_id` preenchido,
+  `orbit.user_owns_client()` existe, 1 trigger customizado em `auth.users` existe, `security_invoker
+  = true` confirmado nas 13/13 views de `orbit` (inclui `v_client_health`). `client_onboarding_open_v1`
+  (a policy `ALL` aberta a `public` citada no Contexto desta ADR) **não existe mais** — substituída
+  por `authenticated_select_own_client_onboarding` (SELECT-only, via `user_owns_client()`).
+  **A ressalva aberta acima está `RESOLVED`:** as 6 policies `anon_read_*` (`alerts`, `clients`,
+  `funnel_data`, `ig_account_snapshots`, `ig_audience_snapshots`, `ig_posts`) não existem mais —
+  o achado do protótipo descrevia o estado PRÉ-migration. Ver `ORB-DEBT-008`.
+  **Nota de precisão:** as "5 tabelas sensíveis" do texto acima não foram tratadas de forma
+  uniforme — `avatar_validations`/`ig_import_sessions`/`raw_ig_ingest` têm SELECT liberado para
+  `authenticated` via `user_owns_client()`; `ref_thresholds`/`ref_export_file_catalog` têm ZERO
+  policies (nega tudo mesmo para `authenticated`). O resultado final ("seguro para client-side")
+  é o mesmo nas duas subdivisões, mas o mecanismo difere — o texto original trata o grupo como
+  homogêneo. `service_role` tem `rolbypassrls = true` (confirmado via `pg_roles`) — as policies
+  `svc_*_all` remanescentes em várias tabelas são redundantes mas inofensivas, e isso explica por
+  que a ingestão funciona em `ref_thresholds`/`ref_export_file_catalog` mesmo sem nenhuma policy
+  própria para `service_role`.
+  **Gap novo identificado, fora do escopo original desta ADR:** nenhuma das ~20 tabelas do padrão
+  `authenticated_select_own_*` recebeu policy de `INSERT`/`UPDATE` para `authenticated` — foi
+  SELECT-only por decisão explícita (texto da Decisão acima). Isso hoje bloqueia a escrita
+  client-side em `orbit.client_onboarding` (e em qualquer outra tabela do mesmo grupo) para um
+  usuário autenticado comum — só `service_role`/`postgres` conseguem gravar. Ver `ORB-DEBT-040`.
+  Recomendação: tratar como `ADR-010` separada (escopo de escrita client-side), não reabrir esta ADR.
 
 ### 2026-08-09 — ADR-006: Protótipo HTML como artefato companion de auditoria forense e design
 - **Contexto:** `orbit-prototipo-consolidado-neon.html` consolida telas do produto, uma aba de
@@ -256,7 +282,7 @@ Formato: `[DATA] ID — Título` · Contexto · Decisão · Status
 | ORB-DEBT-005 | `currentClient` no `OrbitDashboardContext` nunca é populado — sempre `undefined` em runtime | Contexto global | 2026-07-19 | `OPEN` |
 | ORB-DEBT-006 | `AlertasScreen.tsx`/`AlertCard.tsx`: componente órfão (não roteado), contrato `Alert` local divergente do SSOT, `useAlerts()` real incompatível, zero TOKENS | Alertas | 2026-07-19 | `OPEN` — ver ADR-003, reconfirmado 09/08. Reforçado 11/08: tabela `alerts` vazia (ORB-DEBT-033) |
 | ORB-DEBT-007 | `SemaphoreColor`/`GLOW_MAP` ainda existem em `orbit.ts` — versão "definitiva" do ADR-004 (deletar, migrar repositórios pra `ClientHealthStatus` direto) não foi aplicada | Design system / orbit.ts | 2026-08-09 | `OPEN` — ver ADR-004, REGRA-09 |
-| ORB-DEBT-008 | Reconciliar achado "RLS `anon_read_*` sem escopo em 6 tabelas" (protótipo, tag crítico) contra as migrations do ADR-005 — confirmar se é achado pré-fix (já resolvido) ou gap remanescente | Segurança / Supabase | 2026-08-09 | `OPEN` — ver ADR-005 |
+| ORB-DEBT-008 | Reconciliar achado "RLS `anon_read_*` sem escopo em 6 tabelas" (protótipo, tag crítico) contra as migrations do ADR-005 — confirmar se é achado pré-fix (já resolvido) ou gap remanescente | Segurança / Supabase | 2026-08-09 | `RESOLVED` (2026-08-12) — confirmado via `pg_policies` ao vivo: as 6 policies (`alerts`, `clients`, `funnel_data`, `ig_account_snapshots`, `ig_audience_snapshots`, `ig_posts`) não existem mais no schema `orbit`. Achado do protótipo descrevia o estado pré-migration. Ver ADR-005, atualização 12/08 |
 | ORB-DEBT-009 | `orbit.ts` interno: `UseClientsResult` **duplicada dentro do próprio SSOT**, linhas 159 e 912 — consolidar em uma única definição | orbit.ts (SSOT) | 2026-08-09 | `OPEN` — viola REGRA-01 dentro da própria fonte da verdade |
 | ORB-DEBT-010 | `OrbitDashboardProviderProps` duplicada: `src/context/OrbitDashboardContext.tsx` (real, estende `UseInstagramOverviewParams`) vs `src/types/orbit.ts` (desatualizada) — deprecar a versão de `orbit.ts` | Contexto global | 2026-08-09 | `OPEN` — fonte real confirmada é o context; planejar limpeza em `orbit.ts` |
 | ORB-DEBT-011 | `src/hooks/useClients.ts`: conteúdo real do hook nunca foi escrito — arquivo contém JSX de tela (`CarteiraScreen`) no lugar do hook. `page.tsx:9` espera `UseClientsReturn` (com `filter`), incompatível com `UseClientsResult` que `CarteiraScreen` importa | Carteira | 2026-08-09 | `OPEN` — ❌ QUEBRA, build falha (`tsc`/`npm run build`), prioridade 1 de execução sugerida |
@@ -288,6 +314,9 @@ Formato: `[DATA] ID — Título` · Contexto · Decisão · Status
 | ORB-DEBT-037 | Contrato `clients` (DB) ↔ `client`/`Client` (TS) diverge em 34 campos: **30 colunas só no DB** (inclui `created_at`, `updated_at`, `segment`, `instagram_user_id`, `ig_username`, `ig_display_name`, `business_objective`, `gross_margin_pct`, `monthly_ad_budget`, todos os 8 `avatar_expected_*`/`avatar_unconscious_desire`/`avatar_alignment_hypothesis`, os 11 `threshold_*`, `health_status`, `health_updated_at`, `subscription_id`) e 4 campos só no TS (`avatar`, `status`, `metrics`, `lastUpdated`). Amplia consideravelmente o achado estreito já registrado em `ORB-DEBT-013` (que cobria só `status`/`'unknown'`) | orbit.ts (SSOT) / Carteira | 2026-08-12 | `OPEN` — supersede parcialmente o escopo de ORB-DEBT-013, REGRA-01 |
 | ORB-DEBT-038 | Contrato `ig_audience_snapshots` (DB) ↔ `igaudiencesnapshotrow`/`IgAudienceSnapshotRow` (TS) tem 9 colunas do DB ausentes do type TS: `id`, `import_session`, `created_at`, `top_countries`, `confidence_level`, `avatar_gender_alignment_score`, `avatar_age_alignment_score`, `avatar_geo_alignment_score`, `avatar_composite_score`. Achado relevante: `avatar_composite_score` não está só `NULL` no dado (ORB-DEBT-034) — **o campo nem está modelado no tipo TS da linha**, dois problemas empilhados (dado + tipo) | orbit.ts (SSOT) / Avatar | 2026-08-12 | `OPEN` — ver ORB-DEBT-034, R-11 |
 | ORB-DEBT-039 | 18 tabelas do DB sem interface TS correspondente (mesmo por similaridade de nome): `ads_ga4_landing_pages`, `ads_google_campaigns`, `ads_google_search_terms`, `ads_google_snapshots`, `ads_meta_adsets`, `ads_meta_campaigns`, `ads_meta_creatives`, `ads_meta_snapshots`, `client_reports`, `funnel_data`, `ig_account_snapshots`, `ig_import_sessions`, `ig_posts`, `metric_history`, `raw_ig_ingest`, `ref_export_file_catalog`, `ref_thresholds`, `subscriptions`, `user_subscriptions`. `raw_ig_ingest`/`ig_import_sessions` já eram esperados sem uso real (ORB-DEBT-020); `ig_posts` sem interface é achado novo e relevante — pode ser causa adicional (camada de tipos, não só dado) para os sintomas já registrados em ORB-DEBT-023 | orbit.ts (SSOT) | 2026-08-12 | `OPEN` — nenhuma ação recomendada ainda, requer decisão de escopo (quais tabelas precisam de interface própria) |
+
+| ORB-DEBT-040 | Nenhuma das ~20 tabelas cobertas pelo padrão `authenticated_select_own_*` (criado pela ADR-005) tem policy de `INSERT`/`UPDATE` para `authenticated` — foi SELECT-only por decisão explícita. Consequência concreta e imediata: `orbit.client_onboarding` não pode ser escrita por um usuário autenticado comum via app hoje, só por `service_role`/`postgres`. `onboardingRepository.ts::upsertClientOnboarding()` é chamado a partir de `OnboardingScreen.tsx` (`'use client'`, roda no browser) — se o client Supabase usado ali for o client-side padrão (anon key + sessão do usuário, não `service_role`), o botão "Salvar Onboarding" falha hoje, silenciosamente pela RLS, independente dos dados estarem corretos. **Não confirmado ainda:** qual client Supabase `@/lib/supabase` realmente exporta — não estava nos arquivos desta sessão | Segurança / Supabase / Onboarding | 2026-08-12 | `OPEN` — 🔴 P0, bloqueia diretamente o fluxo de onboarding em andamento nesta sessão. Ver ADR-005 (atualização 12/08), recomendação de abrir ADR-010 |
+| ORB-DEBT-041 | Tabela nova `orbit.content_insights` (RLS habilitada, zero policies) encontrada ao vivo — não existe no dump original de referência nem em nenhum ADR/Ledger anterior. Com RLS ligada e zero policies, está em deny-all para `authenticated`/`anon` (só `service_role` acessa, via `rolbypassrls`). Pode ser intencional (tabela ainda não exposta a client-side) ou esquecimento — não decidido aqui | Supabase Schema | 2026-08-12 | `OPEN` — decisão de escopo pendente: precisa de policy própria ou é legitimamente service_role-only? |
 
 **Ordem de execução sugerida pelo checklist forense (09/08), para os itens ❌/⚠ de Carteira/Alertas/Meta Ads:**
 `useClients.ts` (real) → `ClientCard.tsx` (import de `orbit.ts`) → `AlertCard.tsx` (import do

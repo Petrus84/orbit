@@ -12,8 +12,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { RealtimeChannel } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase'
-import { fetchInstagramOverview } from '../lib/repositories/instagramOverviewRepository'
-import type { AsyncState, FetchStatus, IGOverviewData } from '../types/instagram'
+import { fetchInstagramOverview } from '@/lib/repositories/instagramOverviewRepository'
+import type { AsyncState, FetchStatus, IGOverviewData } from '@/types/instagram'
 
 // ─────────────────────────────────────────────
 // Configuração
@@ -39,6 +39,7 @@ export interface UseInstagramOverviewReturn extends AsyncState<IGOverviewData | 
   lastUpdated: Date | null
 }
 
+
 // ─────────────────────────────────────────────
 // Utilitários
 // ─────────────────────────────────────────────
@@ -55,6 +56,8 @@ function backoffDelay(attempt: number): number {
 function toISODate(date: Date): string {
   return date.toISOString().slice(0, 10)
 }
+
+
 
 // ─────────────────────────────────────────────
 // Hook principal
@@ -165,6 +168,11 @@ export function useInstagramOverview({
       }
     }
   }, [fetchWithRetry, pollingIntervalMs, fetchTick])
+
+  useEffect(() => {
+  console.count(`[DIAGNÓSTICO] Hook renderizou ou dependências mudaram. Start: ${periodStart.toISOString()}`);
+}, [fetchWithRetry]);
+
 
   // ── Realtime Supabase ─────────────────────────────────────────────────────
 

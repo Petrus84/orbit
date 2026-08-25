@@ -9,8 +9,8 @@
 // - Feedback claro ao usuário sobre o tipo de erro
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { fetchAvatarAlignment, AvatarRepositoryError } from '../lib/repositories/avatarRepository'
-import type { AvatarAlignment, FetchStatus } from '../types/avatar'
+import { fetchAvatarAlignment, AvatarRepositoryError } from '@/lib/repositories/avatarRepository'
+import type { AvatarAlignment, FetchStatus } from '@/types/avatar'
 
 // ─── Public shape ─────────────────────────────────────────────────────────────
 

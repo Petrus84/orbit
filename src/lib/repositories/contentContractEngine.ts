@@ -1,8 +1,10 @@
 /* ==========================================================================
    ORBIT · contentContractEngine.ts
    Implementação de código do modelo de decisão descrito em
-   contentContractTreeDecisionModel.md. Consome os tipos de src/types/orbit.ts
-   (não redeclarados aqui) e o schema de content_contract_migration.sql.
+   contentContractTreeDecisionModel.md, agora conciliado com o
+   **Content Contract v1.3** (24/08/2026 — substitui v1.2). Consome os tipos
+   de src/types/orbit.ts (não redeclarados aqui) e o schema de
+   content_contract_migrationv1.2.sql.
 
    REGRA DE OURO deste arquivo: nenhuma função aqui reimplementa a régua de
    threshold em JS. A régua vive uma única vez em orbit.fn_classify_metric
@@ -11,6 +13,37 @@
    `audience_split_sum` validado tanto em OnboardingScreen.tsx quanto em
    onboardingRepository.ts — mesma regra, dois lugares, garantido divergir
    um dia. Aqui: uma regra, uma chamada RPC.
+
+   ⚠️ O QUE MUDOU NESTA REVISÃO (v1.3):
+   - `RefThresholdRow` e `ClassifiedMetric` SAÍRAM daqui e foram para
+     orbit.ts (SSOT) — viviam redeclarados localmente, o mesmo erro que o
+     comentário original deste arquivo já apontava para `AlertNatureza`.
+   - `calibration_method` ganhou 2 valores novos no banco
+     (`empirical_percentile`, `empirical_percentile_zero_inflated`) — ver
+     orbit.ts. Este arquivo NÃO decide threshold a partir disso; usa só
+     pra saber se precisa do texto zero-inflated do Content Contract §1.1.
+   - `classifyMetric()` agora também devolve `thresholdSource`,
+     `confidenceScore` e `ruleDeclaration` — a régua continua decidida
+     100% no Postgres; o que mudou é que o Postgres agora informa qual
+     nível da hierarquia (`category+tier → category+all → global`, §0.1)
+     ele usou, e este arquivo só rotula/traduz isso pro vocabulário oficial
+     do contrato. Isso NÃO é reimplementar a régua — é o texto declarar a
+     régua que o banco já escolheu, exigência explícita do §0.1.
+   - ✅ 25/08/2026: migração de `fn_classify_metric` CONFIRMADA em produção
+     (`information_schema`/`pg_proc` verificado pós-migração) — a função
+     hoje devolve os 9 campos que `FnClassifyMetricRow` espera
+     (`semaphore, status_text, confidence_level, category, tier,
+     confidence_score, calibration_method, zero_pct, signal_range_label`),
+     usando `ref_thresholds.tier_normalized` na coluna `tier` (antes vinha
+     preenchida com string de confidence level por engano). CASO G está
+     desbloqueado. A guarda de shape em `classifyMetric()` (ver função,
+     abaixo) foi mantida como backstop defensivo, não removida — não
+     decide nada sozinha, só recusa confiar num `semaphore` fora de
+     {verde,ambar,vermelho}.
+   - O gate de confiança do §0.2 (confidence_score < 0.75 força 🟡/🔴) é
+     comportamento de TEXTO/STATUS, não de threshold — o próprio contrato
+     (Introdução, item 6) atribui esse ajuste ao código, não mais ao banco.
+     Implementado em `applyConfidenceGate()`.
    ========================================================================== */
 
 import type {
@@ -20,15 +53,20 @@ import type {
   ConfidenceLevel,
   CriticalAlertData,
   InsightData,
-} from '../../types/orbit'
+  CalibrationMethod,     // ✅ NOVO v1.3 — SSOT em orbit.ts
+  ThresholdGranularity,  // ✅ NOVO v1.3 — SSOT em orbit.ts
+  RefThresholdRow,       // ✅ MOVIDO v1.3 — antes redeclarado aqui, agora SSOT em orbit.ts
+  ClassifiedMetric,      // ✅ MOVIDO v1.3 — antes redeclarado aqui, agora SSOT em orbit.ts
+} from '@/types/orbit'
 import { supabase } from '@/lib/supabase'
 
 // ----------------------------------------------------------------------------
 // Extensões de tipo — fecham os gaps do SIPOC.
-// `AlertNatureza` NÃO é redeclarado aqui — vem de orbit.ts (SSOT), mesma
-// regra que orbit.ts já impõe em todo o resto do projeto (tipo de domínio
-// não nasce no consumidor). Versão anterior deste arquivo cometia
-// exatamente esse erro.
+// `AlertNatureza`, `RefThresholdRow`, `ClassifiedMetric` NÃO são
+// redeclarados aqui — vêm de orbit.ts (SSOT), mesma regra que orbit.ts já
+// impõe em todo o resto do projeto (tipo de domínio não nasce no
+// consumidor). Versões anteriores deste arquivo cometiam exatamente esse
+// erro para `RefThresholdRow`/`ClassifiedMetric` — corrigido nesta revisão.
 // ----------------------------------------------------------------------------
 
 export interface AlertContractFields {
@@ -43,6 +81,16 @@ export interface AlertContractFields {
   // 'fallback_by_error'/'fallback_by_empty' em produção, rodar o ALTER
   // correspondente na coluna do banco (era CHECK/enum de 3 valores).
   dataSource: 'real_snapshot' | 'fallback_by_client' | 'fallback_by_error' | 'fallback_by_empty' | 'estimate'
+  // ✅ NOVO (Content Contract v1.3): os 3 campos que o payload do frontend
+  // precisa ter para métricas classificadas por régua (§0.1/§0.2). Opcionais
+  // aqui de propósito — só CASO G (`resolveEngagementScoreAlert`) usa
+  // `classifyMetric()`; os outros 6 resolvers são árvore-de-eliminação
+  // (item 1, 2, 6, 7, 11/19), não régua de percentil, então não têm régua
+  // pra declarar. Forçar esses campos em todos os resolvers inventaria uma
+  // transparência de régua que não existe pra alertas rule-tree.
+  thresholdSource?: ThresholdGranularity
+  confidenceScore?: number | null
+  ruleDeclaration?: string
 }
 
 export type AlertDraft = Pick<Alert, 'type' | 'severity' | 'title' | 'description'> &
@@ -50,32 +98,132 @@ export type AlertDraft = Pick<Alert, 'type' | 'severity' | 'title' | 'descriptio
     immediateAction: string
   }
 
-export interface RefThresholdRow {
-  metric_name: string
-  calibration_method: 'percentile_relative' | 'percentile_based' | 'percentile_based_lower_better'
-  percentile_p10: number | null
-  percentile_p25: number | null
-  percentile_p50: number | null
-  percentile_p75: number | null
-  percentile_p90: number | null
-  sample_count: number
-  green_min: number | null
-  green_max: number | null
-  amber_min: number | null
-  amber_max: number | null
-  red_min: number | null
-  red_max: number | null
-}
-
-export interface ClassifiedMetric {
+// ----------------------------------------------------------------------------
+// Shape cru do retorno de `fn_classify_metric` pós-migração v1.3.
+// ⚠️ NÃO EXPORTADO — é detalhe de transporte da RPC, não tipo de domínio
+// (por isso não foi pra orbit.ts junto com RefThresholdRow/ClassifiedMetric).
+// Os 4 primeiros campos (`semaphore`, `status_text`, `confidence_level`,
+// e os originais) já existiam antes da v1.3 e estão confirmados em
+// produção. `category`/`tier`/`confidence_score`/`calibration_method` e o
+// par `zero_pct`/`signal_range_label` são o que a função precisa devolver
+// a mais para o contrato v1.3 funcionar (§0.1, §0.2, §1.1) — **a migração
+// de `fn_classify_metric` para devolver esses campos é pré-requisito desta
+// revisão**; até lá, todos os acessos abaixo são defensivos com `?? null`
+// e o engine cai para o texto de "régua não declarada" em vez de quebrar.
+// ----------------------------------------------------------------------------
+interface FnClassifyMetricRow {
   semaphore: 'verde' | 'ambar' | 'vermelho'
-  statusText: string
-  confidenceLevel: ConfidenceLevel
+  status_text: string
+  confidence_level: ConfidenceLevel
+  category?: string | null
+  tier?: string | null
+  confidence_score?: number | null
+  calibration_method?: CalibrationMethod | null
+  zero_pct?: number | null
+  signal_range_label?: string | null
 }
 
 // ----------------------------------------------------------------------------
-// classifyMetric — única porta de entrada para "essa cor é essa cor por quê".
-// Chama fn_classify_metric no Postgres. Não recalcula percentil aqui.
+// deriveThresholdSource — rotula qual nível da hierarquia (§0.1) o Postgres
+// usou, A PARTIR do category/tier que a RPC já devolveu. Isso não decide
+// nada: só traduz o que o banco escolheu pro vocabulário de
+// `ThresholdGranularity`. Se um dia o banco parar de mandar category/tier,
+// isso cai pra 'global' (mais conservador — nunca declara régua mais
+// específica do que o confirmado).
+// ----------------------------------------------------------------------------
+function deriveThresholdSource(category: string | null | undefined, tier: string | null | undefined): ThresholdGranularity {
+  if (!category || category === 'all') return 'global'
+  if (!tier || tier === 'all') return 'category_all'
+  return 'category_tier'
+}
+
+// ----------------------------------------------------------------------------
+// formatCategoryLabel — só cosmética (underscore → espaço, remove prefixo
+// numérico de enum tipo '1_ecommerce_direto'). Não decide régua.
+// ----------------------------------------------------------------------------
+function formatCategoryLabel(category: string): string {
+  return category
+    .replace(/^\d+_/, '')
+    .replace(/_/g, ' ')
+    .trim()
+}
+
+// ----------------------------------------------------------------------------
+// buildRuleDeclaration — monta o texto obrigatório do §0.1 ("Transparência
+// da régua utilizada"), usando literalmente os 3 exemplos corretos do
+// contrato como template por nível de granularidade.
+// ----------------------------------------------------------------------------
+function buildRuleDeclaration(
+  thresholdSource: ThresholdGranularity,
+  category: string | null | undefined,
+  tier: string | null | undefined
+): string {
+  switch (thresholdSource) {
+    case 'category_tier':
+      return `Comparado à faixa de referência para ${formatCategoryLabel(category ?? '')} de porte ${tier} (régua de categoria + porte).`
+    case 'category_all':
+      return `Comparado ao padrão observado em contas ${formatCategoryLabel(category ?? '')} (régua de categoria, sem quebra por porte).`
+    case 'global':
+    default:
+      return 'Comparado ao benchmark global (régua mais ampla e de maior confiança estatística).'
+  }
+}
+
+// ----------------------------------------------------------------------------
+// applyConfidenceGate — Content Contract v1.3 §0.2. Comportamento de
+// TEXTO/STATUS a partir de confidence_score, não de threshold — o próprio
+// contrato atribui este ajuste ao código (Introdução, item 6), não mais ao
+// banco. Regra: "Um número com baixa confiança nunca deve ser apresentado
+// como fato consolidado."
+//   ≥ 0.90            → não mexe (🟢 pleno, se já era 🟢)
+//   0.75 – 0.89       → não força cor, mas sinaliza ressalva leve no texto
+//   < 0.75            → força 🟡 se estava 🟢; nunca deixa aparecer como 🟢
+//   confidence null   → trata como baixa confiança (mesma regra do < 0.75) —
+//                        não presumir alta confiança na ausência do dado
+// ----------------------------------------------------------------------------
+function applyConfidenceGate(
+  semaphore: 'verde' | 'ambar' | 'vermelho',
+  confidenceScore: number | null
+): { semaphore: 'verde' | 'ambar' | 'vermelho'; caveat: string | null } {
+  if (confidenceScore === null) {
+    return {
+      semaphore: semaphore === 'verde' ? 'ambar' : semaphore,
+      caveat: 'confiança da régua não informada pela RPC — tratado como baixa confiança por precaução',
+    }
+  }
+  if (confidenceScore < 0.75) {
+    return {
+      semaphore: semaphore === 'verde' ? 'ambar' : semaphore,
+      caveat: 'ainda não temos amostra suficiente para confiança plena nesta régua',
+    }
+  }
+  if (confidenceScore < 0.9) {
+    return {
+      semaphore,
+      caveat: 'confiança moderada — dado utilizável com ressalva leve',
+    }
+  }
+  return { semaphore, caveat: null }
+}
+
+// ----------------------------------------------------------------------------
+// buildZeroInflatedText — Content Contract v1.3 §1.1. Só chamado quando
+// `calibration_method === 'empirical_percentile_zero_inflated'`. Nunca
+// tratar o zero automaticamente como falha.
+// ----------------------------------------------------------------------------
+function buildZeroInflatedText(
+  categoryLabel: string,
+  zeroPct: number,
+  signalRangeLabel: string
+): string {
+  return `${zeroPct.toFixed(0)}% dos posts desta ${categoryLabel} não apresentam sinal comercial explícito. Isso é o padrão da amostra, não necessariamente um problema. Os posts que apresentam sinal estão em ${signalRangeLabel}.`
+}
+
+// ----------------------------------------------------------------------------
+// classifyMetric — única porta de entrada para "essa cor é essa cor por
+// quê". Chama fn_classify_metric no Postgres. Não recalcula percentil
+// aqui — v1.3 só adiciona rotulagem de régua (§0.1) e gate de confiança
+// (§0.2) em cima do que o Postgres já decidiu.
 // ----------------------------------------------------------------------------
 
 export async function classifyMetric(
@@ -93,14 +241,70 @@ export async function classifyMetric(
       semaphore: 'ambar',
       statusText: `classificação indisponível para ${metricName} — não decidir sem o dado que falta`,
       confidenceLevel: 'L2',
+      thresholdSource: 'global',
+      confidenceScore: null,
+      ruleDeclaration: 'régua não pôde ser determinada — sem dado de classificação retornado pela RPC.',
+      calibrationMethod: null,
+      zeroInflated: null,
     }
   }
 
-  const row = data[0]
+  const row = data[0] as FnClassifyMetricRow
+
+  // ⚠️ GUARDA ADICIONADA (auditoria contra orbit_schema.sql, 25/08/2026):
+  // fn_classify_metric() hoje devolve RETURNS TABLE(category, tier,
+  // confidence_score, calibration_method, zero_pct, signal_range_label) —
+  // 6 colunas. NÃO devolve semaphore/status_text/confidence_level como
+  // campos próprios; `row.semaphore` chega `undefined` do Supabase (não
+  // lança erro — só não tem essa chave). Sem esta guarda, o `undefined`
+  // vazava pra applyConfidenceGate() e o resolver de CASO G nunca batia
+  // 'vermelho'/'ambar', caindo sempre no branch "Engajamento saudável" —
+  // uma falsa negativa silenciosa, o padrão que a REGRA-11 existe pra
+  // proibir. A migração correta é dar match no RETURNS TABLE real da
+  // função pra incluir esses 3 campos (ver proposta de migração enviada
+  // separadamente); até lá, isto trata o shape errado como "classificação
+  // indisponível", igual ao caminho já existente pra ausência de dado —
+  // não decide semáforo nenhum sozinho, só recusa confiar num campo que
+  // não existe.
+  const VALID_SEMAPHORES = ['verde', 'ambar', 'vermelho'] as const
+  if (!VALID_SEMAPHORES.includes(row.semaphore as typeof VALID_SEMAPHORES[number])) {
+    return {
+      semaphore: 'ambar',
+      statusText: `classificação indisponível para ${metricName} — fn_classify_metric() não devolveu semaphore/status_text/confidence_level no shape esperado (esperado desde a migração de 25/08/2026 — verificar se a RPC foi revertida ou se este cliente está batendo numa versão antiga em cache)`,
+      confidenceLevel: 'L2',
+      thresholdSource: 'global',
+      confidenceScore: null,
+      ruleDeclaration: 'régua não pôde ser determinada — RPC com shape incompatível.',
+      calibrationMethod: null,
+      zeroInflated: null,
+    }
+  }
+
+  const thresholdSource = deriveThresholdSource(row.category, row.tier)
+  const ruleDeclaration = buildRuleDeclaration(thresholdSource, row.category, row.tier)
+  const confidenceScore = row.confidence_score ?? null
+  const { semaphore, caveat } = applyConfidenceGate(row.semaphore, confidenceScore)
+
+  const isZeroInflated = row.calibration_method === 'empirical_percentile_zero_inflated'
+  const zeroInflated = isZeroInflated && row.zero_pct != null && row.signal_range_label
+    ? { zeroPct: row.zero_pct, signalRangeLabel: row.signal_range_label }
+    : null
+
+  const statusText = zeroInflated
+    ? buildZeroInflatedText(formatCategoryLabel(row.category ?? ''), zeroInflated.zeroPct, zeroInflated.signalRangeLabel)
+    : caveat
+      ? `${row.status_text} (${caveat})`
+      : row.status_text
+
   return {
-    semaphore: row.semaphore,
-    statusText: row.status_text,
+    semaphore,
+    statusText,
     confidenceLevel: row.confidence_level,
+    thresholdSource,
+    confidenceScore,
+    ruleDeclaration,
+    calibrationMethod: row.calibration_method ?? null,
+    zeroInflated,
   }
 }
 
@@ -558,57 +762,102 @@ export async function resolveEngagementScoreAlert(input: EngagementScoreInput): 
     classifyMetric('polemic_score_pct', input.polemicScorePct),
   ])
 
+  // ⚠️ v1.3: os 3 campos de régua/confiança do payload (thresholdSource,
+  // confidenceScore, ruleDeclaration) sempre vêm da métrica que decidiu o
+  // branch abaixo — nunca de uma das outras duas. Misturar a régua de uma
+  // métrica com o número de outra seria exatamente o tipo de mentira sobre
+  // a régua que a §9 (Nota de governança) proíbe.
+
   if (vps.semaphore === 'vermelho') {
     return {
       type: 'engagement_collapse',
       severity: 'critical',
-      title: `VPS em ${input.vpsPct.toFixed(1)}% — algoritmo não distribui pros seguidores (${vps.statusText})`,
+      // 🔴 template §3: "Ainda não sabemos [pergunta], porque [causa
+      // técnica], Para resolver: [ação + responsável]" — aqui a "causa
+      // técnica concreta" É o próprio resultado da régua (VPS vermelho),
+      // não falta de dado, então o texto usa o statusText já pronto.
+      title: `Ainda não sabemos se o conteúdo está bom, porque o algoritmo não está distribuindo pros seguidores — VPS em ${input.vpsPct.toFixed(1)}% (${vps.statusText})`,
       description: null,
       natureza: 'tecnica',
       probableCause: 'baixa penetração no público próprio — possível shadowban ou desalinhamento de conteúdo',
-      immediateAction: 'verificar shadowban e testar conteúdo/horário novo',
+      immediateAction: 'verificar shadowban e testar conteúdo/horário novo — responsabilidade Orbit (diagnóstico técnico)',
       confidenceLevel: vps.confidenceLevel,
       dataSource: 'real_snapshot',
+      thresholdSource: vps.thresholdSource,
+      confidenceScore: vps.confidenceScore,
+      ruleDeclaration: vps.ruleDeclaration,
     }
   }
 
   if (polemic.semaphore === 'vermelho') {
+    // §1.1: se polemic_score_pct usa calibração zero-inflated, o
+    // `statusText` já vem pronto no template zero-inflated (via
+    // classifyMetric) — não sobrescrever com um título que ignore isso.
     return {
       type: 'polemic_score_high',
       severity: 'warning',
-      title: `Polêmica em ${input.polemicScorePct.toFixed(1)}% — ${polemic.statusText}`,
-      description: null,
+      title: polemic.zeroInflated
+        ? `Polêmica ${input.polemicScorePct.toFixed(1)}% — ${polemic.statusText}`
+        : `Polêmica em ${input.polemicScorePct.toFixed(1)}% (${polemic.ruleDeclaration})`,
+      description: polemic.zeroInflated ? null : polemic.statusText,
       natureza: 'tecnica',
       probableCause: 'razão comentários/curtidas alta — conteúdo dividindo opinião',
       immediateAction: 'avaliar se é debate saudável (ok) ou hate (moderar/ajustar tom)',
       confidenceLevel: polemic.confidenceLevel,
       dataSource: 'real_snapshot',
+      thresholdSource: polemic.thresholdSource,
+      confidenceScore: polemic.confidenceScore,
+      ruleDeclaration: polemic.ruleDeclaration,
     }
   }
 
   if (er.semaphore === 'vermelho' || er.semaphore === 'ambar') {
+    // 🟡 template §2 nunca mostra número — só aplica quando a régua caiu
+    // pra ambar POR confiança insuficiente (er.confidenceScore < 0.75),
+    // que é o caso "estrutura pronta, aguardando confiança". Ambar por
+    // valor abaixo do threshold (não por confiança) segue o template 🟢/🔴
+    // normal, que pode mostrar número — são causas diferentes de ambar.
+    const isLowConfidenceAmber = er.semaphore === 'ambar' &&
+      er.confidenceScore !== null && er.confidenceScore < 0.75
+
     return {
       type: 'engagement_collapse',
       severity: er.semaphore === 'vermelho' ? 'critical' : 'warning',
-      title: `ER Real em ${input.erRealPct.toFixed(1)}% — ${er.statusText}`,
-      description: null,
+      title: isLowConfidenceAmber
+        ? 'Estrutura pronta — ER Real ainda sem confiança suficiente para confirmar'
+        : `ER Real em ${input.erRealPct.toFixed(1)}% — ${er.statusText}`,
+      description: isLowConfidenceAmber
+        ? `Volta a aparecer quando a amostra da régua atingir confiança ≥ 0,75. ${er.ruleDeclaration}`
+        : null,
       natureza: 'tecnica',
       probableCause: 'conteúdo não está motivando ação (saves/shares/comments), só visualização passiva',
-      immediateAction: 'testar novo CTA ou formato de conteúdo',
+      immediateAction: isLowConfidenceAmber
+        ? 'aguardar expansão da base de referência da régua — não decidir sobre este número ainda'
+        : 'testar novo CTA ou formato de conteúdo',
       confidenceLevel: er.confidenceLevel,
       dataSource: 'real_snapshot',
+      thresholdSource: er.thresholdSource,
+      confidenceScore: er.confidenceScore,
+      ruleDeclaration: er.ruleDeclaration,
     }
   }
 
+  // 🟢 template §1: "[valor] ([período]) — [comparação com a régua
+  // utilizada], [o que isso prova ou o que fazer]." Período não está no
+  // input deste resolver (EngagementScoreInput não carrega período) — se
+  // vier a ser exigido no texto exportável (§5), precisa entrar no input.
   return {
     type: 'engagement_collapse',
     severity: 'info',
     title: `Engajamento saudável — ER Real ${input.erRealPct.toFixed(1)}%, VPS ${input.vpsPct.toFixed(1)}%`,
-    description: null,
+    description: `${er.ruleDeclaration} Priorize o formato que gerou esse resultado.`,
     natureza: 'tecnica',
     probableCause: 'n/a',
     immediateAction: 'continuar monitorando',
     confidenceLevel: 'L0',
     dataSource: 'real_snapshot',
+    thresholdSource: er.thresholdSource,
+    confidenceScore: er.confidenceScore,
+    ruleDeclaration: er.ruleDeclaration,
   }
 }

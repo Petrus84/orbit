@@ -6,7 +6,7 @@
 
 import React from 'react'
 import styles from './SemaphoreIndicator.module.css'
-import type { SemaphoreColor } from '../../types/orbit'
+import type { SemaphoreColor } from '@/types/orbit'
 
 export interface SemaphoreIndicatorProps {
   color: SemaphoreColor

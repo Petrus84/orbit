@@ -140,6 +140,100 @@ export type AlertNatureza = 'tecnica' | 'comunicacao'
 //                 resolver que gerou o alerta sabe qual dos dois é.
 
 /**
+ * ✅ PATCH (Content Contract v1.3 — 24/08/2026): `orbit.calibration_method`
+ * tem 5 valores no banco — os 3 originais do engine
+ * (`percentile_relative`, `percentile_based`, `percentile_based_lower_better`)
+ * mais 2 introduzidos pela migração da Opção B: `empirical_percentile` e
+ * `empirical_percentile_zero_inflated` (usado por `utilidade_score` e
+ * `polemica_score` — dispara o tratamento de texto zero-inflated
+ * obrigatório do Content Contract v1.3 §1.1, nunca tratar o zero como
+ * falha). Fonte canônica agora aqui; contentContractEngine.ts importa, não
+ * redeclara — antes deste patch o tipo estava local ao engine com só 3
+ * valores, fora de sincronia com o enum real do Postgres.
+ */
+export type CalibrationMethod =
+  | 'percentile_relative'
+  | 'percentile_based'
+  | 'percentile_based_lower_better'
+  | 'empirical_percentile'
+  | 'empirical_percentile_zero_inflated'
+
+/**
+ * ✅ NOVO (Content Contract v1.3 §0.1): hierarquia de fallback da régua —
+ * `category + tier` → `category + all` → `global`, nesta ordem. Estado do
+ * banco validado em 24/08/2026: só `1_ecommerce_direto` tem réguas por
+ * tier (nano/micro/mid/macro + all); todas as demais categorias caem no
+ * `global`. O texto do alerta é obrigado a declarar qual nível foi
+ * realmente usado (campo `ruleDeclaration` em `ClassifiedMetric`) — nunca
+ * apresentar uma régua mais específica do que a que decidiu a cor.
+ */
+export type ThresholdGranularity = 'category_tier' | 'category_all' | 'global'
+
+/**
+ * ✅ NOVO (Content Contract v1.3): shape de linha de `orbit.ref_thresholds`
+ * pós-migração da Opção B. Substitui o `RefThresholdRow` que vivia
+ * redeclarado localmente em `contentContractEngine.ts` — violava a mesma
+ * regra de SSOT que este arquivo já impõe em todo o resto do projeto
+ * (tipo de domínio não nasce no consumidor; ver observação de cabeçalho,
+ * item sobre `AlertNatureza`). `category`/`tier` são os campos de
+ * granularidade novos da migração; `confidence_score` (0–1 contínuo,
+ * Content Contract v1.3 §0.2) é distinto de `ConfidenceLevel` (L0/L1/L2
+ * categórico) — os dois convivem por design, não é duplicação.
+ */
+export interface RefThresholdRow {
+  metric_name: string
+  category: string          // ex: '1_ecommerce_direto' | 'all'
+  tier: string | null       // ex: 'nano' | 'micro' | 'mid' | 'macro'; null quando category = 'all'
+  calibration_method: CalibrationMethod
+  percentile_p10: number | null
+  percentile_p25: number | null
+  percentile_p50: number | null
+  percentile_p75: number | null
+  percentile_p90: number | null
+  sample_count: number
+  confidence_score: number  // 0–1; ver Content Contract v1.3 §0.2 (thresholds de comportamento de texto)
+  green_min: number | null
+  green_max: number | null
+  amber_min: number | null
+  amber_max: number | null
+  red_min: number | null
+  red_max: number | null
+}
+
+/**
+ * ✅ NOVO (Content Contract v1.3): payload de retorno de
+ * `classifyMetric()`/`fn_classify_metric` pós-contrato v1.3. Estende o
+ * shape anterior (`semaphore`, `statusText`, `confidenceLevel`) com os 3
+ * campos que o frontend precisa para não inventar transparência de régua
+ * na UI: `thresholdSource` (qual nível da hierarquia §0.1 decidiu a cor),
+ * `confidenceScore` (0–1 cru, pode ser `null` se a RPC não retornar),
+ * `ruleDeclaration` (o texto pronto da régua usada — já no vocabulário
+ * oficial do contrato, item 0.1 "Exemplos corretos"). Movido para cá pela
+ * mesma razão de `RefThresholdRow`: é forma de domínio, não deveria nascer
+ * dentro de `contentContractEngine.ts`.
+ */
+export interface ClassifiedMetric {
+  semaphore: SemaphoreColor
+  statusText: string
+  confidenceLevel: ConfidenceLevel
+  thresholdSource: ThresholdGranularity
+  confidenceScore: number | null
+  ruleDeclaration: string
+  // ✅ NOVO (Content Contract v1.3 §1.1): presente só quando
+  // `calibration_method === 'empirical_percentile_zero_inflated'`
+  // (hoje: `utilidade_score`/`polemica_score`). `zeroPct` = % de posts sem
+  // sinal comercial explícito na categoria/porte da régua usada;
+  // `signalRangeLabel` = texto já pronto da faixa onde os posts COM sinal
+  // estão (ex: "12–34"). O contrato é explícito: zero nunca é tratado como
+  // falha por padrão — o resolver decide o texto, não assume.
+  calibrationMethod: CalibrationMethod | null
+  zeroInflated: {
+    zeroPct: number
+    signalRangeLabel: string
+  } | null
+}
+
+/**
  * ✅ PATCH (perícia enums 14/08): enum `orbit.campaign_objective` tem 8
  * valores; estava como `string` solto (INV-3).
  */

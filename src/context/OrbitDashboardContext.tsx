@@ -22,8 +22,8 @@ import {
   useInstagramOverview,
   type UseInstagramOverviewParams,
   type UseInstagramOverviewReturn,
-} from '../hooks/useInstagramOverview'
-import type { TabId } from '../types/orbit'
+} from '@/hooks/useInstagramOverview'
+import type { TabId } from '@/types/orbit'
 
 // ─── Interface do contexto ───────────────────────────────────────────────────
 

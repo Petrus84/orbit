@@ -40,7 +40,7 @@
 .none {
   background: rgba(112, 110, 106, 0.12);
   border: var(--border-width) solid var(--line);
-  color: var(--t2);
+  color: var(--t1);
 }
 
 .label {

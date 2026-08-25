@@ -1,71 +1,15 @@
-// src/app/instagram/avatar/page.tsx
-/**
- * ORBIT · Avatar Page (L4 — Rota)
- * Versão: 1.0.1
- * Responsabilidade: Renderizar AvatarScreen com seletor de clientes
- * 
- * Correções:
- * 1. Ajustado o import correto de @/lib/constants.
- * 2. Corrigida a inicialização do useState usando o array clientKeys.
- * 3. Passado as datas como objetos Date puros (conforme v2.0.0 do contexto).
- */
+/* ==========================================================================
+   ORBIT · Avatar — redirect para rota canônica
+   Caminho: src/app/(dashboard)/instagram/avatar/page.tsx
 
-'use client'
+   Seção 5.5: /avatar e /instagram/avatar divergiam de fato (label vs name,
+   estado ativo do botão, aria-pressed ausente em /instagram/avatar).
+   Canônica decidida pelo usuário: /avatar (implementação mais completa —
+   já tinha aria-pressed, type="button" e cor de estado ativo).
+   ========================================================================== */
 
-import { useState } from 'react'
-import { CLIENTS, PERIOD_START, PERIOD_END } from '@/lib/constants' // ✅ Import corrigido e limpo
-import { AvatarScreen } from '@/components/screens/AvatarScreen'
-import { OrbitDashboardProvider } from '@/context/OrbitDashboardContext'
+import { redirect } from 'next/navigation'
 
-export default function AvatarPage() {
-  const clientKeys = Object.keys(CLIENTS) as (keyof typeof CLIENTS)[]
-  
-  // ✅ Estado inicializado com segurança
-  const [activeClientKey, setActiveClientKey] = useState<keyof typeof CLIENTS>(clientKeys[0])
-  const activeClient = CLIENTS[activeClientKey]
-
-  return (
-    <OrbitDashboardProvider
-      clientId={activeClient.id}
-      periodStart={PERIOD_START} // ✅ Correto: Objeto Date puro passado ao Provider
-      periodEnd={PERIOD_END}     // ✅ Correto: Objeto Date puro passado ao Provider
-    >
-      <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-        {/* Client Selector Nav */}
-        <nav
-          style={{
-            display: 'flex',
-            gap: '8px',
-            padding: '16px 20px',
-            borderBottom: '1px solid var(--line)',
-            background: 'var(--bg1)',
-          }}
-        >
-          {clientKeys.map((key) => (
-            <button
-              key={key}
-              onClick={() => setActiveClientKey(key)}
-              style={{
-                padding: '8px 16px',
-                borderRadius: '8px',
-                border: activeClientKey === key ? '1px solid var(--acc)' : '1px solid var(--line)',
-                background: activeClientKey === key ? 'var(--bg3)' : 'transparent',
-                color: 'var(--t0)',
-                cursor: 'pointer',
-                fontSize: '13px',
-                fontWeight: activeClientKey === key ? 500 : 400,
-              }}
-            >
-              {CLIENTS[key].name}
-            </button>
-          ))}
-        </nav>
-
-        {/* Avatar Screen */}
-        <div style={{ flex: 1, overflow: 'auto' }}>
-          <AvatarScreen />
-        </div>
-      </div>
-    </OrbitDashboardProvider>
-  )
+export default function InstagramAvatarRedirect() {
+  redirect('/avatar')
 }

@@ -3,8 +3,8 @@
 // ============================================================================
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { fetchAlerts, fetchCriticalAlerts } from '../lib/repositories/alertsRepository'
-import type { Alert, AlertSeverity, FetchStatus } from '../types/alert'
+import { fetchAlerts, fetchCriticalAlerts } from '@/lib/repositories/alertsRepository'
+import type { Alert, AlertSeverity, FetchStatus } from '@/types/alert'
 
 // ── Config ────────────────────────────────────────────────────────────────
 const MAX_RETRIES = 3

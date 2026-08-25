@@ -32,7 +32,7 @@ import type {
   InsightData,
   SemaphoreColor,
   GlowColor,
-} from '../../types/orbit'
+} from '@/types/orbit'
 
 type RawRow = Record<string, unknown>
 
@@ -359,4 +359,83 @@ function generateInsights(formats: FormatPerformanceRow[]): InsightData[] {
       id:   `insight-${f.id}`,
       text: `O formato ${f.format} gerou ${f.shares} interações em ${f.posts} publicação(ões).`,
     }))
+}
+
+/* ==========================================================================
+   fetchLatestEngagementScoreSnapshot — conexão pro CASO G do Content
+   Contract Engine (resolveEngagementScoreAlert / contentContractEngine.ts).
+
+   ⚠️ Decisão de camada: este arquivo NÃO importa `EngagementScoreInput` de
+   contentContractEngine.ts. Repository não deve depender de tipo de camada
+   de negócio (five-layer architecture: Screen → Hook → Repository →
+   Supabase → DB) — o inverso já acontece em outros pontos do projeto
+   (ex: alertsRepository.ts importa AlertDraft do engine), mas isso é uma
+   exceção já aceita pra escrita de alertas, não motivo pra replicar aqui
+   também. `EngagementScoreSnapshot` abaixo é estruturalmente idêntico a
+   `EngagementScoreInput` — TypeScript aceita a passagem direta pro resolver
+   por tipagem estrutural, sem acoplamento de import.
+
+   ⚠️ Nomes de coluna (er_real_pct, utility_score_pct, polemic_score_pct,
+   vps_pct) vêm do comentário do próprio contentContractEngine.ts (CASO G,
+   "Scores de orbit.ig_account_snapshots") — não foram confirmados aqui
+   contra dump_orbit.sql, que não estava disponível nesta sessão. Se algum
+   nome divergir, o Supabase retorna erro explícito (`error.message` abaixo)
+   em vez de mascarar — não inventa valor pra coluna que não existe.
+
+   ⚠️ REGRA-11: se QUALQUER um dos 4 campos vier `null` do banco, a função
+   devolve `null` inteiro em vez de montar um input parcial com zero
+   fabricado — resolveEngagementScoreAlert não deve rodar sobre dado
+   incompleto disfarçado de completo. O caller (syncClientAlerts.ts) decide
+   o que fazer com `null` (hoje: não gera draft pra esse caso).
+   ========================================================================== */
+
+export interface EngagementScoreSnapshot {
+  erRealPct: number
+  utilityScorePct: number
+  polemicScorePct: number
+  vpsPct: number
+}
+
+interface EngagementScoreSnapshotRow {
+  er_real_pct: number | null
+  utility_score_pct: number | null
+  polemic_score_pct: number | null
+  vps_pct: number | null
+}
+
+export async function fetchLatestEngagementScoreSnapshot(
+  clientId: string
+): Promise<EngagementScoreSnapshot | null> {
+  const { data, error } = await supabase
+    .from('ig_account_snapshots')          // orbit.ig_account_snapshots
+    .select('er_real_pct, utility_score_pct, polemic_score_pct, vps_pct, period_end')
+    .eq('client_id', clientId)
+    .order('period_end', { ascending: false })
+    .limit(1)
+    .maybeSingle()
+    .returns<EngagementScoreSnapshotRow & { period_end: string }>()
+
+  if (error) {
+    throw new Error(
+      `[instagramOverviewRepository] falha ao buscar snapshot de engagement score para ${clientId}: ${error.message}`
+    )
+  }
+
+  if (!data) return null // sem nenhuma linha para o cliente ainda — não fabricar snapshot vazio
+
+  const { er_real_pct, utility_score_pct, polemic_score_pct, vps_pct } = data
+
+  if (er_real_pct == null || utility_score_pct == null || polemic_score_pct == null || vps_pct == null) {
+    // REGRA-11: um ou mais dos 4 campos ausentes na linha mais recente —
+    // não roda o resolver sobre input parcial. O caller decide se isso vira
+    // um alerta 'data_gap' explícito ou é apenas pulado silenciosamente.
+    return null
+  }
+
+  return {
+    erRealPct: er_real_pct,
+    utilityScorePct: utility_score_pct,
+    polemicScorePct: polemic_score_pct,
+    vpsPct: vps_pct,
+  }
 }

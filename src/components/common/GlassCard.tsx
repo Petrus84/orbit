@@ -5,7 +5,7 @@
 
 import React, { type ReactNode, type MouseEventHandler } from 'react'
 import styles from './GlassCard.module.css'
-import type { GlowColor } from '../../types/orbit'
+import type { GlowColor } from '@/types/orbit'
 
 export interface GlassCardProps {
   children:  ReactNode

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './RecommendationAlert.module.css';
-import type { AlignmentStatus } from '../../types/avatar';
+import type { AlignmentStatus } from '@/types/avatar';
 
 interface RecommendationAlertProps {
   status: AlignmentStatus;

@@ -1,240 +1,267 @@
 // src/components/screens/AvatarScreen.tsx
-// ✅ VERSÃO 3.0: Compatível com código existente + correções do repositório e hook
+// ✅ VERSÃO 4.0: Migrado de Tailwind ad-hoc (gray-950/blue-600, paleta
+// genérica desconectada do design system) para AvatarScreen.module.css —
+// o CSS Module já existia, token-based (--bg/--t0/--acc/--space-*),
+// e já era usado corretamente por AvatarCard/AvatarComparison/AlignmentBars.
+// A v3.0 tinha parado de importá-lo e reimplementado o shell da tela em
+// Tailwind com valores arbitrários (max-w-4xl, bg-blue-600...) que não
+// existem em nenhum outro lugar do app — causa raiz do visual
+// desproporcional/inconsistente entre o shell e os componentes filhos.
 //
-// Mudanças:
-// - Adiciona errorCode e isRetrying do hook v2.0
-// - Mantém a lógica de contexto (useOrbitDashboard)
-// - Mantém a estrutura Tailwind existente
-// - Adiciona 4 estados de erro distintos
-// - Adiciona feedback visual de retry
+// Mudanças desta versão:
+// - Todo o shell (header, estados de loading/erro/retry, skeleton) agora
+//   usa var(--*) via AvatarScreen.module.css, mesma linguagem visual dos
+//   filhos.
+// - Os 5 estados de erro de useAvatar() (NO_DATA/NETWORK_ERROR/
+//   VALIDATION_FAILED/UNKNOWN/sem código) foram unificados num único
+//   layout (.center/.stateIcon/.stateTitle/.stateBody/.detailCard),
+//   parametrizado por conteúdo — elimina 5 blocos JSX quase idênticos
+//   com wrappers Tailwind duplicados.
+// - Botão de ação primário usa --acc (lima, o único acento do sistema),
+//   não mais bg-blue-600 (cor que não aparece em nenhum outro componente
+//   do app).
 
 'use client'
 
 import React from 'react'
-import { useOrbitDashboard } from '../../context/OrbitDashboardContext'
-import { useAvatar } from '../../hooks/useAvatar'
-import { AvatarComparison } from '../common/AvatarComparison'
-import { AlignmentBars } from '../common/AlignmentBars'
-import { AlignmentFormula } from '../common/AlignmentFormula'
-import { RecommendationAlert } from '../common/RecommendationAlert'
+import { useOrbitDashboard } from '@/context/OrbitDashboardContext'
+import { useAvatar } from '@/hooks/useAvatar'
+import { AvatarComparison } from '@/components/common/AvatarComparison'
+import { AlignmentBars } from '@/components/common/AlignmentBars'
+import { AlignmentFormula } from '@/components/common/AlignmentFormula'
+import { RecommendationAlert } from '@/components/common/RecommendationAlert'
+import styles from './AvatarScreen.module.css'
 
 interface AvatarScreenProps {
   clientId?: string
 }
 
-const Skeleton: React.FC<{ className?: string }> = ({ className = '' }) => (
-  <div className={`animate-pulse bg-gray-800/60 rounded-lg ${className}`} />
-)
+// ─── Skeleton ────────────────────────────────────────────────────────────
 
 const AvatarScreenSkeleton: React.FC = () => (
-  <div className="space-y-6">
-    <div className="flex gap-3">
-      <Skeleton className="flex-1 h-52" />
-      <Skeleton className="w-6" />
-      <Skeleton className="flex-1 h-52" />
+  <div className={styles.skeletonStack}>
+    <div className={styles.skeletonRow}>
+      <div className={`${styles.skeleton} ${styles.skeletonCard}`} style={{ flex: 1 }} />
+      <div className={styles.skeleton} style={{ width: 24 }} />
+      <div className={`${styles.skeleton} ${styles.skeletonCard}`} style={{ flex: 1 }} />
     </div>
-    <Skeleton className="h-40" />
-    <Skeleton className="h-32" />
-    <Skeleton className="h-24" />
+    <div className={`${styles.skeleton} ${styles.skeletonBars}`} />
+    <div className={`${styles.skeleton} ${styles.skeletonFormula}`} />
+    <div className={`${styles.skeleton} ${styles.skeletonRecs}`} />
+  </div>
+)
+
+// ─── Header (compartilhado pelos estados loading e sucesso) ──────────────
+
+const Header: React.FC<{ lastUpdatedLabel?: string }> = ({ lastUpdatedLabel }) => (
+  <div className={styles.headerRow}>
+    <div className={styles.headerText}>
+      <h1 className={styles.title}>Avatar Alignment</h1>
+      <p className={styles.subtitle}>
+        Comparativo entre o avatar esperado e a audiência captada pelas APIs
+      </p>
+    </div>
+
+    {lastUpdatedLabel && (
+      <div>
+        <p className={styles.metaLabel}>Última atualização</p>
+        <p className={styles.metaValue}>{lastUpdatedLabel}</p>
+      </div>
+    )}
+  </div>
+)
+
+// ─── Estado centralizado genérico (reutilizado pelos 5 estados de erro) ──
+
+interface CenterStateProps {
+  icon: string
+  spin?: boolean
+  title: string
+  body: string
+  detailTitle?: string
+  detailItems?: string[]
+  detailRaw?: string
+  primaryAction?: { label: string; onClick: () => void }
+  hint?: string
+}
+
+const CenterState: React.FC<CenterStateProps> = ({
+  icon,
+  spin,
+  title,
+  body,
+  detailTitle,
+  detailItems,
+  detailRaw,
+  primaryAction,
+  hint,
+}) => (
+  <div className={styles.center}>
+    <div className={styles.centerInner}>
+      <span className={`${styles.stateIcon} ${spin ? styles.stateIconSpin : ''}`}>{icon}</span>
+      <h2 className={styles.stateTitle}>{title}</h2>
+      <p className={styles.stateBody}>{body}</p>
+
+      {(detailItems || detailRaw) && (
+        <div className={styles.detailCard}>
+          {detailTitle && <p className={styles.detailTitle}>{detailTitle}</p>}
+          {detailItems && (
+            <ul className={styles.detailList}>
+              {detailItems.map((item) => (
+                <li key={item}>✓ {item}</li>
+              ))}
+            </ul>
+          )}
+          {detailRaw && <code className={styles.errorDetail}>{detailRaw}</code>}
+        </div>
+      )}
+
+      {primaryAction && (
+        <div className={styles.actions}>
+          <button className={styles.btnPrimary} onClick={primaryAction.onClick}>
+            {primaryAction.label}
+          </button>
+          {hint && <p className={styles.hint}>{hint}</p>}
+        </div>
+      )}
+    </div>
   </div>
 )
 
 export const AvatarScreen: React.FC<AvatarScreenProps> = ({ clientId: propClientId }) => {
-  // ✅ PASSO 1: Obter clientId do contexto ou prop
   const { clientId: contextClientId } = useOrbitDashboard()
   const clientId = propClientId || contextClientId
 
-  // ✅ PASSO 2: Chamar hook com TODOS os novos campos
   const { data, status, error, errorCode, isRetrying, refetch } = useAvatar(clientId || '')
 
-  // ✅ PASSO 3: Derivar estados
   const isLoading = status === 'loading' && !isRetrying
   const isError = status === 'error'
   const isSuccess = status === 'success' && data
 
-  // ─── GUARD: Cliente não identificado ──────────────────────────────────────
+  // ─── GUARD: Cliente não identificado ────────────────────────────────────
 
   if (!clientId) {
     return (
-      <div className="min-h-screen bg-gray-950 text-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-2xl mb-2">❓</p>
-          <p className="text-gray-400">Cliente não identificado</p>
-        </div>
+      <div className={styles.page}>
+        <CenterState icon="❓" title="Cliente não identificado" body="" />
       </div>
     )
   }
 
-  // ─── ESTADO: Carregando ───────────────────────────────────────────────────
+  // ─── ESTADO: Carregando ──────────────────────────────────────────────────
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-950 text-gray-100">
-        <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
-          <div className="flex items-start justify-between">
-            <div>
-              <h1 className="text-xl font-bold text-white tracking-tight">
-                Avatar Alignment
-              </h1>
-              <p className="text-sm text-gray-500 mt-0.5">
-                Comparativo entre o avatar esperado e a audiência captada pelas APIs
-              </p>
-            </div>
-          </div>
-          <AvatarScreenSkeleton />
-        </div>
+      <div className={styles.page}>
+        <Header />
+        <AvatarScreenSkeleton />
       </div>
     )
   }
 
-  // ─── ESTADO: Tentando reconectar ──────────────────────────────────────────
+  // ─── ESTADO: Tentando reconectar ───────────────────────────────────────
 
   if (isRetrying) {
     return (
-      <div className="min-h-screen bg-gray-950 text-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-4xl mb-4 animate-spin">🔄</p>
-          <p className="text-gray-300 text-lg">Tentando reconectar...</p>
-          <p className="text-gray-500 text-sm mt-2">Por favor, aguarde.</p>
-        </div>
+      <div className={styles.page}>
+        <CenterState
+          icon="🔄"
+          spin
+          title="Tentando reconectar..."
+          body="Por favor, aguarde."
+        />
       </div>
     )
   }
 
-  // ─── ESTADO: Erro NO_DATA (Cliente sem avatar) ────────────────────────────
+  // ─── ESTADO: Erro NO_DATA (Cliente sem avatar) ──────────────────────────
 
   if (isError && errorCode === 'NO_DATA') {
     return (
-      <div className="min-h-screen bg-gray-950 text-gray-100 flex items-center justify-center">
-        <div className="max-w-md text-center">
-          <p className="text-5xl mb-4">📊</p>
-          <h2 className="text-2xl font-bold text-white mb-2">Avatar não configurado</h2>
-          <p className="text-gray-400 mb-6">
-            Este cliente ainda não possui um alinhamento de avatar configurado no sistema.
-          </p>
-          <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 mb-6 text-left">
-            <p className="text-sm font-semibold text-gray-300 mb-3">O que fazer:</p>
-            <ul className="text-sm text-gray-400 space-y-2">
-              <li>✓ Verifique se o cliente foi criado corretamente</li>
-              <li>✓ Confirme que os dados de avatar foram sincronizados</li>
-              <li>✓ Configure um novo avatar para este cliente se necessário</li>
-            </ul>
-          </div>
-          <button
-            onClick={refetch}
-            className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
-          >
-            🔄 Tentar Novamente
-          </button>
-        </div>
+      <div className={styles.page}>
+        <CenterState
+          icon="📊"
+          title="Avatar não configurado"
+          body="Este cliente ainda não possui um alinhamento de avatar configurado no sistema."
+          detailTitle="O que fazer:"
+          detailItems={[
+            'Verifique se o cliente foi criado corretamente',
+            'Confirme que os dados de avatar foram sincronizados',
+            'Configure um novo avatar para este cliente se necessário',
+          ]}
+          primaryAction={{ label: '🔄 Tentar Novamente', onClick: refetch }}
+        />
       </div>
     )
   }
 
-  // ─── ESTADO: Erro NETWORK_ERROR (Conexão) ─────────────────────────────────
+  // ─── ESTADO: Erro NETWORK_ERROR (Conexão) ───────────────────────────────
 
   if (isError && errorCode === 'NETWORK_ERROR') {
     return (
-      <div className="min-h-screen bg-gray-950 text-gray-100 flex items-center justify-center">
-        <div className="max-w-md text-center">
-          <p className="text-5xl mb-4">🌐</p>
-          <h2 className="text-2xl font-bold text-white mb-2">Erro de conexão</h2>
-          <p className="text-gray-400 mb-6">
-            Não foi possível conectar ao servidor para buscar os dados de avatar.
-          </p>
-          <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 mb-6 text-left">
-            <p className="text-sm font-semibold text-gray-300 mb-3">Possíveis causas:</p>
-            <ul className="text-sm text-gray-400 space-y-2">
-              <li>✓ Sua conexão com a internet pode estar instável</li>
-              <li>✓ O servidor pode estar temporariamente indisponível</li>
-              <li>✓ Verifique sua conexão e tente novamente</li>
-            </ul>
-          </div>
-          <button
-            onClick={refetch}
-            className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
-          >
-            🔗 Reconectar
-          </button>
-        </div>
+      <div className={styles.page}>
+        <CenterState
+          icon="🌐"
+          title="Erro de conexão"
+          body="Não foi possível conectar ao servidor para buscar os dados de avatar."
+          detailTitle="Possíveis causas:"
+          detailItems={[
+            'Sua conexão com a internet pode estar instável',
+            'O servidor pode estar temporariamente indisponível',
+            'Verifique sua conexão e tente novamente',
+          ]}
+          primaryAction={{ label: '🔗 Reconectar', onClick: refetch }}
+        />
       </div>
     )
   }
 
-  // ─── ESTADO: Erro VALIDATION_FAILED (Dados inválidos) ──────────────────────
+  // ─── ESTADO: Erro VALIDATION_FAILED (Dados inválidos) ────────────────────
 
   if (isError && errorCode === 'VALIDATION_FAILED') {
     return (
-      <div className="min-h-screen bg-gray-950 text-gray-100 flex items-center justify-center">
-        <div className="max-w-md text-center">
-          <p className="text-5xl mb-4">⚠️</p>
-          <h2 className="text-2xl font-bold text-white mb-2">Dados inválidos recebidos</h2>
-          <p className="text-gray-400 mb-6">
-            O servidor retornou dados que não passaram na validação.
-          </p>
-          <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 mb-6 text-left">
-            <p className="text-sm font-semibold text-gray-300 mb-2">Detalhes do erro:</p>
-            <code className="text-xs text-gray-400 break-words block">{error}</code>
-          </div>
-          <div className="space-y-3">
-            <button
-              onClick={refetch}
-              className="w-full px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
-            >
-              🔄 Tentar Novamente
-            </button>
-            <p className="text-xs text-gray-500">
-              Se o problema persistir, entre em contato com o suporte.
-            </p>
-          </div>
-        </div>
+      <div className={styles.page}>
+        <CenterState
+          icon="⚠️"
+          title="Dados inválidos recebidos"
+          body="O servidor retornou dados que não passaram na validação."
+          detailTitle="Detalhes do erro:"
+          detailRaw={error ?? undefined}
+          primaryAction={{ label: '🔄 Tentar Novamente', onClick: refetch }}
+          hint="Se o problema persistir, entre em contato com o suporte."
+        />
       </div>
     )
   }
 
-  // ─── ESTADO: Erro UNKNOWN (Genérico) ──────────────────────────────────────
+  // ─── ESTADO: Erro UNKNOWN (Genérico) ────────────────────────────────────
 
   if (isError && errorCode === 'UNKNOWN') {
     return (
-      <div className="min-h-screen bg-gray-950 text-gray-100 flex items-center justify-center">
-        <div className="max-w-md text-center">
-          <p className="text-5xl mb-4">❌</p>
-          <h2 className="text-2xl font-bold text-white mb-2">Erro desconhecido</h2>
-          <p className="text-gray-400 mb-6">
-            Ocorreu um erro inesperado ao carregar o alinhamento de avatar.
-          </p>
-          <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 mb-6 text-left">
-            <p className="text-sm font-semibold text-gray-300 mb-2">Mensagem:</p>
-            <code className="text-xs text-gray-400 break-words block">{error}</code>
-          </div>
-          <div className="space-y-3">
-            <button
-              onClick={refetch}
-              className="w-full px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
-            >
-              🔄 Tentar Novamente
-            </button>
-            <p className="text-xs text-gray-500">
-              Verifique o console do navegador para mais detalhes.
-            </p>
-          </div>
-        </div>
+      <div className={styles.page}>
+        <CenterState
+          icon="❌"
+          title="Erro desconhecido"
+          body="Ocorreu um erro inesperado ao carregar o alinhamento de avatar."
+          detailTitle="Mensagem:"
+          detailRaw={error ?? undefined}
+          primaryAction={{ label: '🔄 Tentar Novamente', onClick: refetch }}
+          hint="Verifique o console do navegador para mais detalhes."
+        />
       </div>
     )
   }
 
-  // ─── ESTADO: Erro genérico (sem errorCode) ───────────────────────────────
+  // ─── ESTADO: Erro genérico (sem errorCode) ──────────────────────────────
 
   if (isError && !errorCode) {
     return (
-      <div className="min-h-screen bg-gray-950 text-gray-100">
-        <div className="max-w-4xl mx-auto px-4 py-6">
-          <div className="bg-rose-950/40 border border-rose-500/40 rounded-xl p-4 flex items-center gap-3">
-            <span className="text-2xl">❌</span>
-            <div>
-              <p className="text-sm font-semibold text-rose-400">Erro ao carregar dados</p>
-              <p className="text-xs text-gray-400 mt-0.5">{error || 'Erro desconhecido'}</p>
-            </div>
+      <div className={styles.page}>
+        <div className={styles.genericErrorBanner}>
+          <span className={styles.stateIcon} style={{ fontSize: 24, marginBottom: 0 }}>❌</span>
+          <div>
+            <p className={styles.genericErrorTitle}>Erro ao carregar dados</p>
+            <p className={styles.genericErrorBody}>{error || 'Erro desconhecido'}</p>
           </div>
         </div>
       </div>
@@ -244,57 +271,36 @@ export const AvatarScreen: React.FC<AvatarScreenProps> = ({ clientId: propClient
   // ─── ESTADO: Sucesso ─────────────────────────────────────────────────────
 
   if (isSuccess) {
+    const lastUpdatedLabel = new Date().toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: 'short',
+      hour: '2-digit',
+      minute: '2-digit',
+    })
+
     return (
-      <div className="min-h-screen bg-gray-950 text-gray-100">
-        <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
-          <div className="flex items-start justify-between">
-            <div>
-              <h1 className="text-xl font-bold text-white tracking-tight">
-                Avatar Alignment
-              </h1>
-              <p className="text-sm text-gray-500 mt-0.5">
-                Comparativo entre o avatar esperado e a audiência captada pelas APIs
-              </p>
-            </div>
+      <div className={styles.page}>
+        <Header lastUpdatedLabel={lastUpdatedLabel} />
 
-            <div className="text-right">
-              <p className="text-xs text-gray-600 uppercase tracking-wider">
-                Última atualização
-              </p>
-              <p className="text-xs text-gray-400 mt-0.5">
-                {new Date().toLocaleDateString('pt-BR', {
-                  day: '2-digit',
-                  month: 'short',
-                  hour: '2-digit',
-                  minute: '2-digit',
-                })}
-              </p>
-            </div>
-          </div>
+        <AvatarComparison
+          expected={data.expected}
+          real={data.real}
+          score={data.score}
+          status={data.status}
+          unconsciousDesireMapped={data.unconsciousDesireMapped}
+          misalignmentHypothesis={data.misalignmentHypothesis}
+        />
 
-          <AvatarComparison
-            expected={data.expected}
-            real={data.real}
-            score={data.score}
-            status={data.status}
-            unconsciousDesireMapped={data.unconsciousDesireMapped}
-            misalignmentHypothesis={data.misalignmentHypothesis}
-          />
+        <AlignmentBars bars={data.bars} />
 
-          <AlignmentBars bars={data.bars} />
+        <AlignmentFormula />
 
-          <AlignmentFormula />
+        <RecommendationAlert status={data.status} score={data.score} />
 
-          <RecommendationAlert status={data.status} score={data.score} />
-
-          <div className="flex justify-center pt-4">
-            <button
-              onClick={refetch}
-              className="px-6 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white rounded-lg font-medium transition-colors text-sm"
-            >
-              🔄 Atualizar Dados
-            </button>
-          </div>
+        <div className={styles.footer}>
+          <button className={styles.btnGhost} onClick={refetch}>
+            🔄 Atualizar Dados
+          </button>
         </div>
       </div>
     )
@@ -303,8 +309,8 @@ export const AvatarScreen: React.FC<AvatarScreenProps> = ({ clientId: propClient
   // ─── ESTADO: Idle (nunca deveria chegar aqui) ────────────────────────────
 
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-100 flex items-center justify-center">
-      <p className="text-gray-400">Pronto para carregar dados de avatar.</p>
+    <div className={styles.page}>
+      <CenterState icon="⏳" title="" body="Pronto para carregar dados de avatar." />
     </div>
   )
 }

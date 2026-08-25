@@ -28,7 +28,7 @@
  * ============================================================================
  */
 import React from 'react'
-import type { CriticalAlertData, AlertSeverity } from '../../types/orbit'
+import type { CriticalAlertData, AlertSeverity } from '@/types/orbit'
 import styles from './CriticalAlert.module.css'
 
 export interface CriticalAlertProps {

@@ -7,8 +7,8 @@
 
 import React from 'react'
 import { GlassCard } from './GlassCard'
-import type { AlignmentBar, AlignmentColor } from '../../types/avatar'
-import type { GlowColor } from '../../types/orbit'
+import type { AlignmentBar, AlignmentColor } from '@/types/avatar'
+import type { GlowColor } from '@/types/orbit'
 import styles from './AlignmentBars.module.css'
 
 export interface AlignmentBarsProps {

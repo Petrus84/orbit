@@ -20,12 +20,12 @@
 //   Carteira sem duplicar lógica de fetch.
 
 import React from 'react'
-import SectionHead from '../common/SectionHead'
-import ClientCard from '../common/ClientCard'
-import AlertCard from '../common/AlertCard'
-import type { Client, UseClientsResult } from '../../types/client'
-import type { Alert } from '../../types/alert'
-import type { UseAlertsReturn } from '../../hooks/useAlerts'
+import SectionHead from '@/components/common/SectionHead'
+import ClientCard from '@/components/common/ClientCard'
+import AlertCard from '@/components/common/AlertCard'
+import type { Client, UseClientsResult } from '@/types/client'
+import type { Alert } from '@/types/alert'
+import type { UseAlertsReturn } from '@/hooks/useAlerts'
 
 // ─── Loading skeletons ───────────────────────────────────────
 

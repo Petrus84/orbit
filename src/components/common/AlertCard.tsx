@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react'
-import type { Alert, AlertSeverity, AlertType, AlertAction } from '../../types/alert'
+import type { Alert, AlertSeverity, AlertType, AlertAction } from '@/types/alert'
 import styles from './AlertCard.module.css'
 
 /**

@@ -19,7 +19,7 @@ import {
   TREND_TO_GLOW,
   TrendColor,
   DateBounds,
-} from "../../types/orbit";
+} from "@/types/orbit";
 
 // ── Label / unit / glow config maps ──────────────────────────────────────
 

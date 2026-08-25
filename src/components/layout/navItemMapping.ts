@@ -23,7 +23,7 @@
    • Função isValidNavItem() agora usa whitelist completa
    ========================================================================== */
 
-import type { TabId } from '../../types/orbit'
+import type { TabId } from '@/types/orbit'
 
 /**
  * WHITELIST OFICIAL DE ITENS DE NAVEGAÇÃO
@@ -44,6 +44,7 @@ const VALID_NAV_ITEMS = new Set<string>([
   'visao-geral-ig',        // R-07: Visão unificada orgânico + pago
   'funil-simulador',       // R-04: Funil interativo com simulador de cenário
   'avatar-alignment',      // R-11: Auditoria de consistência de avatar
+  'onboarding',            // Sem RN — item de menu, ver ADR-010/Sidebar.tsx
 ])
 
 /**

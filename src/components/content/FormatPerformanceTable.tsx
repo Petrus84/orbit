@@ -5,9 +5,9 @@
    ========================================================================== */
 
 import React from 'react'
-import { StatusPill }                  from '../common/StatusPill'
+import { StatusPill }                  from '@/components/common/StatusPill'
 import styles                          from './FormatPerformanceTable.module.css'
-import type { FormatPerformanceRow }   from '../../types/orbit'
+import type { FormatPerformanceRow }   from '@/types/orbit'
 
 export interface FormatPerformanceTableProps {
   rows: FormatPerformanceRow[]

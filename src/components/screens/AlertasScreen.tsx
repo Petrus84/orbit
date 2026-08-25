@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import SectionHead from '../common/SectionHead'
-import AlertCard from '../common/AlertCard'
+import SectionHead from '@/components/common/SectionHead'
+import AlertCard from '@/components/common/AlertCard'
 // 🐛 CORRIGIDO: importava `Alert` de '../common/AlertCard'. AlertCard é um
 // componente de UI, não deveria re-exportar tipo de domínio — e o `Alert`
 // que ele exportava lá era uma versão fabricada, incompatível com o
 // contrato real (ver AlertCard.tsx). Fonte correta é o barrel de tipos.
-import type { Alert } from '../../types/alert'
-import type { UseAlertsReturn } from '../../hooks/useAlerts'
+import type { Alert } from '@/types/alert'
+import type { UseAlertsReturn } from '@/hooks/useAlerts'
 
 // ─── Filter tabs ──────────────────────────────────────────────
 

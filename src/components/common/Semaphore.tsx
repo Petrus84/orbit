@@ -9,7 +9,7 @@
 
 import React from 'react'
 import styles from './Semaphore.module.css'
-import type { ClientHealthStatus } from '../../types/orbit'
+import type { ClientHealthStatus } from '@/types/orbit'
 
 // Vocabulário canônico único. ClientHealthStatus já cobre os 4 estados
 // reais do produto (healthy/warning/critical/unknown) — todo componente

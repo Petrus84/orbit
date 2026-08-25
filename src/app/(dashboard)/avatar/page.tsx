@@ -25,15 +25,15 @@ export default function AvatarPage() {
       periodStart={PERIOD_START}   // ✅ Date — sem .toISOString()
       periodEnd={PERIOD_END}       // ✅ Date — sem .toISOString()
     >
-      <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: '#0C0C0F' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: 'var(--bg)' }}>
 
         <nav
           style={{
             display: 'flex',
             gap: '8px',
             padding: '12px 20px',
-            borderBottom: '1px solid rgba(255,255,255,0.08)',
-            background: 'rgba(255,255,255,0.03)',
+            borderBottom: '1px solid var(--line)',
+            background: 'var(--bg1)',
           }}
           aria-label="Selecionar cliente"
         >
@@ -47,12 +47,12 @@ export default function AvatarPage() {
                 padding: '6px 14px',
                 borderRadius: '8px',
                 border: activeClientKey === key
-                  ? '1px solid rgba(200,255,87,0.4)'
-                  : '1px solid rgba(255,255,255,0.1)',
+                  ? '1px solid var(--acc)'
+                  : '1px solid var(--line)',
                 background: activeClientKey === key
-                  ? 'rgba(200,255,87,0.1)'
+                  ? 'var(--bg3)'
                   : 'transparent',
-                color: activeClientKey === key ? '#C8FF57' : '#888',
+                color: activeClientKey === key ? 'var(--acc)' : 'var(--t2)',
                 cursor: 'pointer',
                 fontSize: '13px',
                 fontWeight: activeClientKey === key ? 500 : 400,

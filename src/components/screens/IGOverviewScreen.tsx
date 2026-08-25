@@ -1,14 +1,14 @@
 import React from 'react';
 import { useParams } from 'next/navigation';
-import SectionHead from '../common/SectionHead';
-import KPICard from '../common/KPICard';
-import QualityScoreCard from '../common/QualityScoreCard';
-import PerformanceTable from '../common/PerformanceTable';
-import DiagnosticAlert from '../common/DiagnosticAlert';
-import type { KPI } from '../common/KPICard';
-import type { QualityScore } from '../common/QualityScoreCard';
-import type { PerformanceMetric } from '../common/PerformanceTable';
-import type { DiagnosticAlertData } from '../common/DiagnosticAlert';
+import SectionHead from '@/components/common/SectionHead';
+import KPICard from '@/components/common/KPICard';
+import QualityScoreCard from '@/components/common/QualityScoreCard';
+import PerformanceTable from '@/components/common/PerformanceTable';
+import DiagnosticAlert from '@/components/common/DiagnosticAlert';
+import type { KPI } from '@/components/common/KPICard';
+import type { QualityScore } from '@/components/common/QualityScoreCard';
+import type { PerformanceMetric } from '@/components/common/PerformanceTable';
+import type { DiagnosticAlertData } from '@/components/common/DiagnosticAlert';
 
 // ─── Hook contract ────────────────────────────────────────────
 

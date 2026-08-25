@@ -14,7 +14,7 @@
 
 import React from 'react'
 import styles from './StatusPill.module.css'
-import type { GlowColor } from '../../types/orbit'
+import type { GlowColor } from '@/types/orbit'
 
 export interface StatusPillProps {
   text: string

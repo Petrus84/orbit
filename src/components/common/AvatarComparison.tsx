@@ -8,9 +8,9 @@
 import React from 'react'
 import { StatusPill } from './StatusPill'
 import { AvatarCard } from './AvatarCard'
-import type { AvatarProfile, AlignmentStatus} from '../../types/avatar'
-import { ALIGNMENT_STATUS_LABEL } from '../../types/avatar'
-import type { GlowColor } from '../../types/orbit'
+import type { AvatarProfile, AlignmentStatus} from '@/types/avatar'
+import { ALIGNMENT_STATUS_LABEL } from '@/types/avatar'
+import type { GlowColor } from '@/types/orbit'
 import styles from './AvatarComparison.module.css'
 
 export interface AvatarComparisonProps {

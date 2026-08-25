@@ -1,5 +1,5 @@
 import React from 'react'
-import type { AlertType } from '../../types/alert'
+import type { AlertType } from '@/types/alert'
 
 /**
  * 🐛 CORRIGIDO: este arquivo declarava seu PRÓPRIO `AlertType` local, com

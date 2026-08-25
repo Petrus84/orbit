@@ -5,12 +5,12 @@
    ========================================================================== */
 
 import React from 'react'
-import { GlassCard }            from '../common/GlassCard'
+import { GlassCard }            from '@/components/common/GlassCard'
 import { GlowingNumber }        from './GlowingNumber'
 import { DeltaText }            from './DeltaText'
 import { SemaphoreIndicator }   from './SemaphoreIndicator'
 import styles                   from './KPICard.module.css'
-import type { KPICardData }     from '../../types/orbit'
+import type { KPICardData }     from '@/types/orbit'
 
 export interface KPICardProps {
   data: KPICardData

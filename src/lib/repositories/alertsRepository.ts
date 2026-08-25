@@ -28,7 +28,7 @@ import type {
   AlertType,
   AlertNatureza,
   ConfidenceLevel,
-} from '../../types/orbit'
+} from '@/types/orbit'
 import type { AlertDraft } from './contentContractEngine'
 
 // ── Raw shape from orbit.alerts + orbit.clients JOIN ─────────────────────
