@@ -158,6 +158,7 @@ export type CalibrationMethod =
   | 'empirical_percentile'
   | 'empirical_percentile_zero_inflated'
 
+
 /**
  * ✅ NOVO (Content Contract v1.3 §0.1): hierarquia de fallback da régua —
  * `category + tier` → `category + all` → `global`, nesta ordem. Estado do
@@ -180,26 +181,44 @@ export type ThresholdGranularity = 'category_tier' | 'category_all' | 'global'
  * Content Contract v1.3 §0.2) é distinto de `ConfidenceLevel` (L0/L1/L2
  * categórico) — os dois convivem por design, não é duplicação.
  */
+export type ThresholdSource = 'category' | 'category_tier' | 'global' | 'tier'
+
+export type MetricDirection = 'higher_is_better' | 'lower_is_better' | 'signal_intensity'
+
+/**
+ * Shape canônico de orbit.ref_thresholds (pós Opção B + Content Contract v1.3).
+ * `tier_normalized` é o nome da coluna no banco.
+ * `tier` fica como alias opcional só para consumidores antigos.
+ */
 export interface RefThresholdRow {
   metric_name: string
-  category: string          // ex: '1_ecommerce_direto' | 'all'
-  tier: string | null       // ex: 'nano' | 'micro' | 'mid' | 'macro'; null quando category = 'all'
-  calibration_method: CalibrationMethod
+  category: string | null
+  tier_normalized: string | null
+  tier?: string | null
+  dataset_id: string | null
+  threshold_source: ThresholdSource | null
+  observation_unit: string | null
+  direction: MetricDirection | null
   percentile_p10: number | null
   percentile_p25: number | null
   percentile_p50: number | null
   percentile_p75: number | null
   percentile_p90: number | null
+  sample_mean: number | null
+  sample_std: number | null
   sample_count: number
-  confidence_score: number  // 0–1; ver Content Contract v1.3 §0.2 (thresholds de comportamento de texto)
+  confidence_score: number | null
   green_min: number | null
   green_max: number | null
   amber_min: number | null
   amber_max: number | null
   red_min: number | null
   red_max: number | null
+  zero_count: number | null
+  zero_rate: number | null
+  notes: string | null
+  benchmark_note: string | null
 }
-
 /**
  * ✅ NOVO (Content Contract v1.3): payload de retorno de
  * `classifyMetric()`/`fn_classify_metric` pós-contrato v1.3. Estende o
@@ -445,6 +464,8 @@ export interface FormatPerformanceRow {
   posts: number
   shares: number
   trendLabel: string
+  postsDetail: PostSummary[]
+  
   // ✅ CORREÇÃO (achado novo, mesma causa já documentada em DB-06 para
   // FormatPerformanceRawRow): v_format_performance.trend_color devolve uma
   // cor pronta ('cyan'|'gold'|'red'|'none'), não uma direção de tendência
@@ -455,11 +476,26 @@ export interface FormatPerformanceRow {
   trendColor: GlowColor
 }
 
+export interface SharesSummary {
+  total: number | null
+  periodLabel: string
+  source: 'account_aggregate' // real, agregado por conta/período — nunca distribuído por post
+}
+
+export interface PostSummary {
+  id: string
+  publishedAt: string
+  likes: number | null
+  comments: number | null
+  polemicScorePct: number | null
+}
+
 export interface InsightData {
   id: string
   text: string
 }
-//Adições apos script detectar que nao contemplava Alerts todos os campos necessários.
+// APENAS A SEÇÃO QUE PRECISA MUDAR - copie e substitua em orbit.ts
+
 export interface CriticalAlertData {
   id: string
   title: string
@@ -470,6 +506,7 @@ export interface CriticalAlertData {
   severity: AlertSeverity
   description?: string | null
   actionUrl?: string | null
+
   /**
    * ✅ PATCH (content contract 14/08): mesmo trio de Alert, mesma semântica.
    * Alert e CriticalAlertData são dois shapes paralelos pro mesmo conceito
@@ -478,14 +515,14 @@ export interface CriticalAlertData {
    */
   natureza?: AlertNatureza
   probableCause?: string | null
-  dataSource?: 'real_snapshot' | 'fallback_by_client' | 'estimate'
+  dataSource?: 'real_snapshot' | 'fallback_by_client' | 'fallback_by_error' | 'fallback_by_empty' | 'estimate'
 }
-
 export interface IGOverviewData {
   meta: DashboardHeaderMeta
   kpis: KPICardData[]
   qualityScores: QualityScoreItem[]
   formatPerformance: FormatPerformanceRow[]
+  sharesSummary: SharesSummary   // ⬅️ novo
   insights: InsightData[]
   criticalAlerts: CriticalAlertData[]
 }

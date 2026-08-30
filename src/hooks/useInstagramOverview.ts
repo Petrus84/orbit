@@ -1,6 +1,18 @@
 // src/hooks/useInstagramOverview.ts
 // ORBIT · Hook — Instagram Visão Geral
-// Versão: 2.0.0
+// Versão: 2.0.1
+//
+// v2.0.1 (recuperação pós-acidente de git, 29/08/2026):
+//   ✅ Restaurado após o conteúdo deste arquivo ter sido sobrescrito pelo
+//      de instagramOverviewRepository.ts (confirmado via import quebrado
+//      de './contentContractEngine', caminho que só existe a partir de
+//      src/lib/repositories/, e por fetchInstagramOverview estar exportado
+//      daqui em vez de useInstagramOverview).
+//   ✅ Removido bloco de código morto em fetchWithRetry() — havia um
+//      segundo setStatus('success')/setLastUpdated/return logo após um
+//      return já executado, nunca alcançável, sobra de edição manual.
+//   ✅ Removido useEffect de diagnóstico (console.count por render) que
+//      não tinha relação com a lógica do hook.
 //
 // v2.0.0:
 //   ✅ usePrototypeData removido — sem mock, sem buildPrototypeData()
@@ -13,7 +25,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { RealtimeChannel } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase'
 import { fetchInstagramOverview } from '@/lib/repositories/instagramOverviewRepository'
-import type { AsyncState, FetchStatus, IGOverviewData } from '@/types/instagram'
+import type { AsyncState, FetchStatus, IGOverviewData } from '@/types/orbit'
 
 // ─────────────────────────────────────────────
 // Configuração
@@ -101,14 +113,7 @@ export function useInstagramOverview({
 
         if (!isMountedRef.current) return
 
-              if (!isMountedRef.current) return
-      
-      // Código original restaurado: limpo de 'any' e em conformidade estrita com IGOverviewData
-      setData(result)
-      setStatus('success')
-      setLastUpdated(new Date())
-      return
-
+        setData(result)
         setStatus('success')
         setLastUpdated(new Date())
         return
@@ -169,11 +174,6 @@ export function useInstagramOverview({
     }
   }, [fetchWithRetry, pollingIntervalMs, fetchTick])
 
-  useEffect(() => {
-  console.count(`[DIAGNÓSTICO] Hook renderizou ou dependências mudaram. Start: ${periodStart.toISOString()}`);
-}, [fetchWithRetry]);
-
-
   // ── Realtime Supabase ─────────────────────────────────────────────────────
 
   useEffect(() => {
@@ -218,5 +218,3 @@ export function useInstagramOverview({
 
   return { data, status, error, refetch, lastUpdated }
 }
-
-

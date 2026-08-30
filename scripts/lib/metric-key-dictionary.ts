@@ -4,34 +4,29 @@
 // ✅ SSOT (Single Source of Truth) para variantes de encoding corrompido
 //    (mojibake) nas chaves de `string_map_data` dos exports da Meta.
 //
-// PROBLEMA QUE ESTE ARQUIVO RESOLVE:
-//   Os exports do Instagram/Meta às vezes vêm com chaves em UTF-8 correto
-//   ("Contas alcançadas") e às vezes com mojibake ("Contas alcan\u00c3\u00a7adas"
-//   — UTF-8 decodificado como Latin-1). Antes desta refatoração, cada script
-//   de ingestão (ingest-insights.ts, extract-demographics.ts, ingest-l0-v2.ts)
-//   mantinha sua PRÓPRIA lista de variantes, hardcoded e divergente entre si.
+// [... cabeçalho original preservado — ver histórico de versões anteriores ...]
 //
-//   Consequência real: se um novo export trouxer uma variante que só está
-//   na lista de UM dos três scripts, os outros dois não erram — eles
-//   silenciosamente retornam 0 (ou null) pra aquela métrica, porque o padrão
-//   "cascade de fallback → 0 no final" nunca lança exceção.
+// v1.7.0 — Adiciona REACH_FROM_FOLLOWERS_PCT e REACH_FROM_NON_FOLLOWERS_PCT.
+//   Confirmado em profiles_reached.json real (organic_insights_reach):
+//     "Seguidores": "61.2%"       ← % do alcance que veio de seguidores
+//     "Não seguidores": "38.8%"   ← complementar, soma ~100%
 //
-// SOLUÇÃO:
-//   Toda variante conhecida vive AQUI, uma única vez, indexada por uma chave
-//   canônica semântica (ex: REACH, LIKES_POST). Os 3 scripts importam
-//   `resolveIntMetric` / `resolveStringMetric` e passam a chave canônica —
-//   nunca mais uma string literal de chave bruta do JSON.
+//   ⚠️  ARMADILHA DE NOME — LEIA ANTES DE MEXER:
+//   A chave literal "Seguidores" JÁ EXISTE no dicionário como variante de
+//   FOLLOWERS (audience_insights.json), onde significa CONTAGEM ABSOLUTA de
+//   seguidores (ex: "1785"). Em profiles_reached.json, a MESMA string
+//   "Seguidores" aparece com um significado totalmente diferente: um
+//   PERCENTUAL de origem do alcance (ex: "61.2%"). São arquivos diferentes,
+//   semânticas diferentes, mesma grafia de rótulo.
+//   NUNCA reaproveite a lista de variantes de FOLLOWERS para ler este campo,
+//   e vice-versa — por isso REACH_FROM_FOLLOWERS_PCT tem sua própria entrada
+//   isolada, mesmo repetindo a string "Seguidores" no array de variantes.
 //
-//   Adicionar uma nova variante de mojibake = editar UMA linha, UMA vez,
-//   e os 3 scripts (e qualquer script futuro) passam a reconhecê-la.
-//
-// v1.6.0 — Adiciona EXTERNAL_LINK_TAPS. O campo "Toques em links externos"
-//   existe em profiles_reached.json desde sempre, mas nunca teve entrada
-//   canônica no dicionário — nenhum script tinha como lê-lo, mesmo o
-//   ingest-insights.ts que abre esse arquivo pra extrair REACH. Como o rótulo
-//   não tem caractere acentuado, não sofre mojibake; a variante em inglês é
-//   mantida por simetria com o que aparece em posts_insights.json (nível de
-//   post) e por segurança caso um export futuro venha localizado diferente.
+//   Também confirmado neste mesmo arquivo: percentuais aqui vêm com PONTO
+//   decimal ("61.2%", estilo EN-US), enquanto audience_insights.json usa
+//   VÍRGULA decimal ("34,5%", estilo PT-BR) — a Meta mistura formatação
+//   dentro do mesmo pacote de export. Por isso resolvePercentMetric() (novo
+//   nesta versão) lida com os dois formatos, em vez de assumir um só.
 // ============================================================================
 
 /** Formato mínimo de uma entrada de string_map_data que este módulo consome. */
@@ -42,10 +37,6 @@ export interface MetricEntryLike {
 export type StringMapLike = Record<string, MetricEntryLike | undefined>
 
 // ── Dicionário canônico ─────────────────────────────────────────────────────
-//
-// Ordem das variantes dentro de cada array não importa para correção (todas
-// são tentadas), mas por convenção mantemos: [UTF-8 correto, mojibake, inglês]
-// para facilitar leitura/diff.
 
 export const METRIC_KEYS = {
   // ── Interações de post ──────────────────────────────────────────────────
@@ -69,9 +60,6 @@ export const METRIC_KEYS = {
   COMMENTS_REELS: ['Comentários em reels', 'Coment\u00c3\u00a1rios em reels'],
 
   // ── Métricas por post individual (nível ig_posts, usadas no ingest-l0) ──
-  // NOTA: antes desta refatoração, ingest-l0-v2.ts só reconhecia a variante
-  // mojibake de REACH e nenhuma variante de fallback para as demais — por
-  // isso essas listas são deliberadamente as mais completas do dicionário.
   REACH: ['Contas alcançadas', 'Contas alcan\u00c3\u00a7adas', 'Accounts reached'],
   IMPRESSIONS: ['Impressões', 'Impress\u00c3\u00b5es', 'Impressions'],
   COMMENTS: ['Comentários', 'Coment\u00c3\u00a1rios', 'Comments'],
@@ -82,12 +70,9 @@ export const METRIC_KEYS = {
   FOLLOWS_FROM_INTERACTION: ['Seguidores', 'Seguidores\u00c3', 'Followers'],
 
   // ── Cliques / CTA ────────────────────────────────────────────────────────
-  // "Toques em links externos" — nível de conta, vem de profiles_reached.json.
-  // Sem caractere acentuado, então não sofre mojibake; variante EN mantida
-  // por segurança (é a grafia usada a nível de post em posts_insights.json).
   EXTERNAL_LINK_TAPS: ['Toques em links externos', 'External link taps'],
 
-  // ── Seguidores / audiência (nível de conta) ─────────────────────────────
+  // ── Seguidores / audiência (nível de conta, vem de audience_insights.json) ──
   FOLLOWERS: ['Seguidores', 'Seguidores\u00c3', 'Followers'],
   TOTAL_FOLLOWERS: [
     'Total de seguidores',
@@ -95,12 +80,16 @@ export const METRIC_KEYS = {
     'Total followers',
   ],
 
+  // ── Composição do alcance (nível de conta, vem de profiles_reached.json) ──
+  // v1.7.0. ⚠️ Repete a string "Seguidores" de propósito — ver aviso de
+  // colisão no cabeçalho do arquivo. NUNCA usar FOLLOWERS aqui nem vice-versa.
+  // Confirmado em export real: valor vem como percentual com PONTO decimal
+  // ("61.2%"), diferente da vírgula usada em audience_insights.json — use
+  // resolvePercentMetric(), não resolveIntMetric(), para ler este campo.
+  REACH_FROM_FOLLOWERS_PCT: ['Seguidores'],
+  REACH_FROM_NON_FOLLOWERS_PCT: ['Não seguidores', 'N\u00c3\u00a3o seguidores'],
+
   // ── Demografia ───────────────────────────────────────────────────────────
-  // NOTA: antes desta refatoração, extract-demographics.ts não tinha NENHUMA
-  // variante de fallback para homens/mulheres/cidade — só a chave "ideal".
-  // Adicionamos variantes plausíveis de mojibake por simetria com o resto
-  // do dicionário; se o export real usar outra grafia, basta acrescentar
-  // aqui.
   PCT_MALE: [
     'Porcentagem do total de seguidores para homens',
     'Porcentagem do total de seguidores para homens\u00c3',
@@ -120,13 +109,11 @@ export const METRIC_KEYS = {
   PCT_COUNTRY: [
     'Porcentagem de seguidores por país',
     'Porcentagem de seguidores por pa\u00c3\u00ad s',
-    'Porcentagem de seguidores por paÃs' // ← INCLUÍDO: Casamento perfeito com o console!
+    'Porcentagem de seguidores por paÃs',
   ],
 
   // ── Metadados diversos ───────────────────────────────────────────────────
   MEDIA_THUMBNAIL: ['Miniatura de mídia', 'Miniatura de m\u00c3\u00addia'],
-  // Usado para achar o label_value que contém a mídia real do post (busca
-  // por substring/igualdade, não leitura direta de mapa — ver ingest-l0-v2.ts)
   MEDIA_LABEL: ['mídia', 'm\u00c3\u00addia', 'midia'],
   USERNAME: ['Nome de usuário', 'Username'],
   DATE_RANGE: ['Intervalo de datas', 'Date range'],
@@ -136,17 +123,6 @@ export type MetricKeyName = keyof typeof METRIC_KEYS
 
 // ── Resolvers genéricos ──────────────────────────────────────────────────────
 
-/**
- * Resolve um valor numérico tentando, em cascata, todas as variantes de
- * encoding conhecidas para `keyName`. Retorna 0 se nenhuma variante existir
- * OU se o valor encontrado for literalmente "0" — mesmo comportamento que
- * os scripts originais já tinham, preservado aqui para não mudar semântica
- * de negócio, só centralizar a fonte das variantes.
- *
- * @param smd - string_map_data do arquivo Meta
- * @param keyName - chave CANÔNICA (não a string bruta do JSON)
- * @param onMiss - callback opcional de diagnóstico quando nenhuma variante bate
- */
 export function resolveIntMetric(
   smd: StringMapLike,
   keyName: MetricKeyName,
@@ -165,11 +141,6 @@ export function resolveIntMetric(
   return 0
 }
 
-/**
- * Variante "nullable" de resolveIntMetric — usada onde a diferença entre
- * "métrica ausente" (null) e "métrica zerada" (0) importa para a lógica de
- * negócio (ex: decidir se uma linha inteira deve ser pulada).
- */
 export function resolveIntMetricOrNull(
   smd: StringMapLike,
   keyName: MetricKeyName,
@@ -187,10 +158,6 @@ export function resolveIntMetricOrNull(
   return null
 }
 
-/**
- * Resolve um valor de string (ex: "34,5%") tentando todas as variantes.
- * Retorna '' se nenhuma variante existir.
- */
 export function resolveStringMetric(
   smd: StringMapLike,
   keyName: MetricKeyName,
@@ -206,11 +173,40 @@ export function resolveStringMetric(
 }
 
 /**
- * Resolve uma entrada de um mapa QUALQUER (não necessariamente
- * string_map_data) tentando as variantes de `keyName`. Útil para estruturas
- * como `media_map_data`, onde o valor não é `{ value: string }` e sim um
- * objeto com forma própria (ex: `{ uri, creation_timestamp }`).
+ * ✅ NOVO v1.7.0 — Resolve um percentual (ex: "61.2%", "34,5%", "-46.8%")
+ * tentando todas as variantes de `keyName`, com parsing tolerante a locale:
+ * aceita PONTO ou VÍRGULA como separador decimal, sinal negativo opcional,
+ * e o símbolo "%" opcional (alguns campos de delta vêm sem "%").
+ *
+ * Regra de decisão do separador decimal:
+ * - Se a string tem vírgula e NÃO tem ponto → vírgula é o decimal (PT-BR).
+ * - Caso contrário (tem ponto, ou não tem nenhum dos dois) → usa como está.
+ * Isso cobre os dois formatos confirmados em exports reais da Meta:
+ * "61.2%" (profiles_reached.json) e "34,5%" (audience_insights.json), sem
+ * assumir que o export inteiro segue um único locale.
+ *
+ * Retorna null (não 0) quando a chave não é encontrada — a ausência de um
+ * percentual de composição de alcance é uma informação diferente de "0%".
  */
+export function resolvePercentMetric(
+  smd: StringMapLike,
+  keyName: MetricKeyName,
+  onMiss?: (smd: StringMapLike, keyName: MetricKeyName, triedVariants: readonly string[]) => void
+): number | null {
+  const raw = resolveStringMetric(smd, keyName, onMiss)
+  if (!raw) return null
+
+  const hasComma = raw.includes(',')
+  const hasDot = raw.includes('.')
+  const normalized = hasComma && !hasDot ? raw.replace(',', '.') : raw
+
+  const match = normalized.match(/-?\d+(\.\d+)?/)
+  if (!match) return null
+
+  const value = parseFloat(match[0])
+  return Number.isNaN(value) ? null : value
+}
+
 export function resolveMapEntry<T>(
   map: Record<string, T | undefined>,
   keyName: MetricKeyName
@@ -222,28 +218,15 @@ export function resolveMapEntry<T>(
   return undefined
 }
 
-/**
- * Retorna a lista de variantes cadastradas para uma chave canônica — usado
- * quando a lógica de correspondência não é uma simples leitura de mapa
- * (ex: procurar um `label` dentro de um array por substring/igualdade).
- */
 export function variantsFor(keyName: MetricKeyName): readonly string[] {
   return METRIC_KEYS[keyName]
 }
 
-/**
- * Diagnóstico padrão: loga em console quando nenhuma variante de uma chave
- * canônica foi encontrada, junto com as primeiras chaves reais disponíveis
- * no objeto — útil pra descobrir rapidamente uma variante nova de mojibake
- * e adicioná-la aqui (em vez de reimplementá-la em algum script).
- */
 export function logMissingKey(
   smd: StringMapLike,
   keyName: MetricKeyName,
   triedVariants: readonly string[]
 ): void {
-  // Assinatura mantida idêntica à esperada por onMiss (smd, keyName, triedVariants)
-  // em resolveIntMetric / resolveIntMetricOrNull / resolveStringMetric.
   console.warn(`   ⚠️  [metric-key-dictionary] Nenhuma variante encontrada para "${keyName}"`)
   console.warn(`      Tentativas: ${triedVariants.join(' | ')}`)
   console.warn(`      Chaves disponíveis no arquivo: ${Object.keys(smd).slice(0, 8).join(', ')}`)

@@ -50,3 +50,75 @@
   color:       var(--text-primary);
   font-size:   var(--font-size-base);
 }
+
+/* ── Expansão por posts individuais (v2.0.0) ────────────────────────────── */
+
+.tdChevron {
+  width:   20px;
+  padding: var(--space-3) 0;
+}
+
+.trClickable {
+  cursor: pointer;
+}
+
+.trClickable:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.chevron,
+.chevronOpen {
+  color:      var(--text-dim);
+  transition: transform var(--transition-fast);
+}
+
+.chevronOpen {
+  transform: rotate(90deg);
+}
+
+.formatIcon {
+  display:      inline-flex;
+  align-items:  center;
+  color:        var(--text-dim);
+  margin-right: var(--space-2);
+  vertical-align: -3px;
+}
+
+.tdDetail {
+  padding:       0 0 var(--space-3);
+  border-bottom: var(--border-width) solid rgba(31, 41, 55, 0.5);
+}
+
+.postList {
+  display:        flex;
+  flex-direction: column;
+  gap:            2px;
+  padding:        var(--space-2) 0 0 26px;
+}
+
+.postRow {
+  display:     flex;
+  align-items: center;
+  gap:         var(--space-3);
+  font-size:   var(--font-size-xs);
+  font-family: var(--font-mono);
+  padding:     4px 0;
+}
+
+.postDate {
+  color:     var(--text-secondary);
+  min-width: 52px;
+}
+
+.postMetrics {
+  color: var(--text-dim);
+  flex:  1;
+}
+
+.postScore {
+  color: var(--text-secondary);
+}
+
+.postScoreMuted {
+  color: var(--text-dim);
+}
