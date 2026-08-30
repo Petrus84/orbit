@@ -8,8 +8,8 @@
 
 import React                      from 'react'
 import styles                     from './Header.module.css'
-import { useOrbitDashboard }      from '../../context/OrbitDashboardContext'
-import type { TabId }             from '../../types/orbit'
+import { useOrbitDashboard }      from '@/context/OrbitDashboardContext'
+import type { TabId }             from '@/types/orbit'
 
 // ─── Abas — exatamente 3, na ordem do protótipo ───────────────────────────
 

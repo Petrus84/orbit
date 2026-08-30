@@ -8,15 +8,15 @@
    4. real_interest vem do banco, não é fabricado
    ========================================================================== */
 
-import { supabaseLegacy } from '../supabase'
+import { supabase } from '@/lib/supabase'
 import type {
   AlignmentBar,
   AlignmentStatus,
   AvatarAlignment,
   AvatarProfile,
   AvatarRecommendation,
-} from '../../types/avatar'
-import { ALIGNMENT_THRESHOLDS, ALIGNMENT_STATUS_COLOR } from '../../types/avatar'
+} from '@/types/avatar'
+import { ALIGNMENT_THRESHOLDS, ALIGNMENT_STATUS_COLOR } from '@/types/avatar'
 
 interface AvatarAlignmentRow {
   client_id: string
@@ -284,7 +284,7 @@ export async function fetchAvatarAlignment(clientId: string): Promise<AvatarAlig
   }
 
   try {
-    const { data, error } = await supabaseLegacy
+    const { data, error } = await supabase
       .schema('orbit')
       .from('v_avatar_alignment')
       .select(

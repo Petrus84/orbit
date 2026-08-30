@@ -1,7 +1,7 @@
 // src/components/common/AvatarCard.tsx
 
 import React from 'react'
-import type { AvatarProfile, AlignmentStatus } from '../../types/avatar'
+import type { AvatarProfile, AlignmentStatus } from '@/types/avatar'
 import styles from './AvatarCard.module.css'
 
 export interface AvatarCardProps {

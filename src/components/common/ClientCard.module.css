@@ -78,7 +78,7 @@
   white-space: nowrap;
   font-family: var(--font);
   font-size: var(--font-size-xs);
-  color: var(--t2);
+  color: var(--t1);
 }
 
 .divider {
@@ -105,7 +105,7 @@
   font-weight: var(--font-weight-normal);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--t2);
+  color: var(--t1);
 }
 
 .metricValue {
@@ -117,5 +117,5 @@
 }
 
 .metricValueDimmed {
-  color: var(--t2);
+  color: var(--t1);
 }

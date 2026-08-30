@@ -53,8 +53,17 @@
   /* Aliases */
   --text-primary: var(--t0);
   --text-secondary: var(--t1);
-  --text-muted: var(--t2);
-  --text-dim: var(--t3);
+  /* FIX WCAG 1.4.3 (Seção 5.4 / REGRA-04): --t2 (3.47-3.70:1) e --t3
+     (1.79-1.91:1) falham AA contra --bg1/--bg2. Auditoria de todos os 25
+     usos de --text-muted/--text-dim em 17 arquivos (KPICard, Sidebar,
+     Header, FunnelScreen, IGOverviewScreen, AlertCard, etc.) confirmou
+     que 100% são texto com dado real (rótulo de KPI, unidade, subtítulo,
+     nome de cliente, nav-label) — nenhum uso puramente decorativo, então
+     nenhum pode continuar usando um token abaixo de AA (REGRA-04).
+     --t1 atinge AA em ambos os fundos (9.28:1 sobre --bg1, 8.71:1 sobre
+     --bg2) — redirecionado aqui, paleta --t0..--t3 em si não alterada. */
+  --text-muted: var(--t1);
+  --text-dim: var(--t1);
 
   /* ═══════════════════════════════════════════════════════════════
      ACCENTS & NEONS (SSOT — Unique identity)

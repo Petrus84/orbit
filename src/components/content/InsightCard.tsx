@@ -5,7 +5,7 @@
 
 import React                    from 'react'
 import styles                   from './InsightCard.module.css'
-import type { InsightData }     from '../../types/orbit'
+import type { InsightData }     from '@/types/orbit'
 
 export interface InsightCardProps {
   insight: InsightData

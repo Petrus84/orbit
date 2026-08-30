@@ -9,9 +9,9 @@
    - Integração com ContentContractEngine para marcar dataSource
    ============================================================================= */
 
-import { supabase } from '../supabase'
+import { supabase } from '@/lib/supabase'
 import { buildFunnelInsight } from './contentContractEngine'
-import type { FunnelMetrics , InsightData } from '../../types/orbit'
+import type { FunnelMetrics , InsightData } from '@/types/orbit'
 import type { AlertContractFields } from './contentContractEngine'
 
 // ✅ SHAPE LOCAL: Mapeia a linha bruta de orbit.funnel_data

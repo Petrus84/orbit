@@ -26,7 +26,7 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Semaphore from './Semaphore'
 import type { SemaphoreStatus } from './Semaphore'
-import type { Client } from '../../types/client'
+import type { Client } from '@/types/client'
 import styles from './ClientCard.module.css'
 
 interface ClientCardProps {

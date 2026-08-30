@@ -57,6 +57,23 @@
   }
 }
 
+/* Variante 2:1 — o gráfico do funil se beneficia de mais espaço horizontal
+   que os sliders do simulador. Mesmo breakpoint (1024px) do .grid acima,
+   não um valor novo inventado. */
+.gridAsymmetric {
+  display:               grid;
+  grid-template-columns: 1fr;
+  gap:                   var(--space-6);
+  width:                 100%;
+  align-items:           stretch;
+}
+
+@media (min-width: 1024px) {
+  .gridAsymmetric {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
 .colStretch {
   display:        flex;
   flex-direction: column;
@@ -69,10 +86,6 @@
   flex-direction: column;
   gap:            var(--space-4);
   width:          100%;
-  padding:        18px 20px;
-  border:         var(--border-width) solid var(--border-default);
-  border-radius:  var(--r16);
-  background:     var(--bg-card);
 }
 
 .panelTitle {
@@ -90,7 +103,12 @@
   display:         flex;
   flex-direction:  column;
   justify-content: center;
-  align-items:     center;
+  /* ✅ CORREÇÃO: align-items:center encolhia FunnelSimulator (.wrap não
+     declara width:100%) para a largura do conteúdo em vez de preencher
+     o painel — um dos motivos do simulador aparecer desproporcional/
+     descentralizado dentro do grid. stretch é o comportamento correto
+     para um painel de largura total. */
+  align-items:     stretch;
 }
 
 .chartWrap {

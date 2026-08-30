@@ -6,7 +6,7 @@
 
 import React from 'react'
 import styles from './GlowingNumber.module.css'
-import type { GlowColor } from '../../types/orbit'
+import type { GlowColor } from '@/types/orbit'
 
 export type GlowingNumberSize = 'sm' | 'md' | 'lg' | 'xl'
 

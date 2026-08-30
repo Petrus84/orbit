@@ -2,10 +2,10 @@
 // Versão: 1.0.0 (CORRIGIDO)
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { fetchFunnelData } from '../lib/repositories/funnelRepository'
+import { fetchFunnelData } from '@/lib/repositories/funnelRepository'
 
-import type { FetchStatus } from '../types/orbit'
-import type { FunnelMetrics, UseFunnelResult, SimulatedFunnelParams } from '../types/funnel'
+import type { FetchStatus } from '@/types/orbit'
+import type { FunnelMetrics, UseFunnelResult, SimulatedFunnelParams } from '@/types/funnel'
 
 const MAX_RETRIES = 3
 const BASE_DELAY_MS = 1000

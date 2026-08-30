@@ -10,10 +10,10 @@
    ========================================================================== */
 
 import React from 'react'
-import { GlassCard }             from '../common/GlassCard'
-import { GlowingNumber }         from '../kpi/GlowingNumber'
+import { GlassCard }             from '@/components/common/GlassCard'
+import { GlowingNumber }         from '@/components/kpi/GlowingNumber'
 import styles                    from './QualityScoresPanel.module.css'
-import type { QualityScoreItem } from '../../types/orbit'
+import type { QualityScoreItem } from '@/types/orbit'
 
 export interface QualityScoresPanelProps {
   scores: QualityScoreItem[]

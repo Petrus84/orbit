@@ -28,9 +28,9 @@ import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import styles from './Sidebar.module.css'
-import { useOrbitDashboard } from '../../context/OrbitDashboardContext'
+import { useOrbitDashboard } from '@/context/OrbitDashboardContext'
 import { NAV_ITEM_TO_TAB_MAP, isNavItemActive } from './navItemMapping'
-import type { TabId } from '../../types/orbit'
+import type { TabId } from '@/types/orbit'
 
 /**
  * Representa um item de navegação da sidebar.
@@ -84,7 +84,7 @@ const NAV_ITEMS: NavItem[] = [
   {
     id:         'funil-simulador',
     label:      'Funil + Simulador',
-    href:       '/instagram/funil',
+    href:       '/funil',
     icon:       '🌀',
     section:    'instagram',
     ruleNumber: 'R-04',  // Funil interativo com simulador de cenário
@@ -92,10 +92,20 @@ const NAV_ITEMS: NavItem[] = [
   {
     id:         'avatar-alignment',
     label:      'Avatar Alignment',
-    href:       '/instagram/avatar',
+    href:       '/avatar',
     icon:       '👤',
     section:    'instagram',
     ruleNumber: 'R-11',  // Auditoria de consistência de avatar
+  },
+  {
+    id:         'onboarding',
+    label:      'Onboarding',
+    href:       '/onboarding',
+    icon:       '🧭',
+    section:    'instagram',
+    // Sem R-XX: não está entre as 11 RNs originais do SSOT — item
+    // adicionado em 2026-08-20 porque a tela/hook/repository já existiam
+    // completos (ver ADR-010) e ficavam inalcançáveis sem link de menu.
   },
 ]
 
@@ -213,14 +223,28 @@ interface NavItemRowProps {
  * @param onTabClick - Callback para mudar aba (apenas para itens em NAV_ITEM_TO_TAB_MAP)
  */
 function NavItemRow({ item, isActive, onTabClick }: NavItemRowProps) {
+  const pathname = usePathname()
+
   const handleItemClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    // Intercepta APENAS se o item está no mapa de abas
-    // Funil e Avatar NÃO estão no mapa → navegação normal do Next.js
-    if (item.section === 'instagram' && item.id in NAV_ITEM_TO_TAB_MAP) {
+    // Intercepta como troca de aba SOMENTE se:
+    //   1. o item está no mapa de abas (visao-geral-ig → 'overview'), E
+    //   2. o usuário já está fisicamente em /instagram.
+    // Sem o item 2, clicar em "Visão geral IG" a partir de QUALQUER outra
+    // rota (Carteira, Alertas, Funil, Avatar, Onboarding) ficava sem efeito
+    // visível: o preventDefault() bloqueava a navegação real do Next.js e
+    // setActiveTab() mudava o estado do OrbitDashboardProvider errado (o
+    // "provider de sidebar" do layout compartilhado, que não renderiza
+    // nada dependente de activeTab) — a página parecia "não clicável".
+    if (
+      item.section === 'instagram' &&
+      item.id in NAV_ITEM_TO_TAB_MAP &&
+      pathname === item.href
+    ) {
       e.preventDefault()
       const tabId = NAV_ITEM_TO_TAB_MAP[item.id]
       onTabClick(tabId)
     }
+    // Caso contrário: <Link> navega normalmente para item.href.
   }
 
   return (

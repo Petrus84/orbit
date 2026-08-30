@@ -11,7 +11,7 @@
   font-weight: var(--font-weight-bold);
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--t2);
+  color: var(--t1);
 }
 
 .card {
@@ -55,7 +55,7 @@
 }
 
 .weightComment {
-  color: var(--t2);
+  color: var(--t1);
   margin-left: var(--space-2);
   font-size: var(--font-size-xs);
 }
@@ -106,5 +106,5 @@
 
 .legendLabel {
   font-size: var(--font-size-xs);
-  color: var(--t2);
+  color: var(--t1);
 }

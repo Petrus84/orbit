@@ -38,7 +38,7 @@
 // ============================================================================
 
 import { supabase } from '@/lib/supabase'
-import type { Client, ClientHealthStatus } from '../../types/client'
+import type { Client, ClientHealthStatus } from '@/types/client'
 
 // ── Raw shape from orbit.v_client_metrics ─────────────────────────────────
 interface ClientMetricsRow {

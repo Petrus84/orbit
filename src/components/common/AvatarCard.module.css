@@ -36,7 +36,7 @@
   font-size: var(--font-size-xs);
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: var(--t2);
+  color: var(--t1);
   margin-bottom: var(--space-2);
 }
 
@@ -94,7 +94,7 @@
 .confidenceTag {
   font-family: var(--mono);
   font-size: 10px;
-  color: var(--t2);
+  color: var(--t1);
 }
 
 /* Insight */
