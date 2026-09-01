@@ -1,33 +1,67 @@
-// ============================================================================
-// ARQUIVO: lib/metric-key-dictionary.ts
-// ============================================================================
-// ✅ SSOT (Single Source of Truth) para variantes de encoding corrompido
-//    (mojibake) nas chaves de `string_map_data` dos exports da Meta.
-//
-// [... cabeçalho original preservado — ver histórico de versões anteriores ...]
-//
-// v1.7.0 — Adiciona REACH_FROM_FOLLOWERS_PCT e REACH_FROM_NON_FOLLOWERS_PCT.
-//   Confirmado em profiles_reached.json real (organic_insights_reach):
-//     "Seguidores": "61.2%"       ← % do alcance que veio de seguidores
-//     "Não seguidores": "38.8%"   ← complementar, soma ~100%
-//
-//   ⚠️  ARMADILHA DE NOME — LEIA ANTES DE MEXER:
-//   A chave literal "Seguidores" JÁ EXISTE no dicionário como variante de
-//   FOLLOWERS (audience_insights.json), onde significa CONTAGEM ABSOLUTA de
-//   seguidores (ex: "1785"). Em profiles_reached.json, a MESMA string
-//   "Seguidores" aparece com um significado totalmente diferente: um
-//   PERCENTUAL de origem do alcance (ex: "61.2%"). São arquivos diferentes,
-//   semânticas diferentes, mesma grafia de rótulo.
-//   NUNCA reaproveite a lista de variantes de FOLLOWERS para ler este campo,
-//   e vice-versa — por isso REACH_FROM_FOLLOWERS_PCT tem sua própria entrada
-//   isolada, mesmo repetindo a string "Seguidores" no array de variantes.
-//
-//   Também confirmado neste mesmo arquivo: percentuais aqui vêm com PONTO
-//   decimal ("61.2%", estilo EN-US), enquanto audience_insights.json usa
-//   VÍRGULA decimal ("34,5%", estilo PT-BR) — a Meta mistura formatação
-//   dentro do mesmo pacote de export. Por isso resolvePercentMetric() (novo
-//   nesta versão) lida com os dois formatos, em vez de assumir um só.
-// ============================================================================
+/* =============================================================================
+   ARQUIVO: lib/metric-key-dictionary.ts
+   ============================================================================
+   ✅ SSOT (Single Source of Truth) para variantes de encoding corrompido
+      (mojibake) nas chaves de `string_map_data` dos exports da Meta.
+
+   [... cabeçalho original preservado — ver histórico de versões anteriores ...]
+
+   v1.7.0 — Adiciona REACH_FROM_FOLLOWERS_PCT e REACH_FROM_NON_FOLLOWERS_PCT.
+     Confirmado em profiles_reached.json real (organic_insights_reach):
+       "Seguidores": "61.2%"       ← % do alcance que veio de seguidores
+       "Não seguidores": "38.8%"   ← complementar, soma ~100%
+
+     ⚠️  ARMADILHA DE NOME — LEIA ANTES DE MEXER:
+     A chave literal "Seguidores" JÁ EXISTE no dicionário como variante de
+     FOLLOWERS (audience_insights.json), onde significa CONTAGEM ABSOLUTA de
+     seguidores (ex: "1785"). Em profiles_reached.json, a MESMA string
+     "Seguidores" aparece com um significado totalmente diferente: um
+     PERCENTUAL de origem do alcance (ex: "61.2%"). São arquivos diferentes,
+     semânticas diferentes, mesma grafia de rótulo.
+     NUNCA reaproveite a lista de variantes de FOLLOWERS para ler este campo,
+     e vice-versa — por isso REACH_FROM_FOLLOWERS_PCT tem sua própria entrada
+     isolada, mesmo repetindo a string "Seguidores" no array de variantes.
+
+     Também confirmado neste mesmo arquivo: percentuais aqui vêm com PONTO
+     decimal ("61.2%", estilo EN-US), enquanto audience_insights.json usa
+     VÍRGULA decimal ("34,5%", estilo PT-BR) — a Meta mistura formatação
+     dentro do mesmo pacote de export. Por isso resolvePercentMetric() (novo
+     nesta versão) lida com os dois formatos, em vez de assumir um só.
+
+   v1.8.0 — Duas correções encontradas em teste real com 2 exports distintos
+     (cpimportstore, eupetruchio84) via ingest-from-zip.ts v2.0.0:
+
+     1. BUG REAL: COMMENTS_POST não existia como chave canônica. O cálculo de
+        totalComments em ingest-from-zip.ts sempre foi só commReels (Reels),
+        nunca incluía comentários de post estático/carrossel — herdado sem
+        revisão do ingest-insights.ts original. Confirmado em export real:
+        a chave "Comentários do post" existe e nunca era lida. Provavelmente
+        'comentarios-90d' estava zerado/subestimado para todo cliente desde
+        sempre.
+
+     2. Todos os resolvers agora comparam chaves normalizadas (NFC) em vez de
+        comparação direta smd[key]. Confirmado em export real: a chave real
+        "Porcentagem de seguidores por paÃs" é BYTE-A-BYTE idêntica à
+        terceira variante já cadastrada em PCT_COUNTRY, mas ainda assim não
+        batia — sintoma clássico de normalização Unicode diferente (NFC vs
+        NFD) entre a string literal do código-fonte e a string do JSON lido
+        em runtime. Normalizar os dois lados antes de comparar corrige esse
+        caso e protege contra a mesma classe de problema em qualquer chave
+        futura, sem precisar adivinhar a variante exata de bytes.
+
+   v1.9.0 — Variantes de mojibake completadas com base em validação real
+     (eupetruchio84, 30/08/2026):
+
+     1. SHARES_REELS, SAVES_REELS, LIKES_REELS: adicionadas variantes com
+        mojibake "Ã" (A com til) além de "\u00c3" (ã em UTF-8 escapado).
+        Confirmado em export real que ambas as variantes aparecem em diferentes
+        clientes.
+
+     2. PCT_COUNTRY: adicionada variante com espaço antes de "s"
+        ("Porcentagem de seguidores por paÃ s") que aparece em alguns exports.
+        Confirmado em eupetruchio84 que a chave vem com espaço não-intuitivo.
+
+   ============================================================================ */
 
 /** Formato mínimo de uma entrada de string_map_data que este módulo consome. */
 export interface MetricEntryLike {
@@ -36,25 +70,46 @@ export interface MetricEntryLike {
 
 export type StringMapLike = Record<string, MetricEntryLike | undefined>
 
-// ── Dicionário canônico ─────────────────────────────────────────────────────
+/** Normaliza uma chave para comparação robusta a NFC/NFD. */
+function normalizeKey(s: string): string {
+  return s.normalize('NFC')
+}
+
+/** Constrói um mapa com chaves normalizadas, preservando o valor original. */
+function buildNormalizedLookup(smd: StringMapLike): Map<string, MetricEntryLike | undefined> {
+  const map = new Map<string, MetricEntryLike | undefined>()
+  for (const [k, v] of Object.entries(smd)) {
+    map.set(normalizeKey(k), v)
+  }
+  return map
+}
+
+/* ── Dicionário canônico ────────────────────────────────────────────────────── */
 
 export const METRIC_KEYS = {
   // ── Interações de post ──────────────────────────────────────────────────
   SHARES_POST: ['Compartilhamento do post', 'Compartilhamento\u00c3\u00a3o do post'],
   SAVES_POST: ['Salvamentos do post', 'Salvamentos\u00c3 do post'],
   LIKES_POST: ['Curtidas do post', 'Curtidas\u00c3 do post'],
+  // v1.8.0 — NOVO. Confirmado em export real (eupetruchio84, 29/08/2026):
+  // chave existe e nunca tinha sido lida por nenhum script anterior.
+  COMMENTS_POST: ['Comentários do post', 'Coment\u00c3\u00a1rios do post'],
 
   // ── Interações de Reels ──────────────────────────────────────────────────
+  // v1.9.0 — Variantes de mojibake completadas com "Ã" (A com til)
   SHARES_REELS: [
     'Compartilhamentos de vídeos do Reels',
+    'CompartilhamentosÃ de vÃdeos do Reels',
     'Compartilhamentos\u00c3 de v\u00c3\u00addeos do Reels',
   ],
   SAVES_REELS: [
     'Salvamentos de vídeos do Reels',
+    'SalvamentosÃ de vÃdeos do Reels',
     'Salvamentos\u00c3 de v\u00c3\u00addeos do Reels',
   ],
   LIKES_REELS: [
     'Curtidas em vídeos do Reels',
+    'CurtidasÃ em vÃdeos do Reels',
     'Curtidas\u00c3 em v\u00c3\u00addeos do Reels',
   ],
   COMMENTS_REELS: ['Comentários em reels', 'Coment\u00c3\u00a1rios em reels'],
@@ -106,10 +161,12 @@ export const METRIC_KEYS = {
     'Porcentagem de seguidores por cidade',
     'Porcentagem de seguidores por cidade\u00c3',
   ],
+  // v1.9.0 — Variantes de PCT_COUNTRY completadas com espaço antes de "s"
   PCT_COUNTRY: [
     'Porcentagem de seguidores por país',
-    'Porcentagem de seguidores por pa\u00c3\u00ad s',
     'Porcentagem de seguidores por paÃs',
+    'Porcentagem de seguidores por paÃ s',
+    'Porcentagem de seguidores por pa\u00c3\u00ad s',
   ],
 
   // ── Metadados diversos ───────────────────────────────────────────────────
@@ -121,7 +178,7 @@ export const METRIC_KEYS = {
 
 export type MetricKeyName = keyof typeof METRIC_KEYS
 
-// ── Resolvers genéricos ──────────────────────────────────────────────────────
+/* ── Resolvers genéricos ────────────────────────────────────────────────────── */
 
 export function resolveIntMetric(
   smd: StringMapLike,
@@ -129,8 +186,9 @@ export function resolveIntMetric(
   onMiss?: (smd: StringMapLike, keyName: MetricKeyName, triedVariants: readonly string[]) => void
 ): number {
   const variants = METRIC_KEYS[keyName]
+  const lookup = buildNormalizedLookup(smd)
   for (const key of variants) {
-    const raw = smd[key]?.value
+    const raw = lookup.get(normalizeKey(key))?.value
     if (raw !== undefined) {
       const cleaned = raw.replace(/[^0-9\-]/g, '')
       const parsed = parseInt(cleaned || '0', 10)
@@ -147,8 +205,9 @@ export function resolveIntMetricOrNull(
   onMiss?: (smd: StringMapLike, keyName: MetricKeyName, triedVariants: readonly string[]) => void
 ): number | null {
   const variants = METRIC_KEYS[keyName]
+  const lookup = buildNormalizedLookup(smd)
   for (const key of variants) {
-    const raw = smd[key]?.value
+    const raw = lookup.get(normalizeKey(key))?.value
     if (raw !== undefined) {
       const cleaned = raw.replace(/[^0-9\-]/g, '')
       return parseInt(cleaned || '0', 10)
@@ -164,8 +223,9 @@ export function resolveStringMetric(
   onMiss?: (smd: StringMapLike, keyName: MetricKeyName, triedVariants: readonly string[]) => void
 ): string {
   const variants = METRIC_KEYS[keyName]
+  const lookup = buildNormalizedLookup(smd)
   for (const key of variants) {
-    const entry = smd[key]
+    const entry = lookup.get(normalizeKey(key))
     if (entry?.value && entry.value.trim()) return entry.value
   }
   onMiss?.(smd, keyName, variants)
@@ -212,8 +272,11 @@ export function resolveMapEntry<T>(
   keyName: MetricKeyName
 ): T | undefined {
   const variants = METRIC_KEYS[keyName]
+  const normalizedMap = new Map<string, T | undefined>()
+  for (const [k, v] of Object.entries(map)) normalizedMap.set(normalizeKey(k), v)
   for (const key of variants) {
-    if (map[key] !== undefined) return map[key]
+    const hit = normalizedMap.get(normalizeKey(key))
+    if (hit !== undefined) return hit
   }
   return undefined
 }

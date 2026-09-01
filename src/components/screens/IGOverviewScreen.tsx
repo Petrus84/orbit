@@ -1,36 +1,86 @@
-import React from 'react';
-import { useParams } from 'next/navigation';
-import SectionHead from '@/components/common/SectionHead';
-import KPICard from '@/components/common/KPICard';
-import QualityScoreCard from '@/components/common/QualityScoreCard';
-import PerformanceTable from '@/components/common/PerformanceTable';
-import DiagnosticAlert from '@/components/common/DiagnosticAlert';
-import type { KPI } from '@/components/common/KPICard';
-import type { QualityScore } from '@/components/common/QualityScoreCard';
-import type { PerformanceMetric } from '@/components/common/PerformanceTable';
-import type { DiagnosticAlertData } from '@/components/common/DiagnosticAlert';
+import React from 'react'
+import { useParams } from 'next/navigation'
+import SectionHead from '@/components/common/SectionHead'
+import KPICard from '@/components/common/KPICard'
+import QualityScoreCard from '@/components/common/QualityScoreCard'
+import PerformanceTable from '@/components/common/PerformanceTable'
+import DiagnosticAlert from '@/components/common/DiagnosticAlert'
+import { AudienceSummaryPanel } from '@/components/content/AudienceSummaryPanel'
 
-// ─── Hook contract ────────────────────────────────────────────
-
-interface IGOverviewData {
-  kpis: KPI[];
-  qualityScores: QualityScore[];
-  formatPerformance: PerformanceMetric[];
-  diagnosticAlerts: DiagnosticAlertData[];
-}
+import type { KPI } from '@/components/common/KPICard'
+import type { QualityScore } from '@/components/common/QualityScoreCard'
+import type { PerformanceMetric } from '@/components/common/PerformanceTable'
+import type { DiagnosticAlertData } from '@/components/common/DiagnosticAlert'
+import type {
+  IGOverviewData,
+  KPICardData,
+  QualityScoreItem,
+  FormatPerformanceRow,
+  CriticalAlertData,
+  AudienceSummary,
+} from '@/types/orbit'
 
 interface UseIGOverviewResult {
-  data: IGOverviewData | null;
-  status: 'idle' | 'loading' | 'success' | 'error';
-  error: string | null;
-  refetch: () => void;
+  data: IGOverviewData | null
+  status: 'idle' | 'loading' | 'success' | 'error'
+  error: string | null
+  refetch: () => void
 }
 
 interface IGOverviewScreenProps {
-  useIGOverview: (clientId: string) => UseIGOverviewResult;
+  useIGOverview: (clientId: string) => UseIGOverviewResult
 }
 
-// ─── Skeletons ────────────────────────────────────────────────
+// ─── Mappers (transformam SSOT → componentes) ──────────────────────
+
+function mapKPICardDataToKPI(data: KPICardData): KPI {
+  return {
+    label: data.label,
+    value: data.value,
+    delta: data.delta,
+    trend: data.delta > 0 ? 'up' : data.delta < 0 ? 'down' : 'neutral',
+    flagLevel: (data.sourceLevel as 'L0' | 'L1' | 'L2') || 'L0',
+    unit: data.unit ?? undefined,
+  }
+}
+
+function mapQualityScoreItemToQualityScore(data: QualityScoreItem): QualityScore {
+  const statusMap: Record<string, 'ok' | 'neutral' | 'warn'> = {
+    ok: 'ok',
+    warn: 'warn',
+    neutral: 'neutral',
+  }
+  return {
+    label: data.label,
+    value: typeof data.value === 'number' ? data.value : null,
+    status: statusMap[data.statusVariant] || 'neutral',
+    statusText: data.statusText,
+  }
+}
+
+function mapFormatPerformanceRowToMetric(data: FormatPerformanceRow): PerformanceMetric {
+  return {
+    format: data.format,
+    postCount: data.posts,
+    shareCount: data.shares,
+    trend: data.trendLabel,
+    trendColor: data.trendColor === 'none' ? undefined : (data.trendColor as 'cyan' | 'red' | 'gold' | undefined),
+  }
+}
+
+function mapCriticalAlertToDiagnostic(data: CriticalAlertData): DiagnosticAlertData | null {
+  if (data.severity === 'success' || data.severity === 'info') {
+    return null
+  }
+  return {
+    id: data.id,
+    title: data.title,
+    body: data.body,
+    severity: data.severity as 'critical' | 'warning',
+  }
+}
+
+// ─── Skeletons ────────────────────────────────────────────────────
 
 function KPISkeleton(): React.ReactElement {
   return (
@@ -47,7 +97,7 @@ function KPISkeleton(): React.ReactElement {
         <div className="h-6 w-16 rounded bg-zinc-800" />
       </div>
     </div>
-  );
+  )
 }
 
 function ScoreSkeleton(): React.ReactElement {
@@ -60,7 +110,7 @@ function ScoreSkeleton(): React.ReactElement {
         <div className="h-2.5 w-28 rounded bg-zinc-800" />
       </div>
     </div>
-  );
+  )
 }
 
 function TableSkeleton(): React.ReactElement {
@@ -78,7 +128,23 @@ function TableSkeleton(): React.ReactElement {
         </div>
       ))}
     </div>
-  );
+  )
+}
+
+function AudienceSkeleton(): React.ReactElement {
+  return (
+    <div className="flex flex-col gap-4 rounded-2xl border border-cyan-500/20 bg-cyan-900/10 p-6 animate-pulse">
+      <div className="h-4 w-48 rounded bg-zinc-800" />
+      <div className="grid grid-cols-3 gap-4">
+        {[0, 1, 2].map((i) => (
+          <div key={i} className="flex flex-col gap-2">
+            <div className="h-2.5 w-20 rounded bg-zinc-800" />
+            <div className="h-6 w-16 rounded bg-zinc-800" />
+          </div>
+        ))}
+      </div>
+    </div>
+  )
 }
 
 function AlertSkeletonRow(): React.ReactElement {
@@ -92,20 +158,16 @@ function AlertSkeletonRow(): React.ReactElement {
         <div className="h-6 w-28 rounded-full bg-zinc-800" />
       </div>
     </div>
-  );
+  )
 }
-
-// ─── Section label ────────────────────────────────────────────
 
 function SectionLabel({ children }: { children: React.ReactNode }): React.ReactElement {
   return (
     <p className="font-sans text-xs font-semibold uppercase tracking-widest text-zinc-600">
       {children}
     </p>
-  );
+  )
 }
-
-// ─── Error state ──────────────────────────────────────────────
 
 function ErrorState({ message, onRetry }: { message: string; onRetry: () => void }): React.ReactElement {
   return (
@@ -119,26 +181,24 @@ function ErrorState({ message, onRetry }: { message: string; onRetry: () => void
         Tentar novamente
       </button>
     </div>
-  );
+  )
 }
 
-// ─── Screen ───────────────────────────────────────────────────
+// ─── Main Screen ───────────────────────────────────────────────────
 
 export default function IGOverviewScreen({ useIGOverview }: IGOverviewScreenProps): React.ReactElement {
-  const { clientId = '' } = useParams<{ clientId: string }>();
-  const { data, status, error, refetch } = useIGOverview(clientId);
+  const { clientId = '' } = useParams<{ clientId: string }>()
+  const { data, status, error, refetch } = useIGOverview(clientId)
 
-  const isLoading = status === 'idle' || status === 'loading';
+  const isLoading = status === 'idle' || status === 'loading'
 
   return (
     <main className="flex min-h-screen flex-col gap-8 bg-[#0C0C0F] px-4 py-6 sm:px-6">
-      {/* Header */}
       <SectionHead
         title="Instagram · Visão Geral"
         subtitle={status === 'success' ? 'Últimos 90 dias' : undefined}
       />
 
-      {/* Error */}
       {status === 'error' && error && (
         <ErrorState message={error} onRetry={refetch} />
       )}
@@ -149,8 +209,8 @@ export default function IGOverviewScreen({ useIGOverview }: IGOverviewScreenProp
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {isLoading
             ? [0, 1, 2, 3].map((i) => <KPISkeleton key={i} />)
-            : (data?.kpis ?? []).map((kpi) => (
-                <KPICard key={kpi.label} kpi={kpi} />
+            : (data?.kpis ?? []).map((kpiData: KPICardData) => (
+                <KPICard key={kpiData.label} kpi={mapKPICardDataToKPI(kpiData)} />
               ))}
         </div>
       </section>
@@ -161,8 +221,11 @@ export default function IGOverviewScreen({ useIGOverview }: IGOverviewScreenProp
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {isLoading
             ? [0, 1, 2, 3].map((i) => <ScoreSkeleton key={i} />)
-            : (data?.qualityScores ?? []).map((score) => (
-                <QualityScoreCard key={score.label} score={score} />
+            : (data?.qualityScores ?? []).map((scoreData: QualityScoreItem) => (
+                <QualityScoreCard
+                  key={scoreData.label}
+                  score={mapQualityScoreItemToQualityScore(scoreData)}
+                />
               ))}
         </div>
       </section>
@@ -173,23 +236,59 @@ export default function IGOverviewScreen({ useIGOverview }: IGOverviewScreenProp
         {isLoading ? (
           <TableSkeleton />
         ) : (
-          <PerformanceTable metrics={data?.formatPerformance ?? []} />
+          <PerformanceTable
+            metrics={(data?.formatPerformance ?? []).map(mapFormatPerformanceRowToMetric)}
+          />
         )}
       </section>
 
-      {/* ── Diagnostic Alerts ── */}
-      {(isLoading || (data?.diagnosticAlerts ?? []).length > 0) && (
+      {/* ── Audience Summary ── */}
+      {isLoading ? (
+        <AudienceSkeleton />
+      ) : data?.audienceSummary ? (
+        <AudienceSummaryPanel summary={data.audienceSummary} />
+      ) : null}
+
+      {/* ── Critical Alerts ── */}
+      {(isLoading || (data?.criticalAlerts ?? []).length > 0) && (
         <section className="flex flex-col gap-3">
-          <SectionLabel>Diagnóstico</SectionLabel>
+          <SectionLabel>Alertas</SectionLabel>
           <div className="flex flex-col gap-2">
             {isLoading
               ? [0, 1, 2].map((i) => <AlertSkeletonRow key={i} />)
-              : (data?.diagnosticAlerts ?? []).map((alert, i) => (
-                  <DiagnosticAlert key={alert.id} alert={alert} index={i + 1} />
+              : (data?.criticalAlerts ?? [])
+                  .map(mapCriticalAlertToDiagnostic)
+                  .filter((alert): alert is DiagnosticAlertData => alert !== null)
+                  .map((alert: DiagnosticAlertData, i: number) => (
+                    <DiagnosticAlert key={alert.id} alert={alert} index={i + 1} />
+                  ))}
+          </div>
+        </section>
+      )}
+
+      {/* ── Insights ── */}
+      {(isLoading || (data?.insights ?? []).length > 0) && (
+        <section className="flex flex-col gap-3">
+          <SectionLabel>Insights</SectionLabel>
+          <div className="flex flex-col gap-2">
+            {isLoading
+              ? [0, 1, 2].map((i) => (
+                  <div
+                    key={i}
+                    className="h-16 rounded-2xl border border-zinc-800 bg-[#18181F] animate-pulse"
+                  />
+                ))
+              : (data?.insights ?? []).map((insight) => (
+                  <div
+                    key={insight.id}
+                    className="rounded-2xl border border-blue-500/30 bg-blue-900/20 p-4 text-sm text-blue-200"
+                  >
+                    {insight.text}
+                  </div>
                 ))}
           </div>
         </section>
       )}
     </main>
-  );
+  )
 }

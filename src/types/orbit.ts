@@ -525,8 +525,23 @@ export interface IGOverviewData {
   sharesSummary: SharesSummary   // ⬅️ novo
   insights: InsightData[]
   criticalAlerts: CriticalAlertData[]
+  audienceSummary: AudienceSummary
+}
+export interface AudienceCity {
+  name: string
+  pct: number
 }
 
+export interface AudienceSummary {
+  genderFemalePct: number | null
+  genderMalePct: number | null
+  genderOtherPct: number | null
+  topCities: AudienceCity[]
+  reachFollowersPct: number | null
+  profileVisits: number | null
+  linkClicks: number | null
+  periodLabel: string
+}
 /**
  * ✅ PATCH (FE-01 — guia de implantação): adicionado `FunnelData`.
  * Evidência: `src/types/funnel.ts` reexporta `FunnelData` de `orbit.ts`,
@@ -600,6 +615,32 @@ export interface FunnelMetricsRow {
   link_clicks: number | null
   period_start: string
   period_end: string
+}
+/**
+ * ✅ NOVO: shape de retorno de fetchSectorPositioning()
+ * (instagramOverviewRepository.ts). Derivado diretamente do objeto que a
+ * função monta — cada campo mapeado 1:1 com o tipo real da coluna
+ * correspondente em ClientOnboarding, e erReal/vps/polemicScore usando
+ * ClassifiedMetric (já existente) porque vêm de classifyMetric().
+ */
+export interface SectorPositioning {
+  setorBenchmark: SetorBenchmark | null
+  nicho: string | null
+  funnelMaturity: FunnelMaturity | null
+  proofMechanism: ProofMechanism | null
+  erReal: ClassifiedMetric | null
+  vps: ClassifiedMetric | null
+  polemicScore: ClassifiedMetric | null
+  engagementPeriodNotes: string | null
+  contentProxyNotes: string | null
+  misalignmentNotes: string | null
+  observedContentClusters: string | null
+  audienceComposition: {
+    nucleoFielPct: number | null
+    consumoPassivoPct: number | null
+    curiosidadeExternaPct: number | null
+    altaRotatividadePct: number | null
+  }
 }
 
 // ============================================================================

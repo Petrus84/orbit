@@ -1,5 +1,43 @@
 /* ==========================================================================
-   ORBIT · Repository — Instagram Overview (v4.2.0)
+   ORBIT · Repository — Instagram Overview (v4.3.2)
+
+   v4.3.2 (correção de type safety — .overrideTypes() com merge: false, 01/09/2026):
+   - 6 ocorrências de `.overrideTypes<T>()` trocadas por
+     `.overrideTypes<T, { merge: false }>()` — resolve TS2322 causado pelo
+     merge automático de tipos quando usado com `.maybeSingle()/.single()`.
+     O segundo argumento `{ merge: false }` força o retorno exato do tipo
+     especificado, sem tentar fazer merge com a inferred signature do Supabase.
+   - Sem alterações de lógica de query ou negócio.
+
+   v4.3.1 (fechamento de dívida — .returns() → .overrideTypes(), 31/08/2026):
+   - 6 ocorrências de `.maybeSingle()/.single().returns<T>()` trocadas por
+     `.overrideTypes<T>()` — mesmo bug relatado pelo TS2322 em
+     fetchClientOnboarding, mas presente em mais 5 lugares que ainda não
+     tinham sido reportados pelo compilador (clientRow em
+     fetchInstagramOverview, audienceRes/accountRes em
+     fetchAudienceSummary, fetchTotalFollowers,
+     fetchLatestEngagementScoreSnapshot). Troca mecânica de API — nenhuma
+     lógica de query ou de negócio foi alterada. `.returns<T[]>()` após
+     queries que retornam array (sem `.single()`/`.maybeSingle()`) não tem
+     esse bug e foi deixado como estava.
+   - `PostRowRaw` (type derivado de PostRowRawSchema) removido — não usado
+     em lugar nenhum do arquivo; só o schema (`.safeParse`) é consumido.
+
+   v4.3.0 (reconciliação category/tier — 31/08/2026):
+   - Novo fetchClientOnboarding(): busca a linha completa de
+     orbit.client_onboarding do cliente (setor_benchmark, total_followers,
+     notas, composição de audiência etc.) — SSOT único pra esses dados.
+   - Novo fetchSectorPositioning(): monta o objeto SectorPositioning
+     (types/orbit.ts:553) combinando client_onboarding (dados estáticos de
+     onboarding) + fetchLatestEngagementScoreSnapshot (reaproveitado, não
+     duplica query) + classifyMetric() com category/tier resolvidos via
+     mapSegmentToCategory/mapFollowersToTier (contentContractEngine.ts).
+   - fetchCriticalAlerts agora busca onboarding e passa category/tier pra
+     resolveEngagementScoreAlert, em vez de classificar sempre no fallback
+     global. er_real_pct/vps_pct continuam "indisponível" por decisão (não
+     há régua calibrada pra esses metric_name em nenhuma categoria) —
+     polemic_score_pct passa a poder pegar a régua tier-específica de
+     1_ecommerce_direto quando aplicável.
 
    v4.2.0 (fechamento de dívidas — 26/08/2026):
    - criticalAlerts deixa de ser hardcoded []: agora chama
@@ -19,6 +57,13 @@
      (orbit.ig_account_snapshots.interactions_shares), para uso honesto na
      tela — nunca distribuído por post (ig_posts.shares segue null até a
      ingestão ser corrigida; ver ORB-DEBT-043, não fechado por este arquivo).
+   - Novo fetchAudienceSummary(): gênero e cidades (ig_audience_snapshots) +
+     alcance por seguidor/visitas de perfil/cliques de link
+     (ig_account_snapshots), ambos agregados por conta/período, mesma
+     disciplina de fetchSharesSummary: pega o snapshot mais recente do
+     período, nunca soma múltiplas linhas. Idade (age_*_pct) fica de fora
+     até o bug de ingestão (hardcoded 0) ser corrigido — não expor campo
+     que hoje é sempre zero fabricado.
    - Novo fetchPostsByFormat(): agrupa posts por formato (reel, carousel, etc)
      com mapeamento de labels e scores de polêmica. Suporta granularidade por
      post (diferente de fetchSharesSummary que é agregado por conta/período).
@@ -62,23 +107,29 @@ import type {
   CriticalAlertData,
   SharesSummary,
   PostSummary,
+  AudienceSummary,
+  ClientOnboarding,
+  SectorPositioning,
 } from '@/types/orbit'
 
-import { resolveEngagementScoreAlert, toCriticalAlert } from './contentContractEngine'
+import {
+  resolveEngagementScoreAlert,
+  toCriticalAlert,
+  mapSegmentToCategory,
+  mapFollowersToTier,
+  classifyMetric,
+} from './contentContractEngine'
 
 type RawRow = Record<string, unknown>
 
 // ── Constantes de configuração ──────────────────────────────────────────
 
-// KPI_METRIC_KEYS: alinhados com as chaves emitidas por orbit.v_kpi_snapshots
 const KPI_METRIC_KEYS = [
   'alcance-90d',
   'seguidores-totais',
   'saldo-90-dias',
 ]
 
-// FORMAT_LABEL: mapeamento de content_format (banco) → label (UI)
-// Usado em fetchPostsByFormat para tradução de formatos de post
 const FORMAT_LABEL: Record<string, string> = {
   reel: 'Reels',
   static_post: 'Estático',
@@ -88,8 +139,6 @@ const FORMAT_LABEL: Record<string, string> = {
   igtv: 'IGTV',
 }
 
-// CONFIDENCE_LEVELS: filtro de qualidade de dados de posts
-// L0, L1 = confiança alta; L2+ = descartados (fonte não validada)
 const CONFIDENCE_LEVELS = ['L0', 'L1']
 
 // ── Schemas (validação de dados do banco) ───────────────────────────────
@@ -104,7 +153,6 @@ const KpiRowSchema = z.object({
   metric_value:  z.union([z.number(), z.string()]).optional(),
   value:         z.union([z.number(), z.string()]).optional(),
   delta_pct:     z.union([z.number(), z.string()]).nullable().optional().default(0),
-  // semaphore: apenas valores aceitos pelo enum Zod — 'info' seria descartado silenciosamente
   semaphore:     z.enum(['verde', 'ambar', 'vermelho']).nullable().optional().default('ambar'),
   subtitle:      z.string().nullable().optional().default(null),
   calculated_at: z.string().optional(),
@@ -115,7 +163,6 @@ const KpiRowSchema = z.object({
 
 type KpiRow = z.infer<typeof KpiRowSchema>
 
-// PostRowRaw: schema para linhas brutas de ig_posts (antes de transformação)
 const PostRowRawSchema = z.object({
   id:                  z.string(),
   content_format:      z.string(),
@@ -124,8 +171,6 @@ const PostRowRawSchema = z.object({
   comments:            z.number().nullable(),
   polemic_score_pct:   z.number().nullable(),
 })
-
-type PostRowRaw = z.infer<typeof PostRowRawSchema>
 
 // ── Mapas de transformação ──────────────────────────────────────────────
 
@@ -190,10 +235,9 @@ export async function fetchInstagramOverview(
   let realStart = periodStart
   let realEnd   = periodEnd
 
-  // ── Bounds discovery: tenta orbit primeiro, cai para legacy ──────────────
   try {
     const { data: orbitBounds, error: orbitBoundsError } = await supabase
-      .from('ig_account_snapshots')          // orbit.ig_account_snapshots
+      .from('ig_account_snapshots')
       .select('period_start, period_end')
       .eq('client_id', clientId)
       .order('period_start', { ascending: true })
@@ -203,7 +247,6 @@ export async function fetchInstagramOverview(
       realStart = orbitBounds[0].period_start
       realEnd   = orbitBounds[orbitBounds.length - 1].period_end
     } else {
-      // Fallback para public.kpi_snapshots (legacy Sprint 1)
       const { data: legacyBounds } = await supabaseLegacy
         .from('kpi_snapshots')
         .select('period_start, period_end')
@@ -227,6 +270,7 @@ export async function fetchInstagramOverview(
     fetchQualityScores(clientId, realStart, realEnd),
     fetchFormatPerformance(clientId, realStart, realEnd),
     fetchSharesSummary(clientId, realStart, realEnd),
+    fetchAudienceSummary(clientId, realStart, realEnd),
     fetchCriticalAlerts(clientId),
   ])
 
@@ -242,17 +286,26 @@ export async function fetchInstagramOverview(
   const sharesSummary: SharesSummary = results[3].status === 'fulfilled'
     ? results[3].value
     : { total: null, periodLabel: 'erro ao buscar', source: 'account_aggregate' }
-  const criticalAlerts: CriticalAlertData[] = results[4].status === 'fulfilled' ? results[4].value : []
+  const audienceSummary: AudienceSummary = results[4].status === 'fulfilled'
+    ? results[4].value
+    : {
+        genderFemalePct: null,
+        genderMalePct: null,
+        genderOtherPct: null,
+        topCities: [],
+        reachFollowersPct: null,
+        profileVisits: null,
+        linkClicks: null,
+        periodLabel: 'erro ao buscar',
+      }
+  const criticalAlerts: CriticalAlertData[] = results[5].status === 'fulfilled' ? results[5].value : []
 
-  // ── Header: busca handle em orbit.clients (campo correto) ────────────────
-  // MUDANÇA v4.0.0: 'instagram_account_id' → 'handle'
-  // (instagram_account_id não existe em orbit.clients)
   const { data: clientRow, error: clientError } = await supabase
-    .from('clients')                         // orbit.clients
+    .from('clients')
     .select('handle')
     .eq('id', clientId)
     .single()
-    .returns<{ handle: string | null }>()
+    .overrideTypes<{ handle: string | null }, { merge: false }>()
 
   if (clientError || !clientRow) {
     console.warn(`[Repository] Cliente ${clientId} não encontrado em orbit.clients.`)
@@ -275,6 +328,7 @@ export async function fetchInstagramOverview(
     qualityScores,
     formatPerformance,
     sharesSummary,
+    audienceSummary,
     insights:       generateInsights(formatPerformance),
     criticalAlerts,
   }
@@ -287,9 +341,8 @@ async function fetchKPIs(
   start: string,
   end: string
 ): Promise<KPICardData[]> {
-  // Primary: orbit.v_kpi_snapshots
   const { data: orbitData, error: orbitError } = await supabase
-    .from('v_kpi_snapshots')               // orbit.v_kpi_snapshots (sem _calculated)
+    .from('v_kpi_snapshots')
     .select('*')
     .eq('client_id', clientId)
     .gte('period_start', start)
@@ -303,7 +356,6 @@ async function fetchKPIs(
   if (orbitError) {
     console.warn(`[fetchKPIs] orbit.v_kpi_snapshots indisponível (${orbitError.message}). Fallback legacy...`)
 
-    // Fallback: public.kpi_snapshots (legacy Sprint 1)
     const { data: fallback, error: fallbackError } = await supabaseLegacy
       .from('kpi_snapshots')
       .select('id, client_id, metric, value, period_start, period_end, calculated_at, semaphore, subtitle, delta_pct')
@@ -337,9 +389,8 @@ async function fetchQualityScores(
 ): Promise<QualityScoreItem[]> {
   const glowMap: Record<string, GlowColor> = { ok: 'cyan', warn: 'gold', neutral: 'none' }
 
-  // Primary: orbit.v_quality_scores (SEM "_calculated")
   const { data: orbitRows, error: orbitError } = await supabase
-    .from('v_quality_scores')   // orbit.v_quality_scores (SEM "_calculated")
+    .from('v_quality_scores')
     .select('id, score_key, score_value, status_text, status_variant')
     .eq('client_id', clientId)
     .returns<RawRow[]>()
@@ -349,7 +400,6 @@ async function fetchQualityScores(
   if (orbitError) {
     console.warn(`[fetchQualityScores] orbit view indisponível (${orbitError.message}). Fallback legacy...`)
 
-    // Fallback: public.v_quality_scores (legacy)
     const { data: calcRows, error: calcError } = await supabaseLegacy
       .from('v_quality_scores')
       .select('id, score_key, score_value, status_text, status_variant')
@@ -383,25 +433,6 @@ async function fetchQualityScores(
   }))
 }
 
-/* ==========================================================================
-   fetchPostsByFormat — agrupa posts por formato (reel, carousel, etc)
-   com mapeamento de labels (FORMAT_LABEL) e scores de polêmica.
-   Diferente de fetchSharesSummary (agregado por conta/período), esta
-   função retorna granularidade por post individual, permitindo análise
-   de performance por formato e por publicação.
-
-   Retorna Map<string, PostSummary[]> onde:
-   - Chave: label do formato (ex: "Reels", "Carrossel")
-   - Valor: array de posts daquele formato, ordenados por data decrescente
-
-   ⚠️ FILTRO confidence_level (Bug 1): filtra por ['L0','L1'] para garantir
-   consistência de contagem entre card (fetchFormatPerformance) e lista
-   (fetchPostsByFormat). Sem esse filtro, card e lista divergem.
-
-   ⚠️ NOTA: ig_posts.shares segue null até correção de ingestão (ORB-DEBT-043).
-   Não incluído em PostSummary — use fetchSharesSummary para agregado real.
-   ========================================================================== */
-
 async function fetchPostsByFormat(
   clientId: string,
   start: string,
@@ -427,7 +458,6 @@ async function fetchPostsByFormat(
   if (!data) return byFormat
 
   for (const row of data) {
-    // Valida linha com schema
     const parsed = PostRowRawSchema.safeParse(row)
     if (!parsed.success) {
       console.warn('[fetchPostsByFormat] Linha inválida descartada:', parsed.error.message)
@@ -435,11 +465,8 @@ async function fetchPostsByFormat(
     }
 
     const post = parsed.data
-
-    // Mapeia content_format para label legível (ex: "reel" → "Reels")
     const label = FORMAT_LABEL[post.content_format] ?? post.content_format
 
-    // Transforma para PostSummary (camelCase) — importado de @/types/orbit
     const summary: PostSummary = {
       id: post.id,
       publishedAt: post.published_at,
@@ -448,7 +475,6 @@ async function fetchPostsByFormat(
       polemicScorePct: post.polemic_score_pct,
     }
 
-    // Agrupa por formato
     const list = byFormat.get(label) ?? []
     list.push(summary)
     byFormat.set(label, list)
@@ -462,9 +488,8 @@ async function fetchFormatPerformance(
   start: string,
   end: string
 ): Promise<FormatPerformanceRow[]> {
-  // Primary: orbit.v_format_performance (SEM "_calculated")
   const { data: orbitRows, error: orbitError } = await supabase
-    .from('v_format_performance') // orbit.v_format_performance (SEM "_calculated")
+    .from('v_format_performance')
     .select('id, format_name, post_count, share_count, trend_label, trend_color')
     .eq('client_id', clientId)
     .returns<RawRow[]>()
@@ -496,7 +521,6 @@ async function fetchFormatPerformance(
     }
   }
 
-  // Bug 2: Busca posts detalhados por formato para expansão de linha
   const postsByFormat = await fetchPostsByFormat(clientId, start, end)
 
   return (rows ?? []).map(row => {
@@ -512,16 +536,6 @@ async function fetchFormatPerformance(
     }
   })
 }
-
-/* ==========================================================================
-   fetchSharesSummary — shares real, agregado por conta/período
-   (orbit.ig_account_snapshots.interactions_shares). Existe pra sustentar a
-   tela sem forçar granularidade por post que a fonte não tem (ig_posts.shares
-   é null hoje, ORB-DEBT-043 — não fechado por este arquivo, é dívida de
-   ingest-from-zip.ts). Pega o snapshot mais recente do período com o campo
-   preenchido, não soma múltiplas linhas (períodos de snapshot se sobrepõem
-   no schema real — somar duplicaria contagem).
-   ========================================================================== */
 
 async function fetchSharesSummary(
   clientId: string,
@@ -551,6 +565,67 @@ async function fetchSharesSummary(
   }
 }
 
+interface AudienceRowRaw {
+  gender_female_pct: number | null
+  gender_male_pct: number | null
+  gender_other_pct: number | null
+  top_cities: { name: string; pct: number }[] | null
+  period_start: string
+  period_end: string
+}
+
+interface AccountReachRowRaw {
+  reach_followers_pct: number | null
+  profile_visits: number | null
+  link_clicks: number | null
+}
+
+async function fetchAudienceSummary(
+  clientId: string,
+  start: string,
+  end: string
+): Promise<AudienceSummary> {
+  const [audienceRes, accountRes] = await Promise.all([
+    supabase
+      .from('ig_audience_snapshots')
+      .select('gender_female_pct, gender_male_pct, gender_other_pct, top_cities, period_start, period_end')
+      .eq('client_id', clientId)
+      .gte('period_start', start)
+      .lte('period_end', end)
+      .order('period_end', { ascending: false })
+      .limit(1)
+      .maybeSingle()
+      .overrideTypes<AudienceRowRaw, { merge: false }>(),
+    supabase
+      .from('ig_account_snapshots')
+      .select('reach_followers_pct, profile_visits, link_clicks')
+      .eq('client_id', clientId)
+      .gte('period_start', start)
+      .lte('period_end', end)
+      .not('reach_followers_pct', 'is', null)
+      .order('period_end', { ascending: false })
+      .limit(1)
+      .maybeSingle()
+      .overrideTypes<AccountReachRowRaw, { merge: false }>(),
+  ])
+
+  const audience = audienceRes.data
+  const account  = accountRes.data
+
+  return {
+    genderFemalePct: audience?.gender_female_pct ?? null,
+    genderMalePct: audience?.gender_male_pct ?? null,
+    genderOtherPct: audience?.gender_other_pct ?? null,
+    topCities: audience?.top_cities ?? [],
+    reachFollowersPct: account?.reach_followers_pct ?? null,
+    profileVisits: account?.profile_visits ?? null,
+    linkClicks: account?.link_clicks ?? null,
+    periodLabel: audience
+      ? `${audience.period_start} – ${audience.period_end}`
+      : 'sem dado no período',
+  }
+}
+
 function generateInsights(formats: FormatPerformanceRow[]): InsightData[] {
   return formats
     .filter(f => f.posts > 0 && f.shares > 0)
@@ -560,23 +635,84 @@ function generateInsights(formats: FormatPerformanceRow[]): InsightData[] {
     }))
 }
 
-/* ==========================================================================
-   fetchCriticalAlerts — fecha o hardcoded criticalAlerts: [] que existia
-   desde antes desta revisão. Chama fetchLatestEngagementScoreSnapshot()
-   (abaixo) → resolveEngagementScoreAlert() (CASO G, contentContractEngine.ts)
-   → toCriticalAlert(). Não é 1:1 direto: o resolver também pode concluir
-   "Engajamento saudável" (severity 'info'/'success') — isso é status, não
-   alerta acionável, e não vira card. Essa filtragem é decisão própria desta
-   função, não do Content Contract nem do resolver — documentado aqui pra
-   não ser assumido silenciosamente em outro lugar.
-   ========================================================================== */
+// ── client_onboarding (SSOT único de setor/nicho/porte/audiência) ────────
+
+export async function fetchClientOnboarding(
+  clientId: string
+): Promise<ClientOnboarding | null> {
+  const { data, error } = await supabase
+    .from('client_onboarding')
+    .select('*')
+    .eq('client_id', clientId)
+    .maybeSingle()
+    .overrideTypes<ClientOnboarding, { merge: false }>()
+
+  if (error || !data) return null
+  return data
+}
+
+// ── SectorPositioning (painel de posicionamento setorial) ────────────────
+
+export async function fetchSectorPositioning(
+  clientId: string
+): Promise<SectorPositioning | null> {
+  const [onboarding, snapshot] = await Promise.all([
+    fetchClientOnboarding(clientId),
+    fetchLatestEngagementScoreSnapshot(clientId),
+  ])
+
+  if (!onboarding) return null
+
+  const category = mapSegmentToCategory(onboarding.setor_benchmark)
+  const tier     = mapFollowersToTier(onboarding.total_followers)
+
+  // ⚠️ er_real_pct/vps_pct: mesmos metricName do CASO G
+  // (resolveEngagementScoreAlert). Não há linha calibrada pra esses nomes
+  // em nenhuma categoria/tier hoje — vão sempre voltar "classificação
+  // indisponível". Decisão tomada, não é bug desta função.
+  const [erReal, vps, polemicScore] = snapshot
+    ? await Promise.all([
+        classifyMetric('er_real_pct', snapshot.erRealPct, category, tier),
+        classifyMetric('vps_pct', snapshot.vpsPct, category, tier),
+        classifyMetric('polemic_score_pct', snapshot.polemicScorePct, category, tier),
+      ])
+    : [null, null, null]
+
+  return {
+    setorBenchmark: onboarding.setor_benchmark,
+    nicho: onboarding.nicho,
+    funnelMaturity: onboarding.funnel_maturity,
+    proofMechanism: onboarding.proof_mechanism,
+    erReal,
+    vps,
+    polemicScore,
+    engagementPeriodNotes: onboarding.q1_engagement_period_notes,
+    contentProxyNotes: onboarding.q2_content_proxy_notes,
+    misalignmentNotes: onboarding.q3_misalignment_notes,
+    observedContentClusters: onboarding.observed_content_clusters,
+    audienceComposition: {
+      nucleoFielPct: onboarding.audience_nucleo_fiel_pct,
+      consumoPassivoPct: onboarding.audience_consumo_passivo_pct,
+      curiosidadeExternaPct: onboarding.audience_curiosidade_externa_pct,
+      altaRotatividadePct: onboarding.audience_alta_rotatividade_pct,
+    },
+  }
+}
+
+// ── CASO G (engagement score) ─────────────────────────────────────────────
 
 async function fetchCriticalAlerts(clientId: string): Promise<CriticalAlertData[]> {
   try {
-    const snapshot = await fetchLatestEngagementScoreSnapshot(clientId)
-    if (!snapshot) return [] // sem os 4 campos completos — REGRA-11, não roda o resolver sobre input parcial
+    const [snapshot, onboarding] = await Promise.all([
+      fetchLatestEngagementScoreSnapshot(clientId),
+      fetchClientOnboarding(clientId),
+    ])
+    if (!snapshot) return []
 
-    const draft = await resolveEngagementScoreAlert(snapshot)
+    const category = mapSegmentToCategory(onboarding?.setor_benchmark ?? null)
+    const tier     = mapFollowersToTier(onboarding?.total_followers ?? null)
+
+    const draft = await resolveEngagementScoreAlert(snapshot, category, tier)
 
     if (draft.severity === 'info' || draft.severity === 'success') return []
 
@@ -586,51 +722,6 @@ async function fetchCriticalAlerts(clientId: string): Promise<CriticalAlertData[
     return []
   }
 }
-
-/* ==========================================================================
-   fetchLatestEngagementScoreSnapshot — conexão pro CASO G do Content
-   Contract Engine (resolveEngagementScoreAlert / contentContractEngine.ts).
-
-   ⚠️ Decisão de camada: este arquivo NÃO importa `EngagementScoreInput` de
-   contentContractEngine.ts. Repository não deve depender de tipo de camada
-   de negócio (five-layer architecture: Screen → Hook → Repository →
-   Supabase → DB) — o inverso já acontece em outros pontos do projeto
-   (ex: alertsRepository.ts importa AlertDraft do engine), mas isso é uma
-   exceção já aceita pra escrita de alertas, não motivo pra replicar aqui
-   também. `EngagementScoreSnapshot` abaixo é estruturalmente idêntico a
-   `EngagementScoreInput` — TypeScript aceita a passagem direta pro resolver
-   por tipagem estrutural, sem acoplamento de import.
-
-   ⚠️ CORREÇÃO (fechamento 26/08/2026): vps_pct deixou de vir direto de
-   orbit.ig_account_snapshots.vps_pct. Essa é uma coluna GENERATED que
-   depende de followers_total NA MESMA TABELA — e followers_total é
-   permanentemente NULL (bloqueio deliberado de escrita em
-   extract-demographics.ts:287 e ingest-insights.ts:260, fonte considerada
-   não confiável). Ler essa coluna aqui fazia vps_pct ser sempre null pra
-   este resolver, mesmo quando orbit.v_quality_scores (outra view, mesma
-   métrica) já produzia valor real via join com
-   orbit.client_onboarding.total_followers — fonte confiável, alimentada no
-   onboarding do cliente. Esta função agora replica esse mesmo cálculo
-   (reach_total / total_followers * 100), não a coluna gerada. Isso NÃO é
-   reimplementar régua/threshold — é aritmética de input, igual ao que a
-   view já faz; a classificação continua 100% em fn_classify_metric via
-   classifyMetric() dentro do engine.
-
-   ⚠️ Nomes de coluna (er_real_pct, utility_score_pct, polemic_score_pct)
-   vêm do comentário do próprio contentContractEngine.ts (CASO G,
-   "Scores de orbit.ig_account_snapshots") — não foram confirmados aqui
-   contra dump_orbit.sql, que não estava disponível nesta sessão. Se algum
-   nome divergir, o Supabase retorna erro explícito (`error.message` abaixo)
-   em vez de mascarar — não inventa valor pra coluna que não existe.
-
-   ⚠️ REGRA-11: se QUALQUER um dos 4 campos (er_real_pct, utility_score_pct,
-   polemic_score_pct, vps_pct calculado) vier `null`, a função devolve `null`
-   inteiro em vez de montar um input parcial com zero fabricado —
-   resolveEngagementScoreAlert não deve rodar sobre dado incompleto
-   disfarçado de completo. O caller (fetchCriticalAlerts acima;
-   syncClientAlerts.ts em outro fluxo) decide o que fazer com `null` (hoje:
-   não gera alerta pra esse caso).
-   ========================================================================== */
 
 export interface EngagementScoreSnapshot {
   erRealPct: number
@@ -648,17 +739,12 @@ interface EngagementScoreSnapshotRow {
 }
 
 async function fetchTotalFollowers(clientId: string): Promise<number | null> {
-  // Fonte confiável de followers (onboarding manual), a mesma que
-  // orbit.v_quality_scores já usa via join. Query separada em vez de embed
-  // do PostgREST (client_onboarding(...)) de propósito: embed depende do
-  // PostgREST reconhecer a FK no schema cache, não confirmado nesta sessão
-  // — duas queries simples é o caminho que não depende dessa confirmação.
   const { data, error } = await supabase
     .from('client_onboarding')
     .select('total_followers')
     .eq('client_id', clientId)
     .maybeSingle()
-    .returns<{ total_followers: number | null }>()
+    .overrideTypes<{ total_followers: number | null }, { merge: false }>()
 
   if (error || !data) return null
   return data.total_followers ?? null
@@ -669,13 +755,13 @@ export async function fetchLatestEngagementScoreSnapshot(
 ): Promise<EngagementScoreSnapshot | null> {
   const [{ data, error }, totalFollowers] = await Promise.all([
     supabase
-      .from('ig_account_snapshots')          // orbit.ig_account_snapshots
+      .from('ig_account_snapshots')
       .select('er_real_pct, utility_score_pct, polemic_score_pct, reach_total, period_end')
       .eq('client_id', clientId)
       .order('period_end', { ascending: false })
       .limit(1)
       .maybeSingle()
-      .returns<EngagementScoreSnapshotRow>(),
+      .overrideTypes<EngagementScoreSnapshotRow, { merge: false }>(),
     fetchTotalFollowers(clientId),
   ])
 
@@ -685,7 +771,7 @@ export async function fetchLatestEngagementScoreSnapshot(
     )
   }
 
-  if (!data) return null // sem nenhuma linha para o cliente ainda — não fabricar snapshot vazio
+  if (!data) return null
 
   const { er_real_pct, utility_score_pct, polemic_score_pct, reach_total } = data
 
@@ -695,8 +781,6 @@ export async function fetchLatestEngagementScoreSnapshot(
       : null
 
   if (er_real_pct == null || utility_score_pct == null || polemic_score_pct == null || vpsPct == null) {
-    // REGRA-11: um ou mais dos 4 campos ausentes (vps_pct calculado incluso)
-    // — não roda o resolver sobre input parcial.
     return null
   }
 
@@ -707,7 +791,5 @@ export async function fetchLatestEngagementScoreSnapshot(
     vpsPct,
   }
 }
-
-// ── Exports públicos ────────────────────────────────────────────────────
 
 export { fetchPostsByFormat }

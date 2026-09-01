@@ -12,7 +12,7 @@
 //      segundo setStatus('success')/setLastUpdated/return logo após um
 //      return já executado, nunca alcançável, sobra de edição manual.
 //   ✅ Removido useEffect de diagnóstico (console.count por render) que
-//      não tinha relação com a lógica do hook.
+//      não tinha relação com a lógica do hook demais.
 //
 // v2.0.0:
 //   ✅ usePrototypeData removido — sem mock, sem buildPrototypeData()

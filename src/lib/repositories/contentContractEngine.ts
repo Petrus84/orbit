@@ -44,6 +44,24 @@
      comportamento de TEXTO/STATUS, não de threshold — o próprio contrato
      (Introdução, item 6) atribui esse ajuste ao código, não mais ao banco.
      Implementado em `applyConfidenceGate()`.
+
+   ⚠️ O QUE MUDOU EM 31/08/2026 (fechamento de dívida — category/tier):
+   - `classifyMetric()` e `resolveEngagementScoreAlert()` passam a aceitar
+     `category`/`tier` opcionais e repassá-los para `fn_classify_metric`.
+     A assinatura real da função no Postgres já era
+     `fn_classify_metric(p_metric_name, p_value, p_category DEFAULT NULL,
+     p_tier DEFAULT NULL)` — confirmado lendo a função no dump do banco
+     (31/08/2026); o TS estava desatualizado em relação a ela, não o
+     contrário.
+   - `mapSegmentToCategory` e `mapFollowersToTier` foram adicionados.
+     Confirmados contra dados reais (`SELECT DISTINCT category,
+     tier_normalized FROM orbit.ref_thresholds`, 31/08/2026): hoje só
+     existe UMA categoria calibrada (`1_ecommerce_direto`), com tiers
+     nano/micro/mid/macro/all — todo o resto cai em `all`/`all` (global).
+     Os cortes de `mapFollowersToTier` são os TIER_BANDS oficiais do
+     pipeline (`calibrate_thresholds_stratified.py`) — os mesmos que
+     gravaram `tier_normalized` nas linhas reais, não uma convenção de
+     mercado genérica.
    ========================================================================== */
 
 import type {
@@ -56,6 +74,7 @@ import type {
   ClassifiedMetric,
   ThresholdGranularity,
   CalibrationMethod,
+  SetorBenchmark,
 } from '@/types/orbit'
 import { supabase } from '@/lib/supabase'
 
@@ -84,6 +103,49 @@ interface FnClassifyMetricRow {
   calibration_method?: CalibrationMethod | null
   zero_pct?: number | null
   signal_range_label?: string | null
+}
+
+/**
+ * ✅ Mapeia setor_benchmark → category de orbit.ref_thresholds.
+ * Confirmado contra dados reais (SELECT DISTINCT category FROM
+ * orbit.ref_thresholds, 31/08/2026): hoje só existe UMA categoria
+ * calibrada, '1_ecommerce_direto'. Os outros 8 valores de SetorBenchmark
+ * não têm régua própria — devolver `null` é o comportamento correto, não
+ * uma lacuna: aciona o fallback global (Nível 3, §0.1) do próprio
+ * fn_classify_metric, em vez de inventar uma categoria que não existe no
+ * banco. Não invente '2_...', '3_...' etc. sem confirmar contra
+ * orbit.ref_thresholds primeiro.
+ */
+export function mapSegmentToCategory(setorBenchmark: SetorBenchmark | null): string | null {
+  if (setorBenchmark === 'comercio_direto_ecommerce_social') {
+    return '1_ecommerce_direto'
+  }
+  return null
+}
+
+/**
+ * ✅ Mapeia total_followers → tier_normalized de orbit.ref_thresholds.
+ * Cortes = TIER_BANDS oficiais do pipeline (calibrate_thresholds_stratified.py),
+ * os mesmos que gravaram tier_normalized nas linhas reais do banco — não
+ * uma convenção de mercado genérica.
+ *   nano   [0,         9_999]
+ *   micro  [10_000,    49_999]
+ *   mid    [50_000,   249_999]
+ *   macro  [250_000,  999_999]
+ *   mega   [1_000_000,    +∞]
+ * Fonte: client_onboarding.total_followers — NUNCA
+ * ig_account_snapshots.followers_total do último período (vem null,
+ * confirmado 31/08/2026).
+ * `null` de retorno é esperado e correto quando não há base (followers
+ * ausente): a RPC faz COALESCE(p_tier, 'all').
+ */
+export function mapFollowersToTier(followers: number | null | undefined): string | null {
+  if (followers == null || followers < 0) return null
+  if (followers < 10_000) return 'nano'
+  if (followers < 50_000) return 'micro'
+  if (followers < 250_000) return 'mid'
+  if (followers < 1_000_000) return 'macro'
+  return 'mega'
 }
 
 function deriveThresholdSource(category: string | null | undefined, tier: string | null | undefined): ThresholdGranularity {
@@ -150,11 +212,15 @@ function buildZeroInflatedText(
 
 export async function classifyMetric(
   metricName: string,
-  value: number
+  value: number,
+  category?: string | null,
+  tier?: string | null
 ): Promise<ClassifiedMetric> {
   const { data, error } = await supabase.rpc('fn_classify_metric', {
     p_metric_name: metricName,
     p_value: value,
+    p_category: category ?? null,
+    p_tier: tier ?? null,
   })
 
   if (error || !data?.[0]) {
@@ -532,11 +598,15 @@ export interface EngagementScoreInput {
   vpsPct: number
 }
 
-export async function resolveEngagementScoreAlert(input: EngagementScoreInput): Promise<AlertDraft> {
+export async function resolveEngagementScoreAlert(
+  input: EngagementScoreInput,
+  category?: string | null,
+  tier?: string | null
+): Promise<AlertDraft> {
   const [er, vps, polemic] = await Promise.all([
-    classifyMetric('er_real_pct', input.erRealPct),
-    classifyMetric('vps_pct', input.vpsPct),
-    classifyMetric('polemic_score_pct', input.polemicScorePct),
+    classifyMetric('er_real_pct', input.erRealPct, category, tier),
+    classifyMetric('vps_pct', input.vpsPct, category, tier),
+    classifyMetric('polemic_score_pct', input.polemicScorePct, category, tier),
   ])
 
   if (vps.semaphore === 'vermelho') {
