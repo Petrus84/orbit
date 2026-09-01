@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import type { Database } from '@/types/database.types'
 
 // ─── Captura Direta e Literal (Exigência do Next.js para Client-Side) ────────
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -15,8 +16,16 @@ if (!supabaseUrl || !supabaseKey) {
   }
 }
 
+// ✅ v2 (31/08/2026): createClient<Database> — antes era createClient() sem
+// generic, o que deixava .from(tabela) sem nenhum tipo real de coluna e
+// quebrava o narrowing de .single()/.maybeSingle() (causa raiz confirmada
+// lendo postgrest-js/src/types.ts: IsValidResultOverride só resolve
+// Result como "objeto único" quando o builder já sabe o shape real da
+// tabela). database.types.ts gerado via
+// `supabase gen types typescript --project-id smifhuvzroznlmbrvhaj --schema orbit,public`.
+//
 // ✅ UMA ÚNICA DECLARAÇÃO (schema: orbit)
-export const supabase = createClient(supabaseUrl || '', supabaseKey || '', {
+export const supabase = createClient<Database, 'orbit'>(supabaseUrl || '', supabaseKey || '', {
   db: { schema: 'orbit' as const },
   auth: {
     autoRefreshToken: true,
@@ -26,7 +35,7 @@ export const supabase = createClient(supabaseUrl || '', supabaseKey || '', {
 })
 
 // ✅ UMA ÚNICA DECLARAÇÃO (schema: public — fallback)
-export const supabaseLegacy = createClient(supabaseUrl || '', supabaseKey || '', {
+export const supabaseLegacy = createClient<Database, 'public'>(supabaseUrl || '', supabaseKey || '', {
   db: { schema: 'public' as const },
   auth: {
     autoRefreshToken: false,

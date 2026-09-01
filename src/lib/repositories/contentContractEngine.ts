@@ -219,8 +219,8 @@ export async function classifyMetric(
   const { data, error } = await supabase.rpc('fn_classify_metric', {
     p_metric_name: metricName,
     p_value: value,
-    p_category: category ?? null,
-    p_tier: tier ?? null,
+    p_category: category ?? undefined,
+    p_tier: tier ?? undefined,
   })
 
   if (error || !data?.[0]) {

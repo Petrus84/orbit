@@ -1,5 +1,26 @@
 // ============================================================================
-// ORBIT · Repository — Alerts (v3.0.0)
+// ORBIT · Repository — Alerts (v3.0.1)
+//
+// v3.0.1 (fechamento de bug — 31/08/2026):
+// - 🐛 CORRIGIDO createAlert(): o insert usava `type: AlertType[draft.type]`
+//   — dois bugs numa linha só. (1) a coluna real é `alert_type`, não `type`
+//   (TS2353). (2) `AlertType` é um type do TypeScript (union de string),
+//   sem existência em runtime — indexar nele como `AlertType[x]` é inválido
+//   (TS2693), provavelmente resquício de confundir um union type escrito à
+//   mão com um enum gerado do Postgres. `draft.type`/`alert.type` já é a
+//   string correta; não precisa (e não pode) passar por `AlertType[...]`.
+// - ⚠️ RISCO ABERTO, não resolvido por este patch: `Alert.type`/
+//   `AlertDraft.type` são tipados como `string` solto em orbit.ts, não como
+//   `AlertType`. Apliquei `as AlertType` em createAlert() e
+//   createAlertsBatch() só pra destravar o build — mas
+//   contentContractEngine.ts usa `type: 'data_gap'`
+//   (withMissingDataGuard, 4 call sites) e 'data_gap' NÃO está no union
+//   `AlertType` (9 valores). Se um draft com esse type chegar aqui, o cast
+//   mente pro compilador e o INSERT pode ser rejeitado em runtime pelo
+//   Postgres (se orbit.alert_type for ENUM de verdade). Decisão pendente:
+//   'data_gap' vira o 10º valor real do enum, ou alertas desse tipo nunca
+//   deveriam ser persistidos em orbit.alerts (ficam só como insight de
+//   tela)? Não decidido aqui.
 //
 // v3.0.0 (revisão 18/08/2026):
 // - ❌ REMOVIDO: fallback para public.alerts (legacy). orbit.alerts é a
@@ -230,6 +251,14 @@ export function draftToAlert(
  *   await createAlert(draft, clientId, clientName, clientHandle)
  *
  * ⚠️ Pré-requisito: ALTER TABLE orbit.alerts já rodou (migration)
+ * ⚠️ RISCO ABERTO (ver changelog v3.0.1 no topo do arquivo): `alert.type`
+ * vem de `Alert.type: string` solto, não de `AlertType`. O cast abaixo
+ * destrava o build mas não protege contra draft.type === 'data_gap'
+ * (produzido por withMissingDataGuard em contentContractEngine.ts), que
+ * não existe no union AlertType nem, possivelmente, no enum real do
+ * Postgres — se chegar aqui, o INSERT pode falhar em runtime. Decisão
+ * pendente com o DG: adicionar 'data_gap' ao enum real, ou nunca chamar
+ * createAlert()/createAlertsBatch() com um draft desse tipo.
  */
 export async function createAlert(
   draft: AlertDraft,
@@ -243,7 +272,7 @@ export async function createAlert(
     .from('alerts')
     .insert({
       client_id: clientId,
-      alert_type: alert.type,
+      alert_type: alert.type as AlertType,
       severity: alert.severity,
       title: alert.title,
       description: alert.description,
@@ -275,6 +304,7 @@ export async function createAlert(
 
 /**
  * Batch: cria múltiplos alertas de uma vez
+ * ⚠️ Mesmo risco aberto do createAlert() acima (draft.type === 'data_gap').
  */
 export async function createAlertsBatch(
   drafts: Array<{
@@ -286,7 +316,7 @@ export async function createAlertsBatch(
 ): Promise<Alert[]> {
   const rows = drafts.map((d) => ({
     client_id: d.clientId,
-    alert_type: d.draft.type,
+    alert_type: d.draft.type as AlertType,
     severity: d.draft.severity,
     title: d.draft.title,
     description: d.draft.description,
