@@ -1,10 +1,27 @@
 // ============================================================================
 // src/lib/repositories/onboardingRepository.ts
-// Versão: 1.1.0
+// Versão: 1.1.1
+//
+// v1.1.1 (fechamento de bug — 31/08/2026):
+// - 🐛 CORRIGIDO upsertClientOnboarding(): TS2345 — `bio_links: BioLink[]`
+//   (interface nomeada, sem assinatura de índice) não é estruturalmente
+//   compatível com `Json` (o tipo gerado pra colunas jsonb: união recursiva
+//   com `{ [key: string]: Json }`). Isso é uma limitação do TypeScript, não
+//   um problema do dado em si — em runtime o shape sempre foi válido.
+//   Mesma classe de problema também afeta `expected_schwartz`/
+//   `real_schwartz` (ambos `Record<string, SchwatzValue>`, e `SchwatzValue`
+//   é interface nomeada sem index signature) — corrigidos juntos, mesmo
+//   que só `bio_links` tivesse aparecido no erro reportado; teriam
+//   quebrado do mesmo jeito assim que o TS chegasse neles.
+//   Fix: cast explícito `as unknown as Json` nesses 3 campos, só no ponto
+//   de saída pro Supabase — o tipo `ClientOnboarding` (SSOT em orbit.ts)
+//   continua estrito pro resto do app; a perda de precisão de tipo fica
+//   isolada nesta função.
 // ============================================================================
 
 import { supabase } from '@/lib/supabase'
 import type { ClientOnboarding } from '@/types/orbit'
+import type { Json } from '@/types/database.types'
 
 // ============================================================================
 // ✅ FUNÇÃO DE VALIDAÇÃO (AGORA DEFINIDA!)
@@ -101,7 +118,18 @@ export async function upsertClientOnboarding(onboarding: ClientOnboarding): Prom
     const { error } = await supabase
       .schema('orbit')
       .from('client_onboarding')
-      .upsert(onboarding, { onConflict: 'client_id' })
+      .upsert(
+        {
+          ...onboarding,
+          // ⚠️ Cast pra Json só aqui, no ponto de saída — ver changelog
+          // v1.1.1 no topo do arquivo. ClientOnboarding continua estrito
+          // em orbit.ts; isso não afasta a interface do SSOT.
+          bio_links: onboarding.bio_links as unknown as Json,
+          expected_schwartz: onboarding.expected_schwartz as unknown as Json | null,
+          real_schwartz: onboarding.real_schwartz as unknown as Json | null,
+        },
+        { onConflict: 'client_id' }
+      )
 
     if (error) {
       console.error('[onboardingRepository] Erro ao salvar:', error.message)

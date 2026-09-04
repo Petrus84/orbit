@@ -398,6 +398,22 @@ dataSource?: 'real_snapshot' | 'fallback_by_client' | 'fallback_by_error' | 'fal
   // obrigatório expor quando = 'fallback_by_client': é o campo que existe
   // porque o Funil (funnelRepository.ts) hoje cai em FALLBACK_BY_CLIENT sem
   // marcar a origem do dado que chega à UI.
+
+  /**
+   * ✅ NOVO (schema orbit.alerts confirmado via database.types.ts):
+   * campos que já existem na tabela real, mas ainda não eram expostos por
+   * `Alert`/`fromOrbitRow()`. Todos opcionais/nuláveis, mesmo padrão dos
+   * campos do Content Contract acima — ausência ≠ erro, é estado válido.
+   */
+  snapshotId?: string
+  // referência ao snapshot (orbit.ig_account_snapshots ou equivalente) que
+  // originou o metricValue. `undefined`/`null` = alerta ainda sem
+  // proveniência registrada (ver observação sobre o gerador de
+  // ctr_below_threshold — nenhuma rotina hoje preenche esta coluna).
+  suggestedAction?: string | null
+  resolvedAt?: string | null
+  snoozedUntil?: string | null
+  resolvedBy?: string | null
 }
 
 
@@ -693,15 +709,18 @@ export interface ClientMetrics {
   }
 }
 
-export interface Client {
+  export interface Client {
   id: string
   handle: string
   name: string
   avatar?: string
   status: ClientHealthStatus
   metrics: ClientMetrics
+  snapshotCount?: number
+  lastSnapshotDate?: string | null
   lastUpdated: string
 }
+
 
 // ============================================================================
 // SEÇÃO 2: RAW ROW CONTRACTS — REPOSITÓRIOS

@@ -1,36 +1,35 @@
 /**
  * ============================================================================
- * ClientCard — Refatoração 15/08/2026
+ * ClientCard — Refatoração 15/08/2026 + Integração Snapshot 04/09/2026
  * ============================================================================
  *
- * O contrato de dados já estava certo nesta versão: `Client` vem do barrel
- * (`../../types/client` → `orbit.ts`), sem redeclaração local, `avatar`
- * (não `avatarUrl`), `SemaphoreStatus = ClientHealthStatus` já cobre os 4
- * valores (confirmado lendo `Semaphore.tsx` — `ICON_MAP`/`CLASS_MAP` tratam
- * 'unknown' explicitamente, não quebra a compilação).
+ * v2.0.1 (integração snapshot — 04/09/2026):
+ * - ✅ MANTIDO: CSS Module, Semaphore, Router, Image, MetricCol
+ * - ✅ NOVO: Props opcionais healthStatus, snapshotCount, lastSnapshotDate
+ * - ✅ NOVO: Fallbacks que priorizam props, depois recorrem ao client
+ * - ✅ NOVO: Snapshot info renderizado acima das métricas
+ * - ✅ NOVO: Regra estrita para CTR: NULL/undefined → '—', 0 → '0.0%'
  *
- * O QUE FOI CORRIGIDO (REGRA-03):
- * Componente inteiro estava em Tailwind com valores arbitrários que
- * coincidem exatamente com tokens do SSOT, mas sem referenciá-los:
- * - `bg-[#18181F]`            → é literalmente `--bg2`
- * - `hover:bg-[#1F1F28]`      → é literalmente `--bg3`
- * - `outline-[#C8FF57]`       → é literalmente `--acc`
- * Ou seja: alguém já sabia os valores certos, só não usou os tokens — o
- * pior cenário de REGRA-03 (paleta correta por acidente, não por fonte
- * única). Se o SSOT mudar esses valores algum dia, este componente não
- * acompanharia. Convertido para CSS Module consumindo `var(--token)`.
+ * v1.0.0 (15/08/2026):
+ * O contrato de dados já estava certo: `Client` vem do barrel
+ * (`../../types/client` → `orbit.ts`), sem redeclaração local.
+ * Convertido para CSS Module consumindo `var(--token)` (REGRA-03).
  * ============================================================================
  */
+
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Semaphore from './Semaphore'
 import type { SemaphoreStatus } from './Semaphore'
-import type { Client } from '@/types/client'
+import type { Client, ClientHealthStatus } from '@/types/client'
 import styles from './ClientCard.module.css'
 
-interface ClientCardProps {
+export interface ClientCardProps {
   client: Client
+  healthStatus?: ClientHealthStatus
+  snapshotCount?: number
+  lastSnapshotDate?: string | null
 }
 
 function formatFollowerBalance(value: number): string {
@@ -43,6 +42,20 @@ function formatFollowerBalance(value: number): string {
 
 function formatPercent(value: number): string {
   return `${value.toFixed(1)}%`
+}
+
+function formatDate(dateString: string | null | undefined): string {
+  if (!dateString) return '--'
+  try {
+    const date = new Date(dateString)
+    return date.toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    })
+  } catch {
+    return '--'
+  }
 }
 
 interface MetricColProps {
@@ -62,13 +75,27 @@ function MetricCol({ label, value, dimmed }: MetricColProps): React.ReactElement
   )
 }
 
-export default function ClientCard({ client }: ClientCardProps): React.ReactElement {
+export default function ClientCard({
+  client,
+  healthStatus: propHealthStatus,
+  snapshotCount: propSnapshotCount,
+  lastSnapshotDate: propLastSnapshotDate,
+}: ClientCardProps): React.ReactElement {
   const router = useRouter()
 
-  const semaphoreStatus: SemaphoreStatus = client.status
+  // ✅ Fallbacks que priorizam as props e recorrem ao objeto client
+  const healthStatus: ClientHealthStatus = propHealthStatus ?? client.status ?? 'unknown'
+  const snapshotCount = propSnapshotCount ?? client.snapshotCount ?? 0
+  const lastSnapshotDate = propLastSnapshotDate ?? client.lastSnapshotDate ?? null
 
+  // ✅ Cast seguro: healthStatus é ClientHealthStatus, que é compatível com SemaphoreStatus
+  const semaphoreStatus: SemaphoreStatus = healthStatus
+
+  // ✅ Regra estrita: NULL/undefined exibe '—', 0 exibe '0.0%'
   const ctrDisplay =
-    client.metrics.ctr_link === 0 ? '—' : formatPercent(client.metrics.ctr_link)
+    client.metrics.ctr_link == null
+      ? '—'
+      : formatPercent(client.metrics.ctr_link)
 
   return (
     <button
@@ -102,6 +129,16 @@ export default function ClientCard({ client }: ClientCardProps): React.ReactElem
 
       <div className={styles.divider} />
 
+      {/* ✅ NOVO: Snapshot info */}
+      {snapshotCount > 0 && lastSnapshotDate && (
+        <div className={styles.snapshotInfo}>
+          <span className={styles.snapshotLabel}>Último Snapshot:</span>
+          <span className={styles.snapshotValue}>
+            {formatDate(lastSnapshotDate)} ({snapshotCount} histórico{snapshotCount !== 1 ? 's' : ''})
+          </span>
+        </div>
+      )}
+
       {/* Metrics row */}
       <div className={styles.metricsRow}>
         <MetricCol
@@ -114,7 +151,7 @@ export default function ClientCard({ client }: ClientCardProps): React.ReactElem
           value={formatPercent(client.metrics.engagement_real)}
           dimmed={client.metrics.engagement_real === 0}
         />
-        <MetricCol label="CTR link" value={ctrDisplay} dimmed={client.metrics.ctr_link === 0} />
+        <MetricCol label="CTR link" value={ctrDisplay} dimmed={client.metrics.ctr_link == null} />
       </div>
     </button>
   )

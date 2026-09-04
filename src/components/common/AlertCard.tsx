@@ -1,239 +1,111 @@
-import React, { useCallback, useMemo } from 'react'
-import type { Alert, AlertSeverity, AlertType, AlertAction } from '@/types/alert'
-import styles from './AlertCard.module.css'
-
-/**
- * ============================================================================
- * ALERTCARD COMPONENT — v3 (14/08/2026)
- * ============================================================================
- *
- * v2 → v3: trocado de CSS global (`alerts.css`, classes `.alert-crit` etc,
- * tokens extraídos do protótipo HTML) para CSS Module — o padrão real do
- * projeto, confirmado contra `CriticalAlert.module.css` (REGRA-07/convenção
- * de estilo). `alerts.css` global não existe mais; não importar.
- *
- * Histórico de correções da v1→v2 (mantidas):
- * 1. Campos em camelCase (`clientId`, `type`, `metricValue`,
- *    `thresholdValue`, `createdAt`) — contrato real de `Alert`.
- * 2. `AlertType` com os 9 valores reais de `orbit.alert_type` (Postgres).
- * 3. `AlertAction` é objeto (`{type, label, url?}`), não union de string —
- *    o alerta tem UMA ação (`alert.action`), não um catálogo fixo.
- * 4. Ciclo de vida real é `isResolved` (boolean) — não existe
- *    acknowledged_at/dismissed_at nem em `Alert` nem na tabela.
- * ============================================================================
- */
+import React, { useState } from 'react'
+import type { Alert } from '@/types/alert'
+import { markAlertAsRead } from '@/lib/repositories/alertsRepository'
 
 interface AlertCardProps {
   alert: Alert
-  onDismiss?: (alertId: string) => Promise<void>
-  onAcknowledge?: (alertId: string) => Promise<void>
-  onActionClick?: (alert: Alert, action: AlertAction) => Promise<void>
-  isLoading?: boolean
-  className?: string
+  onAcknowledge?: () => Promise<void> | void
 }
 
-// ============================================================================
-// MAPEAMENTOS — alinhados a orbit.alert_type (9 valores reais, dump_orbit.sql)
-// ============================================================================
+export default function AlertCard({ alert, onAcknowledge }: AlertCardProps): React.ReactElement {
+  const [isLoading, setIsLoading] = useState(false)
 
-const SEVERITY_CLASS: Record<AlertSeverity, string> = {
-  critical: styles.critical,
-  warning: styles.warning,
-  info: styles.info,
-  // 'success' nunca chega até aqui na prática: v_alerts já colapsa para
-  // 'info' no banco. Mapeado por segurança de tipo, não porque é esperado.
-  success: styles.info,
-}
+  // ✅ CORRIGIDO: Função async que aguarda a mutação ANTES de chamar o callback
+  async function handleAcknowledge(): Promise<void> {
+    try {
+      setIsLoading(true)
+      // 1. Aguarda a gravação no banco
+      await markAlertAsRead(alert.id)
+      // 2. Executa o refetch após o sucesso (evita race condition)
+      await onAcknowledge?.()
+    } catch (err) {
+      console.error('[AlertCard] Erro ao reconhecer alerta:', err)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
-const ALERT_TYPE_ICON: Record<AlertType, string> = {
-  ctr_below_threshold: '⚡',
-  engagement_collapse: '📉',
-  avatar_misalignment: '🎯',
-  creative_fatigue: '😴',
-  roas_below_minimum: '💸',
-  follower_churn_high: '👋',
-  polemic_score_high: '🔥',
-  boost_opportunity: '🚀',
-  budget_pace: '⏱️',
-}
+  const severityColors: Record<string, string> = {
+    critical: 'border-red-500/40 bg-red-500/5',
+    warning: 'border-amber-500/40 bg-amber-500/5',
+    info: 'border-blue-500/40 bg-blue-500/5',
+    success: 'border-green-500/40 bg-green-500/5',
+  }
 
-const ALERT_TYPE_LABELS: Record<AlertType, string> = {
-  ctr_below_threshold: 'CTR abaixo do limite',
-  engagement_collapse: 'Colapso de engajamento',
-  avatar_misalignment: 'Desalinhamento de avatar',
-  creative_fatigue: 'Fadiga de criativo',
-  roas_below_minimum: 'ROAS abaixo do mínimo',
-  follower_churn_high: 'Churn de seguidores alto',
-  polemic_score_high: 'Score de polêmica alto',
-  boost_opportunity: 'Oportunidade de impulsionamento',
-  budget_pace: 'Ritmo de orçamento',
-}
+  const severityIcons: Record<string, string> = {
+    critical: '🚨',
+    warning: '⚠️',
+    info: 'ℹ️',
+    success: '✅',
+  }
 
-// ============================================================================
-// SUBCOMPONENTES
-// ============================================================================
+  const severityLabels: Record<string, string> = {
+    critical: 'Crítico',
+    warning: 'Atenção',
+    info: 'Info',
+    success: 'Sucesso',
+  }
 
-const MetricComparison: React.FC<{
-  metricName: string | null
-  metricValue: number | null
-  thresholdValue: number | null
-}> = ({ metricName, metricValue, thresholdValue }) => {
-  if (metricName === null || metricValue === null || thresholdValue === null) return null
-
-  const isExceeded = metricValue > thresholdValue
-  const percentDiff = thresholdValue !== 0 ? (((metricValue - thresholdValue) / thresholdValue) * 100).toFixed(1) : '—'
+  const borderColor = severityColors[alert.severity] || severityColors.info
+  const icon = severityIcons[alert.severity] || severityIcons.info
+  const label = severityLabels[alert.severity] || severityLabels.info
 
   return (
-    <div className={styles.meta}>
-      <span>
-        {metricName}: <strong>{metricValue.toFixed(2)}</strong> / {thresholdValue.toFixed(2)}
-      </span>
-      <span>
-        {isExceeded ? '+' : ''}
-        {percentDiff}%
-      </span>
-    </div>
-  )
-}
-
-const AlertStatus: React.FC<{ isResolved: boolean; createdAt: string }> = ({ isResolved, createdAt }) => {
-  return (
-    <div className={styles.status}>
-      {isResolved ? '✓ Resolvido' : '⚠ Pendente de ação'} ·{' '}
-      {new Date(createdAt).toLocaleDateString('pt-BR')}
-    </div>
-  )
-}
-
-// ============================================================================
-// COMPONENTE PRINCIPAL
-// ============================================================================
-
-export const AlertCard: React.FC<AlertCardProps> = ({
-  alert,
-  onDismiss,
-  onAcknowledge,
-  onActionClick,
-  isLoading = false,
-  className,
-}) => {
-  const [isActionLoading, setIsActionLoading] = React.useState(false)
-
-  const alertTypeLabel = ALERT_TYPE_LABELS[alert.type as AlertType] ?? alert.type
-  const alertTypeIcon = ALERT_TYPE_ICON[alert.type as AlertType] ?? '•'
-
-  const handleDismiss = useCallback(async () => {
-    if (!onDismiss) return
-    try {
-      setIsActionLoading(true)
-      await onDismiss(alert.id)
-    } catch (err) {
-      console.error('Erro ao descartar alerta:', err)
-    } finally {
-      setIsActionLoading(false)
-    }
-  }, [alert.id, onDismiss])
-
-  const handleAcknowledge = useCallback(async () => {
-    if (!onAcknowledge) return
-    try {
-      setIsActionLoading(true)
-      await onAcknowledge(alert.id)
-    } catch (err) {
-      console.error('Erro ao resolver alerta:', err)
-    } finally {
-      setIsActionLoading(false)
-    }
-  }, [alert.id, onAcknowledge])
-
-  const handleAction = useCallback(async () => {
-    if (!alert.action) return
-    try {
-      setIsActionLoading(true)
-      if (onActionClick) {
-        await onActionClick(alert, alert.action)
-        return
-      }
-      if (alert.action.type === 'link' && alert.action.url) {
-        window.open(alert.action.url, '_blank', 'noopener,noreferrer')
-      } else if (alert.action.type === 'resolve') {
-        await handleAcknowledge()
-      } else if (alert.action.type === 'dismiss') {
-        await handleDismiss()
-      }
-    } catch (err) {
-      console.error('Erro ao executar ação:', err)
-    } finally {
-      setIsActionLoading(false)
-    }
-  }, [alert, onActionClick, handleAcknowledge, handleDismiss])
-
-  const isActive = useMemo(() => !alert.isResolved, [alert.isResolved])
-
-  return (
-    <div className={[styles.card, SEVERITY_CLASS[alert.severity], className ?? ''].join(' ')}>
-      {isActive && onDismiss && (
-        <button
-          onClick={handleDismiss}
-          disabled={isActionLoading}
-          className={styles.dismiss}
-          title="Descartar alerta"
-          aria-label="Descartar alerta"
-        >
-          ✕
-        </button>
-      )}
-
-      <div className={styles.icon}>{alertTypeIcon}</div>
-
-      <div className={styles.body}>
-        <div className={styles.title}>{alertTypeLabel}</div>
-        <p className={styles.text}>{alert.title}</p>
-        {alert.description && <p className={styles.text}>{alert.description}</p>}
-
-        <MetricComparison
-          metricName={alert.metricName}
-          metricValue={alert.metricValue}
-          thresholdValue={alert.thresholdValue}
-        />
-
-        <div className={styles.action}>
-          {isActive && alert.action && (
-            <button className={styles.btn} onClick={handleAction} disabled={isActionLoading}>
-              {alert.action.label}
-            </button>
-          )}
-          {isActive && onAcknowledge && (
-            <button
-              className={`${styles.btn} ${styles.btnGhost}`}
-              onClick={handleAcknowledge}
-              disabled={isActionLoading}
-            >
-              Marcar como resolvido
-            </button>
-          )}
-        </div>
-
-        <AlertStatus isResolved={alert.isResolved} createdAt={alert.createdAt} />
+    <div className={`flex gap-3 rounded-2xl border p-4 ${borderColor}`}>
+      <div className="flex flex-col items-center gap-2 pt-0.5">
+        <span className="text-lg">{icon}</span>
+        {!alert.isResolved && <div className="h-1.5 w-1.5 rounded-full bg-current opacity-60" />}
       </div>
 
-      {isLoading && (
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            borderRadius: 'inherit',
-            background: 'rgba(0,0,0,0.5)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <div className="animate-spin rounded-full h-5 w-5 border-2 border-gray-600 border-t-gray-300" />
+      <div className="flex flex-1 flex-col gap-2">
+        <div className="flex items-start justify-between gap-2">
+          <h3 className="font-sans font-semibold text-sm text-white">{alert.title}</h3>
+          <time className="font-mono text-xs text-zinc-500 whitespace-nowrap">
+            {new Date(alert.createdAt).toLocaleDateString('pt-BR')}
+          </time>
         </div>
-      )}
+
+        {alert.description && (
+          <p className="font-sans text-xs text-zinc-400">{alert.description}</p>
+        )}
+
+        {alert.metricName && alert.metricValue !== null && (
+          <p className="font-mono text-xs text-zinc-500">
+            <span className="text-zinc-400">{alert.metricName}:</span>{' '}
+            <span className="font-semibold text-white">{alert.metricValue.toFixed(2)}</span>
+            {alert.thresholdValue !== null && (
+              <>
+                {' '}
+                <span className="text-zinc-600">vs</span>{' '}
+                <span className="text-zinc-400">{alert.thresholdValue.toFixed(2)}</span>
+              </>
+            )}
+          </p>
+        )}
+
+        <div className="flex gap-2 pt-1">
+          <span className="inline-flex rounded-full bg-zinc-900/50 px-2.5 py-1 font-mono text-[10px] font-medium text-zinc-400">
+            {label}
+          </span>
+
+          {alert.clientName && (
+            <span className="inline-flex rounded-full bg-zinc-900/50 px-2.5 py-1 font-mono text-[10px] font-medium text-zinc-400">
+              {alert.clientHandle ? `@${alert.clientHandle}` : alert.clientName}
+            </span>
+          )}
+
+          {!alert.isResolved && (
+            <button
+              type="button"
+              onClick={handleAcknowledge}
+              disabled={isLoading}
+              className="ml-auto rounded-full bg-zinc-700/50 px-3 py-1 font-sans text-xs font-medium text-zinc-300 transition-colors hover:bg-zinc-600 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isLoading ? 'Resolvendo...' : 'Resolver'}
+            </button>
+          )}
+        </div>
+      </div>
     </div>
   )
 }
-
-export default AlertCard

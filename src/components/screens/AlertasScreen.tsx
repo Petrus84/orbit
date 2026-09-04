@@ -180,6 +180,7 @@ export default function AlertasScreen({ useAlerts }: AlertasScreenProps): React.
       ) : (
         <div className="flex flex-col gap-3" role="tabpanel">
           {sortedAlerts.map((alert) => (
+            // ✅ CORRIGIDO: Repassa onAcknowledge com refetch
             <AlertCard key={alert.id} alert={alert} onAcknowledge={async () => refetch()} />
           ))}
         </div>
