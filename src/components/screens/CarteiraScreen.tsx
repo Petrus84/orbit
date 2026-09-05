@@ -20,7 +20,6 @@ import SectionHead from '@/components/common/SectionHead'
 import ClientCard from '@/components/common/ClientCard'
 import AlertCard from '@/components/common/AlertCard'
 import type { Client } from '@/types/client'
-import type { Alert } from '@/types/alert'
 import type { UseAlertsReturn } from '@/hooks/useAlerts'
 import type { UseClientsResult } from '@/types/orbit'
 
@@ -139,11 +138,9 @@ function CarteiraScreen({
         <EmptyState />
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {clients.map((client) => {
+          {clients.map((client: Client) => {
             // ✅ Filtra alertas críticos mantendo compatibilidade com camelCase e snake_case
-            const clientAlerts = criticalAlerts.filter(
-              (a: any) => (a.clientId ?? a.client_id) === client.id
-            )
+            const clientAlerts = criticalAlerts.filter((a) => a.clientId === client.id)
 
             return (
               <div key={client.id} className="flex flex-col gap-2">
@@ -158,7 +155,7 @@ function CarteiraScreen({
                 {/* ✅ Alertas críticos do cliente */}
                 {clientAlerts.length > 0 && (
                   <div className="flex flex-col gap-1.5 pl-1">
-                    {clientAlerts.map((alert: Alert) => (
+                    {clientAlerts.map((alert) => (
                       <AlertCard
                         key={alert.id}
                         alert={alert}
@@ -183,7 +180,7 @@ function CarteiraScreen({
             Alertas urgentes (todos os clientes)
           </p>
           <div className="flex flex-col gap-2">
-            {criticalAlerts.map((alert: Alert) => (
+            {criticalAlerts.map((alert) => (
               <AlertCard
                 key={alert.id}
                 alert={alert}

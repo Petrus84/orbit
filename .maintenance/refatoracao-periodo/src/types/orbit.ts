@@ -185,8 +185,6 @@ export type ThresholdSource = 'category' | 'category_tier' | 'global' | 'tier'
 
 export type MetricDirection = 'higher_is_better' | 'lower_is_better' | 'signal_intensity'
 
-export type ClientCardData = Client
-
 /**
  * Shape canônico de orbit.ref_thresholds (pós Opção B + Content Contract v1.3).
  * `tier_normalized` é o nome da coluna no banco.
@@ -400,22 +398,6 @@ dataSource?: 'real_snapshot' | 'fallback_by_client' | 'fallback_by_error' | 'fal
   // obrigatório expor quando = 'fallback_by_client': é o campo que existe
   // porque o Funil (funnelRepository.ts) hoje cai em FALLBACK_BY_CLIENT sem
   // marcar a origem do dado que chega à UI.
-
-  /**
-   * ✅ NOVO (schema orbit.alerts confirmado via database.types.ts):
-   * campos que já existem na tabela real, mas ainda não eram expostos por
-   * `Alert`/`fromOrbitRow()`. Todos opcionais/nuláveis, mesmo padrão dos
-   * campos do Content Contract acima — ausência ≠ erro, é estado válido.
-   */
-  snapshotId?: string
-  // referência ao snapshot (orbit.ig_account_snapshots ou equivalente) que
-  // originou o metricValue. `undefined`/`null` = alerta ainda sem
-  // proveniência registrada (ver observação sobre o gerador de
-  // ctr_below_threshold — nenhuma rotina hoje preenche esta coluna).
-  suggestedAction?: string | null
-  resolvedAt?: string | null
-  snoozedUntil?: string | null
-  resolvedBy?: string | null
 }
 
 
@@ -540,14 +522,11 @@ export interface IGOverviewData {
   kpis: KPICardData[]
   qualityScores: QualityScoreItem[]
   formatPerformance: FormatPerformanceRow[]
-  sharesSummary: SharesSummary
+  sharesSummary: SharesSummary   // ⬅️ novo
   insights: InsightData[]
   criticalAlerts: CriticalAlertData[]
   audienceSummary: AudienceSummary
-  clients: Client[]  // ⚠️ OBSERVAÇÃO (15): shape de cliente com `positioning` (nova feature)
-  positioning: SectorPositioning  // ✅ mudou aqui
 }
-
 export interface AudienceCity {
   name: string
   pct: number
@@ -637,32 +616,6 @@ export interface FunnelMetricsRow {
   period_start: string
   period_end: string
 }
-/**
- * ✅ NOVO: shape de retorno de fetchSectorPositioning()
- * (instagramOverviewRepository.ts). Derivado diretamente do objeto que a
- * função monta — cada campo mapeado 1:1 com o tipo real da coluna
- * correspondente em ClientOnboarding, e erReal/vps/polemicScore usando
- * ClassifiedMetric (já existente) porque vêm de classifyMetric().
- */
-export interface SectorPositioning {
-  setorBenchmark: SetorBenchmark | null
-  nicho: string | null
-  funnelMaturity: FunnelMaturity | null
-  proofMechanism: ProofMechanism | null
-  erReal: ClassifiedMetric | null
-  vps: ClassifiedMetric | null
-  polemicScore: ClassifiedMetric | null
-  engagementPeriodNotes: string | null
-  contentProxyNotes: string | null
-  misalignmentNotes: string | null
-  observedContentClusters: string | null
-  audienceComposition: {
-  nucleoFielPct: number | null
-  consumoPassivoPct: number | null
-  curiosidadeExternaPct: number | null
-  altaRotatividadePct: number | null
-  }
-}
 
 // ============================================================================
 // SEÇÃO 1: TIPOS EXISTENTES
@@ -714,18 +667,15 @@ export interface ClientMetrics {
   }
 }
 
-  export interface Client {
+export interface Client {
   id: string
   handle: string
   name: string
   avatar?: string
   status: ClientHealthStatus
   metrics: ClientMetrics
-  snapshotCount?: number
-  lastSnapshotDate?: string | null
   lastUpdated: string
 }
-
 
 // ============================================================================
 // SEÇÃO 2: RAW ROW CONTRACTS — REPOSITÓRIOS

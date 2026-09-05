@@ -117,7 +117,12 @@ const NAV_ITEMS: NavItem[] = [
  * Nenhum elemento visual, botão ou link estático para "Estudo de Mercado".
  */
 export function Sidebar() {
-  const pathname = usePathname()
+  // usePathname() tipa como `string | null` (pode ser null durante certas
+  // transições de rota no App Router). isNavItemActive() e as comparações
+  // abaixo (`pathname === item.href`) esperam sempre uma string — o
+  // fallback '' nunca bate com nenhum item.href real, então o comportamento
+  // visual não muda (nenhum item fica marcado como ativo nesse instante).
+  const pathname = usePathname() ?? ''
   const { activeTab, setActiveTab, currentClient, alertCount } = useOrbitDashboard()
 
   // Separar itens por seção

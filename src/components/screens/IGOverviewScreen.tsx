@@ -17,7 +17,6 @@ import type {
   QualityScoreItem,
   FormatPerformanceRow,
   CriticalAlertData,
-  AudienceSummary,
 } from '@/types/orbit'
 
 interface UseIGOverviewResult {
@@ -187,7 +186,7 @@ function ErrorState({ message, onRetry }: { message: string; onRetry: () => void
 // ─── Main Screen ───────────────────────────────────────────────────
 
 export default function IGOverviewScreen({ useIGOverview }: IGOverviewScreenProps): React.ReactElement {
-  const { clientId = '' } = useParams<{ clientId: string }>()
+  const clientId = useParams<{ clientId: string }>()?.clientId ?? ''
   const { data, status, error, refetch } = useIGOverview(clientId)
 
   const isLoading = status === 'idle' || status === 'loading'

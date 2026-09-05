@@ -86,6 +86,18 @@ export interface AlertContractFields {
   thresholdSource?: ThresholdGranularity
   confidenceScore?: number | null
   ruleDeclaration?: string
+  snapshotId?: string
+  metricName?: string
+  metricValue?: number
+  thresholdValue?: number | null
+}
+
+export interface EngagementScoreInput {
+  snapshotId: string       // ⬅️ novo — EngagementScoreSnapshot já tem, estruturalmente compatível
+  erRealPct: number
+  utilityScorePct: number
+  polemicScorePct: number
+  vpsPct: number
 }
 
 export type AlertDraft = Pick<Alert, 'type' | 'severity' | 'title' | 'description'> &
@@ -107,18 +119,45 @@ interface FnClassifyMetricRow {
 
 /**
  * ✅ Mapeia setor_benchmark → category de orbit.ref_thresholds.
- * Confirmado contra dados reais (SELECT DISTINCT category FROM
- * orbit.ref_thresholds, 31/08/2026): hoje só existe UMA categoria
- * calibrada, '1_ecommerce_direto'. Os outros 8 valores de SetorBenchmark
- * não têm régua própria — devolver `null` é o comportamento correto, não
- * uma lacuna: aciona o fallback global (Nível 3, §0.1) do próprio
- * fn_classify_metric, em vez de inventar uma categoria que não existe no
- * banco. Não invente '2_...', '3_...' etc. sem confirmar contra
+ *
+ * ⚠️ REVISADO 05/09/2026 (fecha ORB-DEBT-052 no lado do código):
+ * Até esta revisão, só 'comercio_direto_ecommerce_social' tinha régua,
+ * e o código traduzia esse valor para o nome legado '1_ecommerce_direto'
+ * (dataset benchmark_58_v1). O novo payload calibrado
+ * (benchmark_58_v2_real_schema, 29 linhas, orbit_v41.py) usa os valores
+ * de SetorBenchmark *como string de category*, sem prefixo numérico —
+ * ou seja, a partir de agora a categoria em orbit.ref_thresholds é
+ * literalmente o mesmo texto do enum, sem tradução nenhuma.
+ *
+ * 7 categorias com régua própria calibrada nesta revisão (n≥10 contas,
+ * ver coverage_report_final.json): comercio_direto_ecommerce_social,
+ * infoprodutor_educador_pago, servico_consultoria_profissional,
+ * patrocinio_publicidade_marca, membership_assinatura_comunidade,
+ * monetizacao_nativa_plataforma, autoridade_personal_branding_b2b.
+ *
+ * 'comissionamento_afiliados' e 'pre_monetizacao_a_validar' continuam
+ * sem régua própria — `null` é o comportamento correto pra elas, aciona
+ * o fallback global (Nível 3, §0.1) do próprio fn_classify_metric, não
+ * uma lacuna. Não invente régua pra elas sem confirmar contra
  * orbit.ref_thresholds primeiro.
+ *
+ * ⚠️ Isso só passa a valer de fato depois que o payload de 29 linhas for
+ * inserido em orbit.ref_thresholds com esses nomes exatos — ver
+ * ORB-DEBT-052 no runbook.
  */
+const CALIBRATED_SETOR_BENCHMARK_CATEGORIES: ReadonlySet<SetorBenchmark> = new Set([
+  'comercio_direto_ecommerce_social',
+  'infoprodutor_educador_pago',
+  'servico_consultoria_profissional',
+  'patrocinio_publicidade_marca',
+  'membership_assinatura_comunidade',
+  'monetizacao_nativa_plataforma',
+  'autoridade_personal_branding_b2b',
+])
+
 export function mapSegmentToCategory(setorBenchmark: SetorBenchmark | null): string | null {
-  if (setorBenchmark === 'comercio_direto_ecommerce_social') {
-    return '1_ecommerce_direto'
+  if (setorBenchmark !== null && CALIBRATED_SETOR_BENCHMARK_CATEGORIES.has(setorBenchmark)) {
+    return setorBenchmark
   }
   return null
 }
@@ -213,16 +252,17 @@ function buildZeroInflatedText(
 export async function classifyMetric(
   metricName: string,
   value: number,
-  category?: string | null,
-  tier?: string | null
+  category: string = 'all',
+  tier: string = 'all'
 ): Promise<ClassifiedMetric> {
   const { data, error } = await supabase.rpc('fn_classify_metric', {
     p_metric_name: metricName,
     p_value: value,
-    p_category: category ?? undefined,
-    p_tier: tier ?? undefined,
+    p_category: category,
+    p_tier: tier,
   })
 
+  // ...resto da função permanece idêntico — o shape de retorno não mudou.
   if (error || !data?.[0]) {
     return {
       semaphore: 'ambar',
@@ -590,25 +630,22 @@ export function resolveRoasBelowMinimumAlert(input: RoasBelowMinimumInput): Aler
     dataSource: 'real_snapshot',
   }
 }
-
-export interface EngagementScoreInput {
-  erRealPct: number
-  utilityScorePct: number
-  polemicScorePct: number
-  vpsPct: number
-}
-
 export async function resolveEngagementScoreAlert(
   input: EngagementScoreInput,
   category?: string | null,
   tier?: string | null
 ): Promise<AlertDraft> {
+  // ✅ Coalescer null → undefined
+  const categoryForClassify = category ?? undefined
+  const tierForClassify = tier ?? undefined
+
   const [er, vps, polemic] = await Promise.all([
-    classifyMetric('er_real_pct', input.erRealPct, category, tier),
-    classifyMetric('vps_pct', input.vpsPct, category, tier),
-    classifyMetric('polemic_score_pct', input.polemicScorePct, category, tier),
+    classifyMetric('er_real_pct', input.erRealPct, categoryForClassify, tierForClassify),
+    classifyMetric('vps_pct', input.vpsPct, categoryForClassify, tierForClassify),
+    classifyMetric('polemic_score_pct', input.polemicScorePct, categoryForClassify, tierForClassify),
   ])
 
+  // ✅ CASO 1: VPS vermelho (baixa penetração)
   if (vps.semaphore === 'vermelho') {
     return {
       type: 'engagement_collapse',
@@ -623,9 +660,14 @@ export async function resolveEngagementScoreAlert(
       thresholdSource: vps.thresholdSource,
       confidenceScore: vps.confidenceScore,
       ruleDeclaration: vps.ruleDeclaration,
+      snapshotId: input.snapshotId,
+      metricName: 'vps_pct',
+      metricValue: input.vpsPct,
+      thresholdValue: null,
     }
   }
 
+  // ✅ CASO 2: Polêmica vermelha
   if (polemic.semaphore === 'vermelho') {
     return {
       type: 'polemic_score_high',
@@ -642,9 +684,14 @@ export async function resolveEngagementScoreAlert(
       thresholdSource: polemic.thresholdSource,
       confidenceScore: polemic.confidenceScore,
       ruleDeclaration: polemic.ruleDeclaration,
+      snapshotId: input.snapshotId,
+      metricName: 'polemic_score_pct',
+      metricValue: input.polemicScorePct,
+      thresholdValue: null,
     }
   }
 
+  // ✅ CASO 3: ER vermelho ou âmbar
   if (er.semaphore === 'vermelho' || er.semaphore === 'ambar') {
     const isLowConfidenceAmber = er.semaphore === 'ambar' &&
       er.confidenceScore !== null && er.confidenceScore < 0.75
@@ -668,9 +715,14 @@ export async function resolveEngagementScoreAlert(
       thresholdSource: er.thresholdSource,
       confidenceScore: er.confidenceScore,
       ruleDeclaration: er.ruleDeclaration,
+      snapshotId: input.snapshotId,
+      metricName: 'er_real_pct',
+      metricValue: input.erRealPct,
+      thresholdValue: null,
     }
   }
 
+  // ✅ CASO 4: Tudo verde (engajamento saudável)
   return {
     type: 'engagement_collapse',
     severity: 'info',
@@ -684,6 +736,10 @@ export async function resolveEngagementScoreAlert(
     thresholdSource: er.thresholdSource,
     confidenceScore: er.confidenceScore,
     ruleDeclaration: er.ruleDeclaration,
+    snapshotId: input.snapshotId,
+    metricName: 'er_real_pct',
+    metricValue: input.erRealPct,
+    thresholdValue: null,
   }
 }
 

@@ -18,10 +18,6 @@
      hook useInstagramOverview) — ele reflete automaticamente o novo
      período assim que o Provider refaz o fetch.
    ========================================================================== */
-/* ==========================================================================
-   ORBIT · Page — Instagram Overview
-   Caminho físico real: src/app/instagram/page.tsx
-   ========================================================================== */
 'use client'
 import React, { useState } from 'react'
 import { OrbitDashboardProvider, useOrbitDashboard } from '@/context/OrbitDashboardContext'
@@ -34,11 +30,9 @@ import { FormatPerformanceTable } from '@/components/content/FormatPerformanceTa
 import { InsightCard } from '@/components/content/InsightCard'
 import { CriticalAlert } from '@/components/content/CriticalAlert'
 import { AudienceSummaryPanel } from '@/components/content/AudienceSummaryPanel'
-import { SectorPositioningPanel } from '@/components/panels/SectorPositioningPanel'  // ✅ ADICIONE AQUI
 import { GlassCard } from '@/components/common/GlassCard'
 import { DateRangeControl, type PeriodRange } from '@/components/common/DateRangeControl'
 import styles from './InstagramOverviewPage.module.css'
-
 
 import type {
   KPICardData as KPI,
@@ -177,19 +171,31 @@ function InstagramOverviewLayout() {
 
               {/* TELA 3 — Audiência ✅ NOVO */}
               {activeTab === 'audiencia' && (
-  <div className={styles.tabContent}>
-    {/* Painel de Posicionamento */}
-    <SectorPositioningPanel 
-      positioning={data.positioning}  // ✅ Passa os dados
-    />
-    
-    {/* Painel de Resumo de Audiência */}
-    <AudienceSummaryPanel 
-      summary={data.audienceSummary}
-    />
-  </div>
-)}
+                <>
+                  {/* ✅ AudienceSummaryPanel renderizado aqui */}
+                  {data.audienceSummary && (
+                    <AudienceSummaryPanel summary={data.audienceSummary} />
+                  )}
 
+                  <section className={styles.midRow} aria-label="Análise de público e seguidores">
+                    <QualityScoresPanel scores={data.qualityScores} />
+                    <GlassCard glowColor="cyan">
+                      <h3 style={{ color: '#fff', marginBottom: '1rem' }}>
+                        🌀 Funil de E-commerce &amp; Simulador Dinâmico
+                      </h3>
+                      <p style={{ color: '#aaa', marginBottom: '1.5rem' }}>
+                        Métricas baseadas nos dados coletados e estruturados.
+                      </p>
+                      <h3 style={{ color: '#fff', marginTop: '2rem' }}>
+                        👤 Avatar Alignment (Persona Psicográfica)
+                      </h3>
+                      <p style={{ color: '#aaa', marginTop: '0.5rem' }}>
+                        Dados de audiência carregados via pipeline L0/L1.
+                      </p>
+                    </GlassCard>
+                  </section>
+                </>
+              )}
 
               {/* Alertas críticos */}
               {data.criticalAlerts.length > 0 && (

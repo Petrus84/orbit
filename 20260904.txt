@@ -1,0 +1,152 @@
+diff --git a/src/lib/repositories/alertsRepository.ts b/src/lib/repositories/alertsRepository.ts
+index e9d0a6b..195a8a1 100644
+--- a/src/lib/repositories/alertsRepository.ts
++++ b/src/lib/repositories/alertsRepository.ts
+@@ -52,6 +52,25 @@ import type {
+ } from '@/types/orbit'
+ import type { AlertDraft } from './contentContractEngine'
+ 
++// ── Guard de AlertType (fecha o RISCO ABERTO documentado no changelog
++// acima: `as AlertType` mentia pro compilador sobre drafts vindos de
++// withMissingDataGuard com type: 'data_gap', que não existe neste union) ──
++const ALERT_TYPES: readonly AlertType[] = [
++  'ctr_below_threshold',
++  'engagement_collapse',
++  'avatar_misalignment',
++  'creative_fatigue',
++  'roas_below_minimum',
++  'follower_churn_high',
++  'polemic_score_high',
++  'boost_opportunity',
++  'budget_pace',
++]
++
++function isAlertType(value: string): value is AlertType {
++  return (ALERT_TYPES as readonly string[]).includes(value)
++}
++
+ // ── Raw shape from orbit.alerts + orbit.clients JOIN ─────────────────────
+ interface OrbitAlertRow {
+   id: string
+@@ -71,6 +90,13 @@ interface OrbitAlertRow {
+   probable_cause: string | null
+   confidence_level: ConfidenceLevel | null
+   data_source: 'real_snapshot' | 'fallback_by_client' | 'fallback_by_error' | 'fallback_by_empty' | 'estimate' | null
++  // ✅ NOVO: campos confirmados em orbit.alerts (database.types.ts) que
++  // ainda não eram lidos por este repositório.
++  snapshot_id: string | null
++  suggested_action: string | null
++  resolved_at: string | null
++  snoozed_until: string | null
++  resolved_by: string | null
+   // ✅ JOIN
+   clients: {
+     name: string
+@@ -101,6 +127,12 @@ function fromOrbitRow(row: OrbitAlertRow): Alert {
+     probableCause: row.probable_cause ?? undefined,
+     confidenceLevel: row.confidence_level ?? undefined,
+     dataSource: row.data_source ?? undefined,
++    // ✅ NOVO: mapeamento dos campos confirmados em orbit.alerts
++    snapshotId: row.snapshot_id ?? undefined,
++    suggestedAction: row.suggested_action ?? undefined,
++    resolvedAt: row.resolved_at ?? undefined,
++    snoozedUntil: row.snoozed_until ?? undefined,
++    resolvedBy: row.resolved_by ?? undefined,
+   }
+ }
+ 
+@@ -114,6 +146,7 @@ function orbitBaseQuery() {
+       metric_name, metric_value, threshold_value, action_url,
+       is_resolved, created_at,
+       natureza, probable_cause, confidence_level, data_source,
++      snapshot_id, suggested_action, resolved_at, snoozed_until, resolved_by,
+       clients ( name, handle )
+     `
+     )
+diff --git a/src/lib/repositories/onboardingRepository.ts b/src/lib/repositories/onboardingRepository.ts
+index d412078..aef283d 100644
+--- a/src/lib/repositories/onboardingRepository.ts
++++ b/src/lib/repositories/onboardingRepository.ts
+@@ -1,10 +1,27 @@
+ // ============================================================================
+ // src/lib/repositories/onboardingRepository.ts
+-// Versão: 1.1.0
++// Versão: 1.1.1
++//
++// v1.1.1 (fechamento de bug — 31/08/2026):
++// - 🐛 CORRIGIDO upsertClientOnboarding(): TS2345 — `bio_links: BioLink[]`
++//   (interface nomeada, sem assinatura de índice) não é estruturalmente
++//   compatível com `Json` (o tipo gerado pra colunas jsonb: união recursiva
++//   com `{ [key: string]: Json }`). Isso é uma limitação do TypeScript, não
++//   um problema do dado em si — em runtime o shape sempre foi válido.
++//   Mesma classe de problema também afeta `expected_schwartz`/
++//   `real_schwartz` (ambos `Record<string, SchwatzValue>`, e `SchwatzValue`
++//   é interface nomeada sem index signature) — corrigidos juntos, mesmo
++//   que só `bio_links` tivesse aparecido no erro reportado; teriam
++//   quebrado do mesmo jeito assim que o TS chegasse neles.
++//   Fix: cast explícito `as unknown as Json` nesses 3 campos, só no ponto
++//   de saída pro Supabase — o tipo `ClientOnboarding` (SSOT em orbit.ts)
++//   continua estrito pro resto do app; a perda de precisão de tipo fica
++//   isolada nesta função.
+ // ============================================================================
+ 
+ import { supabase } from '@/lib/supabase'
+ import type { ClientOnboarding } from '@/types/orbit'
++import type { Json } from '@/types/database.types'
+ 
+ // ============================================================================
+ // ✅ FUNÇÃO DE VALIDAÇÃO (AGORA DEFINIDA!)
+@@ -101,7 +118,18 @@ export async function upsertClientOnboarding(onboarding: ClientOnboarding): Prom
+     const { error } = await supabase
+       .schema('orbit')
+       .from('client_onboarding')
+-      .upsert(onboarding, { onConflict: 'client_id' })
++      .upsert(
++        {
++          ...onboarding,
++          // ⚠️ Cast pra Json só aqui, no ponto de saída — ver changelog
++          // v1.1.1 no topo do arquivo. ClientOnboarding continua estrito
++          // em orbit.ts; isso não afasta a interface do SSOT.
++          bio_links: onboarding.bio_links as unknown as Json,
++          expected_schwartz: onboarding.expected_schwartz as unknown as Json | null,
++          real_schwartz: onboarding.real_schwartz as unknown as Json | null,
++        },
++        { onConflict: 'client_id' }
++      )
+ 
+     if (error) {
+       console.error('[onboardingRepository] Erro ao salvar:', error.message)
+@@ -114,4 +142,4 @@ export async function upsertClientOnboarding(onboarding: ClientOnboarding): Prom
+     console.error('[onboardingRepository] Exceção:', err)
+     return false
+   }
+-}
++}
+\ No newline at end of file
+diff --git a/src/types/orbit.ts b/src/types/orbit.ts
+index 3383427..2669eba 100644
+--- a/src/types/orbit.ts
++++ b/src/types/orbit.ts
+@@ -398,6 +398,22 @@ dataSource?: 'real_snapshot' | 'fallback_by_client' | 'fallback_by_error' | 'fal
+   // obrigatório expor quando = 'fallback_by_client': é o campo que existe
+   // porque o Funil (funnelRepository.ts) hoje cai em FALLBACK_BY_CLIENT sem
+   // marcar a origem do dado que chega à UI.
++
++  /**
++   * ✅ NOVO (schema orbit.alerts confirmado via database.types.ts):
++   * campos que já existem na tabela real, mas ainda não eram expostos por
++   * `Alert`/`fromOrbitRow()`. Todos opcionais/nuláveis, mesmo padrão dos
++   * campos do Content Contract acima — ausência ≠ erro, é estado válido.
++   */
++  snapshotId?: string
++  // referência ao snapshot (orbit.ig_account_snapshots ou equivalente) que
++  // originou o metricValue. `undefined`/`null` = alerta ainda sem
++  // proveniência registrada (ver observação sobre o gerador de
++  // ctr_below_threshold — nenhuma rotina hoje preenche esta coluna).
++  suggestedAction?: string | null
++  resolvedAt?: string | null
++  snoozedUntil?: string | null
++  resolvedBy?: string | null
+ }
+ 
+ 

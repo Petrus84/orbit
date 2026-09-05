@@ -1,0 +1,56 @@
+* 73452c7 (HEAD -> master, origin/master, origin/HEAD) correção de alertrepo bug alertype
+* 4998cab  coomitei
+*   973fabd Merge pull request #5 from Petrus84/feature/enums-patch
+|\  
+| * 5981562 (origin/feature/enums-patch) Trabalho finalizado nas enums e organizacao de scripts
+| * 10a794d feat: consolida ajustes de contratos, views e rotas do dashboard
+| * 41840bd  alinhamento de thresholds
+* | d66655e Merge pull request #4 from Petrus84/feature/enums-patch
+|\| 
+| * d627b51 build: organizar estrutura da raiz e corrigir scroll-behavior no layout
+* | d454ee9 Merge pull request #3 from Petrus84/feature/enums-patch
+|\| 
+| * ecbcd5c build: ignorar script de inspecao no tsconfig
+| * a20529c feat: patch de enums e organizacao de arquivos
+| * f069735 Criacao da rota de alertas substituindo o antigo codigo hardcoded
+| * 91281f5 wip: diagnóstico de alertas - tipos e hooks
+* | fc1b424 (agents/local-execution-patch-application) Merge pull request #1 from Petrus84/feature/enums-patch
+|\| 
+| * 0714f31 Salvando alterações da feature enums-patch
+| * 1de8920 (backup/antes-master) checkpoint antes de criar branch
+| * f75cdc6 ajustes antes do merge
+* | ea5f643 merge: feature/refactor-orbit into master
+|\| 
+| * 45285dc (feature/refactor-orbit) refactor(types): resolve duplicação de AvatarProfile e remove thresholds hardcoded em orbit.ts
+| * c804575 (origin/feature/refactor-orbit) fix: rename migration file (remove extra space)
+| * db4d725 feat: add 13 missing migrations (reconciliation with remote schema)
+| * e858abd 🔄 chore: Trazer SSOT de métricas e manifesto do Instagram
+| * 680efde feat: atualiza arquivos de codigo e orbit.ts
+| * 9abce42 chore: alinhar contratos canônicos de alertas e status de requisição
+| * b4fc7c9 feat: adicionar componentes comuns do funil e avatar
+|/  
+* 2a6433a style: remove arquivos duplicados orbit e consolida importações legítimas ssot
+* 5fa427b feat(layout): restaura interface original ssot e blinda config do eslint
+* 48ef4f9 fix: consolidate globals.css with dual design system (orbit v1.1.0 + SSOT v2.0.0 + Tailwind v4)
+* bf06eed restore: recover orbit-globals.css (v1.0.0) for CSS Modules compatibility
+* c420c38 fix: migrate to Tailwind v4 + SSOT v2.0.0 design system
+* 6ca514f  comit de algnament bar
+* 986f92b comit para ajustes diversos
+* 69f9440  Deus nos salva
+* 7db373f  comit final com rotas ok
+* 9902460 criacao de rotas e alteracao do bug relacionado ao arquivo instagram overview repository, fazia mencao a dados que nao constam no supabse (calculated) q
+* 28b2244 refactor(infra): consolidacao da arquitetura orbit s e sincronizacao de schemas
+* ab26b07 Mudanças nos scripts alinhados aos dados do orbits.ts no supabase
+* b1a6f31 fix: corrigir import de supabaseClient para supabase
+* cd77a0c chore: atualizar configurações eslint, typescript e dependências
+* 1c54284 feat: adicionar resolveClientId e melhorias no extract-demographics
+* 7df0a70 refactor: migrar supabaseClient para supabase com melhorias de tipagem
+* 84b100d fix: remove incomplete index idx_orbit_clients_public_id
+* d716142 feat: add orbit schema + update repositories for Sprint 2
+* e22cd80 refactor: harmonizar tipagens de overview, incluir handle no seeder e blindar políticas locais
+* 7cf0671 refactor: atualizar scripts de ingestão e semente de dados com nova estrutura
+* 68624e1 fix(arch): alinhar repositórios e telas com a SSOT v3.0 e passar no build do Next
+* 8d438c7 fix(types): centralizar tipos no orbit.ts e corrigir conflitos de funil e campanhas
+* 6732716 chore: adicionar orbit-dashboard/ ao .gitignore
+* 1db3e51 chore: remover backups antigos + scripts de diagnóstico + remover embedded git repo
+* cd033dc chore: remover backups antigos + scripts de diagnóstico
