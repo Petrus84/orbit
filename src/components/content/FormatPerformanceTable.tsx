@@ -33,6 +33,12 @@ import type { FormatPerformanceRow, PostSummary } from '@/types/orbit'
 
 export interface FormatPerformanceTableProps {
 rows: FormatPerformanceRow[]
+// ✅ NOVO 06/09/2026: a mesma tabela é usada em dois lugares — Visão Geral
+// (deve ser só um resumo, sem expandir) e Por post (expande e mostra
+// caption/boost de cada post). `expandable=false` desliga o clique, o
+// chevron e a linha de detalhe — sem duplicar o componente inteiro.
+// Default `true` preserva o comportamento existente em "Por post".
+expandable?: boolean
 }
 
 const FORMAT_ICON: Record<string, React.ReactNode> = {
@@ -107,6 +113,14 @@ return (
       {captionDisplay}
     </span>
 
+    {/* ✅ NOVO 06/09/2026: is_boost_candidate já calculado no banco, mas
+        nunca aparecia na tela — o post ficava marcado só no Supabase. */}
+    {post.isBoostCandidate && (
+      <span className={styles.boostBadge} title="Candidato a impulsionamento">
+        🚀 Boost
+      </span>
+    )}
+
     {/* Score Polêmica */}
     <span className={hasScore ? styles.postScore : styles.postScoreMuted}>
       {hasScore ? `${post.polemicScorePct?.toFixed(1)}%` : '—'}
@@ -115,7 +129,7 @@ return (
 )
 }
 
-export function FormatPerformanceTable({ rows }: FormatPerformanceTableProps) {
+export function FormatPerformanceTable({ rows, expandable = true }: FormatPerformanceTableProps) {
 const [expandedId, setExpandedId] = useState<string | null>(null)
 
 return (
@@ -134,8 +148,8 @@ return (
       </thead>
       <tbody>
         {rows.map((row) => {
-          const isExpanded = expandedId === row.id
-          const canExpand = row.postsDetail.length > 0
+          const isExpanded = expandable && expandedId === row.id
+          const canExpand = expandable && row.postsDetail.length > 0
 
           return (
             <React.Fragment key={row.id}>

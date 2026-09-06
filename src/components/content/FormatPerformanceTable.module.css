@@ -150,3 +150,15 @@ flex:     0 0 auto;
 min-width: 40px;
 text-align: right;
 }
+
+/* ✅ NOVO 06/09/2026: badge de post candidato a boost (is_boost_candidate) */
+.boostBadge {
+flex:           0 0 auto;
+font-size:      var(--font-size-xs);
+color:          #ffb020;
+background:     rgba(255, 176, 32, 0.12);
+border:         1px solid rgba(255, 176, 32, 0.35);
+border-radius:  4px;
+padding:        1px 6px;
+white-space:    nowrap;
+}

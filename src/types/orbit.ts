@@ -515,6 +515,10 @@ export interface PostSummary {
   comments: number | null
   caption: string | null
   polemicScorePct: number | null
+  // ✅ NOVO (06/09/2026): orbit.ig_posts.is_boost_candidate já é calculado
+  // no banco (motor de boost), mas nunca tinha sido exposto na tela —
+  // ficava "invisível" mesmo quando true. Ver FormatPerformanceTable.
+  isBoostCandidate: boolean
 }
 
 export interface InsightData {

@@ -149,7 +149,29 @@ const PostRowRawSchema = z.object({
   comments:            z.number().nullable(),
   caption:             z.string().nullable(),
   polemic_score_pct:   z.number().nullable(),
+  is_boost_candidate:  z.boolean().nullable(),
 })
+
+// ✅ NOVO (06/09/2026): blindagem contra caption com encoding corrompido
+// (UTF-8 salvo/lido como Latin-1 em algum ponto do pipeline de ingest —
+// causa raiz real fica no script de ingest, fora deste arquivo, mas a
+// tela não deve exibir mojibake enquanto isso não for corrigido lá).
+// Heurística: só tenta reparar se o texto contém os marcadores típicos de
+// mojibake (Ã seguido de outro caractere, ou â€); texto normal em PT-BR
+// nunca bate nesse padrão, então não há risco de "reparar" algo que já
+// estava certo. Se o "reparo" falhar (texto não era mojibake de verdade),
+// devolve o original sem alterar.
+function repairMojibakeCaption(text: string | null): string | null {
+  if (!text) return text
+  if (!/Ã.|â€/.test(text)) return text
+  try {
+    const bytes = Uint8Array.from(Array.from(text, ch => ch.charCodeAt(0)))
+    return new TextDecoder('utf-8', { fatal: true }).decode(bytes)
+  } catch {
+    return text
+  }
+}
+
 
 // ── Mapas de transformação ──────────────────────────────────────────────
 
@@ -232,16 +254,36 @@ export async function fetchInstagramOverview(
   let realEnd   = periodEnd
 
   try {
-    const { data: orbitBounds, error: orbitBoundsError } = await supabase
-      .from('ig_account_snapshots')
-      .select('period_start, period_end')
-      .eq('client_id', clientId)
-      .order('period_start', { ascending: true })
-      .returns<{ period_start: string; period_end: string }[]>()
+    // ⚠️ CORRIGIDO 06/09/2026: a versão anterior ordenava por `period_start`
+    // e lia o `period_end` da última linha, assumindo que quem começa depois
+    // também termina depois. Isso quebra com snapshots avulsos de 1 dia
+    // (ex: period_start=period_end='2026-07-14') que têm period_start mais
+    // recente que um snapshot de 90 dias já existente (period_end
+    // '2026-08-24') — a tela ficava travada na data do snapshot avulso,
+    // ignorando dado mais novo e mais completo. Agora pega MIN(period_start)
+    // e MAX(period_end) de verdade, cada um independente do outro.
+    const [minStartRes, maxEndRes] = await Promise.all([
+      supabase
+        .from('ig_account_snapshots')
+        .select('period_start')
+        .eq('client_id', clientId)
+        .order('period_start', { ascending: true })
+        .limit(1)
+        .maybeSingle()
+        .overrideTypes<{ period_start: string }, { merge: false }>(),
+      supabase
+        .from('ig_account_snapshots')
+        .select('period_end')
+        .eq('client_id', clientId)
+        .order('period_end', { ascending: false })
+        .limit(1)
+        .maybeSingle()
+        .overrideTypes<{ period_end: string }, { merge: false }>(),
+    ])
 
-    if (!orbitBoundsError && orbitBounds && orbitBounds.length > 0) {
-      realStart = orbitBounds[0].period_start
-      realEnd   = orbitBounds[orbitBounds.length - 1].period_end
+    if (minStartRes.data && maxEndRes.data) {
+      realStart = minStartRes.data.period_start
+      realEnd   = maxEndRes.data.period_end
     } else {
       console.warn('[Discovery] Nenhuma safra encontrada em orbit.ig_account_snapshots.')
     }
@@ -394,7 +436,7 @@ export async function fetchPostsByFormat(
 
   const { data, error } = await supabase
     .from('ig_posts')
-    .select('id, content_format, published_at, likes, comments, caption, polemic_score_pct')
+    .select('id, content_format, published_at, likes, comments, caption, polemic_score_pct, is_boost_candidate')
     .eq('client_id', clientId)
     .gte('published_at', start)
     .lte('published_at', end)
@@ -424,8 +466,9 @@ export async function fetchPostsByFormat(
       publishedAt: post.published_at,
       likes: post.likes,
       comments: post.comments,
-      caption: post.caption,
+      caption: repairMojibakeCaption(post.caption),
       polemicScorePct: post.polemic_score_pct,
+      isBoostCandidate: post.is_boost_candidate ?? false,
     }
 
     const list = byFormat.get(label) ?? []
