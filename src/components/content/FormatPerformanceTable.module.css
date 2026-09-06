@@ -121,7 +121,13 @@ min-width: 100px;
 /* ✅ NOVO v2.1.0: Caption com truncamento */
 
 .postCaption {
-flex:              2;
+/* ✅ FIX (gap gigante antes do %): antes era `flex: 2`, e por ser o único
+   item com flex-grow > 0 na linha, ele absorvia 100% do espaço livre
+   independente do tamanho do texto — em captions curtas isso deixava uma
+   caixa larga com texto alinhado à esquerda e um vão vazio antes do
+   .postScore. Trocado para flex-basis fixo sem grow: a caixa some do
+   tamanho do conteúdo (até o teto) e o % vem logo em seguida. */
+flex:              0 1 480px;
 color:             var(--text-dim);
 overflow:          hidden;
 text-overflow:     ellipsis;
@@ -149,16 +155,4 @@ color:    var(--text-dim);
 flex:     0 0 auto;
 min-width: 40px;
 text-align: right;
-}
-
-/* ✅ NOVO 06/09/2026: badge de post candidato a boost (is_boost_candidate) */
-.boostBadge {
-flex:           0 0 auto;
-font-size:      var(--font-size-xs);
-color:          #ffb020;
-background:     rgba(255, 176, 32, 0.12);
-border:         1px solid rgba(255, 176, 32, 0.35);
-border-radius:  4px;
-padding:        1px 6px;
-white-space:    nowrap;
 }

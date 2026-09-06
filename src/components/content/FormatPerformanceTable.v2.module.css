@@ -1,0 +1,126 @@
+/* FormatPerformanceTable.v2.module.css */
+
+.wrapper {
+display:        flex;
+flex-direction: column;
+}
+
+/* ── FilterBar ────────────────────────────────────────────────────────── */
+
+.filterBar {
+display:       flex;
+align-items:   center;
+flex-wrap:     wrap;
+gap:           var(--space-3);
+padding:       var(--space-3);
+margin-bottom: var(--space-4);
+background:    var(--bg-hover);
+border:        var(--border-width) solid var(--border-default);
+border-radius: var(--radius-md);
+}
+
+.field {
+display: flex;
+flex:    1 1 160px;
+min-width: 160px;
+}
+
+.field:first-child {
+flex: 2 1 220px;
+}
+
+/* Label associado ao input/select, presente pro leitor de tela mas fora
+   do fluxo visual — os controles já têm placeholder/valor selecionado
+   como indicação visível. */
+.visuallyHiddenLabel {
+position: absolute;
+width:    1px;
+height:   1px;
+padding:  0;
+margin:   -1px;
+overflow: hidden;
+clip:     rect(0, 0, 0, 0);
+white-space: nowrap;
+border:   0;
+}
+
+.input,
+.select {
+width:           100%;
+padding:         var(--space-2) var(--space-3);
+background:      var(--bg-card);
+border:          var(--border-width) solid var(--border-default);
+border-radius:   var(--radius-sm);
+color:           var(--text-primary);
+font-size:       var(--font-size-sm);
+font-family:     var(--font-family);
+}
+
+.input:focus,
+.select:focus {
+outline:        2px solid var(--acc);
+outline-offset: 2px;
+border-color:   var(--acc);
+}
+
+.resultCount {
+font-size:   var(--font-size-sm);
+color:       var(--text-secondary);
+white-space: nowrap;
+margin-left: auto;
+}
+
+/* ── FormatGroup ──────────────────────────────────────────────────────── */
+
+.group {
+margin-bottom: var(--space-4);
+}
+
+.groupHeader {
+display:        flex;
+align-items:    center;
+gap:            var(--space-2);
+width:          100%;
+padding:        var(--space-3);
+background:     none;
+border:         none;
+border-bottom:  var(--border-width) solid var(--border-default);
+cursor:         pointer;
+text-align:     left;
+font-family:    var(--font-family);
+}
+
+.groupHeader:disabled {
+cursor: default;
+opacity: 0.6;
+}
+
+.groupHeader:hover:not(:disabled) {
+background: rgba(255, 255, 255, 0.02);
+}
+
+.groupTitle {
+color:       var(--text-primary);
+font-weight: var(--font-weight-bold);
+font-size:   var(--font-size-base);
+}
+
+.groupCount {
+flex:      1;
+color:     var(--text-dim);
+font-size: var(--font-size-xs);
+}
+
+.groupEmpty {
+padding:   var(--space-3);
+color:     var(--text-dim);
+font-size: var(--font-size-sm);
+font-style: italic;
+}
+
+.emptyState {
+padding:    var(--space-8) var(--space-3);
+text-align: center;
+color:      var(--text-dim);
+font-size:  var(--font-size-sm);
+}

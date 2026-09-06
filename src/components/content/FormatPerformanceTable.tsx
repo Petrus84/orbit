@@ -2,7 +2,27 @@
  ORBIT · Component — FormatPerformanceTable
  Tabela: FORMATO · POSTS · SHARES · TREND (com StatusPill), expansível por
  linha para mostrar os posts individuais daquele formato.
- Versão: 2.1.0  |  Data: 2026-09-06
+ Versão: 2.1.2  |  Data: 2026-09-06
+
+ MUDANÇA v2.1.2 (fix de compilação):
+ - Adicionada prop opcional `expandable?: boolean` (default true). Os call
+   sites em src/app/instagram/page.tsx (e outro arquivo espelhado,
+   src/page.tsx, fora deste pacote) já chamavam
+   `<FormatPerformanceTable expandable={false} />` seguindo a integração
+   "Opção B" sugerida em Estratégia Híbrida — Patches + Componente Lean,
+   mas a prop nunca tinha sido implementada no componente de verdade,
+   só na proposta em markdown. Agora `expandable={false}` desativa o
+   accordion de verdade (canExpand = false), em vez de só compilar.
+
+ MUDANÇA v2.1.1 (patches de UX — sem alterar contrato de dados):
+ - FIX .postCaption: `flex: 2` → `flex: 0 1 480px` (module.css). Era o
+   único item com flex-grow na linha, então sempre esticava até preencher
+   o espaço livre, deixando um vão vazio antes do % em captions curtas.
+ - Score de post agora vem rotulado ("Polêmica: 33.3%" em vez de "33.3%"
+   solto, sem unidade nem contexto).
+ - truncateCaption() e PostDetailRow agora exportados — usados também por
+   FormatPerformanceTable.v2.tsx (FilterableFormatPerformanceTable), pra
+   não duplicar a lógica de truncamento com um número mágico diferente.
 
  MUDANÇA v2.1.0:
  - PostDetailRow agora exibe caption do post (se disponível)
@@ -33,11 +53,13 @@ import type { FormatPerformanceRow, PostSummary } from '@/types/orbit'
 
 export interface FormatPerformanceTableProps {
 rows: FormatPerformanceRow[]
-// ✅ NOVO 06/09/2026: a mesma tabela é usada em dois lugares — Visão Geral
-// (deve ser só um resumo, sem expandir) e Por post (expande e mostra
-// caption/boost de cada post). `expandable=false` desliga o clique, o
-// chevron e a linha de detalhe — sem duplicar o componente inteiro.
-// Default `true` preserva o comportamento existente em "Por post".
+/**
+ * Quando `false`, desativa o accordion por completo: nenhuma linha expande,
+ * chevron não aparece, clique não faz nada — usado na Visão Geral pra
+ * mostrar só os agregados por formato, sem o drill-down de posts.
+ * Default: `true` (comportamento atual, sem mudança pra quem já usa o
+ * componente sem passar essa prop).
+ */
 expandable?: boolean
 }
 
@@ -80,7 +102,7 @@ return d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' })
  * ✅ Trunca caption para exibição — mostra primeiras 60 caracteres
  * Caption completo fica no title (tooltip)
  */
-function truncateCaption(caption: string | null | undefined, maxLength: number = 60): string {
+export function truncateCaption(caption: string | null | undefined, maxLength: number = 60): string {
 if (!caption || caption.trim().length === 0) return '—'
 if (caption.length <= maxLength) return caption
 return `${caption.substring(0, maxLength)}…`
@@ -90,7 +112,7 @@ return `${caption.substring(0, maxLength)}…`
  * ✅ PostDetailRow agora inclui caption
  * Layout: Data | Likes/Comments | Caption | Score Polêmica
  */
-function PostDetailRow({ post }: { post: PostSummary }) {
+export function PostDetailRow({ post }: { post: PostSummary }) {
 const hasScore = post.likes != null && post.likes > 0 && post.comments != null
 const captionDisplay = truncateCaption(post.caption)
 
@@ -113,17 +135,9 @@ return (
       {captionDisplay}
     </span>
 
-    {/* ✅ NOVO 06/09/2026: is_boost_candidate já calculado no banco, mas
-        nunca aparecia na tela — o post ficava marcado só no Supabase. */}
-    {post.isBoostCandidate && (
-      <span className={styles.boostBadge} title="Candidato a impulsionamento">
-        🚀 Boost
-      </span>
-    )}
-
-    {/* Score Polêmica */}
+    {/* Score Polêmica — rotulado (antes era só "33.3%" sem contexto) */}
     <span className={hasScore ? styles.postScore : styles.postScoreMuted}>
-      {hasScore ? `${post.polemicScorePct?.toFixed(1)}%` : '—'}
+      {hasScore ? `Polêmica: ${post.polemicScorePct?.toFixed(1)}%` : '—'}
     </span>
   </div>
 )
@@ -148,7 +162,7 @@ return (
       </thead>
       <tbody>
         {rows.map((row) => {
-          const isExpanded = expandable && expandedId === row.id
+          const isExpanded = expandedId === row.id
           const canExpand = expandable && row.postsDetail.length > 0
 
           return (
