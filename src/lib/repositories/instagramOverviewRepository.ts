@@ -147,6 +147,7 @@ const PostRowRawSchema = z.object({
   published_at:        z.string(),
   likes:               z.number().nullable(),
   comments:            z.number().nullable(),
+  caption:             z.string().nullable(),
   polemic_score_pct:   z.number().nullable(),
 })
 
@@ -252,7 +253,7 @@ export async function fetchInstagramOverview(
     fetchKPIs(clientId, realStart, realEnd),
     fetchQualityScores(clientId),
     fetchFormatPerformance(clientId, realStart, realEnd),
-    fetchSharesSummary(clientId, realStart, realEnd),
+    fetchSharesSummary(clientId),
     fetchAudienceSummary(clientId, realStart, realEnd),
     fetchCriticalAlerts(clientId),
     fetchSectorPositioning(clientId),
@@ -393,7 +394,7 @@ export async function fetchPostsByFormat(
 
   const { data, error } = await supabase
     .from('ig_posts')
-    .select('id, content_format, published_at, likes, comments, polemic_score_pct')
+    .select('id, content_format, published_at, likes, comments, caption, polemic_score_pct')
     .eq('client_id', clientId)
     .gte('published_at', start)
     .lte('published_at', end)
@@ -423,6 +424,7 @@ export async function fetchPostsByFormat(
       publishedAt: post.published_at,
       likes: post.likes,
       comments: post.comments,
+      caption: post.caption,
       polemicScorePct: post.polemic_score_pct,
     }
 
@@ -468,15 +470,11 @@ async function fetchFormatPerformance(
 
 async function fetchSharesSummary(
   clientId: string,
-  start: string,
-  end: string
 ): Promise<SharesSummary> {
   const { data, error } = await supabase
     .from('ig_account_snapshots')
     .select('interactions_shares, period_start, period_end')
     .eq('client_id', clientId)
-    .gte('period_start', start)
-    .lte('period_end', end)
     .not('interactions_shares', 'is', null)
     .order('period_end', { ascending: false })
     .limit(1)
@@ -630,8 +628,11 @@ export async function fetchSectorPositioning(
     funnelMaturity: onboarding.funnel_maturity,
     proofMechanism: onboarding.proof_mechanism,
     erReal,
+    erRealValue: snapshot?.erRealPct ?? null,
     vps,
+    vpsValue: snapshot?.vpsPct ?? null,
     polemicScore,
+    polemicScoreValue: snapshot?.polemicScorePct ?? null,
     engagementPeriodNotes: onboarding.q1_engagement_period_notes,
     contentProxyNotes: onboarding.q2_content_proxy_notes,
     misalignmentNotes: onboarding.q3_misalignment_notes,

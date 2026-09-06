@@ -1,67 +1,24 @@
 /* ==========================================================================
    ORBIT · contentContractEngine.ts
-   Implementação de código do modelo de decisão descrito em
-   contentContractTreeDecisionModel.md, agora conciliado com o
-   **Content Contract v1.3** (24/08/2026 — substitui v1.2). Consome os tipos
-   de src/types/orbit.ts (não redeclarados aqui) e o schema de
-   content_contract_migrationv1.2.sql.
+   Content Contract v1.5.1 + textos de cliente (06/09/2026)
 
-   REGRA DE OURO deste arquivo: nenhuma função aqui reimplementa a régua de
-   threshold em JS. A régua vive uma única vez em orbit.fn_classify_metric
-   (Postgres). Isso existe porque a tela de Onboarding (imagem 3, "Split de
-   audiência declarado") já documenta o bug-tipo que este arquivo evita:
-   `audience_split_sum` validado tanto em OnboardingScreen.tsx quanto em
-   onboardingRepository.ts — mesma regra, dois lugares, garantido divergir
-   um dia. Aqui: uma regra, uma chamada RPC.
+   REGRA DE OURO: nenhuma função aqui reimplementa threshold em JS.
+   A régua vive em orbit.fn_classify_metric (Postgres). Este arquivo
+   classifica o que o banco já decidiu e escreve o que o cliente lê.
 
-   ⚠️ O QUE MUDOU NESTA REVISÃO (v1.3):
-   - `RefThresholdRow` e `ClassifiedMetric` SAÍRAM daqui e foram para
-     orbit.ts (SSOT) — viviam redeclarados localmente, o mesmo erro que o
-     comentário original deste arquivo já apontava para `AlertNatureza`.
-   - `calibration_method` ganhou 2 valores novos no banco
-     (`empirical_percentile`, `empirical_percentile_zero_inflated`) — ver
-     orbit.ts. Este arquivo NÃO decide threshold a partir disso; usa só
-     pra saber se precisa do texto zero-inflated do Content Contract §1.1.
-   - `classifyMetric()` agora também devolve `thresholdSource`,
-     `confidenceScore` e `ruleDeclaration` — a régua continua decidida
-     100% no Postgres; o que mudou é que o Postgres agora informa qual
-     nível da hierarquia (`category+tier → category+all → global`, §0.1)
-     ele usou, e este arquivo só rotula/traduz isso pro vocabulário oficial
-     do contrato. Isso NÃO é reimplementar a régua — é o texto declarar a
-     régua que o banco já escolheu, exigência explícita do §0.1.
-   - ✅ 25/08/2026: migração de `fn_classify_metric` CONFIRMADA em produção
-     (`information_schema`/`pg_proc` verificado pós-migração) — a função
-     hoje devolve os 9 campos que `FnClassifyMetricRow` espera
-     (`semaphore, status_text, confidence_level, category, tier,
-     confidence_score, calibration_method, zero_pct, signal_range_label`),
-     usando `ref_thresholds.tier_normalized` na coluna `tier` (antes vinha
-     preenchida com string de confidence level por engano). CASO G está
-     desbloqueado. A guarda de shape em `classifyMetric()` (ver função,
-     abaixo) foi mantida como backstop defensivo, não removida — não
-     decide nada sozinha, só recusa confiar num `semaphore` fora de
-     {verde,ambar,vermelho}.
-   - O gate de confiança do §0.2 (confidence_score < 0.75 força 🟡/🔴) é
-     comportamento de TEXTO/STATUS, não de threshold — o próprio contrato
-     (Introdução, item 6) atribui esse ajuste ao código, não mais ao banco.
-     Implementado em `applyConfidenceGate()`.
+   Voz:
+   - título = o que está acontecendo na conta
+   - probableCause = por que esta hipótese, não a outra
+   - immediateAction = um verbo, um objeto, um prazo
+   - caveat = só quando muda a permissão de agir
+   - "Traduzindo:" = número vira contagem concreta; nunca explica
+     zero-inflated, threshold ou calibração para o cliente
 
-   ⚠️ O QUE MUDOU EM 31/08/2026 (fechamento de dívida — category/tier):
-   - `classifyMetric()` e `resolveEngagementScoreAlert()` passam a aceitar
-     `category`/`tier` opcionais e repassá-los para `fn_classify_metric`.
-     A assinatura real da função no Postgres já era
-     `fn_classify_metric(p_metric_name, p_value, p_category DEFAULT NULL,
-     p_tier DEFAULT NULL)` — confirmado lendo a função no dump do banco
-     (31/08/2026); o TS estava desatualizado em relação a ela, não o
-     contrário.
-   - `mapSegmentToCategory` e `mapFollowersToTier` foram adicionados.
-     Confirmados contra dados reais (`SELECT DISTINCT category,
-     tier_normalized FROM orbit.ref_thresholds`, 31/08/2026): hoje só
-     existe UMA categoria calibrada (`1_ecommerce_direto`), com tiers
-     nano/micro/mid/macro/all — todo o resto cai em `all`/`all` (global).
-     Os cortes de `mapFollowersToTier` são os TIER_BANDS oficiais do
-     pipeline (`calibrate_thresholds_stratified.py`) — os mesmos que
-     gravaram `tier_normalized` nas linhas reais, não uma convenção de
-     mercado genérica.
+   vps_pct na UI = "alcance na base" (fatia de quem já segue que viu o post).
+   Não é Value Proposition Score de questionário. Chave do banco não muda.
+
+   polemic_score_pct na UI = "discussão nos comentários"
+   (posts em que alguém discorda, não só curte). Não é incentivo a polêmica.
    ========================================================================== */
 
 import type {
@@ -93,7 +50,7 @@ export interface AlertContractFields {
 }
 
 export interface EngagementScoreInput {
-  snapshotId: string       // ⬅️ novo — EngagementScoreSnapshot já tem, estruturalmente compatível
+  snapshotId: string
   erRealPct: number
   utilityScorePct: number
   polemicScorePct: number
@@ -117,34 +74,10 @@ interface FnClassifyMetricRow {
   signal_range_label?: string | null
 }
 
-/**
- * ✅ Mapeia setor_benchmark → category de orbit.ref_thresholds.
- *
- * ⚠️ REVISADO 05/09/2026 (fecha ORB-DEBT-052 no lado do código):
- * Até esta revisão, só 'comercio_direto_ecommerce_social' tinha régua,
- * e o código traduzia esse valor para o nome legado '1_ecommerce_direto'
- * (dataset benchmark_58_v1). O novo payload calibrado
- * (benchmark_58_v2_real_schema, 29 linhas, orbit_v41.py) usa os valores
- * de SetorBenchmark *como string de category*, sem prefixo numérico —
- * ou seja, a partir de agora a categoria em orbit.ref_thresholds é
- * literalmente o mesmo texto do enum, sem tradução nenhuma.
- *
- * 7 categorias com régua própria calibrada nesta revisão (n≥10 contas,
- * ver coverage_report_final.json): comercio_direto_ecommerce_social,
- * infoprodutor_educador_pago, servico_consultoria_profissional,
- * patrocinio_publicidade_marca, membership_assinatura_comunidade,
- * monetizacao_nativa_plataforma, autoridade_personal_branding_b2b.
- *
- * 'comissionamento_afiliados' e 'pre_monetizacao_a_validar' continuam
- * sem régua própria — `null` é o comportamento correto pra elas, aciona
- * o fallback global (Nível 3, §0.1) do próprio fn_classify_metric, não
- * uma lacuna. Não invente régua pra elas sem confirmar contra
- * orbit.ref_thresholds primeiro.
- *
- * ⚠️ Isso só passa a valer de fato depois que o payload de 29 linhas for
- * inserido em orbit.ref_thresholds com esses nomes exatos — ver
- * ORB-DEBT-052 no runbook.
- */
+/* -------------------------------------------------------------------------- */
+/*  Recortes calibrados                                                       */
+/* -------------------------------------------------------------------------- */
+
 const CALIBRATED_SETOR_BENCHMARK_CATEGORIES: ReadonlySet<SetorBenchmark> = new Set([
   'comercio_direto_ecommerce_social',
   'infoprodutor_educador_pago',
@@ -155,6 +88,56 @@ const CALIBRATED_SETOR_BENCHMARK_CATEGORIES: ReadonlySet<SetorBenchmark> = new S
   'autoridade_personal_branding_b2b',
 ])
 
+const SETOR_LABEL: Record<string, string> = {
+  comercio_direto_ecommerce_social: 'lojas que vendem pelo Instagram',
+  infoprodutor_educador_pago: 'infoprodutores e cursos',
+  servico_consultoria_profissional: 'serviços e consultorias',
+  patrocinio_publicidade_marca: 'marcas que vivem de publicidade',
+  membership_assinatura_comunidade: 'assinaturas e comunidades',
+  monetizacao_nativa_plataforma: 'contas que monetizam na própria plataforma',
+  autoridade_personal_branding_b2b: 'autoridade e personal branding B2B',
+}
+
+const TIER_LABEL: Record<string, string> = {
+  nano: 'até 10 mil seguidores',
+  micro: '10 a 50 mil seguidores',
+  mid: '50 a 250 mil seguidores',
+  macro: '250 mil a 1 milhão de seguidores',
+  mega: 'mais de 1 milhão de seguidores',
+}
+
+const METRIC_LABEL: Record<string, string> = {
+  er_real_pct: 'engajamento real',
+  vps_pct: 'alcance na base',
+  polemic_score_pct: 'discussão nos comentários',
+  utility_score_pct: 'quanto o post é guardado ou repassado',
+}
+
+const ZERO_INFLATED_EVENT_NOUN: Record<string, string> = {
+  er_real_pct: 'ação de quem viu (curtida, comentário, salvamento ou compartilhamento)',
+  vps_pct: 'alcance dentro da própria base de seguidores',
+  polemic_score_pct: 'gente discordando nos comentários (não só curtindo)',
+  utility_score_pct: 'salvamento ou compartilhamento',
+  cta_rate_pct: 'pedido de compra',
+}
+
+const METRIC_TRANSLATION_TEMPLATE: Record<string, (value: number) => string> = {
+  er_real_pct: (v) =>
+    `Traduzindo: de cada 100 pessoas que viram o post, ${formatPtBr(v)} pararam para curtir, comentar, salvar ou compartilhar.`,
+  vps_pct: (v) =>
+    `Traduzindo: de cada 100 seguidores que você tem hoje, ${formatPtBr(v)} viram esse post.`,
+  polemic_score_pct: (v) =>
+    `Traduzindo: em ${formatPtBr(v)}% dos posts, teve gente discordando nos comentários — não só curtindo.`,
+  utility_score_pct: (v) =>
+    `Traduzindo: ${formatPtBr(v)}% dos posts foram guardados ou repassados por alguém.`,
+}
+
+const BOUNDED_PERCENT_METRICS: ReadonlySet<string> = new Set([
+  'vps_pct',
+  'er_real_pct',
+  'utility_score_pct',
+])
+
 export function mapSegmentToCategory(setorBenchmark: SetorBenchmark | null): string | null {
   if (setorBenchmark !== null && CALIBRATED_SETOR_BENCHMARK_CATEGORIES.has(setorBenchmark)) {
     return setorBenchmark
@@ -162,22 +145,6 @@ export function mapSegmentToCategory(setorBenchmark: SetorBenchmark | null): str
   return null
 }
 
-/**
- * ✅ Mapeia total_followers → tier_normalized de orbit.ref_thresholds.
- * Cortes = TIER_BANDS oficiais do pipeline (calibrate_thresholds_stratified.py),
- * os mesmos que gravaram tier_normalized nas linhas reais do banco — não
- * uma convenção de mercado genérica.
- *   nano   [0,         9_999]
- *   micro  [10_000,    49_999]
- *   mid    [50_000,   249_999]
- *   macro  [250_000,  999_999]
- *   mega   [1_000_000,    +∞]
- * Fonte: client_onboarding.total_followers — NUNCA
- * ig_account_snapshots.followers_total do último período (vem null,
- * confirmado 31/08/2026).
- * `null` de retorno é esperado e correto quando não há base (followers
- * ausente): a RPC faz COALESCE(p_tier, 'all').
- */
 export function mapFollowersToTier(followers: number | null | undefined): string | null {
   if (followers == null || followers < 0) return null
   if (followers < 10_000) return 'nano'
@@ -187,17 +154,74 @@ export function mapFollowersToTier(followers: number | null | undefined): string
   return 'mega'
 }
 
-function deriveThresholdSource(category: string | null | undefined, tier: string | null | undefined): ThresholdGranularity {
+/* -------------------------------------------------------------------------- */
+/*  Utilitários de tradução numérica                                          */
+/* -------------------------------------------------------------------------- */
+
+function formatPtBr(value: number, decimals: number = 1): string {
+  return value.toFixed(decimals).replace('.', ',')
+}
+
+function toFriendlyFraction(pct: number): string | null {
+  const COMMON_FRACTIONS: [number, string][] = [
+    [50, '1 em cada 2'],
+    [33.3, '1 em cada 3'],
+    [25, '1 em cada 4'],
+    [20, '1 em cada 5'],
+    [10, '1 em cada 10'],
+    [66.7, '2 em cada 3'],
+    [75, '3 em cada 4'],
+    [90, '9 em cada 10'],
+  ]
+
+  let closest: [number, string] | null = null
+  let minDiff = Infinity
+
+  for (const fraction of COMMON_FRACTIONS) {
+    const diff = Math.abs(pct - fraction[0])
+    if (diff < minDiff) {
+      minDiff = diff
+      closest = fraction
+    }
+  }
+
+  if (closest && minDiff <= 4) return closest[1]
+  return null
+}
+
+function buildTranslationLine(metricName: string, value: number): string | null {
+  const template = METRIC_TRANSLATION_TEMPLATE[metricName]
+  if (!template) return null
+  return template(value)
+}
+
+function withTranslation(baseText: string, metricName: string, value: number): string {
+  if (baseText.includes('Traduzindo:')) return baseText
+  const translation = buildTranslationLine(metricName, value)
+  return translation ? `${baseText} ${translation}` : baseText
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Textos de régua e confiança                                               */
+/* -------------------------------------------------------------------------- */
+
+function deriveThresholdSource(
+  category: string | null | undefined,
+  tier: string | null | undefined
+): ThresholdGranularity {
   if (!category || category === 'all') return 'global'
   if (!tier || tier === 'all') return 'category_all'
   return 'category_tier'
 }
 
-function formatCategoryLabel(category: string): string {
-  return category
-    .replace(/^\d+_/, '')
-    .replace(/_/g, ' ')
-    .trim()
+export function formatCategoryLabel(category: string): string {
+  if (!category || category === 'all') return 'contas em geral'
+  return SETOR_LABEL[category] ?? category.replace(/^\d+_/, '').replace(/_/g, ' ').trim()
+}
+
+function formatTierLabel(tier: string | null | undefined): string | null {
+  if (!tier || tier === 'all') return null
+  return TIER_LABEL[tier] ?? `porte ${tier}`
 }
 
 function buildRuleDeclaration(
@@ -205,14 +229,213 @@ function buildRuleDeclaration(
   category: string | null | undefined,
   tier: string | null | undefined
 ): string {
+  const setor = formatCategoryLabel(category ?? '')
+  const porte = formatTierLabel(tier)
+
   switch (thresholdSource) {
     case 'category_tier':
-      return `Comparado à faixa de referência para ${formatCategoryLabel(category ?? '')} de porte ${tier} (régua de categoria + porte).`
+      return porte
+        ? `Comparamos com ${setor} de ${porte}.`
+        : `Comparamos com ${setor}.`
     case 'category_all':
-      return `Comparado ao padrão observado em contas ${formatCategoryLabel(category ?? '')} (régua de categoria, sem quebra por porte).`
+      return `Comparamos com ${setor}, sem separar por tamanho de conta.`
     case 'global':
     default:
-      return 'Comparado ao benchmark global (régua mais ampla e de maior confiança estatística).'
+      return 'Ainda não há recorte do seu tipo de negócio. Comparamos com o conjunto geral de contas da base.'
+  }
+}
+
+function locateValueInRange(value: number, signalRangeLabel: string): string | null {
+  const numbers = signalRangeLabel.match(/[\d.]+/g)
+  if (!numbers || numbers.length < 2) return null
+
+  const min = parseFloat(numbers[0])
+  const max = parseFloat(numbers[1])
+  if (Number.isNaN(min) || Number.isNaN(max) || max <= min) return null
+
+  const position = (value - min) / (max - min)
+
+  if (value < min) return 'abaixo do que costuma acontecer quando essa métrica não é zero'
+  if (value > max) return 'acima do que costuma acontecer quando essa métrica não é zero'
+  if (position < 0.33) return 'perto do piso da sua faixa'
+  if (position > 0.66) return 'perto do teto da sua faixa'
+  return 'no meio da sua faixa'
+}
+
+function buildZeroInflatedText(
+  metricName: string,
+  categoryLabel: string,
+  zeroPct: number,
+  signalRangeLabel: string,
+  value: number
+): string {
+  const eventNoun = ZERO_INFLATED_EVENT_NOUN[metricName] ?? METRIC_LABEL[metricName] ?? metricName
+  const location = locateValueInRange(value, signalRangeLabel)
+  const friendlyFraction = toFriendlyFraction(zeroPct)
+  const zeroPctPhrase = friendlyFraction
+    ? `${friendlyFraction} (${zeroPct.toFixed(0)}%)`
+    : `${zeroPct.toFixed(0)}%`
+
+  let text = `${zeroPctPhrase} dos posts de ${categoryLabel} não têm ${eventNoun} — isso é o padrão da amostra, não uma falha da conta. Quando o post tem, o volume costuma ficar em ${signalRangeLabel}.`
+
+  if (location) {
+    text += ` O seu valor (${formatPtBr(value, 2)}%) está ${location}.`
+  }
+
+  return withTranslation(text, metricName, value)
+}
+
+function buildUnavailableMetricText(metricName: string): string {
+  const label = METRIC_LABEL[metricName] ?? metricName
+  return `Não classificamos o ${label} agora. O número pode aparecer na tela; o veredito bom/ruim, não. Não decida oferta nem verba por este cartão.`
+}
+
+function buildTechnicalErrorText(metricName: string): string {
+  const label = METRIC_LABEL[metricName] ?? 'esta métrica'
+  return `A avaliação de ${label} falhou. Recarregue. Se o cartão voltar assim, ignore o veredito e use só o número bruto.`
+}
+
+function guardOutOfRangePercentMetric(metricName: string, value: number): ClassifiedMetric | null {
+  if (!BOUNDED_PERCENT_METRICS.has(metricName)) return null
+  if (value >= 0 && value <= 100) return null
+
+  const label = METRIC_LABEL[metricName] ?? metricName
+  return {
+    value,
+    semaphore: 'ambar',
+    statusText: `${capitalize(label)} em ${formatPtBr(value)}% — fora do intervalo esperado para um post individual (0 a 100%). Pode ser soma de vários posts ou erro de ingestão. Confirme antes de decidir.`,
+    confidenceLevel: 'L2',
+    thresholdSource: 'global',
+    confidenceScore: null,
+    ruleDeclaration: 'Este valor está fora do intervalo físico esperado para um post.',
+    calibrationMethod: null,
+    zeroInflated: null,
+  }
+}
+
+function buildLowConfidenceCard(
+  metricName: string,
+  value: number,
+  ruleDeclaration: string,
+  confidenceScore: number | null
+): { title: string; probableCause: string; immediateAction: string } {
+  const label = METRIC_LABEL[metricName] ?? metricName
+
+  if (confidenceScore === null) {
+    return {
+      title: `${capitalize(label)} em ${formatPtBr(value, 2)}% — sem referência para o seu negócio`,
+      probableCause: `${ruleDeclaration} Ainda não há comparação específica para o seu tipo de conta. Confira o setor marcado no onboarding.`,
+      immediateAction: 'Acompanhe este número na sua própria conta, semana a semana. Não mude oferta por ele agora.',
+    }
+  }
+
+  return {
+    title: `${capitalize(label)} em ${formatPtBr(value, 2)}% — ainda não dá para julgar este número`,
+    probableCause: `${ruleDeclaration} O número da conta é real; a base de comparação deste recorte ainda é curta.`,
+    immediateAction:
+      'Publique no ritmo atual por mais 14 dias antes de mudar oferta, bio ou verba por causa deste cartão.',
+  }
+}
+
+function capitalize(text: string): string {
+  return text.charAt(0).toUpperCase() + text.slice(1)
+}
+
+/* -------------------------------------------------------------------------- */
+/*  RPC                                                                       */
+/* -------------------------------------------------------------------------- */
+
+export async function classifyMetric(
+  metricName: string,
+  value: number,
+  category: string = 'all',
+  tier: string = 'all'
+): Promise<ClassifiedMetric> {
+  const outOfRange = guardOutOfRangePercentMetric(metricName, value)
+  if (outOfRange) return outOfRange
+
+  const { data, error } = await supabase.rpc('fn_classify_metric', {
+    p_metric_name: metricName,
+    p_value: value,
+    p_category: category,
+    p_tier: tier,
+  })
+
+  if (error || !data?.[0]) {
+    return {
+      value,
+      semaphore: 'ambar',
+      statusText: buildUnavailableMetricText(metricName),
+      confidenceLevel: 'L2',
+      thresholdSource: 'global',
+      confidenceScore: null,
+      ruleDeclaration: 'A classificação não voltou desta consulta.',
+      calibrationMethod: null,
+      zeroInflated: null,
+    }
+  }
+
+  const row = data[0] as FnClassifyMetricRow
+  const VALID_SEMAPHORES = ['verde', 'ambar', 'vermelho'] as const
+
+  if (!VALID_SEMAPHORES.includes(row.semaphore as (typeof VALID_SEMAPHORES)[number])) {
+    return {
+      value,
+      semaphore: 'ambar',
+      statusText: buildTechnicalErrorText(metricName),
+      confidenceLevel: 'L2',
+      thresholdSource: 'global',
+      confidenceScore: null,
+      ruleDeclaration: 'A classificação voltou em formato que este app não reconhece.',
+      calibrationMethod: null,
+      zeroInflated: null,
+    }
+  }
+
+  const thresholdSource = deriveThresholdSource(row.category, row.tier)
+  const ruleDeclaration = buildRuleDeclaration(thresholdSource, row.category, row.tier)
+  const confidenceScore = row.confidence_score ?? null
+
+  const isZeroInflated = row.calibration_method === 'empirical_percentile_zero_inflated'
+  const zeroInflated =
+    isZeroInflated && row.zero_pct != null && row.signal_range_label
+      ? { zeroPct: row.zero_pct, signalRangeLabel: row.signal_range_label }
+      : null
+
+  if (zeroInflated) {
+    const statusText = buildZeroInflatedText(
+      metricName,
+      formatCategoryLabel(row.category ?? ''),
+      zeroInflated.zeroPct,
+      zeroInflated.signalRangeLabel,
+      value
+    )
+    return {
+      value,
+      semaphore: row.semaphore,
+      statusText,
+      confidenceLevel: row.confidence_level,
+      thresholdSource,
+      confidenceScore,
+      ruleDeclaration,
+      calibrationMethod: row.calibration_method ?? null,
+      zeroInflated,
+    }
+  }
+
+  const { semaphore, caveat } = applyConfidenceGate(row.semaphore, confidenceScore)
+  const statusText = caveat ? `${row.status_text} ${caveat}` : row.status_text
+
+  return {
+    value,
+    semaphore,
+    statusText,
+    confidenceLevel: row.confidence_level,
+    thresholdSource,
+    confidenceScore,
+    ruleDeclaration,
+    calibrationMethod: row.calibration_method ?? null,
+    zeroInflated: null,
   }
 }
 
@@ -223,102 +446,31 @@ function applyConfidenceGate(
   if (confidenceScore === null) {
     return {
       semaphore: semaphore === 'verde' ? 'ambar' : semaphore,
-      caveat: 'confiança da régua não informada pela RPC — tratado como baixa confiança por precaução',
+      caveat: 'A certeza desta comparação não veio junto do número. Use como pista, não como decisão de verba.',
     }
   }
   if (confidenceScore < 0.75) {
     return {
       semaphore: semaphore === 'verde' ? 'ambar' : semaphore,
-      caveat: 'ainda não temos amostra suficiente para confiança plena nesta régua',
+      caveat: 'Ainda há poucas contas neste recorte. Serve para olhar, não para mudar oferta, bio ou anúncio.',
     }
   }
   if (confidenceScore < 0.9) {
     return {
       semaphore,
-      caveat: 'confiança moderada — dado utilizável com ressalva leve',
+      caveat: 'Comparação utilizável. Se for mexer em verba, confirme com mais 7 dias.',
     }
   }
   return { semaphore, caveat: null }
 }
 
-function buildZeroInflatedText(
-  categoryLabel: string,
-  zeroPct: number,
-  signalRangeLabel: string
-): string {
-  return `${zeroPct.toFixed(0)}% dos posts desta ${categoryLabel} não apresentam sinal comercial explícito. Isso é o padrão da amostra, não necessariamente um problema. Os posts que apresentam sinal estão em ${signalRangeLabel}.`
+function buildLowConfidenceWarning(ruleDeclaration: string): string {
+  return `O sinal existe, mas a base de comparação ainda é curta. ${ruleDeclaration} Não mude estratégia por este cartão.`
 }
 
-export async function classifyMetric(
-  metricName: string,
-  value: number,
-  category: string = 'all',
-  tier: string = 'all'
-): Promise<ClassifiedMetric> {
-  const { data, error } = await supabase.rpc('fn_classify_metric', {
-    p_metric_name: metricName,
-    p_value: value,
-    p_category: category,
-    p_tier: tier,
-  })
-
-  // ...resto da função permanece idêntico — o shape de retorno não mudou.
-  if (error || !data?.[0]) {
-    return {
-      semaphore: 'ambar',
-      statusText: `classificação indisponível para ${metricName} — não decidir sem o dado que falta`,
-      confidenceLevel: 'L2',
-      thresholdSource: 'global',
-      confidenceScore: null,
-      ruleDeclaration: 'régua não pôde ser determinada — sem dado de classificação retornado pela RPC.',
-      calibrationMethod: null,
-      zeroInflated: null,
-    }
-  }
-
-  const row = data[0] as FnClassifyMetricRow
-
-  const VALID_SEMAPHORES = ['verde', 'ambar', 'vermelho'] as const
-  if (!VALID_SEMAPHORES.includes(row.semaphore as typeof VALID_SEMAPHORES[number])) {
-    return {
-      semaphore: 'ambar',
-      statusText: `classificação indisponível para ${metricName} — fn_classify_metric() não devolveu semaphore/status_text/confidence_level no shape esperado (esperado desde a migração de 25/08/2026 — verificar se a RPC foi revertida ou se este cliente está batendo numa versão antiga em cache)`,
-      confidenceLevel: 'L2',
-      thresholdSource: 'global',
-      confidenceScore: null,
-      ruleDeclaration: 'régua não pôde ser determinada — RPC com shape incompatível.',
-      calibrationMethod: null,
-      zeroInflated: null,
-    }
-  }
-
-  const thresholdSource = deriveThresholdSource(row.category, row.tier)
-  const ruleDeclaration = buildRuleDeclaration(thresholdSource, row.category, row.tier)
-  const confidenceScore = row.confidence_score ?? null
-  const { semaphore, caveat } = applyConfidenceGate(row.semaphore, confidenceScore)
-
-  const isZeroInflated = row.calibration_method === 'empirical_percentile_zero_inflated'
-  const zeroInflated = isZeroInflated && row.zero_pct != null && row.signal_range_label
-    ? { zeroPct: row.zero_pct, signalRangeLabel: row.signal_range_label }
-    : null
-
-  const statusText = zeroInflated
-    ? buildZeroInflatedText(formatCategoryLabel(row.category ?? ''), zeroInflated.zeroPct, zeroInflated.signalRangeLabel)
-    : caveat
-      ? `${row.status_text} (${caveat})`
-      : row.status_text
-
-  return {
-    semaphore,
-    statusText,
-    confidenceLevel: row.confidence_level,
-    thresholdSource,
-    confidenceScore,
-    ruleDeclaration,
-    calibrationMethod: row.calibration_method ?? null,
-    zeroInflated,
-  }
-}
+/* -------------------------------------------------------------------------- */
+/*  Guarda de dado ausente                                                    */
+/* -------------------------------------------------------------------------- */
 
 function withMissingDataGuard<TInput>(
   requiredData: TInput | null | undefined,
@@ -329,14 +481,19 @@ function withMissingDataGuard<TInput>(
     return {
       type: 'data_gap',
       severity: 'warning',
-      title: 'Causa indeterminável — dado necessário ausente',
+      title: 'Falta um dado para não chutarmos a causa',
       description: null,
-      probableCause: 'causa indeterminável sem o dado que decide entre as hipóteses candidatas',
+      probableCause:
+        'Com o que temos, duas explicações ainda empatam. Sem o próximo dado, qualquer ação é chute.',
       immediateAction: missingDataAction,
     }
   }
   return onPresent(requiredData)
 }
+
+/* -------------------------------------------------------------------------- */
+/*  CTR bio                                                                   */
+/* -------------------------------------------------------------------------- */
 
 export interface CtrBioInput {
   ctrValue: number
@@ -346,16 +503,21 @@ export interface CtrBioInput {
   originBreakdown: { origin: string; ctr: number }[] | null
 }
 
+function buildCtrTranslation(ctrValue: number): string {
+  return `Traduzindo: de cada 100 pessoas que abrem sua bio, ${formatPtBr(ctrValue)} clicam no link.`
+}
+
 export function resolveCtrBioAlert(input: CtrBioInput): AlertDraft {
   if (!input.linkIsWorking) {
     return {
       type: 'ctr_below_threshold',
       severity: 'critical',
-      title: 'Link da bio quebrado',
+      title: 'O link da bio não está abrindo',
       description: null,
       natureza: 'tecnica',
-      probableCause: 'link quebrado ou redirecionamento lento',
-      immediateAction: 'consertar o link e reavaliar CTR em 7 dias',
+      probableCause: 'O clique existe; a página não. Poucos cliques aqui é problema técnico, não de oferta.',
+      immediateAction:
+        'Abra o link no celular agora. Conserte. Só reescreva a bio depois de 7 dias com o link estável.',
       confidenceLevel: 'L0',
       dataSource: 'real_snapshot',
     }
@@ -363,27 +525,31 @@ export function resolveCtrBioAlert(input: CtrBioInput): AlertDraft {
 
   const base = withMissingDataGuard(
     input.originBreakdown,
-    'instalar rastreamento de origem de tráfego (post vs. hashtag vs. busca) antes de qualquer mudança de bio',
+    'Instale o rastreio de origem (post, hashtag, busca) antes de mexer na bio. Sem isso, o próximo texto da bio é chute.',
     (breakdown) => {
-      const lowOnlyInOneOrigin = breakdown.some((o) => o.ctr < input.threshold) &&
+      const lowOnlyInOneOrigin =
+        breakdown.some((o) => o.ctr < input.threshold) &&
         breakdown.some((o) => o.ctr >= input.threshold)
 
       return lowOnlyInOneOrigin
         ? {
             type: 'ctr_below_threshold' as const,
             severity: 'warning' as AlertSeverity,
-            title: 'CTR baixo concentrado em uma origem de tráfego',
-            description: null,
-            probableCause: 'origem específica de tráfego, não a bio em si',
-            immediateAction: 'investigar/cortar a origem de baixa intenção antes de tocar na bio',
+            title: 'Quem clica no link da bio muda dependendo de onde a pessoa veio',
+            description: `${buildCtrTranslation(input.ctrValue)} Em uma origem o clique some; nas outras, acontece.`,
+            probableCause:
+              'A bio serve para parte do público. O buraco está em quem chega por um caminho específico — post, busca ou hashtag.',
+            immediateAction:
+              'Não mexa na bio. Identifique a origem fraca e interrompa esse caminho antes de testar texto novo.',
           }
         : {
             type: 'ctr_below_threshold' as const,
             severity: 'warning' as AlertSeverity,
-            title: 'CTR uniformemente baixo entre origens',
-            description: null,
-            probableCause: 'bio/oferta — problema é uniforme, não de origem',
-            immediateAction: 'reescrever bio, uma variável por vez, e reavaliar em 14 dias',
+            title: 'Quem chega na bio não clica — em nenhuma origem de tráfego',
+            description: buildCtrTranslation(input.ctrValue),
+            probableCause: 'O problema é a promessa da bio ou da oferta, não de onde a pessoa veio.',
+            immediateAction:
+              'Reescreva um elemento só da bio (promessa ou botão). Meça 14 dias. Não mude os dois juntos.',
           }
     }
   )
@@ -395,6 +561,10 @@ export function resolveCtrBioAlert(input: CtrBioInput): AlertDraft {
     dataSource: 'real_snapshot',
   }
 }
+
+/* -------------------------------------------------------------------------- */
+/*  Avatar                                                                    */
+/* -------------------------------------------------------------------------- */
 
 export interface AvatarDivergenceInput {
   declaredDominant: string
@@ -410,33 +580,41 @@ export function resolveAvatarAlert(input: AvatarDivergenceInput): AlertDraft {
     return {
       type: 'avatar_misalignment',
       severity: 'warning',
-      title: 'Avatar "real" declarado por engajamento, não por conversão',
+      title: 'Quem mais curte e comenta ainda não é quem compra',
       description: null,
       natureza: 'tecnica',
-      probableCause: 'engajamento alto pode não coincidir com quem efetivamente compra',
-      immediateAction: 'cruzar avatar por engajamento vs. avatar por conversão antes de qualquer decisão de pivô',
+      probableCause:
+        'O retrato veio de curtida e comentário, não de pedido pago. São dois grupos que podem não ser o mesmo.',
+      immediateAction:
+        'Antes de mudar posicionamento, separe: quem interage vs. quem já pagou. Sem esse cruzamento, não mude o alvo.',
       confidenceLevel: 'L2',
       dataSource: 'real_snapshot',
     }
   }
 
+  const adaptableAction =
+    input.productAdaptableToRealAudience === null
+      ? 'Isso não é automático. Decida com o cliente: falar com quem já compra, ou mudar o produto. As duas coisas ao mesmo tempo espalham o teste.'
+      : input.productAdaptableToRealAudience
+        ? 'Ajuste a comunicação para quem já compra. O produto já serve a esse público — não redesenhe a oferta.'
+        : 'O produto não serve ao público que está pagando hoje. Ou adapta a oferta, ou aceita um mercado menor do que o briefing pintou.'
+
   return {
     type: 'avatar_misalignment',
     severity: 'critical',
-    title: `Avatar declarado (${input.declaredDominant}) diverge do avatar real de conversão (${input.realDominant})`,
+    title: `Você descreveu ${input.declaredDominant} no briefing. Quem compra de verdade é ${input.realDominant}`,
     description: null,
     natureza: 'comunicacao',
-    probableCause: 'dado de conversão real diverge do briefing declarado no onboarding',
-    immediateAction:
-      input.productAdaptableToRealAudience === null
-        ? 'decidir com o cliente: pivotar avatar de marketing para o público real, ou adaptar produto — decisão executiva, não automática'
-        : input.productAdaptableToRealAudience
-          ? 'pivotar avatar de marketing para o público real; produto já é vendável a ele'
-          : 'decisão executiva mais cara: adaptar produto ou aceitar mercado real menor que o imaginado',
+    probableCause: 'O onboarding descreveu um tipo de cliente. As vendas reais mostram outro.',
+    immediateAction: adaptableAction,
     confidenceLevel: input.realConfidence,
     dataSource: 'real_snapshot',
   }
 }
+
+/* -------------------------------------------------------------------------- */
+/*  Funil                                                                     */
+/* -------------------------------------------------------------------------- */
 
 export interface FunnelResult {
   reach: number
@@ -450,24 +628,32 @@ export function buildFunnelInsight(result: FunnelResult): InsightData & AlertCon
   const isFallback = result.dataSource !== 'real_snapshot'
 
   const fallbackReason: Record<Exclude<FunnelResult['dataSource'], 'real_snapshot'>, string> = {
-    fallback_by_client: 'ausência de linha em orbit.ig_account_snapshots para o período solicitado',
-    fallback_by_empty: 'período solicitado existe na tabela mas sem linha retornada (funil vazio)',
-    fallback_by_error: `erro do Supabase ao buscar funnel_data${result.errorMessage ? `: ${result.errorMessage}` : ''}`,
+    fallback_by_client: 'Não há registro desta conta salvo para este período.',
+    fallback_by_empty: 'O período existe; não veio nenhum dado de clique nele.',
+    fallback_by_error: result.errorMessage
+      ? `A busca deste dado falhou: ${result.errorMessage}`
+      : 'A busca deste dado falhou. Tente de novo antes de tratar o número como real.',
   }
+
+  const ctrText = `De cada 100 pessoas que abrem sua bio, ${formatPtBr(result.ctrBio)} clicam no link`
 
   return {
     id: crypto.randomUUID(),
     text: isFallback
-      ? `CTR bio de ${result.ctrBio.toFixed(1)}% calculado sobre dado de fallback (${fallbackReason[result.dataSource as Exclude<FunnelResult['dataSource'], 'real_snapshot'>]}) — não usar para decisão de investimento sem confirmar período real.`
-      : `CTR bio de ${result.ctrBio.toFixed(1)}% no período.`,
+      ? `${ctrText} — mas este número não é do período pedido. Não use para projetar venda nem para subir verba. ${fallbackReason[result.dataSource as Exclude<FunnelResult['dataSource'], 'real_snapshot'>]}`
+      : `${ctrText} neste período.`,
     natureza: 'tecnica',
     probableCause: isFallback
-      ? `${fallbackReason[result.dataSource as Exclude<FunnelResult['dataSource'], 'real_snapshot'>]} — confirmar ingestão do período real antes de usar este número em projeção de vendas`
+      ? `${fallbackReason[result.dataSource as Exclude<FunnelResult['dataSource'], 'real_snapshot'>]} Confirme a ingestão do período real antes de usar este número em projeção.`
       : 'n/a',
     confidenceLevel: isFallback ? 'L2' : 'L0',
     dataSource: result.dataSource,
   }
 }
+
+/* -------------------------------------------------------------------------- */
+/*  Queda de engajamento                                                      */
+/* -------------------------------------------------------------------------- */
 
 export interface EngagementCollapseInput {
   engagementChangePct: number
@@ -480,16 +666,18 @@ export interface EngagementCollapseInput {
 export function resolveEngagementCollapseAlert(input: EngagementCollapseInput): AlertDraft {
   const base = withMissingDataGuard(
     input.followerBalanceTrend,
-    'coletar saldo de seguidores do período antes de classificar a causa — é o dado que decide entre ruptura de algoritmo e mudança de mix de formato (item 2)',
+    'Puxe o saldo de seguidores deste período. É o dado que separa "menos gente vendo" de "mudei o tipo de post".',
     (followerBalance) => {
       if (followerBalance < 0) {
         return {
           type: 'engagement_collapse' as const,
           severity: 'critical' as AlertSeverity,
-          title: `Engajamento em colapso (${input.engagementChangePct.toFixed(1)}% em ${input.windowDays}d) com perda de seguidores`,
+          title: `Curtida, comentário e salvamento caíram ${formatPtBr(input.engagementChangePct)}% em ${input.windowDays} dias — e você está perdendo seguidores também`,
           description: null,
-          probableCause: 'ruptura de distribuição pelo algoritmo — base fiel também caindo, não é reposicionamento voluntário de público',
-          immediateAction: 'verificar shadowban/violação de guideline recente antes de qualquer mudança de estratégia de conteúdo; não tratar como problema de pauta',
+          probableCause:
+            'Não é só menos gente vendo o post. Quem já seguia está deixando de seguir. Isso não parece troca voluntária de assunto.',
+          immediateAction:
+            'Não mude o tipo de conteúdo ainda. Primeiro confira se algum post recente foi limitado ou denunciado. Só depois discuta pauta.',
         }
       }
 
@@ -497,20 +685,23 @@ export function resolveEngagementCollapseAlert(input: EngagementCollapseInput): 
         return {
           type: 'engagement_collapse' as const,
           severity: 'warning' as AlertSeverity,
-          title: 'Queda de engajamento coincide com mudança de mix de formato',
+          title: 'A queda de engajamento veio junto com a troca de formato de post',
           description: null,
-          probableCause: 'troca de composição de formato explica a métrica — correlação espúria, não ruptura',
-          immediateAction: 'não agir sobre a queda isoladamente; reavaliar após 30 dias de mix estável',
+          probableCause:
+            'Você comparou um período de Reels com um período de foto (ou carrossel). Está comparando dois tipos de post diferentes como se fossem um só.',
+          immediateAction: 'Fixe um único formato por 30 dias. Só então leia a queda de novo.',
         }
       }
 
       return {
         type: 'engagement_collapse' as const,
         severity: 'info' as AlertSeverity,
-        title: 'Queda de alcance com saldo de seguidores estável',
+        title: 'Menos gente está vendo os posts; o número de seguidores não caiu',
         description: null,
-        probableCause: 'alcance limitado por escala natural, não ruptura — checar se ER subiu no mesmo período',
-        immediateAction: 'confirmar tendência de ER antes de descartar como saudável (item 2, ação padrão)',
+        probableCause:
+          'Parece que menos gente está vendo, não que os seguidores estão insatisfeitos. Pode até ser saudável se quem vê estiver interagindo mais.',
+        immediateAction:
+          'Compare curtida e comentário por pessoa que viu nos mesmos 7 a 14 dias. Se essa proporção subiu, não trate esta queda como crise.',
       }
     }
   )
@@ -523,6 +714,10 @@ export function resolveEngagementCollapseAlert(input: EngagementCollapseInput): 
   }
 }
 
+/* -------------------------------------------------------------------------- */
+/*  Fadiga de criativo                                                        */
+/* -------------------------------------------------------------------------- */
+
 export interface CreativeFatigueInput {
   fatiguePct: number
   fatigueThreshold: number
@@ -532,29 +727,39 @@ export interface CreativeFatigueInput {
   roasTarget: number
 }
 
+function formatRoasPlain(value: number): string {
+  return `${formatPtBr(value)}x (a cada R$1 investido, voltam R$${formatPtBr(value)})`
+}
+
 export function resolveCreativeFatigueAlert(input: CreativeFatigueInput): AlertDraft {
   const base = withMissingDataGuard(
     input.roasTrend,
-    'coletar tendência de ROAS dos últimos 7-14 dias — é o dado que decide entre trocar o criativo agora ou aguardar (item 6); fadiga sozinha não é gatilho',
+    'Puxe se o retorno do anúncio está subindo, estável ou caindo nos últimos 7 a 14 dias. As pessoas já terem visto o anúncio demais não basta, sozinho, para trocar de peça.',
     (trend) => {
       if (trend === 'falling') {
+        const prazo = input.daysUntilThresholdCross
+          ? ` No ritmo atual, isso passa do limite combinado em ${input.daysUntilThresholdCross} dias.`
+          : ''
         return {
           type: 'creative_fatigue' as const,
           severity: 'warning' as AlertSeverity,
-          title: `Fadiga de criativo em ${input.fatiguePct}% com ROAS em queda`,
+          title: `As mesmas pessoas já viram este anúncio demais (${formatPtBr(input.fatiguePct)}% de repetição) e o retorno está caindo`,
           description: null,
-          probableCause: 'fadiga já está corroendo resultado, ainda não cruzou o threshold de meta',
-          immediateAction: `trocar o criativo agora, antes de cruzar o threshold de meta (ação proativa)${input.daysUntilThresholdCross ? ` — ${input.daysUntilThresholdCross} dias no ritmo atual` : ''}`,
+          probableCause:
+            'A repetição deixou de ser só um alerta de estoque de público: já está comendo resultado de venda.',
+          immediateAction: `Troque o criativo agora. Esperar só deixa o prejuízo maior.${prazo}`,
         }
       }
 
       return {
         type: 'creative_fatigue' as const,
         severity: 'info' as AlertSeverity,
-        title: `Fadiga de criativo em ${input.fatiguePct}% com ROAS estável (${input.roasCurrent}x vs. meta ${input.roasTarget}x)`,
+        title: `As mesmas pessoas já viram este anúncio bastante (${formatPtBr(input.fatiguePct)}%), mas ele ainda paga: retorno de ${formatRoasPlain(input.roasCurrent)}, contra a meta de ${formatRoasPlain(input.roasTarget)}`,
         description: null,
-        probableCause: 'fadiga declarada mas criativo ainda efetivo — os dois indicadores medem coisas diferentes em horizontes diferentes',
-        immediateAction: 'aguardar; trocar agora desperdiça um ativo que ainda funciona. Não recalibrar o threshold de fadiga pra baixo (item 17) — investigar causa alternativa se a conversão cair antes do threshold ser cruzado',
+        probableCause:
+          'Repetição de exposição e retorno financeiro medem coisas diferentes. Um pode subir sem o outro ter quebrado.',
+        immediateAction:
+          'Não troque ainda. Se o retorno cair antes de bater o limite combinado, investigue outra causa — não troque só por repetição.',
       }
     }
   )
@@ -567,6 +772,10 @@ export function resolveCreativeFatigueAlert(input: CreativeFatigueInput): AlertD
   }
 }
 
+/* -------------------------------------------------------------------------- */
+/*  ROAS                                                                      */
+/* -------------------------------------------------------------------------- */
+
 export interface RoasBelowMinimumInput {
   roasCurrent: number
   roasTarget: number
@@ -578,22 +787,25 @@ export interface RoasBelowMinimumInput {
 
 export function resolveRoasBelowMinimumAlert(input: RoasBelowMinimumInput): AlertDraft {
   const belowFloor = input.roasCurrent <= input.roasMinViable
+  const roasPlain = formatRoasPlain(input.roasCurrent)
 
   const base = withMissingDataGuard(
     input.cpmChangePctMarketBenchmark,
-    'obter benchmark de CPM do mercado no período — sem ele não é possível isolar leilão mais caro (mercado inteiro) de problema específico da conta (item 7); enquanto isso, não trocar criativo como primeira resposta',
+    'Puxe quanto o Instagram está cobrando para mostrar anúncio no mercado neste período. Sem esse número não dá para saber se ficou caro só para você ou para todo mundo. Enquanto isso, não troque o criativo como primeira resposta.',
     (marketCpm) => {
-      const marketWide = input.cpmChangePctThisAccount !== null &&
+      const marketWide =
+        input.cpmChangePctThisAccount !== null &&
         Math.abs((input.cpmChangePctThisAccount ?? 0) - marketCpm) < 10
 
       if (marketWide) {
         return {
           type: 'roas_below_minimum' as const,
           severity: 'critical' as AlertSeverity,
-          title: `ROAS ${input.roasCurrent}x no limite de rentabilidade — CPM subiu no mercado inteiro`,
+          title: `Retorno em ${roasPlain} — mostrar anúncio ficou mais caro para todo mundo no Instagram, não só para você`,
           description: null,
-          probableCause: 'leilão mais caro por sazonalidade/concorrência de mercado, não qualidade de criativo ou público',
-          immediateAction: 'ajustar lance ou aguardar estabilização do leilão — não trocar criativo',
+          probableCause:
+            'O custo da sua conta subiu no mesmo ritmo do mercado inteiro. Não é o criativo que piorou; é o preço do anúncio no período.',
+          immediateAction: 'Não troque o anúncio. Ajuste o valor do lance ou espere o preço do anúncio baixar.',
         }
       }
 
@@ -601,20 +813,22 @@ export function resolveRoasBelowMinimumAlert(input: RoasBelowMinimumInput): Aler
         return {
           type: 'roas_below_minimum' as const,
           severity: 'critical' as AlertSeverity,
-          title: `ROAS ${input.roasCurrent}x no limite de rentabilidade — CPM subiu só nesta conta com frequência em alta`,
+          title: `Retorno em ${roasPlain} — só a sua conta ficou mais cara, e é o mesmo anúncio se repetindo para as mesmas pessoas`,
           description: null,
-          probableCause: 'fadiga de criativo é a causa provável (CPM sobe isolado + frequência em alta)',
-          immediateAction: 'trocar criativo',
+          probableCause: 'O público já viu esta peça demais. Isso encarece só a sua conta, não o mercado.',
+          immediateAction:
+            'Troque o criativo. Testar público novo só depois, se o custo não cair com a peça nova.',
         }
       }
 
       return {
         type: 'roas_below_minimum' as const,
         severity: 'critical' as AlertSeverity,
-        title: `ROAS ${input.roasCurrent}x no limite de rentabilidade — causa não isolada por criativo`,
+        title: `Retorno em ${roasPlain} — sua conta ficou mais cara sem o mesmo anúncio se repetir mais`,
         description: null,
-        probableCause: 'público pode estar saturado — CPM sobe isolado sem aumento de frequência',
-        immediateAction: 'testar público novo antes de qualquer outra ação',
+        probableCause:
+          'Não parece as mesmas pessoas vendo demais o anúncio. O grupo visado pode ter esgotado.',
+        immediateAction: 'Teste um público novo antes de mexer no criativo ou no valor do lance.',
       }
     }
   )
@@ -622,20 +836,25 @@ export function resolveRoasBelowMinimumAlert(input: RoasBelowMinimumInput): Aler
   return {
     ...base,
     severity: belowFloor ? 'critical' : base.severity,
-    immediateAction: belowFloor && input.cpmChangePctMarketBenchmark === null
-      ? 'pausar campanhas abaixo do piso de rentabilidade enquanto a causa é isolada — não esperar o diagnóstico completo para conter a perda'
-      : base.immediateAction,
+    immediateAction:
+      belowFloor && input.cpmChangePctMarketBenchmark === null
+        ? `Pause o que está com retorno abaixo de ${formatRoasPlain(input.roasMinViable)} hoje. Isolar a causa sem pausar deixa a conta perdendo dinheiro enquanto investiga.`
+        : base.immediateAction,
     natureza: 'tecnica',
     confidenceLevel: input.cpmChangePctMarketBenchmark === null ? 'L2' : 'L1',
     dataSource: 'real_snapshot',
   }
 }
+
+/* -------------------------------------------------------------------------- */
+/*  Score de engajamento                                                      */
+/* -------------------------------------------------------------------------- */
+
 export async function resolveEngagementScoreAlert(
   input: EngagementScoreInput,
   category?: string | null,
   tier?: string | null
 ): Promise<AlertDraft> {
-  // ✅ Coalescer null → undefined
   const categoryForClassify = category ?? undefined
   const tierForClassify = tier ?? undefined
 
@@ -645,16 +864,17 @@ export async function resolveEngagementScoreAlert(
     classifyMetric('polemic_score_pct', input.polemicScorePct, categoryForClassify, tierForClassify),
   ])
 
-  // ✅ CASO 1: VPS vermelho (baixa penetração)
-  if (vps.semaphore === 'vermelho') {
+  if (input.vpsPct < 0 || input.vpsPct > 100) {
     return {
       type: 'engagement_collapse',
-      severity: 'critical',
-      title: `Ainda não sabemos se o conteúdo está bom, porque o algoritmo não está distribuindo pros seguidores — VPS em ${input.vpsPct.toFixed(1)}% (${vps.statusText})`,
-      description: null,
+      severity: 'warning',
+      title: `Alcance na base em ${formatPtBr(input.vpsPct)}% — fora do que um post sozinho comporta`,
+      description: vps.statusText,
       natureza: 'tecnica',
-      probableCause: 'baixa penetração no público próprio — possível shadowban ou desalinhamento de conteúdo',
-      immediateAction: 'verificar shadowban e testar conteúdo/horário novo — responsabilidade Orbit (diagnóstico técnico)',
+      probableCause:
+        'Alcance na base deveria ser, no máximo, 100 em cada 100 seguidores por post. Este valor só faz sentido se for soma de vários posts — e, se for, o cartão precisa dizer isso.',
+      immediateAction:
+        'Confirme se este número é de um post ou somado no período antes de usar este cartão para qualquer decisão.',
       confidenceLevel: vps.confidenceLevel,
       dataSource: 'real_snapshot',
       thresholdSource: vps.thresholdSource,
@@ -667,18 +887,48 @@ export async function resolveEngagementScoreAlert(
     }
   }
 
-  // ✅ CASO 2: Polêmica vermelha
-  if (polemic.semaphore === 'vermelho') {
+  if (vps.semaphore === 'vermelho') {
+    return {
+      type: 'engagement_collapse',
+      severity: 'critical',
+      title: `Só ${formatPtBr(input.vpsPct)}% dos seus seguidores viram este post`,
+      description: withTranslation(vps.statusText, 'vps_pct', input.vpsPct),
+      natureza: 'tecnica',
+      probableCause:
+        'Alcance na base é quantos dos seus seguidores viram o post — não é nota de qualidade nem de proposta de valor. Enquanto ele estiver baixo, "post ruim" e "post que não circulou" parecem a mesma coisa.',
+      immediateAction:
+        'Mantenha o mesmo formato e mude só o horário nas próximas 4 publicações. Se o alcance na base continuar baixo, aí investigamos se a conta está sendo limitada — não comece por aí.',
+      confidenceLevel: vps.confidenceLevel,
+      dataSource: 'real_snapshot',
+      thresholdSource: vps.thresholdSource,
+      confidenceScore: vps.confidenceScore,
+      ruleDeclaration: vps.ruleDeclaration,
+      snapshotId: input.snapshotId,
+      metricName: 'vps_pct',
+      metricValue: input.vpsPct,
+      thresholdValue: null,
+    }
+  }
+
+  if (polemic.zeroInflated) {
+    const isWithinNormalRange =
+      polemic.semaphore !== 'vermelho' &&
+      (polemic.confidenceScore === null || polemic.confidenceScore >= 0.75)
+
     return {
       type: 'polemic_score_high',
-      severity: 'warning',
-      title: polemic.zeroInflated
-        ? `Polêmica ${input.polemicScorePct.toFixed(1)}% — ${polemic.statusText}`
-        : `Polêmica em ${input.polemicScorePct.toFixed(1)}% (${polemic.ruleDeclaration})`,
-      description: polemic.zeroInflated ? null : polemic.statusText,
+      severity: isWithinNormalRange ? 'info' : 'warning',
+      title: isWithinNormalRange
+        ? `${formatPtBr(input.polemicScorePct)}% dos seus posts têm gente discordando nos comentários — isso é normal no seu segmento`
+        : `${formatPtBr(input.polemicScorePct)}% dos seus posts têm gente discordando nos comentários`,
+      description: polemic.statusText,
       natureza: 'tecnica',
-      probableCause: 'razão comentários/curtidas alta — conteúdo dividindo opinião',
-      immediateAction: 'avaliar se é debate saudável (ok) ou hate (moderar/ajustar tom)',
+      probableCause: isWithinNormalRange
+        ? 'A maioria das contas do seu segmento não tem esse tipo de comentário em nenhum post. O seu número está na faixa de quem tem — não é sinal de crise e não é convite para criar briga.'
+        : 'Há mais gente discordando nos comentários do que o normal do seu segmento. Pode ser dúvida útil ou ataque — o número sozinho não diferencia.',
+      immediateAction: isWithinNormalRange
+        ? 'Não mude o tom dos posts por este cartão. Releia em 30 dias, com mais posts publicados.'
+        : 'Leia os 20 comentários mais recentes. Se forem pergunta e opinião, mantenha o tom. Se forem ataque, feche a moderação desses posts.',
       confidenceLevel: polemic.confidenceLevel,
       dataSource: 'real_snapshot',
       thresholdSource: polemic.thresholdSource,
@@ -691,25 +941,75 @@ export async function resolveEngagementScoreAlert(
     }
   }
 
-  // ✅ CASO 3: ER vermelho ou âmbar
+  if (polemic.semaphore === 'vermelho') {
+    return {
+      type: 'polemic_score_high',
+      severity: 'warning',
+      title: `${formatPtBr(input.polemicScorePct)}% dos seus posts têm gente discordando nos comentários — acima do normal`,
+      description: withTranslation(polemic.statusText, 'polemic_score_pct', input.polemicScorePct),
+      natureza: 'tecnica',
+      probableCause:
+        'Há mais gente discordando nos comentários do que o recorte costuma ver. Pode ser conversa útil ou briga. Não é meta para subir.',
+      immediateAction:
+        'Leia os 20 comentários mais recentes. Se forem pergunta e opinião, mantenha o tom. Se forem ataque, feche a moderação desses posts.',
+      confidenceLevel: polemic.confidenceLevel,
+      dataSource: 'real_snapshot',
+      thresholdSource: polemic.thresholdSource,
+      confidenceScore: polemic.confidenceScore,
+      ruleDeclaration: polemic.ruleDeclaration,
+      snapshotId: input.snapshotId,
+      metricName: 'polemic_score_pct',
+      metricValue: input.polemicScorePct,
+      thresholdValue: null,
+    }
+  }
+
   if (er.semaphore === 'vermelho' || er.semaphore === 'ambar') {
-    const isLowConfidenceAmber = er.semaphore === 'ambar' &&
-      er.confidenceScore !== null && er.confidenceScore < 0.75
+    const isLowConfidenceAmber =
+      er.semaphore === 'ambar' && er.confidenceScore !== null && er.confidenceScore < 0.75
+    const isMissingConfidence = er.confidenceScore === null
+
+    if (isLowConfidenceAmber || isMissingConfidence) {
+      const card = buildLowConfidenceCard(
+        'er_real_pct',
+        input.erRealPct,
+        er.ruleDeclaration ?? '',
+        er.confidenceScore
+      )
+      return {
+        type: 'engagement_collapse',
+        severity: 'warning',
+        title: card.title,
+        description: withTranslation(
+          buildLowConfidenceWarning(er.ruleDeclaration ?? ''),
+          'er_real_pct',
+          input.erRealPct
+        ),
+        natureza: 'tecnica',
+        probableCause: card.probableCause,
+        immediateAction: card.immediateAction,
+        confidenceLevel: er.confidenceLevel,
+        dataSource: 'real_snapshot',
+        thresholdSource: er.thresholdSource,
+        confidenceScore: er.confidenceScore,
+        ruleDeclaration: er.ruleDeclaration,
+        snapshotId: input.snapshotId,
+        metricName: 'er_real_pct',
+        metricValue: input.erRealPct,
+        thresholdValue: null,
+      }
+    }
 
     return {
       type: 'engagement_collapse',
       severity: er.semaphore === 'vermelho' ? 'critical' : 'warning',
-      title: isLowConfidenceAmber
-        ? 'Estrutura pronta — ER Real ainda sem confiança suficiente para confirmar'
-        : `ER Real em ${input.erRealPct.toFixed(1)}% — ${er.statusText}`,
-      description: isLowConfidenceAmber
-        ? `Volta a aparecer quando a amostra da régua atingir confiança ≥ 0,75. ${er.ruleDeclaration}`
-        : null,
+      title: `As pessoas veem o post e não fazem nada com ele — só ${formatPtBr(input.erRealPct)}% curtem, comentam, salvam ou compartilham`,
+      description: withTranslation(er.statusText, 'er_real_pct', input.erRealPct),
       natureza: 'tecnica',
-      probableCause: 'conteúdo não está motivando ação (saves/shares/comments), só visualização passiva',
-      immediateAction: isLowConfidenceAmber
-        ? 'aguardar expansão da base de referência da régua — não decidir sobre este número ainda'
-        : 'testar novo CTA ou formato de conteúdo',
+      probableCause:
+        'As pessoas veem o post. Falta curtida, salvamento, comentário ou compartilhamento. O conteúdo não está pedindo nada que a pessoa queira fazer.',
+      immediateAction:
+        'No próximo post, peça uma coisa só: salvar, ou responder uma pergunta com 2 opções. Mesmo formato. Não troque o produto e o pedido ao mesmo tempo.',
       confidenceLevel: er.confidenceLevel,
       dataSource: 'real_snapshot',
       thresholdSource: er.thresholdSource,
@@ -722,15 +1022,18 @@ export async function resolveEngagementScoreAlert(
     }
   }
 
-  // ✅ CASO 4: Tudo verde (engajamento saudável)
   return {
     type: 'engagement_collapse',
     severity: 'info',
-    title: `Engajamento saudável — ER Real ${input.erRealPct.toFixed(1)}%, VPS ${input.vpsPct.toFixed(1)}%`,
-    description: `${er.ruleDeclaration} Priorize o formato que gerou esse resultado.`,
+    title: `Engajamento saudável para o seu porte — ${formatPtBr(input.erRealPct)}% agem no post, ${formatPtBr(input.vpsPct)}% dos seguidores viram`,
+    description: withTranslation(
+      `${er.ruleDeclaration ?? ''} O formato que gerou isso é o seu ativo. Repita-o.`.trim(),
+      'er_real_pct',
+      input.erRealPct
+    ),
     natureza: 'tecnica',
     probableCause: 'n/a',
-    immediateAction: 'continuar monitorando',
+    immediateAction: 'Nas próximas 4 peças, copie o formato que funcionou. Só depois teste uma variação.',
     confidenceLevel: 'L0',
     dataSource: 'real_snapshot',
     thresholdSource: er.thresholdSource,
@@ -742,6 +1045,10 @@ export async function resolveEngagementScoreAlert(
     thresholdValue: null,
   }
 }
+
+/* -------------------------------------------------------------------------- */
+/*  Exportação                                                                */
+/* -------------------------------------------------------------------------- */
 
 function computeExportable(
   severity: AlertSeverity,

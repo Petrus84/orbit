@@ -234,6 +234,14 @@ export interface RefThresholdRow {
  * dentro de `contentContractEngine.ts`.
  */
 export interface ClassifiedMetric {
+  // ✅ NOVO (05/09/2026 — fix bug "NaN" no SectorPositioningPanel): valor
+  // numérico bruto que foi classificado, exposto direto — antes disso, o
+  // único jeito de recuperar o número era fazer parse de `statusText`
+  // (`Number(statusText.split(' ')[0])`), que quebra sempre que statusText
+  // não começa com o número puro (ex: fallback "classificação
+  // indisponível...", ou o texto zero-inflated "35% dos posts..."). Não
+  // reintroduza esse parsing — use este campo.
+  value: number
   semaphore: SemaphoreColor
   statusText: string
   confidenceLevel: ConfidenceLevel
@@ -505,6 +513,7 @@ export interface PostSummary {
   publishedAt: string
   likes: number | null
   comments: number | null
+  caption: string | null
   polemicScorePct: number | null
 }
 
@@ -650,8 +659,11 @@ export interface SectorPositioning {
   funnelMaturity: FunnelMaturity | null
   proofMechanism: ProofMechanism | null
   erReal: ClassifiedMetric | null
+  erRealValue: number | null
   vps: ClassifiedMetric | null
+  vpsValue: number | null
   polemicScore: ClassifiedMetric | null
+  polemicScoreValue: number | null
   engagementPeriodNotes: string | null
   contentProxyNotes: string | null
   misalignmentNotes: string | null
