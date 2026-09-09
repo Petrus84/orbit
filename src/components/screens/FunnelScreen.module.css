@@ -3,9 +3,16 @@
   flex-direction: column;
   gap:            var(--space-6);
   width:          100%;
-  max-width:      1400px;
+  max-width:      1120px;
   margin:         0 auto;
   padding:        var(--space-8) var(--space-6);
+  /* ✅ FIX (mesma causa do CarteiraScreen): .grid/.gridAsymmetric abaixo
+     decidiam colunas com @media, medindo a JANELA inteira do navegador
+     em vez do espaço que sobra depois da sidebar de 220px do layout.tsx
+     compartilhado. container-type aqui faz os @container abaixo reagirem
+     à largura real disponível para o conteúdo. */
+  container-type: inline-size;
+  container-name: funil;
 }
 
 .errorBox {
@@ -44,48 +51,51 @@
 }
 
 .grid {
-  display:               grid;
-  grid-template-columns: 1fr;
-  gap:                   var(--space-6);
-  width:                 100%;
-  align-items:           stretch;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  width: 100%;
+  align-items: stretch;
 }
 
-@media (min-width: 1024px) {
+@container funil (max-width: 900px) {
   .grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 }
 
-/* Variante 2:1 — o gráfico do funil se beneficia de mais espaço horizontal
-   que os sliders do simulador. Mesmo breakpoint (1024px) do .grid acima,
-   não um valor novo inventado. */
 .gridAsymmetric {
-  display:               grid;
-  grid-template-columns: 1fr;
-  gap:                   var(--space-6);
-  width:                 100%;
-  align-items:           stretch;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  width: 100%;
+  align-items: stretch;
 }
 
-@media (min-width: 1024px) {
+@container funil (max-width: 900px) {
   .gridAsymmetric {
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr;
   }
 }
 
 .colStretch {
-  display:        flex;
+  display: flex;
   flex-direction: column;
-  width:          100%;
+  width: 100%;
+  min-height: 100%;
 }
 
-/* Panel — espelha .card do protótipo (bg2 / border line / r16 / padding 18-20px) */
 .panel {
-  display:        flex;
+  display: flex;
   flex-direction: column;
-  gap:            var(--space-4);
-  width:          100%;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 100%;
+  padding: var(--space-3);
+  border: var(--border-width) solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--bg2);
+  box-shadow: var(--shadow-soft);
 }
 
 .panelTitle {
@@ -100,9 +110,10 @@
 .panelBody {
   flex:            1;
   width:           100%;
+  min-height:      0;
   display:         flex;
   flex-direction:  column;
-  justify-content: center;
+  justify-content: flex-start;
   /* ✅ CORREÇÃO: align-items:center encolhia FunnelSimulator (.wrap não
      declara width:100%) para a largura do conteúdo em vez de preencher
      o painel — um dos motivos do simulador aparecer desproporcional/
@@ -113,11 +124,12 @@
 
 .chartWrap {
   width:      100%;
-  height:     100%;
-  min-height: 350px;
+  height:     auto;
+  min-height: 0;
+  flex:       1;
   display:    flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: stretch;
+  align-items: stretch;
 }
 
 /* ── Skeletons ── */

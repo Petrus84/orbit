@@ -13,5 +13,17 @@
 /* ─── Tokens legados (CSS Modules antigos) ─── */
 @import '../styles/ssot-design-tokens.css';
 
-/* ─── Design system SSOT (Tailwind + componentes novos) ─── */
-@import '../styles/ssot-globals.css';
+/* ─── Fundo absoluto do ORBIT (camada base #0C0C0F) ───
+   Regra restaurada de ssot-globals.css (07/09/2026), que deixou de ser
+   importado por src/app/layout.tsx ao corrigir o erro de recursão do
+   Tailwind (@layer sem 'tailwindcss' na própria cadeia). Fica AQUI porque
+   este é o único arquivo que o layout.tsx de fato importa — ssot-globals.css
+   permanece órfão e não deve voltar a ser importado diretamente. */
+@layer base {
+  body {
+    background-color: var(--bg);
+    color: var(--t0);
+    font-family: 'DM Sans', sans-serif;
+  }
+}
+

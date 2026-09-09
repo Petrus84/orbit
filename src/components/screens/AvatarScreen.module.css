@@ -5,7 +5,13 @@
   flex-direction: column;
   gap: var(--space-6);
   padding: var(--space-6);
-  min-height: 100vh;
+  /* ✅ FIX: min-height:100vh duplicava o 100vh que já vem do
+     src/app/(dashboard)/layout.tsx (Sidebar+conteúdo). vh sempre mede a
+     viewport, então os dois se somavam em vez de se conterem, deixando
+     uma sobra vazia enorme abaixo do conteúdo — o mesmo sintoma visto
+     no CarteiraScreen. min-height:100% preenche só o espaço que o
+     layout pai já reservou. */
+  min-height: 100%;
   /* ✅ CORREÇÃO: sem max-width, o conteúdo esticava borda a borda em
      monitores largos — cards ficavam desproporcionalmente largos/rasos.
      Mesmo valor (1400px) que FunnelScreen.module.css/.main já usa para

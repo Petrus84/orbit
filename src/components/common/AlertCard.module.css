@@ -49,6 +49,20 @@
   box-shadow: 0 0 24px rgba(0, 255, 255, 0.08);
 }
 
+/* ✅ ADICIONADO 07/09 — AlertSeverity inclui 'success' (orbit.ts), mas o
+   módulo só cobria critical/warning/info. Usa --green (SSOT), não uma
+   nova cor fora da paleta. */
+.success {
+  background: linear-gradient(135deg, rgba(46, 204, 113, 0.08), rgba(46, 204, 113, 0.03));
+  border-color: var(--green);
+  box-shadow: 0 0 24px rgba(46, 204, 113, 0.1);
+}
+.success .btn {
+  background: rgba(46, 204, 113, 0.12);
+  border-color: var(--green);
+  color: var(--text-primary);
+}
+
 .icon {
   font-size: var(--font-size-lg);
   flex-shrink: 0;
@@ -61,6 +75,71 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
+}
+
+/* ✅ ADICIONADO 07/09 — linha título + timestamp (padrão .row-between do
+   protótipo, aplicado como CSS Module em vez de classe global). */
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+/* ✅ ADICIONADO 08/09 — agrupa título + badge de severidade no cabeçalho,
+   paridade com `row-between mb8` (alert-title + badge-red/amber) do
+   protótipo. */
+.titleGroup {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+/* Badge pequeno — cores próprias, não reaproveita o gradiente/glow de
+   .critical/.warning/.info/.success (feitos para o card inteiro; um glow
+   de 24px numa pill de texto pequena borra o contorno). */
+.severityBadge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  padding: 1px var(--space-3);
+  border-radius: var(--radius-lg);
+  border: var(--border-width) solid;
+  background: none;
+  box-shadow: none;
+}
+
+.severityBadge.critical {
+  color: #ff8080;
+  border-color: var(--border-glow-red);
+  background: rgba(255, 65, 54, 0.15);
+}
+.severityBadge.warning {
+  color: var(--amber);
+  border-color: var(--border-glow-gold);
+  background: rgba(255, 195, 0, 0.12);
+}
+.severityBadge.info {
+  color: #7eb3ff;
+  border-color: var(--border-glow-cyan);
+  background: rgba(0, 255, 255, 0.1);
+}
+.severityBadge.success {
+  color: var(--green);
+  border-color: var(--green);
+  background: rgba(46, 204, 113, 0.12);
+}
+
+.timestamp {
+  flex-shrink: 0;
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  white-space: nowrap;
 }
 
 .title {
@@ -100,6 +179,8 @@
    Usei --font-weight-bold (confirmado) e --border-radius-lg (confirmado)
    até ter o arquivo real de botão pra conferir. */
 .btn {
+  display: inline-flex;
+  align-items: center;
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   padding: var(--space-1) var(--space-4);
@@ -107,6 +188,7 @@
   cursor: pointer;
   border: var(--border-width) solid;
   background: none;
+  text-decoration: none;
   transition: opacity 120ms ease;
 }
 .btn:hover { opacity: 0.85; }

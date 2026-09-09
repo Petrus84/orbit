@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react';
 import Slider from './Slider';
 import FunnelResult from './FunnelResult';
@@ -5,10 +7,24 @@ import type { SimulationResult } from './FunnelResult';
 import type { SetorBenchmark } from '@/types/orbit';
 import styles from './FunnelSimulator.module.css';
 
+interface SaturationOutput {
+  razaoEscala: number;
+  isSaturated: boolean;
+  engajamentoEfetivo: number;
+  ctrEfetivo: number;
+  convEfetivo: number;
+}
+
 export interface SimulatorState {
   ctrBio: number;
   taxaConv: number;
   alcance: number;
+  /**
+   * Ticket médio (R$) — premissa única aplicada ao cenário real e ao
+   * simulado (ver nota em FunnelResult.tsx). Editável aqui porque não há,
+   * ainda, receita real vinda do banco.
+   */
+  ticketMedio: number;
 }
 
 interface FunnelSimulatorProps {
@@ -16,9 +32,18 @@ interface FunnelSimulatorProps {
   onChange: (next: SimulatorState) => void;
   result: SimulationResult;
   baseVendas: number;
-  alcanceRealHistorico: number;
+  baseCliques: number;
+  /**
+   * Calculado por src/lib/funnelMath.ts (fonte única) e passado pronto —
+   * este componente só exibe. Antes, FunnelSimulator recalculava a mesma
+   * coisa localmente só para o texto de aviso, e esse cálculo paralelo
+   * nunca alimentava o resultado real (era puro teatro visual). Ver
+   * FunnelScreen.tsx.
+   */
+  saturation: SaturationOutput;
   erRealNativo: number | null;
   setor: SetorBenchmark | null;
+  onSaveGoal?: (goalName: string) => Promise<void>;
 }
 
 export default function FunnelSimulator({
@@ -26,19 +51,12 @@ export default function FunnelSimulator({
   onChange,
   result,
   baseVendas,
-  alcanceRealHistorico,
+  baseCliques,
+  saturation,
   erRealNativo,
+  onSaveGoal,
 }: FunnelSimulatorProps): React.ReactElement {
-  const razaoEscala = state.alcance / (alcanceRealHistorico || 1);
-  const isSaturated = razaoEscala > 1.5;
-  const engajamentoEfetivo = erRealNativo !== null && erRealNativo > 0 ? erRealNativo : 1.5;
-
-  const alphaBase = 0.25;
-  const alphaDinamico = Math.max(0.1, alphaBase - engajamentoEfetivo * 0.02);
-  const friccao = razaoEscala > 1 ? Math.pow(razaoEscala, alphaDinamico) : 1;
-
-  const ctrReal = state.ctrBio / friccao;
-  const convReal = state.taxaConv / friccao;
+  const { razaoEscala, isSaturated, engajamentoEfetivo, ctrEfetivo, convEfetivo } = saturation;
 
   const set = <K extends keyof SimulatorState>(key: K, value: SimulatorState[K]) =>
     onChange({ ...state, [key]: value });
@@ -46,33 +64,95 @@ export default function FunnelSimulator({
   return (
     <div className={styles.wrap}>
       <div className={styles.diagnosticBox}>
-        📊 SSOT: Métrica de Engajamento ({erRealNativo !== null ? 'Banco' : 'Benchmark'}):{' '}
+        SSOT · Métrica de engajamento ({erRealNativo !== null ? 'Banco' : 'Benchmark'}):{' '}
         <strong className={styles.diagnosticStrong}>{engajamentoEfetivo}%</strong>
       </div>
 
       <div className={styles.slidersBlock}>
-        <Slider label="CTR Alvo da Bio" min={0} max={20} step={0.1} value={state.ctrBio} onChange={(v) => set('ctrBio', v)} unit="%" />
-        {razaoEscala > 1 && (
-          <div className={styles.degradedHint}>↳ Degradado pela escala: {ctrReal.toFixed(2)}%</div>
-        )}
+        <div className={styles.sliderGroup}>
+          <Slider
+            label="CTR alvo da bio"
+            helpText="A porcentagem de pessoas que devem clicar no link depois de visitar a bio."
+            min={0}
+            max={20}
+            step={0.1}
+            value={state.ctrBio}
+            onChange={(v) => set('ctrBio', v)}
+            unit="%"
+          />
+          {razaoEscala > 1 && (
+            <div className={styles.degradedHint}>
+              ↳ Aplicado na simulação: {ctrEfetivo.toFixed(2)}% (degradado pela escala)
+            </div>
+          )}
+        </div>
 
-        <Slider label="Taxa de Conversão" min={0} max={10} step={0.1} value={state.taxaConv} onChange={(v) => set('taxaConv', v)} unit="%" />
-        {razaoEscala > 1 && (
-          <div className={styles.degradedHint}>↳ Conversão real estimada: {convReal.toFixed(2)}%</div>
-        )}
+        <div className={styles.sliderGroup}>
+          <Slider
+            label="Taxa de conversão"
+            helpText="A porcentagem de cliques que pode virar uma venda."
+            min={0}
+            max={10}
+            step={0.1}
+            value={state.taxaConv}
+            onChange={(v) => set('taxaConv', v)}
+            unit="%"
+          />
+          {razaoEscala > 1 && (
+            <div className={styles.degradedHint}>
+              ↳ Aplicado na simulação: {convEfetivo.toFixed(2)}% (degradado pela escala)
+            </div>
+          )}
+        </div>
 
-        <Slider label="Alcance Simulado" min={1000} max={500000} step={1000} value={state.alcance} onChange={(v) => set('alcance', v)} unit="" />
+        <div className={styles.sliderGroup}>
+          <Slider
+            label="Alcance simulado"
+            helpText="Quantas pessoas a publicação ou campanha deve alcançar."
+            min={1000}
+            max={500000}
+            step={1000}
+            value={state.alcance}
+            onChange={(v) => set('alcance', v)}
+            unit=""
+          />
+        </div>
+
+        <div className={styles.sliderGroup}>
+          <Slider
+            label="Ticket médio (R$)"
+            helpText="O valor médio estimado de cada venda."
+            min={10}
+            max={1000}
+            step={5}
+            value={state.ticketMedio}
+            onChange={(v) => set('ticketMedio', v)}
+            formatDisplay={(v) => `R$ ${v.toFixed(0)}`}
+          />
+        </div>
       </div>
 
       {isSaturated && (
         <div className={styles.saturationAlert}>
-          ⚠️ <strong>Alerta de Saturação:</strong> Escala de público frio detectada fora da bolha
-          histórica ({razaoEscala.toFixed(1)}x). A eficiência marginal caiu em função da Lei dos
-          Rendimentos Decrescentes.
+          <strong>Alerta de saturação:</strong> escala de público frio detectada fora da bolha
+          histórica ({razaoEscala.toFixed(1)}x). O CTR e a conversão acima já estão sendo
+          reduzidos nas vendas estimadas — não é só um aviso, é o número que você está vendo.
         </div>
       )}
 
-      <FunnelResult result={result} baseVendas={baseVendas} />
+      <FunnelResult
+        result={result}
+        baseVendas={baseVendas}
+        baseCliques={baseCliques}
+        ticketMedio={state.ticketMedio}
+        onSaveGoal={onSaveGoal}
+      />
+
+      <div className={styles.footerActions}>
+        <button type="button" className={styles.exportBtn}>
+          Exportar Cenário
+        </button>
+      </div>
     </div>
   );
 }

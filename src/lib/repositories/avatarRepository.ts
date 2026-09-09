@@ -9,6 +9,7 @@
    ========================================================================== */
 
 import { supabase } from '@/lib/supabase'
+import { repairMojibake } from '@/lib/textRepair'
 import type {
   AlignmentBar,
   AlignmentStatus,
@@ -128,7 +129,10 @@ function validateAvatarRow(data: unknown): AvatarAlignmentRow {
     real_gender_female: Number(obj.real_gender_female),
     real_age_range: String(obj.real_age_range),
     real_interest: obj.real_interest ? String(obj.real_interest) : null, // ✅ Vem do banco
-    real_geo: String(obj.real_geo),
+    // ✅ CORRIGIDO 09/09 (punch list item 5️⃣) — mesmo reparo de mojibake
+    // usado em captions/top_cities; real_geo vem de ig_audience_snapshots
+    // e sofre o mesmo problema de encoding no ingest.
+    real_geo: repairMojibake(String(obj.real_geo)) ?? String(obj.real_geo),
     alignment_score: Number(obj.alignment_score),
     alignment_status: String(obj.alignment_status),
   }
@@ -285,6 +289,7 @@ export async function fetchAvatarAlignment(clientId: string): Promise<AvatarAlig
 
   try {
     const { data, error } = await supabase
+      .schema('orbit')
       .schema('orbit')
       .from('v_avatar_alignment')
       .select(

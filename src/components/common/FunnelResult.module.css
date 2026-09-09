@@ -1,86 +1,274 @@
-/* FunnelResult.module.css — espelha .funil-result/.funil-headline (linhas ~255-257) */
+/* FunnelResult.module.css
+   Todas as classes usadas por FunnelResult.tsx estão definidas aqui —
+   nada depende de módulos externos. min-height + gap explícitos em cada
+   bloco para nunca sobrepor o vizinho, mesmo com valores zerados. */
 
 .card {
-  display:        flex;
+  display: flex;
   flex-direction: column;
-  gap:            var(--space-4);
-  padding:        var(--space-4);
-  border:         var(--border-width) solid color-mix(in srgb, var(--acc) 20%, transparent);
-  border-radius:  var(--radius-lg);
-  background:     color-mix(in srgb, var(--acc) 5%, transparent);
+  gap: var(--space-4);
+  width: 100%;
+  margin-top: auto;
+  padding: var(--space-4);
+  border: var(--border-width) solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg2);
+  box-shadow: var(--shadow-soft);
 }
 
 .headlineBlock {
-  display:        flex;
+  display: flex;
   flex-direction: column;
-  gap:            2px;
+  gap: var(--space-1);
+  min-height: 58px;
 }
 
 .headlineLabel {
-  font-family:    var(--font-family);
-  font-size:      10px;
-  font-weight:    600;
+  font-family: var(--font-family);
+  font-size: 10px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color:          var(--text-muted);
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
 }
 
 .headlineRow {
-  display:        flex;
-  align-items:    baseline;
-  gap:            var(--space-2);
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: var(--space-2);
+  flex-wrap: wrap;
 }
 
 .headline {
-  font-family:    var(--font-mono);
-  font-size:      var(--font-size-4xl);
-  font-weight:    700;
-  color:          var(--acc);
-  line-height:    1;
-  letter-spacing: -1px;
+  font-family: var(--font-mono);
+  font-size: clamp(1.9rem, 3vw, 2.8rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+  letter-spacing: -0.04em;
   font-variant-numeric: tabular-nums;
 }
 
 .delta {
   font-family: var(--font-mono);
-  font-size:   var(--font-size-base);
-  font-weight: 600;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 
-.deltaUp     { color: var(--green); }
-.deltaDown   { color: var(--red); }
-.deltaNeutral{ color: var(--text-muted); }
+.deltaUp { color: var(--green); }
+.deltaDown { color: var(--red); }
+.deltaNeutral { color: var(--text-muted); }
 
 .secondaryRow {
-  display:         flex;
-  align-items:     center;
+  display: flex;
+  align-items: center;
   justify-content: space-between;
-  padding:         var(--space-2) var(--space-3);
-  border:          var(--border-width) solid var(--border-default);
-  border-radius:   var(--radius-lg);
-  background:      var(--bg-hover);
+  gap: var(--space-3);
+  min-height: 46px;
+  padding: var(--space-2) var(--space-3);
+  border: var(--border-width) solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg-hover);
 }
 
 .secondaryLabel {
   font-family: var(--font-family);
-  font-size:   var(--font-size-xs);
-  color:       var(--text-muted);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.secondaryValueBlock {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  flex-wrap: wrap;
 }
 
 .secondaryValue {
   font-family: var(--font-mono);
-  font-size:   var(--font-size-sm);
-  font-weight: 600;
-  color:       var(--amber);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--amber);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.secondaryDelta {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .insight {
   font-family: var(--font-family);
-  font-size:   var(--font-size-xs);
+  font-size: var(--font-size-xs);
   line-height: 1.6;
-  color:       var(--text-muted);
-  border-top:  var(--border-width) solid var(--border-default);
+  color: var(--text-muted);
+  border-top: var(--border-width) solid var(--border-default);
   padding-top: var(--space-3);
+  margin: 0;
+}
+
+.bottleneckAlert {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-3);
+  border-radius: var(--radius-lg);
+  border: var(--border-width) solid var(--border-default);
+}
+
+.bottleneck-critical {
+  border-color: color-mix(in srgb, var(--red) 40%, transparent);
+  background: color-mix(in srgb, var(--red) 10%, transparent);
+}
+
+.bottleneck-warning {
+  border-color: color-mix(in srgb, var(--amber) 35%, transparent);
+  background: color-mix(in srgb, var(--amber) 10%, transparent);
+}
+
+.bottleneck-info {
+  border-color: var(--border-default);
+  background: var(--bg-hover);
+}
+
+.bottleneckMessage {
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.bottleneckAction {
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
+.ctaButton {
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--bg-base);
+  background: var(--acc);
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-4);
+  cursor: pointer;
+  transition: filter var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+  box-shadow: var(--shadow-soft);
+}
+
+.ctaButton:hover:not(:disabled) {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.ctaButton:focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 2px;
+}
+
+.ctaButton:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.ctaButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  background: color-mix(in srgb, black 65%, transparent);
+  z-index: 50;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 360px;
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  border: var(--border-width) solid var(--border-default);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-lg);
+}
+
+.modalTitle {
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.modalInput {
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  background: var(--bg-hover);
+  border: var(--border-width) solid var(--border-default);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  outline: none;
+}
+
+.modalInput:focus {
+  border-color: var(--acc);
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+.modalCancel,
+.modalConfirm {
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+  border: var(--border-width) solid var(--border-default);
+}
+
+.modalCancel {
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.modalConfirm {
+  background: var(--acc);
+  color: var(--bg-base);
+  border-color: transparent;
+}
+
+.modalCancel:disabled,
+.modalConfirm:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+.modalError {
+  font-family: var(--font-family);
+  font-size:   var(--font-size-xs);
+  color:       var(--red);
 }

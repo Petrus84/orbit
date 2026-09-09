@@ -1,19 +1,42 @@
 /* ClientCard.module.css */
 
 .card {
+  position: relative;
   display: flex;
   width: 100%;
   flex-direction: column;
   gap: var(--space-4);
+  border: var(--border-width) solid var(--line);
   border-radius: var(--r16);
-  background-color: var(--bg2);
+  background: linear-gradient(180deg, var(--bg2) 0%, rgba(15, 23, 42, 0.94) 100%);
   padding: var(--space-4);
   text-align: left;
-  transition: background-color var(--transition-fast);
+  transition: transform var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
 }
 
+/* ✅ ADICIONADO 08/09 — filete de topo por severidade (paridade com
+   .client-card::before / .cc-cyan/.cc-gold/.cc-red do protótipo). */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+.accentHealthy::before { background: var(--neon-cyan); }
+.accentWarning::before { background: var(--neon-gold); }
+.accentCritical::before { background: var(--neon-red); }
+.accentUnknown::before { background: var(--line2); }
+
 .card:hover {
-  background-color: var(--bg3);
+  transform: translateY(-2px);
+  border-color: rgba(125, 211, 252, 0.35);
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.98) 0%, rgba(15, 23, 42, 0.9) 100%);
 }
 
 .card:focus-visible {
@@ -111,6 +134,18 @@
   color: var(--t1);
 }
 
+/* ✅ AJUSTADO 07/09 — passa a empilhar semáforo + badge de status (antes
+   só continha o semáforo; badge era classe morta). Alinhado ao
+   client-card do protótipo (dot + badge de texto, alinhados à direita). */
+.semaphoreWrap {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: var(--space-1);
+  flex-shrink: 0;
+}
+
 .snapshotInfo {
   display: flex;
   align-items: center;
@@ -118,7 +153,8 @@
   gap: var(--space-2);
   padding: var(--space-2) var(--space-3);
   border-radius: var(--r8);
-  background-color: var(--bg3);
+  background: rgba(148, 163, 184, 0.06);
+  border: 1px solid rgba(148, 163, 184, 0.12);
 }
 
 .snapshotLabel {
@@ -167,4 +203,13 @@
 
 .metricValueDimmed {
   color: var(--t1);
+}
+
+/* ✅ ADICIONADO 08/09 — linha-resumo do alerta mais urgente do cliente,
+   paridade com a linha "⚠ ..." no rodapé do .client-card do protótipo. */
+.topAlertText {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  color: #f43f5e;
+  line-height: 1.4;
 }

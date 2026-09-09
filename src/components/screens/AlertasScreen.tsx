@@ -19,13 +19,6 @@ const TABS: { id: FilterTab; label: string }[] = [
   { id: 'info', label: 'Info' },
 ]
 
-const TAB_ACTIVE: Record<FilterTab, string> = {
-  all: 'bg-zinc-700 text-white',
-  critical: 'bg-red-500/20 text-red-400 border border-red-500/40',
-  warning: 'bg-amber-500/20 text-amber-400 border border-amber-500/40',
-  info: 'bg-blue-500/20 text-blue-400 border border-blue-500/40',
-}
-
 // ─── Skeleton ─────────────────────────────────────────────────
 
 function AlertSkeleton(): React.ReactElement {
@@ -144,27 +137,29 @@ export default function AlertasScreen({ useAlerts }: AlertasScreenProps): React.
   const isLoading = status === 'idle' || status === 'loading'
 
   return (
-    <main className="flex min-h-screen flex-col gap-6 bg-[#0C0C0F] px-4 py-6 sm:px-6">
+    <main className="mx-auto flex min-h-screen w-full max-w-7xl flex-col gap-6 px-4 py-6 sm:px-6">
       <SectionHead title="Central de alertas" subtitle={subtitle} />
 
-      <div className="flex gap-1.5 flex-wrap" role="tablist" aria-label="Filtrar alertas">
-        {TABS.map((tab) => (
-          <button
-            key={tab.id}
-            type="button"
-            role="tab"
-            aria-selected={activeTab === tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`rounded-full px-3 py-1.5 font-sans text-xs font-medium transition-colors ${
-              activeTab === tab.id
-                ? TAB_ACTIVE[tab.id]
-                : 'bg-zinc-900 text-zinc-500 hover:bg-zinc-800 hover:text-zinc-300'
-            }`}
-          >
-            {tab.label}
-            {!isLoading && <TabBadge count={tabCounts[tab.id]} tab={tab.id} />}
-          </button>
-        ))}
+      <div className="rounded-2xl border border-[var(--line)] bg-[var(--bg2)] p-2" role="tablist" aria-label="Filtrar alertas">
+        <div className="flex flex-wrap gap-2">
+          {TABS.map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              role="tab"
+              aria-selected={activeTab === tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`inline-flex items-center rounded-full px-3 py-2 text-xs font-medium transition-all duration-200 ${
+                activeTab === tab.id
+                  ? 'bg-[var(--bg3)] text-[var(--t0)] shadow-[inset_0_0_0_1px_var(--line)]'
+                  : 'bg-transparent text-[var(--t1)] hover:bg-[var(--bg3)] hover:text-[var(--t0)]'
+              }`}
+            >
+              <span>{tab.label}</span>
+              {!isLoading && <TabBadge count={tabCounts[tab.id]} tab={tab.id} />}
+            </button>
+          ))}
+        </div>
       </div>
 
       {status === 'error' && error ? (
@@ -180,7 +175,6 @@ export default function AlertasScreen({ useAlerts }: AlertasScreenProps): React.
       ) : (
         <div className="flex flex-col gap-3" role="tabpanel">
           {sortedAlerts.map((alert) => (
-            // ✅ CORRIGIDO: Repassa onAcknowledge com refetch
             <AlertCard key={alert.id} alert={alert} onAcknowledge={async () => refetch()} />
           ))}
         </div>

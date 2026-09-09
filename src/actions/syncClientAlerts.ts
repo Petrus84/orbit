@@ -56,7 +56,11 @@ export async function syncClientAlerts(clientId: string): Promise<SyncClientAler
     // 3) O Maquinário: Apenas CASO G (Engagement Score) tem fonte de dado confirmada hoje.
     const validDrafts: AlertDraft[] = []
 
-    const engagementSnapshot = await fetchLatestEngagementScoreSnapshot(clientId)
+    const engagementSnapshot = await fetchLatestEngagementScoreSnapshot(
+      clientId,
+      periodStartObj.toISOString(),
+      periodEndObj.toISOString(),
+    )
     if (engagementSnapshot) {
       const engagementDraft = await resolveEngagementScoreAlert(engagementSnapshot)
       if (engagementDraft) {

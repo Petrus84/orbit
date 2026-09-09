@@ -96,38 +96,58 @@ gap:            2px;
 padding:        var(--space-2) 0 0 26px;
 }
 
-/* ✅ v2.1.0: Linha de post com caption */
+/* ✅ v2.3.0 (grid — corrige 3 bugs reportados em runtime pelo cliente):
+   Antes era `display:flex` com .postCaption em `flex: 0 1 480px` — uma
+   caixa de largura FIXA (480px) reservada pra um texto que já vinha
+   pré-cortado em 60 caracteres via truncateCaption() (FormatPerformance-
+   Table.tsx). Duas truncagens independentes, dimensionadas pra suposições
+   diferentes, empilhadas: a caixa CSS quase nunca enchia (sobrava vão em
+   branco à direita do texto) e o corte em 60 caracteres acontecia mesmo
+   quando a tela tinha espaço de sobra pra mostrar mais legenda.
+
+   Grid com `minmax(0, 1fr)` na coluna de legenda resolve isso na raiz:
+   a coluna PREENCHE exatamente o espaço realmente disponível (não um
+   chute de 480px) e só corta via `text-overflow: ellipsis` quando o
+   texto de fato não cabe — o corte passa a refletir a largura real da
+   tela, não um número de caracteres arbitrário. `truncateCaption()`
+   continua existindo como teto de segurança (ver default em
+   FormatPerformanceTable.tsx), não mais como truncagem primária.
+
+   Grid também dá ao Boost uma coluna própria de largura FIXA, sempre
+   reservada (presente ou não o badge) — antes, por ser um item
+   condicional dentro de um flex row, sua ausência/presença deslocava
+   .postScore horizontalmente entre linhas; "Polêmica: X%" não ficava
+   alinhado na coluna entre um post com Boost e um sem. */
 
 .postRow {
-display:     flex;
-align-items: center;
-gap:         var(--space-3);
-font-size:   var(--font-size-xs);
-font-family: var(--font-mono);
-padding:     4px 0;
+display:               grid;
+grid-template-columns: 56px 136px minmax(0, 1fr) 64px 104px;
+align-items:           center;
+column-gap:            var(--space-3);
+font-size:             var(--font-size-xs);
+font-family:           var(--font-mono);
+padding:               4px 0;
 }
 
 .postDate {
-color:     var(--text-secondary);
-min-width: 52px;
+color:       var(--text-secondary);
+white-space: nowrap;
 }
 
 .postMetrics {
-color: var(--text-dim);
-flex:  0 0 auto;
-min-width: 100px;
+color:       var(--text-dim);
+white-space: nowrap;
+overflow:    hidden;
+text-overflow: ellipsis;
 }
 
-/* ✅ NOVO v2.1.0: Caption com truncamento */
+/* ✅ Caption ocupa exatamente a coluna que sobra (minmax(0,1fr) no grid
+   acima) — `min-width: 0` é obrigatório aqui: sem ele, um item de grid
+   nunca encolhe abaixo do tamanho intrínseco do conteúdo, e o ellipsis
+   simplesmente não dispara. */
 
 .postCaption {
-/* ✅ FIX (gap gigante antes do %): antes era `flex: 2`, e por ser o único
-   item com flex-grow > 0 na linha, ele absorvia 100% do espaço livre
-   independente do tamanho do texto — em captions curtas isso deixava uma
-   caixa larga com texto alinhado à esquerda e um vão vazio antes do
-   .postScore. Trocado para flex-basis fixo sem grow: a caixa some do
-   tamanho do conteúdo (até o teto) e o % vem logo em seguida. */
-flex:              0 1 480px;
+min-width:         0;
 color:             var(--text-dim);
 overflow:          hidden;
 text-overflow:     ellipsis;
@@ -143,16 +163,44 @@ color:             var(--neon-cyan, #00c8ff);
 border-bottom-color: rgba(0, 255, 200, 0.5);
 }
 
+/* ✅ Slot de largura fixa pro badge de Boost — SEMPRE ocupa a coluna do
+   grid, com ou sem o badge dentro. É isso que garante que .postScore
+   nunca se desloque entre uma linha com Boost e outra sem. */
+
+.postBoostSlot {
+display:         flex;
+align-items:     center;
+justify-content: flex-start;
+}
+
 .postScore {
-color:    var(--text-secondary);
-flex:     0 0 auto;
-min-width: 40px;
+color:      var(--text-secondary);
+white-space: nowrap;
 text-align: right;
 }
 
 .postScoreMuted {
-color:    var(--text-dim);
-flex:     0 0 auto;
-min-width: 40px;
+color:      var(--text-dim);
+white-space: nowrap;
 text-align: right;
+}
+
+/* ✅ v2.2.0: badge de boost candidate — reusa --acc, o acento único do
+   design (ssot-design-tokens.css), em vez de introduzir uma terceira cor
+   de "destaque positivo" no vocabulário já fragmentado do projeto. */
+
+.postBoostBadge {
+display:        inline-flex;
+align-items:    center;
+gap:            3px;
+padding:        1px 6px;
+border-radius:  var(--radius-pill, 9999px);
+border:         var(--border-width) solid var(--acc);
+color:          var(--acc);
+font-family:    var(--font-family);
+font-size:      9px;
+font-weight:    var(--font-weight-bold);
+letter-spacing: 0.4px;
+text-transform: uppercase;
+white-space:    nowrap;
 }

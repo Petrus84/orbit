@@ -22,8 +22,8 @@ import { GlassCard } from '@/components/common/GlassCard'
 import FunnelChart from '@/components/common/FunnelChart'
 import FunnelSimulator from '@/components/common/FunnelSimulator'
 import type { SimulatorState } from '@/components/common/FunnelSimulator'
-import type { SimulationResult } from '@/components/common/FunnelResult'
 import type { UseFunnelResult } from '@/types/funnel'
+import { runFunnelSimulation } from '@/lib/repositories/funnelMath'
 import styles from './FunnelScreen.module.css'
 
 interface FunnelScreenProps {
@@ -33,20 +33,11 @@ interface FunnelScreenProps {
   useFunnel: (clientId: string, periodStart: string, periodEnd: string) => UseFunnelResult
 }
 
-function computeSimulation(state: SimulatorState, ctrLink: number): SimulationResult {
-  // Ajuste matemático preventivo contra divisões espúrias por zero ou valores inteiros diretos
-  const visitas = state.alcance * (state.ctrBio / 100)
-  const cliques = visitas * (ctrLink / 100)
-  const vendas = cliques * (state.taxaConv / 100)
-
-  return {
-    alcanceSimulado: state.alcance,
-    ctrBio: state.ctrBio,
-    taxaConv: state.taxaConv,
-    cliques: Math.round(cliques),
-    vendas: Math.round(vendas),
-  }
-}
+// Ticket médio (R$) ainda não tem fonte real conectada (nenhuma coluna de
+// receita chega via useFunnel/FunnelMetrics) — mesmo caso de
+// erRealNativo/setor logo abaixo. Usamos um valor inicial editável em vez
+// de inventar uma métrica "real" que não existe no banco.
+const DEFAULT_TICKET_MEDIO = 80
 
 function ChartSkeleton() {
   return (
@@ -114,16 +105,18 @@ export default function FunnelScreen({ clientId, periodStart, periodEnd, useFunn
     ctrBio: 5,
     taxaConv: 2,
     alcance: 10_000,
+    ticketMedio: DEFAULT_TICKET_MEDIO,
   })
 
   const [synced, setSynced] = useState(false)
 
   if (data && !synced) {
-    setSimState({
+    setSimState((prev) => ({
       ctrBio: data.ctrBio ?? 5,
       taxaConv: data.taxaConv ?? 2,
       alcance: data.alcance ?? 10_000,
-    })
+      ticketMedio: prev.ticketMedio, // premissa do usuário, não vem do fetch
+    }))
     setSynced(true)
   }
 
@@ -134,8 +127,26 @@ export default function FunnelScreen({ clientId, periodStart, periodEnd, useFunn
     return rawCtr > 100 ? 100 : rawCtr
   }, [data])
 
-  const simResult = useMemo(() => computeSimulation(simState, ctrLink), [simState, ctrLink])
+  // ✅ CORREÇÃO (dataflow, 2026-09-06): antes, o decaimento por saturação
+  // (razaoEscala/friccao) só existia dentro de FunnelSimulator.tsx como um
+  // texto de aviso — o cálculo real de vendas ignorava a saturação
+  // completamente (função linear pura). Agora ambos vêm da mesma fonte
+  // (src/lib/funnelMath.ts), então o número que o usuário vê É o número
+  // usado no aviso, sempre.
+  const alcanceRealHistorico = data?.alcance ?? 0
+  const erRealNativo: number | null = null // sem fonte real conectada ainda (ver comentário abaixo)
+
+  const { result: simResult, saturation } = useMemo(
+    () =>
+      runFunnelSimulation(simState, ctrLink, {
+        alcanceRealHistorico,
+        erRealNativo,
+      }),
+    [simState, ctrLink, alcanceRealHistorico, erRealNativo]
+  )
+
   const baseVendas = data?.vendas ?? 0
+  const baseCliques = data?.cliques ?? 0
 
   return (
     <main className={styles.main}>
@@ -153,13 +164,12 @@ export default function FunnelScreen({ clientId, periodStart, periodEnd, useFunn
       ) : (
         <div className={styles.grid}>
           <div className={styles.colStretch}>
-
-            <Panel title="Funil real . 90 dias">
+            <Panel title="Funil real · 90 dias">
               {isLoading || !data ? (
                 <ChartSkeleton />
               ) : (
                 <div className={styles.chartWrap}>
-                  <FunnelChart data={data} />
+                  <FunnelChart data={{ ...data, ticketMedio: simState.ticketMedio }} />
                 </div>
               )}
             </Panel>
@@ -175,21 +185,18 @@ export default function FunnelScreen({ clientId, periodStart, periodEnd, useFunn
                   onChange={setSimState}
                   result={simResult}
                   baseVendas={baseVendas}
-                  // ✅ CORREÇÃO (L6 — FunnelScreen.tsx): FunnelSimulatorProps
-                  // exige alcanceRealHistorico/erRealNativo/setor.
-                  // alcanceRealHistorico vem de dado real já buscado
-                  // (data.alcance). erRealNativo e setor não têm fonte de
-                  // dado real conectada ainda nesta tela (erRealNativo
-                  // viria do banco de engajamento nativo; setor viria de
-                  // ClientOnboarding.setor_benchmark, um domínio diferente
-                  // — onboarding — não buscado aqui). null é o estado
-                  // legítimo que FunnelSimulator já trata: cai para
-                  // benchmark (1.5%) e mostra "Benchmark" em vez de
-                  // "Banco" no diagnóstico. Não inventar valor — se/quando
-                  // useOnboarding(clientId) for integrado a esta tela, dá
-                  // pra trocar por dado real.
-                  alcanceRealHistorico={data?.alcance ?? 0}
-                  erRealNativo={null}
+                  baseCliques={baseCliques}
+                  // ✅ CORREÇÃO (dataflow, 2026-09-06): saturation já vem
+                  // calculado por runFunnelSimulation acima — FunnelSimulator
+                  // só exibe, não recalcula mais em paralelo (era isso que
+                  // permitia o aviso de saturação divergir do resultado
+                  // real). erRealNativo/setor continuam null: sem fonte de
+                  // dado real conectada ainda nesta tela (erRealNativo viria
+                  // do banco de engajamento nativo; setor viria de
+                  // ClientOnboarding.setor_benchmark, domínio de onboarding
+                  // não buscado aqui). Não inventar valor.
+                  saturation={saturation}
+                  erRealNativo={erRealNativo}
                   setor={null}
                 />
               )}

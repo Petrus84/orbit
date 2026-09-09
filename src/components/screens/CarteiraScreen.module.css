@@ -1,0 +1,405 @@
+/* ============================================================================
+   CarteiraScreen — CSS Modules
+   ============================================================================ */
+
+.main {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  /* ✅ FIX (proporção dos cards): removido min-height:100vh — o layout
+     pai (src/app/(dashboard)/layout.tsx) já força 100vh na linha
+     Sidebar+conteúdo. Manter aqui também empilhava dois 100vh e criava
+     a sobra vazia vista no devtools. min-height:100% deixa este .main
+     preencher só o espaço que o pai já reservou. */
+  min-height: 100%;
+  width: 100%;
+  max-width: 80rem;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  /* ✅ FIX (proporção dos cards): estabelece um container query context.
+     A partir daqui, .kpiGrid e .clientsGrid reagem à largura REAL
+     disponível para o conteúdo (já descontada a sidebar de 220px),
+     em vez da largura da janela inteira do navegador — que é o que
+     @media sempre mede, e por isso os cards ficavam largos/rasos
+     depois que a sidebar entrou no layout. */
+  container-type: inline-size;
+  container-name: carteira;
+}
+
+@container carteira (min-width: 640px) {
+  .main {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* ─── Header Row ─────────────────────────────────────────────────────── */
+
+.headRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+/* ─── Tabs ───────────────────────────────────────────────────────────── */
+
+.tabsContainer {
+  border-radius: 1rem;
+  border: 1px solid var(--line);
+  background-color: var(--bg2);
+  padding: 0.5rem;
+}
+
+.tabsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: all 200ms;
+  border: none;
+  cursor: pointer;
+}
+
+.tabActive {
+  background-color: var(--bg3);
+  color: var(--t0);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.tabInactive {
+  background-color: transparent;
+  color: var(--t1);
+}
+
+.tabInactive:hover {
+  background-color: var(--bg3);
+  color: var(--t0);
+}
+
+/* ─── KPI Grid ───────────────────────────────────────────────────────── */
+
+.kpiGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+/* ✅ FIX: @media → @container (ver nota em .main) */
+@container carteira (min-width: 640px) {
+  .kpiGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.kpiCard {
+  border-radius: 1rem;
+  border: 1px solid var(--line);
+  background-color: var(--bg2);
+  padding: 1rem;
+}
+
+.kpiLabel {
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--t1);
+}
+
+.kpiValue {
+  margin-top: 0.5rem;
+  font-family: monospace;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--t0);
+}
+
+.kpiValueWarning {
+  color: var(--amber);
+}
+
+.kpiValueError {
+  color: var(--red);
+}
+
+/* ─── Skeleton ───────────────────────────────────────────────────────── */
+
+.cardSkeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-radius: 1rem;
+  background-color: rgba(24, 24, 27, 0.5);
+  padding: 1rem;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.skeletonHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.skeletonAvatar {
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 9999px;
+  background-color: rgb(39, 39, 42);
+}
+
+.skeletonInfo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.skeletonLine {
+  height: 0.75rem;
+  width: 8rem;
+  border-radius: 0.25rem;
+  background-color: rgb(39, 39, 42);
+}
+
+.skeletonLineSmall {
+  height: 0.625rem;
+  width: 5rem;
+  border-radius: 0.25rem;
+  background-color: rgb(39, 39, 42);
+}
+
+.skeletonDot {
+  height: 0.625rem;
+  width: 0.625rem;
+  border-radius: 9999px;
+  background-color: rgb(39, 39, 42);
+}
+
+.skeletonDivider {
+  height: 1px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.skeletonGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.skeletonItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.skeletonLabel {
+  height: 0.5rem;
+  width: 3rem;
+  border-radius: 0.25rem;
+  background-color: rgb(39, 39, 42);
+}
+
+.skeletonValue {
+  height: 0.875rem;
+  width: 4rem;
+  border-radius: 0.25rem;
+  background-color: rgb(39, 39, 42);
+}
+
+.skeletonsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+/* ✅ FIX: @media → @container (ver nota em .main) */
+@container carteira (min-width: 640px) {
+  .skeletonsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container carteira (min-width: 1024px) {
+  .skeletonsGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@container carteira (min-width: 1280px) {
+  .skeletonsGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* ─── Error State ────────────────────────────────────────────────────── */
+
+.errorState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 1rem;
+  background-color: rgba(127, 29, 29, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  padding: 2rem;
+  text-align: center;
+}
+
+.errorMessage {
+  font-size: 0.875rem;
+  color: rgb(248, 113, 113);
+}
+
+.retryButton {
+  border-radius: 9999px;
+  background-color: rgba(239, 68, 68, 0.2);
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgb(248, 113, 113);
+  transition: background-color 200ms;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  cursor: pointer;
+}
+
+.retryButton:hover {
+  background-color: rgba(239, 68, 68, 0.3);
+}
+
+/* ─── Empty State ────────────────────────────────────────────────────── */
+
+.emptyState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  border: 1px solid rgb(39, 39, 42);
+  background-color: rgba(24, 24, 27, 0.2);
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.emptyMessage {
+  font-size: 0.875rem;
+  color: rgb(113, 113, 122);
+}
+
+/* ─── Clients Grid ───────────────────────────────────────────────────── */
+
+.clientsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+/* ✅ FIX principal: @media → @container. Antes, este grid contava colunas
+   com base na largura da JANELA (ignorando os 220px da sidebar); agora
+   conta com base na largura real disponível para o .main (container
+   "carteira" definido acima) — os cards voltam a ter o tamanho/proporção
+   desenhados independente da largura da sidebar. */
+@container carteira (min-width: 640px) {
+  .clientsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container carteira (min-width: 1024px) {
+  .clientsGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@container carteira (min-width: 1280px) {
+  .clientsGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.clientWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.alertsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-left: 0.25rem;
+}
+
+/* ─── Global Alerts Section ──────────────────────────────────────────── */
+
+.globalAlertsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  border-top: 1px solid var(--line);
+  padding-top: 1.25rem;
+}
+
+.globalAlertsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.globalAlertsLabel {
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--t1);
+}
+
+.globalAlertsBadge {
+  border-radius: 9999px;
+  border: 1px solid var(--line);
+  background-color: var(--bg2);
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  font-family: monospace;
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: var(--red);
+}
+
+.globalAlertsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}

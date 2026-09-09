@@ -404,7 +404,7 @@ export interface Alert {
   // causa nomeada pelo resolver, nunca escrita à mão na UI. `null` explícito
   // = resolver rodou e concluiu que a causa é indeterminável com o dado
   // atual (não confundir com `undefined` = resolver nem rodou ainda).
-dataSource?: 'real_snapshot' | 'fallback_by_client' | 'fallback_by_error' | 'fallback_by_empty' | 'estimate'
+dataSource?: 'real_snapshot' | 'fallback_by_client' | 'fallback_by_error' | 'fallback_by_empty' | 'empty_database' | 'error' | 'estimate'
   // obrigatório expor quando = 'fallback_by_client': é o campo que existe
   // porque o Funil (funnelRepository.ts) hoje cai em FALLBACK_BY_CLIENT sem
   // marcar a origem do dado que chega à UI.
@@ -489,6 +489,12 @@ export interface FormatPerformanceRow {
   format: string
   posts: number
   shares: number
+  // ✅ ADICIONADO 08/09 — paridade com o protótipo (screen-ig-overview,
+  // tabela Formato/Posts/Shares/Saves/Trend): a coluna Saves nunca foi
+  // exposta neste tipo, mesmo a view (`v_format_performance.save_count`)
+  // já trazendo o dado pronto — fetchFormatPerformance() nem selecionava
+  // essa coluna. Ver instagramOverviewRepository.ts.
+  saves: number
   trendLabel: string
   postsDetail: PostSummary[]
   
@@ -515,10 +521,9 @@ export interface PostSummary {
   comments: number | null
   caption: string | null
   polemicScorePct: number | null
-  // ✅ NOVO (06/09/2026): orbit.ig_posts.is_boost_candidate já é calculado
-  // no banco (motor de boost), mas nunca tinha sido exposto na tela —
-  // ficava "invisível" mesmo quando true. Ver FormatPerformanceTable.
   isBoostCandidate: boolean
+  reach: number | null
+  reachClassification: ClassifiedMetric | null
 }
 
 export interface InsightData {
@@ -546,7 +551,7 @@ export interface CriticalAlertData {
    */
   natureza?: AlertNatureza
   probableCause?: string | null
-  dataSource?: 'real_snapshot' | 'fallback_by_client' | 'fallback_by_error' | 'fallback_by_empty' | 'estimate'
+  dataSource?: 'real_snapshot' | 'fallback_by_client' | 'fallback_by_error' | 'fallback_by_empty' | 'empty_database' | 'error' | 'estimate'
 }
 export interface IGOverviewData {
   meta: DashboardHeaderMeta
@@ -1764,6 +1769,72 @@ export interface ClientRow {
 export type InstagramOverviewData = IGOverviewData
 export type UseInstagramOverviewReturn = UseInstagramOverviewResult
 
+// ============================================================================
+// SEÇÃO 13: FUNIL — TIPOS ESTENDIDOS (Refatoração v2.0)
+// ✅ PATCH (Refatoração Funil 06/09/2026): adicionado suporte a Ticket Médio,
+// Drop-off, Diagnóstico de Gargalo e CTA de Salvar Meta.
+// ============================================================================
+
+/**
+ * ✅ NOVO: Estende FunnelMetrics com dados financeiros
+ * Ticket Médio (R$) permite calcular Faturamento Estimado (R$)
+ */
+export interface FunnelMetricsExtended extends FunnelMetrics {
+  ticketMedio: number  // R$ — valor médio por venda
+  faturamentoEstimado?: number  // R$ — calculado (vendas × ticketMedio)
+}
+
+/**
+ * ✅ NOVO: Dados de uma etapa do funil com drop-off
+ * Usado por FunnelChart para renderizar queda % entre etapas
+ */
+export interface FunnelStepDataExtended {
+  label: string
+  value: number
+  percentage: number  // relativo à primeira etapa (alcance = 100%)
+  color: string  // Token CSS, ex: 'var(--blue)'
+  dropoffPct?: number  // ✅ NOVO: queda % da etapa anterior
+  dropoffLabel?: string  // ✅ NOVO: label legível (ex: "↓ 45.2% queda")
+}
+
+/**
+ * ✅ NOVO: Diagnóstico de gargalo quando simulação = cenário atual
+ * Usado por FunnelResult para exibir ação acionável
+ */
+export interface BottleneckDiagnosis {
+  detected: boolean
+  type: 'zero_clicks' | 'zero_conversions' | 'low_ctr' | 'low_conversion' | 'none'
+  message: string  // Texto pronto para exibir
+  suggestedAction: string  // CTA sugerido
+  severity: 'critical' | 'warning' | 'info'
+}
+
+/**
+ * ✅ NOVO: Meta de funil para salvar
+ * Usado por FunnelSimulator para persistir cenário simulado
+ */
+export interface FunnelGoal {
+  id?: string
+  clientId: string
+  name: string  // Ex: "Meta: 150 vendas/mês"
+  description?: string
+  targetMetrics: FunnelMetricsExtended
+  baselineMetrics: FunnelMetrics
+  createdAt: string
+  updatedAt?: string
+  createdBy?: string
+  isActive: boolean
+}
+
+/**
+ * ✅ NOVO: Resultado de simulação com diagnóstico
+ * Estende SimulatedFunnelResult com análise de gargalo
+ */
+export interface SimulatedFunnelResultExtended extends SimulatedFunnelResult {
+  faturamentoSimulado?: number  // R$ — calculado
+  bottleneck?: BottleneckDiagnosis
+  goalSaveStatus?: 'idle' | 'saving' | 'success' | 'error'
+}
 
 
 // ============================================================================

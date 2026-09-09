@@ -84,6 +84,7 @@ function toClient(
 
 async function fetchHealthMap(): Promise<Map<string, ClientHealthStatus>> {
   const { data, error } = await supabase
+    .schema('orbit')
     .from('v_client_health')
     .select('client_id, health_status')
     .returns<ClientHealthRow[]>()
@@ -107,10 +108,12 @@ export async function fetchClientsWithHealth(): Promise<Client[]> {
     healthMap,
   ] = await Promise.all([
     supabase
-      .from('v_carteira_clients' as any)
+      .schema('orbit')
+      .from('v_carteira_clients' as never)
       .select('id, name, handle, snapshot_count, last_snapshot_date')
       .returns<CarteiraClientRow[]>(),
     supabase
+      .schema('orbit')
       .from('v_client_metrics')
       .select('id, name, handle, follower_balance, engagement_real, ctr_link, polemic_score_pct, follower_churn_pct')
       .returns<ClientMetricsRow[]>(),
@@ -149,12 +152,14 @@ export async function fetchClientById(clientId: string): Promise<Client | null> 
     healthMap,
   ] = await Promise.all([
     supabase
-      .from('v_carteira_clients' as any)
+      .schema('orbit')
+      .from('v_carteira_clients' as never)
       .select('id, name, handle, snapshot_count, last_snapshot_date')
       .eq('id', clientId)
       .returns<CarteiraClientRow[]>()
       .maybeSingle(),
     supabase
+      .schema('orbit')
       .from('v_client_metrics')
       .select('id, name, handle, follower_balance, engagement_real, ctr_link, polemic_score_pct, follower_churn_pct')
       .eq('id', clientId)

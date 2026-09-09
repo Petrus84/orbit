@@ -3,6 +3,7 @@ import styles from './Slider.module.css';
 
 interface SliderProps {
   label: string;
+  helpText?: string;
   min: number;
   max: number;
   step?: number;
@@ -14,6 +15,7 @@ interface SliderProps {
 
 export default function Slider({
   label,
+  helpText,
   min,
   max,
   step = 0.1,
@@ -29,9 +31,23 @@ export default function Slider({
   return (
     <div className={styles.wrap}>
       <div className={styles.head}>
-        <label htmlFor={id} className={styles.label}>
-          {label}
-        </label>
+        <div className={styles.labelGroup}>
+          <label htmlFor={id} className={styles.label}>
+            {label}
+          </label>
+          {helpText && (
+            <button
+              type="button"
+              className={styles.tooltipTrigger}
+              aria-label={`Ajuda: ${helpText}`}
+            >
+              ?
+              <span className={styles.tooltip} role="tooltip">
+                {helpText}
+              </span>
+            </button>
+          )}
+        </div>
         <span className={styles.valueDisplay}>{display}</span>
       </div>
 

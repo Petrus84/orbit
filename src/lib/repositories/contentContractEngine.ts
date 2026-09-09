@@ -39,7 +39,7 @@ export interface AlertContractFields {
   natureza: AlertNatureza
   probableCause: string
   confidenceLevel: ConfidenceLevel
-  dataSource: 'real_snapshot' | 'fallback_by_client' | 'fallback_by_error' | 'fallback_by_empty' | 'estimate'
+  dataSource: 'real_snapshot' | 'fallback_by_client' | 'fallback_by_error' | 'fallback_by_empty' | 'empty_database' | 'error' | 'estimate'
   thresholdSource?: ThresholdGranularity
   confidenceScore?: number | null
   ruleDeclaration?: string
@@ -619,7 +619,7 @@ export function resolveAvatarAlert(input: AvatarDivergenceInput): AlertDraft {
 export interface FunnelResult {
   reach: number
   ctrBio: number
-  dataSource: 'real_snapshot' | 'fallback_by_client' | 'fallback_by_error' | 'fallback_by_empty'
+  dataSource: 'real_snapshot' | 'fallback_by_client' | 'fallback_by_error' | 'fallback_by_empty' | 'empty_database' | 'error'
   fallbackClientId?: string
   errorMessage?: string
 }
@@ -631,6 +631,10 @@ export function buildFunnelInsight(result: FunnelResult): InsightData & AlertCon
     fallback_by_client: 'Não há registro desta conta salvo para este período.',
     fallback_by_empty: 'O período existe; não veio nenhum dado de clique nele.',
     fallback_by_error: result.errorMessage
+      ? `A busca deste dado falhou: ${result.errorMessage}`
+      : 'A busca deste dado falhou. Tente de novo antes de tratar o número como real.',
+    empty_database: 'O banco não possui registros para este cliente no período selecionado.',
+    error: result.errorMessage
       ? `A busca deste dado falhou: ${result.errorMessage}`
       : 'A busca deste dado falhou. Tente de novo antes de tratar o número como real.',
   }
@@ -868,13 +872,13 @@ export async function resolveEngagementScoreAlert(
     return {
       type: 'engagement_collapse',
       severity: 'warning',
-      title: `Alcance na base em ${formatPtBr(input.vpsPct)}% — fora do que um post sozinho comporta`,
+      title: `Alcance acumulado na base em ${formatPtBr(input.vpsPct)}% no período`,
       description: vps.statusText,
       natureza: 'tecnica',
       probableCause:
-        'Alcance na base deveria ser, no máximo, 100 em cada 100 seguidores por post. Este valor só faz sentido se for soma de vários posts — e, se for, o cartão precisa dizer isso.',
+        'Este indicador vem de um snapshot agregado da conta. Acima de 100% pode ser válido quando soma o alcance de vários conteúdos no período; não deve ser interpretado como alcance de um único post.',
       immediateAction:
-        'Confirme se este número é de um post ou somado no período antes de usar este cartão para qualquer decisão.',
+        'Compare este valor com o período selecionado e use-o apenas como alcance acumulado da conta.',
       confidenceLevel: vps.confidenceLevel,
       dataSource: 'real_snapshot',
       thresholdSource: vps.thresholdSource,

@@ -128,6 +128,7 @@ function fromOrbitRow(row: OrbitAlertRow): Alert {
 // ── Base query — orbit.alerts ─────────────────────────────────────────────
 function orbitBaseQuery() {
   return supabase
+    .schema('orbit')
     .from('alerts')
     .select(ALERT_SELECT_FIELDS)
     .eq('is_resolved', false)
@@ -169,6 +170,7 @@ export async function fetchCriticalAlerts(): Promise<Alert[]> {
  */
 export async function fetchAlertById(alertId: string): Promise<Alert | null> {
   const { data, error } = await supabase
+    .schema('orbit')
     .from('alerts')
     .select(ALERT_SELECT_FIELDS)
     .eq('id', alertId)
@@ -191,6 +193,7 @@ export async function fetchAlertById(alertId: string): Promise<Alert | null> {
  */
 export async function markAlertAsRead(alertId: string): Promise<void> {
   const { error } = await supabase
+    .schema('orbit')
     .from('alerts')
     .update({
       is_resolved: true,
@@ -252,8 +255,6 @@ export function draftToAlert(
 export async function createAlert(
   draft: AlertDraft,
   clientId: string,
-  clientName: string,
-  clientHandle: string
 ): Promise<Alert> {
   if (!isAlertType(draft.type)) {
     throw new Error(
@@ -262,6 +263,7 @@ export async function createAlert(
   }
 
   const { data, error } = await supabase
+    .schema('orbit')
     .from('alerts')
     .insert({
       client_id: clientId,
@@ -321,6 +323,7 @@ export async function createAlertsBatch(
   })
 
   const { data, error } = await supabase
+    .schema('orbit')
     .from('alerts')
     .insert(rows)
     .select(ALERT_SELECT_FIELDS)

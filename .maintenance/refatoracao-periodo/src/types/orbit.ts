@@ -483,11 +483,17 @@ export interface SharesSummary {
 }
 
 export interface PostSummary {
+
   id: string
   publishedAt: string
   likes: number | null
   comments: number | null
+  caption: string | null
   polemicScorePct: number | null
+  isBoostCandidate: boolean
+  // reach por post + classificação self_reference (ver nota completa no arquivo)
+  reach: number | null
+  reachClassification: ClassifiedMetric | null
 }
 
 export interface InsightData {

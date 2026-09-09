@@ -10,6 +10,16 @@
  * - ✅ NOVO: Snapshot info renderizado acima das métricas
  * - ✅ NOVO: Regra estrita para CTR: NULL/undefined → '—', 0 → '0.0%'
  *
+ * v2.0.2 (SSOT vs protótipo — 07/09/2026):
+ * - 🐛 CORRIGIDO: o protótipo (client-card) mostra o semáforo JUNTO com um
+ *   badge de texto ("Crítico"/"Saudável"). O componente já tinha as classes
+ *   prontas para isso (`.statusBadge`, `.statusHealthy`, `.statusWarning`,
+ *   `.statusCritical`, `.statusUnknown` em ClientCard.module.css) mas nunca
+ *   as usava — `showLabel` do Semaphore ficava fixo em `false` e o card
+ *   renderizava só o círculo, sem rótulo. Adicionado o badge de status
+ *   reaproveitando `STATUS_LABELS` (fonte única, já exportada por
+ *   Semaphore.tsx) — não duplica vocabulário novo.
+ *
  * v1.0.0 (15/08/2026):
  * O contrato de dados já estava certo: `Client` vem do barrel
  * (`../../types/client` → `orbit.ts`), sem redeclaração local.
@@ -20,7 +30,7 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import Semaphore from './Semaphore'
+import Semaphore, { STATUS_LABELS } from './Semaphore'
 import type { SemaphoreStatus } from './Semaphore'
 import type { Client, ClientHealthStatus } from '@/types/client'
 import styles from './ClientCard.module.css'
@@ -30,6 +40,14 @@ export interface ClientCardProps {
   healthStatus?: ClientHealthStatus
   snapshotCount?: number
   lastSnapshotDate?: string | null
+  /**
+   * ✅ ADICIONADO 08/09 — paridade com o protótipo (client-card): o card
+   * sempre mostra uma linha-resumo do problema mais urgente do cliente
+   * ("⚠ Funil travado na bio · avatar desalinhado..."), abaixo das
+   * métricas. Isso tinha ficado só na Central de Alertas — o card, aqui,
+   * nunca recebia esse texto. Opcional: sem alerta, a linha não renderiza.
+   */
+  topAlertText?: string | null
 }
 
 function formatFollowerBalance(value: number): string {
@@ -58,6 +76,25 @@ function formatDate(dateString: string | null | undefined): string {
   }
 }
 
+const STATUS_BADGE_CLASS: Record<ClientHealthStatus, string> = {
+  healthy: styles.statusHealthy,
+  warning: styles.statusWarning,
+  critical: styles.statusCritical,
+  unknown: styles.statusUnknown,
+}
+
+// ✅ ADICIONADO 08/09 — paridade com o protótipo: client-card tinha um
+// filete colorido no topo por severidade (.cc-cyan/.cc-gold/.cc-red em
+// ::before). O componente nunca aplicava nenhuma classe de acento — o
+// card ficava com a mesma borda neutra em qualquer status, inclusive
+// crítico. Reaproveita o mesmo vocabulário cyan/gold/red do Semaphore.
+const STATUS_ACCENT_CLASS: Record<ClientHealthStatus, string> = {
+  healthy: styles.accentHealthy,
+  warning: styles.accentWarning,
+  critical: styles.accentCritical,
+  unknown: styles.accentUnknown,
+}
+
 interface MetricColProps {
   label: string
   value: string
@@ -80,6 +117,7 @@ export default function ClientCard({
   healthStatus: propHealthStatus,
   snapshotCount: propSnapshotCount,
   lastSnapshotDate: propLastSnapshotDate,
+  topAlertText,
 }: ClientCardProps): React.ReactElement {
   const router = useRouter()
 
@@ -101,9 +139,9 @@ export default function ClientCard({
     <button
       type="button"
       onClick={() => router.push(`/clients/${client.id}`)}
-      className={styles.card}
+      className={[styles.card, STATUS_ACCENT_CLASS[healthStatus]].join(' ')}
+      aria-label={`Abrir cliente ${client.name}`}
     >
-      {/* Header: avatar + name + semaphore */}
       <div className={styles.header}>
         {client.avatar ? (
           <Image
@@ -124,22 +162,25 @@ export default function ClientCard({
           <span className={styles.handle}>{client.handle}</span>
         </div>
 
-        <Semaphore status={semaphoreStatus} showLabel={false} />
+        <span className={styles.semaphoreWrap}>
+          <Semaphore status={semaphoreStatus} showLabel={false} />
+          <span className={`${styles.statusBadge} ${STATUS_BADGE_CLASS[healthStatus]}`}>
+            {STATUS_LABELS[healthStatus]}
+          </span>
+        </span>
       </div>
 
       <div className={styles.divider} />
 
-      {/* ✅ NOVO: Snapshot info */}
       {snapshotCount > 0 && lastSnapshotDate && (
         <div className={styles.snapshotInfo}>
-          <span className={styles.snapshotLabel}>Último Snapshot:</span>
+          <span className={styles.snapshotLabel}>Último Snapshot</span>
           <span className={styles.snapshotValue}>
-            {formatDate(lastSnapshotDate)} ({snapshotCount} histórico{snapshotCount !== 1 ? 's' : ''})
+            {formatDate(lastSnapshotDate)} · {snapshotCount}
           </span>
         </div>
       )}
 
-      {/* Metrics row */}
       <div className={styles.metricsRow}>
         <MetricCol
           label="Saldo seg."
@@ -153,6 +194,10 @@ export default function ClientCard({
         />
         <MetricCol label="CTR link" value={ctrDisplay} dimmed={client.metrics.ctr_link == null} />
       </div>
+
+      {topAlertText && (
+        <p className={styles.topAlertText}>⚠ {topAlertText}</p>
+      )}
     </button>
   )
 }

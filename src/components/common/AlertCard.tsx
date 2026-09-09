@@ -1,16 +1,110 @@
+/**
+ * ============================================================================
+ * AlertCard — Refatoração SSOT 07/09/2026
+ * ============================================================================
+ *
+ * 🐛 CORRIGIDO (auditoria vs protótipo SSOT):
+ * 1) Ícone: existia um SEGUNDO vocabulário de ícones, local e hardcoded por
+ *    `severity` (🚨/⚠️/ℹ️/✅), duplicando — com valores diferentes — o que
+ *    `AlertIcon.tsx` já resolve corretamente por `alert.type` (vocabulário
+ *    único, 9 valores, mesmo enum do Postgres). O protótipo mostra ícone por
+ *    TIPO de alerta (⚡ CTR, 📉 engajamento, 🎯 avatar, 💸 ROAS, 🚀 boost...),
+ *    não por severidade — a versão anterior nunca conseguiria reproduzir
+ *    isso. Trocado para <AlertIcon type={...} />.
+ *    ⚠️ CORRIGIDO (rodada 2 — tsc): `Alert.type` em orbit.ts é `string`
+ *    solto (contrato de domínio propositalmente mais largo que o enum do
+ *    banco), enquanto `AlertIcon` exige `AlertType`. Passar `alert.type`
+ *    direto quebra `tsc`. Usa o guard `isAlertType()` — já exportado por
+ *    `alertsRepository.ts`, mesmo lugar que já faz esse narrowing pro
+ *    insert — em vez de um cast forçado (`as AlertType`), que esconderia
+ *    um valor de fato inválido em vez de degradar com segurança.
+ * 2) Cor: classes Tailwind com paleta padrão (`red-500`, `amber-500`,
+ *    `blue-500`, `green-500`) — fora da paleta neon do SSOT
+ *    (--neon-red/--neon-gold/--neon-cyan definidas em ssot-design-tokens.css
+ *    e já usadas por Semaphore.tsx). Substituído por `AlertCard.module.css`,
+ *    que já existia pronto no projeto — SSOT-aligned — mas nunca era
+ *    importado por este componente (arquivo órfão).
+ * 3) Ação contextual: `alert.action` (populado por alertsRepository.ts a
+ *    partir de `action_url`, ex.: link para o simulador de funil) era
+ *    ignorado por completo — só existia um botão genérico "Resolver". O
+ *    protótipo mostra o botão de ação específico ("Simular funil",
+ *    "Diagnóstico completo"...) — corrigido para renderizar o link real
+ *    quando existir, mantendo "Resolver" como ação secundária de
+ *    reconhecimento.
+ * 4) `suggestedAction` (texto de recomendação vindo do banco) também não
+ *    era exibido — adicionado como linha auxiliar, mesmo padrão do
+ *    `alert-text` do protótipo.
+ * 5) Adicionada variante `.success` ausente em AlertCard.module.css
+ *    (severity inclui 'success' em AlertSeverity, mas o módulo só cobria
+ *    critical/warning/info).
+ *
+ * 🐛 CORRIGIDO (rodada 3 — 08/09, paridade com protótipo + achado da
+ * análise de dados 08/09/2026):
+ * 6) O badge de severidade ("Crítico"/"Atenção") estava sendo renderizado
+ *    como um pill dentro da linha de botões (`.action`), junto com
+ *    "Resolver" e "@handle". No protótipo (`screen-alertas`,
+ *    `row-between mb8` com `alert-title` + `badge-red`/`badge-amber`), a
+ *    severidade é um badge no CABEÇALHO, ao lado do título — não uma ação.
+ *    Movido para `headerRow`, ao lado do timestamp; a linha de ações
+ *    (`.action`) agora só contém ações de verdade (link contextual,
+ *    handle do cliente, resolver).
+ * 7) `action.url` agora é validado antes de virar link clicável: a
+ *    análise de dados de 08/09/2026 confirmou que o único alerta real da
+ *    base (CTR de eupetruchio84) tem `action_url = 'https://example.com/
+ *    alerts/ctr'` — um placeholder de exemplo nunca trocado no dado, não
+ *    um link de fato. Renderizar isso como botão clicável manda o usuário
+ *    pra um domínio de exemplo. `isPlaceholderUrl()` filtra domínios de
+ *    exemplo conhecidos (example.com/example.org/localhost) — quando
+ *    bate, o botão de ação não aparece (degrada para só "Resolver"), em
+ *    vez de linkar para lugar nenhum.
+ * ============================================================================
+ */
+
 import React, { useState } from 'react'
+import Link from 'next/link'
 import type { Alert } from '@/types/alert'
-import { markAlertAsRead } from '@/lib/repositories/alertsRepository'
+import { markAlertAsRead, isAlertType } from '@/lib/repositories/alertsRepository'
+import AlertIcon from './AlertIcon'
+import styles from './AlertCard.module.css'
 
 interface AlertCardProps {
   alert: Alert
   onAcknowledge?: () => Promise<void> | void
 }
 
+const SEVERITY_CLASS: Record<Alert['severity'], string> = {
+  critical: styles.critical,
+  warning: styles.warning,
+  info: styles.info,
+  success: styles.success,
+}
+
+const SEVERITY_LABEL: Record<Alert['severity'], string> = {
+  critical: 'Crítico',
+  warning: 'Atenção',
+  info: 'Info',
+  success: 'Resolvido',
+}
+
+// ✅ ADICIONADO 08/09 — achado da análise de dados: action_url do único
+// alerta real da base é 'https://example.com/alerts/ctr', um placeholder
+// nunca trocado. Não é caso isolado necessariamente — qualquer domínio de
+// exemplo/local não deve virar link clicável pro usuário final.
+const PLACEHOLDER_HOSTS = ['example.com', 'example.org', 'example.net', 'localhost']
+
+function isPlaceholderUrl(url: string): boolean {
+  try {
+    const { hostname } = new URL(url)
+    return PLACEHOLDER_HOSTS.some((host) => hostname === host || hostname.endsWith(`.${host}`))
+  } catch {
+    // URL relativa (ex: '/funil') não é um domínio de exemplo — deixa passar.
+    return false
+  }
+}
+
 export default function AlertCard({ alert, onAcknowledge }: AlertCardProps): React.ReactElement {
   const [isLoading, setIsLoading] = useState(false)
 
-  // ✅ CORRIGIDO: Função async que aguarda a mutação ANTES de chamar o callback
   async function handleAcknowledge(): Promise<void> {
     try {
       setIsLoading(true)
@@ -25,73 +119,69 @@ export default function AlertCard({ alert, onAcknowledge }: AlertCardProps): Rea
     }
   }
 
-  const severityColors: Record<string, string> = {
-    critical: 'border-red-500/40 bg-red-500/5',
-    warning: 'border-amber-500/40 bg-amber-500/5',
-    info: 'border-blue-500/40 bg-blue-500/5',
-    success: 'border-green-500/40 bg-green-500/5',
-  }
-
-  const severityIcons: Record<string, string> = {
-    critical: '🚨',
-    warning: '⚠️',
-    info: 'ℹ️',
-    success: '✅',
-  }
-
-  const severityLabels: Record<string, string> = {
-    critical: 'Crítico',
-    warning: 'Atenção',
-    info: 'Info',
-    success: 'Sucesso',
-  }
-
-  const borderColor = severityColors[alert.severity] || severityColors.info
-  const icon = severityIcons[alert.severity] || severityIcons.info
-  const label = severityLabels[alert.severity] || severityLabels.info
+  const severityClass = SEVERITY_CLASS[alert.severity] ?? styles.info
+  const severityLabel = SEVERITY_LABEL[alert.severity] ?? 'Info'
+  // `alert.type` é `string` no contrato de domínio (orbit.ts) — mais largo
+  // que o enum `AlertType` que `AlertIcon` exige. Narrowing explícito em
+  // vez de cast: um valor fora do enum vira fallback genérico, não erro.
+  const iconType = isAlertType(alert.type) ? alert.type : null
+  // ✅ ADICIONADO 08/09 — só considera o link de ação válido se não for
+  // um placeholder de exemplo (ver isPlaceholderUrl acima).
+  const hasValidActionLink =
+    alert.action?.type === 'link' && !!alert.action.url && !isPlaceholderUrl(alert.action.url)
 
   return (
-    <div className={`flex gap-3 rounded-2xl border p-4 ${borderColor}`}>
-      <div className="flex flex-col items-center gap-2 pt-0.5">
-        <span className="text-lg">{icon}</span>
-        {!alert.isResolved && <div className="h-1.5 w-1.5 rounded-full bg-current opacity-60" />}
+    <div className={`${styles.card} ${severityClass}`} aria-live="polite">
+      <div className={styles.icon}>
+        {iconType ? (
+          <AlertIcon type={iconType} />
+        ) : (
+          <span role="img" aria-label="alerta" className="select-none">
+            🔔
+          </span>
+        )}
       </div>
 
-      <div className="flex flex-1 flex-col gap-2">
-        <div className="flex items-start justify-between gap-2">
-          <h3 className="font-sans font-semibold text-sm text-white">{alert.title}</h3>
-          <time className="font-mono text-xs text-zinc-500 whitespace-nowrap">
+      <div className={styles.body}>
+        <div className={styles.headerRow}>
+          <div className={styles.titleGroup}>
+            <h3 className={styles.title}>{alert.title}</h3>
+            {/* ✅ MOVIDO 08/09 — paridade com o protótipo: badge de
+                severidade fica no cabeçalho, ao lado do título, não como
+                pill na linha de ações. */}
+            <span className={`${styles.severityBadge} ${severityClass}`}>{severityLabel}</span>
+          </div>
+          <time className={styles.timestamp}>
             {new Date(alert.createdAt).toLocaleDateString('pt-BR')}
           </time>
         </div>
 
-        {alert.description && (
-          <p className="font-sans text-xs text-zinc-400">{alert.description}</p>
-        )}
+        {alert.description && <p className={styles.text}>{alert.description}</p>}
 
         {alert.metricName && alert.metricValue !== null && (
-          <p className="font-mono text-xs text-zinc-500">
-            <span className="text-zinc-400">{alert.metricName}:</span>{' '}
-            <span className="font-semibold text-white">{alert.metricValue.toFixed(2)}</span>
+          <p className={styles.text}>
+            {alert.metricName}: <strong>{alert.metricValue.toFixed(2)}</strong>
             {alert.thresholdValue !== null && (
               <>
-                {' '}
-                <span className="text-zinc-600">vs</span>{' '}
-                <span className="text-zinc-400">{alert.thresholdValue.toFixed(2)}</span>
+                {' '}vs <strong>{alert.thresholdValue.toFixed(2)}</strong>
               </>
             )}
           </p>
         )}
 
-        <div className="flex gap-2 pt-1">
-          <span className="inline-flex rounded-full bg-zinc-900/50 px-2.5 py-1 font-mono text-[10px] font-medium text-zinc-400">
-            {label}
-          </span>
+        {alert.suggestedAction && <p className={styles.text}>💡 {alert.suggestedAction}</p>}
 
+        <div className={styles.action}>
           {alert.clientName && (
-            <span className="inline-flex rounded-full bg-zinc-900/50 px-2.5 py-1 font-mono text-[10px] font-medium text-zinc-400">
+            <span className={`${styles.btn} ${styles.btnGhost}`}>
               {alert.clientHandle ? `@${alert.clientHandle}` : alert.clientName}
             </span>
+          )}
+
+          {hasValidActionLink && (
+            <Link href={alert.action!.url!} className={styles.btn}>
+              {alert.action!.label}
+            </Link>
           )}
 
           {!alert.isResolved && (
@@ -99,7 +189,7 @@ export default function AlertCard({ alert, onAcknowledge }: AlertCardProps): Rea
               type="button"
               onClick={handleAcknowledge}
               disabled={isLoading}
-              className="ml-auto rounded-full bg-zinc-700/50 px-3 py-1 font-sans text-xs font-medium text-zinc-300 transition-colors hover:bg-zinc-600 disabled:opacity-50 disabled:cursor-not-allowed"
+              className={`${styles.btn} ${styles.btnGhost}`}
             >
               {isLoading ? 'Resolvendo...' : 'Resolver'}
             </button>

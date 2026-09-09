@@ -1,20 +1,21 @@
 /* =============================================================================
-   ORBIT · Repository — Funil Interativo + Simulador
-   Caminho: src/lib/repositories/funnelRepository.ts
-   Versão: 4.0.0 + ContentContractEngine Integration
-   
-   v4.0.0:
-   - Usa supabase (orbit.funnel_data confirmado em produção)
-   - Fallback hardcoded com dados do @cpimportstore quando DB retorna vazio
-   - Integração com ContentContractEngine para marcar dataSource
-   ============================================================================= */
+  ORBIT · Repository — Funil Interativo + Simulador
+  Caminho: src/lib/repositories/funnelRepository.ts
+  ============================================================================= */
 
 import { supabase } from '@/lib/supabase'
 import { buildFunnelInsight } from './contentContractEngine'
 import type { FunnelMetrics , InsightData } from '@/types/orbit'
 import type { AlertContractFields } from './contentContractEngine'
 
-// ✅ SHAPE LOCAL: Mapeia a linha bruta de orbit.funnel_data
+interface AccountSnapshotRow {
+  reach_total: number | null
+  profile_visits: number | null
+  link_clicks: number | null
+  period_start: string
+  period_end: string
+}
+
 interface FunnelDataRow {
   id: string
   client_id: string
@@ -29,41 +30,70 @@ interface FunnelDataRow {
   created_at: string
 }
 
-// ✅ MAPPER: FunnelDataRow → FunnelMetrics (domínio)
-function mapRowToFunnelMetrics(row: FunnelDataRow): FunnelMetrics {
+function mapRowsToFunnelMetrics(rows: FunnelDataRow[]): FunnelMetrics {
+  const alcance = rows.reduce((sum, r) => sum + (r.alcance ?? 0), 0)
+  const visitas = rows.reduce((sum, r) => sum + (r.visitas ?? 0), 0)
+  const cliques = rows.reduce((sum, r) => sum + (r.cliques ?? 0), 0)
+  const vendas = rows.reduce((sum, r) => sum + (r.vendas ?? 0), 0)
+
   return {
-    alcance: row.alcance,
-    visitas: row.visitas ?? 0,
-    cliques: row.cliques ?? 0,
-    vendas: row.vendas ?? 0,
-    ctrBio: typeof row.ctr_bio === 'string' ? parseFloat(row.ctr_bio) : row.ctr_bio,
-    taxaConv: typeof row.taxa_conv === 'string' ? parseFloat(row.taxa_conv) : row.taxa_conv,
+    alcance,
+    visitas,
+    cliques,
+    vendas,
+    ctrBio: alcance > 0 ? (visitas / alcance) * 100 : 0,
+    taxaConv: cliques > 0 ? (vendas / cliques) * 100 : 0,
   }
 }
 
-// ✅ FALLBACK: Dados reais verificados de @cpimportstore (Feb-Mai 2026)
-const FALLBACK_CPIMPORTSTORE: FunnelMetrics = {
-  alcance: 443,
-  visitas: 53,
-  cliques: 4,
-  vendas: 0,
-  ctrBio: 7.5,
-  taxaConv: 0,
+function toFiniteNumber(value: number | null | undefined): number {
+  return value != null && Number.isFinite(value) ? value : 0
 }
 
-const FALLBACK_DEFAULT: FunnelMetrics = {
-  alcance: 1000,
-  visitas: 120,
-  cliques: 12,
-  vendas: 2,
-  ctrBio: 12,
-  taxaConv: 16.7,
+function mapFunnelMetrics(
+  accountSnapshot: AccountSnapshotRow | null,
+  funnelRows: FunnelDataRow[]
+): FunnelMetrics {
+  const fallback = mapRowsToFunnelMetrics(funnelRows)
+  const alcance = accountSnapshot
+    ? accountSnapshot.reach_total == null
+      ? fallback.alcance
+      : toFiniteNumber(accountSnapshot.reach_total)
+    : fallback.alcance
+  const visitas = accountSnapshot
+    ? accountSnapshot.profile_visits == null
+      ? fallback.visitas
+      : toFiniteNumber(accountSnapshot.profile_visits)
+    : fallback.visitas
+  const cliques = accountSnapshot
+    ? accountSnapshot.link_clicks == null
+      ? fallback.cliques
+      : toFiniteNumber(accountSnapshot.link_clicks)
+    : fallback.cliques
+  const vendas = fallback.vendas
+
+  return {
+    alcance,
+    visitas,
+    cliques,
+    vendas,
+    ctrBio: alcance > 0 ? (visitas / alcance) * 100 : 0,
+    taxaConv: cliques > 0 ? (vendas / cliques) * 100 : 0,
+  }
 }
 
-// ✅ HELPER: Normaliza Date | string para ISO
 function toISOString(date: Date | string): string {
   if (typeof date === 'string') return date
   return date.toISOString()
+}
+
+const EMPTY_FUNNEL_METRICS: FunnelMetrics = {
+  alcance: 0,
+  visitas: 0,
+  cliques: 0,
+  vendas: 0,
+  ctrBio: 0,
+  taxaConv: 0,
 }
 
 // ============================================================================
@@ -78,97 +108,59 @@ export async function fetchFunnelData(
   metrics: FunnelMetrics
   insight: InsightData & AlertContractFields
 }> {
-  try {
-    const { data, error } = await supabase
+  const start = toISOString(periodStart)
+  const end = toISOString(periodEnd)
+
+  const [accountResult, funnelResult] = await Promise.all([
+    supabase
+      .schema('orbit')
+      .from('ig_account_snapshots')
+      .select('reach_total, profile_visits, link_clicks, period_start, period_end')
+      .eq('client_id', clientId)
+      .lte('period_start', end)
+      .gte('period_end', start)
+      .order('period_end', { ascending: false })
+      .limit(1)
+      .maybeSingle(),
+    supabase
+      .schema('orbit')
       .from('funnel_data')
       .select('id, client_id, alcance, visitas, cliques, vendas, ctr_bio, taxa_conv, period_start, period_end, created_at')
       .eq('client_id', clientId)
-      .gte('period_start', toISOString(periodStart))
-      .lte('period_end', toISOString(periodEnd))
-      .order('period_end', { ascending: false })
-      .limit(1)
-      .maybeSingle()
+      .lte('period_start', end)
+      .gte('period_end', start)
+      .order('period_end', { ascending: false }),
+  ])
 
-    // ❌ ERRO: Supabase retornou erro
-    if (error) {
-      console.warn('[funnelRepository] Supabase error:', error.message)
-      const metrics = clientId.includes('c4722cfc') ? FALLBACK_CPIMPORTSTORE : FALLBACK_DEFAULT
-      const insight = buildFunnelInsight({
-        reach: metrics.alcance,
-        ctrBio: metrics.ctrBio,
-        dataSource: 'fallback_by_error',
-        fallbackClientId: clientId,
-        errorMessage: error.message,
-      })
-      return { metrics, insight }
-    }
-
-    // ❌ VAZIO: Sem dados no período
-    if (!data) {
-      console.warn('[funnelRepository] No data for period:', { clientId, periodStart, periodEnd })
-      const metrics = clientId.includes('c4722cfc') ? FALLBACK_CPIMPORTSTORE : FALLBACK_DEFAULT
-      const insight = buildFunnelInsight({
-        reach: metrics.alcance,
-        ctrBio: metrics.ctrBio,
-        dataSource: 'fallback_by_empty',
-        fallbackClientId: clientId,
-      })
-      return { metrics, insight }
-    }
-
-    // ✅ SUCESSO: Dados reais
-    const metrics = mapRowToFunnelMetrics(data as FunnelDataRow)
-    const insight = buildFunnelInsight({
-      reach: metrics.alcance,
-      ctrBio: metrics.ctrBio,
-      dataSource: 'real_snapshot',
-    })
-    return { metrics, insight }
-  } catch (err) {
-    const message = err instanceof Error ? err.message : 'Unknown error'
-    console.error('[funnelRepository] Exception:', message)
-    const metrics = clientId.includes('c4722cfc') ? FALLBACK_CPIMPORTSTORE : FALLBACK_DEFAULT
-    const insight = buildFunnelInsight({
-      reach: metrics.alcance,
-      ctrBio: metrics.ctrBio,
-      dataSource: 'fallback_by_error',
-      fallbackClientId: clientId,
-      errorMessage: message,
-    })
-    return { metrics, insight }
+  if (accountResult.error) {
+    throw accountResult.error
   }
-}
 
-// ============================================================================
-// SIMULADOR: Calcula funil com parâmetros customizados
-// ============================================================================
-
-export interface SimulatedFunnelParams {
-  alcance: number
-  ctrBio: number
-  taxaConv: number
-}
-
-export function calculateSimulatedFunnel(
-  params: SimulatedFunnelParams,
-  ctrLink: number
-): FunnelMetrics {
-  const visitas = Math.round(params.alcance * (params.ctrBio / 100))
-  const cliques = Math.round(visitas * (ctrLink / 100))
-  const vendas = Math.round(cliques * (params.taxaConv / 100))
-
-  return {
-    alcance: params.alcance,
-    visitas,
-    cliques,
-    vendas,
-    ctrBio: params.ctrBio,
-    taxaConv: params.taxaConv,
+  if (funnelResult.error) {
+    throw funnelResult.error
   }
+
+  const accountSnapshot = accountResult.data as AccountSnapshotRow | null
+  const funnelRows = (funnelResult.data ?? []) as FunnelDataRow[]
+
+  if (!accountSnapshot && funnelRows.length === 0) {
+    const insight = buildFunnelInsight({
+      reach: EMPTY_FUNNEL_METRICS.alcance,
+      ctrBio: EMPTY_FUNNEL_METRICS.ctrBio,
+      dataSource: 'empty_database',
+    })
+    return { metrics: EMPTY_FUNNEL_METRICS, insight }
+  }
+
+  const metrics = mapFunnelMetrics(accountSnapshot, funnelRows)
+  const insight = buildFunnelInsight({
+    reach: metrics.alcance,
+    ctrBio: metrics.ctrBio,
+    dataSource: 'real_snapshot',
+  })
+  return { metrics, insight }
 }
 
 // ============================================================================
-// EXPORT: Função de cálculo isolada (compatível com FunnelSimulator)
+// FIM — cálculo de simulação vive em src/lib/funnelMath.ts (runFunnelSimulation)
 // ============================================================================
-
-export { calculateSimulatedFunnel as calculateSimulatedFunnelFromParams }

@@ -12,9 +12,9 @@
    ========================================================================== */
 
 import React from 'react'
-import { GlassCard }             from '@/components/common/GlassCard'
-import styles                    from './AudienceSummaryPanel.module.css'
-import type { AudienceSummary }  from '@/types/orbit'
+import { GlassCard }             from '../../../../../src/components/common/GlassCard'
+import styles                    from '../../../../../src/components/content/AudienceSummaryPanel.module.css'
+import type { AudienceSummary }  from '../../types/orbit'
 
 export interface AudienceSummaryPanelProps {
   summary: AudienceSummary

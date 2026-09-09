@@ -81,6 +81,7 @@ export async function fetchClientOnboarding(clientId: string): Promise<ClientOnb
   try {
     const { data, error } = await supabase
       .schema('orbit')
+      .schema('orbit')
       .from('client_onboarding')
       .select('*')
       .eq('client_id', clientId)
@@ -116,6 +117,7 @@ export async function fetchClientOnboarding(clientId: string): Promise<ClientOnb
 export async function upsertClientOnboarding(onboarding: ClientOnboarding): Promise<boolean> {
   try {
     const { error } = await supabase
+      .schema('orbit')
       .schema('orbit')
       .from('client_onboarding')
       .upsert(
