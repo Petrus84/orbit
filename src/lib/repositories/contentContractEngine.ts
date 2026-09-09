@@ -618,7 +618,10 @@ export function resolveAvatarAlert(input: AvatarDivergenceInput): AlertDraft {
 
 export interface FunnelResult {
   reach: number
-  ctrBio: number
+  // ✅ CORRIGIDO 09/09 (TICKETS item 4) — era `ctrBio`, mas ctrText abaixo
+  // sempre descreveu "abrem bio → clicam no link" (visitas→cliques), não
+  // "alcance→visitas". Nome agora bate com o que o texto sempre disse.
+  linkCtrPct: number
   dataSource: 'real_snapshot' | 'fallback_by_client' | 'fallback_by_error' | 'fallback_by_empty' | 'empty_database' | 'error'
   fallbackClientId?: string
   errorMessage?: string
@@ -639,7 +642,7 @@ export function buildFunnelInsight(result: FunnelResult): InsightData & AlertCon
       : 'A busca deste dado falhou. Tente de novo antes de tratar o número como real.',
   }
 
-  const ctrText = `De cada 100 pessoas que abrem sua bio, ${formatPtBr(result.ctrBio)} clicam no link`
+  const ctrText = `De cada 100 pessoas que abrem sua bio, ${formatPtBr(result.linkCtrPct)} clicam no link`
 
   return {
     id: crypto.randomUUID(),

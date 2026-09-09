@@ -2,8 +2,6 @@
 
 import React from 'react';
 import Slider from './Slider';
-import FunnelResult from './FunnelResult';
-import type { SimulationResult } from './FunnelResult';
 import type { SetorBenchmark } from '@/types/orbit';
 import styles from './FunnelSimulator.module.css';
 
@@ -30,9 +28,6 @@ export interface SimulatorState {
 interface FunnelSimulatorProps {
   state: SimulatorState;
   onChange: (next: SimulatorState) => void;
-  result: SimulationResult;
-  baseVendas: number;
-  baseCliques: number;
   /**
    * Calculado por src/lib/funnelMath.ts (fonte única) e passado pronto —
    * este componente só exibe. Antes, FunnelSimulator recalculava a mesma
@@ -43,18 +38,18 @@ interface FunnelSimulatorProps {
   saturation: SaturationOutput;
   erRealNativo: number | null;
   setor: SetorBenchmark | null;
-  onSaveGoal?: (goalName: string) => Promise<void>;
 }
 
+// ✅ MOVIDO (09/09/2026): `result`/`baseVendas`/`baseCliques`/`onSaveGoal`
+// saíram daqui — este componente parou de renderizar <FunnelResult> (era a
+// "continuação" do card do simulador que misturava premissas com
+// resultado/receita). FunnelResult agora é um terceiro card próprio,
+// renderizado direto por FunnelScreen.tsx, que já tem tudo que ele precisa.
 export default function FunnelSimulator({
   state,
   onChange,
-  result,
-  baseVendas,
-  baseCliques,
   saturation,
   erRealNativo,
-  onSaveGoal,
 }: FunnelSimulatorProps): React.ReactElement {
   const { razaoEscala, isSaturated, engajamentoEfetivo, ctrEfetivo, convEfetivo } = saturation;
 
@@ -68,7 +63,28 @@ export default function FunnelSimulator({
         <strong className={styles.diagnosticStrong}>{engajamentoEfetivo}%</strong>
       </div>
 
+      {/* ✅ REORDENADO (09/09/2026): premissas agora seguem a MESMA ordem
+          do funil real (FunnelChart.tsx / dados de useFunnel): Alcance →
+          Visita/Clique → Venda. Antes a ordem era CTR bio → Conversão →
+          Alcance → Ticket, o que colocava o resultado do topo do funil
+          (Alcance) depois de duas taxas que dependem dele — invertido em
+          relação ao card "Funil Real" ao lado. Ticket médio continua por
+          último por ser uma premissa financeira (R$/venda), não uma etapa
+          do funil. */}
       <div className={styles.slidersBlock}>
+        <div className={styles.sliderGroup}>
+          <Slider
+            label="Alcance simulado"
+            helpText="Quantas pessoas a publicação ou campanha deve alcançar."
+            min={1000}
+            max={500000}
+            step={1000}
+            value={state.alcance}
+            onChange={(v) => set('alcance', v)}
+            unit=""
+          />
+        </div>
+
         <div className={styles.sliderGroup}>
           <Slider
             label="CTR alvo da bio"
@@ -107,19 +123,6 @@ export default function FunnelSimulator({
 
         <div className={styles.sliderGroup}>
           <Slider
-            label="Alcance simulado"
-            helpText="Quantas pessoas a publicação ou campanha deve alcançar."
-            min={1000}
-            max={500000}
-            step={1000}
-            value={state.alcance}
-            onChange={(v) => set('alcance', v)}
-            unit=""
-          />
-        </div>
-
-        <div className={styles.sliderGroup}>
-          <Slider
             label="Ticket médio (R$)"
             helpText="O valor médio estimado de cada venda."
             min={10}
@@ -139,14 +142,6 @@ export default function FunnelSimulator({
           reduzidos nas vendas estimadas — não é só um aviso, é o número que você está vendo.
         </div>
       )}
-
-      <FunnelResult
-        result={result}
-        baseVendas={baseVendas}
-        baseCliques={baseCliques}
-        ticketMedio={state.ticketMedio}
-        onSaveGoal={onSaveGoal}
-      />
 
       <div className={styles.footerActions}>
         <button type="button" className={styles.exportBtn}>

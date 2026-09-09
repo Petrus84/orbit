@@ -40,14 +40,6 @@ export interface ClientCardProps {
   healthStatus?: ClientHealthStatus
   snapshotCount?: number
   lastSnapshotDate?: string | null
-  /**
-   * ✅ ADICIONADO 08/09 — paridade com o protótipo (client-card): o card
-   * sempre mostra uma linha-resumo do problema mais urgente do cliente
-   * ("⚠ Funil travado na bio · avatar desalinhado..."), abaixo das
-   * métricas. Isso tinha ficado só na Central de Alertas — o card, aqui,
-   * nunca recebia esse texto. Opcional: sem alerta, a linha não renderiza.
-   */
-  topAlertText?: string | null
 }
 
 function formatFollowerBalance(value: number): string {
@@ -83,18 +75,6 @@ const STATUS_BADGE_CLASS: Record<ClientHealthStatus, string> = {
   unknown: styles.statusUnknown,
 }
 
-// ✅ ADICIONADO 08/09 — paridade com o protótipo: client-card tinha um
-// filete colorido no topo por severidade (.cc-cyan/.cc-gold/.cc-red em
-// ::before). O componente nunca aplicava nenhuma classe de acento — o
-// card ficava com a mesma borda neutra em qualquer status, inclusive
-// crítico. Reaproveita o mesmo vocabulário cyan/gold/red do Semaphore.
-const STATUS_ACCENT_CLASS: Record<ClientHealthStatus, string> = {
-  healthy: styles.accentHealthy,
-  warning: styles.accentWarning,
-  critical: styles.accentCritical,
-  unknown: styles.accentUnknown,
-}
-
 interface MetricColProps {
   label: string
   value: string
@@ -117,7 +97,6 @@ export default function ClientCard({
   healthStatus: propHealthStatus,
   snapshotCount: propSnapshotCount,
   lastSnapshotDate: propLastSnapshotDate,
-  topAlertText,
 }: ClientCardProps): React.ReactElement {
   const router = useRouter()
 
@@ -139,7 +118,7 @@ export default function ClientCard({
     <button
       type="button"
       onClick={() => router.push(`/clients/${client.id}`)}
-      className={[styles.card, STATUS_ACCENT_CLASS[healthStatus]].join(' ')}
+      className={styles.card}
       aria-label={`Abrir cliente ${client.name}`}
     >
       <div className={styles.header}>
@@ -194,10 +173,6 @@ export default function ClientCard({
         />
         <MetricCol label="CTR link" value={ctrDisplay} dimmed={client.metrics.ctr_link == null} />
       </div>
-
-      {topAlertText && (
-        <p className={styles.topAlertText}>⚠ {topAlertText}</p>
-      )}
     </button>
   )
 }

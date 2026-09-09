@@ -22,6 +22,7 @@ import { GlassCard } from '@/components/common/GlassCard'
 import FunnelChart from '@/components/common/FunnelChart'
 import FunnelSimulator from '@/components/common/FunnelSimulator'
 import type { SimulatorState } from '@/components/common/FunnelSimulator'
+import FunnelResult from '@/components/common/FunnelResult'
 import type { UseFunnelResult } from '@/types/funnel'
 import { runFunnelSimulation } from '@/lib/repositories/funnelMath'
 import styles from './FunnelScreen.module.css'
@@ -39,6 +40,13 @@ interface FunnelScreenProps {
 // de inventar uma métrica "real" que não existe no banco.
 const DEFAULT_TICKET_MEDIO = 80
 
+// ✅ CORRIGIDO 09/09 (TICKETS item 9) — subtitle estático virou dinâmico
+// com o período que já chega via props (mesmo padrão de formatDate local
+// usado em ClientCard.tsx/FormatPerformanceTable.tsx).
+function formatDate(iso: string): string {
+  return new Date(iso).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' })
+}
+
 function ChartSkeleton() {
   return (
     <div className={`${styles.skeletonRows} ${styles.skeletonPulse}`}>
@@ -53,6 +61,14 @@ function ChartSkeleton() {
           </div>
         </div>
       ))}
+    </div>
+  )
+}
+
+function ResultSkeleton() {
+  return (
+    <div className={`${styles.skeletonRows} ${styles.skeletonPulse}`}>
+      <div className={styles.skeletonBlock} />
     </div>
   )
 }
@@ -84,7 +100,7 @@ function Panel({ title, children }: { title: string; children: React.ReactNode }
 }
 
 export default function FunnelScreen({ clientId, periodStart, periodEnd, useFunnel }: FunnelScreenProps) {
-  const { data, status, error, refetch } = useFunnel(clientId, periodStart, periodEnd)
+  const { data, status, error, refetch, setor } = useFunnel(clientId, periodStart, periodEnd)
 
   useEffect(() => {
     if (process.env.NODE_ENV === 'development') {
@@ -112,7 +128,7 @@ export default function FunnelScreen({ clientId, periodStart, periodEnd, useFunn
 
   if (data && !synced) {
     setSimState((prev) => ({
-      ctrBio: data.ctrBio ?? 5,
+      ctrBio: data.profileVisitRate ?? 5,
       taxaConv: data.taxaConv ?? 2,
       alcance: data.alcance ?? 10_000,
       ticketMedio: prev.ticketMedio, // premissa do usuário, não vem do fetch
@@ -121,7 +137,7 @@ export default function FunnelScreen({ clientId, periodStart, periodEnd, useFunn
   }
 
   const ctrLink = useMemo(() => {
-    if (!data || !data.visitas || data.visitas === 0) return 10
+    if (!data || !data.visitas || data.visitas === 0 || data.cliques == null) return 10
     const rawCtr = (data.cliques / data.visitas) * 100
     // Trava preventiva: se a taxa calculada for bizarra por ruído do scraper, limita a amostragem
     return rawCtr > 100 ? 100 : rawCtr
@@ -150,7 +166,10 @@ export default function FunnelScreen({ clientId, periodStart, periodEnd, useFunn
 
   return (
     <main className={styles.main}>
-      <SectionHead title="Funil de conversão" subtitle="Dados reais vs. cenário simulado" />
+      <SectionHead
+        title="Funil de conversão"
+        subtitle={`Dados reais vs. cenário simulado · ${formatDate(periodStart)} – ${formatDate(periodEnd)}`}
+      />
 
       {status === 'error' && error ? (
         <div className={styles.errorBox}>
@@ -183,25 +202,46 @@ export default function FunnelScreen({ clientId, periodStart, periodEnd, useFunn
                 <FunnelSimulator
                   state={simState}
                   onChange={setSimState}
-                  result={simResult}
-                  baseVendas={baseVendas}
-                  baseCliques={baseCliques}
                   // ✅ CORREÇÃO (dataflow, 2026-09-06): saturation já vem
                   // calculado por runFunnelSimulation acima — FunnelSimulator
                   // só exibe, não recalcula mais em paralelo (era isso que
                   // permitia o aviso de saturação divergir do resultado
-                  // real). erRealNativo/setor continuam null: sem fonte de
-                  // dado real conectada ainda nesta tela (erRealNativo viria
-                  // do banco de engajamento nativo; setor viria de
-                  // ClientOnboarding.setor_benchmark, domínio de onboarding
-                  // não buscado aqui). Não inventar valor.
+                  // real). erRealNativo continua null: sem fonte de dado
+                  // real de engajamento nativo conectada ainda nesta tela
+                  // (viria do banco de engajamento nativo). Não inventar
+                  // valor. setor ✅ CORRIGIDO 09/09 (TICKETS item 8) —
+                  // agora vem de client_onboarding.setor_benchmark via
+                  // useFunnel/fetchFunnelData, não é mais hardcoded null.
                   saturation={saturation}
                   erRealNativo={erRealNativo}
-                  setor={null}
+                  setor={setor}
                 />
               )}
             </Panel>
           </div>
+        </div>
+      )}
+
+      {/* ✅ NOVO (09/09/2026): terceiro card, fora do grid de 2 colunas —
+          antes este bloco (Vendas estimadas/Faturamento/Cliques/CTA de
+          salvar meta) era renderizado dentro do card "Simulador de
+          cenários", como uma continuação dele. Extraído pra cá porque é
+          resultado/receita, não premissa — merece seu próprio espaço,
+          não o rodapé de outro card. */}
+      {status !== 'error' && (
+        <div className={styles.colStretch}>
+          <Panel title="Resultado do cenário simulado">
+            {isLoading ? (
+              <ResultSkeleton />
+            ) : (
+              <FunnelResult
+                result={simResult}
+                baseVendas={baseVendas}
+                baseCliques={baseCliques}
+                ticketMedio={simState.ticketMedio}
+              />
+            )}
+          </Panel>
         </div>
       )}
     </main>

@@ -14,7 +14,7 @@
 }
 
 .verde {
-  background: rgba(0, 255, 0, 0.15);
+  background: rgba(46, 204, 113, 0.15);
   border:     var(--border-width) solid var(--neon-green);
   color:      var(--neon-green);
 }
@@ -26,7 +26,7 @@
 }
 
 .vermelho {
-  background: rgba(255, 65, 54, 0.15);
+  background: rgba(255, 68, 68, 0.15);
   border:     var(--border-width) solid var(--neon-red);
   color:      var(--neon-red);
 }

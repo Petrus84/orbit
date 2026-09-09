@@ -190,7 +190,6 @@ function CarteiraScreen({
                   healthStatus={client.status}
                   snapshotCount={client.snapshotCount}
                   lastSnapshotDate={client.lastSnapshotDate}
-                  topAlertText={clientAlerts[0]?.title ?? null}
                 />
 
                 {clientAlerts.length > 0 && (

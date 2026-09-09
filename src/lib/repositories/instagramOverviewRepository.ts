@@ -1,23 +1,73 @@
 /* ==========================================================================
-   fetchSectorPositioning — card de setor (client_onboarding, direto, sem
-   cálculo) + benchmarking das 3 métricas via classifyMetric().
+   ORBIT · Repository — Instagram Overview (v4.3.3)
 
-   ⚠️ classifyMetric() hoje NÃO diferencia por categoria/segmento —
-   fn_classify_metric(p_metric_name, p_value, p_category, p_tier) tem
-   parâmetros de categoria/tier, mas a lógica dentro não os usa para
-   filtrar linhas de ref_thresholds (sempre busca 'all'/'all'). O que volta
-   aqui é comparação GLOBAL, não "do seu setor", mesmo que setorBenchmark
-   diga outra coisa. Não fabrica diferenciação que a função não faz — o
-   ruleDeclaration que classifyMetric já devolve já é honesto sobre isso
-   ("Comparado ao benchmark global..."). Quando fn_classify_metric for
-   corrigida para de fato usar p_category/p_tier (migration futura, fora
-   do escopo deste arquivo), esta função não precisa mudar — só a RPC por
-   baixo fica mais precisa.
+   v4.3.3 (remove fallbacks legados mortos, 01/09/2026):
+   - v_kpi_snapshots, v_quality_scores, v_format_performance só existem no
+     schema orbit — nunca existiram no projeto legado (supabaseLegacy). Os
+     fallbacks que tentavam repetir a MESMA query contra supabaseLegacy
+     eram código morto: nunca poderiam funcionar, porque essas views nunca
+     existiram lá. Removidos. Se a query em orbit falhar, a função degrada
+     para lista vazia — não tenta de novo contra um client que
+     estruturalmente não tem a view.
+   - CONFIDENCE_LEVELS agora com `as const` — sem isso, o TS infere
+     `string[]` (tipo largo) e `.in('confidence_level', CONFIDENCE_LEVELS)`
+     rejeita porque a coluna espera o enum literal ('L0'|'L1'|'L2').
+   - `import { any, z } from 'zod'` corrigido para `import { z } from 'zod'`
+     — `any` não é um export de zod, sobrou de edição manual anterior.
+   - fetchPostsByFormat exportado diretamente na declaração, em vez de um
+     `export { fetchPostsByFormat }` solto no fim do arquivo — elimina o
+     erro de "definição circular do alias de importação" causado por chaves
+     desalinhadas em edições anteriores.
+   - insights volta a usar generateInsights(formatPerformance) em vez de
+     array vazio hardcoded.
 
-   ⚠️ er_real_pct/vps_pct: mesmos metricName do CASO G
-   (resolveEngagementScoreAlert). Não há linha calibrada pra esses nomes
-   em nenhuma categoria/tier hoje — vão sempre voltar "classificação
-   indisponível". Decisão tomada, não é bug desta função.
+   v4.3.2 (correção de type safety — .overrideTypes() com merge: false, 01/09/2026):
+   - 6 ocorrências de `.overrideTypes<T>()` trocadas por
+     `.overrideTypes<T, { merge: false }>()` — resolve TS2322 causado pelo
+     merge automático de tipos quando usado com `.maybeSingle()/.single()`.
+
+   v4.3.1 (fechamento de dívida — .returns() → .overrideTypes(), 31/08/2026):
+   - 6 ocorrências de `.maybeSingle()/.single().returns<T>()` trocadas por
+     `.overrideTypes<T>()`. `PostRowRaw` (type derivado) removido — não
+     usado em lugar nenhum do arquivo.
+
+   v4.3.0 (reconciliação category/tier — 31/08/2026):
+   - Novo fetchClientOnboarding(): busca a linha completa de
+     orbit.client_onboarding do cliente — SSOT único pra setor/nicho/porte/
+     audiência.
+   - Novo fetchSectorPositioning(): monta SectorPositioning combinando
+     client_onboarding + fetchLatestEngagementScoreSnapshot (reaproveitado)
+     + classifyMetric() com category/tier resolvidos via
+     mapSegmentToCategory/mapFollowersToTier (contentContractEngine.ts).
+   - fetchCriticalAlerts agora resolve category/tier do onboarding e passa
+     pra resolveEngagementScoreAlert, em vez de classificar sempre no
+     fallback global.
+
+   v4.2.0 (fechamento de dívidas — 26/08/2026):
+   - criticalAlerts deixa de ser hardcoded []: chama
+     fetchLatestEngagementScoreSnapshot() → resolveEngagementScoreAlert()
+     (CASO G) → toCriticalAlert().
+   - fetchLatestEngagementScoreSnapshot: vps_pct deixou de ler a coluna
+     GERADA de ig_account_snapshots (depende de followers_total, sempre
+     NULL por bloqueio deliberado em extract-demographics.ts/
+     ingest-insights.ts). Passa a computar vps_pct = reach_total /
+     client_onboarding.total_followers * 100 — mesma fórmula que
+     orbit.v_quality_scores já usa. Classificação continua 100% em
+     fn_classify_metric via classifyMetric().
+   - Novo fetchSharesSummary(): shares real agregado por conta/período,
+     nunca distribuído por post (ig_posts.shares é null até ORB-DEBT-043
+     ser fechado).
+   - Novo fetchAudienceSummary(): gênero/cidades + alcance por seguidor/
+     visitas/cliques, agregados por conta/período, pega o snapshot mais
+     recente do período (nunca soma múltiplas linhas). Idade fica de fora
+     até o hardcode-zero de ingestão ser corrigido em outro arquivo.
+   - Novo fetchPostsByFormat(): agrupa posts por formato, conectado a
+     fetchFormatPerformance via postsDetail. Filtra confidence_level
+     ['L0','L1'] pra evitar divergência de contagem entre card e lista.
+
+   v4.1.0 (Sprint 2 — REFATORADO):
+   - Migrado para schema orbit.*. Header handle via .select('handle')
+     (instagram_account_id não existe no orbit).
    ========================================================================== */
 
 import { supabase } from '@/lib/supabase'
@@ -39,7 +89,6 @@ import type {
   AudienceSummary,
   ClientOnboarding,
   SectorPositioning,
-  ClassifiedMetric,
 } from '@/types/orbit'
 
 import {
@@ -54,21 +103,26 @@ type RawRow = Record<string, unknown>
 
 // ── Constantes de configuração ──────────────────────────────────────────
 
-// ✅ CORRIGIDO 08/09 — paridade com o protótipo (screen-ig-overview,
-// .grid4): faltava 'cliques-no-link', então o 4º KPICard simplesmente
-// nunca renderizava (nunca havia dado pra ele). A ordem do array agora
-// também é a ordem de exibição (ver KPI_ORDER abaixo) — antes a ordem
-// final dependia de `calculated_at` do banco, por isso os cards saíam em
-// ordem diferente da do protótipo (Seguidores → Saldo → Alcance →
-// Cliques) a cada carga.
 const KPI_METRIC_KEYS = [
+  'alcance-90d',
+  'seguidores-totais',
+  'saldo-90-dias',
+  'cliques-no-link',
+]
+
+// ✅ 09/09 — REGRESSÃO CORRIGIDA: 'cliques-no-link' tinha sido removido de
+// KPI_METRIC_KEYS (fora do .in() da query, a linha nunca voltava do banco)
+// e KPI_ORDER (ordenação canônica) tinha desaparecido junto, voltando a
+// ordenar por calculated_at desc. Resultado: o 4º KPICard do Overview
+// ("Cliques no link") não aparecia mais, mesmo com dado real em
+// orbit.v_kpi_snapshots. Ver CHANGELOG_08-09-2026_paridade-protótipo.md,
+// item 4 — este era o comportamento correto documentado lá.
+const KPI_ORDER = [
   'seguidores-totais',
   'saldo-90-dias',
   'alcance-90d',
   'cliques-no-link',
 ]
-
-const KPI_ORDER = new Map(KPI_METRIC_KEYS.map((key, index) => [key, index]))
 
 const FORMAT_LABEL: Record<string, string> = {
   reel: 'Reels',
@@ -117,23 +171,11 @@ const PostRowRawSchema = z.object({
   caption:             z.string().nullable(),
   polemic_score_pct:   z.number().nullable(),
   is_boost_candidate:  z.boolean().nullable(),
-  reach:               z.number().nullable(),
 })
 
-// ✅ NOVO (06/09/2026): blindagem contra caption com encoding corrompido
-// (UTF-8 salvo/lido como Latin-1 em algum ponto do pipeline de ingest —
-// causa raiz real fica no script de ingest, fora deste arquivo, mas a
-// tela não deve exibir mojibake enquanto isso não for corrigido lá).
-// Heurística: só tenta reparar se o texto contém os marcadores típicos de
-// mojibake (Ã seguido de outro caractere, ou â€); texto normal em PT-BR
-// nunca bate nesse padrão, então não há risco de "reparar" algo que já
-// estava certo. Se o "reparo" falhar (texto não era mojibake de verdade),
-// devolve o original sem alterar.
-// ✅ 09/09 — promovida para util compartilhado (src/lib/textRepair.ts),
-// já que o mesmo problema aparece fora deste arquivo (avatarRepository.ts,
-// punch list item 7️⃣/real_geo). Mantém o nome local para não reescrever
-// todas as chamadas abaixo.
-const repairMojibakeCaption = repairMojibake
+// ✅ 09/09 — cópia local duplicada removida; usa repairMojibake de
+// @/lib/textRepair (mesma função, um único lugar, cobre caption/
+// top_cities/real_geo). Ver TICKETS DE CORREÇÃO item 3.
 
 
 // ── Mapas de transformação ──────────────────────────────────────────────
@@ -177,6 +219,19 @@ function dedupeByMetric(rows: KpiRow[]): KpiRow[] {
     if (currentTs > existingTs) latestByMetric.set(key, row)
   }
   return Array.from(latestByMetric.values())
+}
+
+// Ordena pela ordem canônica do protótipo (KPI_ORDER), não pela ordem de
+// chegada do banco — sem isso os cards embaralham a cada snapshot novo
+// porque a query vem ordenada por calculated_at desc.
+function sortByCanonicalOrder(rows: KpiRow[]): KpiRow[] {
+  return [...rows].sort((a, b) => {
+    const keyA = a.metric_key ?? a.metric ?? 'unknown'
+    const keyB = b.metric_key ?? b.metric ?? 'unknown'
+    const idxA = KPI_ORDER.indexOf(keyA)
+    const idxB = KPI_ORDER.indexOf(keyB)
+    return (idxA === -1 ? KPI_ORDER.length : idxA) - (idxB === -1 ? KPI_ORDER.length : idxB)
+  })
 }
 
 // ── Interfaces públicas ─────────────────────────────────────────────────
@@ -319,22 +374,7 @@ async function fetchKPIs(
     })
     .filter((item): item is KpiRow => item !== null)
 
-  // ✅ CORRIGIDO 08/09 — ordena pela ordem canônica do protótipo
-  // (KPI_ORDER), não pela ordem de chegada do banco (que seguia
-  // `calculated_at desc` e podia embaralhar os 4 cards a cada snapshot
-  // novo). Ordenar o KpiRow bruto (por metric_key) antes de mapear pro
-  // shape de exibição — mais robusto que tentar recuperar a key a partir
-  // do label já formatado. Chave desconhecida (não deveria acontecer, dado
-  // o filtro `.in('metric_key', KPI_METRIC_KEYS)` acima) vai pro fim.
-  const orderedRows = dedupeByMetric(parsedRows).sort((a, b) => {
-    const keyA = a.metric_key ?? a.metric ?? ''
-    const keyB = b.metric_key ?? b.metric ?? ''
-    const orderA = KPI_ORDER.get(keyA) ?? Number.MAX_SAFE_INTEGER
-    const orderB = KPI_ORDER.get(keyB) ?? Number.MAX_SAFE_INTEGER
-    return orderA - orderB
-  })
-
-  return orderedRows.map(kpiRowToCardData)
+  return sortByCanonicalOrder(dedupeByMetric(parsedRows)).map(kpiRowToCardData)
 }
 
 async function fetchQualityScores(
@@ -376,25 +416,10 @@ export async function fetchPostsByFormat(
 ): Promise<Map<string, PostSummary[]>> {
   const byFormat = new Map<string, PostSummary[]>()
 
-  // Resolver handle do cliente (para classificação self_reference)
-  const { data: clientRow, error: clientError } = await supabase
-    .schema('orbit')
-    .from('clients')
-    .select('handle')
-    .eq('id', clientId)
-    .single()
-    .overrideTypes<{ handle: string | null }, { merge: false }>()
-
-  if (clientError) {
-    console.warn(`[fetchPostsByFormat] Não consegui resolver handle do cliente ${clientId}:`, clientError.message)
-  }
-
-  const handle = clientRow?.handle ?? null
-
   const { data, error } = await supabase
     .schema('orbit')
     .from('ig_posts')
-    .select('id, content_format, published_at, likes, comments, caption, polemic_score_pct, is_boost_candidate, reach')
+    .select('id, content_format, published_at, likes, comments, caption, polemic_score_pct, is_boost_candidate')
     .eq('client_id', clientId)
     .gte('published_at', start)
     .lte('published_at', end)
@@ -419,27 +444,14 @@ export async function fetchPostsByFormat(
     const post = parsed.data
     const label = FORMAT_LABEL[post.content_format] ?? post.content_format
 
-    // Classificar reach com self_reference (histórico da conta, não mercado global)
-    let reachClassification: ClassifiedMetric | null = null
-    if (post.reach != null && handle != null) {
-      try {
-        reachClassification = await classifyMetric('reach', post.reach, 'self_reference', handle)
-      } catch (err) {
-        console.warn(`[fetchPostsByFormat] Falha ao classificar reach do post ${post.id}:`, err)
-        reachClassification = null
-      }
-    }
-
     const summary: PostSummary = {
       id: post.id,
       publishedAt: post.published_at,
       likes: post.likes,
       comments: post.comments,
-      caption: repairMojibakeCaption(post.caption),
+      caption: repairMojibake(post.caption),
       polemicScorePct: post.polemic_score_pct,
       isBoostCandidate: post.is_boost_candidate ?? false,
-      reach: post.reach,
-      reachClassification,
     }
 
     const list = byFormat.get(label) ?? []
@@ -458,10 +470,7 @@ async function fetchFormatPerformance(
   const { data: orbitRows, error: orbitError } = await supabase
     .schema('orbit')
     .from('v_format_performance')
-  // ✅ CORRIGIDO 08/09 — save_count já existe na view (confirmado em
-  // database.types.ts) mas nunca era selecionado; coluna Saves do
-  // protótipo ficava impossível de preencher.
-  .select('id, format_name, post_count, share_count, save_count, trend_label, trend_color, period_start, period_end')
+  .select('id, format_name, post_count, share_count, trend_label, trend_color, period_start, period_end')
     .eq('client_id', clientId)
   .lte('period_start', end)
   .gte('period_end', start)
@@ -481,7 +490,6 @@ async function fetchFormatPerformance(
       format:      label,
       posts:       toFiniteNumber(row.post_count),
       shares:      toFiniteNumber(row.share_count),
-      saves:       toFiniteNumber(row.save_count),
       trendLabel:  String(row.trend_label ?? 'Estável'),
       trendColor:  (row.trend_color as GlowColor) ?? 'gold',
       postsDetail: postsByFormat.get(label) ?? [],
@@ -557,7 +565,14 @@ async function fetchAudienceSummary(
       .eq('client_id', clientId)
       .lte('period_start', end)
       .gte('period_end', start)
-      .not('reach_followers_pct', 'is', null)
+      // ✅ 09/09 — REGRESSÃO CORRIGIDA: o .not('reach_followers_pct', 'is', null)
+      // que existia aqui descartava a linha inteira (inclusive profile_visits e
+      // link_clicks, que vêm preenchidos de forma independente na ingestão —
+      // ver EXTERNAL_LINK_TAPS/PROFILE_VISITS_FROM em ingest-from-zip.ts) sempre
+      // que só reach_followers_pct estivesse nulo (export sem a chave
+      // REACH_FROM_FOLLOWERS_PCT). Efeito visível: "Cliques no link" some do
+      // AudienceSummaryPanel mesmo com dado real no snapshot mais recente.
+      // Basta pegar o snapshot mais recente do período, sem exigir esse campo.
       .order('period_end', { ascending: false })
       .limit(1)
       .maybeSingle()
@@ -571,14 +586,8 @@ async function fetchAudienceSummary(
     genderFemalePct: toFiniteNumber(audience?.gender_female_pct),
     genderMalePct: toFiniteNumber(audience?.gender_male_pct),
     genderOtherPct: toFiniteNumber(audience?.gender_other_pct),
-    // ✅ CORRIGIDO 09/09 (punch list item 5️⃣) — mesmo reparo de mojibake já
-    // aplicado a captions ("SÃ£o Paulo" → "São Paulo"). A causa raiz é no
-    // ingest (fora deste repo); isto é mitigação client-side, não o fix
-    // definitivo — a query de validação mostrou snapshots com nomes
-    // corretos E corrompidos coexistindo, ou seja, o bug do ingest é
-    // intermitente, não constante.
     topCities: (audience?.top_cities ?? []).map((city) => ({
-      name: repairMojibakeCaption(city.name) ?? city.name,
+      name: repairMojibake(city.name) ?? city.name,
       pct: toFiniteNumber(city.pct),
     })),
     reachFollowersPct: toFiniteNumber(account?.reach_followers_pct),

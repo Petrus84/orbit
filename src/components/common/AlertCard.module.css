@@ -19,6 +19,12 @@
    Marcados inline com ⚠️. Não vi nenhum arquivo que confirme o nome real
    destes — se o token real tiver outro nome, é achar-e-substituir, não
    reescrever a estrutura.
+   FIX 09/09/2026 — rgba(255, 65, 54, ...) corrigido pra rgba(255, 68, 68, ...)
+   em 4 ocorrências (.critical, .severityBadge.critical, .critical .btn).
+   O valor antigo era um vermelho ligeiramente diferente do --red/--neon-red
+   oficial (#FF4444 = rgb(255,68,68)) — drift confirmado contra o protótipo
+   SSOT, provavelmente cópia manual desatualizada. Demais cores (gold, cyan,
+   green) já batiam exatamente com os tokens, não precisaram de correção.
    ============================================================================ */
 
 .card {
@@ -32,9 +38,9 @@
 }
 
 .critical {
-  background: linear-gradient(135deg, rgba(255, 65, 54, 0.08), rgba(255, 65, 54, 0.03));
+  background: linear-gradient(135deg, rgba(255, 68, 68, 0.08), rgba(255, 68, 68, 0.03));
   border-color: var(--border-glow-red);
-  box-shadow: 0 0 24px rgba(255, 65, 54, 0.1);
+  box-shadow: 0 0 24px rgba(255, 68, 68, 0.1);
 }
 
 .warning {
@@ -116,7 +122,7 @@
 .severityBadge.critical {
   color: #ff8080;
   border-color: var(--border-glow-red);
-  background: rgba(255, 65, 54, 0.15);
+  background: rgba(255, 68, 68, 0.15);
 }
 .severityBadge.warning {
   color: var(--amber);
@@ -195,7 +201,7 @@
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
 .critical .btn {
-  background: rgba(255, 65, 54, 0.15);
+  background: rgba(255, 68, 68, 0.15);
   border-color: var(--border-glow-red);
   color: var(--text-primary);
 }

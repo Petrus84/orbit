@@ -37,26 +37,6 @@
  * 5) Adicionada variante `.success` ausente em AlertCard.module.css
  *    (severity inclui 'success' em AlertSeverity, mas o módulo só cobria
  *    critical/warning/info).
- *
- * 🐛 CORRIGIDO (rodada 3 — 08/09, paridade com protótipo + achado da
- * análise de dados 08/09/2026):
- * 6) O badge de severidade ("Crítico"/"Atenção") estava sendo renderizado
- *    como um pill dentro da linha de botões (`.action`), junto com
- *    "Resolver" e "@handle". No protótipo (`screen-alertas`,
- *    `row-between mb8` com `alert-title` + `badge-red`/`badge-amber`), a
- *    severidade é um badge no CABEÇALHO, ao lado do título — não uma ação.
- *    Movido para `headerRow`, ao lado do timestamp; a linha de ações
- *    (`.action`) agora só contém ações de verdade (link contextual,
- *    handle do cliente, resolver).
- * 7) `action.url` agora é validado antes de virar link clicável: a
- *    análise de dados de 08/09/2026 confirmou que o único alerta real da
- *    base (CTR de eupetruchio84) tem `action_url = 'https://example.com/
- *    alerts/ctr'` — um placeholder de exemplo nunca trocado no dado, não
- *    um link de fato. Renderizar isso como botão clicável manda o usuário
- *    pra um domínio de exemplo. `isPlaceholderUrl()` filtra domínios de
- *    exemplo conhecidos (example.com/example.org/localhost) — quando
- *    bate, o botão de ação não aparece (degrada para só "Resolver"), em
- *    vez de linkar para lugar nenhum.
  * ============================================================================
  */
 
@@ -86,22 +66,6 @@ const SEVERITY_LABEL: Record<Alert['severity'], string> = {
   success: 'Resolvido',
 }
 
-// ✅ ADICIONADO 08/09 — achado da análise de dados: action_url do único
-// alerta real da base é 'https://example.com/alerts/ctr', um placeholder
-// nunca trocado. Não é caso isolado necessariamente — qualquer domínio de
-// exemplo/local não deve virar link clicável pro usuário final.
-const PLACEHOLDER_HOSTS = ['example.com', 'example.org', 'example.net', 'localhost']
-
-function isPlaceholderUrl(url: string): boolean {
-  try {
-    const { hostname } = new URL(url)
-    return PLACEHOLDER_HOSTS.some((host) => hostname === host || hostname.endsWith(`.${host}`))
-  } catch {
-    // URL relativa (ex: '/funil') não é um domínio de exemplo — deixa passar.
-    return false
-  }
-}
-
 export default function AlertCard({ alert, onAcknowledge }: AlertCardProps): React.ReactElement {
   const [isLoading, setIsLoading] = useState(false)
 
@@ -125,10 +89,6 @@ export default function AlertCard({ alert, onAcknowledge }: AlertCardProps): Rea
   // que o enum `AlertType` que `AlertIcon` exige. Narrowing explícito em
   // vez de cast: um valor fora do enum vira fallback genérico, não erro.
   const iconType = isAlertType(alert.type) ? alert.type : null
-  // ✅ ADICIONADO 08/09 — só considera o link de ação válido se não for
-  // um placeholder de exemplo (ver isPlaceholderUrl acima).
-  const hasValidActionLink =
-    alert.action?.type === 'link' && !!alert.action.url && !isPlaceholderUrl(alert.action.url)
 
   return (
     <div className={`${styles.card} ${severityClass}`} aria-live="polite">
@@ -144,13 +104,7 @@ export default function AlertCard({ alert, onAcknowledge }: AlertCardProps): Rea
 
       <div className={styles.body}>
         <div className={styles.headerRow}>
-          <div className={styles.titleGroup}>
-            <h3 className={styles.title}>{alert.title}</h3>
-            {/* ✅ MOVIDO 08/09 — paridade com o protótipo: badge de
-                severidade fica no cabeçalho, ao lado do título, não como
-                pill na linha de ações. */}
-            <span className={`${styles.severityBadge} ${severityClass}`}>{severityLabel}</span>
-          </div>
+          <h3 className={styles.title}>{alert.title}</h3>
           <time className={styles.timestamp}>
             {new Date(alert.createdAt).toLocaleDateString('pt-BR')}
           </time>
@@ -172,15 +126,17 @@ export default function AlertCard({ alert, onAcknowledge }: AlertCardProps): Rea
         {alert.suggestedAction && <p className={styles.text}>💡 {alert.suggestedAction}</p>}
 
         <div className={styles.action}>
+          <span className={`${styles.btn} ${styles.btnGhost}`}>{severityLabel}</span>
+
           {alert.clientName && (
             <span className={`${styles.btn} ${styles.btnGhost}`}>
               {alert.clientHandle ? `@${alert.clientHandle}` : alert.clientName}
             </span>
           )}
 
-          {hasValidActionLink && (
-            <Link href={alert.action!.url!} className={styles.btn}>
-              {alert.action!.label}
+          {alert.action?.type === 'link' && alert.action.url && (
+            <Link href={alert.action.url} className={styles.btn}>
+              {alert.action.label}
             </Link>
           )}
 

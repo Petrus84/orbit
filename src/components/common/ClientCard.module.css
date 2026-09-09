@@ -8,7 +8,7 @@
   gap: var(--space-4);
   border: var(--border-width) solid var(--line);
   border-radius: var(--r16);
-  background: linear-gradient(180deg, var(--bg2) 0%, rgba(15, 23, 42, 0.94) 100%);
+  background: linear-gradient(180deg, var(--bg2) 0%, rgba(12, 12, 15, 0.94) 100%);
   padding: var(--space-4);
   text-align: left;
   transition: transform var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
@@ -35,8 +35,8 @@
 
 .card:hover {
   transform: translateY(-2px);
-  border-color: rgba(125, 211, 252, 0.35);
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.98) 0%, rgba(15, 23, 42, 0.9) 100%);
+  border-color: var(--line2);
+  background: var(--bg3);
 }
 
 .card:focus-visible {
@@ -114,19 +114,23 @@
   font-weight: var(--font-weight-bold);
 }
 
+/* FIX 09/09/2026 — cores eram Tailwind (emerald/amber/rose), fora da
+   paleta Orbit. Corrigido pra paleta neon única (healthy=cyan, não verde
+   — ver decisão de 22/07/2026 documentada no protótipo SSOT, mesmo
+   vocabulário do .accentHealthy/.accentWarning/.accentCritical acima). */
 .statusHealthy {
-  background-color: rgba(16, 185, 129, 0.1);
-  color: #10b981;
+  background-color: rgba(0, 255, 255, 0.1);
+  color: var(--neon-cyan);
 }
 
 .statusWarning {
-  background-color: rgba(245, 158, 11, 0.1);
-  color: #f59e0b;
+  background-color: rgba(255, 195, 0, 0.1);
+  color: var(--neon-gold);
 }
 
 .statusCritical {
-  background-color: rgba(244, 63, 94, 0.1);
-  color: #f43f5e;
+  background-color: rgba(255, 68, 68, 0.1);
+  color: var(--neon-red);
 }
 
 .statusUnknown {
@@ -153,8 +157,8 @@
   gap: var(--space-2);
   padding: var(--space-2) var(--space-3);
   border-radius: var(--r8);
-  background: rgba(148, 163, 184, 0.06);
-  border: 1px solid rgba(148, 163, 184, 0.12);
+  background: var(--bg1);
+  border: 1px solid var(--line);
 }
 
 .snapshotLabel {
@@ -210,6 +214,6 @@
 .topAlertText {
   font-family: var(--font);
   font-size: var(--font-size-xs);
-  color: #f43f5e;
+  color: var(--neon-red);
   line-height: 1.4;
 }

@@ -17,7 +17,7 @@
 }
 
 .md { width: 20px; height: 20px; font-size: 10px; }
-.sm { width: 14px; height: 14px; font-size: 8px; }
+.sm { width: 14px; height: 14px; font-size: var(--font-size-xs); }
 
 .cyan {
   background: rgba(0, 255, 255, 0.15);

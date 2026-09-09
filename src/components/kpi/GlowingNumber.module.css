@@ -27,7 +27,7 @@
 
 .red {
   color:       var(--neon-red);
-  text-shadow: 0 0 12px rgba(255, 65, 54, 0.6), 0 0 24px rgba(255, 65, 54, 0.2);
+  text-shadow: 0 0 12px rgba(255, 68, 68, 0.6), 0 0 24px rgba(255, 68, 68, 0.2);
 }
 
 .gold {

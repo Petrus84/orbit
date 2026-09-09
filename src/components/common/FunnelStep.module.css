@@ -1,88 +1,134 @@
 /* FunnelStep.module.css
-   Espelha .funnel-step / .funnel-bar-wrap / .funnel-bar / .funnel-val / .funnel-pct
-   do protótipo (linhas ~154-160). A cor de cada etapa é um TOKEN (var(--blue),
-   var(--acc), var(--amber), var(--red)) passado via CSS custom property
-   --step-color pelo componente pai — nunca hex solto. */
+   ============================================================================
+   CORES: a cor de cada etapa (--step-color) chega pronta via inline style,
+   já resolvida em FunnelChart.tsx a partir do vocabulário GlowColor
+   ('cyan' | 'gold' | 'red') — o mesmo usado em KPICardData, QualityScoreItem,
+   FormatPerformanceRow e no glow do GlassCard deste painel. Este arquivo
+   nunca decide cor sozinho; só consome --step-color. Isso evita reintroduzir
+   um tom fora do sistema (ex.: --acc, que no SSOT real é #C8FF57 — verde-
+   lima de marca, não um substituto de azul).
 
-.step {
+   LAYOUT (cascata): a etapa inteira (barra + badge de queda) encolhe como
+   uma unidade só via `width` real em `.stepInner` (ver FunnelStep.tsx) —
+   nunca via flex-basis num contêiner column, que controla altura, não
+   largura, e era a causa do desalinhamento/overlap anterior.
+   ============================================================================ */
+
+.stepContainer {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
-  padding: var(--space-1) 0;
+  align-items: center;
+  gap: var(--space-2, 0.5rem);
+  padding: var(--space-1, 0.25rem) 0;
+  width: 100%;
 }
 
-.row {
+.stepInner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1, 0.25rem);
+  min-width: min(220px, 100%);
+  margin: 0 auto;
+}
+
+.bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-3);
+  gap: var(--space-3, 0.75rem);
+  min-height: 48px;
+  padding: var(--space-2, 0.5rem) var(--space-4, 1rem);
+  border-radius: var(--radius-lg, 8px);
+  background: linear-gradient(135deg, var(--step-color) 0%, color-mix(in srgb, var(--step-color) 78%, black) 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  transition: transform var(--transition-fast, 120ms ease), box-shadow var(--transition-fast, 120ms ease);
 }
 
+.bar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.barInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.name,
 .label {
   font-family: var(--font-family);
-  font-size: var(--font-size-xs);
-  color: var(--text-secondary);
-}
-
-.values {
-  display: flex;
-  align-items: baseline;
-  justify-content: flex-end;
-  gap: var(--space-2);
-  min-width: 120px;
+  font-size: var(--font-size-sm, 0.875rem);
+  color: #fff;
+  font-weight: var(--font-weight-semibold, 600);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .value {
   font-family: var(--font-mono);
-  font-size: var(--font-size-sm);
-  font-weight: 700;
-  color: var(--text-primary);
+  font-size: var(--font-size-xs, 0.75rem);
+  color: rgba(255, 255, 255, 0.82);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .percentage {
   font-family: var(--font-mono);
-  font-size: var(--font-size-xs);
-  color: var(--step-color);
+  font-size: var(--font-size-sm, 0.875rem);
+  font-weight: var(--font-weight-bold, 700);
+  color: #fff;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-.barWrap {
-  position: relative;
-  height: 17px;
-  width: 100%;
-  overflow: hidden;
-  border-radius: var(--radius-pill);
-  background: var(--bg-active);
-  box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.08);
-}
-
-.barFill {
-  height: 100%;
-  border-radius: var(--radius-pill);
-  background: var(--step-color);
-  box-shadow: 0 0 8px color-mix(in srgb, var(--step-color) 35%, transparent);
-  transition: width var(--transition-slow);
+.dropoffWrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2, 0.5rem);
+  padding-right: var(--space-1, 0.25rem);
 }
 
 .dropoffBadge {
   display: inline-flex;
   align-items: center;
-  align-self: flex-start;
-  margin-top: 0.1rem;
-  padding: 0.15rem 0.45rem;
-  border-radius: var(--radius-pill);
-  background: var(--bg-hover);
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 0.35rem;
+  border-radius: var(--radius-pill, 9999px);
+  background: color-mix(in srgb, var(--step-color) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--step-color) 35%, transparent);
   font-family: var(--font-mono);
-  font-size: var(--font-size-xs);
-  font-weight: 700;
+  font-size: var(--font-size-xs, 0.75rem);
+  font-weight: var(--font-weight-bold, 700);
   letter-spacing: 0.02em;
   color: var(--step-color);
 }
 
+.dropoffLabel {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs, 0.75rem);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.dropoffNote {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs, 0.75rem);
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: right;
+}
+
+/* Linha fina conectando esta etapa à próxima — reforça a leitura de
+   cascata/funil entre retângulos de largura decrescente. */
 .connector {
   width: 1px;
-  height: var(--space-3);
-  margin: 0 auto;
+  height: var(--space-3, 0.75rem);
   background: linear-gradient(180deg, var(--border-default), transparent);
 }

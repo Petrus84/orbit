@@ -17,7 +17,7 @@
   font-size:   var(--font-size-sm);
   font-family: var(--font-mono);
   color:       var(--neon-red);
-  text-shadow: 0 0 8px rgba(255, 65, 54, 0.5);
+  text-shadow: 0 0 8px rgba(255, 68, 68, 0.5);
 }
 
 .label {

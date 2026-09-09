@@ -5,7 +5,7 @@
 
 import { supabase } from '@/lib/supabase'
 import { buildFunnelInsight } from './contentContractEngine'
-import type { FunnelMetrics , InsightData } from '@/types/orbit'
+import type { FunnelMetrics, InsightData, SetorBenchmark } from '@/types/orbit'
 import type { AlertContractFields } from './contentContractEngine'
 
 interface AccountSnapshotRow {
@@ -23,26 +23,35 @@ interface FunnelDataRow {
   visitas: number
   cliques: number | null
   vendas: number | null
-  ctr_bio: string | number
-  taxa_conv: string | number
   period_start: string
   period_end: string
   created_at: string
 }
 
+// ✅ CORRIGIDO 09/09 (TICKETS item 5) — ctr_bio/taxa_conv eram buscadas do
+// banco e descartadas (tudo era recalculado do zero). Decisão: banco não é
+// fonte de verdade pra essas 2 colunas, então pararam de ser selecionadas
+// na query também (ver .select() abaixo) — evita payload morto e deixa
+// explícito que o cálculo é sempre local.
+
 function mapRowsToFunnelMetrics(rows: FunnelDataRow[]): FunnelMetrics {
+  const hasRows = rows.length > 0
   const alcance = rows.reduce((sum, r) => sum + (r.alcance ?? 0), 0)
   const visitas = rows.reduce((sum, r) => sum + (r.visitas ?? 0), 0)
-  const cliques = rows.reduce((sum, r) => sum + (r.cliques ?? 0), 0)
-  const vendas = rows.reduce((sum, r) => sum + (r.vendas ?? 0), 0)
+  // ✅ TICKETS item 7 — null quando não há NENHUMA linha no período (sem
+  // dado de verdade), número (inclusive 0) quando há linha(s).
+  const cliques = hasRows ? rows.reduce((sum, r) => sum + (r.cliques ?? 0), 0) : null
+  const vendas = hasRows ? rows.reduce((sum, r) => sum + (r.vendas ?? 0), 0) : null
 
   return {
     alcance,
     visitas,
     cliques,
     vendas,
-    ctrBio: alcance > 0 ? (visitas / alcance) * 100 : 0,
-    taxaConv: cliques > 0 ? (vendas / cliques) * 100 : 0,
+    // ✅ TICKETS item 4 — nomes corretos (ver types/orbit.ts).
+    profileVisitRate: alcance > 0 ? (visitas / alcance) * 100 : 0,
+    linkCtrPct: visitas > 0 && cliques != null ? (cliques / visitas) * 100 : 0,
+    taxaConv: cliques != null && cliques > 0 && vendas != null ? (vendas / cliques) * 100 : 0,
   }
 }
 
@@ -65,11 +74,14 @@ function mapFunnelMetrics(
       ? fallback.visitas
       : toFiniteNumber(accountSnapshot.profile_visits)
     : fallback.visitas
-  const cliques = accountSnapshot
-    ? accountSnapshot.link_clicks == null
-      ? fallback.cliques
-      : toFiniteNumber(accountSnapshot.link_clicks)
-    : fallback.cliques
+  // ✅ TICKETS item 7 — cliques só vira número quando accountSnapshot tem
+  // link_clicks OU o fallback (funnel_data) tinha linha(s) de verdade;
+  // caso contrário fica null ("sem dado"), não 0.
+  const cliques =
+    accountSnapshot && accountSnapshot.link_clicks != null
+      ? toFiniteNumber(accountSnapshot.link_clicks)
+      : fallback.cliques
+  // vendas não tem fonte em ig_account_snapshots — vem só de funnel_data.
   const vendas = fallback.vendas
 
   return {
@@ -77,8 +89,9 @@ function mapFunnelMetrics(
     visitas,
     cliques,
     vendas,
-    ctrBio: alcance > 0 ? (visitas / alcance) * 100 : 0,
-    taxaConv: cliques > 0 ? (vendas / cliques) * 100 : 0,
+    profileVisitRate: alcance > 0 ? (visitas / alcance) * 100 : 0,
+    linkCtrPct: visitas > 0 && cliques != null ? (cliques / visitas) * 100 : 0,
+    taxaConv: cliques != null && cliques > 0 && vendas != null ? (vendas / cliques) * 100 : 0,
   }
 }
 
@@ -90,9 +103,10 @@ function toISOString(date: Date | string): string {
 const EMPTY_FUNNEL_METRICS: FunnelMetrics = {
   alcance: 0,
   visitas: 0,
-  cliques: 0,
-  vendas: 0,
-  ctrBio: 0,
+  cliques: null,
+  vendas: null,
+  profileVisitRate: 0,
+  linkCtrPct: 0,
   taxaConv: 0,
 }
 
@@ -107,11 +121,14 @@ export async function fetchFunnelData(
 ): Promise<{
   metrics: FunnelMetrics
   insight: InsightData & AlertContractFields
+  // ✅ TICKETS item 8 — setor_benchmark de client_onboarding, pra
+  // FunnelScreen parar de passar setor={null} fixo pro simulador.
+  setor: SetorBenchmark | null
 }> {
   const start = toISOString(periodStart)
   const end = toISOString(periodEnd)
 
-  const [accountResult, funnelResult] = await Promise.all([
+  const [accountResult, funnelResult, onboardingResult] = await Promise.all([
     supabase
       .schema('orbit')
       .from('ig_account_snapshots')
@@ -125,11 +142,20 @@ export async function fetchFunnelData(
     supabase
       .schema('orbit')
       .from('funnel_data')
-      .select('id, client_id, alcance, visitas, cliques, vendas, ctr_bio, taxa_conv, period_start, period_end, created_at')
+      // ✅ TICKETS item 5 — ctr_bio/taxa_conv removidos do select: eram
+      // buscados e nunca lidos (tudo recalculado localmente). Banco não é
+      // fonte de verdade pra essas 2 colunas.
+      .select('id, client_id, alcance, visitas, cliques, vendas, period_start, period_end, created_at')
       .eq('client_id', clientId)
       .lte('period_start', end)
       .gte('period_end', start)
       .order('period_end', { ascending: false }),
+    supabase
+      .schema('orbit')
+      .from('client_onboarding')
+      .select('setor_benchmark')
+      .eq('client_id', clientId)
+      .maybeSingle(),
   ])
 
   if (accountResult.error) {
@@ -142,23 +168,24 @@ export async function fetchFunnelData(
 
   const accountSnapshot = accountResult.data as AccountSnapshotRow | null
   const funnelRows = (funnelResult.data ?? []) as FunnelDataRow[]
+  const setor = (onboardingResult.data?.setor_benchmark ?? null) as SetorBenchmark | null
 
   if (!accountSnapshot && funnelRows.length === 0) {
     const insight = buildFunnelInsight({
       reach: EMPTY_FUNNEL_METRICS.alcance,
-      ctrBio: EMPTY_FUNNEL_METRICS.ctrBio,
+      linkCtrPct: EMPTY_FUNNEL_METRICS.linkCtrPct,
       dataSource: 'empty_database',
     })
-    return { metrics: EMPTY_FUNNEL_METRICS, insight }
+    return { metrics: EMPTY_FUNNEL_METRICS, insight, setor }
   }
 
   const metrics = mapFunnelMetrics(accountSnapshot, funnelRows)
   const insight = buildFunnelInsight({
     reach: metrics.alcance,
-    ctrBio: metrics.ctrBio,
+    linkCtrPct: metrics.linkCtrPct,
     dataSource: 'real_snapshot',
   })
-  return { metrics, insight }
+  return { metrics, insight, setor }
 }
 
 // ============================================================================

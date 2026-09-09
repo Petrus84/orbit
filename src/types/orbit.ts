@@ -489,12 +489,6 @@ export interface FormatPerformanceRow {
   format: string
   posts: number
   shares: number
-  // ✅ ADICIONADO 08/09 — paridade com o protótipo (screen-ig-overview,
-  // tabela Formato/Posts/Shares/Saves/Trend): a coluna Saves nunca foi
-  // exposta neste tipo, mesmo a view (`v_format_performance.save_count`)
-  // já trazendo o dado pronto — fetchFormatPerformance() nem selecionava
-  // essa coluna. Ver instagramOverviewRepository.ts.
-  saves: number
   trendLabel: string
   postsDetail: PostSummary[]
   
@@ -521,9 +515,10 @@ export interface PostSummary {
   comments: number | null
   caption: string | null
   polemicScorePct: number | null
+  // ✅ NOVO (06/09/2026): orbit.ig_posts.is_boost_candidate já é calculado
+  // no banco (motor de boost), mas nunca tinha sido exposto na tela —
+  // ficava "invisível" mesmo quando true. Ver FormatPerformanceTable.
   isBoostCandidate: boolean
-  reach: number | null
-  reachClassification: ClassifiedMetric | null
 }
 
 export interface InsightData {
@@ -606,9 +601,18 @@ export interface FunnelData {
 export interface FunnelMetrics {
   alcance: number
   visitas: number
-  cliques: number
-  vendas: number
-  ctrBio: number
+  // ✅ CORRIGIDO 09/09 (TICKETS item 7) — number | null pra distinguir
+  // "sem dado no período" de "zero real". Antes NULL do banco já virava 0
+  // dentro de funnelRepository.ts, então o componente nunca sabia a
+  // diferença.
+  cliques: number | null
+  vendas: number | null
+  // ✅ CORRIGIDO 09/09 (TICKETS item 4) — "ctrBio" era usado pra
+  // alcance→visitas (taxa de visita ao perfil), não pra CTR do link. Split
+  // em 2 campos com nome correto; profileVisitRate = visitas/alcance,
+  // linkCtrPct = cliques/visitas (o que o texto do insight já descrevia).
+  profileVisitRate: number
+  linkCtrPct: number
   taxaConv: number
 }
 
@@ -646,6 +650,9 @@ export interface UseFunnelResult extends AsyncState<FunnelMetrics> {
   setParams: (params: SimulatedFunnelParams) => void
   lastUpdated: Date | null
   refetch: () => void
+  // ✅ CORRIGIDO 09/09 (TICKETS item 8) — client_onboarding.setor_benchmark,
+  // pra FunnelScreen parar de passar `setor={null}` fixo pro simulador.
+  setor: SetorBenchmark | null
 }
 
 export interface FunnelMetricsRow {
@@ -1789,8 +1796,9 @@ export interface FunnelMetricsExtended extends FunnelMetrics {
  * Usado por FunnelChart para renderizar queda % entre etapas
  */
 export interface FunnelStepDataExtended {
+  isLast?: boolean
   label: string
-  value: number
+  value: number | string // ✅ TICKETS item 7 — '—' quando a etapa não tem dado no período (não confundir com 0 real)
   percentage: number  // relativo à primeira etapa (alcance = 100%)
   color: string  // Token CSS, ex: 'var(--blue)'
   dropoffPct?: number  // ✅ NOVO: queda % da etapa anterior

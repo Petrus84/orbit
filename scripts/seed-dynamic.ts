@@ -78,6 +78,7 @@ async function dynamicSeeder() {
     // ─── PASSO 1: PROVISIONAR A AGÊNCIA MESTRE DE TESTES ───────────────────
     console.log('🏢 Validando Agência Mestre de Homologação...')
     const { error: agencyError } = await supabase
+      .schema('orbit')
       .from('agencies')
       .upsert({
         id: METODO75_AGENCY_ID,
@@ -130,6 +131,7 @@ async function dynamicSeeder() {
         // homologação, mas idealmente crie uma UNIQUE constraint real no banco
         // se precisar de idempotência por instagram_account_id.
         const { data: clientData, error: clientError } = await supabase
+          .schema('orbit')
           .from('clients')
           .upsert(clientPayload, { onConflict: 'id' })
           .select('id, name')

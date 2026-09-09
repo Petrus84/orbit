@@ -21,6 +21,8 @@ export function useFunnel(
   const [error, setError] = useState<string | null>(null)
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
   const [params, setParams] = useState<SimulatedFunnelParams>(DEFAULT_PARAMS)
+  // ✅ TICKETS item 8
+  const [setor, setSetor] = useState<UseFunnelResult['setor']>(null)
 
   // Tracker para controle de requisição ativa e race conditions
   const activeRequestRef = useRef<number>(0)
@@ -50,12 +52,19 @@ export function useFunnel(
       setStatus('success')
       setError(null)
       setLastUpdated(new Date())
+      setSetor(result.setor)
 
       // Resincroniza os parâmetros do simulador apenas se o contexto (cliente/data) mudou
       if (lastParamsKey.current !== currentKey) {
         setParams({
           alcance: result.metrics.alcance,
-          ctrBio: result.metrics.ctrBio,
+          // ✅ CORRIGIDO 09/09 (TICKETS item 4) — o alvo do simulador
+          // ("CTR alvo da bio") sempre significou alcance→visitas (ver
+          // funnelMath.ts:computeSaturation, ctrEfetivo = ctrBio/friccao
+          // aplicado sobre `visitas = alcance * ctrEfetivo`). Antes lia de
+          // `result.metrics.ctrBio`, que tinha o mesmo valor mas nome
+          // errado; agora lê do campo com nome certo.
+          ctrBio: result.metrics.profileVisitRate,
           taxaConv: result.metrics.taxaConv,
         })
         lastParamsKey.current = currentKey
@@ -89,5 +98,5 @@ export function useFunnel(
     void load()
   }, [load])
 
-  return { data, status, error, lastUpdated, refetch, params, setParams }
+  return { data, status, error, lastUpdated, refetch, params, setParams, setor }
 }

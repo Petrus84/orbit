@@ -217,7 +217,6 @@ export function FormatPerformanceTable({ rows, expandable = true }: FormatPerfor
             <th className={styles.th}>FORMATO</th>
             <th className={styles.th}>POSTS</th>
             <th className={styles.th}>SHARES</th>
-            <th className={styles.th}>SAVES</th>
             <th className={styles.th}>TREND</th>
           </tr>
         </thead>
@@ -260,7 +259,6 @@ export function FormatPerformanceTable({ rows, expandable = true }: FormatPerfor
                   </td>
                   <td className={styles.td}>{row.posts}</td>
                   <td className={styles.td}>{row.shares}</td>
-                  <td className={styles.td}>{row.saves}</td>
                   <td className={styles.td}>
                     <StatusPill text={row.trendLabel} color={row.trendColor} />
                   </td>
@@ -268,7 +266,7 @@ export function FormatPerformanceTable({ rows, expandable = true }: FormatPerfor
 
                 {isExpanded && (
                   <tr>
-                    <td colSpan={6} className={styles.tdDetail}>
+                    <td colSpan={5} className={styles.tdDetail}>
                       <div className={styles.postList}>
                         {row.postsDetail.map((post) => (
                           <PostDetailRow key={post.id} post={post} />

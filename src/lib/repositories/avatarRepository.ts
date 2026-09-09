@@ -129,9 +129,6 @@ function validateAvatarRow(data: unknown): AvatarAlignmentRow {
     real_gender_female: Number(obj.real_gender_female),
     real_age_range: String(obj.real_age_range),
     real_interest: obj.real_interest ? String(obj.real_interest) : null, // ✅ Vem do banco
-    // ✅ CORRIGIDO 09/09 (punch list item 5️⃣) — mesmo reparo de mojibake
-    // usado em captions/top_cities; real_geo vem de ig_audience_snapshots
-    // e sofre o mesmo problema de encoding no ingest.
     real_geo: repairMojibake(String(obj.real_geo)) ?? String(obj.real_geo),
     alignment_score: Number(obj.alignment_score),
     alignment_status: String(obj.alignment_status),
