@@ -65,7 +65,7 @@
 
 /** Formato mínimo de uma entrada de string_map_data que este módulo consome. */
 export interface MetricEntryLike {
-  value?: string
+  value?: string | undefined
 }
 
 export type StringMapLike = Record<string, MetricEntryLike | undefined>

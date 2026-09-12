@@ -96,9 +96,10 @@ export default function FunnelSimulator({
             onChange={(v) => set('ctrBio', v)}
             unit="%"
           />
+↳ 
           {razaoEscala > 1 && (
             <div className={styles.degradedHint}>
-              ↳ Aplicado na simulação: {ctrEfetivo.toFixed(2)}% (degradado pela escala)
+              ↳ Aplicado na simulação: {(ctrEfetivo ?? 0).toFixed(2)}% (degradado pela escala)
             </div>
           )}
         </div>
@@ -116,7 +117,7 @@ export default function FunnelSimulator({
           />
           {razaoEscala > 1 && (
             <div className={styles.degradedHint}>
-              ↳ Aplicado na simulação: {convEfetivo.toFixed(2)}% (degradado pela escala)
+              ↳ Aplicado na simulação: {(convEfetivo ?? 0).toFixed(2)}% (degradado pela escala)
             </div>
           )}
         </div>
@@ -130,15 +131,15 @@ export default function FunnelSimulator({
             step={5}
             value={state.ticketMedio}
             onChange={(v) => set('ticketMedio', v)}
-            formatDisplay={(v) => `R$ ${v.toFixed(0)}`}
-          />
+            formatDisplay={(v) => `R$ ${(v ?? 0).toFixed(0)}`}
+                      />
         </div>
       </div>
 
       {isSaturated && (
         <div className={styles.saturationAlert}>
           <strong>Alerta de saturação:</strong> escala de público frio detectada fora da bolha
-          histórica ({razaoEscala.toFixed(1)}x). O CTR e a conversão acima já estão sendo
+          histórica ({ (razaoEscala ?? 1).toFixed(1) }x). O CTR e a conversão acima já estão sendo
           reduzidos nas vendas estimadas — não é só um aviso, é o número que você está vendo.
         </div>
       )}

@@ -6,7 +6,6 @@
 
 'use client'
 
-import React                      from 'react'
 import styles                     from './Header.module.css'
 import { useOrbitDashboard }      from '@/context/OrbitDashboardContext'
 import type { TabId }             from '@/types/orbit'

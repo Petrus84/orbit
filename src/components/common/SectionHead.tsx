@@ -3,7 +3,7 @@ import styles from './SectionHead.module.css';
 
 interface SectionHeadProps {
   title: string;
-  subtitle?: string;
+  subtitle?: string | undefined;
 }
 
 export default function SectionHead({ title, subtitle }: SectionHeadProps): React.ReactElement {

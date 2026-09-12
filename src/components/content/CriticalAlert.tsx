@@ -48,10 +48,10 @@ const SEVERITY_ICON: Record<AlertSeverity, React.ReactNode> = {
 // Ponte puramente de apresentação (severidade → classe CSS local). Não é
 // um mapeamento para ClientHealthStatus — ver header.
 const SEVERITY_CLASS: Record<AlertSeverity, string> = {
-  critical: styles.critical,
-  warning: styles.warning,
-  info: styles.info,
-  success: styles.success,
+  critical: styles.critical ?? '',
+  warning: styles.warning ?? '',
+  info: styles.info ?? '',
+  success: styles.success ?? '',
 }
 
 export function CriticalAlert({ alert, className, onActionClick }: CriticalAlertProps) {

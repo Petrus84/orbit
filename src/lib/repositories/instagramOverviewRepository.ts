@@ -201,7 +201,12 @@ function kpiRowToCardData(row: KpiRow): KPICardData {
     value:      numVal,
     unit:       null,
     delta,
-    deltaLabel: `${delta > 0 ? '+' : ''}${delta}%`,
+    // PR-B / N11 ("Δ 0% 0%"): `delta` já é renderizado por <DeltaText> como
+    // seta + percentual (ex.: "↑ 3.1%"). Este `deltaLabel` é o SUBLABEL ao
+    // lado, não um segundo valor — interpolar o mesmo % de novo duplicava o
+    // número (e no caso delta=0 duplicava literalmente "0% 0%"). Texto fixo
+    // de comparação, sem repetir o dado.
+    deltaLabel: 'vs período anterior',
     semaphore,
     glowColor:  GLOW_MAP[semaphore],
     subtitle:   row.subtitle ?? null,
@@ -377,6 +382,19 @@ async function fetchKPIs(
   return sortByCanonicalOrder(dedupeByMetric(parsedRows)).map(kpiRowToCardData)
 }
 
+// PR-B / N8: ER Real, VPS e Utilidade não têm tarifário setorial hoje (ver
+// Documento Técnico v8.2 §1.6 — só `polemic_score_pct` tem as 7 espécies do
+// enum). Sem isso, o card mostrava o texto neutro genérico da view como se
+// fosse "sem dados", quando na verdade o dado existe e só falta régua de
+// comparação por setor. PROIBIDO: gravar um limiar fantasma pra essas
+// métricas em orbit.ref_thresholds só pra o semáforo acender — isso é
+// decisão fechada (gap #2), não implementada aqui.
+const SCORE_KEYS_WITHOUT_SECTOR_TARIFARIO: readonly string[] = [
+  'er_real_pct',
+  'vps_pct',
+  'utility_score_pct',
+]
+
 async function fetchQualityScores(
   clientId: string,
   start: string,
@@ -398,15 +416,23 @@ async function fetchQualityScores(
     return []
   }
 
-  return (orbitRows ?? []).map(row => ({
-    id:            String(row.id),
-    label:         String(row.score_key),
-    value:         row.score_value != null ? toFiniteNumber(row.score_value) : 'N/A',
-    unit:          '',
-    statusText:    String(row.status_text ?? 'Sem dados'),
-    statusVariant: (row.status_variant as 'ok' | 'warn' | 'neutral') ?? 'neutral',
-    glowColor:     (glowMap[String(row.status_variant ?? 'neutral')] ?? 'none') as GlowColor,
-  }))
+  return (orbitRows ?? []).map(row => {
+    const scoreKey = String(row.score_key)
+    return {
+      id:    String(row.id),
+      label: scoreKey,
+      value: row.score_value != null ? toFiniteNumber(row.score_value) : 'N/A',
+      // Todas as métricas deste painel são "%" (ER Real, Utilidade, VPS,
+      // Polêmica) — unit vazia fazia o GlowingNumber renderizar o número
+      // sem unidade nenhuma.
+      unit: '%',
+      statusText: SCORE_KEYS_WITHOUT_SECTOR_TARIFARIO.includes(scoreKey)
+        ? 'sem recorte setorial'
+        : String(row.status_text ?? 'Sem dados'),
+      statusVariant: (row.status_variant as 'ok' | 'warn' | 'neutral') ?? 'neutral',
+      glowColor: (glowMap[String(row.status_variant ?? 'neutral')] ?? 'none') as GlowColor,
+    }
+  })
 }
 
 export async function fetchPostsByFormat(
@@ -519,6 +545,9 @@ async function fetchSharesSummary(
   }
 
   const row = data[0]
+  if (!row) {
+    return { total: null, periodLabel: 'sem dado no período', source: 'account_aggregate' }
+  }
   return {
     total: row.interactions_shares,
     periodLabel: `${row.period_start} – ${row.period_end}`,

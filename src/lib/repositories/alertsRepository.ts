@@ -50,6 +50,26 @@ export function isAlertType(value: string): value is AlertType {
   return (ALERT_TYPES as readonly string[]).includes(value)
 }
 
+// ✅ FIX (P0-A — regressão do guard de href): sanitizeActionUrl() já existia
+// em orbitAlert.mapper.ts, mas mapOrbitAlertRowToContract() não é importado
+// por nenhum caminho de leitura ativo — fetchAlerts/fetchCriticalAlerts (o
+// que alimenta AlertCard via useAlerts) passam por fromOrbitRow() aqui
+// embaixo, que montava `action.url` direto de `row.action_url` sem guard.
+// Duplicado aqui como o comentário do mapper já previa ("mesmo guard
+// aplicado em alertsRepository.ts P0.1") — mas nunca tinha sido escrito.
+const PLACEHOLDER_HOSTS: readonly string[] = ['example.com', 'example.org', 'localhost']
+
+function sanitizeActionUrl(url: string | null): string | null {
+  if (!url) return null
+  if (url.startsWith('/')) return url // rota interna: sempre segura
+  try {
+    const host = new URL(url).hostname
+    return PLACEHOLDER_HOSTS.includes(host) ? null : url
+  } catch {
+    return null // URL malformada: sem link
+  }
+}
+
 // ── Campos padrão de seleção para reutilização e consistência ─────────────
 const ALERT_SELECT_FIELDS = `
   id, client_id, alert_type, severity, title, description,
@@ -110,8 +130,8 @@ function fromOrbitRow(row: OrbitAlertRow): Alert {
     thresholdValue: row.threshold_value,
     isResolved: row.is_resolved,
     createdAt: row.created_at,
-    action: row.action_url
-      ? { type: 'link', label: 'Ver detalhes', url: row.action_url }
+    action: sanitizeActionUrl(row.action_url)
+      ? { type: 'link', label: 'Ver detalhes', url: sanitizeActionUrl(row.action_url) as string }
       : null,
     natureza: row.natureza ?? undefined,
     probableCause: row.probable_cause ?? undefined,
@@ -126,12 +146,21 @@ function fromOrbitRow(row: OrbitAlertRow): Alert {
 }
 
 // ── Base query — orbit.alerts ─────────────────────────────────────────────
+// ✅ P0.3 (09/09/2026): faltava o filtro de snooze — is_resolved=false já
+// existia, mas um alerta adiado (is_snoozed=true, snoozed_until no futuro)
+// continuava aparecendo na lista igual a um alerta ativo. Guard: nunca
+// mostrar alerta com is_snoozed=true E snoozed_until ainda no futuro.
+// `.not('is_snoozed', 'is', true)` cobre null e false (nunca esconde por
+// engano um alerta que nunca foi adiado); o OR cobre "nunca foi adiado"
+// (snoozed_until null) e "foi adiado mas o prazo já passou".
 function orbitBaseQuery() {
   return supabase
     .schema('orbit')
     .from('alerts')
     .select(ALERT_SELECT_FIELDS)
     .eq('is_resolved', false)
+    .not('is_snoozed', 'is', true)
+    .or(`snoozed_until.is.null,snoozed_until.lt.${new Date().toISOString()}`)
     .order('created_at', { ascending: false })
 }
 

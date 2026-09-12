@@ -4,7 +4,6 @@
    Versão: 1.0.0  |  Data: 2026-06-01
    ========================================================================== */
 
-import React from 'react'
 import styles from './SemaphoreIndicator.module.css'
 import type { SemaphoreColor } from '@/types/orbit'
 
@@ -19,9 +18,9 @@ const ICON_MAP: Record<SemaphoreColor, string> = {
 }
 
 const COLOR_CLASS: Record<SemaphoreColor, string> = {
-  verde:    styles.verde,
-  ambar:    styles.ambar,
-  vermelho: styles.vermelho,
+  verde:    styles.verde ?? '',
+  ambar:    styles.ambar ?? '',
+  vermelho: styles.vermelho ?? '',
 }
 
 const ARIA_LABEL: Record<SemaphoreColor, string> = {

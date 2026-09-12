@@ -196,7 +196,7 @@ export interface RefThresholdRow {
   metric_name: string
   category: string | null
   tier_normalized: string | null
-  tier?: string | null
+  tier?: string | null | undefined
   dataset_id: string | null
   threshold_source: ThresholdSource | null
   observation_unit: string | null
@@ -389,22 +389,22 @@ export interface Alert {
    * valor. Antes era `boolean` obrigatório (forçava o mapper a inventar
    * um valor); agora ausência real é representável sem type-cast forçado.
    */
-  exportable?: boolean  // 🟢=true, 🟡/🔴=false — TODO: confirmar regra
-  confidenceLevel?: 'L0' | 'L1' | 'L2'  // Selo L2
-  personaType?: 'ecommerce' | 'creator' | 'agency' | 'infoprodutor'
+  exportable?: boolean | undefined  // 🟢=true, 🟡/🔴=false — TODO: confirmar regra
+  confidenceLevel?: 'L0' | 'L1' | 'L2' | undefined  // Selo L2
+  personaType?: 'ecommerce' | 'creator' | 'agency' | 'infoprodutor' | undefined
   /**
    * ✅ PATCH (content contract 14/08): campos do Content Contract Tree.
    */
-  natureza?: AlertNatureza
+  natureza?: AlertNatureza | undefined
   // ausente = ainda não classificado pelo motor (contentContractEngine.ts).
   // NÃO tratar ausência como 'tecnica' por default em nenhuma camada — é
   // exatamente o que a coluna correspondente em orbit.alerts evita não
   // tendo DEFAULT. Ver orbit.alerts.natureza.
-  probableCause?: string | null
+  probableCause?: string | null | undefined
   // causa nomeada pelo resolver, nunca escrita à mão na UI. `null` explícito
   // = resolver rodou e concluiu que a causa é indeterminável com o dado
   // atual (não confundir com `undefined` = resolver nem rodou ainda).
-dataSource?: 'real_snapshot' | 'fallback_by_client' | 'fallback_by_error' | 'fallback_by_empty' | 'empty_database' | 'error' | 'estimate'
+dataSource?: 'real_snapshot' | 'fallback_by_client' | 'fallback_by_error' | 'fallback_by_empty' | 'empty_database' | 'error' | 'estimate' | undefined
   // obrigatório expor quando = 'fallback_by_client': é o campo que existe
   // porque o Funil (funnelRepository.ts) hoje cai em FALLBACK_BY_CLIENT sem
   // marcar a origem do dado que chega à UI.
@@ -415,15 +415,15 @@ dataSource?: 'real_snapshot' | 'fallback_by_client' | 'fallback_by_error' | 'fal
    * `Alert`/`fromOrbitRow()`. Todos opcionais/nuláveis, mesmo padrão dos
    * campos do Content Contract acima — ausência ≠ erro, é estado válido.
    */
-  snapshotId?: string
+  snapshotId?: string | undefined
   // referência ao snapshot (orbit.ig_account_snapshots ou equivalente) que
   // originou o metricValue. `undefined`/`null` = alerta ainda sem
   // proveniência registrada (ver observação sobre o gerador de
   // ctr_below_threshold — nenhuma rotina hoje preenche esta coluna).
-  suggestedAction?: string | null
-  resolvedAt?: string | null
-  snoozedUntil?: string | null
-  resolvedBy?: string | null
+  suggestedAction?: string | null | undefined
+  resolvedAt?: string | null | undefined
+  snoozedUntil?: string | null | undefined
+  resolvedBy?: string | null | undefined
 }
 
 
@@ -746,7 +746,7 @@ export interface ClientMetrics {
   id: string
   handle: string
   name: string
-  avatar?: string
+  avatar?: string | undefined
   status: ClientHealthStatus
   metrics: ClientMetrics
   snapshotCount?: number
@@ -1470,13 +1470,34 @@ export interface BioLink {
   label: string
 }
 
-export type CTAType = 'link_direto' | 'linktree_multilink' | 'dm_comentario' | 'nenhum'
+/**
+ * ✅ PATCH (verificação ao vivo pg_constraint, 11/09/2026):
+ * `client_onboarding_cta_type_check` no Postgres tem 5 valores — faltava
+ * 'link_bio'. Query: information_schema/pg_constraint em orbit.client_onboarding.
+ */
+export type CTAType =
+  | 'link_direto'
+  | 'linktree_multilink'
+  | 'dm_comentario'
+  | 'nenhum'
+  | 'link_bio'
 
+/**
+ * ✅ PATCH (verificação ao vivo pg_constraint, 11/09/2026):
+ * `client_onboarding_funnel_maturity_check` no Postgres tem 4 valores —
+ * faltava 'funil_basico'.
+ */
 export type FunnelMaturity =
   | 'nao_implementado'
   | 'implementado_fragmentado'
   | 'implementado_unificado'
+  | 'funil_basico'
 
+/**
+ * ✅ PATCH (verificação ao vivo pg_constraint, 11/09/2026):
+ * `client_onboarding_proof_mechanism_check` no Postgres tem 7 valores —
+ * faltava 'clientes_ativos_gestao'.
+ */
 export type ProofMechanism =
   | 'prova_social'
   | 'autoridade'
@@ -1484,6 +1505,7 @@ export type ProofMechanism =
   | 'associacao_marca'
   | 'resultado_documentado'
   | 'nenhum_observavel'
+  | 'clientes_ativos_gestao'
 
 /** ⚠️ CORRIGIDO: schema real usa 'PANIC_GRIEF', não 'PANIC'; 'mixed' não
  * existe na CHECK constraint do banco — removido. */
@@ -1495,13 +1517,36 @@ export interface SchwatzValue {
   priority: 'high' | 'medium' | 'low'
 }
 
-export type ValuesAffectSource = 'onboarding' | 'client_feedback' | 'manual'
+/**
+ * ✅ PATCH (verificação ao vivo pg_constraint, 11/09/2026):
+ * `client_onboarding_values_affect_source_check` no Postgres tem 4 valores —
+ * faltava 'bio_oficial_zip_insights_decisao_canal'.
+ */
+export type ValuesAffectSource =
+  | 'onboarding'
+  | 'client_feedback'
+  | 'manual'
+  | 'bio_oficial_zip_insights_decisao_canal'
+
+/**
+ * ✅ PATCH (verificação ao vivo pg_constraint, 11/09/2026):
+ * `client_onboarding_total_followers_source_check` no Postgres tem 4
+ * valores — a union inline em `ClientOnboarding.total_followers_source`
+ * tinha só 3 (faltava 'scrape_perfil_confirmado'). Nomeado aqui para virar
+ * a fonte única — `ClientOnboarding` referencia este tipo em vez de repetir
+ * a union inline.
+ */
+export type TotalFollowersSource =
+  | 'manual_print_confirmado'
+  | 'instagram_api'
+  | 'estimate'
+  | 'scrape_perfil_confirmado'
 
 /** SSOT: orbit.client_onboarding (schema confirmado 2026-07-28). */
 export interface ClientOnboarding {
   client_id: string
   total_followers: number
-  total_followers_source: 'manual_print_confirmado' | 'instagram_api' | 'estimate'
+  total_followers_source: TotalFollowersSource
   bio_links: BioLink[]
   cta_type: CTAType | null
   funnel_maturity: FunnelMaturity | null
@@ -1580,6 +1625,9 @@ export interface UseAlertsResult {
 // nenhuma das duas linhagens de orbit.ts (TS2305 no relatório forense).
 // Valores conforme o próprio relatório forense (Documento 6, avatarRepository
 // Erro #2) — não confirmados contra tabela/enum do Supabase.
+// ✅ PATCH (verificação ao vivo pg_constraint, 11/09/2026):
+// `client_onboarding_setor_benchmark_check` no Postgres tem 10 valores —
+// faltava 'saas_ferramenta'.
 export type SetorBenchmark =
   | 'comercio_direto_ecommerce_social'
   | 'comissionamento_afiliados'
@@ -1590,6 +1638,7 @@ export type SetorBenchmark =
   | 'monetizacao_nativa_plataforma'
   | 'autoridade_personal_branding_b2b'
   | 'pre_monetizacao_a_validar'
+  | 'saas_ferramenta'
 
 // ⚠️ OBSERVAÇÃO (16) — GAP FECHADO: `CalculationResult` vivia apenas local
 // em funnelRepository.calc.ts (fora do SSOT). Centralizado aqui conforme o
@@ -1801,8 +1850,8 @@ export interface FunnelStepDataExtended {
   value: number | string // ✅ TICKETS item 7 — '—' quando a etapa não tem dado no período (não confundir com 0 real)
   percentage: number  // relativo à primeira etapa (alcance = 100%)
   color: string  // Token CSS, ex: 'var(--blue)'
-  dropoffPct?: number  // ✅ NOVO: queda % da etapa anterior
-  dropoffLabel?: string  // ✅ NOVO: label legível (ex: "↓ 45.2% queda")
+  dropoffPct?: number | undefined  // ✅ NOVO: queda % da etapa anterior
+  dropoffLabel?: string | undefined  // ✅ NOVO: label legível (ex: "↓ 45.2% queda")
 }
 
 /**

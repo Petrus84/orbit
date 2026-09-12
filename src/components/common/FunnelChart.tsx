@@ -31,7 +31,7 @@ interface FunnelChartProps {
 // deste painel (glowColor="cyan" em FunnelScreen.tsx) — etapas 1 e 2
 // (informativas) usam o mesmo cyan do card; a partir da 3ª etapa (onde a
 // queda vira relevante) entra gold, e a etapa crítica usa red.
-const STEP_COLORS = ['var(--neon-cyan)', 'var(--neon-cyan)', 'var(--neon-gold)', 'var(--neon-red)']
+const STEP_COLORS = ['var(--neon-cyan)', 'var(--neon-cyan)', 'var(--neon-gold)', 'var(--neon-red)'] as const
 const BAR_WIDTH_PCT = [100, 85, 60, 30] as const
 const STEP_UNITS = ['pessoas', 'pessoas', 'cliques', 'vendas'] as const
 
@@ -100,8 +100,8 @@ export default function FunnelChart({ data }: FunnelChartProps): React.ReactElem
           key={step.label}
           step={step}
           isLast={i === steps.length - 1}
-          barWidthPct={BAR_WIDTH_PCT[i]}
-          unitLabel={STEP_UNITS[i]}
+          barWidthPct={BAR_WIDTH_PCT[i] ?? 0}
+          unitLabel={STEP_UNITS[i] ?? 'pessoas'}
         />
       ))}
 

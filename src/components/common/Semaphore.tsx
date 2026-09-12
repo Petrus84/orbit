@@ -40,10 +40,10 @@ export const STATUS_LABELS: Record<SemaphoreStatus, string> = {
 }
 
 const CLASS_MAP: Record<SemaphoreStatus, string> = {
-  healthy: styles.cyan,
-  warning: styles.gold,
-  critical: styles.red,
-  unknown: styles.none,
+  healthy: styles.cyan ?? '',
+  warning: styles.gold ?? '',
+  critical: styles.red ?? '',
+  unknown: styles.none ?? '',
 }
 
 export default function Semaphore({

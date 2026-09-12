@@ -1,5 +1,6 @@
 'use client'
 
+import type React from 'react'
 import { useParams } from 'next/navigation'
 import OnboardingScreen from '@/components/screens/OnboardingScreen'
 import { useOnboarding } from '@/hooks/useOnboarding'
@@ -8,7 +9,7 @@ export default function OnboardingPage(): React.ReactElement {
   const params = useParams()
   const clientId = (params?.clientId as string) || '2141d077-0d82-4fda-83df-558377f105ff'
 
-  const { data, status, error, save } = useOnboarding(clientId)
+  const { data, status, error } = useOnboarding(clientId)
 
   if (status === 'loading') {
     return (
@@ -26,12 +27,5 @@ export default function OnboardingPage(): React.ReactElement {
     )
   }
 
-  return (
-    <OnboardingScreen
-      clientId={clientId}
-      initialData={data}
-      onSave={save}
-      isSaving={false}
-    />
-  )
+  return <OnboardingScreen clientId={clientId} initialData={data} />
 }

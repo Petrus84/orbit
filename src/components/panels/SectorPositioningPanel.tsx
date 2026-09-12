@@ -1,5 +1,4 @@
 'use client'
-import React from 'react'
 import { GlassCard } from '@/components/common/GlassCard'
 import styles from './SectorPositioningPanel.module.css'
 import type { SectorPositioning, ClassifiedMetric } from '@/types/orbit'

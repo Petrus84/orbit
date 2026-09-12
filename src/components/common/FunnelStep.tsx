@@ -30,6 +30,7 @@ interface FunnelStepProps {
 
 function formatValue(v: number | string): string {
   if (typeof v === 'string') return v
+  if (v == null || isNaN(v)) return '0'
   if (v >= 1_000_000) return `${(v / 1_000_000).toFixed(1)}M`
   if (v >= 1_000) return `${(v / 1_000).toFixed(1)}k`
   return v.toLocaleString('pt-BR')
@@ -57,7 +58,7 @@ export default function FunnelStep({ step, isLast = false, barWidthPct, unitLabe
               {formatValue(step.value)} {unitLabel}
             </span>
           </div>
-          <span className={styles.percentage}>{step.percentage.toFixed(1)}%</span>
+          <span className={styles.percentage}>{(step?.percentage ?? 0).toFixed(1)}%</span>
         </div>
 
         {(hasNumericDropoff || step.dropoffLabel) && (

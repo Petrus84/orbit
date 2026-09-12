@@ -5,7 +5,7 @@ export interface PerformanceMetric {
   postCount: number;
   shareCount: number;
   trend: string;
-  trendColor?: 'cyan' | 'red' | 'gold';
+  trendColor?: 'cyan' | 'red' | 'gold' | undefined;
 }
 
 interface PerformanceTableProps {

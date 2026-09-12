@@ -37,8 +37,16 @@ function getMostCommonAgeRange(ageRange: AvatarProfile['ageRange']): string {
 // equivalente de localização é `geo` (string única, já resolvida no
 // repositório). Substituído por leitura direta, sem inventar um shape que
 // não existe no contrato.
+//
+// PR-B / N1: `geo || 'Não especificado'` só cobria string vazia. O
+// avatarRepository já normaliza "", "null", "undefined" antes de montar o
+// profile, mas este componente não deve depender só disso — defesa em
+// profundidade contra o mesmo dado sentinela, sem `String(null)`.
+const EMPTY_GEO_SENTINELS = new Set(['', 'null', 'undefined'])
+
 function getTopLocation(geo: AvatarProfile['geo']): string {
-  return geo || 'Não especificado'
+  const trimmed = (geo ?? '').trim()
+  return EMPTY_GEO_SENTINELS.has(trimmed.toLowerCase()) ? 'Não especificado' : trimmed
 }
 
 export function AvatarCard({

@@ -28,10 +28,10 @@ const STATUS_ICON: Record<'ok' | 'warn' | 'neutral', string> = {
 // Mapa completo: cobre todos os valores de GlowColor
 function scoreBoxClass(glowColor: QualityScoreItem['glowColor']): string {
   switch (glowColor) {
-    case 'cyan': return styles.boxCyan
-    case 'red':  return styles.boxRed
-    case 'gold': return styles.boxGold     // NOVO v1.0.1 — era ignorado, entrava em default
-    default:     return styles.boxNeutral  // 'none' + qualquer valor inesperado
+    case 'cyan': return styles.boxCyan ?? ''
+    case 'red':  return styles.boxRed ?? ''
+    case 'gold': return styles.boxGold ?? ''     // NOVO v1.0.1 — era ignorado, entrava em default
+    default:     return styles.boxNeutral ?? ''  // 'none' + qualquer valor inesperado
   }
 }
 

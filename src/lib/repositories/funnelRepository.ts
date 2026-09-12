@@ -5,7 +5,7 @@
 
 import { supabase } from '@/lib/supabase'
 import { buildFunnelInsight } from './contentContractEngine'
-import type { FunnelMetrics, InsightData, SetorBenchmark } from '@/types/orbit'
+import type { FunnelMetrics, InsightData, SetorBenchmark } from '@/types/funnel'
 import type { AlertContractFields } from './contentContractEngine'
 
 interface AccountSnapshotRow {

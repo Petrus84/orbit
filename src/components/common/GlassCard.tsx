@@ -10,17 +10,17 @@ import type { GlowColor } from '@/types/orbit'
 export interface GlassCardProps {
   children:  ReactNode
   glowColor?: GlowColor
-  className?: string
+  className?: string | undefined
   onClick?:   MouseEventHandler<HTMLDivElement>
   role?:      string
   tabIndex?:  number
 }
 
 const GLOW_CLASS: Record<GlowColor, string> = {
-  cyan: styles.glowCyan,
-  red:  styles.glowRed,
-  gold: styles.glowGold,
-  none: styles.glowNone,
+  cyan: styles.glowCyan ?? '',
+  red:  styles.glowRed ?? '',
+  gold: styles.glowGold ?? '',
+  none: styles.glowNone ?? '',
 }
 
 export function GlassCard({

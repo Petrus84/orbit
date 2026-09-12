@@ -69,10 +69,22 @@ function formatDate(dateString: string | null | undefined): string {
 }
 
 const STATUS_BADGE_CLASS: Record<ClientHealthStatus, string> = {
-  healthy: styles.statusHealthy,
-  warning: styles.statusWarning,
-  critical: styles.statusCritical,
-  unknown: styles.statusUnknown,
+  healthy: styles.statusHealthy ?? '',
+  warning: styles.statusWarning ?? '',
+  critical: styles.statusCritical ?? '',
+  unknown: styles.statusUnknown ?? '',
+}
+
+// ✅ FIX (SSOT — 11/09/2026): `.accentHealthy/.accentWarning/.accentCritical/
+// .accentUnknown` já existiam em ClientCard.module.css (filete de 3px no
+// topo do card, cores --neon-cyan/--neon-gold/--neon-red) mas nunca eram
+// aplicadas aqui — CSS morto. Era a causa do card parecer monocromático
+// mesmo tendo os tokens de destaque prontos.
+const ACCENT_CLASS: Record<ClientHealthStatus, string> = {
+  healthy: styles.accentHealthy ?? '',
+  warning: styles.accentWarning ?? '',
+  critical: styles.accentCritical ?? '',
+  unknown: styles.accentUnknown ?? '',
 }
 
 interface MetricColProps {
@@ -118,7 +130,7 @@ export default function ClientCard({
     <button
       type="button"
       onClick={() => router.push(`/clients/${client.id}`)}
-      className={styles.card}
+      className={`${styles.card} ${ACCENT_CLASS[healthStatus]}`}
       aria-label={`Abrir cliente ${client.name}`}
     >
       <div className={styles.header}>

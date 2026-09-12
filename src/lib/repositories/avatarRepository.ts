@@ -1,15 +1,31 @@
 /* ==========================================================================
-   ORBIT · Repository - Avatar Alignment (v4.0 Sem Fallback Tóxico)
-   
-   Mudanças Críticas:
+   ORBIT · Repository - Avatar Alignment (v5.0 Conectado ao Mapper)
+
+   v5.0 (conexão ao mapper — 11/09/2026):
+   - 🔌 Repositório religado a @/lib/mappers/avatarAlignment. A interface
+     local `AvatarAlignmentRow` + `validateAvatarRow()` (validação manual
+     campo a campo, escrita à mão) foram substituídas por
+     `avatarAlignmentViewRowSchema.parse()` (barreira Zod, gerada a partir
+     do shape real de `Database['orbit']['Views']['v_avatar_alignment']`)
+     seguido de `mapAvatarAlignmentViewRowToContract()`.
+   - ➕ Adicionado `id` à query de select: o schema do mapper exige a coluna
+     `id` (presente na view) mesmo que este repositório não a consuma
+     diretamente — sem ela, `avatarAlignmentViewRowSchema.parse()` falha
+     porque a chave está ausente do objeto, não apenas nula.
+   - 🛡️ `OrbitValidationError` (lançado pelo mapper quando `client_id` vem
+     nulo — join quebrado) e `ZodError` (schema drift real do Postgres)
+     agora são capturados e traduzidos para `AvatarRepositoryError` com
+     code 'VALIDATION_FAILED', mantendo a mesma taxonomia de erro que o
+     resto do app já espera deste repositório.
+
+   Mudanças Críticas (mantidas de v4.0):
    1. Elimina fallback silencioso — retorna erro explícito
-   2. Valida estrutura de dados antes de usar
-   3. Diferencia entre "sem dados" e "erro de conexão"
-   4. real_interest vem do banco, não é fabricado
+   2. Diferencia entre "sem dados" e "erro de conexão"
+   3. real_interest vem do banco, não é fabricado
    ========================================================================== */
 
 import { supabase } from '@/lib/supabase'
-import { repairMojibake } from '@/lib/textRepair'
+import { ZodError } from 'zod'
 import type {
   AlignmentBar,
   AlignmentStatus,
@@ -18,24 +34,12 @@ import type {
   AvatarRecommendation,
 } from '@/types/avatar'
 import { ALIGNMENT_THRESHOLDS, ALIGNMENT_STATUS_COLOR } from '@/types/avatar'
-
-interface AvatarAlignmentRow {
-  client_id: string
-  handle: string
-  name: string
-  expected_gender_male: number
-  expected_gender_female: number
-  expected_age_range: string
-  expected_interest: string | null
-  expected_geo: string
-  real_gender_male: number
-  real_gender_female: number
-  real_age_range: string
-  real_interest: string | null
-  real_geo: string
-  alignment_score: number
-  alignment_status: string
-}
+import type { AvatarAlignmentRow } from '@/types/orbit'
+import {
+  avatarAlignmentViewRowSchema,
+  mapAvatarAlignmentViewRowToContract,
+} from '@/lib/mappers/avatarAlignment'
+import { OrbitValidationError } from '@/lib/mappers/shared/types'
 
 // ─── TIPOS DE ERRO EXPLÍCITOS ─────────────────────────────────────────────
 
@@ -47,91 +51,6 @@ export class AvatarRepositoryError extends Error {
   ) {
     super(message)
     this.name = 'AvatarRepositoryError'
-  }
-}
-
-// ─── VALIDAÇÃO DE DADOS ───────────────────────────────────────────────────
-
-function validateAvatarRow(data: unknown): AvatarAlignmentRow {
-  if (!data || typeof data !== 'object') {
-    throw new AvatarRepositoryError(
-      'VALIDATION_FAILED',
-      'Dados recebidos não são um objeto válido',
-      { received: typeof data }
-    )
-  }
-
-  const obj = data as Record<string, unknown>
-
-  // Validar campos obrigatórios
-  const requiredFields = [
-    'client_id',
-    'handle',
-    'name',
-    'expected_gender_male',
-    'expected_gender_female',
-    'expected_age_range',
-    'expected_geo',
-    'real_gender_male',
-    'real_gender_female',
-    'real_age_range',
-    'real_geo',
-    'alignment_score',
-    'alignment_status',
-  ]
-
-  const missing = requiredFields.filter((field) => !(field in obj))
-  if (missing.length > 0) {
-    throw new AvatarRepositoryError(
-      'VALIDATION_FAILED',
-      `Campos obrigatórios faltando: ${missing.join(', ')}`,
-      { missing }
-    )
-  }
-
-  // Validar tipos numéricos
-  if (typeof obj.expected_gender_male !== 'number' || obj.expected_gender_male < 0 || obj.expected_gender_male > 100) {
-    throw new AvatarRepositoryError(
-      'VALIDATION_FAILED',
-      'expected_gender_male deve ser número entre 0-100',
-      { received: obj.expected_gender_male }
-    )
-  }
-
-  if (typeof obj.alignment_score !== 'number' || obj.alignment_score < 0 || obj.alignment_score > 100) {
-    throw new AvatarRepositoryError(
-      'VALIDATION_FAILED',
-      'alignment_score deve ser número entre 0-100',
-      { received: obj.alignment_score }
-    )
-  }
-
-  // Validar status
-  const validStatuses = ['critical', 'warning', 'healthy']
-  if (!validStatuses.includes(String(obj.alignment_status).toLowerCase())) {
-    throw new AvatarRepositoryError(
-      'VALIDATION_FAILED',
-      `alignment_status deve ser um de: ${validStatuses.join(', ')}`,
-      { received: obj.alignment_status }
-    )
-  }
-
-  return {
-    client_id: String(obj.client_id),
-    handle: String(obj.handle),
-    name: String(obj.name),
-    expected_gender_male: Number(obj.expected_gender_male),
-    expected_gender_female: Number(obj.expected_gender_female),
-    expected_age_range: String(obj.expected_age_range),
-    expected_interest: obj.expected_interest ? String(obj.expected_interest) : null,
-    expected_geo: String(obj.expected_geo),
-    real_gender_male: Number(obj.real_gender_male),
-    real_gender_female: Number(obj.real_gender_female),
-    real_age_range: String(obj.real_age_range),
-    real_interest: obj.real_interest ? String(obj.real_interest) : null, // ✅ Vem do banco
-    real_geo: repairMojibake(String(obj.real_geo)) ?? String(obj.real_geo),
-    alignment_score: Number(obj.alignment_score),
-    alignment_status: String(obj.alignment_status),
   }
 }
 
@@ -153,11 +72,33 @@ function categoricalVariance(expected: string, real: string): number {
   return expected.trim().toLowerCase() === real.trim().toLowerCase() ? 0 : 100
 }
 
+// PR-B / N1 (expected_geo/real_geo = "null"): o mapper (avatarAlignment.mapper.ts)
+// só substitui `null` real por 'N/A' — uma linha em que a VIEW devolve o
+// texto literal "null"/"undefined" (dado corrompido na ingestão, não o
+// `null` do JS) passa pela barreira Zod como string válida e chega aqui
+// intacta. Normalizado no ponto de consumo, sem tocar mapper/schema
+// (fora do escopo deste PR). Nunca fazer `String(valor)` nesse caminho:
+// se `valor` puder ser `null`/`undefined`, `String(null) === 'null'`
+// fabricaria exatamente o texto sentinela que este guard evita.
+const EMPTY_GEO_SENTINELS = new Set(['', 'null', 'undefined'])
+
+function normalizeGeoText(value: string | null | undefined): string {
+  if (value == null) return 'Não especificado'
+  const trimmed = value.trim()
+  return EMPTY_GEO_SENTINELS.has(trimmed.toLowerCase()) ? 'Não especificado' : trimmed
+}
+
 function buildBars(row: AvatarAlignmentRow): AlignmentBar[] {
   const genderVariance = Math.abs(row.real_gender_male - row.expected_gender_male)
   const ageVariance = categoricalVariance(row.expected_age_range, row.real_age_range)
   const interestVariance = categoricalVariance(row.expected_interest ?? '', row.real_interest ?? '')
-  const geoVariance = categoricalVariance(row.expected_geo, row.real_geo)
+  // Normalizado antes de comparar: sem isso, "null" (expected) === "null"
+  // (real) bateria como alinhamento saudável (variance 0) em vez de
+  // sinalizar ausência de dado dos dois lados.
+  const geoVariance = categoricalVariance(
+    normalizeGeoText(row.expected_geo),
+    normalizeGeoText(row.real_geo)
+  )
 
   const toBar = (label: string, expected: number, real: number, variance: number): AlignmentBar => {
     const status = varianceToStatus(variance)
@@ -229,6 +170,9 @@ function buildMisalignmentHypothesis(row: AvatarAlignmentRow, bars: AlignmentBar
   }
 
   const worst = [...bars].sort((a, b) => b.variance - a.variance)[0]
+  if (!worst) {
+    return 'Sem dados suficientes para apontar a maior divergência.'
+  }
   return `A maior divergência está em "${worst.label}" (esperado vs. real). Hipótese: a audiência captada reflete "${row.real_interest ?? 'um interesse não mapeado'}", diferente do avatar esperado — provável desalinhamento de criativo ou segmentação de campanha.`
 }
 
@@ -237,14 +181,14 @@ function rowToAvatarAlignment(row: AvatarAlignmentRow): AvatarAlignment {
     gender: { male: row.expected_gender_male, female: row.expected_gender_female },
     ageRange: row.expected_age_range,
     interest: row.expected_interest ?? 'Não mapeado',
-    geo: row.expected_geo,
+    geo: normalizeGeoText(row.expected_geo),
   }
 
   const real: AvatarProfile = {
     gender: { male: row.real_gender_male, female: row.real_gender_female },
     ageRange: row.real_age_range,
     interest: row.real_interest ?? 'Não mapeado',
-    geo: row.real_geo,
+    geo: normalizeGeoText(row.real_geo),
   }
 
   const score = Number(row.alignment_score)
@@ -287,10 +231,10 @@ export async function fetchAvatarAlignment(clientId: string): Promise<AvatarAlig
   try {
     const { data, error } = await supabase
       .schema('orbit')
-      .schema('orbit')
       .from('v_avatar_alignment')
       .select(
         `
+        id,
         client_id,
         handle,
         name,
@@ -299,11 +243,13 @@ export async function fetchAvatarAlignment(clientId: string): Promise<AvatarAlig
         expected_age_range,
         expected_interest,
         expected_geo,
+        expected_geo_pct,
         real_gender_male,
         real_gender_female,
         real_age_range,
         real_interest,
         real_geo,
+        real_geo_pct,
         alignment_score,
         alignment_status
       `
@@ -328,16 +274,41 @@ export async function fetchAvatarAlignment(clientId: string): Promise<AvatarAlig
       )
     }
 
-    // ✅ VALIDAÇÃO: Estrutura de dados
-    const validatedRow = validateAvatarRow(data)
+    // ✅ BARREIRA ZOD: valida o shape cru da view antes de mapear
+    const parsedRow = avatarAlignmentViewRowSchema.parse(data)
 
-    // ✅ CONVERSÃO: Sem fabricação de dados
-    return rowToAvatarAlignment(validatedRow)
+    // ✅ MAPPER: view row → AvatarAlignmentRow (Contract, orbit.ts)
+    const contractRow = mapAvatarAlignmentViewRowToContract(parsedRow)
+
+    // ✅ CONVERSÃO: Contract → AvatarAlignment (domínio de UI)
+    return rowToAvatarAlignment(contractRow)
   } catch (err) {
     // Se já é AvatarRepositoryError, relança como está
     if (err instanceof AvatarRepositoryError) {
       console.error(`[avatarRepository] ${err.code}: ${err.message}`, err.details)
       throw err
+    }
+
+    // client_id nulo na view (JOIN quebrado) — sinalizado pelo mapper
+    if (err instanceof OrbitValidationError) {
+      const wrapped = new AvatarRepositoryError(
+        'VALIDATION_FAILED',
+        err.message,
+        { details: err.details }
+      )
+      console.error(`[avatarRepository] ${wrapped.code}: ${wrapped.message}`, wrapped.details)
+      throw wrapped
+    }
+
+    // Schema drift real do Postgres — coluna removida/tipo trocado
+    if (err instanceof ZodError) {
+      const wrapped = new AvatarRepositoryError(
+        'VALIDATION_FAILED',
+        'Payload de orbit.v_avatar_alignment fora do schema esperado',
+        { zodIssues: err.issues }
+      )
+      console.error(`[avatarRepository] ${wrapped.code}: ${wrapped.message}`, wrapped.details)
+      throw wrapped
     }
 
     // Outros erros são UNKNOWN

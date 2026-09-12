@@ -43,7 +43,7 @@ interface NavItem {
   icon:          string
   section:       'visao-geral' | 'instagram'
   ruleNumber?:   string  // Rastreabilidade: qual RN este item atende
-  badge?:        number
+  badge?:        number | undefined
   badgeVariant?: 'default' | 'alert'
 }
 
@@ -247,7 +247,7 @@ function NavItemRow({ item, isActive, onTabClick }: NavItemRowProps) {
     ) {
       e.preventDefault()
       const tabId = NAV_ITEM_TO_TAB_MAP[item.id]
-      onTabClick(tabId)
+      if (tabId) onTabClick(tabId)
     }
     // Caso contrário: <Link> navega normalmente para item.href.
   }

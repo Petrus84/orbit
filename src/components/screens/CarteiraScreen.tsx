@@ -92,7 +92,13 @@ function CarteiraScreen({
   useAlerts,
 }: CarteiraScreenProps): React.ReactElement {
   const { data, status, error, refetch } = useClients()
-  const { data: criticalAlerts, refetch: refetchAlerts } = useAlerts('critical')
+  // PR-B / N9: "Com alerta" e os AlertCards embaixo de cada ClientCard são
+  // sobre alertas em geral (qualquer severity) — precisam de useAlerts()
+  // sem filtro. "Alertas críticos" + a seção "urgentes" continuam restritos
+  // a useAlerts('critical'). Antes, os dois liam da mesma chamada filtrada
+  // e "Com alerta" só contava cliente com alerta crítico.
+  const { data: allAlerts, refetch: refetchAllAlerts } = useAlerts()
+  const { data: criticalAlerts, refetch: refetchCriticalAlerts } = useAlerts('critical')
   const [activeTab, setActiveTab] = useState<FilterTab>('all')
 
   const allClients: Client[] = data ?? []
@@ -103,9 +109,14 @@ function CarteiraScreen({
   const isLoading = status === 'loading' || status === 'idle'
 
   const clientsWithAlerts = allClients.filter((c) =>
-    criticalAlerts.some((a) => a.clientId === c.id)
+    allAlerts.some((a) => a.clientId === c.id)
   ).length
   const totalAlerts = criticalAlerts.length
+
+  const refetchAlerts = (): void => {
+    refetchAllAlerts()
+    refetchCriticalAlerts()
+  }
 
   const subtitle =
     status === 'success'
@@ -123,7 +134,16 @@ function CarteiraScreen({
   return (
     <main className={styles.main}>
       <div className={styles.headRow}>
-        <SectionHead title="Carteira de clientes" subtitle={subtitle} />
+        <SectionHead
+          title="Carteira de clientes"
+          {...(subtitle !== undefined ? { subtitle } : {})}
+        />
+        {/* PR-F (parcial) / TS2375: `subtitle` é `string | undefined`
+            (calculado condicionalmente acima), mas SectionHeadProps.subtitle
+            é opcional sob exactOptionalPropertyTypes — passar
+            subtitle={undefined} explicitamente não é o mesmo que omitir a
+            prop. Spread condicional garante que a chave só existe quando
+            há valor. */}
 
         <div
           className={styles.tabsContainer}
@@ -150,15 +170,15 @@ function CarteiraScreen({
       </div>
 
       <div className={styles.kpiGrid}>
-        <div className={styles.kpiCard}>
+        <div className={`${styles.kpiCard} ${styles.kpiCardNeutral}`}>
           <p className={styles.kpiLabel}>Clientes ativos</p>
           <p className={styles.kpiValue}>{allClients.length}</p>
         </div>
-        <div className={styles.kpiCard}>
+        <div className={`${styles.kpiCard} ${styles.kpiCardWarning}`}>
           <p className={styles.kpiLabel}>Com alerta</p>
           <p className={`${styles.kpiValue} ${styles.kpiValueWarning}`}>{clientsWithAlerts}</p>
         </div>
-        <div className={styles.kpiCard}>
+        <div className={`${styles.kpiCard} ${styles.kpiCardCritical}`}>
           <p className={styles.kpiLabel}>Alertas críticos</p>
           <p className={`${styles.kpiValue} ${styles.kpiValueError}`}>{totalAlerts}</p>
         </div>
@@ -181,16 +201,24 @@ function CarteiraScreen({
       ) : (
         <div className={styles.clientsGrid}>
           {clients.map((client: Client) => {
-            const clientAlerts = criticalAlerts.filter((a) => a.clientId === client.id)
+            const clientAlerts = allAlerts.filter((a) => a.clientId === client.id)
 
             return (
               <div key={client.id} className={styles.clientWrapper}>
                 <ClientCard
                   client={client}
                   healthStatus={client.status}
-                  snapshotCount={client.snapshotCount}
-                  lastSnapshotDate={client.lastSnapshotDate}
+                  {...(client.snapshotCount !== undefined
+                    ? { snapshotCount: client.snapshotCount }
+                    : {})}
+                  {...(client.lastSnapshotDate !== undefined
+                    ? { lastSnapshotDate: client.lastSnapshotDate }
+                    : {})}
                 />
+                {/* PR-F (parcial) / TS2375: snapshotCount?: number e
+                    lastSnapshotDate?: string | null em Client — ambos podem
+                    vir `undefined`. `healthStatus` fica direto porque
+                    `client.status: ClientHealthStatus` nunca é undefined. */}
 
                 {clientAlerts.length > 0 && (
                   <div className={styles.alertsContainer}>

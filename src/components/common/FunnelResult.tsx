@@ -30,6 +30,7 @@ interface FunnelResultProps {
 
 function formatValue(v: number): string {
   if (!Number.isFinite(v)) return '—'
+  if (v == null || isNaN(v)) return '0'
   if (v >= 1_000_000) return `${(v / 1_000_000).toFixed(2)}M`
   if (v >= 1_000) return `${(v / 1_000).toFixed(1)}k`
   return Math.round(v).toLocaleString('pt-BR')

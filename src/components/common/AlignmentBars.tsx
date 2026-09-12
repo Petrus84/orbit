@@ -22,24 +22,24 @@ const COLOR_TO_GLOW: Record<AlignmentColor, GlowColor> = {
 }
 
 const DOT_CLASS: Record<GlowColor, string> = {
-  cyan: styles.dotCyan,
-  gold: styles.dotGold,
-  red: styles.dotRed,
-  none: styles.dotNone,
+  cyan: styles.dotCyan ?? '',
+  gold: styles.dotGold ?? '',
+  red: styles.dotRed ?? '',
+  none: styles.dotNone ?? '',
 }
 
 const FILL_CLASS: Record<GlowColor, string> = {
-  cyan: styles.fillCyan,
-  gold: styles.fillGold,
-  red: styles.fillRed,
-  none: styles.fillNone,
+  cyan: styles.fillCyan ?? '',
+  gold: styles.fillGold ?? '',
+  red: styles.fillRed ?? '',
+  none: styles.fillNone ?? '',
 }
 
 const PILL_CLASS: Record<GlowColor, string> = {
-  cyan: styles.pillCyan,
-  gold: styles.pillGold,
-  red: styles.pillRed,
-  none: styles.pillNone,
+  cyan: styles.pillCyan ?? '',
+  gold: styles.pillGold ?? '',
+  red: styles.pillRed ?? '',
+  none: styles.pillNone ?? '',
 }
 
 function clampAlignmentPct(variance: number): number {

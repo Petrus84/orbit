@@ -3,17 +3,20 @@
    ============================================================================ */
 
 .main {
-  margin-left: auto;
-  margin-right: auto;
   display: flex;
+  /* ✅ FIX (aproveitamento de tela — 11/09/2026): removido `max-width: 80rem`
+     + `margin: auto`. Isso centralizava um bloco fixo de 1280px e deixava
+     área morta em telas largas — comparar com InstagramOverviewPage.module.css
+     `.main`, que usa `flex: 1` sem teto de largura. Carteira agora ocupa
+     100% do espaço que o layout pai (`(dashboard)/layout.tsx`) já reserva
+     para o conteúdo, igual à Visão Geral IG. */
+  width: 100%;
   /* ✅ FIX (proporção dos cards): removido min-height:100vh — o layout
      pai (src/app/(dashboard)/layout.tsx) já força 100vh na linha
      Sidebar+conteúdo. Manter aqui também empilhava dois 100vh e criava
      a sobra vazia vista no devtools. min-height:100% deixa este .main
      preencher só o espaço que o pai já reservou. */
   min-height: 100%;
-  width: 100%;
-  max-width: 80rem;
   flex-direction: column;
   gap: 1.5rem;
   padding-left: 1rem;
@@ -113,6 +116,26 @@
   border: 1px solid var(--line);
   background-color: var(--bg2);
   padding: 1rem;
+  transition: border-color var(--transition-base, 150ms), box-shadow var(--transition-base, 150ms);
+}
+
+/* ✅ FIX (SSOT — 11/09/2026): os 3 KPIs eram visualmente idênticos, sem
+   nenhum destaque de severidade — mesmos tokens de glow que GlassCard.tsx
+   já usa em glowCyan/glowGold/glowRed (Visão Geral IG), aplicados aqui via
+   classe própria porque este card não passa por <GlassCard>. */
+.kpiCardNeutral {
+  border-color: var(--border-glow-cyan);
+  box-shadow: var(--shadow-inner-cyan);
+}
+
+.kpiCardWarning {
+  border-color: var(--border-glow-gold);
+  box-shadow: var(--shadow-inner-gold);
+}
+
+.kpiCardCritical {
+  border-color: var(--border-glow-red);
+  box-shadow: var(--shadow-inner-red);
 }
 
 .kpiLabel {
@@ -125,7 +148,7 @@
 
 .kpiValue {
   margin-top: 0.5rem;
-  font-family: monospace;
+  font-family: var(--mono);
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--t0);
@@ -392,7 +415,7 @@
   padding-right: 0.5rem;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
-  font-family: monospace;
+  font-family: var(--mono);
   font-size: 0.625rem;
   font-weight: 600;
   color: var(--red);

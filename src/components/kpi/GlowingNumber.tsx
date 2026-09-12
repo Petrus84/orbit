@@ -4,7 +4,6 @@
    Versão: 1.0.0  |  Data: 2026-06-01
    ========================================================================== */
 
-import React from 'react'
 import styles from './GlowingNumber.module.css'
 import type { GlowColor } from '@/types/orbit'
 
@@ -18,17 +17,17 @@ export interface GlowingNumberProps {
 }
 
 const COLOR_CLASS: Record<GlowColor, string> = {
-  cyan: styles.cyan,
-  red:  styles.red,
-  gold: styles.gold,
-  none: styles.muted,
+  cyan: styles.cyan ?? '',
+  red:  styles.red ?? '',
+  gold: styles.gold ?? '',
+  none: styles.muted ?? '',
 }
 
 const SIZE_CLASS: Record<GlowingNumberSize, string> = {
-  sm: styles.sizeSm,
-  md: styles.sizeMd,
-  lg: styles.sizeLg,
-  xl: styles.sizeXl,
+  sm: styles.sizeSm ?? '',
+  md: styles.sizeMd ?? '',
+  lg: styles.sizeLg ?? '',
+  xl: styles.sizeXl ?? '',
 }
 
 export function GlowingNumber({

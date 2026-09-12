@@ -24,15 +24,12 @@
 
 import { useState } from 'react'
 import OnboardingScreen from '@/components/screens/OnboardingScreen'
-import { useOnboarding } from '@/hooks/useOnboarding'
 import { CLIENTS, type ClientKey } from '@/lib/constants'
 
 export default function OnboardingPage() {
   const clientKeys = Object.keys(CLIENTS) as ClientKey[]
-  const [activeClientKey, setActiveClientKey] = useState<ClientKey>(clientKeys[0])
+  const [activeClientKey, setActiveClientKey] = useState<ClientKey>(clientKeys[0] ?? 'cpimportstore')
   const activeClient = CLIENTS[activeClientKey]
-
-  const { data, status, save } = useOnboarding(activeClient.id)
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: 'var(--bg)' }}>
@@ -74,12 +71,7 @@ export default function OnboardingPage() {
       </nav>
 
       <div style={{ flex: 1, overflow: 'auto' }}>
-        <OnboardingScreen
-          clientId={activeClient.id}
-          initialData={data}
-          onSave={save}
-          isSaving={status === 'loading'}
-        />
+        <OnboardingScreen clientId={activeClient.id} />
       </div>
     </div>
   )

@@ -80,7 +80,7 @@ interface CenterStateProps {
   body: string
   detailTitle?: string
   detailItems?: string[]
-  detailRaw?: string
+  detailRaw?: string | undefined
   primaryAction?: { label: string; onClick: () => void }
   hint?: string
 }

@@ -17,7 +17,7 @@ export interface Campaign {
 
 interface CampaignRowProps {
   campaign: Campaign;
-  onAction?: (id: string) => void;
+  onAction?: ((id: string) => void) | undefined;
 }
 
 const OBJECTIVE_LABELS: Record<CampaignObjective, string> = {

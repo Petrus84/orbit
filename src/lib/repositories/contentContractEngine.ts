@@ -249,8 +249,8 @@ function locateValueInRange(value: number, signalRangeLabel: string): string | n
   const numbers = signalRangeLabel.match(/[\d.]+/g)
   if (!numbers || numbers.length < 2) return null
 
-  const min = parseFloat(numbers[0])
-  const max = parseFloat(numbers[1])
+  const min = parseFloat(numbers[0] ?? '')
+  const max = parseFloat(numbers[1] ?? '')
   if (Number.isNaN(min) || Number.isNaN(max) || max <= min) return null
 
   const position = (value - min) / (max - min)

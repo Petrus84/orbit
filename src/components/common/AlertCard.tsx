@@ -52,11 +52,17 @@ interface AlertCardProps {
   onAcknowledge?: () => Promise<void> | void
 }
 
+// PR-F (parcial) / TS2322: com `noUncheckedIndexedAccess`, o import de
+// AlertCard.module.css (só tem index signature, sem propriedades
+// declaradas) faz `styles.critical` etc. tiparem como `string | undefined`
+// — mesmo as 4 classes existindo de fato no CSS (confirmado acima:
+// .critical/.warning/.info/.success). `?? ''` satisfaz o tsc sem mudar
+// comportamento em runtime (a classe real nunca é undefined de verdade).
 const SEVERITY_CLASS: Record<Alert['severity'], string> = {
-  critical: styles.critical,
-  warning: styles.warning,
-  info: styles.info,
-  success: styles.success,
+  critical: styles.critical ?? '',
+  warning: styles.warning ?? '',
+  info: styles.info ?? '',
+  success: styles.success ?? '',
 }
 
 const SEVERITY_LABEL: Record<Alert['severity'], string> = {

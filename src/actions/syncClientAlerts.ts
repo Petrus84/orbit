@@ -28,9 +28,9 @@ import type { AlertDraft } from '@/lib/repositories/contentContractEngine'
 export interface SyncClientAlertsResult {
   success: boolean
   alertsGenerated: number
-  clientHandle?: string
-  message?: string
-  error?: string
+  clientHandle?: string | undefined
+  message?: string | undefined
+  error?: string | undefined
 }
 
 export async function syncClientAlerts(clientId: string): Promise<SyncClientAlertsResult> {
