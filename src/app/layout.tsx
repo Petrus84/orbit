@@ -22,8 +22,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ORBIT · Dashboard",
-  description: "Sistema de Gestão de Funil de E-commerce",
+  title: "ORBIT",
+  description: "Sistema de Gestão de Funil e Performance de Contas",
 };
 
 export default function RootLayout({

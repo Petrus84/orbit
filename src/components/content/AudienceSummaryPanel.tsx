@@ -11,7 +11,6 @@
    se fosse dado real. Volta quando o parser for corrigido.
    ========================================================================== */
 
-import React from 'react'
 import { GlassCard }             from '@/components/common/GlassCard'
 import styles                    from './AudienceSummaryPanel.module.css'
 import type { AudienceSummary }  from '@/types/orbit'

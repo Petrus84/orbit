@@ -4,7 +4,6 @@
    Versão: 1.0.0  |  Data: 2026-06-01
    ========================================================================== */
 
-import React from 'react'
 import styles from './DeltaText.module.css'
 
 export interface DeltaTextProps {

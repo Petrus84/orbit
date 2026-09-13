@@ -2,13 +2,13 @@ import dotenv from 'dotenv'
 import * as fs from 'fs'
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
 import { z } from 'zod'
-import { resolveClientId } from './lib/resolveClientId.ts'
+import { resolveClientId } from './lib/resolveClientId'
 import {
 resolveIntMetric,
 resolveStringMetric,
 resolvePercentMetric,
 logMissingKey,
-} from './lib/metric-key-dictionary.ts'
+} from './lib/metric-key-dictionary'
 import AdmZip from 'adm-zip'
 import { createHash } from 'crypto'
 
@@ -19,8 +19,9 @@ function argVal(flag: string): string | undefined {
 const eq = process.argv.find(a => a.startsWith(`--${flag}=`))
 if (eq) return eq.split('=').slice(1).join('=')
 const idx = process.argv.indexOf(`--${flag}`)
-if (idx >= 0 && process.argv[idx + 1] && !process.argv[idx + 1].startsWith('--')) {
-  return process.argv[idx + 1]
+const next = process.argv[idx + 1]
+if (idx >= 0 && next && !next.startsWith('--')) {
+  return next
 }
 return undefined
 }
@@ -218,6 +219,10 @@ const raw = match.getData().toString('utf-8')
 return JSON.parse(raw) as T
 }
 
+function todayISO(): string {
+return new Date().toISOString().slice(0, 10)
+}
+
 function parseDateRange(range: string): { start: string; end: string } {
 const monthMap: Record<string, string> = {
   Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
@@ -228,8 +233,11 @@ const year = today.getFullYear()
 
 try {
   const [startPart, endPart] = range.split(' - ')
+  if (!startPart || !endPart) throw new Error('range mal formado')
+
   const [startMon, startDay] = startPart.trim().split(' ')
   const [endMon, endDay] = endPart.trim().split(' ')
+  if (!startMon || !startDay || !endMon || !endDay) throw new Error('range mal formado')
 
   const startM = monthMap[startMon] ?? '01'
   const endM = monthMap[endMon] ?? '12'
@@ -241,13 +249,12 @@ try {
   const end = `${endYear}-${endM}-${endDay.padStart(2, '0')}`
   return { start, end }
 } catch {
-  const today2 = new Date().toISOString().split('T')[0]
-  return { start: today2, end: today2 }
+  return { start: todayISO(), end: todayISO() }
 }
 }
 
 /* ── BLOCO 1: Catálogo de posts ─────────────────────────────────────────── */
-function mapMetrics(smdRaw: Record<string, { value?: string }>): PostMetrics {
+function mapMetrics(smdRaw: Record<string, { value?: string | undefined }>): PostMetrics {
 const smd: Record<string, string | undefined> = {}
 for (const [k, v] of Object.entries(smdRaw)) {
   smd[fixMetaMojibake(k)] = v.value
@@ -287,7 +294,8 @@ if (!items.success) return []
 
 const posts: UnifiedPost[] = []
 for (const item of items.data) {
-  const first = item.media[0]
+  const [first] = item.media
+  if (!first) continue
   const timestamp = item.creation_timestamp ?? first.creation_timestamp
   if (!timestamp || !first.uri) continue
 
@@ -351,7 +359,7 @@ const smd = parsedInter.data.organic_insights_interactions[0]?.string_map_data ?
 const dateRangeRaw = resolveStringMetric(smd, 'DATE_RANGE')
 const { start: periodStart, end: periodEnd } = dateRangeRaw
   ? parseDateRange(dateRangeRaw)
-  : { start: new Date().toISOString().split('T')[0], end: new Date().toISOString().split('T')[0] }
+  : { start: todayISO(), end: todayISO() }
 
 const sharesPost = resolveIntMetric(smd, 'SHARES_POST', logMissingKey)
 const savesPost = resolveIntMetric(smd, 'SAVES_POST', logMissingKey)
@@ -376,8 +384,9 @@ let reachFollowersPct: number | null = null
 const rawReach = readZipEntryAsJson<unknown>(zip, NATIVE_PATHS.profilesReached)
 if (rawReach) {
   const parsedReach = ReachFileSchema.safeParse(rawReach)
-  if (parsedReach.success && parsedReach.data.organic_insights_reach.length > 0) {
-    const rsmd = parsedReach.data.organic_insights_reach[0].string_map_data
+  const reachEntry = parsedReach.success ? parsedReach.data.organic_insights_reach[0] : undefined
+  if (reachEntry) {
+    const rsmd = reachEntry.string_map_data
     alcance = resolveIntMetric(rsmd, 'REACH', logMissingKey)
     impressoes = resolveIntMetric(rsmd, 'IMPRESSIONS', logMissingKey)
     visitasPerfil = resolveIntMetric(rsmd, 'PROFILE_VISITS_FROM', logMissingKey)
@@ -448,7 +457,7 @@ function parsePct(value: string): number {
   if (!value) return 0
   const cleanValue = value.replace(',', '.')
   const match = cleanValue.match(/([\d.]+)%/)
-  return match ? parseFloat(match[1]) : 0
+  return match?.[1] ? parseFloat(match[1]) : 0
 }
 
 /**
@@ -492,10 +501,13 @@ function parseAgeRange(value: string): AgeRangeData {
   let match: RegExpExecArray | null = regex.exec(value)
   while (match !== null) {
     const rawGroup = match[1]
-    const pct = parseFloat(match[2])
-    const target = groupMap[rawGroup]
-    if (target) {
-      result[target] = Math.round((result[target] + pct) * 10) / 10
+    const pctStr = match[2]
+    if (rawGroup && pctStr) {
+      const pct = parseFloat(pctStr)
+      const target = groupMap[rawGroup]
+      if (target) {
+        result[target] = Math.round((result[target] + pct) * 10) / 10
+      }
     }
     match = regex.exec(value)
   }
@@ -527,7 +539,9 @@ function extractDemographicsBlock(zip: AdmZip): Demographics | null {
   const regex1 = /([^:,]+):\s*([\d.]+)%/g
   let match: RegExpExecArray | null = regex1.exec(citiesStr)
   while (match !== null) {
-    cities.push({ name: match[1].trim(), pct: parseFloat(match[2]) })
+    const name = match[1]
+    const pctStr = match[2]
+    if (name && pctStr) cities.push({ name: name.trim(), pct: parseFloat(pctStr) })
     match = regex1.exec(citiesStr)
   }
 
@@ -535,7 +549,9 @@ function extractDemographicsBlock(zip: AdmZip): Demographics | null {
   const regex2 = /([^:,]+):\s*([\d.]+)%/g
   let match2: RegExpExecArray | null = regex2.exec(countriesStr)
   while (match2 !== null) {
-    countries.push({ name: match2[1].trim(), pct: parseFloat(match2[2]) })
+    const name = match2[1]
+    const pctStr = match2[2]
+    if (name && pctStr) countries.push({ name: name.trim(), pct: parseFloat(pctStr) })
     match2 = regex2.exec(countriesStr)
   }
 
@@ -742,8 +758,10 @@ const sortedPosts = [...allPosts].sort((a, b) =>
   new Date(a.published_at).getTime() - new Date(b.published_at).getTime()
 )
 
-const periodStart = sortedPosts.length > 0 ? sortedPosts[0].published_at.split('T')[0] : null
-const periodEnd = sortedPosts.length > 0 ? sortedPosts[sortedPosts.length - 1].published_at.split('T')[0] : null
+const firstSortedPost = sortedPosts[0]
+const lastSortedPost = sortedPosts[sortedPosts.length - 1]
+const periodStart = firstSortedPost ? (firstSortedPost.published_at.split('T')[0] ?? null) : null
+const periodEnd = lastSortedPost ? (lastSortedPost.published_at.split('T')[0] ?? null) : null
 
 console.log(`\n💾 [Sessão]`)
 const session = await persistImportSession(clientId, hash, periodStart, periodEnd, filesProcessed, filesMissing)

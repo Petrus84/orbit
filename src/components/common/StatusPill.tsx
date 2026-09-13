@@ -12,7 +12,6 @@
    - Adicionada entrada 'none' ao COLOR_CLASS (GlowColor inclui 'none').
    ========================================================================== */
 
-import React from 'react'
 import styles from './StatusPill.module.css'
 import type { GlowColor } from '@/types/orbit'
 

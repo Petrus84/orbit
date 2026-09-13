@@ -10,7 +10,11 @@ import { DateRangeControl, type PeriodRange } from '@/components/common/DateRang
 
 export default function FunnelPage() {
   const clientKeys = Object.keys(CLIENTS) as (keyof typeof CLIENTS)[]
-  const [activeClientKey, setActiveClientKey] = useState<keyof typeof CLIENTS>(clientKeys[0])
+  const initialClientKey = clientKeys[0] ?? 'cpimportstore'
+  
+    
+  const [activeClientKey, setActiveClientKey] =
+    useState<keyof typeof CLIENTS>(initialClientKey)
   const activeClient = CLIENTS[activeClientKey]
 
   // REFATORAÇÃO (período dinâmico, 2026-08-31): PERIOD_START/PERIOD_END de

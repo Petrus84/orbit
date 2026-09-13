@@ -1,13 +1,11 @@
 import React from 'react'
 import { useParams } from 'next/navigation'
 import SectionHead from '@/components/common/SectionHead'
-import KPICard from '@/components/common/KPICard'
 import QualityScoreCard from '@/components/common/QualityScoreCard'
 import PerformanceTable from '@/components/common/PerformanceTable'
 import DiagnosticAlert from '@/components/common/DiagnosticAlert'
 import { AudienceSummaryPanel } from '@/components/content/AudienceSummaryPanel'
 
-import type { KPI } from '@/components/common/KPICard'
 import type { QualityScore } from '@/components/common/QualityScoreCard'
 import type { PerformanceMetric } from '@/components/common/PerformanceTable'
 import type { DiagnosticAlertData } from '@/components/common/DiagnosticAlert'
@@ -30,6 +28,37 @@ interface IGOverviewScreenProps {
   useIGOverview: (clientId: string) => UseIGOverviewResult
 }
 
+interface KPI {
+  label: string
+  value: string | number
+  delta: number
+  trend: 'up' | 'down' | 'neutral'
+  flagLevel: 'L0' | 'L1' | 'L2'
+  unit?: string
+}
+
+function KPICard({ kpi }: { kpi: KPI }): React.ReactElement {
+  const trendColor = kpi.trend === 'up' ? 'text-emerald-400' : kpi.trend === 'down' ? 'text-red-400' : 'text-zinc-400'
+  const sign = kpi.delta > 0 ? '+' : ''
+
+  return (
+    <div className="flex flex-col gap-3 rounded-2xl bg-[#18181F] p-4">
+      <div className="flex items-center justify-between">
+        <span className="font-sans text-xs font-medium text-zinc-400">{kpi.label}</span>
+        <span className="rounded-full bg-zinc-800 px-2 py-0.5 font-sans text-[10px] text-zinc-500">{kpi.flagLevel}</span>
+      </div>
+      <div className="flex items-end justify-between gap-2">
+        <span className="font-sans text-2xl font-semibold text-zinc-100">
+          {kpi.value}{kpi.unit ?? ''}
+        </span>
+        <span className={`font-sans text-xs font-medium ${trendColor}`}>
+          {sign}{kpi.delta}%
+        </span>
+      </div>
+    </div>
+  )
+}
+
 // ─── Mappers (transformam SSOT → componentes) ──────────────────────
 
 function mapKPICardDataToKPI(data: KPICardData): KPI {
@@ -39,7 +68,7 @@ function mapKPICardDataToKPI(data: KPICardData): KPI {
     delta: data.delta,
     trend: data.delta > 0 ? 'up' : data.delta < 0 ? 'down' : 'neutral',
     flagLevel: (data.sourceLevel as 'L0' | 'L1' | 'L2') || 'L0',
-    unit: data.unit ?? undefined,
+    ...(data.unit ? { unit: data.unit } : {}),
   }
 }
 

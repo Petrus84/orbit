@@ -8,7 +8,7 @@ export interface KPI {
   delta?: number;
   trend?: 'up' | 'down' | 'neutral';
   flagLevel: FlagLevel;
-  unit?: string | undefined;
+  unit?: string;
   sparkline?: number[]; // series of values for the mini chart
 }
 

@@ -33,7 +33,7 @@
       gravar de volta no objeto.
    ========================================================================== */
 
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useCallback } from 'react'
 import { supabase } from '@/lib/supabase'
 import styles from './OnboardingScreen.module.css'
 import { useOnboarding } from '@/hooks/useOnboarding'
@@ -97,22 +97,22 @@ export default function OnboardingScreen({
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
-  const [log, setLog] = useState<LogEntry[]>([])
+  const [log, setLog] = useState<LogEntry[]>(() => {
+    if (typeof window === 'undefined') return []
+
+    try {
+      const stored = localStorage.getItem(`orbit_onboarding_log_${clientId}`)
+      return stored ? (JSON.parse(stored) as LogEntry[]) : []
+    } catch {
+      return []
+    }
+  })
 
   const effectiveRecord = record ?? initialData ?? null
 
   // ============================================================================
   // LOG (audit trail local — não é fallback de dado, ver nota 4 no cabeçalho)
   // ============================================================================
-  const loadLog = useCallback(() => {
-    try {
-      const stored = localStorage.getItem(`orbit_onboarding_log_${clientId}`)
-      setLog(stored ? (JSON.parse(stored) as LogEntry[]) : [])
-    } catch {
-      setLog([])
-    }
-  }, [clientId])
-
   const pushLog = useCallback(
     (entry: LogEntry) => {
       setLog((current) => {
@@ -129,15 +129,13 @@ export default function OnboardingScreen({
     [clientId]
   )
 
-  useEffect(() => {
-    loadLog()
-  }, [loadLog])
-
-  useEffect(() => {
-    if (!loading) {
-      setMode(effectiveRecord ? 'view' : 'edit')
-    }
-  }, [loading, effectiveRecord])
+  const displayMode: Mode = loading
+    ? 'loading'
+    : mode === 'loading'
+      ? effectiveRecord
+        ? 'view'
+        : 'edit'
+      : mode
 
   // ============================================================================
   // EDIT / CANCEL / SAVE
@@ -1025,7 +1023,7 @@ export default function OnboardingScreen({
       {/* Content */}
       {loading ? (
         <div className={styles.loading}>Carregando registro…</div>
-      ) : mode === 'view' ? (
+      ) : displayMode === 'view' ? (
         <>
           {renderView()}
           <div className={styles.actions}>

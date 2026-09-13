@@ -3,7 +3,7 @@
    Versão: 1.0.0  |  Data: 2026-06-01
    ========================================================================== */
 
-import React, { type ReactNode, type MouseEventHandler } from 'react'
+import { type ReactNode, type MouseEventHandler } from 'react'
 import styles from './GlassCard.module.css'
 import type { GlowColor } from '@/types/orbit'
 

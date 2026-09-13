@@ -42,7 +42,12 @@ export async function resolveClientId(
     process.exit(1)
   }
 
-  const id: string = data[0].id
+  const [row] = data
+  if (!row) {
+    throw new Error(`[resolveClientId] handle "${handle}" sem registro após validação`)
+  }
+
+  const id: string = row.id
   cache.set(handle, id)
   return id
 }

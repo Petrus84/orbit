@@ -9,7 +9,6 @@
    Nenhum outro trecho foi alterado.
    ========================================================================== */
 
-import React from 'react'
 import { GlassCard }             from '@/components/common/GlassCard'
 import { GlowingNumber }         from '@/components/kpi/GlowingNumber'
 import styles                    from './QualityScoresPanel.module.css'

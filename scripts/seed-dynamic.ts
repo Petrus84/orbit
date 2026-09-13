@@ -107,7 +107,7 @@ async function dynamicSeeder() {
         if (username.startsWith('instagram-')) {
           const partes = username.split('-')
           if (partes.length > 1) {
-            clientName = partes[1] // Pinça o handle do meio
+            clientName = partes[1] ?? clientName // Pinça o handle do meio
           }
         }
 

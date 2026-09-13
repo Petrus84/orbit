@@ -4,7 +4,7 @@ import { OrbitDashboardProvider, useOrbitDashboard } from '@/context/OrbitDashbo
 import { CLIENTS, PERIOD_START, PERIOD_END } from '@/lib/constants'
 import { Sidebar } from '@/components/layout/Sidebar'
 import { Header } from '@/components/layout/Header'
-import { KPICard } from '@/components/kpi/KPICard'
+import KPICard, { type KPI } from '@/components/kpi/KPICard'
 import { QualityScoresPanel } from '@/components/content/QualityScoresPanel'
 import { FormatPerformanceTable } from '@/components/content/FormatPerformanceTable'
 import { InsightCard } from '@/components/content/InsightCard'
@@ -16,10 +16,23 @@ import { DateRangeControl, type PeriodRange } from '@/components/common/DateRang
 import styles from './InstagramOverviewPage.module.css'
 
 import type {
-KPICardData as KPI,
+KPICardData,
 InsightData as Insight,
 CriticalAlertData as Alert,
 } from '@/types/orbit'
+
+// KPICardData (SSOT em src/types/orbit.ts) e KPI (contrato do componente
+// KPICard) têm formas diferentes — este mapper faz a ponte entre os dois.
+function mapKPICardDataToKPI(data: KPICardData): KPI {
+return {
+  label: data.label,
+  value: data.value,
+  delta: data.delta,
+  trend: data.delta > 0 ? 'up' : data.delta < 0 ? 'down' : 'neutral',
+  flagLevel: (data.sourceLevel as 'L0' | 'L1' | 'L2') || 'L0',
+  ...(data.unit ? { unit: data.unit } : {}),
+}
+}
 
 export default function InstagramOverviewPage() {
 const clientIds = Object.keys(CLIENTS) as (keyof typeof CLIENTS)[]
@@ -128,8 +141,8 @@ return (
             {activeTab === 'overview' && (
               <>
                 <section className={styles.kpiRow} aria-label="KPIs principais">
-                  {data.kpis.map((kpi: KPI) => (
-                    <KPICard key={kpi.id} data={kpi} />
+                  {data.kpis.map((kpi: KPICardData) => (
+                    <KPICard key={kpi.id} kpi={mapKPICardDataToKPI(kpi)} />
                   ))}
                 </section>
 

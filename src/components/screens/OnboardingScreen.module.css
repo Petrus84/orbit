@@ -162,7 +162,7 @@
 }
 
 .field > label,
-dt {
+.card :global(dt) {
   font-size: 0.875rem;
   font-weight: 500;
   color: #d4d4d8;
@@ -205,7 +205,7 @@ dt {
   cursor: not-allowed;
 }
 
-dd {
+.card :global(dd) {
   color: #f4f4f5;
   margin: 0;
 }

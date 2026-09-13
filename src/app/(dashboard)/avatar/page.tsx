@@ -24,7 +24,7 @@ import { DateRangeControl, type PeriodRange } from '@/components/common/DateRang
 
 export default function AvatarPage() {
   const clientKeys = Object.keys(CLIENTS) as ClientKey[]
-  const [activeClientKey, setActiveClientKey] = useState<ClientKey>(clientKeys[0])
+  const [activeClientKey, setActiveClientKey] = useState<ClientKey>(clientKeys[0]!)
   const activeClient = CLIENTS[activeClientKey]
 
   const [period, setPeriod] = useState<PeriodRange>({ start: PERIOD_START, end: PERIOD_END })
