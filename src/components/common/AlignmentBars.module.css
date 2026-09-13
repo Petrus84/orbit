@@ -151,14 +151,17 @@
 .dotCyan { background: var(--neon-cyan); }
 .dotGold { background: var(--neon-gold); }
 .dotRed  { background: var(--neon-red); }
+.dotGreen { background: var(--neon-green); }
 .dotNone { background: var(--t2); }
 
 .fillCyan { background: var(--neon-cyan); }
 .fillGold { background: var(--neon-gold); }
 .fillRed  { background: var(--neon-red); }
+.fillGreen { background: var(--neon-green); }
 .fillNone { background: var(--t2); }
 
 .pillCyan { color: var(--neon-cyan); border-color: color-mix(in srgb, var(--neon-cyan) 40%, transparent); background: color-mix(in srgb, var(--neon-cyan) 8%, transparent); }
 .pillGold { color: var(--neon-gold); border-color: color-mix(in srgb, var(--neon-gold) 40%, transparent); background: color-mix(in srgb, var(--neon-gold) 8%, transparent); }
 .pillRed  { color: var(--neon-red);  border-color: color-mix(in srgb, var(--neon-red) 40%, transparent); background: color-mix(in srgb, var(--neon-red) 8%, transparent); }
+.pillGreen { color: var(--neon-green); border-color: color-mix(in srgb, var(--neon-green) 40%, transparent); background: color-mix(in srgb, var(--neon-green) 8%, transparent); }
 .pillNone { color: var(--t1);        border-color: var(--line); }

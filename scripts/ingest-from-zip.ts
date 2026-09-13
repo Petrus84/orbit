@@ -176,6 +176,8 @@ pct: number
 }
 
 interface Demographics {
+periodStart: string
+periodEnd: string
 gender: GenderData
 ageRange: AgeRangeData
 cities: LocationEntry[]
@@ -183,7 +185,13 @@ countries: LocationEntry[]
 }
 
 /* ── Helpers ────────────────────────────────────────────────────────────── */
+// ✅ CORRIGIDO (achado #15) — antes rodava incondicionalmente. Se um export
+// futuro vier com encoding já correto, reinterpretar UTF-8 como latin1
+// CORROMPE o texto (ex: "São Paulo" → "SÃ£o Paulo"), em vez de corrigir.
+// Só aplica a correção quando há sinal real de mojibake (sequências
+// Ã.../Â.../â€... típicas de UTF-8 lido como latin1).
 function fixMetaMojibake(s: string): string {
+if (!/[ÃÂ]|â€/.test(s)) return s
 try {
   return Buffer.from(s, 'latin1').toString('utf-8')
 } catch {
@@ -219,6 +227,28 @@ const raw = match.getData().toString('utf-8')
 return JSON.parse(raw) as T
 }
 
+/**
+ * ✅ NOVO — diagnóstico de estrutura do ZIP.
+ *
+ * Antes: quando nenhum NATIVE_PATHS batia com o conteúdo real do zip
+ * (ex: Meta mudou de "media/posts_1.json" para "content/posts_1.json"
+ * em exportações mais recentes, ou o zip veio com uma pasta raiz extra),
+ * cada extractor retornava silenciosamente [] / null. O resultado final
+ * era indistinguível de "conta sem posts" — e a sessão era marcada como
+ * `done` com 0 registros em todas as tabelas, sem nenhum erro.
+ *
+ * Esta função verifica se PELO MENOS UM dos caminhos esperados existe no
+ * zip. Se nenhum existir, é quase certo que a estrutura do export mudou
+ * (não que a conta está vazia), e isso precisa abortar como erro real —
+ * não terminar como `done`.
+ */
+function diagnoseZipStructure(zip: AdmZip): { anyKnownPathFound: boolean; sampleEntries: string[] } {
+const entries = zip.getEntries().map(e => e.entryName.replace(/\\/g, '/'))
+const knownPaths = Object.values(NATIVE_PATHS)
+const anyKnownPathFound = knownPaths.some(p => entries.some(e => e.endsWith(p)))
+return { anyKnownPathFound, sampleEntries: entries.slice(0, 25) }
+}
+
 function todayISO(): string {
 return new Date().toISOString().slice(0, 10)
 }
@@ -231,22 +261,46 @@ const monthMap: Record<string, string> = {
 const today = new Date()
 const year = today.getFullYear()
 
+// ✅ CORRIGIDO — antes só entendia "MMM D - MMM D" (sem ano). Formato
+// confirmado real (dogativo, 13/09/2026): "Dec 1, 2025 - Aug 17, 2026"
+// (COM ano e vírgula) quebrava silenciosamente: a vírgula ficava grudada
+// no dia ("1,") e o ano de cada lado era descartado, sempre substituído
+// pelo ano de hoje — gerando datas como "2026-12-1," / "2027-08-17,".
+function parseOnePart(part: string, fallbackYear: number): { month: string; day: string; year: number } {
+  const cleaned = part.trim().replace(/,/g, '')
+  const tokens = cleaned.split(/\s+/)
+  const mon = tokens[0] ?? ''
+  const day = tokens[1] ?? '1'
+  const explicitYear = tokens[2] ? parseInt(tokens[2], 10) : null
+  return {
+    month: monthMap[mon] ?? '01',
+    day: day.padStart(2, '0'),
+    year: explicitYear && !Number.isNaN(explicitYear) ? explicitYear : fallbackYear,
+  }
+}
+
 try {
   const [startPart, endPart] = range.split(' - ')
   if (!startPart || !endPart) throw new Error('range mal formado')
 
-  const [startMon, startDay] = startPart.trim().split(' ')
-  const [endMon, endDay] = endPart.trim().split(' ')
-  if (!startMon || !startDay || !endMon || !endDay) throw new Error('range mal formado')
+  const startParsed = parseOnePart(startPart, year)
+  const hasExplicitYear = /\d{4}/.test(startPart) || /\d{4}/.test(endPart)
 
-  const startM = monthMap[startMon] ?? '01'
-  const endM = monthMap[endMon] ?? '12'
+  let endParsed: { month: string; day: string; year: number }
+  if (hasExplicitYear) {
+    // ✅ ano explícito nos dois lados — usa direto, sem heurística.
+    endParsed = parseOnePart(endPart, startParsed.year)
+  } else {
+    // Sem ano no texto (ex: "Feb 25 - May 25" ou "Nov 27 - Feb 24"):
+    // mantém a heurística original de wraparound — se o mês final é
+    // "menor" que o mês inicial, o intervalo cruza a virada do ano.
+    const provisional = parseOnePart(endPart, year)
+    const endYear = parseInt(provisional.month) < parseInt(startParsed.month) ? year + 1 : year
+    endParsed = { ...provisional, year: endYear }
+  }
 
-  const endYear = parseInt(endM) < parseInt(startM) ? year + 1 : year
-  const startYear = year
-
-  const start = `${startYear}-${startM}-${startDay.padStart(2, '0')}`
-  const end = `${endYear}-${endM}-${endDay.padStart(2, '0')}`
+  const start = `${startParsed.year}-${startParsed.month}-${startParsed.day}`
+  const end = `${endParsed.year}-${endParsed.month}-${endParsed.day}`
   return { start, end }
 } catch {
   return { start: todayISO(), end: todayISO() }
@@ -268,13 +322,17 @@ return {
 }
 }
 
-function buildInsightsIndex(zip: AdmZip): Map<string, PostMetrics> {
+// ✅ NOVO (achado #12) — antes, a ausência/erro de parsing de postsInsights
+// (posts.json) era completamente invisível: buildInsightsIndex só
+// retornava um mapa vazio, sem sinalizar nada. Agora devolve um status
+// para o manifesto da sessão poder registrar isso.
+function buildInsightsIndex(zip: AdmZip): { index: Map<string, PostMetrics>; found: boolean } {
 const index = new Map<string, PostMetrics>()
 const raw = readZipEntryAsJson<unknown>(zip, NATIVE_PATHS.postsInsights)
-if (!raw) return index
+if (!raw) return { index, found: false }
 
 const parsed = PostsInsightsFileSchema.safeParse(raw)
-if (!parsed.success) return index
+if (!parsed.success) return { index, found: false }
 
 for (const item of parsed.data.organic_insights_posts) {
   const metrics = mapMetrics(item.string_map_data)
@@ -282,15 +340,15 @@ for (const item of parsed.data.organic_insights_posts) {
     if (media.uri) index.set(baseName(media.uri), metrics)
   }
 }
-return index
+return { index, found: true }
 }
 
-function extractFlatPosts(zip: AdmZip, insightsIndex: Map<string, PostMetrics>): UnifiedPost[] {
+function extractFlatPosts(zip: AdmZip, insightsIndex: Map<string, PostMetrics>): { posts: UnifiedPost[]; found: boolean } {
 const raw = readZipEntryAsJson<unknown>(zip, NATIVE_PATHS.postsFlat)
-if (!raw) return []
+if (!raw) return { posts: [], found: false }
 
 const items = z.array(FlatPostSchema).safeParse(raw)
-if (!items.success) return []
+if (!items.success) return { posts: [], found: false }
 
 const posts: UnifiedPost[] = []
 for (const item of items.data) {
@@ -315,15 +373,15 @@ for (const item of items.data) {
     confidence_level: metrics.reach !== null ? 'L1' : 'L0',
   })
 }
-return posts
+return { posts, found: true }
 }
 
-function extractReels(zip: AdmZip, insightsIndex: Map<string, PostMetrics>): UnifiedPost[] {
+function extractReels(zip: AdmZip, insightsIndex: Map<string, PostMetrics>): { posts: UnifiedPost[]; found: boolean } {
 const raw = readZipEntryAsJson<unknown>(zip, NATIVE_PATHS.reels)
-if (!raw) return []
+if (!raw) return { posts: [], found: false }
 
 const parsed = ReelsFileSchema.safeParse(raw)
-if (!parsed.success) return []
+if (!parsed.success) return { posts: [], found: false }
 
 const posts: UnifiedPost[] = []
 for (const item of parsed.data.ig_reels_media) {
@@ -340,52 +398,70 @@ for (const item of parsed.data.ig_reels_media) {
     confidence_level: metrics.reach !== null ? 'L1' : 'L0',
   })
 }
-return posts
+return { posts, found: true }
 }
 
 /* ── BLOCO 2: Insights de conta ─────────────────────────────────────────── */
+// ✅ CORRIGIDO (achado #13) — antes, se content_interactions.json faltasse,
+// a função retornava null e DESCARTAVA também profiles_reached.json mesmo
+// que ele existisse e fosse válido. Agora cada fonte é opcional e
+// independente; só retorna null se NENHUMA das duas existir.
 function extractAccountInsights(zip: AdmZip): AccountInsights | null {
 const filesUsed: string[] = []
 const filesMissing: string[] = []
 
-const rawInter = readZipEntryAsJson<unknown>(zip, NATIVE_PATHS.contentInteractions)
-if (!rawInter) return null
-
-const parsedInter = ContentInteractionsSchema.safeParse(rawInter)
-if (!parsedInter.success) return null
-filesUsed.push(NATIVE_PATHS.contentInteractions)
-
-const smd = parsedInter.data.organic_insights_interactions[0]?.string_map_data ?? {}
-const dateRangeRaw = resolveStringMetric(smd, 'DATE_RANGE')
-const { start: periodStart, end: periodEnd } = dateRangeRaw
-  ? parseDateRange(dateRangeRaw)
-  : { start: todayISO(), end: todayISO() }
-
-const sharesPost = resolveIntMetric(smd, 'SHARES_POST', logMissingKey)
-const savesPost = resolveIntMetric(smd, 'SAVES_POST', logMissingKey)
-const likesPost = resolveIntMetric(smd, 'LIKES_POST', logMissingKey)
-const commentsPost = resolveIntMetric(smd, 'COMMENTS_POST', logMissingKey)
-const sharesReels = resolveIntMetric(smd, 'SHARES_REELS', logMissingKey)
-const savesReels = resolveIntMetric(smd, 'SAVES_REELS', logMissingKey)
-const likesReels = resolveIntMetric(smd, 'LIKES_REELS', logMissingKey)
-const commReels = resolveIntMetric(smd, 'COMMENTS_REELS', logMissingKey)
-
-const totalShares = sharesPost + sharesReels
-const totalSaves = savesPost + savesReels
-const totalLikes = likesPost + likesReels
-const totalComments = commentsPost + commReels
-
-let alcance = 0
-let impressoes = 0
-let visitasPerfil = 0
-let cliquesLink = 0
+let periodStart: string | null = null
+let periodEnd: string | null = null
+let totalShares = 0, totalSaves = 0, totalLikes = 0, totalComments = 0
+let alcance = 0, impressoes = 0, visitasPerfil = 0, cliquesLink = 0
 let reachFollowersPct: number | null = null
+let anySourceFound = false
+
+const rawInter = readZipEntryAsJson<unknown>(zip, NATIVE_PATHS.contentInteractions)
+if (rawInter) {
+  const parsedInter = ContentInteractionsSchema.safeParse(rawInter)
+  if (parsedInter.success) {
+    anySourceFound = true
+    filesUsed.push(NATIVE_PATHS.contentInteractions)
+    const smd = parsedInter.data.organic_insights_interactions[0]?.string_map_data ?? {}
+    const dateRangeRaw = resolveStringMetric(smd, 'DATE_RANGE')
+    if (dateRangeRaw) ({ start: periodStart, end: periodEnd } = parseDateRange(dateRangeRaw))
+
+    const sharesPost = resolveIntMetric(smd, 'SHARES_POST', logMissingKey)
+    const savesPost = resolveIntMetric(smd, 'SAVES_POST', logMissingKey)
+    const likesPost = resolveIntMetric(smd, 'LIKES_POST', logMissingKey)
+    const commentsPost = resolveIntMetric(smd, 'COMMENTS_POST', logMissingKey)
+    const sharesReels = resolveIntMetric(smd, 'SHARES_REELS', logMissingKey)
+    const savesReels = resolveIntMetric(smd, 'SAVES_REELS', logMissingKey)
+    const likesReels = resolveIntMetric(smd, 'LIKES_REELS', logMissingKey)
+    const commReels = resolveIntMetric(smd, 'COMMENTS_REELS', logMissingKey)
+
+    totalShares = sharesPost + sharesReels
+    totalSaves = savesPost + savesReels
+    totalLikes = likesPost + likesReels
+    totalComments = commentsPost + commReels
+
+    // ✅ NOVO — confirmado com export real (dogativo, 13/09/2026): esse
+    // cliente não tem profiles_reached.json separado; impressões/visitas/
+    // cliques vêm mescladas dentro de content_interactions.json mesmo.
+    // Lidas aqui como fallback; profiles_reached.json (abaixo) tem prioridade
+    // quando existir.
+    impressoes = resolveIntMetric(smd, 'IMPRESSIONS', logMissingKey)
+    visitasPerfil = resolveIntMetric(smd, 'PROFILE_VISITS_FROM', logMissingKey)
+    cliquesLink = resolveIntMetric(smd, 'EXTERNAL_LINK_TAPS', logMissingKey)
+  } else {
+    filesMissing.push(NATIVE_PATHS.contentInteractions)
+  }
+} else {
+  filesMissing.push(NATIVE_PATHS.contentInteractions)
+}
 
 const rawReach = readZipEntryAsJson<unknown>(zip, NATIVE_PATHS.profilesReached)
 if (rawReach) {
   const parsedReach = ReachFileSchema.safeParse(rawReach)
   const reachEntry = parsedReach.success ? parsedReach.data.organic_insights_reach[0] : undefined
   if (reachEntry) {
+    anySourceFound = true
     const rsmd = reachEntry.string_map_data
     alcance = resolveIntMetric(rsmd, 'REACH', logMissingKey)
     impressoes = resolveIntMetric(rsmd, 'IMPRESSIONS', logMissingKey)
@@ -393,14 +469,23 @@ if (rawReach) {
     cliquesLink = resolveIntMetric(rsmd, 'EXTERNAL_LINK_TAPS', logMissingKey)
     reachFollowersPct = resolvePercentMetric(rsmd, 'REACH_FROM_FOLLOWERS_PCT', logMissingKey)
     filesUsed.push(NATIVE_PATHS.profilesReached)
+    // usa o período do reach como fallback se content_interactions não tinha
+    if (!periodStart) {
+      const dateRangeRaw2 = resolveStringMetric(rsmd, 'DATE_RANGE')
+      if (dateRangeRaw2) ({ start: periodStart, end: periodEnd } = parseDateRange(dateRangeRaw2))
+    }
+  } else {
+    filesMissing.push(NATIVE_PATHS.profilesReached)
   }
 } else {
   filesMissing.push(NATIVE_PATHS.profilesReached)
 }
 
+if (!anySourceFound) return null
+
 return {
-  periodStart,
-  periodEnd,
+  periodStart: periodStart ?? todayISO(),
+  periodEnd: periodEnd ?? todayISO(),
   totalShares,
   totalSaves,
   totalLikes,
@@ -415,7 +500,7 @@ return {
 }
 }
 
-async function persistAccountInsights(clientId: string, insights: AccountInsights): Promise<void> {
+async function persistAccountInsights(clientId: string, sessionId: string, insights: AccountInsights): Promise<void> {
 console.log(`\n💾 Gravando insights de conta (${insights.periodStart} ──> ${insights.periodEnd})...`)
 
 const { data: existing } = await supabase
@@ -429,6 +514,7 @@ const { data: existing } = await supabase
 
 const payload = {
   client_id: clientId,
+  import_session: sessionId, // ✅ NOVO — antes ficava NULL (achado #1 da revisão)
   period_start: insights.periodStart,
   period_end: insights.periodEnd,
   reach_total: insights.alcance,
@@ -443,10 +529,12 @@ const payload = {
 }
 
 if (existing) {
-  await supabase.schema('orbit').from('ig_account_snapshots').update(payload).eq('id', existing.id)
+  const { error } = await supabase.schema('orbit').from('ig_account_snapshots').update(payload).eq('id', existing.id)
+  if (error) throw new Error(`Falha ao atualizar ig_account_snapshots: ${error.message}`) // ✅ NOVO (achado #4)
   console.log(`   ✅ ig_account_snapshots atualizado.`)
 } else {
-  await supabase.schema('orbit').from('ig_account_snapshots').insert(payload)
+  const { error } = await supabase.schema('orbit').from('ig_account_snapshots').insert(payload)
+  if (error) throw new Error(`Falha ao criar ig_account_snapshots: ${error.message}`) // ✅ NOVO (achado #4)
   console.log(`   ✅ ig_account_snapshots criado.`)
 }
 }
@@ -497,13 +585,14 @@ function parseAgeRange(value: string): AgeRangeData {
   }
 
   // Ex.: "13-17: 0.7%, 18-24: 47.1%, ..., 65+: 0.8%"
-  const regex = /([\d]+[-+][\d]*)\s*:\s*([\d.]+)%/g
+  // ✅ CORRIGIDO (achado #14) — aceita também vírgula decimal (ex: "47,1%").
+  const regex = /([\d]+[-+][\d]*)\s*:\s*([\d.,]+)%/g
   let match: RegExpExecArray | null = regex.exec(value)
   while (match !== null) {
     const rawGroup = match[1]
     const pctStr = match[2]
     if (rawGroup && pctStr) {
-      const pct = parseFloat(pctStr)
+      const pct = parseFloat(pctStr.replace(',', '.'))
       const target = groupMap[rawGroup]
       if (target) {
         result[target] = Math.round((result[target] + pct) * 10) / 10
@@ -524,6 +613,15 @@ function extractDemographicsBlock(zip: AdmZip): Demographics | null {
 
   const smd = parsed.data.organic_insights_audience[0]?.string_map_data ?? {}
 
+  // ✅ NOVO — achado #2 da revisão: antes o período da demografia era sempre
+  // a data de execução do script (new Date()), mesmo o arquivo tendo seu
+  // próprio "Intervalo de datas" (mesma chave DATE_RANGE dos outros 2
+  // arquivos de insight). Confirmado presente em audience_insights.json real.
+  const dateRangeRaw = resolveStringMetric(smd, 'DATE_RANGE', logMissingKey)
+  const { start: periodStart, end: periodEnd } = dateRangeRaw
+    ? parseDateRange(dateRangeRaw)
+    : { start: todayISO(), end: todayISO() }
+
   const malePctStr = resolveStringMetric(smd, 'PCT_MALE', logMissingKey)
   const femalePctStr = resolveStringMetric(smd, 'PCT_FEMALE', logMissingKey)
   // ✅ NOVO — antes esta linha não existia, e ageRange nunca era preenchido.
@@ -535,27 +633,35 @@ function extractDemographicsBlock(zip: AdmZip): Demographics | null {
   const female = parsePct(femalePctStr)
   const other = Math.max(0, Math.round((100 - male - female) * 10) / 10)
 
+  // ✅ NOVO — aplica fixMetaMojibake() nos NOMES de cidade/país extraídos.
+  // Confirmado com dados reais (mauricioartphoto, 13/09/2026): resolveStringMetric
+  // devolve o valor cru do arquivo (só a CHAVE passa por correção de encoding
+  // no dicionário, o VALOR nunca passava por nada) — por isso "São Paulo"
+  // e "Guarujá" iriam pro banco como "SÃ£o Paulo" e "GuarujÃ¡".
+  // ✅ CORRIGIDO (achado #14) — [\d.,]+ aceita vírgula decimal também aqui.
   const cities: LocationEntry[] = []
-  const regex1 = /([^:,]+):\s*([\d.]+)%/g
+  const regex1 = /([^:,]+):\s*([\d.,]+)%/g
   let match: RegExpExecArray | null = regex1.exec(citiesStr)
   while (match !== null) {
     const name = match[1]
     const pctStr = match[2]
-    if (name && pctStr) cities.push({ name: name.trim(), pct: parseFloat(pctStr) })
+    if (name && pctStr) cities.push({ name: fixMetaMojibake(name.trim()), pct: parseFloat(pctStr.replace(',', '.')) })
     match = regex1.exec(citiesStr)
   }
 
   const countries: LocationEntry[] = []
-  const regex2 = /([^:,]+):\s*([\d.]+)%/g
+  const regex2 = /([^:,]+):\s*([\d.,]+)%/g
   let match2: RegExpExecArray | null = regex2.exec(countriesStr)
   while (match2 !== null) {
     const name = match2[1]
     const pctStr = match2[2]
-    if (name && pctStr) countries.push({ name: name.trim(), pct: parseFloat(pctStr) })
+    if (name && pctStr) countries.push({ name: fixMetaMojibake(name.trim()), pct: parseFloat(pctStr.replace(',', '.')) })
     match2 = regex2.exec(countriesStr)
   }
 
   return {
+    periodStart,
+    periodEnd,
     gender: { male_pct: male, female_pct: female, other_pct: other },
     // ✅ ANTES: hardcoded em 0 para todas as faixas.
     // AGORA: parseado de verdade a partir de PCT_AGE_ALL_GENDERS.
@@ -564,13 +670,14 @@ function extractDemographicsBlock(zip: AdmZip): Demographics | null {
     countries,
   }
 }
-async function persistDemographics(clientId: string, demographics: Demographics): Promise<void> {
-  console.log(`\n💾 Gravando demografia...`)
+async function persistDemographics(clientId: string, sessionId: string, demographics: Demographics): Promise<void> {
+  console.log(`\n💾 Gravando demografia (${demographics.periodStart} ──> ${demographics.periodEnd})...`)
 
   const payload = {
     client_id: clientId,
-    period_start: new Date().toISOString().split('T')[0],
-    period_end: new Date().toISOString().split('T')[0],
+    import_session: sessionId, // ✅ NOVO (achado #1)
+    period_start: demographics.periodStart, // ✅ NOVO — antes era sempre a data de hoje (achado #2)
+    period_end: demographics.periodEnd,
     gender_female_pct: demographics.gender.female_pct,
     gender_male_pct: demographics.gender.male_pct,
     gender_other_pct: demographics.gender.other_pct,
@@ -584,8 +691,26 @@ async function persistDemographics(clientId: string, demographics: Demographics)
     top_countries: demographics.countries,
   }
 
-  await supabase.schema('orbit').from('ig_audience_snapshots').insert(payload)
-  console.log(`   ✅ Demografia gravada.`)
+  // ✅ NOVO — antes fazia insert cego sempre; rodar o mesmo zip 2x duplicava
+  // a linha (achado #6). Agora segue o mesmo padrão de persistAccountInsights.
+  const { data: existing } = await supabase
+    .schema('orbit')
+    .from('ig_audience_snapshots')
+    .select('id')
+    .eq('client_id', clientId)
+    .eq('period_start', demographics.periodStart)
+    .eq('period_end', demographics.periodEnd)
+    .maybeSingle()
+
+  if (existing) {
+    const { error } = await supabase.schema('orbit').from('ig_audience_snapshots').update(payload).eq('id', existing.id)
+    if (error) throw new Error(`Falha ao atualizar ig_audience_snapshots: ${error.message}`) // ✅ NOVO (achado #4)
+    console.log(`   ✅ ig_audience_snapshots atualizado.`)
+  } else {
+    const { error } = await supabase.schema('orbit').from('ig_audience_snapshots').insert(payload)
+    if (error) throw new Error(`Falha ao criar ig_audience_snapshots: ${error.message}`) // ✅ NOVO (achado #4)
+    console.log(`   ✅ ig_audience_snapshots criado.`)
+  }
 }
 
 /* ── BLOCO 4: Persistência de Posts e Sessão ────────────────────────────── */
@@ -597,10 +722,14 @@ periodEnd: string | null,
 filesProcessed: string[],
 filesMissing: string[]
 ): Promise<{ id: string }> {
+// ✅ CORRIGIDO (achado #7) — antes buscava só por hash, então o mesmo
+// arquivo (ou hash colidindo por acaso) processado para outro cliente
+// reaproveitaria a sessão errada.
 const { data: existingSession } = await supabase
   .schema('orbit')
   .from('ig_import_sessions')
   .select('id')
+  .eq('client_id', clientId)
   .eq('export_zip_hash', hash)
   .maybeSingle()
 
@@ -650,12 +779,15 @@ let updated = 0
 let errorCount = 0
 
 for (const p of posts) {
+  // ✅ CORRIGIDO (achado #8) — published_at não é único (dois posts podem
+  // ser publicados no mesmo minuto/segundo); ig_post_uri é o identificador
+  // real e estável do post.
   const { data: existingPost } = await supabase
     .schema('orbit')
     .from('ig_posts')
     .select('id')
     .eq('client_id', clientId)
-    .eq('published_at', p.published_at)
+    .eq('ig_post_uri', p.ig_post_uri)
     .maybeSingle()
 
   const postPayload = {
@@ -717,10 +849,48 @@ const clientId = await resolveClientId(supabase, CLIENT_USERNAME!)
 const zip = new AdmZip(ZIP_PATH!)
 const hash = zipHash(ZIP_PATH!)
 
-const insightsIndex = buildInsightsIndex(zip)
-const flatPosts = extractFlatPosts(zip, insightsIndex)
-const reels = extractReels(zip, insightsIndex)
-const allPosts = [...flatPosts, ...reels]
+// ✅ NOVO — checagem de sanidade ANTES de tentar extrair qualquer coisa.
+const { anyKnownPathFound, sampleEntries } = diagnoseZipStructure(zip)
+if (!anyKnownPathFound) {
+  console.error('\n🚨 Nenhum dos caminhos esperados foi encontrado dentro do ZIP.')
+  console.error('   Isso normalmente significa que a estrutura da exportação da Meta mudou,')
+  console.error('   ou que o zip está aninhado numa pasta extra — NÃO que a conta está vazia.')
+  console.error('\n   Caminhos esperados:')
+  for (const p of Object.values(NATIVE_PATHS)) console.error(`     - ${p}`)
+  console.error('\n   Primeiras entradas encontradas no zip:')
+  for (const e of sampleEntries) console.error(`     - ${e}`)
+
+  if (!DRY_RUN) {
+    const errorMsg = `Estrutura do zip incompatível: nenhum caminho conhecido encontrado. ` +
+      `Amostra de entradas: ${sampleEntries.slice(0, 8).join(', ')}`
+    await supabase
+      .schema('orbit')
+      .from('ig_import_sessions')
+      .insert({
+        client_id: clientId,
+        export_zip_hash: hash,
+        scripts_run: ['ingest-from-zip'],
+        files_processed: [],
+        files_missing: Object.values(NATIVE_PATHS),
+        status: 'failed',
+        error_log: errorMsg,
+        processed_at: new Date().toISOString(),
+      })
+    console.error('\n   ✅ Sessão registrada como `failed` (com error_log) para auditoria futura.')
+  }
+  process.exit(1)
+}
+
+const { index: insightsIndex, found: postsInsightsFound } = buildInsightsIndex(zip)
+const { posts: flatPosts, found: postsFlatFound } = extractFlatPosts(zip, insightsIndex)
+const { posts: reels, found: reelsFound } = extractReels(zip, insightsIndex)
+// ✅ CORRIGIDO (achado #9) — um reel pode aparecer tanto em posts_1.json
+// quanto em reels.json; sem isso, o mesmo post seria gravado 2x (ou o
+// upsert por ig_post_uri simplesmente sobrescreveria, mas o array em
+// memória e o log de "Posts: N" ainda contariam duplicado).
+const allPosts = Array.from(
+  new Map([...flatPosts, ...reels].map(post => [post.ig_post_uri, post])).values()
+)
 
 const accountInsights = extractAccountInsights(zip)
 const demographics = extractDemographicsBlock(zip)
@@ -743,15 +913,31 @@ if (DRY_RUN) {
   return
 }
 
+// ✅ CORRIGIDO (achados #10, #11, #12) — cada um dos 6 arquivos agora é
+// registrado individualmente como processado ou ausente, em vez de
+// assumir "teve post → os dois arquivos de posts funcionaram" e de
+// deixar postsInsights (posts.json) completamente fora do manifesto.
 const filesProcessed: string[] = []
 const filesMissing: string[] = []
 
-if (allPosts.length > 0) filesProcessed.push(NATIVE_PATHS.postsFlat, NATIVE_PATHS.reels)
+if (postsFlatFound) filesProcessed.push(NATIVE_PATHS.postsFlat)
+else filesMissing.push(NATIVE_PATHS.postsFlat)
+
+if (reelsFound) filesProcessed.push(NATIVE_PATHS.reels)
+else filesMissing.push(NATIVE_PATHS.reels)
+
+if (postsInsightsFound) filesProcessed.push(NATIVE_PATHS.postsInsights)
+else filesMissing.push(NATIVE_PATHS.postsInsights)
+
 if (accountInsights) {
   filesProcessed.push(...accountInsights.filesUsed)
   filesMissing.push(...accountInsights.filesMissing)
+} else {
+  filesMissing.push(NATIVE_PATHS.contentInteractions, NATIVE_PATHS.profilesReached)
 }
+
 if (demographics) filesProcessed.push(NATIVE_PATHS.audienceInsights)
+else filesMissing.push(NATIVE_PATHS.audienceInsights)
 
 // ✅ CORRIGIDO: Ordena posts por data ANTES de calcular o período
 const sortedPosts = [...allPosts].sort((a, b) => 
@@ -766,24 +952,61 @@ const periodEnd = lastSortedPost ? (lastSortedPost.published_at.split('T')[0] ??
 console.log(`\n💾 [Sessão]`)
 const session = await persistImportSession(clientId, hash, periodStart, periodEnd, filesProcessed, filesMissing)
 
-console.log(`\n💾 [Posts]`)
-const postStats = await persistPosts(clientId, session.id, allPosts)
+// ✅ NOVO (achado #5) — a partir daqui, qualquer exceção precisa marcar a
+// sessão como `failed` em vez de deixá-la presa em `processing` para
+// sempre. Antes, o catch() global só logava e saía sem tocar no banco.
+try {
+  console.log(`\n💾 [Posts]`)
+  const postStats = await persistPosts(clientId, session.id, allPosts)
 
-if (accountInsights) {
-  await persistAccountInsights(clientId, accountInsights)
+  if (accountInsights) {
+    await persistAccountInsights(clientId, session.id, accountInsights) // ✅ CORRIGIDO (achado #1)
+  }
+
+  if (demographics) {
+    await persistDemographics(clientId, session.id, demographics) // ✅ CORRIGIDO (achado #1)
+  }
+
+  // ✅ NOVO — nunca fechar como `done` se absolutamente nada foi extraído.
+  // (posts=0 E sem insights de conta E sem demografia é um sinal forte de
+  // parsing quebrado, não de conta vazia — ver diagnoseZipStructure acima.)
+  const nothingExtracted = allPosts.length === 0 && !accountInsights && !demographics
+  let finalStatus: string
+  let errorLog: string | null = null
+
+  if (postStats.error > 0) {
+    finalStatus = 'failed'
+    errorLog = `${postStats.error} post(s) falharam ao gravar.`
+  } else if (nothingExtracted) {
+    finalStatus = 'failed'
+    errorLog = 'Nenhum post, insight de conta ou demografia foi extraído do zip, ' +
+      'apesar de ao menos um caminho conhecido existir. Revisar parsing/schema Zod ' +
+      '(provável mudança de formato dos arquivos internos da Meta).'
+  } else {
+    finalStatus = 'done'
+  }
+
+  await supabase
+    .schema('orbit')
+    .from('ig_import_sessions')
+    .update({ status: finalStatus, error_log: errorLog, processed_at: new Date().toISOString() })
+    .eq('id', session.id)
+
+  if (finalStatus === 'failed') {
+    console.error(`\n❌ Sessão marcada como FAILED: ${errorLog}`)
+  } else {
+    console.log(`\n🎉 Concluído: posts novos=${postStats.ok} atualizados=${postStats.updated} erros=${postStats.error}`)
+  }
+} catch (err) {
+  const message = err instanceof Error ? err.message : String(err)
+  await supabase
+    .schema('orbit')
+    .from('ig_import_sessions')
+    .update({ status: 'failed', error_log: message, processed_at: new Date().toISOString() })
+    .eq('id', session.id)
+  console.error(`\n❌ Sessão ${session.id} marcada como FAILED: ${message}`)
+  throw err
 }
-
-if (demographics) {
-  await persistDemographics(clientId, demographics)
-}
-
-await supabase
-  .schema('orbit')
-  .from('ig_import_sessions')
-  .update({ status: postStats.error > 0 ? 'failed' : 'done', processed_at: new Date().toISOString() })
-  .eq('id', session.id)
-
-console.log(`\n🎉 Concluído: posts novos=${postStats.ok} atualizados=${postStats.updated} erros=${postStats.error}`)
 }
 
 run().catch((err: unknown) => {

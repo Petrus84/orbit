@@ -26,6 +26,23 @@ export const CLIENTS = {
     name: 'E-commerce EUPETRUCHIO84',
     label: 'E-commerce EUPETRUCHIO84',
   },
+  mauricioartphoto: {
+    id: '344445c9-08c5-4c07-be1b-c9f8f8e12865',
+    name: 'Maurício Art Photo',
+    label: 'Maurício Art Photo',
+  },
+ djcaiodogao  : {
+    id: 'c2779193-d3a0-4fc7-b392-ad64fea4273f',
+    name: 'DJ Caio Dogão',
+    label: 'DJ Caio Dogão',
+  },
+dogativo: {
+    id: 'e45927a7-4f3d-4fd3-bac7-543cc3545dc1',
+    name: 'Dog Ativo',
+    label: 'Dog Ativo',
+  },
+
+
 } as const
 
 export type ClientKey = keyof typeof CLIENTS

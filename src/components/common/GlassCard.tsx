@@ -17,10 +17,11 @@ export interface GlassCardProps {
 }
 
 const GLOW_CLASS: Record<GlowColor, string> = {
-  cyan: styles.glowCyan ?? '',
-  red:  styles.glowRed ?? '',
-  gold: styles.glowGold ?? '',
-  none: styles.glowNone ?? '',
+  cyan:  styles.glowCyan ?? '',
+  red:   styles.glowRed ?? '',
+  gold:  styles.glowGold ?? '',
+  green: styles.glowGreen ?? '',
+  none:  styles.glowNone ?? '',
 }
 
 export function GlassCard({

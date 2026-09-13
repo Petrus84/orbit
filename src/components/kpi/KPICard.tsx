@@ -94,7 +94,13 @@ function formatValue(value: number | string): string {
 export default function KPICard({ kpi }: KPICardProps): React.ReactElement {
   const flag = FLAG_TOKENS[kpi.flagLevel];
   const deltaTokens = kpi.trend ? DELTA_TOKENS[kpi.trend] : null;
-  const defaultSparkline = [40, 42, 38, 45, 43, 47, 44, 50]; // placeholder shape
+  // ✅ FIX: antes havia um `defaultSparkline` fixo ([40,42,38,45,43,47,44,50])
+  // usado sempre que `kpi.sparkline` era undefined — como nenhum caller real
+  // preenche esse campo hoje, todo KPICard exibia o mesmo mini-gráfico fixo,
+  // sem relação com o número ao lado. Agora, sem série real, não renderiza
+  // sparkline nenhum — "sem dado de série" honesto em vez de tendência
+  // fabricada. Quando `KPICardData` ganhar `sparkline?: number[]` populado
+  // com dado real, ele passa a aparecer automaticamente.
 
   return (
     <div className="flex flex-col gap-3 rounded-2xl bg-[#18181F] p-4">
@@ -132,11 +138,10 @@ export default function KPICard({ kpi }: KPICardProps): React.ReactElement {
           )}
         </div>
 
-        {/* Sparkline */}
-        <Sparkline
-          data={kpi.sparkline ?? defaultSparkline}
-          trend={kpi.trend ?? 'neutral'}
-        />
+        {/* Sparkline — só renderiza com série real; sem dado, sem gráfico fabricado */}
+        {kpi.sparkline && kpi.sparkline.length >= 2 && (
+          <Sparkline data={kpi.sparkline} trend={kpi.trend ?? 'neutral'} />
+        )}
       </div>
     </div>
   );

@@ -35,6 +35,11 @@
   text-shadow: 0 0 12px rgba(255, 195, 0, 0.6), 0 0 24px rgba(255, 195, 0, 0.2);
 }
 
+.green {
+  color:       var(--neon-green);
+  text-shadow: 0 0 12px rgba(46, 204, 113, 0.6), 0 0 24px rgba(46, 204, 113, 0.2);
+}
+
 .muted {
   color:       var(--text-muted);
   text-shadow: none;

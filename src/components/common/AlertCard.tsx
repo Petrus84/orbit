@@ -132,7 +132,7 @@ export default function AlertCard({ alert, onAcknowledge }: AlertCardProps): Rea
         {alert.suggestedAction && <p className={styles.text}>💡 {alert.suggestedAction}</p>}
 
         <div className={styles.action}>
-          <span className={`${styles.btn} ${styles.btnGhost}`}>{severityLabel}</span>
+          <span className={`${styles.severityBadge} ${severityClass}`}>{severityLabel}</span>
 
           {alert.clientName && (
             <span className={`${styles.btn} ${styles.btnGhost}`}>

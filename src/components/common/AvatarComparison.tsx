@@ -6,6 +6,7 @@
    ========================================================================== */
 
 import React from 'react'
+import { GlassCard } from './GlassCard'
 import { StatusPill } from './StatusPill'
 import { AvatarCard } from './AvatarCard'
 import type { AvatarProfile, AlignmentStatus} from '@/types/avatar'
@@ -23,7 +24,7 @@ export interface AvatarComparisonProps {
 }
 
 const STATUS_TO_GLOW: Record<AlignmentStatus, GlowColor> = {
-  healthy: 'cyan',
+  healthy: 'green',
   warning: 'gold',
   critical: 'red',
 }
@@ -40,7 +41,7 @@ export function AvatarComparison({
   const label = ALIGNMENT_STATUS_LABEL[status]
 
   return (
-    <section className={styles.wrapper}>
+    <GlassCard glowColor={glow} className={styles.wrapper}>
       <div className={styles.headerRow}>
         <span className={styles.sectionLabel}>Comparação de Avatar</span>
         <StatusPill text={`${score.toFixed(1)}% — ${label}`} color={glow} />
@@ -75,6 +76,6 @@ export function AvatarComparison({
           />
         </div>
       </div>
-    </section>
+    </GlassCard>
   )
 }

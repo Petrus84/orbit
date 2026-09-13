@@ -114,14 +114,21 @@ export function runFunnelSimulation(
   const cliques = visitas * (ctrLink / 100)
   const vendas = cliques * (saturation.convEfetivo / 100)
 
+  // ⚠️ Antes: Math.round() era aplicado aqui, dentro do cálculo. Isso fazia
+  // um cenário real de 0,13 vendas esperadas (alcance baixo, funil com 4
+  // etapas multiplicativas — qualquer uma pequena já derruba o produto)
+  // virar "0" antes mesmo de sair desta função, sem nenhum jeito de
+  // recuperar o valor real na tela depois. Mantemos os floats aqui; quem
+  // decide como exibir 0,13 (arredondar, mostrar "< 1", etc.) é a camada
+  // de apresentação (FunnelResult.tsx), não o cálculo.
   return {
     result: {
       alcanceSimulado: state.alcance,
       ctrBio: state.ctrBio,
       taxaConv: state.taxaConv,
-      visitas: Math.round(visitas),
-      cliques: Math.round(cliques),
-      vendas: Math.round(vendas),
+      visitas,
+      cliques,
+      vendas,
     },
     saturation,
   }

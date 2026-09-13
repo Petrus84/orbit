@@ -17,10 +17,11 @@ export interface GlowingNumberProps {
 }
 
 const COLOR_CLASS: Record<GlowColor, string> = {
-  cyan: styles.cyan ?? '',
-  red:  styles.red ?? '',
-  gold: styles.gold ?? '',
-  none: styles.muted ?? '',
+  cyan:  styles.cyan ?? '',
+  red:   styles.red ?? '',
+  gold:  styles.gold ?? '',
+  green: styles.green ?? '',
+  none:  styles.muted ?? '',
 }
 
 const SIZE_CLASS: Record<GlowingNumberSize, string> = {

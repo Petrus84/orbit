@@ -1,7 +1,8 @@
 /* src/components/screens/OnboardingScreen.module.css */
 
 .container {
-  min-height: 100vh;
+   min-height: 100%;
+   max-width: 1400px;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;

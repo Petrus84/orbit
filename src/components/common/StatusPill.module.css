@@ -34,3 +34,10 @@
   color:       var(--neon-gold);
   text-shadow: 0 0 6px color-mix(in srgb, var(--neon-gold) 40%, transparent);
 }
+
+.green {
+  background:  color-mix(in srgb, var(--neon-green) 10%, transparent);
+  border:      var(--border-width) solid color-mix(in srgb, var(--neon-green) 40%, transparent);
+  color:       var(--neon-green);
+  text-shadow: 0 0 6px color-mix(in srgb, var(--neon-green) 40%, transparent);
+}

@@ -3,13 +3,17 @@
    Reaproveita o mesmo vocabulário de severidade de AlertCard/Semaphore
    (critical → --red, warning → --amber, healthy → --green) em vez de uma
    paleta própria (rose/amber/emerald do Tailwind), pra não criar uma quarta
-   variação de "vermelho" no sistema. */
+   variação de "vermelho" no sistema.
+
+   ✅ FIX: fundo/borda/glow do cartão inteiro agora vêm do <GlassCard> real
+   (mesmo componente usado em AvatarComparison/AlignmentBars), com
+   glowColor mapeado do status (critical→red, warning→gold, healthy→green).
+   .wrapper deixou de desenhar border/background própria — só define
+   --sev-color, usado pelos elementos internos (badge, ícone, headline). */
 
 .wrapper {
-  border:        var(--border-width) solid color-mix(in srgb, var(--sev-color) 35%, transparent);
-  border-radius: var(--radius-lg);
-  background:    color-mix(in srgb, var(--sev-color) 6%, transparent);
-  overflow:      hidden;
+  overflow: hidden;
+  padding: 0 !important;
 }
 
 .critical { --sev-color: var(--red); }

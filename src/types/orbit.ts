@@ -325,7 +325,7 @@ export type SemaphoreColor = 'verde' | 'ambar' | 'vermelho'
 // ⚠️ OBSERVAÇÃO (4): vocabulário de severidade #2, distinto de AlertSeverity.
 export type StatusVariant = 'ok' | 'warn' | 'neutral'
 // ⚠️ OBSERVAÇÃO (4): vocabulário de cor #2 — nomes de cor em EN.
-export type GlowColor = 'cyan' | 'gold' | 'red' | 'none'
+export type GlowColor = 'cyan' | 'gold' | 'red' | 'green' | 'none'
 export type TrendColor = 'up' | 'down' | 'flat'
 
 /**

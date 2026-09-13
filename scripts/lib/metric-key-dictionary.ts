@@ -88,20 +88,42 @@ function buildNormalizedLookup(smd: StringMapLike): Map<string, MetricEntryLike 
 
 export const METRIC_KEYS = {
   // ── Interações de post ──────────────────────────────────────────────────
-  SHARES_POST: ['Compartilhamento do post', 'Compartilhamento\u00c3\u00a3o do post'],
-  SAVES_POST: ['Salvamentos do post', 'Salvamentos\u00c3 do post'],
-  LIKES_POST: ['Curtidas do post', 'Curtidas\u00c3 do post'],
+  // v2.0.0 — NOVO: variantes pt-PT (Portugal). Confirmadas em export real
+  // (mauricioartphoto, 13/09/2026) — rótulos completamente diferentes dos
+  // pt-BR, não é só mojibake. "Pub. guardada" não tem acento, então uma
+  // única forma já cobre o caso; as demais têm forma mojibake própria
+  // porque o export tem o mesmo bug de encoding do pt-BR.
+  SHARES_POST: [
+    'Compartilhamento do post', 'Compartilhamento\u00c3\u00a3o do post',
+    'Partilhas de publicações', 'PartilhasÃ de publicaÃ§Ãµes', 'Partilhas de publica\u00c3\u00a7\u00c3\u00b5es',
+  ],
+  SAVES_POST: [
+    'Salvamentos do post', 'Salvamentos\u00c3 do post',
+    'Pub. guardada',
+  ],
+  LIKES_POST: [
+    'Curtidas do post', 'Curtidas\u00c3 do post',
+    'Gostos em publicações', 'Gostos em publica\u00c3\u00a7\u00c3\u00b5es',
+  ],
   // v1.8.0 — NOVO. Confirmado em export real (eupetruchio84, 29/08/2026):
   // chave existe e nunca tinha sido lida por nenhum script anterior.
-  COMMENTS_POST: ['Comentários do post', 'Coment\u00c3\u00a1rios do post'],
+  COMMENTS_POST: [
+    'Comentários do post', 'Coment\u00c3\u00a1rios do post',
+    'Comentários em publicações', 'Coment\u00c3\u00a1rios em publica\u00c3\u00a7\u00c3\u00b5es',
+  ],
 
   // ── Interações de Reels ──────────────────────────────────────────────────
   // v1.9.0 — Variantes de mojibake completadas com "Ã" (A com til)
+  // v2.0.0 — NOVO: variantes pt-PT confirmadas (mauricioartphoto, 13/09/2026).
   SHARES_REELS: [
     'Compartilhamentos de vídeos do Reels',
     'CompartilhamentosÃ de vÃdeos do Reels',
     'Compartilhamentos\u00c3 de v\u00c3\u00addeos do Reels',
+    'Partilhas de reels',
   ],
+  // ⚠️ SAVES_REELS: nenhuma variante pt-PT encontrada — este export
+  // (mauricioartphoto) simplesmente não tem um campo de "salvamentos de
+  // reels" separado. Não inventar uma chave aqui; fica 0 de propósito.
   SAVES_REELS: [
     'Salvamentos de vídeos do Reels',
     'SalvamentosÃ de vÃdeos do Reels',
@@ -111,8 +133,12 @@ export const METRIC_KEYS = {
     'Curtidas em vídeos do Reels',
     'CurtidasÃ em vÃdeos do Reels',
     'Curtidas\u00c3 em v\u00c3\u00addeos do Reels',
+    'Gostos nos reels',
   ],
-  COMMENTS_REELS: ['Comentários em reels', 'Coment\u00c3\u00a1rios em reels'],
+  COMMENTS_REELS: [
+    'Comentários em reels', 'Coment\u00c3\u00a1rios em reels',
+    'Comentários nos reels', 'Coment\u00c3\u00a1rios nos reels',
+  ],
 
   // ── Métricas por post individual (nível ig_posts, usadas no ingest-l0) ──
   REACH: ['Contas alcançadas', 'Contas alcan\u00c3\u00a7adas', 'Accounts reached'],
@@ -125,7 +151,12 @@ export const METRIC_KEYS = {
   FOLLOWS_FROM_INTERACTION: ['Seguidores', 'Seguidores\u00c3', 'Followers'],
 
   // ── Cliques / CTA ────────────────────────────────────────────────────────
-  EXTERNAL_LINK_TAPS: ['Toques em links externos', 'External link taps'],
+  // v2.0.0 — NOVO pt-PT (mauricioartphoto, 13/09/2026): "ligações" em vez
+  // de "links".
+  EXTERNAL_LINK_TAPS: [
+    'Toques em links externos', 'External link taps',
+    'Toques em ligações externas', 'Toques em liga\u00c3\u00a7\u00c3\u00b5es externas',
+  ],
 
   // ── Seguidores / audiência (nível de conta, vem de audience_insights.json) ──
   FOLLOWERS: ['Seguidores', 'Seguidores\u00c3', 'Followers'],
@@ -145,28 +176,40 @@ export const METRIC_KEYS = {
   REACH_FROM_NON_FOLLOWERS_PCT: ['Não seguidores', 'N\u00c3\u00a3o seguidores'],
 
   // ── Demografia ───────────────────────────────────────────────────────────
+  // v2.0.0 — NOVO pt-PT (mauricioartphoto, 13/09/2026): confirmado por log
+  // real do script — "Percentagem" em vez de "Porcentagem" (ortografia
+  // europeia), e frases com ordem de palavras diferente para gênero.
   PCT_MALE: [
     'Porcentagem do total de seguidores para homens',
     'Porcentagem do total de seguidores para homens\u00c3',
+    'Percentagem total de seguidores que são homens',
+    'Percentagem total de seguidores que s\u00c3\u00a3o homens',
   ],
   PCT_FEMALE: [
     'Porcentagem do total de seguidores para mulheres',
     'Porcentagem do total de seguidores para mulheres\u00c3',
+    'Percentagem total de seguidores para mulheres',
   ],
   PCT_AGE_ALL_GENDERS: [
     'Porcentagem de seguidores por idade para todos os gêneros',
     'Porcentagem de seguidores por idade para todos os g\u00c3\u00aaneros',
+    'Percentagem de seguidores por idade para todos os géneros',
+    'Percentagem de seguidores por idade para todos os g\u00c3\u00a9neros',
   ],
   PCT_CITY: [
     'Porcentagem de seguidores por cidade',
     'Porcentagem de seguidores por cidade\u00c3',
+    'Percentagem de seguidores por cidade',
   ],
   // v1.9.0 — Variantes de PCT_COUNTRY completadas com espaço antes de "s"
+  // v2.0.0 — NOVO pt-PT: "Percentagem" em vez de "Porcentagem".
   PCT_COUNTRY: [
     'Porcentagem de seguidores por país',
     'Porcentagem de seguidores por paÃs',
     'Porcentagem de seguidores por paÃ s',
     'Porcentagem de seguidores por pa\u00c3\u00ad s',
+    'Percentagem de seguidores por país',
+    'Percentagem de seguidores por pa\u00c3\u00ads',
   ],
 
   // ── Metadados diversos ───────────────────────────────────────────────────

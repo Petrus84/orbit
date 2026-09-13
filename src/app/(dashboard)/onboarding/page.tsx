@@ -1,14 +1,7 @@
 /* ==========================================================================
    ORBIT · Onboarding Page
-   Caminho: src/app/onboarding/page.tsx
-   Versão: 1.0.0
-
-   Corrige ORB-DEBT (Seção 5.1 do prompt de auditoria): OnboardingScreen.tsx,
-   useOnboarding.ts e onboardingRepository.ts já existiam e eram reais, mas
-   nenhuma rota App Router montava esse fluxo — /onboarding retornava 404.
-
-   Padrão de seleção de cliente replicado de src/app/avatar/page.tsx (rota
-   client-scoped), não inventado aqui.
+   Caminho: src/app/(dashboard)/onboarding/page.tsx
+   Versão: 1.1.0
 
    ⚠️ ORB-DEBT-040 (ver relatório final / novo ADR): onboardingRepository.ts
    usa o client `supabase` padrão (anon key, client-side) para
@@ -17,7 +10,7 @@
    INSERT/UPDATE. Isso significa que o botão "Salvar" nesta tela falha hoje,
    silenciosamente, por RLS, independente desta rota estar religada
    corretamente. Este arquivo NÃO tenta corrigir RLS — está fora do escopo
-   desta tarefa (Seção 3, "NÃO pode").
+   desta tarefa.
    ========================================================================== */
 
 'use client'

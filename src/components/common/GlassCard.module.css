@@ -44,6 +44,15 @@
   box-shadow: var(--shadow-outer-lg), var(--shadow-inner-gold);
 }
 
+.glowGreen {
+  border-color: var(--border-glow-green);
+  box-shadow:   var(--shadow-outer-md), var(--shadow-inner-green);
+}
+
+.glowGreen:hover {
+  box-shadow: var(--shadow-outer-lg), var(--shadow-inner-green);
+}
+
 .glowNone {
   border-color: var(--border-default);
   box-shadow:   var(--shadow-outer-sm);

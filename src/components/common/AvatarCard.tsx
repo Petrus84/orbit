@@ -13,8 +13,8 @@ export interface AvatarCardProps {
   insightText: string
 }
 
-const STATUS_GLOW_MAP: Record<AlignmentStatus, 'cyan' | 'gold' | 'red' | 'none'> = {
-  healthy: 'cyan',
+const STATUS_GLOW_MAP: Record<AlignmentStatus, 'cyan' | 'gold' | 'red' | 'green' | 'none'> = {
+  healthy: 'green',
   warning: 'gold',
   critical: 'red',
 }

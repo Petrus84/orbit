@@ -120,9 +120,11 @@
 .fillCyan { background: var(--neon-cyan); }
 .fillGold { background: var(--neon-gold); }
 .fillRed  { background: var(--neon-red); }
+.fillGreen { background: var(--neon-green); }
 .fillNone { background: var(--t2); }
 
 .textCyan { color: var(--neon-cyan); }
 .textGold { color: var(--neon-gold); }
 .textRed  { color: var(--neon-red); }
+.textGreen { color: var(--neon-green); }
 .textNone { color: var(--t1); }

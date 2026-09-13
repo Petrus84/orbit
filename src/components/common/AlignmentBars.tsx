@@ -16,7 +16,7 @@ export interface AlignmentBarsProps {
 }
 
 const COLOR_TO_GLOW: Record<AlignmentColor, GlowColor> = {
-  success: 'cyan',
+  success: 'green',
   warning: 'gold',
   danger: 'red',
 }
@@ -25,6 +25,7 @@ const DOT_CLASS: Record<GlowColor, string> = {
   cyan: styles.dotCyan ?? '',
   gold: styles.dotGold ?? '',
   red: styles.dotRed ?? '',
+  green: styles.dotGreen ?? '',
   none: styles.dotNone ?? '',
 }
 
@@ -32,6 +33,7 @@ const FILL_CLASS: Record<GlowColor, string> = {
   cyan: styles.fillCyan ?? '',
   gold: styles.fillGold ?? '',
   red: styles.fillRed ?? '',
+  green: styles.fillGreen ?? '',
   none: styles.fillNone ?? '',
 }
 
@@ -39,6 +41,7 @@ const PILL_CLASS: Record<GlowColor, string> = {
   cyan: styles.pillCyan ?? '',
   gold: styles.pillGold ?? '',
   red: styles.pillRed ?? '',
+  green: styles.pillGreen ?? '',
   none: styles.pillNone ?? '',
 }
 

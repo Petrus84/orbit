@@ -1,11 +1,27 @@
 import React, { useState } from 'react';
+import { GlassCard } from './GlassCard';
 import styles from './RecommendationAlert.module.css';
 import type { AlignmentStatus } from '@/types/avatar';
+import type { AvatarRecommendation, GlowColor } from '@/types/orbit';
 
 interface RecommendationAlertProps {
   status: AlignmentStatus;
   score: number;
+  // ✅ FIX: dado real por cliente, calculado em avatarRepository.ts a partir
+  // das barras reais de alinhamento. Opcionais para não quebrar nenhum outro
+  // caller existente que ainda não os passa — nesse caso cai no fallback
+  // estático de sempre (STATUS_CONFIG), como já acontecia antes desta mudança.
+  recommendation?: AvatarRecommendation | null;
+  recommendations?: AvatarRecommendation[];
 }
+
+// ✅ FIX: efeito glass card no cartão inteiro, cor = diagnóstico real do
+// cliente (mesmo mapeamento de AvatarComparison/AlignmentBars).
+const STATUS_TO_GLOW: Record<AlignmentStatus, GlowColor> = {
+  critical: 'red',
+  warning: 'gold',
+  healthy: 'green',
+};
 
 interface RecommendationItem {
   icon: string;
@@ -82,12 +98,45 @@ const STATUS_CONFIG: Record<AlignmentStatus, StatusConfig> = {
   },
 };
 
-export const RecommendationAlert: React.FC<RecommendationAlertProps> = ({ status, score }) => {
+export const RecommendationAlert: React.FC<RecommendationAlertProps> = ({
+  status,
+  score,
+  recommendation,
+  recommendations,
+}) => {
   const [expanded, setExpanded] = useState(true);
-  const cfg = STATUS_CONFIG[status];
+  const fallbackCfg = STATUS_CONFIG[status];
+
+  // ✅ FIX: antes o texto era 100% estático por status (STATUS_CONFIG),
+  // idêntico para qualquer cliente com o mesmo status — podendo contradizer
+  // os números reais da própria tela (ex.: dizer "concentração no RJ" para
+  // um cliente cuja audiência real está em SP). Agora, se o repository
+  // mandou recomendação(ões) reais calculadas para este cliente, elas têm
+  // prioridade; o texto estático só aparece quando não há dado real.
+  const realRecommendations: RecommendationItem[] =
+    recommendations && recommendations.length > 0
+      ? recommendations.map((rec) => ({
+          icon: rec.icon ?? fallbackCfg.icon,
+          title: rec.title,
+          desc: rec.description,
+        }))
+      : recommendation
+        ? [
+            {
+              icon: recommendation.icon ?? fallbackCfg.icon,
+              title: recommendation.title,
+              desc: recommendation.description,
+            },
+          ]
+        : [];
+
+  const cfg: StatusConfig = {
+    ...fallbackCfg,
+    recommendations: realRecommendations.length > 0 ? realRecommendations : fallbackCfg.recommendations,
+  };
 
   return (
-    <div className={`${styles.wrapper} ${styles[status]}`}>
+    <GlassCard glowColor={STATUS_TO_GLOW[status]} className={`${styles.wrapper} ${styles[status]}`}>
       <button
         type="button"
         onClick={() => setExpanded((v) => !v)}
@@ -127,6 +176,6 @@ export const RecommendationAlert: React.FC<RecommendationAlertProps> = ({ status
           ))}
         </div>
       )}
-    </div>
+    </GlassCard>
   );
 };

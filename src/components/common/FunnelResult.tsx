@@ -5,6 +5,7 @@ import styles from './FunnelResult.module.css'
 import type { BottleneckDiagnosis } from '@/types/orbit'
 
 export interface SimulationResult {
+  visitas: number
   cliques: number
   vendas: number
   alcanceSimulado: number
@@ -31,6 +32,11 @@ interface FunnelResultProps {
 function formatValue(v: number): string {
   if (!Number.isFinite(v)) return '—'
   if (v == null || isNaN(v)) return '0'
+  // Antes: Math.round(0.13) virava "0" — indistinguível de um cenário que
+  // de fato não gera nenhuma venda. "< 1" preserva a diferença entre
+  // "quase lá" e "zero mesmo" sem inventar uma casa decimal falsa.
+  if (v > 0 && v < 1) return '< 1'
+  if (v < 0 && v > -1) return '> -1'
   if (v >= 1_000_000) return `${(v / 1_000_000).toFixed(2)}M`
   if (v >= 1_000) return `${(v / 1_000).toFixed(1)}k`
   return Math.round(v).toLocaleString('pt-BR')
@@ -112,14 +118,27 @@ export default function FunnelResult({
     { cliques: result.cliques, vendas: result.vendas }
   )
 
-  const insight =
-    result.vendas > safeBaseVendas * 1.5
-      ? 'Potencial alto — vale aumentar o investimento em tráfego.'
-      : result.vendas > safeBaseVendas
-      ? 'Cenário positivo — pequenos ajustes geram impacto real.'
-      : result.vendas < safeBaseVendas * 0.8
-      ? 'Cenário desfavorável — revise o CTR da bio ou a taxa de conversão.'
-      : 'Cenário similar ao atual.'
+  // Cenário com venda fracionada (>0 e <1): não é "sem resultado", é um
+  // funil que ainda não fecha 1 venda inteira dentro deste alcance. Em vez
+  // de deixar o headline em "< 1" sem explicação, mostramos quantos
+  // cliques deste mesmo ritmo seriam necessários para fechar a primeira —
+  // dá ao usuário uma alavanca concreta (mais alcance, ou melhorar CTR/
+  // conversão) em vez de um número que parece erro.
+  const isVendaFracionada = result.vendas > 0 && result.vendas < 1
+  const cliquesParaFecharUmaVenda =
+    isVendaFracionada && result.vendas > 0 ? Math.ceil(result.cliques / result.vendas) : null
+
+  const insight = isVendaFracionada
+    ? `Neste ritmo, é preciso algo como ${formatValue(
+        cliquesParaFecharUmaVenda ?? 0
+      )} cliques para fechar 1 venda — aumente o alcance simulado ou o CTR/conversão para chegar lá dentro deste cenário.`
+    : result.vendas > safeBaseVendas * 1.5
+    ? 'Potencial alto — vale aumentar o investimento em tráfego.'
+    : result.vendas > safeBaseVendas
+    ? 'Cenário positivo — pequenos ajustes geram impacto real.'
+    : result.vendas < safeBaseVendas * 0.8
+    ? 'Cenário desfavorável — revise o CTR da bio ou a taxa de conversão.'
+    : 'Cenário similar ao atual.'
 
   const handleSaveGoal = async () => {
     if (!goalName.trim()) return
@@ -178,6 +197,15 @@ export default function FunnelResult({
             </span>
           )}
         </div>
+      </div>
+
+      {/* Visitas ao perfil — já vinha calculado em funnelMath.ts (alcance ×
+          taxa de visita efetiva) mas não era exibido em lugar nenhum; o
+          usuário via "alcance" no simulador e "cliques"/"vendas" aqui, sem
+          o elo do meio. Exposto para fechar o rastro do funil. */}
+      <div className={styles.secondaryRow}>
+        <span className={styles.secondaryLabel}>Visitas ao perfil</span>
+        <span className={styles.secondaryValue}>{formatValue(result.visitas)}</span>
       </div>
 
       {/* Cliques no link */}
