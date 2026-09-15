@@ -315,19 +315,47 @@ export async function fetchInstagramOverview(
     ? results[6].value
     : null
 
+  // ✅ DIAGNÓSTICO COMPLETO
+  console.log('[fetchInstagramOverview] Iniciando busca de cliente:', {
+    clientId,
+    clientIdTrimmed: clientId?.trim(),
+    clientIdLength: clientId?.length,
+    clientIdType: typeof clientId,
+    supabaseUrl: import.meta.env.VITE_SUPABASE_URL,
+    supabaseKey: import.meta.env.VITE_SUPABASE_ANON_KEY?.substring(0, 20) + '...',
+  })
+
+  const normalizedClientId = clientId?.trim()
+
   const { data: clientRow, error: clientError } = await supabase
     .schema('orbit')
     .from('clients')
     .select('handle')
-    .eq('id', clientId)
-    .single()
+    .eq('id', normalizedClientId)
+    .maybeSingle()
     .overrideTypes<{ handle: string | null }, { merge: false }>()
 
-  if (clientError || !clientRow) {
-    console.warn(`[Repository] Cliente ${clientId} não encontrado em orbit.clients.`)
+  // ✅ LOG DETALHADO DO RESULTADO
+  console.log('[fetchInstagramOverview] Resultado da query:', {
+    clientId: normalizedClientId,
+    dataReceived: clientRow,
+    errorCode: clientError?.code,
+    errorMessage: clientError?.message,
+    errorDetails: clientError?.details,
+    errorHint: clientError?.hint,
+  })
+
+  if (clientError) {
+    console.error('[Repository] Erro ao buscar cliente:', {
+      code: clientError.code,
+      message: clientError.message,
+      details: clientError.details,
+      hint: clientError.hint,
+      clientId: normalizedClientId,
+    })
   }
 
-  const handle = clientRow?.handle ?? clientId
+  const handle = clientRow?.handle ?? normalizedClientId  // ← ÚNICA DEFINIÇÃO
 
   const meta: DashboardHeaderMeta = {
     clientHandle: `@${handle}`,
@@ -351,7 +379,6 @@ export async function fetchInstagramOverview(
     positioning: positioning as SectorPositioning,
   }
 }
-
 // ── Funções de busca (queries ao banco) ──────────────────────────────────
 
 async function fetchKPIs(

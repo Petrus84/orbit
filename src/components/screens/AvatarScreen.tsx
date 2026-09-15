@@ -132,7 +132,7 @@ export const AvatarScreen: React.FC<AvatarScreenProps> = ({ clientId: propClient
   const { clientId: contextClientId } = useOrbitDashboard()
   const clientId = propClientId || contextClientId
 
-  const { data, status, error, errorCode, isRetrying, refetch } = useAvatar(clientId || '')
+  const { data, status, error, errorCode, isRetrying, refetch, lastUpdated } = useAvatar(clientId || '')
 
   const isLoading = status === 'loading' && !isRetrying
   const isError = status === 'error'
@@ -271,12 +271,18 @@ export const AvatarScreen: React.FC<AvatarScreenProps> = ({ clientId: propClient
   // ─── ESTADO: Sucesso ─────────────────────────────────────────────────────
 
   if (isSuccess) {
-    const lastUpdatedLabel = new Date().toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: 'short',
-      hour: '2-digit',
-      minute: '2-digit',
-    })
+    // ✅ FIX: antes gerava `new Date()` direto no corpo do render — qualquer
+    // re-render (refoco de aba, re-render do pai) atualizava esse rótulo
+    // para "agora" mesmo sem nenhum fetch novo ter ocorrido. Agora usa o
+    // `lastUpdated` real do hook, setado só quando o fetch de fato resolve.
+    const lastUpdatedLabel = lastUpdated
+      ? lastUpdated.toLocaleDateString('pt-BR', {
+          day: '2-digit',
+          month: 'short',
+          hour: '2-digit',
+          minute: '2-digit',
+        })
+      : '—'
 
     return (
       <div className={styles.page}>
@@ -295,7 +301,12 @@ export const AvatarScreen: React.FC<AvatarScreenProps> = ({ clientId: propClient
 
         <AlignmentFormula />
 
-        <RecommendationAlert status={data.status} score={data.score} />
+        <RecommendationAlert
+          status={data.status}
+          score={data.score}
+          recommendation={data.recommendation}
+          recommendations={data.recommendations}
+        />
 
         <div className={styles.footer}>
           <button className={styles.btnGhost} onClick={refetch}>

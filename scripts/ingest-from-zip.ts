@@ -5,6 +5,7 @@ import { z } from 'zod'
 import { resolveClientId } from './lib/resolveClientId'
 import {
 resolveIntMetric,
+resolveIntMetricOrNull,
 resolveStringMetric,
 resolvePercentMetric,
 logMissingKey,
@@ -120,6 +121,7 @@ type ContentFormat = 'reel' | 'static_post' | 'carousel'
 
 interface PostMetrics {
 reach: number | null
+impressions: number | null
 likes: number | null
 comments: number | null
 shares: number | null
@@ -132,6 +134,7 @@ published_at: string
 content_format: ContentFormat
 caption: string
 reach: number | null
+impressions: number | null
 likes: number | null
 comments: number | null
 shares: number | null
@@ -156,9 +159,13 @@ filesMissing: string[]
 }
 
 interface GenderData {
-male_pct: number
-female_pct: number
-other_pct: number
+// ✅ CORRIGIDO (v2.1.0) — number | null: ausência de dados de gênero no ZIP
+// deve gravar NULL no banco, não 0. Com number puro, parsePct('') = 0 e
+// o cálculo other = 100 - 0 - 0 = 100 gerava gender_other_pct = 100 quando
+// o ZIP simplesmente não tinha dados de sexo (ex: dogativo).
+male_pct: number | null
+female_pct: number | null
+other_pct: number | null
 }
 
 interface AgeRangeData {
@@ -211,7 +218,7 @@ return uri.split('/').pop() ?? uri
 }
 
 function emptyMetrics(): PostMetrics {
-return { reach: null, likes: null, comments: null, shares: null, saves: null }
+return { reach: null, impressions: null, likes: null, comments: null, shares: null, saves: null }
 }
 
 function zipHash(zipPath: string): string {
@@ -308,17 +315,32 @@ try {
 }
 
 /* ── BLOCO 1: Catálogo de posts ─────────────────────────────────────────── */
+// ✅ CORRIGIDO (achado #17) — duas falhas nesta função:
+//   1) `impressions` nunca era lido aqui (nem existia no tipo PostMetrics),
+//      então a coluna era sempre gravada como null em persistPosts, mesmo
+//      quando o post.json trazia "Impressões" preenchida (confirmado em
+//      export real: dogativo, 172/172 posts com Impressões > 0 no JSON e
+//      null no banco).
+//   2) A busca de chave era um lookup único e hardcoded (ex: só
+//      smd['Curtidas']), sem passar pelas variantes do
+//      metric-key-dictionary.ts. Isso funciona apenas enquanto o export usa
+//      exatamente a grafia pt-BR sem sufixos; qualquer variante pt-PT (como
+//      já visto em outros arquivos do mesmo pacote de export) faria o valor
+//      cair silenciosamente para null, sem nenhum aviso no log. Agora usa os
+//      mesmos resolvers/variantes do dicionário central, em paridade com o
+//      bloco de insights de conta.
 function mapMetrics(smdRaw: Record<string, { value?: string | undefined }>): PostMetrics {
-const smd: Record<string, string | undefined> = {}
+const smd: Record<string, { value?: string | undefined }> = {}
 for (const [k, v] of Object.entries(smdRaw)) {
-  smd[fixMetaMojibake(k)] = v.value
+  smd[fixMetaMojibake(k)] = v
 }
 return {
-  reach: intFromValue(smd['Contas alcançadas']),
-  likes: intFromValue(smd['Curtidas']),
-  comments: intFromValue(smd['Comentários']),
-  shares: intFromValue(smd['Compartilhamentos']),
-  saves: intFromValue(smd['Salvamentos']),
+  reach: resolveIntMetricOrNull(smd, 'REACH'),
+  impressions: resolveIntMetricOrNull(smd, 'IMPRESSIONS'),
+  likes: resolveIntMetricOrNull(smd, 'LIKES'),
+  comments: resolveIntMetricOrNull(smd, 'COMMENTS'),
+  shares: resolveIntMetricOrNull(smd, 'SHARES'),
+  saves: resolveIntMetricOrNull(smd, 'SAVES'),
 }
 }
 
@@ -541,11 +563,18 @@ if (existing) {
 
 /* ── BLOCO 3: Demografia ────────────────────────────────────────────────── */
 /* ── BLOCO 3: Demografia (CORRIGIDO — idade real, não mais hardcoded) ────── */
-function parsePct(value: string): number {
-  if (!value) return 0
+// ✅ CORRIGIDO (v2.1.0) — retorna null em vez de 0 quando o valor está
+// ausente ou não parseable. Antes, parsePct('') = 0 fazia o cálculo
+// other = 100 - 0 - 0 = 100, gravando gender_other_pct = 100 no banco
+// quando o ZIP não tinha dados de gênero. Agora: ausência → null → NULL
+// no banco. O chamador deve tratar null antes de calcular other_pct.
+function parsePct(value: string): number | null {
+  if (!value) return null
   const cleanValue = value.replace(',', '.')
   const match = cleanValue.match(/([\d.]+)%/)
-  return match?.[1] ? parseFloat(match[1]) : 0
+  if (!match?.[1]) return null
+  const v = parseFloat(match[1])
+  return Number.isNaN(v) ? null : v
 }
 
 /**
@@ -611,7 +640,16 @@ function extractDemographicsBlock(zip: AdmZip): Demographics | null {
   const parsed = AudienceInsightsSchema.safeParse(raw)
   if (!parsed.success) return null
 
-  const smd = parsed.data.organic_insights_audience[0]?.string_map_data ?? {}
+  // ✅ CORRIGIDO (v2.1.0) — as chaves do audience_insights.json chegam com
+  // mojibake (ex: "Percentagem total de seguidores que sÃ£o homens") assim
+  // como as dos outros arquivos. mapMetrics() já aplicava fixMetaMojibake()
+  // nas chaves do smd de posts, mas extractDemographicsBlock usava o smd
+  // cru — as variantes do dicionário nunca batiam para contas pt-PT.
+  const rawSmd = parsed.data.organic_insights_audience[0]?.string_map_data ?? {}
+  const smd: typeof rawSmd = {}
+  for (const [k, v] of Object.entries(rawSmd)) {
+    smd[fixMetaMojibake(k)] = v
+  }
 
   // ✅ NOVO — achado #2 da revisão: antes o período da demografia era sempre
   // a data de execução do script (new Date()), mesmo o arquivo tendo seu
@@ -631,7 +669,13 @@ function extractDemographicsBlock(zip: AdmZip): Demographics | null {
 
   const male = parsePct(malePctStr)
   const female = parsePct(femalePctStr)
-  const other = Math.max(0, Math.round((100 - male - female) * 10) / 10)
+  // ✅ CORRIGIDO (v2.1.0) — só calcula other quando AMBOS estão presentes.
+  // Antes: male=0, female=0 → other=100. Agora: se qualquer um for null,
+  // other também é null → grava NULL no banco (ausência real de dados).
+  const other: number | null =
+    male !== null && female !== null
+      ? Math.max(0, Math.round((100 - male - female) * 10) / 10)
+      : null
 
   // ✅ NOVO — aplica fixMetaMojibake() nos NOMES de cidade/país extraídos.
   // Confirmado com dados reais (mauricioartphoto, 13/09/2026): resolveStringMetric
@@ -798,7 +842,8 @@ for (const p of posts) {
     content_format: p.content_format,
     caption: p.caption,
     reach: p.reach,
-    impressions: null,
+    impressions: p.impressions, // ✅ CORRIGIDO (achado #17) — antes era um `null` fixo,
+    // descartando o valor real já calculado em `p` (ver mapMetrics()).
     likes: p.likes,
     comments: p.comments,
     shares: p.shares,
@@ -839,7 +884,7 @@ return { ok, updated, error: errorCount }
 /* ── Main ───────────────────────────────────────────────────────────────── */
 async function run(): Promise<void> {
 console.log('═══════════════════════════════════════════════════════')
-console.log(`🔄 ORBIT · Ingest From Zip — v2.0.0 (Final)`)
+console.log(`🔄 ORBIT · Ingest From Zip — v2.1.0`)
 console.log(`📦 Zip: ${ZIP_PATH}`)
 console.log(`📱 Cliente: ${CLIENT_USERNAME}`)
 console.log(`${DRY_RUN ? '🧪 DRY RUN — nada será gravado' : '💾 Modo gravação real'}`)
@@ -905,7 +950,9 @@ if (accountInsights) {
 }
 
 if (demographics) {
-  console.log(`👥 Demografia: M=${demographics.gender.male_pct}% F=${demographics.gender.female_pct}%`)
+  const gM = demographics.gender.male_pct !== null ? `${demographics.gender.male_pct}%` : 'N/D'
+  const gF = demographics.gender.female_pct !== null ? `${demographics.gender.female_pct}%` : 'N/D'
+  console.log(`👥 Demografia: M=${gM} F=${gF}`)
 }
 
 if (DRY_RUN) {
