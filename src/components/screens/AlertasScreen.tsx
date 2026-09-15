@@ -1,328 +1,189 @@
-// src/components/screens/AvatarScreen.tsx
-// ✅ VERSÃO 4.0: Migrado de Tailwind ad-hoc (gray-950/blue-600, paleta
-// genérica desconectada do design system) para AvatarScreen.module.css —
-// o CSS Module já existia, token-based (--bg/--t0/--acc/--space-*),
-// e já era usado corretamente por AvatarCard/AvatarComparison/AlignmentBars.
-// A v3.0 tinha parado de importá-lo e reimplementado o shell da tela em
-// Tailwind com valores arbitrários (max-w-4xl, bg-blue-600...) que não
-// existem em nenhum outro lugar do app — causa raiz do visual
-// desproporcional/inconsistente entre o shell e os componentes filhos.
-//
-// Mudanças desta versão:
-// - Todo o shell (header, estados de loading/erro/retry, skeleton) agora
-//   usa var(--*) via AvatarScreen.module.css, mesma linguagem visual dos
-//   filhos.
-// - Os 5 estados de erro de useAvatar() (NO_DATA/NETWORK_ERROR/
-//   VALIDATION_FAILED/UNKNOWN/sem código) foram unificados num único
-//   layout (.center/.stateIcon/.stateTitle/.stateBody/.detailCard),
-//   parametrizado por conteúdo — elimina 5 blocos JSX quase idênticos
-//   com wrappers Tailwind duplicados.
-// - Botão de ação primário usa --acc (lima, o único acento do sistema),
-//   não mais bg-blue-600 (cor que não aparece em nenhum outro componente
-//   do app).
+import React, { useState } from 'react'
+import SectionHead from '../common/SectionHead'
+import AlertCard from '../common/AlertCard'
+// 🐛 CORRIGIDO: importava `Alert` de '../common/AlertCard'. AlertCard é um
+// componente de UI, não deveria re-exportar tipo de domínio — e o `Alert`
+// que ele exportava lá era uma versão fabricada, incompatível com o
+// contrato real (ver AlertCard.tsx). Fonte correta é o barrel de tipos.
+import type { Alert } from '../../types/alert'
+import type { UseAlertsReturn } from '../../hooks/useAlerts'
 
-'use client'
+// ─── Filter tabs ──────────────────────────────────────────────
 
-import React from 'react'
-import { useOrbitDashboard } from '@/context/OrbitDashboardContext'
-import { useAvatar } from '@/hooks/useAvatar'
-import { AvatarComparison } from '@/components/common/AvatarComparison'
-import { AlignmentBars } from '@/components/common/AlignmentBars'
-import { AlignmentFormula } from '@/components/common/AlignmentFormula'
-import { RecommendationAlert } from '@/components/common/RecommendationAlert'
-import styles from './AvatarScreen.module.css'
+type FilterTab = 'all' | 'critical' | 'warning' | 'info'
 
-interface AvatarScreenProps {
-  clientId?: string
+const TABS: { id: FilterTab; label: string }[] = [
+  { id: 'all', label: 'Todos' },
+  { id: 'critical', label: 'Críticos' },
+  { id: 'warning', label: 'Atenção' },
+  { id: 'info', label: 'Info' },
+]
+
+const TAB_ACTIVE: Record<FilterTab, string> = {
+  all: 'bg-zinc-700 text-white',
+  critical: 'bg-red-500/20 text-red-400 border border-red-500/40',
+  warning: 'bg-amber-500/20 text-amber-400 border border-amber-500/40',
+  info: 'bg-blue-500/20 text-blue-400 border border-blue-500/40',
 }
 
-// ─── Skeleton ────────────────────────────────────────────────────────────
+// ─── Skeleton ─────────────────────────────────────────────────
 
-const AvatarScreenSkeleton: React.FC = () => (
-  <div className={styles.skeletonStack}>
-    <div className={styles.skeletonRow}>
-      <div className={`${styles.skeleton} ${styles.skeletonCard}`} style={{ flex: 1 }} />
-      <div className={styles.skeleton} style={{ width: 24 }} />
-      <div className={`${styles.skeleton} ${styles.skeletonCard}`} style={{ flex: 1 }} />
-    </div>
-    <div className={`${styles.skeleton} ${styles.skeletonBars}`} />
-    <div className={`${styles.skeleton} ${styles.skeletonFormula}`} />
-    <div className={`${styles.skeleton} ${styles.skeletonRecs}`} />
-  </div>
-)
-
-// ─── Header (compartilhado pelos estados loading e sucesso) ──────────────
-
-const Header: React.FC<{ lastUpdatedLabel?: string }> = ({ lastUpdatedLabel }) => (
-  <div className={styles.headerRow}>
-    <div className={styles.headerText}>
-      <h1 className={styles.title}>Avatar Alignment</h1>
-      <p className={styles.subtitle}>
-        Comparativo entre o avatar esperado e a audiência captada pelas APIs
-      </p>
-    </div>
-
-    {lastUpdatedLabel && (
-      <div>
-        <p className={styles.metaLabel}>Última atualização</p>
-        <p className={styles.metaValue}>{lastUpdatedLabel}</p>
-      </div>
-    )}
-  </div>
-)
-
-// ─── Estado centralizado genérico (reutilizado pelos 5 estados de erro) ──
-
-interface CenterStateProps {
-  icon: string
-  spin?: boolean
-  title: string
-  body: string
-  detailTitle?: string
-  detailItems?: string[]
-  detailRaw?: string | undefined
-  primaryAction?: { label: string; onClick: () => void }
-  hint?: string
-}
-
-const CenterState: React.FC<CenterStateProps> = ({
-  icon,
-  spin,
-  title,
-  body,
-  detailTitle,
-  detailItems,
-  detailRaw,
-  primaryAction,
-  hint,
-}) => (
-  <div className={styles.center}>
-    <div className={styles.centerInner}>
-      <span className={`${styles.stateIcon} ${spin ? styles.stateIconSpin : ''}`}>{icon}</span>
-      <h2 className={styles.stateTitle}>{title}</h2>
-      <p className={styles.stateBody}>{body}</p>
-
-      {(detailItems || detailRaw) && (
-        <div className={styles.detailCard}>
-          {detailTitle && <p className={styles.detailTitle}>{detailTitle}</p>}
-          {detailItems && (
-            <ul className={styles.detailList}>
-              {detailItems.map((item) => (
-                <li key={item}>✓ {item}</li>
-              ))}
-            </ul>
-          )}
-          {detailRaw && <code className={styles.errorDetail}>{detailRaw}</code>}
-        </div>
-      )}
-
-      {primaryAction && (
-        <div className={styles.actions}>
-          <button className={styles.btnPrimary} onClick={primaryAction.onClick}>
-            {primaryAction.label}
-          </button>
-          {hint && <p className={styles.hint}>{hint}</p>}
-        </div>
-      )}
-    </div>
-  </div>
-)
-
-export const AvatarScreen: React.FC<AvatarScreenProps> = ({ clientId: propClientId }) => {
-  const { clientId: contextClientId } = useOrbitDashboard()
-  const clientId = propClientId || contextClientId
-
-  const { data, status, error, errorCode, isRetrying, refetch, lastUpdated } = useAvatar(clientId || '')
-
-  const isLoading = status === 'loading' && !isRetrying
-  const isError = status === 'error'
-  const isSuccess = status === 'success' && data
-
-  // ─── GUARD: Cliente não identificado ────────────────────────────────────
-
-  if (!clientId) {
-    return (
-      <div className={styles.page}>
-        <CenterState icon="❓" title="Cliente não identificado" body="" />
-      </div>
-    )
-  }
-
-  // ─── ESTADO: Carregando ──────────────────────────────────────────────────
-
-  if (isLoading) {
-    return (
-      <div className={styles.page}>
-        <Header />
-        <AvatarScreenSkeleton />
-      </div>
-    )
-  }
-
-  // ─── ESTADO: Tentando reconectar ───────────────────────────────────────
-
-  if (isRetrying) {
-    return (
-      <div className={styles.page}>
-        <CenterState
-          icon="🔄"
-          spin
-          title="Tentando reconectar..."
-          body="Por favor, aguarde."
-        />
-      </div>
-    )
-  }
-
-  // ─── ESTADO: Erro NO_DATA (Cliente sem avatar) ──────────────────────────
-
-  if (isError && errorCode === 'NO_DATA') {
-    return (
-      <div className={styles.page}>
-        <CenterState
-          icon="📊"
-          title="Avatar não configurado"
-          body="Este cliente ainda não possui um alinhamento de avatar configurado no sistema."
-          detailTitle="O que fazer:"
-          detailItems={[
-            'Verifique se o cliente foi criado corretamente',
-            'Confirme que os dados de avatar foram sincronizados',
-            'Configure um novo avatar para este cliente se necessário',
-          ]}
-          primaryAction={{ label: '🔄 Tentar Novamente', onClick: refetch }}
-        />
-      </div>
-    )
-  }
-
-  // ─── ESTADO: Erro NETWORK_ERROR (Conexão) ───────────────────────────────
-
-  if (isError && errorCode === 'NETWORK_ERROR') {
-    return (
-      <div className={styles.page}>
-        <CenterState
-          icon="🌐"
-          title="Erro de conexão"
-          body="Não foi possível conectar ao servidor para buscar os dados de avatar."
-          detailTitle="Possíveis causas:"
-          detailItems={[
-            'Sua conexão com a internet pode estar instável',
-            'O servidor pode estar temporariamente indisponível',
-            'Verifique sua conexão e tente novamente',
-          ]}
-          primaryAction={{ label: '🔗 Reconectar', onClick: refetch }}
-        />
-      </div>
-    )
-  }
-
-  // ─── ESTADO: Erro VALIDATION_FAILED (Dados inválidos) ────────────────────
-
-  if (isError && errorCode === 'VALIDATION_FAILED') {
-    return (
-      <div className={styles.page}>
-        <CenterState
-          icon="⚠️"
-          title="Dados inválidos recebidos"
-          body="O servidor retornou dados que não passaram na validação."
-          detailTitle="Detalhes do erro:"
-          detailRaw={error ?? undefined}
-          primaryAction={{ label: '🔄 Tentar Novamente', onClick: refetch }}
-          hint="Se o problema persistir, entre em contato com o suporte."
-        />
-      </div>
-    )
-  }
-
-  // ─── ESTADO: Erro UNKNOWN (Genérico) ────────────────────────────────────
-
-  if (isError && errorCode === 'UNKNOWN') {
-    return (
-      <div className={styles.page}>
-        <CenterState
-          icon="❌"
-          title="Erro desconhecido"
-          body="Ocorreu um erro inesperado ao carregar o alinhamento de avatar."
-          detailTitle="Mensagem:"
-          detailRaw={error ?? undefined}
-          primaryAction={{ label: '🔄 Tentar Novamente', onClick: refetch }}
-          hint="Verifique o console do navegador para mais detalhes."
-        />
-      </div>
-    )
-  }
-
-  // ─── ESTADO: Erro genérico (sem errorCode) ──────────────────────────────
-
-  if (isError && !errorCode) {
-    return (
-      <div className={styles.page}>
-        <div className={styles.genericErrorBanner}>
-          <span className={styles.stateIcon} style={{ fontSize: 24, marginBottom: 0 }}>❌</span>
-          <div>
-            <p className={styles.genericErrorTitle}>Erro ao carregar dados</p>
-            <p className={styles.genericErrorBody}>{error || 'Erro desconhecido'}</p>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  // ─── ESTADO: Sucesso ─────────────────────────────────────────────────────
-
-  if (isSuccess) {
-    // ✅ FIX: antes gerava `new Date()` direto no corpo do render — qualquer
-    // re-render (refoco de aba, re-render do pai) atualizava esse rótulo
-    // para "agora" mesmo sem nenhum fetch novo ter ocorrido. Agora usa o
-    // `lastUpdated` real do hook, setado só quando o fetch de fato resolve.
-    const lastUpdatedLabel = lastUpdated
-      ? lastUpdated.toLocaleDateString('pt-BR', {
-          day: '2-digit',
-          month: 'short',
-          hour: '2-digit',
-          minute: '2-digit',
-        })
-      : '—'
-
-    return (
-      <div className={styles.page}>
-        <Header lastUpdatedLabel={lastUpdatedLabel} />
-
-        <AvatarComparison
-          expected={data.expected}
-          real={data.real}
-          score={data.score}
-          status={data.status}
-          unconsciousDesireMapped={data.unconsciousDesireMapped}
-          misalignmentHypothesis={data.misalignmentHypothesis}
-        />
-
-        <AlignmentBars bars={data.bars} />
-
-        <AlignmentFormula />
-
-        <RecommendationAlert
-          status={data.status}
-          score={data.score}
-          recommendation={data.recommendation}
-          recommendations={data.recommendations}
-        />
-
-        <div className={styles.footer}>
-          <button className={styles.btnGhost} onClick={refetch}>
-            🔄 Atualizar Dados
-          </button>
-        </div>
-      </div>
-    )
-  }
-
-  // ─── ESTADO: Idle (nunca deveria chegar aqui) ────────────────────────────
-
+function AlertSkeleton(): React.ReactElement {
   return (
-    <div className={styles.page}>
-      <CenterState icon="⏳" title="" body="Pronto para carregar dados de avatar." />
+    <div className="flex gap-3 rounded-2xl border border-zinc-800 bg-zinc-900/30 p-4 animate-pulse">
+      <div className="flex flex-col items-center gap-2 pt-0.5">
+        <div className="h-5 w-5 rounded bg-zinc-800" />
+        <div className="h-1.5 w-1.5 rounded-full bg-zinc-800" />
+      </div>
+      <div className="flex flex-1 flex-col gap-2">
+        <div className="flex justify-between gap-2">
+          <div className="h-3.5 w-48 rounded bg-zinc-800" />
+          <div className="h-2.5 w-10 rounded bg-zinc-800" />
+        </div>
+        <div className="h-2.5 w-full rounded bg-zinc-800" />
+        <div className="h-2.5 w-3/4 rounded bg-zinc-800" />
+        <div className="flex gap-2 pt-1">
+          <div className="h-6 w-24 rounded-full bg-zinc-800" />
+          <div className="h-6 w-20 rounded-full bg-zinc-800" />
+        </div>
+      </div>
     </div>
   )
 }
-export default AvatarScreen
+
+// ─── Error state ──────────────────────────────────────────────
+
+function ErrorState({ message, onRetry }: { message: string; onRetry: () => void }): React.ReactElement {
+  return (
+    <div className="flex flex-col items-center gap-4 rounded-2xl border border-red-500/20 bg-red-900/10 p-8 text-center">
+      <p className="font-sans text-sm text-red-400">{message}</p>
+      <button
+        type="button"
+        onClick={onRetry}
+        className="rounded-full border border-red-500/40 bg-red-500/20 px-4 py-1.5 font-sans text-xs font-medium text-red-400 transition-colors hover:bg-red-500/30"
+      >
+        Tentar novamente
+      </button>
+    </div>
+  )
+}
+
+// ─── Empty state ──────────────────────────────────────────────
+
+function EmptyState({ tab }: { tab: FilterTab }): React.ReactElement {
+  const messages: Record<FilterTab, string> = {
+    all: 'Nenhum alerta encontrado.',
+    critical: 'Nenhum alerta crítico. Tudo certo por aqui.',
+    warning: 'Nenhum alerta de atenção no momento.',
+    info: 'Nenhuma informação pendente.',
+  }
+  return (
+    <div className="flex items-center justify-center rounded-2xl border border-zinc-800 bg-zinc-900/20 py-12">
+      <p className="font-sans text-sm text-zinc-500">{messages[tab]}</p>
+    </div>
+  )
+}
+
+// ─── Badge counter ────────────────────────────────────────────
+
+function TabBadge({ count, tab }: { count: number; tab: FilterTab }): React.ReactElement | null {
+  if (count === 0) return null
+  const colors: Record<FilterTab, string> = {
+    all: 'bg-zinc-600 text-zinc-300',
+    critical: 'bg-red-500/30 text-red-400',
+    warning: 'bg-amber-500/30 text-amber-400',
+    info: 'bg-blue-500/30 text-blue-400',
+  }
+  return (
+    <span className={`ml-1.5 rounded-full px-1.5 py-0.5 font-mono text-[10px] font-medium tabular-nums ${colors[tab]}`}>
+      {count}
+    </span>
+  )
+}
+
+// ─── Screen ───────────────────────────────────────────────────
+
+interface AlertasScreenProps {
+  useAlerts: (filter?: 'critical' | 'warning' | 'info') => UseAlertsReturn
+}
+
+export default function AlertasScreen({ useAlerts }: AlertasScreenProps): React.ReactElement {
+  // 🐛 CORRIGIDO: a versão anterior desestruturava `{ alerts, status, error, refetch }`.
+  // O hook real (useAlerts.ts) devolve `data`, não `alerts` — e também já
+  // devolve `counts` pronto, então não precisa recalcular com 3x .filter().
+  const { data: alerts, counts, status, error, refetch } = useAlerts()
+  const [activeTab, setActiveTab] = useState<FilterTab>('all')
+
+  const tabCounts: Record<FilterTab, number> = {
+    all: counts.total,
+    critical: counts.critical,
+    warning: counts.warning,
+    info: counts.info,
+  }
+
+  const visibleAlerts: Alert[] =
+    activeTab === 'all' ? alerts : alerts.filter((a) => a.severity === activeTab)
+
+  // 🐛 CORRIGIDO: a versão anterior ordenava por `a.acknowledged` e
+  // `a.triggeredAt` — nenhum dos dois existe em `Alert` (nem na tabela
+  // orbit.alerts). Os campos reais são `isResolved` (boolean) e
+  // `createdAt` (string). Critério: não-resolvidos primeiro, depois mais
+  // recentes primeiro.
+  const sortedAlerts = [...visibleAlerts].sort((a, b) => {
+    if (a.isResolved !== b.isResolved) return a.isResolved ? 1 : -1
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  })
+
+  const subtitle =
+    status === 'success'
+      ? `${counts.total} alerta${counts.total !== 1 ? 's' : ''}${
+          counts.critical > 0 ? ` · ${counts.critical} crítico${counts.critical !== 1 ? 's' : ''}` : ''
+        }`
+      : undefined
+
+  const isLoading = status === 'idle' || status === 'loading'
+
+  return (
+    <main className="flex min-h-screen flex-col gap-6 bg-[#0C0C0F] px-4 py-6 sm:px-6">
+      <SectionHead title="Central de alertas" subtitle={subtitle} />
+
+      <div className="flex gap-1.5 flex-wrap" role="tablist" aria-label="Filtrar alertas">
+        {TABS.map((tab) => (
+          <button
+            key={tab.id}
+            type="button"
+            role="tab"
+            aria-selected={activeTab === tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={`rounded-full px-3 py-1.5 font-sans text-xs font-medium transition-colors ${
+              activeTab === tab.id
+                ? TAB_ACTIVE[tab.id]
+                : 'bg-zinc-900 text-zinc-500 hover:bg-zinc-800 hover:text-zinc-300'
+            }`}
+          >
+            {tab.label}
+            {!isLoading && <TabBadge count={tabCounts[tab.id]} tab={tab.id} />}
+          </button>
+        ))}
+      </div>
+
+      {status === 'error' && error ? (
+        <ErrorState message={error} onRetry={refetch} />
+      ) : isLoading ? (
+        <div className="flex flex-col gap-3" role="status" aria-label="Carregando alertas">
+          {[0, 1, 2, 3].map((i) => (
+            <AlertSkeleton key={i} />
+          ))}
+        </div>
+      ) : sortedAlerts.length === 0 ? (
+        <EmptyState tab={activeTab} />
+      ) : (
+        <div className="flex flex-col gap-3" role="tabpanel">
+          {sortedAlerts.map((alert) => (
+            <AlertCard key={alert.id} alert={alert} onAcknowledge={async () => refetch()} />
+          ))}
+        </div>
+      )}
+    </main>
+  )
+}

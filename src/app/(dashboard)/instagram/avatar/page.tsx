@@ -17,7 +17,8 @@
 'use client'
 
 import { useState } from 'react'
-import { CLIENTS, PERIOD_START, PERIOD_END, type ClientKey } from '@/lib/constants'
+import { CLIENTS, PERIOD_START, getPeriodEnd, type ClientKey } from '@/lib/constants'
+import { useClientNow } from '@/hooks/useClientNow'
 import { OrbitDashboardProvider } from '@/context/OrbitDashboardContext'
 import { AvatarScreen } from '@/components/screens/AvatarScreen'
 import { DateRangeControl, type PeriodRange } from '@/components/common/DateRangeControl'
@@ -28,7 +29,12 @@ export default function AvatarPage() {
   const [activeClientKey, setActiveClientKey] = useState<ClientKey>(initialClientKey)
   const activeClient = CLIENTS[activeClientKey]
 
-  const [period, setPeriod] = useState<PeriodRange>({ start: PERIOD_START, end: PERIOD_END })
+  // FIX v1.0.2 (ripple effect de src/lib/constants.ts): ver nota em
+  // src/app/(dashboard)/funil/page.tsx sobre por que PERIOD_END virou
+  // getPeriodEnd() + useClientNow().
+  const clientNow = useClientNow()
+  const periodEnd = clientNow ?? getPeriodEnd()
+  const [period, setPeriod] = useState<PeriodRange>({ start: PERIOD_START, end: periodEnd })
 
   return (
     <OrbitDashboardProvider
@@ -81,7 +87,7 @@ export default function AvatarPage() {
             value={period}
             onChange={setPeriod}
             minDate={PERIOD_START}
-            maxDate={PERIOD_END}
+            maxDate={periodEnd}
           />
         </nav>
 

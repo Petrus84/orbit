@@ -103,12 +103,12 @@ return (
       </div>
     </div>
 
-    <p className={styles.blockLabel}>
-      BENCHMARKING{' '}
-      {positioning.erReal?.thresholdSource === 'global'
-        ? '— régua global'
-        : '— régua do setor'}
-    </p>
+    {/* ✅ CORRIGIDO (PR-A/PR-B): thresholdSource agora pode ser null (sem
+        recorte de mercado — er_real_pct/vps_pct hoje). Antes disso, null
+        caía no ramo "— régua do setor" por padrão, texto que essas duas
+        métricas nunca tiveram. Só polêmica hoje tem régua real; o rótulo
+        reflete cada métrica individualmente, não uma frase única pro bloco. */}
+    <p className={styles.blockLabel}>BENCHMARKING</p>
 
     <div className={styles.metricsRow}>
       {/* ✅ CORRIGIDO: Usar campo .value em vez de fazer parse de statusText */}

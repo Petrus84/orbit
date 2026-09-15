@@ -245,7 +245,11 @@ export interface ClassifiedMetric {
   semaphore: SemaphoreColor
   statusText: string
   confidenceLevel: ConfidenceLevel
-  thresholdSource: ThresholdGranularity
+  // ✅ NOVO (PR-A): null quando a métrica está fora de MARKET_RPC_METRICS —
+  // não houve RPC, então não há nível de hierarquia (category_tier /
+  // category_all / global) a declarar. Distinto de 'global', que é uma
+  // resposta real da régua (linha all/all existe e foi usada).
+  thresholdSource: ThresholdGranularity | null
   confidenceScore: number | null
   ruleDeclaration: string
   // ✅ NOVO (Content Contract v1.3 §1.1): presente só quando
@@ -320,7 +324,12 @@ export interface Campaign {
 }
 
 // ⚠️ OBSERVAÇÃO (4): vocabulário de cor #1 — PT-BR.
-export type SemaphoreColor = 'verde' | 'ambar' | 'vermelho'
+// ✅ NOVO (PR-A, execução ORBIT §"Porta da RPC"): 'neutro' é o estado de
+// "sem recorte setorial" — métrica fora de MARKET_RPC_METRICS
+// (contentContractEngine.ts). Não é 'ambar': ambar é atenção de gestão
+// real; neutro é ausência deliberada de comparação de mercado. Não colapse
+// os dois de volta no consumidor.
+export type SemaphoreColor = 'verde' | 'ambar' | 'vermelho' | 'neutro'
 
 // ⚠️ OBSERVAÇÃO (4): vocabulário de severidade #2, distinto de AlertSeverity.
 export type StatusVariant = 'ok' | 'warn' | 'neutral'

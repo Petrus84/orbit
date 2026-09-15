@@ -15,18 +15,21 @@ const ICON_MAP: Record<SemaphoreColor, string> = {
   verde:    '✓',
   ambar:    '⚠',
   vermelho: '✕',
+  neutro:   '·', // ✅ NOVO (PR-A): sem recorte de mercado, não é alerta
 }
 
 const COLOR_CLASS: Record<SemaphoreColor, string> = {
   verde:    styles.verde ?? '',
   ambar:    styles.ambar ?? '',
   vermelho: styles.vermelho ?? '',
+  neutro:   styles.neutro ?? '',
 }
 
 const ARIA_LABEL: Record<SemaphoreColor, string> = {
   verde:    'Status positivo',
   ambar:    'Status de atenção',
   vermelho: 'Status crítico',
+  neutro:   'Sem recorte de mercado',
 }
 
 export function SemaphoreIndicator({ color }: SemaphoreIndicatorProps) {

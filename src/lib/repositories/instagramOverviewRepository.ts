@@ -184,6 +184,11 @@ const GLOW_MAP: Record<SemaphoreColor, GlowColor> = {
   verde:    'cyan',
   ambar:    'gold',
   vermelho: 'red',
+  // ✅ NOVO (PR-A): 'neutro' vem de ClassifiedMetric (contentContractEngine.ts),
+  // não da view v_kpi_snapshots — mas o Record exige as 4 chaves de
+  // SemaphoreColor agora. KPICardData.semaphore hoje só vem do banco
+  // ('verde'|'ambar'|'vermelho'); este ramo existe só pra satisfazer o tipo.
+  neutro:   'none',
 }
 
 // ── Funções de transformação ────────────────────────────────────────────

@@ -7,11 +7,6 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
-  __InternalSupabase: {
-    PostgrestVersion: "14.5"
-  }
   orbit: {
     Tables: {
       _migration_audit_log: {
@@ -117,13 +112,6 @@ export type Database = {
             foreignKeyName: "ads_ga4_landing_pages_client_id_fkey"
             columns: ["client_id"]
             isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "ads_ga4_landing_pages_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
             referencedRelation: "v_client_health"
             referencedColumns: ["client_id"]
           },
@@ -207,13 +195,6 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_avatar_alignment_latest"
             referencedColumns: ["client_id"]
-          },
-          {
-            foreignKeyName: "ads_google_campaigns_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
           },
           {
             foreignKeyName: "ads_google_campaigns_client_id_fkey"
@@ -318,13 +299,6 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_avatar_alignment_latest"
             referencedColumns: ["client_id"]
-          },
-          {
-            foreignKeyName: "ads_google_search_terms_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
           },
           {
             foreignKeyName: "ads_google_search_terms_client_id_fkey"
@@ -441,13 +415,6 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_avatar_alignment_latest"
             referencedColumns: ["client_id"]
-          },
-          {
-            foreignKeyName: "ads_google_snapshots_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
           },
           {
             foreignKeyName: "ads_google_snapshots_client_id_fkey"
@@ -588,13 +555,6 @@ export type Database = {
             foreignKeyName: "ads_meta_campaigns_client_id_fkey"
             columns: ["client_id"]
             isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "ads_meta_campaigns_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
             referencedRelation: "v_client_health"
             referencedColumns: ["client_id"]
           },
@@ -700,13 +660,6 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_avatar_alignment_latest"
             referencedColumns: ["client_id"]
-          },
-          {
-            foreignKeyName: "ads_meta_creatives_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
           },
           {
             foreignKeyName: "ads_meta_creatives_client_id_fkey"
@@ -864,13 +817,6 @@ export type Database = {
             foreignKeyName: "ads_meta_snapshots_client_id_fkey"
             columns: ["client_id"]
             isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "ads_meta_snapshots_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
             referencedRelation: "v_client_health"
             referencedColumns: ["client_id"]
           },
@@ -1021,13 +967,6 @@ export type Database = {
             foreignKeyName: "alerts_client_id_fkey"
             columns: ["client_id"]
             isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "alerts_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
             referencedRelation: "v_client_health"
             referencedColumns: ["client_id"]
           },
@@ -1170,13 +1109,6 @@ export type Database = {
             foreignKeyName: "avatar_alignment_snapshot_client_id_fkey"
             columns: ["client_id"]
             isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "avatar_alignment_snapshot_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
             referencedRelation: "v_client_health"
             referencedColumns: ["client_id"]
           },
@@ -1268,13 +1200,6 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_avatar_alignment_latest"
             referencedColumns: ["client_id"]
-          },
-          {
-            foreignKeyName: "avatar_validations_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
           },
           {
             foreignKeyName: "avatar_validations_client_id_fkey"
@@ -1425,13 +1350,6 @@ export type Database = {
             foreignKeyName: "client_onboarding_client_id_fkey"
             columns: ["client_id"]
             isOneToOne: true
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "client_onboarding_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: true
             referencedRelation: "v_client_health"
             referencedColumns: ["client_id"]
           },
@@ -1526,13 +1444,6 @@ export type Database = {
             foreignKeyName: "client_reports_client_id_fkey"
             columns: ["client_id"]
             isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "client_reports_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
             referencedRelation: "v_client_health"
             referencedColumns: ["client_id"]
           },
@@ -1558,7 +1469,6 @@ export type Database = {
           avatar_expected_geo_primary: string | null
           avatar_expected_interest: string | null
           avatar_unconscious_desire: string | null
-          benchmark_category: string | null
           business_objective: string | null
           created_at: string
           gross_margin_pct: number | null
@@ -1569,7 +1479,6 @@ export type Database = {
           ig_display_name: string | null
           ig_username: string | null
           instagram_user_id: string | null
-          is_benchmark: boolean
           monthly_ad_budget: number | null
           name: string
           segment: string | null
@@ -1599,7 +1508,6 @@ export type Database = {
           avatar_expected_geo_primary?: string | null
           avatar_expected_interest?: string | null
           avatar_unconscious_desire?: string | null
-          benchmark_category?: string | null
           business_objective?: string | null
           created_at?: string
           gross_margin_pct?: number | null
@@ -1610,7 +1518,6 @@ export type Database = {
           ig_display_name?: string | null
           ig_username?: string | null
           instagram_user_id?: string | null
-          is_benchmark?: boolean
           monthly_ad_budget?: number | null
           name: string
           segment?: string | null
@@ -1640,7 +1547,6 @@ export type Database = {
           avatar_expected_geo_primary?: string | null
           avatar_expected_interest?: string | null
           avatar_unconscious_desire?: string | null
-          benchmark_category?: string | null
           business_objective?: string | null
           created_at?: string
           gross_margin_pct?: number | null
@@ -1651,7 +1557,6 @@ export type Database = {
           ig_display_name?: string | null
           ig_username?: string | null
           instagram_user_id?: string | null
-          is_benchmark?: boolean
           monthly_ad_budget?: number | null
           name?: string
           segment?: string | null
@@ -1746,13 +1651,6 @@ export type Database = {
             foreignKeyName: "content_insights_client_id_fkey"
             columns: ["client_id"]
             isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "content_insights_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
             referencedRelation: "v_client_health"
             referencedColumns: ["client_id"]
           },
@@ -1833,13 +1731,6 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_avatar_alignment_latest"
             referencedColumns: ["client_id"]
-          },
-          {
-            foreignKeyName: "funnel_data_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
           },
           {
             foreignKeyName: "funnel_data_client_id_fkey"
@@ -1993,13 +1884,6 @@ export type Database = {
             foreignKeyName: "ig_account_snapshots_client_id_fkey"
             columns: ["client_id"]
             isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "ig_account_snapshots_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
             referencedRelation: "v_client_health"
             referencedColumns: ["client_id"]
           },
@@ -2125,13 +2009,6 @@ export type Database = {
             foreignKeyName: "ig_audience_snapshots_client_id_fkey"
             columns: ["client_id"]
             isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "ig_audience_snapshots_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
             referencedRelation: "v_client_health"
             referencedColumns: ["client_id"]
           },
@@ -2225,13 +2102,6 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_avatar_alignment_latest"
             referencedColumns: ["client_id"]
-          },
-          {
-            foreignKeyName: "ig_import_sessions_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
           },
           {
             foreignKeyName: "ig_import_sessions_client_id_fkey"
@@ -2367,13 +2237,6 @@ export type Database = {
             foreignKeyName: "ig_posts_client_id_fkey"
             columns: ["client_id"]
             isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "ig_posts_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
             referencedRelation: "v_client_health"
             referencedColumns: ["client_id"]
           },
@@ -2455,13 +2318,6 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_avatar_alignment_latest"
             referencedColumns: ["client_id"]
-          },
-          {
-            foreignKeyName: "metric_history_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
           },
           {
             foreignKeyName: "metric_history_client_id_fkey"
@@ -2550,13 +2406,6 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_avatar_alignment_latest"
             referencedColumns: ["client_id"]
-          },
-          {
-            foreignKeyName: "raw_ig_ingest_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
           },
           {
             foreignKeyName: "raw_ig_ingest_client_id_fkey"
@@ -2800,29 +2649,15 @@ export type Database = {
     Views: {
       v_alerts: {
         Row: {
-          actionUrl: string | null
-          alertType: string | null
           clientHandle: string | null
           clientId: string | null
           clientName: string | null
-          confidenceLevel: string | null
           createdAt: string | null
-          dataSource: string | null
           description: string | null
           id: string | null
           is_resolved: boolean | null
           is_snoozed: boolean | null
-          metricName: string | null
-          metricValue: number | null
-          natureza: string | null
-          probableCause: string | null
-          resolvedAt: string | null
-          resolvedBy: string | null
           severity: string | null
-          snapshotId: string | null
-          snoozedUntil: string | null
-          suggestedAction: string | null
-          thresholdValue: number | null
           title: string | null
         }
         Relationships: [
@@ -2853,13 +2688,6 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_avatar_alignment_latest"
             referencedColumns: ["client_id"]
-          },
-          {
-            foreignKeyName: "alerts_client_id_fkey"
-            columns: ["clientId"]
-            isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
           },
           {
             foreignKeyName: "alerts_client_id_fkey"
@@ -2937,13 +2765,6 @@ export type Database = {
             foreignKeyName: "ig_audience_snapshots_client_id_fkey"
             columns: ["client_id"]
             isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "ig_audience_snapshots_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
             referencedRelation: "v_client_health"
             referencedColumns: ["client_id"]
           },
@@ -3015,14 +2836,6 @@ export type Database = {
           },
         ]
       }
-      v_benchmark_thresholds: {
-        Row: {
-          categoria: string | null
-          media_snapshots: number | null
-          total_contas: number | null
-        }
-        Relationships: []
-      }
       v_boost_candidates: {
         Row: {
           boost_conditions_met: number | null
@@ -3072,13 +2885,6 @@ export type Database = {
             foreignKeyName: "ig_posts_client_id_fkey"
             columns: ["client_id"]
             isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "ig_posts_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
             referencedRelation: "v_client_health"
             referencedColumns: ["client_id"]
           },
@@ -3087,60 +2893,6 @@ export type Database = {
             columns: ["client_id"]
             isOneToOne: false
             referencedRelation: "v_client_metrics"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      v_carteira_clients: {
-        Row: {
-          avatar_alignment_hypothesis: string | null
-          avatar_expected_age_max: number | null
-          avatar_expected_age_min: number | null
-          avatar_expected_gender:
-            | Database["orbit"]["Enums"]["gender_category"]
-            | null
-          avatar_expected_gender_pct: number | null
-          avatar_expected_geo_pct: number | null
-          avatar_expected_geo_primary: string | null
-          avatar_expected_interest: string | null
-          avatar_unconscious_desire: string | null
-          benchmark_category: string | null
-          business_objective: string | null
-          created_at: string | null
-          gross_margin_pct: number | null
-          handle: string | null
-          health_status: Database["orbit"]["Enums"]["health_status"] | null
-          health_updated_at: string | null
-          id: string | null
-          ig_display_name: string | null
-          ig_username: string | null
-          instagram_user_id: string | null
-          is_benchmark: boolean | null
-          last_snapshot_date: string | null
-          monthly_ad_budget: number | null
-          name: string | null
-          segment: string | null
-          snapshot_count: number | null
-          subscription_id: string | null
-          threshold_avatar_alignment_min: number | null
-          threshold_churn_monthly_max: number | null
-          threshold_cpa_max_multiplier: number | null
-          threshold_ctr_ads_min: number | null
-          threshold_ctr_bio_min: number | null
-          threshold_ctr_search_min: number | null
-          threshold_er_real_min: number | null
-          threshold_fatigue_critical: number | null
-          threshold_frequency_max: number | null
-          threshold_polemic_max: number | null
-          threshold_utility_min: number | null
-          updated_at: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "clients_subscription_id_fkey"
-            columns: ["subscription_id"]
-            isOneToOne: false
-            referencedRelation: "subscriptions"
             referencedColumns: ["id"]
           },
         ]
@@ -3154,6 +2906,9 @@ export type Database = {
           handle: string | null
           health_status: string | null
           last_updated: string | null
+          max_confidence_level:
+            | Database["orbit"]["Enums"]["confidence_level"]
+            | null
           metric_count: number | null
         }
         Relationships: []
@@ -3233,13 +2988,6 @@ export type Database = {
             foreignKeyName: "ads_meta_creatives_client_id_fkey"
             columns: ["client_id"]
             isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "ads_meta_creatives_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
             referencedRelation: "v_client_health"
             referencedColumns: ["client_id"]
           },
@@ -3293,13 +3041,6 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_avatar_alignment_latest"
             referencedColumns: ["client_id"]
-          },
-          {
-            foreignKeyName: "ig_posts_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
           },
           {
             foreignKeyName: "ig_posts_client_id_fkey"
@@ -3390,13 +3131,6 @@ export type Database = {
             foreignKeyName: "funnel_data_client_id_fkey"
             columns: ["client_id"]
             isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "funnel_data_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
             referencedRelation: "v_client_health"
             referencedColumns: ["client_id"]
           },
@@ -3429,7 +3163,50 @@ export type Database = {
           source_snapshot_id: string | null
           value: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "metric_history_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "metric_history_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "v_avatar_alignment"
+            referencedColumns: ["client_id"]
+          },
+          {
+            foreignKeyName: "metric_history_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "v_avatar_alignment"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "metric_history_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "v_avatar_alignment_latest"
+            referencedColumns: ["client_id"]
+          },
+          {
+            foreignKeyName: "metric_history_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "v_client_health"
+            referencedColumns: ["client_id"]
+          },
+          {
+            foreignKeyName: "metric_history_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "v_client_metrics"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       v_meta_ads_metrics: {
         Row: {
@@ -3508,13 +3285,6 @@ export type Database = {
             foreignKeyName: "ads_meta_snapshots_client_id_fkey"
             columns: ["client_id"]
             isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "ads_meta_snapshots_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
             referencedRelation: "v_client_health"
             referencedColumns: ["client_id"]
           },
@@ -3586,13 +3356,6 @@ export type Database = {
             foreignKeyName: "ig_account_snapshots_client_id_fkey"
             columns: ["client_id"]
             isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "ig_account_snapshots_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
             referencedRelation: "v_client_health"
             referencedColumns: ["client_id"]
           },
@@ -3650,13 +3413,6 @@ export type Database = {
             foreignKeyName: "ads_meta_snapshots_client_id_fkey"
             columns: ["client_id"]
             isOneToOne: false
-            referencedRelation: "v_carteira_clients"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "ads_meta_snapshots_client_id_fkey"
-            columns: ["client_id"]
-            isOneToOne: false
             referencedRelation: "v_client_health"
             referencedColumns: ["client_id"]
           },
@@ -3697,16 +3453,6 @@ export type Database = {
           status_text: string
           tier: string
           zero_pct: number
-        }[]
-      }
-      get_schema_info: {
-        Args: never
-        Returns: {
-          column_default: string
-          column_name: string
-          data_type: string
-          is_nullable: string
-          table_name: string
         }[]
       }
       metric_has_negative_slope: {
@@ -3830,12 +3576,12 @@ export type Tables<
   DefaultSchemaTableNameOrOptions extends
     | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends (DefaultSchemaTableNameOrOptions extends {
+  TableName extends DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
         DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
-    : never) = never,
+    : never = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -3859,11 +3605,11 @@ export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends (DefaultSchemaTableNameOrOptions extends {
+  TableName extends DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never) = never,
+    : never = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -3884,11 +3630,11 @@ export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends (DefaultSchemaTableNameOrOptions extends {
+  TableName extends DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never) = never,
+    : never = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -3909,11 +3655,11 @@ export type Enums<
   DefaultSchemaEnumNameOrOptions extends
     | keyof DefaultSchema["Enums"]
     | { schema: keyof DatabaseWithoutInternals },
-  EnumName extends (DefaultSchemaEnumNameOrOptions extends {
+  EnumName extends DefaultSchemaEnumNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
-    : never) = never,
+    : never = never,
 > = DefaultSchemaEnumNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -3926,11 +3672,11 @@ export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
     | keyof DefaultSchema["CompositeTypes"]
     | { schema: keyof DatabaseWithoutInternals },
-  CompositeTypeName extends (PublicCompositeTypeNameOrOptions extends {
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
-    : never) = never,
+    : never = never,
 > = PublicCompositeTypeNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -4034,3 +3780,4 @@ export const Constants = {
     },
   },
 } as const
+

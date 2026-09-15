@@ -2,7 +2,8 @@
 'use client'
 
 import { useState } from 'react'
-import { CLIENTS, PERIOD_START, PERIOD_END } from '@/lib/constants'
+import { CLIENTS, PERIOD_START, getPeriodEnd } from '@/lib/constants'
+import { useClientNow } from '@/hooks/useClientNow'
 import { OrbitDashboardProvider } from '@/context/OrbitDashboardContext'
 import FunnelScreen from '@/components/screens/FunnelScreen'
 import { useFunnel } from '@/hooks/useFunnel'
@@ -22,7 +23,15 @@ export default function FunnelPage() {
   // comportamento anterior) — mas agora são só o valor inicial de um
   // estado que o usuário pode mudar via DateRangeControl, em vez de uma
   // constante fixa passada direto pro Provider.
-  const [period, setPeriod] = useState<PeriodRange>({ start: PERIOD_START, end: PERIOD_END })
+  //
+  // FIX v1.0.2 (ripple effect de src/lib/constants.ts): PERIOD_END não
+  // existe mais como constante — "agora" só é seguro depois do mount no
+  // cliente. useClientNow() retorna null no SSR/primeiro render do
+  // cliente (idênticos, sem mismatch) e só preenche o valor real depois
+  // do useEffect; getPeriodEnd() é o fallback estável até lá.
+  const clientNow = useClientNow()
+  const periodEnd = clientNow ?? getPeriodEnd()
+  const [period, setPeriod] = useState<PeriodRange>({ start: PERIOD_START, end: periodEnd })
 
   return (
     <OrbitDashboardProvider
@@ -64,7 +73,7 @@ export default function FunnelPage() {
             ))}
           </div>
 
-          <DateRangeControl value={period} onChange={setPeriod} minDate={PERIOD_START} maxDate={PERIOD_END} />
+          <DateRangeControl value={period} onChange={setPeriod} minDate={PERIOD_START} maxDate={periodEnd} />
         </nav>
 
         {/* Funel Screen */}

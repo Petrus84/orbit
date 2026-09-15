@@ -153,7 +153,7 @@ export async function fetchClientById(clientId: string): Promise<Client | null> 
   ] = await Promise.all([
     supabase
       .schema('orbit')
-      .from('v_carteira_clients' as never)
+      .from('v_carteira_clients')
       .select('id, name, handle, snapshot_count, last_snapshot_date')
       .eq('id', clientId)
       .returns<CarteiraClientRow[]>()

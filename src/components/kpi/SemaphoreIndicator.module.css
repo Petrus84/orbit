@@ -30,3 +30,12 @@
   border:     var(--border-width) solid var(--neon-red);
   color:      var(--neon-red);
 }
+
+/* ✅ NOVO (PR-A): 'neutro' = sem recorte de mercado (não é alerta, não é
+   "tudo bem" — é ausência de régua). Cinza deliberado, sem cor de semáforo,
+   pra não ser lido como positivo nem como atenção. */
+.neutro {
+  background: rgba(255, 255, 255, 0.06);
+  border:     var(--border-width) solid rgba(255, 255, 255, 0.24);
+  color:      rgba(255, 255, 255, 0.55);
+}

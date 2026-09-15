@@ -1,7 +1,8 @@
 'use client'
 import { useState } from 'react'
 import { OrbitDashboardProvider, useOrbitDashboard } from '@/context/OrbitDashboardContext'
-import { CLIENTS, PERIOD_START, PERIOD_END } from '@/lib/constants'
+import { CLIENTS, PERIOD_START, getPeriodEnd } from '@/lib/constants'
+import { useClientNow } from '@/hooks/useClientNow'
 import { Sidebar } from '@/components/layout/Sidebar'
 import { Header } from '@/components/layout/Header'
 import KPICard, { type KPI } from '@/components/kpi/KPICard'
@@ -39,12 +40,18 @@ const clientIds = Object.keys(CLIENTS) as (keyof typeof CLIENTS)[]
 const [activeClientKey, setActiveClientKey] = useState<keyof typeof CLIENTS>(clientIds[0] ?? 'cpimportstore')
 const activeClient = CLIENTS[activeClientKey]
 
-const [period, setPeriod] = useState<PeriodRange>({ start: PERIOD_START, end: PERIOD_END })
+// FIX v1.0.2 (ripple effect de src/lib/constants.ts): PERIOD_END não existe
+// mais como constante — "agora" só é seguro depois do mount no cliente.
+// useClientNow() retorna null no SSR/primeiro render do cliente (idênticos,
+// sem mismatch) e só preenche o valor real depois do useEffect;
+// getPeriodEnd() é o fallback estável até lá.
+const clientNow = useClientNow()
+const periodEnd = clientNow ?? getPeriodEnd()
 
-// ✅ FIX: Garantir que maxDate é sempre PERIOD_END (constante, não muda)
-// Remover "new Date()" daqui — usar a constante importada
+const [period, setPeriod] = useState<PeriodRange>({ start: PERIOD_START, end: periodEnd })
+
 const minDate = PERIOD_START
-const maxDate = PERIOD_END
+const maxDate = periodEnd
 
 return (
   <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>

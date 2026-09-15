@@ -40,7 +40,7 @@ export interface AlertContractFields {
   probableCause: string
   confidenceLevel: ConfidenceLevel
   dataSource: 'real_snapshot' | 'fallback_by_client' | 'fallback_by_error' | 'fallback_by_empty' | 'empty_database' | 'error' | 'estimate'
-  thresholdSource?: ThresholdGranularity
+  thresholdSource?: ThresholdGranularity | null
   confidenceScore?: number | null
   ruleDeclaration?: string
   snapshotId?: string
@@ -136,6 +136,21 @@ const BOUNDED_PERCENT_METRICS: ReadonlySet<string> = new Set([
   'vps_pct',
   'er_real_pct',
   'utility_score_pct',
+])
+
+// ✅ NOVO (PR-A, execução ORBIT §"Porta da RPC", 14/09/2026): única fonte da
+// verdade sobre quais métricas têm régua de mercado real em
+// orbit.ref_thresholds hoje. Confirmado por SQL direto no mesmo dia: só
+// polemic_score_pct tem linhas em dataset_id='benchmark_58_v2_real_schema'
+// (29 linhas, 8 categorias). er_real_pct, vps_pct, utility_score_pct,
+// engagement_public, algo_risk_score, play_to_view_ratio: zero linha v2.
+// Fora deste Set, classifyMetric() NÃO chama a RPC — não existe régua pra
+// comparar, então não finge que existe. Adicionar uma métrica aqui exige
+// confirmar antes, por SQL, que há linha v2 real pra ela — nunca por
+// suposição de nome (ver LEDGER-019: coluna existir não significa régua
+// existir).
+const MARKET_RPC_METRICS: ReadonlySet<string> = new Set([
+  'polemic_score_pct',
 ])
 
 export function mapSegmentToCategory(setorBenchmark: SetorBenchmark | null): string | null {
@@ -295,6 +310,16 @@ function buildTechnicalErrorText(metricName: string): string {
   return `A avaliação de ${label} falhou. Recarregue. Se o cartão voltar assim, ignore o veredito e use só o número bruto.`
 }
 
+// ✅ NOVO (PR-A): texto para métrica fora de MARKET_RPC_METRICS. Mesmo
+// vocabulário já usado em SCORE_KEYS_WITHOUT_SECTOR_TARIFARIO
+// (instagramOverviewRepository.ts) — "sem recorte setorial", nunca
+// "classificação indisponível" (isso soa a falha técnica, não a decisão de
+// produto que de fato é).
+function buildNoMarketRecortText(metricName: string): string {
+  const label = METRIC_LABEL[metricName] ?? metricName
+  return `${capitalize(label)}: número real, sem recorte setorial ainda. Sem base de comparação de mercado para esta métrica hoje.`
+}
+
 function guardOutOfRangePercentMetric(metricName: string, value: number): ClassifiedMetric | null {
   if (!BOUNDED_PERCENT_METRICS.has(metricName)) return null
   if (value >= 0 && value <= 100) return null
@@ -353,6 +378,24 @@ export async function classifyMetric(
 ): Promise<ClassifiedMetric> {
   const outOfRange = guardOutOfRangePercentMetric(metricName, value)
   if (outOfRange) return outOfRange
+
+  // ✅ NOVO (PR-A): porta da RPC. Sem linha de mercado real pra esta
+  // métrica → não chama fn_classify_metric. semaphore='neutro' não é cor de
+  // alerta; thresholdSource=null é sinal explícito de "não houve régua",
+  // distinto de 'global' (que é régua real, só sem recorte por setor/porte).
+  if (!MARKET_RPC_METRICS.has(metricName)) {
+    return {
+      value,
+      semaphore: 'neutro',
+      statusText: buildNoMarketRecortText(metricName),
+      confidenceLevel: 'L2',
+      thresholdSource: null,
+      confidenceScore: null,
+      ruleDeclaration: 'Ainda não há recorte de mercado calibrado para esta métrica.',
+      calibrationMethod: null,
+      zeroInflated: null,
+    }
+  }
 
   const { data, error } = await supabase.rpc('fn_classify_metric', {
     p_metric_name: metricName,
@@ -871,6 +914,23 @@ export async function resolveEngagementScoreAlert(
     classifyMetric('polemic_score_pct', input.polemicScorePct, categoryForClassify, tierForClassify),
   ])
 
+  // ✅ NOVO (execução ORBIT, verificação do fio CASO G, 14/09/2026): guarda
+  // EXPLÍCITA, não implícita. er_real_pct/vps_pct estão fora de
+  // MARKET_RPC_METRICS (contentContractEngine.ts §"Porta da RPC") — nunca
+  // têm régua de mercado hoje, então 'neutro' nunca pode abrir alerta de
+  // gestão (warning/critical) nem ser lido como "saudável" (isso seria
+  // fabricar positivo sem base, o mesmo erro em espelho de fabricar
+  // negativo). Os branches de er.semaphore/vps.semaphore contra
+  // 'vermelho'/'ambar' logo abaixo já ficam estruturalmente inalcançáveis
+  // quando neutro — este assert documenta a invariante em vez de depender
+  // só disso implicitamente, e trava em dev se alguém reativar er/vps em
+  // MARKET_RPC_METRICS sem revisar este arquivo.
+  if (process.env.NODE_ENV !== 'production') {
+    if (er.semaphore === 'neutro' && (er.thresholdSource !== null || vps.thresholdSource !== null)) {
+      console.warn('[CASO G] er/vps saíram de MARKET_RPC_METRICS mas thresholdSource não é null — revise a invariante em contentContractEngine.ts')
+    }
+  }
+
   if (input.vpsPct < 0 || input.vpsPct > 100) {
     return {
       type: 'engagement_collapse',
@@ -1021,6 +1081,34 @@ export async function resolveEngagementScoreAlert(
       dataSource: 'real_snapshot',
       thresholdSource: er.thresholdSource,
       confidenceScore: er.confidenceScore,
+      ruleDeclaration: er.ruleDeclaration,
+      snapshotId: input.snapshotId,
+      metricName: 'er_real_pct',
+      metricValue: input.erRealPct,
+      thresholdValue: null,
+    }
+  }
+
+  // ✅ CORRIGIDO (execução ORBIT, 14/09/2026): antes, este bloco sempre
+  // dizia "Engajamento saudável" usando er.ruleDeclaration — mas com PR-A,
+  // er.ruleDeclaration hoje é 'Ainda não há recorte de mercado calibrado
+  // para esta métrica.' (er/vps fora de MARKET_RPC_METRICS). Colar essa
+  // frase depois de "saudável" fabricava positivo sem base — o mesmo erro
+  // em espelho de fabricar negativo. Quando não há régua, o card é
+  // informativo (severity 'info', sem alegação de saúde), não elogio.
+  if (er.semaphore === 'neutro') {
+    return {
+      type: 'engagement_collapse',
+      severity: 'info',
+      title: `Engajamento no período — ${formatPtBr(input.erRealPct)}% agem no post, ${formatPtBr(input.vpsPct)}% dos seguidores viram`,
+      description: `${er.statusText} ${vps.statusText}`.trim(),
+      natureza: 'tecnica',
+      probableCause: 'n/a — sem régua de mercado calibrada para ER real/VPS hoje.',
+      immediateAction: 'Acompanhe estes dois números na própria série, semana a semana. Não são comparáveis a mercado ainda.',
+      confidenceLevel: 'L2',
+      dataSource: 'real_snapshot',
+      thresholdSource: null,
+      confidenceScore: null,
       ruleDeclaration: er.ruleDeclaration,
       snapshotId: input.snapshotId,
       metricName: 'er_real_pct',

@@ -185,8 +185,8 @@ export function useInstagramOverview({
         'postgres_changes',
         {
           event:  '*',
-          schema: 'public',
-          table:  'kpi_snapshots',
+          schema: 'orbit',
+          table:  'orbit.kpi_snapshots',
           filter: `client_id=eq.${clientId}`,
         },
         (payload) => {

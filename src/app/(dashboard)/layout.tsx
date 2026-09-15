@@ -31,7 +31,8 @@
 
 import { OrbitDashboardProvider } from '@/context/OrbitDashboardContext'
 import { Sidebar } from '@/components/layout/Sidebar'
-import { CLIENTS, PERIOD_START, PERIOD_END } from '@/lib/constants'
+import { CLIENTS, PERIOD_START, getPeriodEnd } from '@/lib/constants'
+import { useClientNow } from '@/hooks/useClientNow'
 
 export default function DashboardLayout({
   children,
@@ -41,11 +42,17 @@ export default function DashboardLayout({
   const defaultClientKey = Object.keys(CLIENTS)[0] as keyof typeof CLIENTS
   const defaultClient = CLIENTS[defaultClientKey]
 
+  // FIX v1.0.2 (ripple effect de src/lib/constants.ts): ver nota em
+  // src/app/(dashboard)/funil/page.tsx sobre por que PERIOD_END virou
+  // getPeriodEnd() + useClientNow().
+  const clientNow = useClientNow()
+  const periodEnd = clientNow ?? getPeriodEnd()
+
   return (
     <OrbitDashboardProvider
       clientId={defaultClient.id}
       periodStart={PERIOD_START}
-      periodEnd={PERIOD_END}
+      periodEnd={periodEnd}
     >
       <div style={{ display: 'flex', minHeight: '100vh' }}>
         <Sidebar />
