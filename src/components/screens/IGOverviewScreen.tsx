@@ -42,7 +42,7 @@ function KPICard({ kpi }: { kpi: KPI }): React.ReactElement {
   const sign = kpi.delta > 0 ? '+' : ''
 
   return (
-    <div className="flex flex-col gap-3 rounded-2xl bg-[#18181F] p-4">
+    <div className="flex flex-col gap-3 rounded-2xl bg-[var(--bg-card)] p-4">
       <div className="flex items-center justify-between">
         <span className="font-sans text-xs font-medium text-zinc-400">{kpi.label}</span>
         <span className="rounded-full bg-zinc-800 px-2 py-0.5 font-sans text-[10px] text-zinc-500">{kpi.flagLevel}</span>
@@ -112,7 +112,7 @@ function mapCriticalAlertToDiagnostic(data: CriticalAlertData): DiagnosticAlertD
 
 function KPISkeleton(): React.ReactElement {
   return (
-    <div className="flex flex-col gap-3 rounded-2xl bg-[#18181F] p-4 animate-pulse">
+    <div className="flex flex-col gap-3 rounded-2xl bg-[var(--bg-card)] p-4 animate-pulse">
       <div className="flex justify-between">
         <div className="h-2.5 w-24 rounded bg-zinc-800" />
         <div className="h-4 w-6 rounded-full bg-zinc-800" />
@@ -130,7 +130,7 @@ function KPISkeleton(): React.ReactElement {
 
 function ScoreSkeleton(): React.ReactElement {
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-zinc-800 bg-[#18181F] p-4 animate-pulse">
+    <div className="flex flex-col gap-3 rounded-2xl border border-zinc-800 bg-[var(--bg-card)] p-4 animate-pulse">
       <div className="h-2.5 w-32 rounded bg-zinc-800" />
       <div className="h-8 w-20 rounded-xl bg-zinc-800" />
       <div className="flex gap-1.5 items-center">
@@ -143,7 +143,7 @@ function ScoreSkeleton(): React.ReactElement {
 
 function TableSkeleton(): React.ReactElement {
   return (
-    <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-[#18181F] animate-pulse">
+    <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-[var(--bg-card)] animate-pulse">
       <div className="border-b border-zinc-800 px-4 py-2.5">
         <div className="h-2.5 w-48 rounded bg-zinc-800" />
       </div>
@@ -177,7 +177,7 @@ function AudienceSkeleton(): React.ReactElement {
 
 function AlertSkeletonRow(): React.ReactElement {
   return (
-    <div className="flex gap-3 rounded-2xl border border-zinc-800 bg-[#18181F] p-4 animate-pulse">
+    <div className="flex gap-3 rounded-2xl border border-zinc-800 bg-[var(--bg-card)] p-4 animate-pulse">
       <div className="h-6 w-6 rounded-full bg-zinc-800 shrink-0" />
       <div className="flex flex-1 flex-col gap-2">
         <div className="h-3 w-40 rounded bg-zinc-800" />
@@ -221,7 +221,7 @@ export default function IGOverviewScreen({ useIGOverview }: IGOverviewScreenProp
   const isLoading = status === 'idle' || status === 'loading'
 
   return (
-    <main className="flex min-h-screen flex-col gap-8 bg-[#0C0C0F] px-4 py-6 sm:px-6">
+    <main className="flex min-h-screen flex-col gap-8 bg-[var(--bg)] px-4 py-6 sm:px-6">
       <SectionHead
         title="Instagram · Visão Geral"
         subtitle={status === 'success' ? 'Últimos 90 dias' : undefined}
@@ -303,7 +303,7 @@ export default function IGOverviewScreen({ useIGOverview }: IGOverviewScreenProp
               ? [0, 1, 2].map((i) => (
                   <div
                     key={i}
-                    className="h-16 rounded-2xl border border-zinc-800 bg-[#18181F] animate-pulse"
+                    className="h-16 rounded-2xl border border-zinc-800 bg-[var(--bg-card)] animate-pulse"
                   />
                 ))
               : (data?.insights ?? []).map((insight) => (

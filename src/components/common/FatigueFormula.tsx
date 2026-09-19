@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function FatigueFormula(): React.ReactElement {
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-zinc-800 bg-[#18181F] p-4">
+    <div className="flex flex-col gap-3 rounded-2xl border border-zinc-800 bg-[var(--bg-card)] p-4">
       {/* Header */}
       <div className="flex items-center gap-2">
         <span className="font-sans text-xs font-semibold uppercase tracking-widest text-zinc-600">
@@ -13,7 +13,7 @@ export default function FatigueFormula(): React.ReactElement {
       {/* Formula block */}
       <div className="overflow-x-auto rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3">
         <pre className="font-mono text-sm leading-relaxed text-zinc-200 whitespace-nowrap">
-          <span className="text-[#C8FF57]">fadiga</span>
+          <span className="text-[var(--acc)]">fadiga</span>
           <span className="text-zinc-500">{' = '}</span>
           <span className="text-white">(</span>
           <span className="text-amber-400">CTR_semana1</span>

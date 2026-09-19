@@ -46,7 +46,7 @@ export default function DiagnosticAlert({ alert, index }: DiagnosticAlertProps):
   const tokens = SEVERITY_TOKENS[alert.severity];
 
   return (
-    <div className={`flex gap-3 rounded-2xl border bg-[#18181F] p-4 ${tokens.border}`}>
+    <div className={`flex gap-3 rounded-2xl border bg-[var(--bg-card)] p-4 ${tokens.border}`}>
       {/* Index number */}
       <div
         className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full font-mono text-xs font-bold ${tokens.numberBg} ${tokens.number}`}

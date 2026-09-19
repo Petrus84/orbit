@@ -72,6 +72,28 @@ const SEVERITY_LABEL: Record<Alert['severity'], string> = {
   success: 'Resolvido',
 }
 
+// ✅ ADICIONADO (P0 — v8.2, item "AlertCard.tsx: Adicionar chips"): rótulos
+// e classes para os chips de contexto. `natureza` espelha orbit.alert_natureza
+// ('tecnica' | 'comunicacao'); confidence_level espelha orbit.confidence_level
+// (L0/L1/L2). Nenhum default inventado — ausência (undefined) simplesmente
+// não renderiza o chip, não vira 'tecnica'/'L0' por engano.
+const NATUREZA_LABEL: Record<NonNullable<Alert['natureza']>, string> = {
+  tecnica: 'Técnica',
+  comunicacao: 'Comunicação',
+}
+
+const CONFIDENCE_LABEL: Record<NonNullable<Alert['confidenceLevel']>, string> = {
+  L0: 'L0 — sem confirmação',
+  L1: 'L1 — parcial',
+  L2: 'L2 — confirmado',
+}
+
+const CONFIDENCE_CLASS: Record<NonNullable<Alert['confidenceLevel']>, string> = {
+  L0: styles.chipConfidenceL0 ?? '',
+  L1: styles.chipConfidenceL1 ?? '',
+  L2: styles.chipConfidenceL2 ?? '',
+}
+
 export default function AlertCard({ alert, onAcknowledge }: AlertCardProps): React.ReactElement {
   const [isLoading, setIsLoading] = useState(false)
 
@@ -127,6 +149,29 @@ export default function AlertCard({ alert, onAcknowledge }: AlertCardProps): Rea
               </>
             )}
           </p>
+        )}
+
+        {/* ✅ ADICIONADO (P0 — v8.2): chips de contexto — métrica, natureza
+            e confiança do dado (L0–L2). Cada chip só aparece se o campo
+            existir; ausência de `natureza`/`confidenceLevel` é estado
+            válido (alerta ainda não classificado pelo engine ou métrica
+            sem proveniência registrada), não deve virar chip "vazio". */}
+        {(alert.metricName || alert.natureza || alert.confidenceLevel) && (
+          <div className={styles.chipRow}>
+            {alert.metricName && (
+              <span className={styles.chip}>{alert.metricName}</span>
+            )}
+            {alert.natureza && (
+              <span className={`${styles.chip} ${styles.chipNatureza}`}>
+                {NATUREZA_LABEL[alert.natureza]}
+              </span>
+            )}
+            {alert.confidenceLevel && (
+              <span className={`${styles.chip} ${CONFIDENCE_CLASS[alert.confidenceLevel]}`}>
+                {CONFIDENCE_LABEL[alert.confidenceLevel]}
+              </span>
+            )}
+          </div>
         )}
 
         {alert.suggestedAction && <p className={styles.text}>💡 {alert.suggestedAction}</p>}

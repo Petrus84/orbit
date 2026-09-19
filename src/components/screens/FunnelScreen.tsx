@@ -1,6 +1,6 @@
 // src/components/screens/FunnelScreen.tsx
 //
-// ✅ Migrado de Tailwind ad-hoc (bg-[#18181F] hardcoded, max-w-7xl,
+// ✅ Migrado de Tailwind ad-hoc (bg-[var(--bg-card)] hardcoded, max-w-7xl,
 // text-zinc-*/border-zinc-* — paleta genérica desconectada do design
 // system) para FunnelScreen.module.css, que já existia pronto e
 // token-based mas tinha parado de ser importado. Mesma causa raiz do

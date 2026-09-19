@@ -61,6 +61,25 @@ return (
 )
 }
 
+// ✅ NOVO (18/09/2026) — algo_risk_score, família Ln. Card separado de
+// metricCard() de propósito: nunca tem semaphore verde/ambar/vermelho de
+// mercado (não é ClassifiedMetric), só um badge neutro — o valor é sempre
+// "vs. você mesmo", nunca "vs. setor".
+function algoRiskCard(algoRisk: SectorPositioning['algoRisk']) {
+  const value = algoRisk?.value ?? null
+  return (
+    <div className={styles.metricCard} key="algo-risk">
+      <p className={styles.metricLabel}>Risco algorítmico (série própria)</p>
+      <p className={styles.metricValue}>
+        {value != null ? value.toFixed(2) : '—'}
+      </p>
+      <span className={styles.badgeNeutral}>
+        {algoRisk?.statusText ?? 'Sem série suficiente para calcular risco algorítmico ainda.'}
+      </span>
+    </div>
+  )
+}
+
 export function SectorPositioningPanel({
 positioning,
 }: SectorPositioningPanelProps) {
@@ -132,6 +151,14 @@ return (
     {ruleDeclaration && (
       <p className={styles.ruleText}>{ruleDeclaration}</p>
     )}
+
+    {/* ✅ NOVO (18/09/2026): seção separada, rótulo distinto de
+        "BENCHMARKING" de propósito — algo_risk_score é família Ln
+        (self-reference), nunca compara com mercado/setor. */}
+    <p className={styles.blockLabel}>SÉRIE PRÓPRIA</p>
+    <div className={styles.metricsRow}>
+      {algoRiskCard(positioning.algoRisk)}
+    </div>
   </GlassCard>
 )
 }

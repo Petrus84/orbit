@@ -13,7 +13,7 @@ export default function OnboardingPage(): React.ReactElement {
 
   if (status === 'loading') {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#0C0C0F]">
+      <div className="flex min-h-screen items-center justify-center bg-[var(--bg)]">
         <p className="text-zinc-400">Carregando...</p>
       </div>
     )
@@ -21,7 +21,7 @@ export default function OnboardingPage(): React.ReactElement {
 
   if (status === 'error') {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#0C0C0F]">
+      <div className="flex min-h-screen items-center justify-center bg-[var(--bg)]">
         <p className="text-red-400">Erro: {error}</p>
       </div>
     )

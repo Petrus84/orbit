@@ -159,7 +159,7 @@ transition:        color var(--transition-fast);
 }
 
 .postCaption:hover {
-color:             var(--neon-cyan, #00c8ff);
+color:             var(--neon-cyan); /* removido fallback #00c8ff — terceiro tom de cyan fora da paleta; --neon-cyan já está sempre definido */
 border-bottom-color: rgba(0, 255, 200, 0.5);
 }
 

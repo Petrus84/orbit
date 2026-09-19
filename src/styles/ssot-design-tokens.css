@@ -63,10 +63,22 @@
   --acc2: #8B5CF6;
   --acc3: #FF6B35;
 
+  /* FIX WCAG 1.4.3 (15/09/2026): --acc2 usado como cor de TEXTO falha AA
+     (4.17:1 sobre --bg2, 3.86:1 sobre --bg3). --acc2 continua válido para
+     bordas/fundos/ícones, que só precisam de 3:1. Para texto, usar
+     --acc2-text (mesmo roxo, 20% mais claro — 5.7:1+ em qualquer fundo). */
+  --acc2-text: #a27df8;
+
   --red: #FF4444;
   --amber: #FFB020;
   --green: #2ECC71;
   --blue: #4A90FF;
+
+  /* Variantes claras p/ texto sobre badge já tingido (ex.: rgba(--red, 0.15)
+     de fundo) — mantém legibilidade sem introduzir tom fora do sistema.
+     Consolida os hex que existiam soltos (#ff8080, #7eb3ff) em tokens nomeados. */
+  --red-text: #ff8080;
+  --blue-text: #7eb3ff;
 
   --neon-cyan: #00FFFF;
   --neon-red: #FF4444;

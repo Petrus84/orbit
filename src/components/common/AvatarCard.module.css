@@ -112,7 +112,7 @@
 
 /* Único uso de tom apagado legítimo: placeholder, não dado real */
 .insightFallback {
-  color: var(--t2);
+  color: var(--text-muted); /* FIX WCAG: era var(--t2), 3.21:1 sobre hover — falha AA. --text-muted já resolve para --t1 (8:1+) */
   font-style: italic;
 }
 

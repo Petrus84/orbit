@@ -25,5 +25,31 @@
     color: var(--t0);
     font-family: 'DM Sans', sans-serif;
   }
+
+  /* FIX a11y (15/09/2026): 27 dos 35 CSS Modules não tinham nenhum estado
+     de foco. Regra global cobre esses 27 de uma vez, sem editar componente
+     por componente. Onde um módulo já define seu próprio :focus-visible
+     (8 arquivos), aquela regra é mais específica e continua vencendo —
+     esta é só o piso, não substitui nada que já existe. */
+  :focus-visible {
+    outline: 2px solid var(--neon-cyan);
+    outline-offset: 2px;
+    border-radius: var(--radius-xs);
+  }
+
+  /* FIX a11y (15/09/2026): só 2 arquivos respeitavam prefers-reduced-motion,
+     mas há @keyframes contínuas (orbitSpin, orbitPulse) em 5 telas. Regra
+     global cobre todas de uma vez — nenhuma animação é removida, só some
+     para quem pediu isso no SO. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
 

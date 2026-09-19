@@ -267,6 +267,30 @@ export interface ClassifiedMetric {
 }
 
 /**
+ * ✅ NOVO (18/09/2026) — algo_risk_score, família Ln (self-reference, igual
+ * `reach` ids 76/77 do `ref_thresholds`). Fórmula fechada: mediana de
+ * `engagement_public` (likes+comments) numa janela recente (N=12, mín. 6)
+ * vs. mediana numa janela baseline disjunta (30 posts imediatamente
+ * anteriores), cada janela trimada por IQR separadamente, `likes IS NULL`
+ * excluído da mediana (não vira 0). `risk = 1 - mediana(R)/mediana(B)`.
+ * NUNCA vira ClassifiedMetric — não é benchmark de mercado, nunca chama
+ * fn_classify_metric('algo_risk_score'), nunca compara "vs loja"/"vs 10k".
+ * Escala −∞…1: risk=0 é estável; risk>0 é queda vs. o próprio passado;
+ * risk<0 é acima do próprio passado (mantido, não é "erro").
+ */
+export interface AlgoRiskScore {
+  // null = sem série suficiente (janela recente ou baseline vazia após
+  // trim, ou baseline com mediana 0 — ver regras de borda no resolver)
+  value: number | null
+  recentMedian: number | null
+  baselineMedian: number | null
+  recentWindowSize: number
+  baselineWindowSize: number
+  // texto pronto pro card, já na leitura certa (nunca "vs loja")
+  statusText: string
+}
+
+/**
  * ✅ PATCH (perícia enums 14/08): enum `orbit.campaign_objective` tem 8
  * valores; estava como `string` solto (INV-3).
  */
@@ -491,6 +515,9 @@ export interface QualityScoreItem {
   statusText: string
   statusVariant: StatusVariant
   glowColor: GlowColor
+  // Cadeia dado -> informação -> ação (scoreStatusCopy.ts)
+  actionText?: string | null
+  referenceNote?: string | null
 }
 
 export interface FormatPerformanceRow {
@@ -528,6 +555,12 @@ export interface PostSummary {
   // no banco (motor de boost), mas nunca tinha sido exposto na tela —
   // ficava "invisível" mesmo quando true. Ver FormatPerformanceTable.
   isBoostCandidate: boolean
+  // ✅ NOVO (2026-09-18): plays / views do reel. Só existe para Reels —
+  // null em posts estáticos e carrosséis. Nunca substituir null por 0:
+  // ausência é distinta de ratio zero (fisicamente impossível num reel
+  // com views). Fonte: orbit.ig_posts.play_to_view_ratio (coluna calculada
+  // no banco). Renderizado em PostDetailRow apenas quando não-null.
+  playToViewRatio: number | null
 }
 
 export interface InsightData {
@@ -555,6 +588,9 @@ export interface CriticalAlertData {
    */
   natureza?: AlertNatureza
   probableCause?: string | null
+  // Ação imediata (um verbo, um objeto, um prazo) — último elo da cadeia
+  // dado → informação → alerta → ação. Antes era descartada no toCriticalAlert.
+  immediateAction?: string | null
   dataSource?: 'real_snapshot' | 'fallback_by_client' | 'fallback_by_error' | 'fallback_by_empty' | 'empty_database' | 'error' | 'estimate'
 }
 export interface IGOverviewData {
@@ -689,6 +725,10 @@ export interface SectorPositioning {
   vpsValue: number | null
   polemicScore: ClassifiedMetric | null
   polemicScoreValue: number | null
+  // ✅ NOVO (18/09/2026, fórmula Ln fechada — self-reference, não é
+  // benchmark de mercado). Tipo próprio, não ClassifiedMetric: não tem
+  // semaphore verde/ambar/vermelho de mercado, nunca chama fn_classify_metric.
+  algoRisk: AlgoRiskScore | null
   engagementPeriodNotes: string | null
   contentProxyNotes: string | null
   misalignmentNotes: string | null

@@ -29,7 +29,7 @@ const FLAG_TOKENS: Record<FlagLevel, { bg: string; text: string; label: string }
 const DELTA_TOKENS: Record<'up' | 'down' | 'neutral', { color: string; arrow: string }> = {
   up:      { color: 'text-emerald-400', arrow: '↑' },
   down:    { color: 'text-red-400',     arrow: '↓' },
-  neutral: { color: 'text-zinc-500',    arrow: '→' },
+  neutral: { color: 'text-[var(--text-dim)]',    arrow: '→' },
 };
 
 // ─── Sparkline ────────────────────────────────────────────────
@@ -57,7 +57,7 @@ function Sparkline({ data, trend }: SparklineProps): React.ReactElement | null {
     .join(' ');
 
   const strokeColor =
-    trend === 'up' ? '#2ECC71' : trend === 'down' ? '#FF4444' : '#71717A';
+    trend === 'up' ? 'var(--green)' : trend === 'down' ? 'var(--red)' : 'var(--text-dim)';
 
   return (
     <svg
@@ -103,10 +103,10 @@ export default function KPICard({ kpi }: KPICardProps): React.ReactElement {
   // com dado real, ele passa a aparecer automaticamente.
 
   return (
-    <div className="flex flex-col gap-3 rounded-2xl bg-[#18181F] p-4">
+    <div className="flex flex-col gap-3 rounded-2xl bg-[var(--bg-card)] p-4">
       {/* Header row: label + flag */}
       <div className="flex items-center justify-between gap-2">
-        <span className="font-sans text-xs font-medium uppercase tracking-widest text-zinc-500">
+        <span className="font-sans text-xs font-medium uppercase tracking-widest text-[var(--text-dim)]">
           {kpi.label}
         </span>
         <span
@@ -122,7 +122,7 @@ export default function KPICard({ kpi }: KPICardProps): React.ReactElement {
           <span className="font-mono text-2xl font-bold tabular-nums text-white leading-none">
             {formatValue(kpi.value)}
             {kpi.unit && (
-              <span className="ml-0.5 font-sans text-sm font-normal text-zinc-500">
+              <span className="ml-0.5 font-sans text-sm font-normal text-[var(--text-dim)]">
                 {kpi.unit}
               </span>
             )}

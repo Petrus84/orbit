@@ -138,13 +138,13 @@ export default function AlertasScreen({ useAlerts }: AlertasScreenProps): React.
     status === 'success'
       ? `${counts.total} alerta${counts.total !== 1 ? 's' : ''}${
           counts.critical > 0 ? ` · ${counts.critical} crítico${counts.critical !== 1 ? 's' : ''}` : ''
-        }`
+        } · todos os clientes`
       : undefined
 
   const isLoading = status === 'idle' || status === 'loading'
 
   return (
-    <main className="flex min-h-screen flex-col gap-6 bg-[#0C0C0F] px-4 py-6 sm:px-6">
+    <main className="flex min-h-screen flex-col gap-6 bg-[var(--bg)] px-4 py-6 sm:px-6">
       <SectionHead title="Central de alertas" subtitle={subtitle} />
 
       <div className="flex gap-1.5 flex-wrap" role="tablist" aria-label="Filtrar alertas">

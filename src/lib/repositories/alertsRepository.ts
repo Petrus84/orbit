@@ -304,6 +304,13 @@ export async function createAlert(
       probable_cause: draft.probableCause ?? null,
       confidence_level: draft.confidenceLevel ?? null,
       data_source: draft.dataSource ?? null,
+      // ✅ FIX (P0 — v8.2, mesmo gap #4 do createAlertsBatch): sem isso o
+      // alerta único também nascia sem metric/threshold/snapshot/ação.
+      metric_name: draft.metricName ?? null,
+      metric_value: draft.metricValue ?? null,
+      threshold_value: draft.thresholdValue ?? null,
+      snapshot_id: draft.snapshotId ?? null,
+      suggested_action: draft.immediateAction ?? null,
     })
     .select(ALERT_SELECT_FIELDS)
     .single()
@@ -337,7 +344,7 @@ export async function createAlertsBatch(
 
   const rows = validDrafts.map((d) => {
     const alertType = d.draft.type as AlertType
-    
+
     return {
       client_id: d.clientId,
       alert_type: alertType,
@@ -348,6 +355,16 @@ export async function createAlertsBatch(
       probable_cause: d.draft.probableCause ?? null,
       confidence_level: d.draft.confidenceLevel ?? null,
       data_source: d.draft.dataSource ?? null,
+      // ✅ FIX (P0 — v8.2, gap #4 "Sem ação"): o engine (contentContractEngine.ts)
+      // já produz metricName/metricValue/thresholdValue/snapshotId/immediateAction
+      // em AlertDraft — mas o writer nunca os incluía no INSERT, então
+      // chegavam sempre NULL no banco (Central "não persiste"). Sem isso,
+      // o chip de métrica em AlertCard.tsx nunca tem o que mostrar.
+      metric_name: d.draft.metricName ?? null,
+      metric_value: d.draft.metricValue ?? null,
+      threshold_value: d.draft.thresholdValue ?? null,
+      snapshot_id: d.draft.snapshotId ?? null,
+      suggested_action: d.draft.immediateAction ?? null,
     }
   })
 

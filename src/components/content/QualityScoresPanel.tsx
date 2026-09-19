@@ -62,12 +62,19 @@ export function QualityScoresPanel({ scores }: QualityScoresPanelProps) {
 
             <p className={[
               styles.statusText,
-              score.statusVariant === 'ok'   ? styles.statusOk
-              : score.statusVariant === 'warn' ? styles.statusWarn
+              score.glowColor === 'cyan' ? styles.statusOk
+              : score.glowColor === 'gold' ? styles.statusWarn
+              : score.glowColor === 'red' ? styles.statusDanger
               : styles.statusNeutral,
             ].join(' ')}>
               {STATUS_ICON[score.statusVariant]} {score.statusText}
             </p>
+            {score.actionText && (
+              <p className={styles.actionText}>{score.actionText}</p>
+            )}
+            {score.referenceNote && (
+              <p className={styles.referenceNote}>{score.referenceNote}</p>
+            )}
           </div>
         ))}
       </div>

@@ -54,9 +54,15 @@ export default function DashboardLayout({
       periodStart={PERIOD_START}
       periodEnd={periodEnd}
     >
-      <div style={{ display: 'flex', minHeight: '100vh' }}>
+      {/* FIX a11y/responsivo (15/09/2026): só 7 de 35 CSS Modules tinham
+          @media e a sidebar tem largura fixa sem breakpoint — abaixo de
+          ~900px o conteúdo era espremido sem alternativa. `overflowX: auto`
+          é a rede de segurança mínima (rola em vez de quebrar o layout);
+          um padrão de colapso de sidebar fica para uma decisão de produto
+          à parte — ver nota em Sidebar.module.css. */}
+      <div style={{ display: 'flex', minHeight: '100vh', overflowX: 'auto' }}>
         <Sidebar />
-        <div style={{ flex: 1, overflow: 'auto' }}>{children}</div>
+        <div style={{ flex: 1, overflow: 'auto', minWidth: 680 }}>{children}</div>
       </div>
     </OrbitDashboardProvider>
   )

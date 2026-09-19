@@ -39,14 +39,30 @@
   min-height: 48px;
   padding: var(--space-2, 0.5rem) var(--space-4, 1rem);
   border-radius: var(--radius-lg, 8px);
-  background: linear-gradient(135deg, var(--step-color) 0%, color-mix(in srgb, var(--step-color) 78%, black) 100%);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  transition: transform var(--transition-fast, 120ms ease), box-shadow var(--transition-fast, 120ms ease);
+  /* Glass: sem preenchimento sólido — fundo do card + tint mínimo da cor da
+     etapa, com borda e glow interno seguindo --step-color (mesma linguagem
+     dos variantes glow* do GlassCard). */
+  background:
+    linear-gradient(135deg,
+      color-mix(in srgb, var(--step-color) 8%, transparent) 0%,
+      color-mix(in srgb, var(--step-color) 2%, transparent) 100%),
+    var(--bg-card);
+  border: 1px solid color-mix(in srgb, var(--step-color) 45%, transparent);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.25),
+    inset 0 0 12px color-mix(in srgb, var(--step-color) 10%, transparent);
+  transition:
+    transform var(--transition-fast, 120ms ease),
+    box-shadow var(--transition-fast, 120ms ease),
+    border-color var(--transition-fast, 120ms ease);
 }
 
 .bar:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  border-color: color-mix(in srgb, var(--step-color) 70%, transparent);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.35),
+    inset 0 0 16px color-mix(in srgb, var(--step-color) 16%, transparent);
 }
 
 .barInfo {
@@ -60,7 +76,7 @@
 .label {
   font-family: var(--font-family);
   font-size: var(--font-size-sm, 0.875rem);
-  color: #fff;
+  color: var(--text-primary); /* era #fff literal — --t0 é visualmente equivalente e é o token oficial */
   font-weight: var(--font-weight-semibold, 600);
   white-space: nowrap;
   overflow: hidden;
@@ -70,7 +86,7 @@
 .value {
   font-family: var(--font-mono);
   font-size: var(--font-size-xs, 0.75rem);
-  color: rgba(255, 255, 255, 0.82);
+  color: color-mix(in srgb, var(--text-primary) 82%, transparent); /* era rgba(255,255,255,.82) literal */
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
@@ -79,7 +95,7 @@
   font-family: var(--font-mono);
   font-size: var(--font-size-sm, 0.875rem);
   font-weight: var(--font-weight-bold, 700);
-  color: #fff;
+  color: var(--step-color);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
   flex-shrink: 0;

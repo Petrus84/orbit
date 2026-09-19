@@ -76,7 +76,20 @@ export function CriticalAlert({ alert, className, onActionClick }: CriticalAlert
       <div className={styles.content}>
         <p className={styles.title}>{alert.title}</p>
         <p className={styles.body}>{alert.body}</p>
-          {alert.description && alert.description !== alert.body && <p className={styles.body}>{alert.description}</p>}        {alert.actionUrl && (
+        {alert.description && alert.description !== alert.body && (
+          <p className={styles.body}>{alert.description}</p>
+        )}
+        {alert.probableCause && (
+          <p className={styles.body}>
+            <strong className={styles.label}>Causa provável:</strong> {alert.probableCause}
+          </p>
+        )}
+        {alert.immediateAction && (
+          <p className={styles.actionText}>
+            <strong className={styles.label}>Ação:</strong> {alert.immediateAction}
+          </p>
+        )}
+        {alert.actionUrl && (
           <button type="button" className={styles.action} onClick={handleActionClick}>
             Ver detalhes
           </button>

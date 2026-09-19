@@ -160,6 +160,57 @@
   line-height: 1.5;
 }
 
+/* ✅ ADICIONADO (P0 — v8.2): fileira de chips de contexto (métrica,
+   natureza, confiança). Mesma lógica visual do .severityBadge (pill
+   pequena, sem o glow de 24px do card inteiro), mas neutra — não é um
+   indicador de severidade, é metadado de proveniência do alerta. */
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-top: var(--space-1);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  padding: 1px var(--space-3);
+  border-radius: var(--border-radius-lg);
+  border: var(--border-width) solid var(--border-default);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* natureza: 'tecnica' | 'comunicacao' — mesma paleta cyan do .info, mas
+   sem glow (é rótulo de metadado, não status de alerta). */
+.chipNatureza {
+  border-color: var(--border-glow-cyan);
+  color: #7eb3ff;
+  background: rgba(0, 255, 255, 0.06);
+}
+
+/* confidence_level: L0/L1/L2 — L2 (confirmado) em verde, L1 em âmbar,
+   L0 (sem confirmação) neutro. Selo de confiança do dado, não severidade
+   do alerta. */
+.chipConfidenceL2 {
+  border-color: var(--green);
+  color: var(--green);
+  background: rgba(46, 204, 113, 0.1);
+}
+.chipConfidenceL1 {
+  border-color: var(--border-glow-gold);
+  color: var(--amber);
+  background: rgba(255, 195, 0, 0.1);
+}
+.chipConfidenceL0 {
+  border-color: var(--border-default);
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.04);
+}
+
 /* ⚠️ --space-2 não confirmado — usei --space-1 (confirmado) como aproximação
    conservadora até alguém confirmar se --space-2 existe de verdade. */
 .meta {

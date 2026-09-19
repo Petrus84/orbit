@@ -73,7 +73,7 @@
   font-family: var(--font);
   font-size: var(--font-size-xs);
   font-weight: 500;
-  color: var(--t2);
+  color: var(--text-muted); /* FIX WCAG: era var(--t2), 3.21:1 sobre hover — falha AA. --text-muted já resolve para --t1 (8:1+) */
   text-transform: uppercase;
   letter-spacing: 0.03em;
   margin: 0 0 var(--space-2) 0;
@@ -154,7 +154,7 @@
   font-family: var(--font);
   font-size: var(--font-size-xs);
   font-weight: 500;
-  color: var(--t2);
+  color: var(--text-muted); /* FIX WCAG: era var(--t2), 3.21:1 sobre hover — falha AA. --text-muted já resolve para --t1 (8:1+) */
   text-transform: uppercase;
   letter-spacing: 0.03em;
   margin: 0 0 var(--space-2) 0;

@@ -29,7 +29,7 @@ const OBJECTIVE_LABELS: Record<CampaignObjective, string> = {
 
 const OBJECTIVE_COLORS: Record<CampaignObjective, string> = {
   awareness:   'text-blue-400',
-  leads:       'text-[#C8FF57]',
+  leads:       'text-[var(--acc)]',
   conversion:  'text-amber-400',
   retargeting: 'text-purple-400',
 };

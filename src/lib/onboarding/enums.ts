@@ -6,6 +6,15 @@
 // `Priority` nunca existiu como tipo nomeado — é só o literal inline de
 // `SchwatzValue.priority`; derivado aqui via indexed access em vez de
 // inventar um tipo novo em orbit.ts sem confirmação.
+//
+// ✅ UX (copy otimizada — 15/09/2026): rótulos reescritos em linguagem
+// mais natural para o cliente final (menos jargão de schema, mais frase
+// de produto). Uma correção feita nesta rodada: ENUM_CONFIDENCE chegou
+// com L0/L2 invertidos (L0 marcado como "Confirmado" e L2 como "precisa
+// de confirmação") — o resto do projeto (orbit.ts, AlertCard.tsx,
+// ENUM_CONFIDENCE anterior) trata L0 = nível mais baixo de confiança
+// (sem confirmação) e L2 = mais alto (confirmado). Mantida a copy nova,
+// corrigida a direção.
 import type {
   CTAType,
   FunnelMaturity,
@@ -21,77 +30,77 @@ import type {
 export type Priority = SchwatzValue['priority']
 
 export const ENUM_TOTAL_FOLLOWERS_SOURCE: Array<[TotalFollowersSource, string]> = [
-  ['manual_print_confirmado', 'Manual (print confirmado)'],
-  ['instagram_api', 'Instagram API'],
-  ['estimate', 'Estimativa'],
-  ['scrape_perfil_confirmado', 'Scrape de perfil confirmado'],
+  ['manual_print_confirmado', 'Confirmado manualmente (com print)'],
+  ['instagram_api', 'Conectado via Instagram'],
+  ['estimate', 'Estimativa baseada em dados'],
+  ['scrape_perfil_confirmado', 'Verificado pelo perfil (dados públicos)'],
 ]
 
 export const ENUM_CTA: Array<[CTAType, string]> = [
-  ['link_direto', 'Link direto'],
-  ['linktree_multilink', 'Linktree / multilink'],
-  ['dm_comentario', 'DM / comentário'],
-  ['link_bio', 'Link na bio'],
-  ['nenhum', 'Nenhum'],
+  ['link_direto', 'Link direto no post'],
+  ['linktree_multilink', 'Linktree ou agregador de links'],
+  ['dm_comentario', 'Contato via DM ou comentários'],
+  ['link_bio', 'Link na bio do perfil'],
+  ['nenhum', 'Sem chamada para ação identificada'],
 ]
 
 export const ENUM_FUNNEL: Array<[FunnelMaturity, string]> = [
-  ['nao_implementado', 'Não implementado'],
-  ['implementado_fragmentado', 'Implementado (fragmentado)'],
-  ['implementado_unificado', 'Implementado (unificado)'],
-  ['funil_basico', 'Funil básico'],
+  ['nao_implementado', 'Sem funil de vendas estruturado'],
+  ['implementado_fragmentado', 'Funil em desenvolvimento (múltiplas plataformas)'],
+  ['implementado_unificado', 'Funil integrado e organizado'],
+  ['funil_basico', 'Funil básico funcionando'],
 ]
 
 export const ENUM_SETOR: Array<[SetorBenchmark, string]> = [
-  ['comercio_direto_ecommerce_social', 'Comércio direto / e-commerce social'],
-  ['comissionamento_afiliados', 'Comissionamento de afiliados'],
-  ['infoprodutor_educador_pago', 'Infoprodutor / educador pago'],
-  ['servico_consultoria_profissional', 'Serviço / consultoria profissional'],
-  ['patrocinio_publicidade_marca', 'Patrocínio / publicidade de marca'],
-  ['membership_assinatura_comunidade', 'Membership / assinatura de comunidade'],
-  ['monetizacao_nativa_plataforma', 'Monetização nativa de plataforma'],
-  ['autoridade_personal_branding_b2b', 'Autoridade / personal branding B2B'],
-  ['saas_ferramenta', 'SaaS / ferramenta'],
-  ['pre_monetizacao_a_validar', 'Pré-monetização (a validar)'],
+  ['comercio_direto_ecommerce_social', 'Venda direta / e-commerce nas redes'],
+  ['comissionamento_afiliados', 'Renda por indicações (afiliados)'],
+  ['infoprodutor_educador_pago', 'Cursos, treinamentos e conteúdo pago'],
+  ['servico_consultoria_profissional', 'Serviços e consultoria profissional'],
+  ['patrocinio_publicidade_marca', 'Parcerias e publicidade de marcas'],
+  ['membership_assinatura_comunidade', 'Comunidade ou assinatura mensal'],
+  ['monetizacao_nativa_plataforma', 'Ganhos diretos da plataforma (ads, tips)'],
+  ['autoridade_personal_branding_b2b', 'Autoridade e parcerias B2B'],
+  ['saas_ferramenta', 'Software ou ferramenta SaaS'],
+  ['pre_monetizacao_a_validar', 'Em fase de teste (modelo ainda incerto)'],
 ]
 
 export const ENUM_PROOF: Array<[ProofMechanism, string]> = [
-  ['prova_social', 'Prova social'],
-  ['autoridade', 'Autoridade'],
-  ['escassez_urgencia', 'Escassez / urgência'],
-  ['associacao_marca', 'Associação de marca'],
-  ['resultado_documentado', 'Resultado documentado'],
-  ['clientes_ativos_gestao', 'Clientes ativos em gestão'],
-  ['nenhum_observavel', 'Nenhum observável'],
+  ['prova_social', 'Comunidade engajada (comentários, compartilhamentos)'],
+  ['autoridade', 'Reconhecimento e expertise na área'],
+  ['escassez_urgencia', 'Oferta limitada ou prazo curto'],
+  ['associacao_marca', 'Parcerias com marcas conhecidas'],
+  ['resultado_documentado', 'Resultados comprovados (cases, antes/depois)'],
+  ['clientes_ativos_gestao', 'Clientes ativos trabalhando com você'],
+  ['nenhum_observavel', 'Sem elementos de prova visíveis'],
 ]
 
 export const ENUM_PANKSEPP: Array<[PankseppSystem, string]> = [
-  ['SEEKING', 'SEEKING'],
-  ['CARE', 'CARE'],
-  ['PLAY', 'PLAY'],
-  ['LUST', 'LUST'],
-  ['FEAR', 'FEAR'],
-  ['RAGE', 'RAGE'],
-  ['PANIC_GRIEF', 'PANIC_GRIEF'],
+  ['SEEKING', 'Busca e descoberta'],
+  ['CARE', 'Cuidado e proteção'],
+  ['PLAY', 'Diversão e leveza'],
+  ['LUST', 'Desejo e atração'],
+  ['FEAR', 'Segurança e proteção'],
+  ['RAGE', 'Justiça e indignação'],
+  ['PANIC_GRIEF', 'Perda e urgência'],
 ]
 
 export const ENUM_AFFECT_SOURCE: Array<[ValuesAffectSource, string]> = [
-  ['onboarding', 'Onboarding'],
-  ['client_feedback', 'Feedback do cliente'],
-  ['manual', 'Manual'],
-  ['bio_oficial_zip_insights_decisao_canal', 'Bio oficial + zip Insights'],
+  ['onboarding', 'Informações do seu cadastro'],
+  ['client_feedback', 'Feedback que você nos passou'],
+  ['manual', 'Dados inseridos manualmente'],
+  ['bio_oficial_zip_insights_decisao_canal', 'Análise da sua bio + dados públicos'],
 ]
 
 export const ENUM_CONFIDENCE: Array<[ConfidenceLevel, string]> = [
-  ['L0', 'L0 — sem confirmação'],
-  ['L1', 'L1 — parcialmente confirmado'],
-  ['L2', 'L2 — confirmado'],
+  ['L0', 'Estimado — precisa de confirmação'],
+  ['L1', 'Calculado — baseado em dados parciais'],
+  ['L2', 'Confirmado — dados diretos da fonte'],
 ]
 
 export const ENUM_PRIORITY: Array<[Priority, string]> = [
-  ['high', 'Alta'],
-  ['medium', 'Média'],
-  ['low', 'Baixa'],
+  ['high', 'Alta prioridade'],
+  ['medium', 'Média prioridade'],
+  ['low', 'Baixa prioridade'],
 ]
 
 export const SCHWARTZ_SUGESTOES = [

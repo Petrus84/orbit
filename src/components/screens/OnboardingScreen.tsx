@@ -83,7 +83,7 @@ interface LogEntry {
   changes: string[]
 }
 
-const AUD_COLORS = ['#06b6d4', '#fbbf24', '#a78bfa', '#ef4444']
+const AUD_COLORS = ['var(--neon-cyan)', 'var(--amber)', 'var(--acc2)', 'var(--red)']
 
 export default function OnboardingScreen({
   clientId,

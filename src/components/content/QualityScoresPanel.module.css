@@ -135,7 +135,7 @@
   font-size: var(--font-size-xs);
   font-weight: 500;
   letter-spacing: 0.03em;
-  color: var(--t2);
+  color: var(--text-muted); /* FIX WCAG: era var(--t2), 3.21:1 sobre hover — falha AA. --text-muted já resolve para --t1 (8:1+) */
   text-transform: uppercase;
   margin: 0 0 var(--space-2) 0;
 }
@@ -179,8 +179,12 @@
   color: var(--amber);
 }
 
+.statusDanger {
+  color: var(--red-text);
+}
+
 .statusNeutral {
-  color: var(--t2);
+  color: var(--text-muted); /* FIX WCAG: era var(--t2), 3.21:1 sobre hover — falha AA. --text-muted já resolve para --t1 (8:1+) */
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -207,4 +211,19 @@
 .scoreBox:focus-visible {
   outline: 2px solid var(--neon-cyan);
   outline-offset: 1px;
+}
+
+.actionText {
+  margin: var(--space-1, 0.25rem) 0 0;
+  font-size: var(--font-size-xs);
+  line-height: 1.4;
+  color: var(--text-primary);
+}
+
+.referenceNote {
+  margin: var(--space-1, 0.25rem) 0 0;
+  font-size: var(--font-size-xs);
+  line-height: 1.4;
+  font-style: italic;
+  color: var(--text-muted);
 }

@@ -81,9 +81,9 @@ return (
                 cursor: 'pointer',
                 fontWeight: activeClientKey === key ? 700 : 400,
                 background: activeClientKey === key
-                  ? 'rgba(0,200,255,0.15)'
-                  : 'rgba(255,255,255,0.06)',
-                color: activeClientKey === key ? '#00c8ff' : '#aaa',
+                  ? 'rgba(0,255,255,0.15)'
+                  : 'var(--bg-hover)',
+                color: activeClientKey === key ? 'var(--neon-cyan)' : 'var(--text-muted)',
                 transition: 'all 0.15s',
               }}
             >
@@ -178,7 +178,7 @@ return (
               // classe que a aba Audiência já usa) é flex de largura cheia.
               <section className={styles.tabContent} aria-label="Dados detalhados por postagem">
                 <GlassCard glowColor="cyan">
-                  <h3 style={{ color: '#fff', marginBottom: '1rem' }}>
+                  <h3 style={{ color: 'var(--text-primary)', marginBottom: '1rem' }}>
                     Métricas Agregadas por Formato
                   </h3>
                   <FormatPerformanceTable rows={data.formatPerformance} />

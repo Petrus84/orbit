@@ -64,7 +64,10 @@ export interface FilterableFormatPerformanceTableProps {
   rows: FormatPerformanceRow[]
 }
 
-type SortBy = 'date' | 'polemic'
+// ✅ NOVO (2026-09-18): 'play_ratio' adicionado. Posts sem playToViewRatio
+// (null — posts não-Reel) vão sempre para o fim, igual ao tratamento de
+// polemicScorePct null — nunca tratamos ausência de dado como zero.
+type SortBy = 'date' | 'polemic' | 'play_ratio'
 type StatusFilter = 'all' | 'ok' | 'warning' | 'critical'
 
 // ── Fonte única dos limiares de "Polêmica" ──────────────────────────────
@@ -159,6 +162,7 @@ function FilterBar({
         >
           <option value="date">Ordenar: Data</option>
           <option value="polemic">Ordenar: Polêmica</option>
+          <option value="play_ratio">Ordenar: Play/View</option>
         </select>
       </div>
 
@@ -276,6 +280,15 @@ export function FilterableFormatPerformanceTable({
         const sorted = [...filtered].sort((a, b) => {
           if (sortBy === 'date') {
             return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+          }
+          if (sortBy === 'play_ratio') {
+            // ✅ NOVO (2026-09-18): ordena por playToViewRatio desc. Posts
+            // sem dado (null — posts não-Reel) vão pro fim: ausência de
+            // dado nunca é tratada como 0 fabricado.
+            if (a.playToViewRatio == null && b.playToViewRatio == null) return 0
+            if (a.playToViewRatio == null) return 1
+            if (b.playToViewRatio == null) return -1
+            return b.playToViewRatio - a.playToViewRatio
           }
           // sortBy === 'polemic' — posts sem score vão pro fim, não pro
           // meio (nunca tratamos "sem dado" como "0%" fabricado).

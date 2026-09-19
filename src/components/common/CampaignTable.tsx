@@ -58,7 +58,7 @@ export default function CampaignTable({ campaigns, onAction }: CampaignTableProp
       )}
 
       {/* Table */}
-      <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-[#18181F]">
+      <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-[var(--bg-card)]">
         <div className="overflow-x-auto">
           <table className="min-w-full border-collapse">
             <thead>

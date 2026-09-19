@@ -33,7 +33,7 @@ function getFormatIcon(format: string): string {
 export default function PerformanceTable({ metrics }: PerformanceTableProps): React.ReactElement {
   if (metrics.length === 0) {
     return (
-      <div className="flex items-center justify-center rounded-2xl border border-zinc-800 bg-[#18181F] py-10">
+      <div className="flex items-center justify-center rounded-2xl border border-zinc-800 bg-[var(--bg-card)] py-10">
         <p className="font-sans text-sm text-zinc-600">Sem dados de performance disponíveis.</p>
       </div>
     );
@@ -43,7 +43,7 @@ export default function PerformanceTable({ metrics }: PerformanceTableProps): Re
   const totalShares = metrics.reduce((s, m) => s + m.shareCount, 0);
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-[#18181F]">
+    <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-[var(--bg-card)]">
       {/* Table header */}
       <div className="grid grid-cols-4 gap-2 border-b border-zinc-800 px-4 py-2.5">
         {(['Formato', 'Posts', 'Shares', 'Trend'] as const).map((col) => (

@@ -149,7 +149,8 @@ export function Sidebar() {
       </div>
 
       {/* ── Cliente Ativo (Dinâmico) ────────────────────────────────────────── */}
-      {currentClient && (
+      {/* /alertas é visão de portfólio (todos os clientes): nenhum cliente ativo. */}
+      {currentClient && !pathname.startsWith('/alertas') && (
         <div className={styles.clientBox}>
           <p className={styles.clientLabel}>CLIENTE ATIVO</p>
           <div className={styles.clientName}>

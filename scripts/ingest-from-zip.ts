@@ -206,13 +206,6 @@ try {
 }
 }
 
-function intFromValue(v: string | undefined): number | null {
-if (!v) return null
-const cleaned = v.replace(/[^0-9-]/g, '')
-if (cleaned === '') return null
-return parseInt(cleaned, 10)
-}
-
 function baseName(uri: string): string {
 return uri.split('/').pop() ?? uri
 }

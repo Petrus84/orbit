@@ -48,7 +48,7 @@ export default function QualityScoreCard({ score }: QualityScoreCardProps): Reac
   const displayValue = score.value === null ? 'N/A' : `${score.value.toFixed(2)}%`;
 
   return (
-    <div className={`flex flex-col gap-3 rounded-2xl border bg-[#18181F] p-4 ${tokens.ring}`}>
+    <div className={`flex flex-col gap-3 rounded-2xl border bg-[var(--bg-card)] p-4 ${tokens.ring}`}>
       {/* Label */}
       <span className="font-sans text-xs font-medium uppercase tracking-widest text-zinc-500">
         {score.label}

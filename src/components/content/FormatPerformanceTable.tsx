@@ -195,6 +195,15 @@ export function PostDetailRow({ post }: { post: PostSummary }) {
         )}
       </span>
 
+      {/* ✅ NOVO (2026-09-18): Play/View — só presente em Reels. null em
+          posts estáticos e carrosséis — nunca renderizado como "0" ou "—"
+          enganoso: apenas omitido quando ausente. */}
+      {post.playToViewRatio != null && (
+        <span className={styles.postPlayRatio} title="Plays / visualizações do reel">
+          {`Play/View: ${post.playToViewRatio.toFixed(2)}`}
+        </span>
+      )}
+
       {/* Score Polêmica — rotulado (antes era só "33.3%" sem contexto) */}
       <span className={hasScore ? styles.postScore : styles.postScoreMuted}>
         {hasScore ? `Polêmica: ${post.polemicScorePct?.toFixed(1)}%` : '—'}

@@ -89,14 +89,18 @@ import type {
   AudienceSummary,
   ClientOnboarding,
   SectorPositioning,
+  AlgoRiskScore,
 } from '@/types/orbit'
 
+import { buildScoreCopy, type SemaphoreKey } from '@/lib/scoreStatusCopy'
 import {
   resolveEngagementScoreAlert,
+  resolveAlgoRiskScoreAlert,
   toCriticalAlert,
   mapSegmentToCategory,
   mapFollowersToTier,
   classifyMetric,
+  computeAlgoRiskScore,
 } from './contentContractEngine'
 
 type RawRow = Record<string, unknown>
@@ -171,6 +175,10 @@ const PostRowRawSchema = z.object({
   caption:             z.string().nullable(),
   polemic_score_pct:   z.number().nullable(),
   is_boost_candidate:  z.boolean().nullable(),
+  // ✅ NOVO (2026-09-18): play_to_view_ratio — calculado no banco para Reels.
+  // Ausente em posts não-Reel; a coluna pode não existir em rows antigas →
+  // optional().nullable() para não rejeitar snapshots sem a coluna.
+  play_to_view_ratio:  z.number().optional().nullable(),
 })
 
 // ✅ 09/09 — cópia local duplicada removida; usa repairMojibake de
@@ -257,7 +265,11 @@ export interface EngagementScoreSnapshot {
   erRealPct: number
   utilityScorePct: number
   polemicScorePct: number
-  vpsPct: number
+  // ✅ FIX (15/09/2026): `number | null` — ver comentário em
+  // EngagementScoreInput (contentContractEngine.ts). Reach_followers_pct
+  // não ingerido (ORB-DEBT-034) é um estado real, não um erro que deva
+  // derrubar o snapshot inteiro.
+  vpsPct: number | null
 }
 
 interface EngagementScoreSnapshotRow {
@@ -266,6 +278,12 @@ interface EngagementScoreSnapshotRow {
   utility_score_pct: number | null
   polemic_score_pct: number | null
   reach_total: number | null
+  // ✅ FIX (v8.2 §1.4 — VPS C-02): faltava essa coluna. Sem ela o cálculo
+  // caía pra reach_total/totalFollowers puro (ver comentário no v4.2.0
+  // acima) — é literalmente a métrica errada, "reach/followers", que o
+  // doc chama de "outra variável" e que dá 111% (1985/1785) em vez do
+  // VPS C-02 real (~7,2%).
+  reach_followers_pct: number | null
   period_end: string
 }
 
@@ -315,14 +333,19 @@ export async function fetchInstagramOverview(
     ? results[6].value
     : null
 
-  // ✅ DIAGNÓSTICO COMPLETO
+  // ✅ FIX (tsc TS2339): `import.meta.env.VITE_*` é Vite — sobrou de antes
+  // da migração pra Next.js, onde env var de cliente é `process.env.NEXT_PUBLIC_*`
+  // (mesma convenção já usada em src/lib/supabase.ts). `import.meta.env`
+  // nem existe no runtime Next/Node, então isso não rodava de verdade —
+  // só quebrava o build. Não logar a key nem truncada: é debug de URL, o
+  // valor da key não ajuda a diagnosticar client_id e não devia ir pro
+  // console de qualquer forma.
   console.log('[fetchInstagramOverview] Iniciando busca de cliente:', {
     clientId,
     clientIdTrimmed: clientId?.trim(),
     clientIdLength: clientId?.length,
     clientIdType: typeof clientId,
-    supabaseUrl: import.meta.env.VITE_SUPABASE_URL,
-    supabaseKey: import.meta.env.VITE_SUPABASE_ANON_KEY?.substring(0, 20) + '...',
+    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
   })
 
   const normalizedClientId = clientId?.trim()
@@ -414,30 +437,30 @@ async function fetchKPIs(
   return sortByCanonicalOrder(dedupeByMetric(parsedRows)).map(kpiRowToCardData)
 }
 
-// PR-B / N8: ER Real, VPS e Utilidade não têm tarifário setorial hoje (ver
-// Documento Técnico v8.2 §1.6 — só `polemic_score_pct` tem as 7 espécies do
-// enum). Sem isso, o card mostrava o texto neutro genérico da view como se
-// fosse "sem dados", quando na verdade o dado existe e só falta régua de
-// comparação por setor. PROIBIDO: gravar um limiar fantasma pra essas
-// métricas em orbit.ref_thresholds só pra o semáforo acender — isso é
-// decisão fechada (gap #2), não implementada aqui.
-const SCORE_KEYS_WITHOUT_SECTOR_TARIFARIO: readonly string[] = [
-  'er_real_pct',
-  'vps_pct',
-  'utility_score_pct',
-]
+// NOTA (19/09/2026): ER Real e VPS têm só régua global de gestão interna
+// (ref_thresholds ids 96/97, confiança 0.50, provisória); Utilidade não tem
+// régua alguma. A cor do semáforo vem da view; a origem da régua ainda não é
+// exposta na tela (ver pendência "meta de gestão" no changelog).
 
 async function fetchQualityScores(
   clientId: string,
   start: string,
   end: string,
 ): Promise<QualityScoreItem[]> {
-  const glowMap: Record<string, GlowColor> = { ok: 'cyan', warn: 'gold', neutral: 'none' }
+  // Dicionário de cores do produto (Semaphore.tsx): verde = ciano, âmbar = dourado,
+  // vermelho = vermelho. A cor vem do semáforo real (status_text da view), NÃO
+  // de status_variant — ele funde vermelho em "warn" e âmbar em "neutral", o que
+  // pintava "vermelho" de dourado e "âmbar" sem cor.
+  const SEMAPHORE_UI: Record<string, { glow: GlowColor; variant: 'ok' | 'warn'; label: string }> = {
+    verde:    { glow: 'cyan', variant: 'ok',   label: 'Verde' },
+    ambar:    { glow: 'gold', variant: 'warn', label: 'Âmbar' },
+    vermelho: { glow: 'red',  variant: 'warn', label: 'Vermelho' },
+  }
 
   const { data: orbitRows, error: orbitError } = await supabase
     .schema('orbit')
     .from('v_quality_scores')
-    .select('id, score_key, score_value, status_text, status_variant, period_start, period_end')
+    .select('id, score_key, score_value, status_text, status_variant, period_start, period_end, semaphore_key, ref_category, ref_source, ref_direction, ref_green_min, ref_green_max, ref_red_min, ref_red_max, ref_p50')
     .eq('client_id', clientId)
     .lte('period_start', end)
     .gte('period_end', start)
@@ -448,21 +471,39 @@ async function fetchQualityScores(
     return []
   }
 
+  const num = (v: unknown): number | null =>
+    v == null ? null : Number.isFinite(Number(v)) ? Number(v) : null
+
   return (orbitRows ?? []).map(row => {
     const scoreKey = String(row.score_key)
+    const rawStatus = String(row.status_text ?? '')
+    const semaphore = (row.semaphore_key ?? null) as SemaphoreKey | null
+    const sem = semaphore ? SEMAPHORE_UI[semaphore] : undefined
+    const value = row.score_value != null ? toFiniteNumber(row.score_value) : null
+
+    const copy = buildScoreCopy({
+      value: typeof value === 'number' ? value : null,
+      semaphore,
+      category:  row.ref_category != null ? String(row.ref_category) : null,
+      source:    row.ref_source != null ? String(row.ref_source) : null,
+      direction: row.ref_direction != null ? String(row.ref_direction) : null,
+      greenMin: num(row.ref_green_min),
+      greenMax: num(row.ref_green_max),
+      redMin:   num(row.ref_red_min),
+      redMax:   num(row.ref_red_max),
+      p50:      num(row.ref_p50),
+    })
+
     return {
       id:    String(row.id),
       label: scoreKey,
-      value: row.score_value != null ? toFiniteNumber(row.score_value) : 'N/A',
-      // Todas as métricas deste painel são "%" (ER Real, Utilidade, VPS,
-      // Polêmica) — unit vazia fazia o GlowingNumber renderizar o número
-      // sem unidade nenhuma.
+      value: value ?? 'N/A',
       unit: '%',
-      statusText: SCORE_KEYS_WITHOUT_SECTOR_TARIFARIO.includes(scoreKey)
-        ? 'sem recorte setorial'
-        : String(row.status_text ?? 'Sem dados'),
-      statusVariant: (row.status_variant as 'ok' | 'warn' | 'neutral') ?? 'neutral',
-      glowColor: (glowMap[String(row.status_variant ?? 'neutral')] ?? 'none') as GlowColor,
+      statusText: copy.text || rawStatus || 'Sem dados',
+      statusVariant: sem ? sem.variant : 'neutral',
+      glowColor: (sem ? sem.glow : 'none') as GlowColor,
+      actionText: copy.action,
+      referenceNote: copy.note,
     }
   })
 }
@@ -510,6 +551,10 @@ export async function fetchPostsByFormat(
       caption: repairMojibake(post.caption),
       polemicScorePct: post.polemic_score_pct,
       isBoostCandidate: post.is_boost_candidate ?? false,
+      // ✅ NOVO (2026-09-18): null quando ausente (posts não-Reel ou coluna
+      // ainda não ingerida). Zod declara optional().nullable() — nunca
+      // substituir por 0: ausência é distinta de ratio zero.
+      playToViewRatio: post.play_to_view_ratio ?? null,
     }
 
     const list = byFormat.get(label) ?? []
@@ -548,8 +593,16 @@ async function fetchFormatPerformance(
       format:      label,
       posts:       toFiniteNumber(row.post_count),
       shares:      toFiniteNumber(row.share_count),
-      trendLabel:  String(row.trend_label ?? 'Estável'),
-      trendColor:  (row.trend_color as GlowColor) ?? 'gold',
+      // ✅ FIX (ORB-DEBT-047, 15/09/2026): a view v_format_performance agora
+      // calcula tendência real (comparação de duas metades cronológicas do
+      // histórico de posts por formato, ver fix_trend_v_format_performance.sql).
+      // Este fallback só dispara se a view devolver `null` por algum motivo
+      // inesperado — não deve mais acontecer, já que a view sempre resolve
+      // pra um dos 4 estados reais. Trocado de 'Estável'/'gold' (mentira por
+      // omissão: parecia dado calculado) para um texto que declara a
+      // ausência, igual ao resto do app faz em casos de dado faltante.
+      trendLabel:  String(row.trend_label ?? 'Sem tendência calculada'),
+      trendColor:  (row.trend_color as GlowColor) ?? 'none',
       postsDetail: postsByFormat.get(label) ?? [],
     }
   })
@@ -706,14 +759,46 @@ export async function fetchClientOnboarding(
    indisponível". Decisão tomada, não é bug desta função.
    ========================================================================== */
 
+/**
+ * ✅ NOVO (18/09/2026) — algo_risk_score, família Ln. Busca os posts do
+ * cliente ordenados do mais recente pro mais antigo (limit generoso o
+ * bastante pra cobrir janela recente + baseline: N_RECENT=12 + até 30 de
+ * baseline = 42 no cenário sem nenhum post excluído por likes null; pede
+ * mais (80) pra sobrar margem quando há posts com likes null no meio).
+ * Não usa RPC, não usa `ref_thresholds` — puro cálculo local sobre o
+ * histórico da própria conta (computeAlgoRiskScore em
+ * contentContractEngine.ts).
+ */
+async function fetchAlgoRiskScore(clientId: string): Promise<AlgoRiskScore | null> {
+  const { data, error } = await supabase
+    .schema('orbit')
+    .from('ig_posts')
+    .select('published_at, likes, comments')
+    .eq('client_id', clientId)
+    .order('published_at', { ascending: false })
+    .limit(80)
+    .returns<{ published_at: string; likes: number | null; comments: number | null }[]>()
+
+  if (error || !data || data.length === 0) return null
+
+  return computeAlgoRiskScore(
+    data.map((row) => ({
+      publishedAt: row.published_at,
+      likes: row.likes,
+      comments: row.comments,
+    }))
+  )
+}
+
 export async function fetchSectorPositioning(
   clientId: string,
   start: string,
   end: string,
 ): Promise<SectorPositioning | null> {
-  const [onboarding, snapshot] = await Promise.all([
+  const [onboarding, snapshot, algoRisk] = await Promise.all([
     fetchClientOnboarding(clientId),
     fetchLatestEngagementScoreSnapshot(clientId, start, end),
+    fetchAlgoRiskScore(clientId),
   ])
 
   if (!onboarding) return null
@@ -727,7 +812,14 @@ export async function fetchSectorPositioning(
   const [erReal, vps, polemicScore] = snapshot
     ? await Promise.all([
         classifyMetric('er_real_pct', snapshot.erRealPct, safeCategory, safeTier),
-        classifyMetric('vps_pct', snapshot.vpsPct, safeCategory, safeTier),
+        // ✅ FIX (15/09/2026): snapshot.vpsPct agora é `number | null`
+        // (ver EngagementScoreSnapshot) — classifyMetric() exige number.
+        // Sem reach_followers_pct (ORB-DEBT-034) não existe classificação
+        // pra fazer, então pula a RPC em vez de mandar `null`/`0` fingindo
+        // ser dado real.
+        snapshot.vpsPct != null
+          ? classifyMetric('vps_pct', snapshot.vpsPct, safeCategory, safeTier)
+          : Promise.resolve(null),
         classifyMetric('polemic_score_pct', snapshot.polemicScorePct, safeCategory, safeTier),
       ])
     : [null, null, null]
@@ -743,6 +835,7 @@ export async function fetchSectorPositioning(
     vpsValue: snapshot?.vpsPct ?? null,
     polemicScore,
     polemicScoreValue: snapshot?.polemicScorePct ?? null,
+    algoRisk,
     engagementPeriodNotes: onboarding.q1_engagement_period_notes,
     contentProxyNotes: onboarding.q2_content_proxy_notes,
     misalignmentNotes: onboarding.q3_misalignment_notes,
@@ -763,25 +856,43 @@ async function fetchCriticalAlerts(
   start: string,
   end: string,
 ): Promise<CriticalAlertData[]> {
+  const alerts: CriticalAlertData[] = []
+
+  // CASO G — score de engajamento (depende de snapshot)
   try {
     const [snapshot, onboarding] = await Promise.all([
       fetchLatestEngagementScoreSnapshot(clientId, start, end),
       fetchClientOnboarding(clientId),
     ])
-    if (!snapshot) return []
-
-    const category = mapSegmentToCategory(onboarding?.setor_benchmark ?? null)
-    const tier     = mapFollowersToTier(onboarding?.total_followers ?? null)
-
-    const draft = await resolveEngagementScoreAlert(snapshot, category, tier)
-
-    if (draft.severity === 'info' || draft.severity === 'success') return []
-
-    return [toCriticalAlert(draft)]
+    if (snapshot) {
+      const category = mapSegmentToCategory(onboarding?.setor_benchmark ?? null)
+      const tier     = mapFollowersToTier(onboarding?.total_followers ?? null)
+      const draft = await resolveEngagementScoreAlert(snapshot, category, tier)
+      if (draft.severity !== 'info' && draft.severity !== 'success') {
+        alerts.push(toCriticalAlert(draft))
+      }
+    }
   } catch (err) {
     console.error('[fetchCriticalAlerts] falha ao resolver CASO G:', err)
-    return []
   }
+
+  // Risco algorítmico — self-reference, independe de snapshot.
+  // Limiares 0,30 (aviso) / 0,50 (crítico) aprovados pelo Lobo em 19/09/2026.
+  try {
+    const algo = await fetchAlgoRiskScore(clientId)
+    if (algo) {
+      const draft = resolveAlgoRiskScoreAlert({
+        snapshotId: `algo_risk:${clientId}:${end}`,
+        algoRiskScore: algo.value,
+        nRecent: algo.recentWindowSize,
+      })
+      if (draft) alerts.push(toCriticalAlert(draft))
+    }
+  } catch (err) {
+    console.error('[fetchCriticalAlerts] falha ao resolver algo_risk_score:', err)
+  }
+
+  return alerts
 }
 
 async function fetchTotalFollowers(clientId: string): Promise<number | null> {
@@ -806,7 +917,7 @@ export async function fetchLatestEngagementScoreSnapshot(
     supabase
       .schema('orbit')
       .from('ig_account_snapshots')
-      .select('id, er_real_pct, utility_score_pct, polemic_score_pct, reach_total, period_end')
+      .select('id, er_real_pct, utility_score_pct, polemic_score_pct, reach_total, reach_followers_pct, period_end')
       .eq('client_id', clientId)
       .lte('period_start', end)
       .gte('period_end', start)
@@ -825,14 +936,30 @@ export async function fetchLatestEngagementScoreSnapshot(
 
   if (!data) return null
 
-  const { id, er_real_pct, utility_score_pct, polemic_score_pct, reach_total } = data
+  const { id, er_real_pct, utility_score_pct, polemic_score_pct, reach_total, reach_followers_pct } = data
 
+  // ✅ FIX (v8.2 §1.4 — VPS C-02, gap #7 do doc): a fórmula anterior era
+  // reach_total / totalFollowers * 100 — isso é "alcance / seguidores",
+  // não VPS. Dá 111% quando reach passa da base de seguidores num
+  // período agregado (exatamente o card "Alcance acumulado na base em
+  // 111,2%" que aparece hardcoded como aviso separado na tela, prova de
+  // que essa métrica errada já tinha vazado pra outro lugar da UI).
+  //
+  // VPS C-02 real: (reach × reach_followers_pct/100) / followers × 100.
+  // "Só classificar se reach_followers_pct ≠ null" (doc) — sem esse dado
+  // não existe VPS pra esse snapshot, não cai pra a fórmula errada como
+  // fallback.
   const vpsPct =
-    reach_total != null && totalFollowers != null && totalFollowers > 0
-      ? Math.round((reach_total / totalFollowers) * 100 * 10000) / 10000
+    reach_total != null &&
+    reach_followers_pct != null &&
+    totalFollowers != null &&
+    totalFollowers > 0
+      ? Math.round(
+          ((reach_total * (reach_followers_pct / 100)) / totalFollowers) * 100 * 10000
+        ) / 10000
       : null
 
-  if (er_real_pct == null || utility_score_pct == null || polemic_score_pct == null || vpsPct == null) {
+  if (er_real_pct == null || utility_score_pct == null || polemic_score_pct == null) {
     return null
   }
 

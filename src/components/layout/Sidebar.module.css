@@ -3,6 +3,9 @@
 .sidebar {
   width:          var(--sidebar-width);
   min-width:      var(--sidebar-width);
+  flex-shrink:    0; /* FIX a11y (15/09/2026): sem isso, um flex container
+    apertado deixa o navegador encolher a sidebar por baixo de 220px,
+    quebrando .navItem/.navLabel de forma imprevisível por tela. */
   background:     var(--bg-card);
   border-right:   var(--border-width) solid var(--border-default);
   padding:        var(--space-5) var(--space-4);
@@ -12,6 +15,15 @@
   overflow-y:     auto;
   height:         100%;
 }
+
+/* DECISÃO DE ESCOPO (15/09/2026): a sidebar não tem um padrão de colapso
+   (ícone-only + toggle) porque isso é uma funcionalidade nova — precisa de
+   estado, affordance de abrir/fechar e provavelmente tooltip nos ícones, e
+   inventar isso sem especificação arrisca esconder o texto do link do jeito
+   errado (display:none no .navLabel apagaria o nome acessível do link, já
+   que o ícone tem aria-hidden). Rede de segurança até essa decisão de
+   produto: abaixo de 900px o shell inteiro rola na horizontal em vez de
+   esmagar a sidebar ou o conteúdo — ver `(dashboard)/layout.tsx`. */
 
 /* Logo */
 

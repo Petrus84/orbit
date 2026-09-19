@@ -1,6 +1,9 @@
 /* ==========================================================================
    ORBIT · contentContractEngine.ts
    Content Contract v1.5.1 + textos de cliente (06/09/2026)
+   Patch 15/09/2026: fix TS2345 (formatPtBr(vpsPct) sem guarda de null) +
+   P0a (categorias comissionamento_afiliados/pre_monetizacao_a_validar) +
+   P0b (template cta_rate_pct) — ver ANALISE_CONVERGENTE_ORBIT.md
 
    REGRA DE OURO: nenhuma função aqui reimplementa threshold em JS.
    A régua vive em orbit.fn_classify_metric (Postgres). Este arquivo
@@ -29,6 +32,7 @@ import type {
   CriticalAlertData,
   InsightData,
   ClassifiedMetric,
+  AlgoRiskScore,
   ThresholdGranularity,
   CalibrationMethod,
   SetorBenchmark,
@@ -54,7 +58,25 @@ export interface EngagementScoreInput {
   erRealPct: number
   utilityScorePct: number
   polemicScorePct: number
-  vpsPct: number
+  // ✅ FIX (15/09/2026 — regressão do fix de VPS C-02): passou a `number |
+  // null`. ORB-DEBT-034 confirma que `reach_followers_pct` nunca foi
+  // ingerido pros clientes reais — sem ele não existe VPS C-02 válido
+  // (doc v8.2 §1.4: "só classificar se reach_followers_pct ≠ null"). Antes
+  // dessa mudança, `vpsPct` não-nulo dependia de fetchLatestEngagementScoreSnapshot
+  // também não-nulo — e como aquela função agora retornava `null` pro
+  // snapshot inteiro quando faltava `reach_followers_pct`, ER Real/
+  // Utilidade/Polêmica paravam de ser classificados também, e o alerta
+  // "Alcance acumulado na base em X%" sumia por completo. `vpsPct: null`
+  // aqui é o estado real e esperado hoje — as outras 3 métricas continuam
+  // sendo avaliadas independentemente.
+  //
+  // ⚠️ Efeito colateral desta mudança (TS2345, corrigido em 15/09/2026):
+  // qualquer lugar que formatasse `input.vpsPct` diretamente com
+  // formatPtBr() (que exige `number`) quebrou a checagem de tipos, porque
+  // o valor agora pode ser `null`. A correção não é forçar um cast — é
+  // tratar o caso nulo explicitamente no texto (ver formatVpsSegment()
+  // abaixo), porque um 0 fabricado pareceria dado real.
+  vpsPct: number | null
 }
 
 export type AlertDraft = Pick<Alert, 'type' | 'severity' | 'title' | 'description'> &
@@ -78,24 +100,33 @@ interface FnClassifyMetricRow {
 /*  Recortes calibrados                                                       */
 /* -------------------------------------------------------------------------- */
 
+// ✅ P0a (ANALISE_CONVERGENTE_ORBIT.md, "Categoria gap: 7 vs 9"): faltavam
+// 'comissionamento_afiliados' e 'pre_monetizacao_a_validar' — clientes
+// nesses 2 setores caíam sempre no recorte 'global' (sem benchmark de
+// categoria), mesmo já existindo em client_onboarding_setor_benchmark_check
+// no banco. Adicionadas em 15/09/2026.
 const CALIBRATED_SETOR_BENCHMARK_CATEGORIES: ReadonlySet<SetorBenchmark> = new Set([
   'comercio_direto_ecommerce_social',
+  'comissionamento_afiliados',
   'infoprodutor_educador_pago',
   'servico_consultoria_profissional',
   'patrocinio_publicidade_marca',
   'membership_assinatura_comunidade',
   'monetizacao_nativa_plataforma',
   'autoridade_personal_branding_b2b',
+  'pre_monetizacao_a_validar',
 ])
 
 const SETOR_LABEL: Record<string, string> = {
   comercio_direto_ecommerce_social: 'lojas que vendem pelo Instagram',
+  comissionamento_afiliados: 'contas de afiliados e comissionamento',
   infoprodutor_educador_pago: 'infoprodutores e cursos',
   servico_consultoria_profissional: 'serviços e consultorias',
   patrocinio_publicidade_marca: 'marcas que vivem de publicidade',
   membership_assinatura_comunidade: 'assinaturas e comunidades',
   monetizacao_nativa_plataforma: 'contas que monetizam na própria plataforma',
   autoridade_personal_branding_b2b: 'autoridade e personal branding B2B',
+  pre_monetizacao_a_validar: 'contas ainda validando modelo de monetização',
 }
 
 const TIER_LABEL: Record<string, string> = {
@@ -111,6 +142,15 @@ const METRIC_LABEL: Record<string, string> = {
   vps_pct: 'alcance na base',
   polemic_score_pct: 'discussão nos comentários',
   utility_score_pct: 'quanto o post é guardado ou repassado',
+  // ✅ P0b (ANALISE_CONVERGENTE_ORBIT.md, "Métrica template gap:
+  // cta_rate_pct"): rótulo faltava; sem ele buildUnavailableMetricText()/
+  // buildTechnicalErrorText() caiam no fallback `?? metricName` (mostraria
+  // literalmente "cta_rate_pct" ao cliente).
+  cta_rate_pct: 'pedido de compra por post',
+  // ✅ NOVO (2026-09-18): métricas órfãs integradas com dado v1.
+  engagement_public: 'engajamento público',
+  algo_risk_score: 'risco algorítmico',
+  play_to_view_ratio: 'taxa de reprodução',
 }
 
 const ZERO_INFLATED_EVENT_NOUN: Record<string, string> = {
@@ -119,6 +159,10 @@ const ZERO_INFLATED_EVENT_NOUN: Record<string, string> = {
   polemic_score_pct: 'gente discordando nos comentários (não só curtindo)',
   utility_score_pct: 'salvamento ou compartilhamento',
   cta_rate_pct: 'pedido de compra',
+  // ✅ NOVO (2026-09-18)
+  engagement_public: 'comentário ou compartilhamento público',
+  algo_risk_score: 'sinal de risco detectado',
+  play_to_view_ratio: 'reprodução completa do reel',
 }
 
 const METRIC_TRANSLATION_TEMPLATE: Record<string, (value: number) => string> = {
@@ -130,27 +174,64 @@ const METRIC_TRANSLATION_TEMPLATE: Record<string, (value: number) => string> = {
     `Traduzindo: em ${formatPtBr(v)}% dos posts, teve gente discordando nos comentários — não só curtindo.`,
   utility_score_pct: (v) =>
     `Traduzindo: ${formatPtBr(v)}% dos posts foram guardados ou repassados por alguém.`,
+  // ✅ P0b: template adicionado. Sem ele, withTranslation() retornava só o
+  // baseText (buildTranslationLine() devolve null pra template ausente) —
+  // "Traduzindo:" nunca aparecia pra esta métrica, mesmo se alguém
+  // chamasse classifyMetric('cta_rate_pct', ...) no futuro.
+  cta_rate_pct: (v) =>
+    `Traduzindo: ${formatPtBr(v)}% dos posts resultaram em pedido de compra.`,
+  // ✅ NOVO (2026-09-18): métricas órfãs integradas com dado v1.
+  // engagement_public: é percentual — "de cada 100 impressões, X geraram
+  // comentário ou compartilhamento".
+  engagement_public: (v) =>
+    `Traduzindo: de cada 100 impressões, ${formatPtBr(v, 2)} geraram comentário ou compartilhamento.`,
+  // play_to_view_ratio: é ratio (0–1+), não percentual. Texto descreve o
+  // que 1 significa (todos que viram iniciaram reprodução).
+  play_to_view_ratio: (v) =>
+    `Traduzindo: para cada visualização, houve ${formatPtBr(v, 2)} reprodução — ${v >= 1 ? 'todos que viram iniciaram o reel' : 'parte das visualizações não virou play'}.`,
 }
 
 const BOUNDED_PERCENT_METRICS: ReadonlySet<string> = new Set([
   'vps_pct',
   'er_real_pct',
   'utility_score_pct',
+  // ❌ REMOVIDO (18/09/2026): engagement_public NÃO é percentual — é
+  // likes+comments, contagem bruta (unit='count' em ref_thresholds,
+  // dataset_id='benchmark_orphan_v1_rescate', green_max chega a 2345 pra
+  // monetizacao_nativa_plataforma). Tratar como 0-100% faria o guard de
+  // "fora do intervalo esperado" disparar pra praticamente todo post real
+  // com qualquer engajamento — mesmo bug de unidade do pts/pct antigo do
+  // polemic_score_pct v1/v2, pego antes de ir ao ar desta vez.
 ])
 
 // ✅ NOVO (PR-A, execução ORBIT §"Porta da RPC", 14/09/2026): única fonte da
 // verdade sobre quais métricas têm régua de mercado real em
 // orbit.ref_thresholds hoje. Confirmado por SQL direto no mesmo dia: só
 // polemic_score_pct tem linhas em dataset_id='benchmark_58_v2_real_schema'
-// (29 linhas, 8 categorias). er_real_pct, vps_pct, utility_score_pct,
-// engagement_public, algo_risk_score, play_to_view_ratio: zero linha v2.
+// (29 linhas, 8 categorias). er_real_pct, vps_pct, utility_score_pct: zero
+// linha v2.
+//
+// engagement_public, play_to_view_ratio: têm linhas em
+// dataset_id='benchmark_58_v1' (7 e 1 linha respectivamente). Integrados
+// em 2026-09-18 com decisão explícita de produto: aceitar v1 enquanto
+// recalibração v2 não roda. Aviso de confiança/recorte exibido via
+// applyConfidenceGate() — qualquer linha com confidence_score < 0.75
+// sofre downgrade de semáforo automático.
+//
+// algo_risk_score: self-reference (conta vs. ela mesma, família
+// self_reference_client_history — ver v_algo_risk_score.sql). NÃO entra
+// aqui: não é benchmark de mercado, não passa por fn_classify_metric.
+// Resolvido por resolveAlgoRiskScoreAlert() com lógica própria sem RPC.
+//
 // Fora deste Set, classifyMetric() NÃO chama a RPC — não existe régua pra
 // comparar, então não finge que existe. Adicionar uma métrica aqui exige
-// confirmar antes, por SQL, que há linha v2 real pra ela — nunca por
-// suposição de nome (ver LEDGER-019: coluna existir não significa régua
-// existir).
+// confirmar antes, por SQL, que há linha real (v1 aceito com aviso explícito
+// de produto; v2 preferível). Nunca por suposição de nome (LEDGER-019:
+// coluna existir não significa régua existir).
 const MARKET_RPC_METRICS: ReadonlySet<string> = new Set([
   'polemic_score_pct',
+  'engagement_public',   // v1 aceito — 2026-09-18, recalibração v2 pendente
+  'play_to_view_ratio',  // v1 aceito — 2026-09-18, só recorte global (n=1.033)
 ])
 
 export function mapSegmentToCategory(setorBenchmark: SetorBenchmark | null): string | null {
@@ -170,11 +251,162 @@ export function mapFollowersToTier(followers: number | null | undefined): string
 }
 
 /* -------------------------------------------------------------------------- */
+/*  algo_risk_score — família Ln (self-reference, não é benchmark de mercado) */
+/* -------------------------------------------------------------------------- */
+
+export interface AlgoRiskPostInput {
+  publishedAt: string
+  likes: number | null
+  comments: number | null
+}
+
+const ALGO_RISK_N_RECENT = 12
+const ALGO_RISK_N_RECENT_MIN = 6
+const ALGO_RISK_BASELINE_MAX_POSTS = 30
+
+// engagement_public = likes + comments, null-safe — mas aqui "null-safe"
+// significa EXCLUIR o post da janela, não fabricar likes=0 (spec explícita:
+// "likes IS NULL → post fora da mediana, não vira 0"). Um post com likes
+// null e comments=5 não vira engagement=5 nem engagement=0 — some da janela.
+function engagementPublicOrNull(post: AlgoRiskPostInput): number | null {
+  if (post.likes == null || post.comments == null) return null
+  return post.likes + post.comments
+}
+
+// Trim por IQR (remove abaixo de Q1-1.5*IQR e acima de Q3+1.5*IQR), depois
+// mediana do que sobrou. Aplicado a CADA janela separadamente — nunca no
+// conjunto R+B junto, senão um outlier de uma janela puxa o corte da outra.
+function medianAfterIqrTrim(values: number[]): number | null {
+  if (values.length === 0) return null
+  const sorted = [...values].sort((a, b) => a - b)
+  const quantile = (q: number) => {
+    const pos = (sorted.length - 1) * q
+    const base = Math.floor(pos)
+    const rest = pos - base
+    const next = sorted[base + 1]
+    return next !== undefined ? sorted[base]! + rest * (next - sorted[base]!) : sorted[base]!
+  }
+  const q1 = quantile(0.25)
+  const q3 = quantile(0.75)
+  const iqr = q3 - q1
+  const lower = q1 - 1.5 * iqr
+  const upper = q3 + 1.5 * iqr
+  const trimmed = sorted.filter((v) => v >= lower && v <= upper)
+  if (trimmed.length === 0) return null
+  const mid = Math.floor(trimmed.length / 2)
+  return trimmed.length % 2 === 0 ? (trimmed[mid - 1]! + trimmed[mid]!) / 2 : trimmed[mid]!
+}
+
+function buildAlgoRiskText(value: number | null): string {
+  if (value === null) return 'Sem série suficiente para calcular risco algorítmico ainda.'
+  if (Math.abs(value) < 0.02) return 'Engajamento recente na mesma faixa do seu histórico — estável.'
+  if (value > 0) {
+    return `Engajamento recente ${formatPtBr(value * 100)}% abaixo da sua própria mediana histórica.`
+  }
+  return `Engajamento recente ${formatPtBr(Math.abs(value) * 100)}% acima da sua própria mediana histórica.`
+}
+
+/**
+ * Fórmula fechada, família Ln — compara a conta com ela mesma, nunca com
+ * mercado. `posts` deve vir ordenado do mais recente pro mais antigo, sem
+ * limite de tamanho pré-imposto (a função corta as janelas internamente).
+ * Janelas R (recente) e B (baseline) são disjuntas por construção — R pega
+ * os N_RECENT primeiros posts válidos (likes+comments não-null), B pega os
+ * próximos até ALGO_RISK_BASELINE_MAX_POSTS depois disso.
+ */
+export function computeAlgoRiskScore(posts: AlgoRiskPostInput[]): AlgoRiskScore {
+  const validValues: number[] = []
+  const engagements: (number | null)[] = posts.map(engagementPublicOrNull)
+  for (const e of engagements) if (e !== null) validValues.push(e)
+
+  // separa em R (primeiros N válidos, mais recentes) e B (os próximos, disjuntos)
+  let recentCount = 0
+  const recent: number[] = []
+  const baseline: number[] = []
+  for (const e of engagements) {
+    if (e === null) continue
+    if (recentCount < ALGO_RISK_N_RECENT) {
+      recent.push(e)
+      recentCount++
+    } else if (baseline.length < ALGO_RISK_BASELINE_MAX_POSTS) {
+      baseline.push(e)
+    } else {
+      break
+    }
+  }
+
+  if (recent.length < ALGO_RISK_N_RECENT_MIN || baseline.length === 0) {
+    return {
+      value: null,
+      recentMedian: null,
+      baselineMedian: null,
+      recentWindowSize: recent.length,
+      baselineWindowSize: baseline.length,
+      statusText: buildAlgoRiskText(null),
+    }
+  }
+
+  const recentMedian = medianAfterIqrTrim(recent)
+  const baselineMedian = medianAfterIqrTrim(baseline)
+
+  // mediana(B)=0 — sem denominador válido. mediana(R) também 0 → sem sinal
+  // nenhum, NULL. mediana(R)>0 com mediana(B)=0 → razão indefinida
+  // (divisão por zero), NULL documentado — nunca -∞.
+  if (baselineMedian === null || baselineMedian === 0) {
+    return {
+      value: null,
+      recentMedian,
+      baselineMedian,
+      recentWindowSize: recent.length,
+      baselineWindowSize: baseline.length,
+      statusText: buildAlgoRiskText(null),
+    }
+  }
+
+  if (recentMedian === null) {
+    return {
+      value: null,
+      recentMedian: null,
+      baselineMedian,
+      recentWindowSize: recent.length,
+      baselineWindowSize: baseline.length,
+      statusText: buildAlgoRiskText(null),
+    }
+  }
+
+  const ratio = recentMedian / baselineMedian
+  const value = 1 - ratio // >0 = queda vs. passado; <0 = acima do passado; 0 = estável
+
+  return {
+    value,
+    recentMedian,
+    baselineMedian,
+    recentWindowSize: recent.length,
+    baselineWindowSize: baseline.length,
+    statusText: buildAlgoRiskText(value),
+  }
+}
+
+/* -------------------------------------------------------------------------- */
 /*  Utilitários de tradução numérica                                          */
 /* -------------------------------------------------------------------------- */
 
 function formatPtBr(value: number, decimals: number = 1): string {
   return value.toFixed(decimals).replace('.', ',')
+}
+
+// ✅ FIX (15/09/2026, TS2345 linhas 1132/1152): helper dedicado para
+// formatar o trecho de VPS num título/descrição quando o valor pode ser
+// `null` (reach_followers_pct não ingerido — ORB-DEBT-034). Isolar isso
+// aqui evita repetir `input.vpsPct != null ? ... : ...` em cada branch que
+// precisa mencionar VPS ao lado de outra métrica, e evita o erro de tipo
+// de chamar formatPtBr(null) diretamente. Não fabrica um 0 — declara a
+// ausência.
+function formatVpsSegment(vpsPct: number | null): string {
+  if (vpsPct == null) {
+    return 'alcance na base indisponível (reach_followers_pct não ingerido — ver ORB-DEBT-034)'
+  }
+  return `${formatPtBr(vpsPct)}% dos seguidores viram`
 }
 
 function toFriendlyFraction(pct: number): string | null {
@@ -897,6 +1129,139 @@ export function resolveRoasBelowMinimumAlert(input: RoasBelowMinimumInput): Aler
 }
 
 /* -------------------------------------------------------------------------- */
+/*  Engajamento público (benchmark v1 — comentários + shares / impressões)   */
+/* -------------------------------------------------------------------------- */
+
+export interface EngagementPublicInput {
+  snapshotId: string
+  engagementPublic: number  // percentual: (comments + shares) / impressions × 100
+}
+
+export async function resolveEngagementPublicAlert(
+  input: EngagementPublicInput,
+  category?: string | null,
+  tier?: string | null
+): Promise<AlertDraft | null> {
+  // classifyMetric() chama fn_classify_metric via RPC (engagement_public
+  // está em MARKET_RPC_METRICS com dado v1). guardOutOfRangePercentMetric()
+  // já roda dentro de classifyMetric() — não duplicar aqui.
+  const classified = await classifyMetric(
+    'engagement_public',
+    input.engagementPublic,
+    category ?? 'all',
+    tier ?? 'all',
+  )
+
+  // semaphore 'verde' ou 'neutro' → sem alerta. 'neutro' acontece se a
+  // métrica sair de MARKET_RPC_METRICS no futuro — defensivo.
+  if (classified.semaphore === 'verde' || classified.semaphore === 'neutro') return null
+
+  const isRed = classified.semaphore === 'vermelho'
+  const v1Caveat =
+    ' (Referência: benchmark v1 — recalibração v2 pendente. Use como sinal, não como decisão de verba isolada.)'
+
+  return {
+    type: 'engagement_collapse',
+    severity: isRed ? 'critical' : 'warning',
+    title: isRed
+      ? `Engajamento público crítico — só ${formatPtBr(input.engagementPublic, 2)}% das impressões viraram comentário ou compartilhamento`
+      : `Engajamento público abaixo do esperado — ${formatPtBr(input.engagementPublic, 2)}% das impressões viraram comentário ou compartilhamento`,
+    description: withTranslation(
+      `${classified.statusText}${v1Caveat}`,
+      'engagement_public',
+      input.engagementPublic,
+    ),
+    natureza: 'tecnica',
+    probableCause: isRed
+      ? 'O conteúdo gera impressões mas não provoca reação pública (comentário ou compartilhamento). Pode ser tema fora do interesse real da audiência ou ausência de chamada para interação.'
+      : 'O engajamento público está aquém do recorte de referência. Pode ser ritmo de publicação, tipo de assunto ou falta de CTA explícito.',
+    immediateAction: isRed
+      ? 'Nos próximos 3 posts, inclua uma pergunta ou provocação que peça resposta nos comentários. Não troque o produto — troque o convite.'
+      : 'Teste incluir uma pergunta direta em legendas. Meça em 14 dias antes de mudar formato ou frequência.',
+    confidenceLevel: classified.confidenceLevel,
+    dataSource: 'real_snapshot',
+    thresholdSource: classified.thresholdSource,
+    confidenceScore: classified.confidenceScore,
+    ruleDeclaration: classified.ruleDeclaration,
+    snapshotId: input.snapshotId,
+    metricName: 'engagement_public',
+    metricValue: input.engagementPublic,
+    thresholdValue: null,
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Risco algorítmico (self-reference — conta vs. histórico dela mesma)       */
+/* -------------------------------------------------------------------------- */
+
+// ⚠️ algo_risk_score NÃO usa fn_classify_metric nem MARKET_RPC_METRICS.
+// É auto-comparação: 1 − (mediana_recente / mediana_baseline), calculado
+// em orbit.v_algo_risk_score. Escala analítica −∞..1 (negativo = acima
+// do próprio baseline = bom). Limiar de produto: ≥ 0.30 → aviso;
+// ≥ 0.50 → crítico. Valores negativos são sempre sinal saudável.
+// Nunca reusar bins de benchmark global (verde ≤ 25 / vermelho ≥ 40 do
+// ref_thresholds v1) — são famílias distintas.
+const ALGO_RISK_AMBER_THRESHOLD = 0.30
+const ALGO_RISK_RED_THRESHOLD = 0.50
+
+export interface AlgoRiskScoreInput {
+  snapshotId: string
+  // Ratio analítico: 1 − (median_r / median_b). Range −∞..1.
+  // null → amostra insuficiente (n_r < 6 ou sem baseline) — não alertar.
+  algoRiskScore: number | null
+  // Número de posts na janela recente (R). Exposto para aviso de confiança.
+  nRecent: number | null
+}
+
+export function resolveAlgoRiskScoreAlert(
+  input: AlgoRiskScoreInput,
+): AlertDraft | null {
+  // null = amostra insuficiente calculada pela view — sem régua, sem alerta.
+  if (input.algoRiskScore === null || input.algoRiskScore === undefined) return null
+
+  const score = input.algoRiskScore
+
+  // Negativo ou abaixo do limiar de atenção → conta acima ou dentro do
+  // próprio histórico. Não gera alerta.
+  if (score < ALGO_RISK_AMBER_THRESHOLD) return null
+
+  const isRed = score >= ALGO_RISK_RED_THRESHOLD
+  const scorePct = (score * 100).toFixed(0)
+
+  // Aviso de amostra curta: n_r entre 6 e 11 (mínimo aceito, mas não robusto).
+  const lowSampleCaveat =
+    input.nRecent !== null && input.nRecent < 12
+      ? ` Amostra recente curta (${input.nRecent} posts) — sinal real, mas inconclusivo: publique mais antes de mudar estratégia.`
+      : ''
+
+  return {
+    type: 'engagement_collapse',
+    severity: isRed ? 'critical' : 'warning',
+    title: isRed
+      ? `Queda expressiva de engajamento vs. histórico da conta — mediana recente caiu ~${scorePct}%`
+      : `Engajamento recente abaixo do histórico da conta — queda de ~${scorePct}% na mediana`,
+    description:
+      `Esta comparação é da conta contra ela mesma (últimos posts vs. período anterior). Não é benchmark de mercado.${lowSampleCaveat}`,
+    natureza: 'tecnica',
+    probableCause: isRed
+      ? 'A mediana de engajamento dos posts recentes caiu de forma expressiva em relação ao histórico da mesma conta. Pode ser mudança de tema, de formato ou de frequência — ou limitação algorítmica.'
+      : 'O engajamento recente está abaixo do próprio histórico da conta. Pode ser variação natural ou início de queda — confirme com mais posts antes de agir.',
+    immediateAction: isRed
+      ? 'Revise os últimos 12 posts: verificar se houve mudança de formato, tema ou frequência que coincide com a queda. Não mude oferta nem verba antes desse diagnóstico.'
+      : 'Acompanhe por mais 14 dias. Se a queda persistir, compare os posts do período B com os do período R para identificar a diferença.',
+    confidenceLevel: (input.nRecent !== null && input.nRecent >= 12) ? 'L1' : 'L2',
+    dataSource: 'real_snapshot',
+    thresholdSource: null,  // self-reference, não benchmark de mercado
+    confidenceScore: null,
+    ruleDeclaration: 'Comparação da conta com o próprio histórico (self-reference). Não é benchmark setorial.',
+    snapshotId: input.snapshotId,
+    metricName: 'algo_risk_score',
+    metricValue: score,
+    thresholdValue: null,
+  }
+}
+
+/* -------------------------------------------------------------------------- */
 /*  Score de engajamento                                                      */
 /* -------------------------------------------------------------------------- */
 
@@ -908,9 +1273,27 @@ export async function resolveEngagementScoreAlert(
   const categoryForClassify = category ?? undefined
   const tierForClassify = tier ?? undefined
 
+  // ✅ FIX (15/09/2026): classifyMetric() exige `value: number` — não dá
+  // pra chamar com `null`. Quando vpsPct é null (reach_followers_pct não
+  // ingerido, ORB-DEBT-034), monta um ClassifiedMetric sintético
+  // 'neutro' local em vez de pular a chamada ou fabricar um 0 que pareça
+  // dado real. semaphore='neutro' garante que os branches de
+  // vps.semaphore==='vermelho' abaixo nunca disparam por engano.
   const [er, vps, polemic] = await Promise.all([
     classifyMetric('er_real_pct', input.erRealPct, categoryForClassify, tierForClassify),
-    classifyMetric('vps_pct', input.vpsPct, categoryForClassify, tierForClassify),
+    input.vpsPct != null
+      ? classifyMetric('vps_pct', input.vpsPct, categoryForClassify, tierForClassify)
+      : Promise.resolve<ClassifiedMetric>({
+          value: 0,
+          semaphore: 'neutro',
+          statusText: 'VPS indisponível: reach_followers_pct ainda não foi ingerido para esta conta (ver ORB-DEBT-034). O número não aparece até a ingestão ser corrigida — não é classificado com dado ausente.',
+          confidenceLevel: 'L0',
+          thresholdSource: null,
+          confidenceScore: null,
+          ruleDeclaration: 'Sem reach_followers_pct não é possível calcular VPS C-02.',
+          calibrationMethod: null,
+          zeroInflated: null,
+        }),
     classifyMetric('polemic_score_pct', input.polemicScorePct, categoryForClassify, tierForClassify),
   ])
 
@@ -931,7 +1314,7 @@ export async function resolveEngagementScoreAlert(
     }
   }
 
-  if (input.vpsPct < 0 || input.vpsPct > 100) {
+  if (input.vpsPct != null && (input.vpsPct < 0 || input.vpsPct > 100)) {
     return {
       type: 'engagement_collapse',
       severity: 'warning',
@@ -954,7 +1337,7 @@ export async function resolveEngagementScoreAlert(
     }
   }
 
-  if (vps.semaphore === 'vermelho') {
+  if (input.vpsPct != null && vps.semaphore === 'vermelho') {
     return {
       type: 'engagement_collapse',
       severity: 'critical',
@@ -1096,11 +1479,17 @@ export async function resolveEngagementScoreAlert(
   // frase depois de "saudável" fabricava positivo sem base — o mesmo erro
   // em espelho de fabricar negativo. Quando não há régua, o card é
   // informativo (severity 'info', sem alegação de saúde), não elogio.
+  //
+  // ✅ FIX (15/09/2026, TS2345): o título abaixo mencionava
+  // formatPtBr(input.vpsPct) diretamente — quebra de tipo porque vpsPct
+  // pode ser null (ORB-DEBT-034). Trocado por formatVpsSegment(), que já
+  // devolve a frase inteira ("X% dos seguidores viram" ou o aviso de
+  // indisponibilidade) sem forçar um número onde não há dado.
   if (er.semaphore === 'neutro') {
     return {
       type: 'engagement_collapse',
       severity: 'info',
-      title: `Engajamento no período — ${formatPtBr(input.erRealPct)}% agem no post, ${formatPtBr(input.vpsPct)}% dos seguidores viram`,
+      title: `Engajamento no período — ${formatPtBr(input.erRealPct)}% agem no post, ${formatVpsSegment(input.vpsPct)}`,
       description: `${er.statusText} ${vps.statusText}`.trim(),
       natureza: 'tecnica',
       probableCause: 'n/a — sem régua de mercado calibrada para ER real/VPS hoje.',
@@ -1120,7 +1509,7 @@ export async function resolveEngagementScoreAlert(
   return {
     type: 'engagement_collapse',
     severity: 'info',
-    title: `Engajamento saudável para o seu porte — ${formatPtBr(input.erRealPct)}% agem no post, ${formatPtBr(input.vpsPct)}% dos seguidores viram`,
+    title: `Engajamento saudável para o seu porte — ${formatPtBr(input.erRealPct)}% agem no post, ${formatVpsSegment(input.vpsPct)}`,
     description: withTranslation(
       `${er.ruleDeclaration ?? ''} O formato que gerou isso é o seu ativo. Repita-o.`.trim(),
       'er_real_pct',
@@ -1166,6 +1555,7 @@ export function toCriticalAlert(draft: AlertDraft): CriticalAlertData {
     actionUrl: null,
     natureza: draft.natureza,
     probableCause: draft.probableCause,
+    immediateAction: draft.immediateAction,
     dataSource: draft.dataSource,
   }
 }
