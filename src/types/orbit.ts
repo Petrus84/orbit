@@ -604,6 +604,8 @@ export interface IGOverviewData {
   audienceSummary: AudienceSummary
   clients: Client[]  // ⚠️ OBSERVAÇÃO (15): shape de cliente com `positioning` (nova feature)
   positioning: SectorPositioning  // ✅ mudou aqui
+  // Fatos do banco que explicam telas vazias/incompletas (dataStatusCopy.ts)
+  dataStatus?: { id: string; text: string }[]
 }
 
 export interface AudienceCity {
@@ -1556,16 +1558,6 @@ export type ProofMechanism =
   | 'nenhum_observavel'
   | 'clientes_ativos_gestao'
 
-/** ⚠️ CORRIGIDO: schema real usa 'PANIC_GRIEF', não 'PANIC'; 'mixed' não
- * existe na CHECK constraint do banco — removido. */
-export type PankseppSystem =
-  | 'SEEKING' | 'RAGE' | 'FEAR' | 'LUST' | 'CARE' | 'PANIC_GRIEF' | 'PLAY'
-
-export interface SchwatzValue {
-  value: string
-  priority: 'high' | 'medium' | 'low'
-}
-
 /**
  * ✅ PATCH (verificação ao vivo pg_constraint, 11/09/2026):
  * `client_onboarding_values_affect_source_check` no Postgres tem 4 valores —
@@ -1611,10 +1603,6 @@ export interface ClientOnboarding {
   setor_benchmark: SetorBenchmark | null
   nicho: string | null
   proof_mechanism: ProofMechanism | null
-  expected_panksepp_system: PankseppSystem | null
-  real_panksepp_system: PankseppSystem | null
-  expected_schwartz: Record<string, SchwatzValue> | null
-  real_schwartz: Record<string, SchwatzValue> | null
   values_affect_source: ValuesAffectSource
   values_affect_confidence: 'L0' | 'L1' | 'L2'
   updated_by: string

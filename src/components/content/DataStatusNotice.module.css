@@ -1,0 +1,26 @@
+.notice {
+  border: 1px solid color-mix(in srgb, var(--neon-cyan) 30%, transparent);
+  border-radius: var(--radius-lg, 8px);
+  background: var(--bg-card);
+  padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1, 0.25rem);
+}
+
+.item {
+  font-size: var(--font-size-xs);
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+
+.item::before {
+  content: 'ℹ ';
+  color: var(--neon-cyan);
+}

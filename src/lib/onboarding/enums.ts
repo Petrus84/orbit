@@ -9,25 +9,27 @@
 //
 // ✅ UX (copy otimizada — 15/09/2026): rótulos reescritos em linguagem
 // mais natural para o cliente final (menos jargão de schema, mais frase
-// de produto). Uma correção feita nesta rodada: ENUM_CONFIDENCE chegou
-// com L0/L2 invertidos (L0 marcado como "Confirmado" e L2 como "precisa
-// de confirmação") — o resto do projeto (orbit.ts, AlertCard.tsx,
-// ENUM_CONFIDENCE anterior) trata L0 = nível mais baixo de confiança
-// (sem confirmação) e L2 = mais alto (confirmado). Mantida a copy nova,
-// corrigida a direção.
+// de produto).
+//
+// ⚠️ FIX (19/09/2026): a rodada de 15/09 tinha invertido L0/L2 partindo do
+// texto do ENUM_CONFIDENCE anterior ("L0 — sem confirmação", "L2 —
+// confirmado") como fonte da verdade. Esse texto é que estava errado — é
+// o mesmo bug propagado, não a correção dele. A fonte real é o uso em
+// contentContractEngine.ts (15+ atribuições: dado direto/real_snapshot →
+// L0; fallback sem breakdown ou amostra insuficiente → L2) e o próprio
+// KPICard.tsx, que sempre pintou L0 de verde. L0 = Medido (direto da
+// fonte, melhor). L1 = Estimado. L2 = Hipótese (pior, ainda sem
+// confirmação) — convenção padrão de camadas de dado (L0 = bruto/medido,
+// como em sensoriamento remoto), confirmada com o cliente nesta rodada.
 import type {
   CTAType,
   FunnelMaturity,
   TotalFollowersSource,
   SetorBenchmark,
   ProofMechanism,
-  PankseppSystem,
   ValuesAffectSource,
   ConfidenceLevel,
-  SchwatzValue,
 } from '@/types/orbit'
-
-export type Priority = SchwatzValue['priority']
 
 export const ENUM_TOTAL_FOLLOWERS_SOURCE: Array<[TotalFollowersSource, string]> = [
   ['manual_print_confirmado', 'Confirmado manualmente (com print)'],
@@ -74,16 +76,6 @@ export const ENUM_PROOF: Array<[ProofMechanism, string]> = [
   ['nenhum_observavel', 'Sem elementos de prova visíveis'],
 ]
 
-export const ENUM_PANKSEPP: Array<[PankseppSystem, string]> = [
-  ['SEEKING', 'Busca e descoberta'],
-  ['CARE', 'Cuidado e proteção'],
-  ['PLAY', 'Diversão e leveza'],
-  ['LUST', 'Desejo e atração'],
-  ['FEAR', 'Segurança e proteção'],
-  ['RAGE', 'Justiça e indignação'],
-  ['PANIC_GRIEF', 'Perda e urgência'],
-]
-
 export const ENUM_AFFECT_SOURCE: Array<[ValuesAffectSource, string]> = [
   ['onboarding', 'Informações do seu cadastro'],
   ['client_feedback', 'Feedback que você nos passou'],
@@ -92,28 +84,9 @@ export const ENUM_AFFECT_SOURCE: Array<[ValuesAffectSource, string]> = [
 ]
 
 export const ENUM_CONFIDENCE: Array<[ConfidenceLevel, string]> = [
-  ['L0', 'Estimado — precisa de confirmação'],
-  ['L1', 'Calculado — baseado em dados parciais'],
-  ['L2', 'Confirmado — dados diretos da fonte'],
-]
-
-export const ENUM_PRIORITY: Array<[Priority, string]> = [
-  ['high', 'Alta prioridade'],
-  ['medium', 'Média prioridade'],
-  ['low', 'Baixa prioridade'],
-]
-
-export const SCHWARTZ_SUGESTOES = [
-  'Poder',
-  'Realização',
-  'Hedonismo',
-  'Estimulação',
-  'Autodireção',
-  'Universalismo',
-  'Benevolência',
-  'Tradição',
-  'Conformidade',
-  'Segurança',
+  ['L0', 'Medido — direto da fonte, sem estimativa'],
+  ['L1', 'Estimado — calculado a partir de dado parcial'],
+  ['L2', 'Hipótese — ainda sem confirmação'],
 ]
 
 export function labelFor<T extends string>(

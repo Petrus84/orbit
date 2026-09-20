@@ -12,13 +12,9 @@ import type {
   TotalFollowersSource,
   SetorBenchmark,
   ProofMechanism,
-  PankseppSystem,
   ValuesAffectSource,
   ConfidenceLevel,
-  SchwatzValue,
 } from '@/types/orbit'
-
-export type Priority = SchwatzValue['priority']
 
 export const ENUM_TOTAL_FOLLOWERS_SOURCE: Array<[TotalFollowersSource, string]> = [
   ['manual_print_confirmado', 'Manual (print confirmado)'],
@@ -65,16 +61,6 @@ export const ENUM_PROOF: Array<[ProofMechanism, string]> = [
   ['nenhum_observavel', 'Nenhum observável'],
 ]
 
-export const ENUM_PANKSEPP: Array<[PankseppSystem, string]> = [
-  ['SEEKING', 'SEEKING'],
-  ['CARE', 'CARE'],
-  ['PLAY', 'PLAY'],
-  ['LUST', 'LUST'],
-  ['FEAR', 'FEAR'],
-  ['RAGE', 'RAGE'],
-  ['PANIC_GRIEF', 'PANIC_GRIEF'],
-]
-
 export const ENUM_AFFECT_SOURCE: Array<[ValuesAffectSource, string]> = [
   ['onboarding', 'Onboarding'],
   ['client_feedback', 'Feedback do cliente'],
@@ -83,28 +69,9 @@ export const ENUM_AFFECT_SOURCE: Array<[ValuesAffectSource, string]> = [
 ]
 
 export const ENUM_CONFIDENCE: Array<[ConfidenceLevel, string]> = [
-  ['L0', 'L0 — sem confirmação'],
-  ['L1', 'L1 — parcialmente confirmado'],
-  ['L2', 'L2 — confirmado'],
-]
-
-export const ENUM_PRIORITY: Array<[Priority, string]> = [
-  ['high', 'Alta'],
-  ['medium', 'Média'],
-  ['low', 'Baixa'],
-]
-
-export const SCHWARTZ_SUGESTOES = [
-  'Poder',
-  'Realização',
-  'Hedonismo',
-  'Estimulação',
-  'Autodireção',
-  'Universalismo',
-  'Benevolência',
-  'Tradição',
-  'Conformidade',
-  'Segurança',
+  ['L0', 'L0 — Medido (direto da fonte)'],
+  ['L1', 'L1 — Estimado (calculado a partir de dado parcial)'],
+  ['L2', 'L2 — Hipótese (ainda sem confirmação)'],
 ]
 
 export function labelFor<T extends string>(

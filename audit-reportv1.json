@@ -1,0 +1,524 @@
+{
+  "timestamp": "2026-09-16T03:02:53.459Z",
+  "clients": [
+    {
+      "name": "cpimportstore",
+      "id": "2141d077-0d82-4fda-83df-558377f105ff",
+      "truncated": false,
+      "stats": {
+        "total": 18,
+        "reach": 17,
+        "impressions": 16,
+        "likes": 17,
+        "comments": 17,
+        "shares": 17,
+        "saves": 17,
+        "l0": 16,
+        "l1": 2,
+        "l2": 0,
+        "boostCandidates": 1,
+        "negativeMetrics": 0,
+        "inconsistentConfidence": 0,
+        "avgReach": 211,
+        "avgErRealPct": 2.87,
+        "avgUtilityScorePct": 2.55
+      },
+      "byFormat": {
+        "static_post": {
+          "total": 1,
+          "reach": 1,
+          "impressions": 0,
+          "likes": 1,
+          "comments": 1,
+          "shares": 1,
+          "saves": 1,
+          "l0": 0,
+          "l1": 1,
+          "l2": 0,
+          "boostCandidates": 0,
+          "negativeMetrics": 0,
+          "inconsistentConfidence": 0,
+          "avgReach": 213,
+          "avgErRealPct": 4.23,
+          "avgUtilityScorePct": 4.23
+        },
+        "reel": {
+          "total": 15,
+          "reach": 15,
+          "impressions": 15,
+          "likes": 15,
+          "comments": 15,
+          "shares": 15,
+          "saves": 15,
+          "l0": 15,
+          "l1": 0,
+          "l2": 0,
+          "boostCandidates": 1,
+          "negativeMetrics": 0,
+          "inconsistentConfidence": 0,
+          "avgReach": 205,
+          "avgErRealPct": 2.95,
+          "avgUtilityScorePct": 2.59
+        },
+        "carousel": {
+          "total": 2,
+          "reach": 1,
+          "impressions": 1,
+          "likes": 1,
+          "comments": 1,
+          "shares": 1,
+          "saves": 1,
+          "l0": 1,
+          "l1": 1,
+          "l2": 0,
+          "boostCandidates": 0,
+          "negativeMetrics": 0,
+          "inconsistentConfidence": 0,
+          "avgReach": 290,
+          "avgErRealPct": 0.34,
+          "avgUtilityScorePct": 0.34
+        }
+      },
+      "samples": {
+        "withReach": [
+          {
+            "published_at": "2026-05-18T23:36:18+00:00",
+            "content_format": "static_post",
+            "reach": 213,
+            "impressions": null,
+            "likes": 2,
+            "confidence_level": "L1"
+          },
+          {
+            "published_at": "2026-06-08T18:21:00+00:00",
+            "content_format": "reel",
+            "reach": 259,
+            "impressions": 352,
+            "likes": 10,
+            "confidence_level": "L0"
+          },
+          {
+            "published_at": "2026-06-05T12:35:00+00:00",
+            "content_format": "reel",
+            "reach": 563,
+            "impressions": 483,
+            "likes": 12,
+            "confidence_level": "L0"
+          }
+        ],
+        "withoutReach": [
+          {
+            "published_at": "2026-05-25T16:59:56+00:00",
+            "content_format": "carousel",
+            "caption": "Você acordou cansada NOVAMENTE.\n\nTreinou",
+            "confidence_level": "L0"
+          }
+        ]
+      }
+    },
+    {
+      "name": "eupetruchio84",
+      "id": "c4722cfc-cff2-4a03-a457-f14ee8c9e0e7",
+      "truncated": false,
+      "stats": {
+        "total": 26,
+        "reach": 14,
+        "impressions": 6,
+        "likes": 21,
+        "comments": 21,
+        "shares": 14,
+        "saves": 14,
+        "l0": 11,
+        "l1": 15,
+        "l2": 0,
+        "boostCandidates": 0,
+        "negativeMetrics": 0,
+        "inconsistentConfidence": 7,
+        "avgReach": 449,
+        "avgErRealPct": 1.08,
+        "avgUtilityScorePct": 0.39
+      },
+      "byFormat": {
+        "static_post": {
+          "total": 21,
+          "reach": 14,
+          "impressions": 6,
+          "likes": 21,
+          "comments": 21,
+          "shares": 14,
+          "saves": 14,
+          "l0": 6,
+          "l1": 15,
+          "l2": 0,
+          "boostCandidates": 0,
+          "negativeMetrics": 0,
+          "inconsistentConfidence": 7,
+          "avgReach": 449,
+          "avgErRealPct": 1.08,
+          "avgUtilityScorePct": 0.39
+        },
+        "reel": {
+          "total": 5,
+          "reach": 0,
+          "impressions": 0,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0,
+          "saves": 0,
+          "l0": 5,
+          "l1": 0,
+          "l2": 0,
+          "boostCandidates": 0,
+          "negativeMetrics": 0,
+          "inconsistentConfidence": 0,
+          "avgReach": null,
+          "avgErRealPct": null,
+          "avgUtilityScorePct": null
+        }
+      },
+      "samples": {
+        "withReach": [
+          {
+            "published_at": "2026-07-03T02:19:50+00:00",
+            "content_format": "static_post",
+            "reach": 408,
+            "impressions": null,
+            "likes": 89,
+            "confidence_level": "L1"
+          },
+          {
+            "published_at": "2026-06-01T00:33:41+00:00",
+            "content_format": "static_post",
+            "reach": 302,
+            "impressions": 365,
+            "likes": 64,
+            "confidence_level": "L0"
+          },
+          {
+            "published_at": "2026-04-11T02:44:25+00:00",
+            "content_format": "static_post",
+            "reach": 386,
+            "impressions": 480,
+            "likes": 70,
+            "confidence_level": "L0"
+          }
+        ],
+        "withoutReach": [
+          {
+            "published_at": "2026-02-01T00:24:35+00:00",
+            "content_format": "static_post",
+            "caption": "Falso Por que alguns conseguem e vocÃª t",
+            "confidence_level": "L1"
+          },
+          {
+            "published_at": "2025-07-03T14:02:25+00:00",
+            "content_format": "static_post",
+            "caption": "Falso \"Entre o peso que afunda e o sal q",
+            "confidence_level": "L1"
+          },
+          {
+            "published_at": "2025-07-02T15:32:22+00:00",
+            "content_format": "static_post",
+            "caption": "Falso Como vocÃª tem nevegado em suas pr",
+            "confidence_level": "L1"
+          }
+        ]
+      }
+    },
+    {
+      "name": "mauricioartphoto",
+      "id": "344445c9-08c5-4c07-be1b-c9f8f8e12865",
+      "truncated": false,
+      "stats": {
+        "total": 40,
+        "reach": 7,
+        "impressions": 7,
+        "likes": 7,
+        "comments": 7,
+        "shares": 7,
+        "saves": 7,
+        "l0": 33,
+        "l1": 7,
+        "l2": 0,
+        "boostCandidates": 0,
+        "negativeMetrics": 0,
+        "inconsistentConfidence": 0,
+        "avgReach": 134,
+        "avgErRealPct": 1.39,
+        "avgUtilityScorePct": 0.21
+      },
+      "byFormat": {
+        "carousel": {
+          "total": 23,
+          "reach": 7,
+          "impressions": 7,
+          "likes": 7,
+          "comments": 7,
+          "shares": 7,
+          "saves": 7,
+          "l0": 16,
+          "l1": 7,
+          "l2": 0,
+          "boostCandidates": 0,
+          "negativeMetrics": 0,
+          "inconsistentConfidence": 0,
+          "avgReach": 134,
+          "avgErRealPct": 1.39,
+          "avgUtilityScorePct": 0.21
+        },
+        "static_post": {
+          "total": 7,
+          "reach": 0,
+          "impressions": 0,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0,
+          "saves": 0,
+          "l0": 7,
+          "l1": 0,
+          "l2": 0,
+          "boostCandidates": 0,
+          "negativeMetrics": 0,
+          "inconsistentConfidence": 0,
+          "avgReach": null,
+          "avgErRealPct": null,
+          "avgUtilityScorePct": null
+        },
+        "reel": {
+          "total": 10,
+          "reach": 0,
+          "impressions": 0,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0,
+          "saves": 0,
+          "l0": 10,
+          "l1": 0,
+          "l2": 0,
+          "boostCandidates": 0,
+          "negativeMetrics": 0,
+          "inconsistentConfidence": 0,
+          "avgReach": null,
+          "avgErRealPct": null,
+          "avgUtilityScorePct": null
+        }
+      },
+      "samples": {
+        "withReach": [
+          {
+            "published_at": "2026-05-23T18:51:36+00:00",
+            "content_format": "carousel",
+            "reach": 134,
+            "impressions": 486,
+            "likes": 13,
+            "confidence_level": "L1"
+          },
+          {
+            "published_at": "2026-04-24T20:59:19+00:00",
+            "content_format": "carousel",
+            "reach": 134,
+            "impressions": 485,
+            "likes": 13,
+            "confidence_level": "L1"
+          },
+          {
+            "published_at": "2026-03-22T05:32:54+00:00",
+            "content_format": "carousel",
+            "reach": 134,
+            "impressions": 485,
+            "likes": 13,
+            "confidence_level": "L1"
+          }
+        ],
+        "withoutReach": [
+          {
+            "published_at": "2026-03-29T03:51:26+00:00",
+            "content_format": "static_post",
+            "caption": "(vazio)",
+            "confidence_level": "L0"
+          },
+          {
+            "published_at": "2026-03-20T00:02:47+00:00",
+            "content_format": "static_post",
+            "caption": "(vazio)",
+            "confidence_level": "L0"
+          },
+          {
+            "published_at": "2026-03-17T23:43:25+00:00",
+            "content_format": "carousel",
+            "caption": "Rota das FalÃ©sias com @aventureiros Can",
+            "confidence_level": "L0"
+          }
+        ]
+      }
+    },
+    {
+      "name": "djcaiodogao",
+      "id": "c2779193-d3a0-4fc7-b392-ad64fea4273f",
+      "truncated": false,
+      "stats": {
+        "total": 215,
+        "reach": 0,
+        "impressions": 0,
+        "likes": 0,
+        "comments": 0,
+        "shares": 0,
+        "saves": 0,
+        "l0": 215,
+        "l1": 0,
+        "l2": 0,
+        "boostCandidates": 0,
+        "negativeMetrics": 0,
+        "inconsistentConfidence": 0,
+        "avgReach": null,
+        "avgErRealPct": null,
+        "avgUtilityScorePct": null
+      },
+      "byFormat": {
+        "static_post": {
+          "total": 26,
+          "reach": 0,
+          "impressions": 0,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0,
+          "saves": 0,
+          "l0": 26,
+          "l1": 0,
+          "l2": 0,
+          "boostCandidates": 0,
+          "negativeMetrics": 0,
+          "inconsistentConfidence": 0,
+          "avgReach": null,
+          "avgErRealPct": null,
+          "avgUtilityScorePct": null
+        },
+        "carousel": {
+          "total": 4,
+          "reach": 0,
+          "impressions": 0,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0,
+          "saves": 0,
+          "l0": 4,
+          "l1": 0,
+          "l2": 0,
+          "boostCandidates": 0,
+          "negativeMetrics": 0,
+          "inconsistentConfidence": 0,
+          "avgReach": null,
+          "avgErRealPct": null,
+          "avgUtilityScorePct": null
+        },
+        "reel": {
+          "total": 185,
+          "reach": 0,
+          "impressions": 0,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0,
+          "saves": 0,
+          "l0": 185,
+          "l1": 0,
+          "l2": 0,
+          "boostCandidates": 0,
+          "negativeMetrics": 0,
+          "inconsistentConfidence": 0,
+          "avgReach": null,
+          "avgErRealPct": null,
+          "avgUtilityScorePct": null
+        }
+      },
+      "samples": {
+        "withReach": [],
+        "withoutReach": [
+          {
+            "published_at": "2025-07-26T18:35:00+00:00",
+            "content_format": "static_post",
+            "caption": "Junina da x9",
+            "confidence_level": "L0"
+          },
+          {
+            "published_at": "2025-07-26T18:33:00+00:00",
+            "content_format": "static_post",
+            "caption": "@x9_pioneira 💚",
+            "confidence_level": "L0"
+          },
+          {
+            "published_at": "2025-05-14T14:28:00+00:00",
+            "content_format": "static_post",
+            "caption": "No meio da multidão....\n\nEu ainda sou mi",
+            "confidence_level": "L0"
+          }
+        ]
+      }
+    },
+    {
+      "name": "dogativo",
+      "id": "e45927a7-4f3d-4fd3-bac7-543cc3545dc1",
+      "truncated": false,
+      "stats": {
+        "total": 172,
+        "reach": 0,
+        "impressions": 172,
+        "likes": 172,
+        "comments": 172,
+        "shares": 172,
+        "saves": 172,
+        "l0": 172,
+        "l1": 0,
+        "l2": 0,
+        "boostCandidates": 0,
+        "negativeMetrics": 0,
+        "inconsistentConfidence": 0,
+        "avgReach": null,
+        "avgErRealPct": null,
+        "avgUtilityScorePct": null
+      },
+      "byFormat": {
+        "static_post": {
+          "total": 172,
+          "reach": 0,
+          "impressions": 172,
+          "likes": 172,
+          "comments": 172,
+          "shares": 172,
+          "saves": 172,
+          "l0": 172,
+          "l1": 0,
+          "l2": 0,
+          "boostCandidates": 0,
+          "negativeMetrics": 0,
+          "inconsistentConfidence": 0,
+          "avgReach": null,
+          "avgErRealPct": null,
+          "avgUtilityScorePct": null
+        }
+      },
+      "samples": {
+        "withReach": [],
+        "withoutReach": [
+          {
+            "published_at": "2026-08-17T03:00:00+00:00",
+            "content_format": "static_post",
+            "caption": "@AllPop_BR Delícia",
+            "confidence_level": "L0"
+          },
+          {
+            "published_at": "2026-07-13T03:00:00+00:00",
+            "content_format": "static_post",
+            "caption": "@xmaicow Ja vai tarde",
+            "confidence_level": "L0"
+          },
+          {
+            "published_at": "2026-07-05T03:00:00+00:00",
+            "content_format": "static_post",
+            "caption": "@BrasilPost13 Nao pode se enclausurar de",
+            "confidence_level": "L0"
+          }
+        ]
+      }
+    }
+  ]
+}

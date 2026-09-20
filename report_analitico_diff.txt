@@ -1,0 +1,1358 @@
+diff --git a/orbit-dashboard-clean.tar.gz b/orbit-dashboard-clean.tar.gz
+index 2874fdc..1ed3772 100644
+Binary files a/orbit-dashboard-clean.tar.gz and b/orbit-dashboard-clean.tar.gz differ
+diff --git a/src/app/(dashboard)/layout.tsx b/src/app/(dashboard)/layout.tsx
+index 7a3b7ea..a77334c 100644
+--- a/src/app/(dashboard)/layout.tsx
++++ b/src/app/(dashboard)/layout.tsx
+@@ -54,9 +54,15 @@ export default function DashboardLayout({
+       periodStart={PERIOD_START}
+       periodEnd={periodEnd}
+     >
+-      <div style={{ display: 'flex', minHeight: '100vh' }}>
++      {/* FIX a11y/responsivo (15/09/2026): só 7 de 35 CSS Modules tinham
++          @media e a sidebar tem largura fixa sem breakpoint — abaixo de
++          ~900px o conteúdo era espremido sem alternativa. `overflowX: auto`
++          é a rede de segurança mínima (rola em vez de quebrar o layout);
++          um padrão de colapso de sidebar fica para uma decisão de produto
++          à parte — ver nota em Sidebar.module.css. */}
++      <div style={{ display: 'flex', minHeight: '100vh', overflowX: 'auto' }}>
+         <Sidebar />
+-        <div style={{ flex: 1, overflow: 'auto' }}>{children}</div>
++        <div style={{ flex: 1, overflow: 'auto', minWidth: 680 }}>{children}</div>
+       </div>
+     </OrbitDashboardProvider>
+   )
+diff --git a/src/app/globals.css b/src/app/globals.css
+index 7b95009..a0c83fd 100644
+--- a/src/app/globals.css
++++ b/src/app/globals.css
+@@ -25,5 +25,31 @@
+     color: var(--t0);
+     font-family: 'DM Sans', sans-serif;
+   }
++
++  /* FIX a11y (15/09/2026): 27 dos 35 CSS Modules não tinham nenhum estado
++     de foco. Regra global cobre esses 27 de uma vez, sem editar componente
++     por componente. Onde um módulo já define seu próprio :focus-visible
++     (8 arquivos), aquela regra é mais específica e continua vencendo —
++     esta é só o piso, não substitui nada que já existe. */
++  :focus-visible {
++    outline: 2px solid var(--neon-cyan);
++    outline-offset: 2px;
++    border-radius: var(--radius-xs);
++  }
++
++  /* FIX a11y (15/09/2026): só 2 arquivos respeitavam prefers-reduced-motion,
++     mas há @keyframes contínuas (orbitSpin, orbitPulse) em 5 telas. Regra
++     global cobre todas de uma vez — nenhuma animação é removida, só some
++     para quem pediu isso no SO. */
++  @media (prefers-reduced-motion: reduce) {
++    *,
++    *::before,
++    *::after {
++      animation-duration: 0.01ms !important;
++      animation-iteration-count: 1 !important;
++      transition-duration: 0.01ms !important;
++      scroll-behavior: auto !important;
++    }
++  }
+ }
+ 
+diff --git a/src/app/instagram/page.tsx b/src/app/instagram/page.tsx
+index 133322e..5f8fd1c 100644
+--- a/src/app/instagram/page.tsx
++++ b/src/app/instagram/page.tsx
+@@ -81,9 +81,9 @@ return (
+                 cursor: 'pointer',
+                 fontWeight: activeClientKey === key ? 700 : 400,
+                 background: activeClientKey === key
+-                  ? 'rgba(0,200,255,0.15)'
+-                  : 'rgba(255,255,255,0.06)',
+-                color: activeClientKey === key ? '#00c8ff' : '#aaa',
++                  ? 'rgba(0,255,255,0.15)'
++                  : 'var(--bg-hover)',
++                color: activeClientKey === key ? 'var(--neon-cyan)' : 'var(--text-muted)',
+                 transition: 'all 0.15s',
+               }}
+             >
+@@ -178,7 +178,7 @@ return (
+               // classe que a aba Audiência já usa) é flex de largura cheia.
+               <section className={styles.tabContent} aria-label="Dados detalhados por postagem">
+                 <GlassCard glowColor="cyan">
+-                  <h3 style={{ color: '#fff', marginBottom: '1rem' }}>
++                  <h3 style={{ color: 'var(--text-primary)', marginBottom: '1rem' }}>
+                     Métricas Agregadas por Formato
+                   </h3>
+                   <FormatPerformanceTable rows={data.formatPerformance} />
+diff --git a/src/components/common/AlertCard.module.css b/src/components/common/AlertCard.module.css
+index 70d46c4..9e9258d 100644
+--- a/src/components/common/AlertCard.module.css
++++ b/src/components/common/AlertCard.module.css
+@@ -160,6 +160,57 @@
+   line-height: 1.5;
+ }
+ 
++/* ✅ ADICIONADO (P0 — v8.2): fileira de chips de contexto (métrica,
++   natureza, confiança). Mesma lógica visual do .severityBadge (pill
++   pequena, sem o glow de 24px do card inteiro), mas neutra — não é um
++   indicador de severidade, é metadado de proveniência do alerta. */
++.chipRow {
++  display: flex;
++  flex-wrap: wrap;
++  gap: var(--space-1);
++  margin-top: var(--space-1);
++}
++
++.chip {
++  display: inline-flex;
++  align-items: center;
++  font-size: var(--font-size-xs);
++  font-weight: var(--font-weight-bold);
++  padding: 1px var(--space-3);
++  border-radius: var(--border-radius-lg);
++  border: var(--border-width) solid var(--border-default);
++  background: rgba(255, 255, 255, 0.04);
++  color: var(--text-muted);
++  white-space: nowrap;
++}
++
++/* natureza: 'tecnica' | 'comunicacao' — mesma paleta cyan do .info, mas
++   sem glow (é rótulo de metadado, não status de alerta). */
++.chipNatureza {
++  border-color: var(--border-glow-cyan);
++  color: #7eb3ff;
++  background: rgba(0, 255, 255, 0.06);
++}
++
++/* confidence_level: L0/L1/L2 — L2 (confirmado) em verde, L1 em âmbar,
++   L0 (sem confirmação) neutro. Selo de confiança do dado, não severidade
++   do alerta. */
++.chipConfidenceL2 {
++  border-color: var(--green);
++  color: var(--green);
++  background: rgba(46, 204, 113, 0.1);
++}
++.chipConfidenceL1 {
++  border-color: var(--border-glow-gold);
++  color: var(--amber);
++  background: rgba(255, 195, 0, 0.1);
++}
++.chipConfidenceL0 {
++  border-color: var(--border-default);
++  color: var(--text-muted);
++  background: rgba(255, 255, 255, 0.04);
++}
++
+ /* ⚠️ --space-2 não confirmado — usei --space-1 (confirmado) como aproximação
+    conservadora até alguém confirmar se --space-2 existe de verdade. */
+ .meta {
+diff --git a/src/components/common/AlertCard.tsx b/src/components/common/AlertCard.tsx
+index 29f1f16..700d7b0 100644
+--- a/src/components/common/AlertCard.tsx
++++ b/src/components/common/AlertCard.tsx
+@@ -72,6 +72,28 @@ const SEVERITY_LABEL: Record<Alert['severity'], string> = {
+   success: 'Resolvido',
+ }
+ 
++// ✅ ADICIONADO (P0 — v8.2, item "AlertCard.tsx: Adicionar chips"): rótulos
++// e classes para os chips de contexto. `natureza` espelha orbit.alert_natureza
++// ('tecnica' | 'comunicacao'); confidence_level espelha orbit.confidence_level
++// (L0/L1/L2). Nenhum default inventado — ausência (undefined) simplesmente
++// não renderiza o chip, não vira 'tecnica'/'L0' por engano.
++const NATUREZA_LABEL: Record<NonNullable<Alert['natureza']>, string> = {
++  tecnica: 'Técnica',
++  comunicacao: 'Comunicação',
++}
++
++const CONFIDENCE_LABEL: Record<NonNullable<Alert['confidenceLevel']>, string> = {
++  L0: 'L0 — sem confirmação',
++  L1: 'L1 — parcial',
++  L2: 'L2 — confirmado',
++}
++
++const CONFIDENCE_CLASS: Record<NonNullable<Alert['confidenceLevel']>, string> = {
++  L0: styles.chipConfidenceL0 ?? '',
++  L1: styles.chipConfidenceL1 ?? '',
++  L2: styles.chipConfidenceL2 ?? '',
++}
++
+ export default function AlertCard({ alert, onAcknowledge }: AlertCardProps): React.ReactElement {
+   const [isLoading, setIsLoading] = useState(false)
+ 
+@@ -129,6 +151,29 @@ export default function AlertCard({ alert, onAcknowledge }: AlertCardProps): Rea
+           </p>
+         )}
+ 
++        {/* ✅ ADICIONADO (P0 — v8.2): chips de contexto — métrica, natureza
++            e confiança do dado (L0–L2). Cada chip só aparece se o campo
++            existir; ausência de `natureza`/`confidenceLevel` é estado
++            válido (alerta ainda não classificado pelo engine ou métrica
++            sem proveniência registrada), não deve virar chip "vazio". */}
++        {(alert.metricName || alert.natureza || alert.confidenceLevel) && (
++          <div className={styles.chipRow}>
++            {alert.metricName && (
++              <span className={styles.chip}>{alert.metricName}</span>
++            )}
++            {alert.natureza && (
++              <span className={`${styles.chip} ${styles.chipNatureza}`}>
++                {NATUREZA_LABEL[alert.natureza]}
++              </span>
++            )}
++            {alert.confidenceLevel && (
++              <span className={`${styles.chip} ${CONFIDENCE_CLASS[alert.confidenceLevel]}`}>
++                {CONFIDENCE_LABEL[alert.confidenceLevel]}
++              </span>
++            )}
++          </div>
++        )}
++
+         {alert.suggestedAction && <p className={styles.text}>💡 {alert.suggestedAction}</p>}
+ 
+         <div className={styles.action}>
+diff --git a/src/components/common/AlignmentFormula.module.css b/src/components/common/AlignmentFormula.module.css
+index 2f90c89..5d04e65 100644
+--- a/src/components/common/AlignmentFormula.module.css
++++ b/src/components/common/AlignmentFormula.module.css
+@@ -38,7 +38,7 @@
+ }
+ 
+ .varName {
+-  color: var(--acc2); /* roxo secundário — identidade da marca */
++  color: var(--acc2-text); /* FIX WCAG: --acc2 puro é 4.17:1 sobre --bg2 (falha AA). --acc2-text mantém a identidade roxa com 5.7:1+ */
+ }
+ 
+ .operator {
+diff --git a/src/components/common/AvatarCard.module.css b/src/components/common/AvatarCard.module.css
+index 9870fbd..57e9037 100644
+--- a/src/components/common/AvatarCard.module.css
++++ b/src/components/common/AvatarCard.module.css
+@@ -112,7 +112,7 @@
+ 
+ /* Único uso de tom apagado legítimo: placeholder, não dado real */
+ .insightFallback {
+-  color: var(--t2);
++  color: var(--text-muted); /* FIX WCAG: era var(--t2), 3.21:1 sobre hover — falha AA. --text-muted já resolve para --t1 (8:1+) */
+   font-style: italic;
+ }
+ 
+diff --git a/src/components/common/CampaignRow.tsx b/src/components/common/CampaignRow.tsx
+index b6e6aaf..c0bea3a 100644
+--- a/src/components/common/CampaignRow.tsx
++++ b/src/components/common/CampaignRow.tsx
+@@ -29,7 +29,7 @@ const OBJECTIVE_LABELS: Record<CampaignObjective, string> = {
+ 
+ const OBJECTIVE_COLORS: Record<CampaignObjective, string> = {
+   awareness:   'text-blue-400',
+-  leads:       'text-[#C8FF57]',
++  leads:       'text-[var(--acc)]',
+   conversion:  'text-amber-400',
+   retargeting: 'text-purple-400',
+ };
+diff --git a/src/components/common/CampaignTable.tsx b/src/components/common/CampaignTable.tsx
+index a467923..18bc209 100644
+--- a/src/components/common/CampaignTable.tsx
++++ b/src/components/common/CampaignTable.tsx
+@@ -58,7 +58,7 @@ export default function CampaignTable({ campaigns, onAction }: CampaignTableProp
+       )}
+ 
+       {/* Table */}
+-      <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-[#18181F]">
++      <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-[var(--bg-card)]">
+         <div className="overflow-x-auto">
+           <table className="min-w-full border-collapse">
+             <thead>
+diff --git a/src/components/common/DiagnosticAlert.tsx b/src/components/common/DiagnosticAlert.tsx
+index d4a69f8..a5d4734 100644
+--- a/src/components/common/DiagnosticAlert.tsx
++++ b/src/components/common/DiagnosticAlert.tsx
+@@ -46,7 +46,7 @@ export default function DiagnosticAlert({ alert, index }: DiagnosticAlertProps):
+   const tokens = SEVERITY_TOKENS[alert.severity];
+ 
+   return (
+-    <div className={`flex gap-3 rounded-2xl border bg-[#18181F] p-4 ${tokens.border}`}>
++    <div className={`flex gap-3 rounded-2xl border bg-[var(--bg-card)] p-4 ${tokens.border}`}>
+       {/* Index number */}
+       <div
+         className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full font-mono text-xs font-bold ${tokens.numberBg} ${tokens.number}`}
+diff --git a/src/components/common/FatigueFormula.tsx b/src/components/common/FatigueFormula.tsx
+index b486a2c..b63b49c 100644
+--- a/src/components/common/FatigueFormula.tsx
++++ b/src/components/common/FatigueFormula.tsx
+@@ -2,7 +2,7 @@ import React from 'react';
+ 
+ export default function FatigueFormula(): React.ReactElement {
+   return (
+-    <div className="flex flex-col gap-3 rounded-2xl border border-zinc-800 bg-[#18181F] p-4">
++    <div className="flex flex-col gap-3 rounded-2xl border border-zinc-800 bg-[var(--bg-card)] p-4">
+       {/* Header */}
+       <div className="flex items-center gap-2">
+         <span className="font-sans text-xs font-semibold uppercase tracking-widest text-zinc-600">
+@@ -13,7 +13,7 @@ export default function FatigueFormula(): React.ReactElement {
+       {/* Formula block */}
+       <div className="overflow-x-auto rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3">
+         <pre className="font-mono text-sm leading-relaxed text-zinc-200 whitespace-nowrap">
+-          <span className="text-[#C8FF57]">fadiga</span>
++          <span className="text-[var(--acc)]">fadiga</span>
+           <span className="text-zinc-500">{' = '}</span>
+           <span className="text-white">(</span>
+           <span className="text-amber-400">CTR_semana1</span>
+diff --git a/src/components/common/FunnelStep.module.css b/src/components/common/FunnelStep.module.css
+index 4205d24..3e18c51 100644
+--- a/src/components/common/FunnelStep.module.css
++++ b/src/components/common/FunnelStep.module.css
+@@ -60,7 +60,7 @@
+ .label {
+   font-family: var(--font-family);
+   font-size: var(--font-size-sm, 0.875rem);
+-  color: #fff;
++  color: var(--text-primary); /* era #fff literal — --t0 é visualmente equivalente e é o token oficial */
+   font-weight: var(--font-weight-semibold, 600);
+   white-space: nowrap;
+   overflow: hidden;
+@@ -70,7 +70,7 @@
+ .value {
+   font-family: var(--font-mono);
+   font-size: var(--font-size-xs, 0.75rem);
+-  color: rgba(255, 255, 255, 0.82);
++  color: color-mix(in srgb, var(--text-primary) 82%, transparent); /* era rgba(255,255,255,.82) literal */
+   font-variant-numeric: tabular-nums;
+   white-space: nowrap;
+ }
+@@ -79,7 +79,7 @@
+   font-family: var(--font-mono);
+   font-size: var(--font-size-sm, 0.875rem);
+   font-weight: var(--font-weight-bold, 700);
+-  color: #fff;
++  color: var(--text-primary); /* era #fff literal — --t0 é visualmente equivalente e é o token oficial */
+   font-variant-numeric: tabular-nums;
+   white-space: nowrap;
+   flex-shrink: 0;
+diff --git a/src/components/common/PerformanceTable.tsx b/src/components/common/PerformanceTable.tsx
+index 76f9828..2b09378 100644
+--- a/src/components/common/PerformanceTable.tsx
++++ b/src/components/common/PerformanceTable.tsx
+@@ -33,7 +33,7 @@ function getFormatIcon(format: string): string {
+ export default function PerformanceTable({ metrics }: PerformanceTableProps): React.ReactElement {
+   if (metrics.length === 0) {
+     return (
+-      <div className="flex items-center justify-center rounded-2xl border border-zinc-800 bg-[#18181F] py-10">
++      <div className="flex items-center justify-center rounded-2xl border border-zinc-800 bg-[var(--bg-card)] py-10">
+         <p className="font-sans text-sm text-zinc-600">Sem dados de performance disponíveis.</p>
+       </div>
+     );
+@@ -43,7 +43,7 @@ export default function PerformanceTable({ metrics }: PerformanceTableProps): Re
+   const totalShares = metrics.reduce((s, m) => s + m.shareCount, 0);
+ 
+   return (
+-    <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-[#18181F]">
++    <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-[var(--bg-card)]">
+       {/* Table header */}
+       <div className="grid grid-cols-4 gap-2 border-b border-zinc-800 px-4 py-2.5">
+         {(['Formato', 'Posts', 'Shares', 'Trend'] as const).map((col) => (
+diff --git a/src/components/common/QualityScoreCard.tsx b/src/components/common/QualityScoreCard.tsx
+index e83e874..6bd47df 100644
+--- a/src/components/common/QualityScoreCard.tsx
++++ b/src/components/common/QualityScoreCard.tsx
+@@ -48,7 +48,7 @@ export default function QualityScoreCard({ score }: QualityScoreCardProps): Reac
+   const displayValue = score.value === null ? 'N/A' : `${score.value.toFixed(2)}%`;
+ 
+   return (
+-    <div className={`flex flex-col gap-3 rounded-2xl border bg-[#18181F] p-4 ${tokens.ring}`}>
++    <div className={`flex flex-col gap-3 rounded-2xl border bg-[var(--bg-card)] p-4 ${tokens.ring}`}>
+       {/* Label */}
+       <span className="font-sans text-xs font-medium uppercase tracking-widest text-zinc-500">
+         {score.label}
+diff --git a/src/components/common/onboarding-common.tsx b/src/components/common/onboarding-common.tsx
+index 1a3f861..669332a 100644
+--- a/src/components/common/onboarding-common.tsx
++++ b/src/components/common/onboarding-common.tsx
+@@ -12,7 +12,7 @@ export default function OnboardingPage(): React.ReactElement {
+ 
+   if (status === 'loading') {
+     return (
+-      <div className="flex min-h-screen items-center justify-center bg-[#0C0C0F]">
++      <div className="flex min-h-screen items-center justify-center bg-[var(--bg)]">
+         <p className="text-zinc-400">Carregando...</p>
+       </div>
+     )
+@@ -20,7 +20,7 @@ export default function OnboardingPage(): React.ReactElement {
+ 
+   if (status === 'error') {
+     return (
+-      <div className="flex min-h-screen items-center justify-center bg-[#0C0C0F]">
++      <div className="flex min-h-screen items-center justify-center bg-[var(--bg)]">
+         <p className="text-red-400">Erro: {error}</p>
+       </div>
+     )
+diff --git a/src/components/common/onboarding.tsx b/src/components/common/onboarding.tsx
+index 1d850bd..2bf6825 100644
+--- a/src/components/common/onboarding.tsx
++++ b/src/components/common/onboarding.tsx
+@@ -13,7 +13,7 @@ export default function OnboardingPage(): React.ReactElement {
+ 
+   if (status === 'loading') {
+     return (
+-      <div className="flex min-h-screen items-center justify-center bg-[#0C0C0F]">
++      <div className="flex min-h-screen items-center justify-center bg-[var(--bg)]">
+         <p className="text-zinc-400">Carregando...</p>
+       </div>
+     )
+@@ -21,7 +21,7 @@ export default function OnboardingPage(): React.ReactElement {
+ 
+   if (status === 'error') {
+     return (
+-      <div className="flex min-h-screen items-center justify-center bg-[#0C0C0F]">
++      <div className="flex min-h-screen items-center justify-center bg-[var(--bg)]">
+         <p className="text-red-400">Erro: {error}</p>
+       </div>
+     )
+diff --git a/src/components/content/CriticalAlert.module.css b/src/components/content/CriticalAlert.module.css
+index b5b9d2d..1b684ae 100644
+--- a/src/components/content/CriticalAlert.module.css
++++ b/src/components/content/CriticalAlert.module.css
+@@ -87,5 +87,5 @@
+ }
+ 
+ .action:hover {
+-  color: var(--acc2);
++  color: var(--acc2-text); /* FIX WCAG: --acc2 puro é 4.17:1 sobre --bg2 (falha AA) */
+ }
+\ No newline at end of file
+diff --git a/src/components/content/FormatPerformanceTable.module.css b/src/components/content/FormatPerformanceTable.module.css
+index 23096c9..e068c19 100644
+--- a/src/components/content/FormatPerformanceTable.module.css
++++ b/src/components/content/FormatPerformanceTable.module.css
+@@ -159,7 +159,7 @@ transition:        color var(--transition-fast);
+ }
+ 
+ .postCaption:hover {
+-color:             var(--neon-cyan, #00c8ff);
++color:             var(--neon-cyan); /* removido fallback #00c8ff — terceiro tom de cyan fora da paleta; --neon-cyan já está sempre definido */
+ border-bottom-color: rgba(0, 255, 200, 0.5);
+ }
+ 
+diff --git a/src/components/content/QualityScoresPanel.module.css b/src/components/content/QualityScoresPanel.module.css
+index c41524d..011a896 100644
+--- a/src/components/content/QualityScoresPanel.module.css
++++ b/src/components/content/QualityScoresPanel.module.css
+@@ -135,7 +135,7 @@
+   font-size: var(--font-size-xs);
+   font-weight: 500;
+   letter-spacing: 0.03em;
+-  color: var(--t2);
++  color: var(--text-muted); /* FIX WCAG: era var(--t2), 3.21:1 sobre hover — falha AA. --text-muted já resolve para --t1 (8:1+) */
+   text-transform: uppercase;
+   margin: 0 0 var(--space-2) 0;
+ }
+@@ -180,7 +180,7 @@
+ }
+ 
+ .statusNeutral {
+-  color: var(--t2);
++  color: var(--text-muted); /* FIX WCAG: era var(--t2), 3.21:1 sobre hover — falha AA. --text-muted já resolve para --t1 (8:1+) */
+ }
+ 
+ /* ═══════════════════════════════════════════════════════════════
+diff --git a/src/components/kpi/KPICard.tsx b/src/components/kpi/KPICard.tsx
+index 35e5724..f12a210 100644
+--- a/src/components/kpi/KPICard.tsx
++++ b/src/components/kpi/KPICard.tsx
+@@ -29,7 +29,7 @@ const FLAG_TOKENS: Record<FlagLevel, { bg: string; text: string; label: string }
+ const DELTA_TOKENS: Record<'up' | 'down' | 'neutral', { color: string; arrow: string }> = {
+   up:      { color: 'text-emerald-400', arrow: '↑' },
+   down:    { color: 'text-red-400',     arrow: '↓' },
+-  neutral: { color: 'text-zinc-500',    arrow: '→' },
++  neutral: { color: 'text-[var(--text-dim)]',    arrow: '→' },
+ };
+ 
+ // ─── Sparkline ────────────────────────────────────────────────
+@@ -57,7 +57,7 @@ function Sparkline({ data, trend }: SparklineProps): React.ReactElement | null {
+     .join(' ');
+ 
+   const strokeColor =
+-    trend === 'up' ? '#2ECC71' : trend === 'down' ? '#FF4444' : '#71717A';
++    trend === 'up' ? 'var(--green)' : trend === 'down' ? 'var(--red)' : 'var(--text-dim)';
+ 
+   return (
+     <svg
+@@ -103,10 +103,10 @@ export default function KPICard({ kpi }: KPICardProps): React.ReactElement {
+   // com dado real, ele passa a aparecer automaticamente.
+ 
+   return (
+-    <div className="flex flex-col gap-3 rounded-2xl bg-[#18181F] p-4">
++    <div className="flex flex-col gap-3 rounded-2xl bg-[var(--bg-card)] p-4">
+       {/* Header row: label + flag */}
+       <div className="flex items-center justify-between gap-2">
+-        <span className="font-sans text-xs font-medium uppercase tracking-widest text-zinc-500">
++        <span className="font-sans text-xs font-medium uppercase tracking-widest text-[var(--text-dim)]">
+           {kpi.label}
+         </span>
+         <span
+@@ -122,7 +122,7 @@ export default function KPICard({ kpi }: KPICardProps): React.ReactElement {
+           <span className="font-mono text-2xl font-bold tabular-nums text-white leading-none">
+             {formatValue(kpi.value)}
+             {kpi.unit && (
+-              <span className="ml-0.5 font-sans text-sm font-normal text-zinc-500">
++              <span className="ml-0.5 font-sans text-sm font-normal text-[var(--text-dim)]">
+                 {kpi.unit}
+               </span>
+             )}
+diff --git a/src/components/layout/Sidebar.module.css b/src/components/layout/Sidebar.module.css
+index ce4cddf..15eb72a 100644
+--- a/src/components/layout/Sidebar.module.css
++++ b/src/components/layout/Sidebar.module.css
+@@ -3,6 +3,9 @@
+ .sidebar {
+   width:          var(--sidebar-width);
+   min-width:      var(--sidebar-width);
++  flex-shrink:    0; /* FIX a11y (15/09/2026): sem isso, um flex container
++    apertado deixa o navegador encolher a sidebar por baixo de 220px,
++    quebrando .navItem/.navLabel de forma imprevisível por tela. */
+   background:     var(--bg-card);
+   border-right:   var(--border-width) solid var(--border-default);
+   padding:        var(--space-5) var(--space-4);
+@@ -13,6 +16,15 @@
+   height:         100%;
+ }
+ 
++/* DECISÃO DE ESCOPO (15/09/2026): a sidebar não tem um padrão de colapso
++   (ícone-only + toggle) porque isso é uma funcionalidade nova — precisa de
++   estado, affordance de abrir/fechar e provavelmente tooltip nos ícones, e
++   inventar isso sem especificação arrisca esconder o texto do link do jeito
++   errado (display:none no .navLabel apagaria o nome acessível do link, já
++   que o ícone tem aria-hidden). Rede de segurança até essa decisão de
++   produto: abaixo de 900px o shell inteiro rola na horizontal em vez de
++   esmagar a sidebar ou o conteúdo — ver `(dashboard)/layout.tsx`. */
++
+ /* Logo */
+ 
+ .logo {
+diff --git a/src/components/panels/SectorPositioningPanel.module.css b/src/components/panels/SectorPositioningPanel.module.css
+index 8151e7f..3b7c025 100644
+--- a/src/components/panels/SectorPositioningPanel.module.css
++++ b/src/components/panels/SectorPositioningPanel.module.css
+@@ -73,7 +73,7 @@
+   font-family: var(--font);
+   font-size: var(--font-size-xs);
+   font-weight: 500;
+-  color: var(--t2);
++  color: var(--text-muted); /* FIX WCAG: era var(--t2), 3.21:1 sobre hover — falha AA. --text-muted já resolve para --t1 (8:1+) */
+   text-transform: uppercase;
+   letter-spacing: 0.03em;
+   margin: 0 0 var(--space-2) 0;
+@@ -154,7 +154,7 @@
+   font-family: var(--font);
+   font-size: var(--font-size-xs);
+   font-weight: 500;
+-  color: var(--t2);
++  color: var(--text-muted); /* FIX WCAG: era var(--t2), 3.21:1 sobre hover — falha AA. --text-muted já resolve para --t1 (8:1+) */
+   text-transform: uppercase;
+   letter-spacing: 0.03em;
+   margin: 0 0 var(--space-2) 0;
+diff --git a/src/components/screens/AlertasScreen.tsx b/src/components/screens/AlertasScreen.tsx
+index 7bbda24..fe44553 100644
+--- a/src/components/screens/AlertasScreen.tsx
++++ b/src/components/screens/AlertasScreen.tsx
+@@ -144,7 +144,7 @@ export default function AlertasScreen({ useAlerts }: AlertasScreenProps): React.
+   const isLoading = status === 'idle' || status === 'loading'
+ 
+   return (
+-    <main className="flex min-h-screen flex-col gap-6 bg-[#0C0C0F] px-4 py-6 sm:px-6">
++    <main className="flex min-h-screen flex-col gap-6 bg-[var(--bg)] px-4 py-6 sm:px-6">
+       <SectionHead title="Central de alertas" subtitle={subtitle} />
+ 
+       <div className="flex gap-1.5 flex-wrap" role="tablist" aria-label="Filtrar alertas">
+diff --git a/src/components/screens/FunnelScreen.tsx b/src/components/screens/FunnelScreen.tsx
+index b1074dd..d97ecfc 100644
+--- a/src/components/screens/FunnelScreen.tsx
++++ b/src/components/screens/FunnelScreen.tsx
+@@ -1,6 +1,6 @@
+ // src/components/screens/FunnelScreen.tsx
+ //
+-// ✅ Migrado de Tailwind ad-hoc (bg-[#18181F] hardcoded, max-w-7xl,
++// ✅ Migrado de Tailwind ad-hoc (bg-[var(--bg-card)] hardcoded, max-w-7xl,
+ // text-zinc-*/border-zinc-* — paleta genérica desconectada do design
+ // system) para FunnelScreen.module.css, que já existia pronto e
+ // token-based mas tinha parado de ser importado. Mesma causa raiz do
+diff --git a/src/components/screens/IGOverviewScreen.tsx b/src/components/screens/IGOverviewScreen.tsx
+index e96de87..0a579a6 100644
+--- a/src/components/screens/IGOverviewScreen.tsx
++++ b/src/components/screens/IGOverviewScreen.tsx
+@@ -42,7 +42,7 @@ function KPICard({ kpi }: { kpi: KPI }): React.ReactElement {
+   const sign = kpi.delta > 0 ? '+' : ''
+ 
+   return (
+-    <div className="flex flex-col gap-3 rounded-2xl bg-[#18181F] p-4">
++    <div className="flex flex-col gap-3 rounded-2xl bg-[var(--bg-card)] p-4">
+       <div className="flex items-center justify-between">
+         <span className="font-sans text-xs font-medium text-zinc-400">{kpi.label}</span>
+         <span className="rounded-full bg-zinc-800 px-2 py-0.5 font-sans text-[10px] text-zinc-500">{kpi.flagLevel}</span>
+@@ -112,7 +112,7 @@ function mapCriticalAlertToDiagnostic(data: CriticalAlertData): DiagnosticAlertD
+ 
+ function KPISkeleton(): React.ReactElement {
+   return (
+-    <div className="flex flex-col gap-3 rounded-2xl bg-[#18181F] p-4 animate-pulse">
++    <div className="flex flex-col gap-3 rounded-2xl bg-[var(--bg-card)] p-4 animate-pulse">
+       <div className="flex justify-between">
+         <div className="h-2.5 w-24 rounded bg-zinc-800" />
+         <div className="h-4 w-6 rounded-full bg-zinc-800" />
+@@ -130,7 +130,7 @@ function KPISkeleton(): React.ReactElement {
+ 
+ function ScoreSkeleton(): React.ReactElement {
+   return (
+-    <div className="flex flex-col gap-3 rounded-2xl border border-zinc-800 bg-[#18181F] p-4 animate-pulse">
++    <div className="flex flex-col gap-3 rounded-2xl border border-zinc-800 bg-[var(--bg-card)] p-4 animate-pulse">
+       <div className="h-2.5 w-32 rounded bg-zinc-800" />
+       <div className="h-8 w-20 rounded-xl bg-zinc-800" />
+       <div className="flex gap-1.5 items-center">
+@@ -143,7 +143,7 @@ function ScoreSkeleton(): React.ReactElement {
+ 
+ function TableSkeleton(): React.ReactElement {
+   return (
+-    <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-[#18181F] animate-pulse">
++    <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-[var(--bg-card)] animate-pulse">
+       <div className="border-b border-zinc-800 px-4 py-2.5">
+         <div className="h-2.5 w-48 rounded bg-zinc-800" />
+       </div>
+@@ -177,7 +177,7 @@ function AudienceSkeleton(): React.ReactElement {
+ 
+ function AlertSkeletonRow(): React.ReactElement {
+   return (
+-    <div className="flex gap-3 rounded-2xl border border-zinc-800 bg-[#18181F] p-4 animate-pulse">
++    <div className="flex gap-3 rounded-2xl border border-zinc-800 bg-[var(--bg-card)] p-4 animate-pulse">
+       <div className="h-6 w-6 rounded-full bg-zinc-800 shrink-0" />
+       <div className="flex flex-1 flex-col gap-2">
+         <div className="h-3 w-40 rounded bg-zinc-800" />
+@@ -221,7 +221,7 @@ export default function IGOverviewScreen({ useIGOverview }: IGOverviewScreenProp
+   const isLoading = status === 'idle' || status === 'loading'
+ 
+   return (
+-    <main className="flex min-h-screen flex-col gap-8 bg-[#0C0C0F] px-4 py-6 sm:px-6">
++    <main className="flex min-h-screen flex-col gap-8 bg-[var(--bg)] px-4 py-6 sm:px-6">
+       <SectionHead
+         title="Instagram · Visão Geral"
+         subtitle={status === 'success' ? 'Últimos 90 dias' : undefined}
+@@ -303,7 +303,7 @@ export default function IGOverviewScreen({ useIGOverview }: IGOverviewScreenProp
+               ? [0, 1, 2].map((i) => (
+                   <div
+                     key={i}
+-                    className="h-16 rounded-2xl border border-zinc-800 bg-[#18181F] animate-pulse"
++                    className="h-16 rounded-2xl border border-zinc-800 bg-[var(--bg-card)] animate-pulse"
+                   />
+                 ))
+               : (data?.insights ?? []).map((insight) => (
+diff --git a/src/components/screens/OnboardingScreen.module.css b/src/components/screens/OnboardingScreen.module.css
+index 2be3342..cf2602a 100644
+--- a/src/components/screens/OnboardingScreen.module.css
++++ b/src/components/screens/OnboardingScreen.module.css
+@@ -6,7 +6,7 @@
+   display: flex;
+   flex-direction: column;
+   gap: 1.5rem;
+-  background-color: #09090b;
++  background-color: var(--bg);
+   padding: 1.5rem;
+ }
+ 
+@@ -17,20 +17,20 @@
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+-  border-bottom: 1px solid #27272a;
++  border-bottom: 1px solid var(--bg3);
+   padding-bottom: 1.5rem;
+ }
+ 
+ .title {
+   font-size: 1.875rem;
+   font-weight: 700;
+-  color: #f4f4f5;
++  color: var(--text-primary);
+   margin: 0;
+ }
+ 
+ .subtitle {
+   font-size: 0.875rem;
+-  color: #a1a1a6;
++  color: var(--text-muted);
+   margin: 0.25rem 0 0 0;
+ }
+ 
+@@ -41,12 +41,12 @@
+ .pct {
+   font-size: 2rem;
+   font-weight: 700;
+-  color: #06b6d4;
++  color: var(--neon-cyan);
+ }
+ 
+ .pctLabel {
+   font-size: 0.75rem;
+-  color: #a1a1a6;
++  color: var(--text-muted);
+   margin: 0;
+ }
+ 
+@@ -55,19 +55,19 @@
+    ============================================================================ */
+ .bannerError {
+   border-radius: 0.5rem;
+-  border: 1px solid #7f1d1d;
+-  background-color: rgba(127, 29, 29, 0.2);
++  border: 1px solid var(--border-glow-red);
++  background-color: rgba(255, 68, 68, 0.2);
+   padding: 1rem;
+-  color: #fca5a5;
++  color: var(--red-text);
+   font-size: 0.875rem;
+ }
+ 
+ .bannerSuccess {
+   border-radius: 0.5rem;
+-  border: 1px solid #166534;
+-  background-color: rgba(22, 101, 52, 0.2);
++  border: 1px solid var(--border-glow-green);
++  background-color: rgba(46, 204, 113, 0.2);
+   padding: 1rem;
+-  color: #86efac;
++  color: color-mix(in srgb, var(--green) 70%, white);
+   font-size: 0.875rem;
+ }
+ 
+@@ -76,15 +76,15 @@
+    ============================================================================ */
+ .loading {
+   border-radius: 0.5rem;
+-  border: 1px solid #3f3f46;
+-  background-color: rgba(63, 63, 70, 0.3);
++  border: 1px solid var(--line);
++  background-color: rgba(31, 31, 40, 0.3);
+   padding: 1.5rem;
+   text-align: center;
+-  color: #a1a1a6;
++  color: var(--text-muted);
+ }
+ 
+ .empty {
+-  color: #a1a1a6;
++  color: var(--text-muted);
+ }
+ 
+ /* ============================================================================
+@@ -98,8 +98,8 @@
+ 
+ .card {
+   border-radius: 0.5rem;
+-  border: 1px solid #3f3f46;
+-  background-color: rgba(63, 63, 70, 0.3);
++  border: 1px solid var(--line);
++  background-color: rgba(31, 31, 40, 0.3);
+   padding: 1.5rem;
+ }
+ 
+@@ -109,7 +109,7 @@
+   gap: 0.75rem;
+   font-size: 1.125rem;
+   font-weight: 600;
+-  color: #f4f4f5;
++  color: var(--text-primary);
+   margin: 0 0 1rem 0;
+ }
+ 
+@@ -120,10 +120,10 @@
+   width: 1.75rem;
+   height: 1.75rem;
+   border-radius: 50%;
+-  background-color: rgba(6, 182, 212, 0.2);
++  background-color: rgba(0, 255, 255, 0.2);
+   font-size: 0.75rem;
+   font-family: 'Monaco', 'Courier New', monospace;
+-  color: #06b6d4;
++  color: var(--neon-cyan);
+ }
+ 
+ /* ============================================================================
+@@ -166,12 +166,12 @@
+ .card :global(dt) {
+   font-size: 0.875rem;
+   font-weight: 500;
+-  color: #d4d4d8;
++  color: var(--text-secondary);
+ }
+ 
+ .help {
+   font-size: 0.75rem;
+-  color: #71717a;
++  color: var(--text-dim);
+   margin: 0.25rem 0 0 0;
+ }
+ 
+@@ -179,10 +179,10 @@
+ .select,
+ .textarea {
+   border-radius: 0.375rem;
+-  border: 1px solid #3f3f46;
+-  background-color: #18181b;
++  border: 1px solid var(--line);
++  background-color: var(--bg1);
+   padding: 0.5rem 0.75rem;
+-  color: #f4f4f5;
++  color: var(--text-primary);
+   font-family: inherit;
+   font-size: 0.875rem;
+   transition: border-color 0.2s ease;
+@@ -192,8 +192,8 @@
+ .select:focus,
+ .textarea:focus {
+   outline: none;
+-  border-color: #06b6d4;
+-  box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.1);
++  border-color: var(--neon-cyan);
++  box-shadow: 0 0 0 2px rgba(0, 255, 255, 0.1);
+ }
+ 
+ .textarea {
+@@ -207,7 +207,7 @@
+ }
+ 
+ .card :global(dd) {
+-  color: #f4f4f5;
++  color: var(--text-primary);
+   margin: 0;
+ }
+ 
+@@ -238,33 +238,33 @@
+ 
+ .btnRemove {
+   border-radius: 0.375rem;
+-  background-color: rgba(239, 68, 68, 0.3);
+-  border: 1px solid rgba(239, 68, 68, 0.5);
++  background-color: rgba(255, 68, 68, 0.3);
++  border: 1px solid rgba(255, 68, 68, 0.5);
+   padding: 0.5rem 0.75rem;
+-  color: #fca5a5;
++  color: var(--red-text);
+   font-size: 0.875rem;
+   cursor: pointer;
+   transition: all 0.2s ease;
+ }
+ 
+ .btnRemove:hover {
+-  background-color: rgba(239, 68, 68, 0.5);
++  background-color: rgba(255, 68, 68, 0.5);
+ }
+ 
+ .btnAdd {
+   border-radius: 0.375rem;
+-  background-color: #18181b;
+-  border: 1px solid #3f3f46;
++  background-color: var(--bg1);
++  border: 1px solid var(--line);
+   padding: 0.5rem 0.75rem;
+-  color: #d4d4d8;
++  color: var(--text-secondary);
+   font-size: 0.875rem;
+   cursor: pointer;
+   transition: all 0.2s ease;
+ }
+ 
+ .btnAdd:hover {
+-  background-color: #27272a;
+-  border-color: #52525b;
++  background-color: var(--bg3);
++  border-color: var(--line2);
+ }
+ 
+ /* ============================================================================
+@@ -281,16 +281,16 @@
+   align-items: center;
+   gap: 0.25rem;
+   border-radius: 9999px;
+-  background-color: rgba(6, 182, 212, 0.2);
++  background-color: rgba(0, 255, 255, 0.2);
+   padding: 0.375rem 0.75rem;
+   font-size: 0.875rem;
+-  color: #06b6d4;
++  color: var(--neon-cyan);
+   text-decoration: none;
+   transition: all 0.2s ease;
+ }
+ 
+ .pill:hover {
+-  background-color: rgba(6, 182, 212, 0.3);
++  background-color: rgba(0, 255, 255, 0.3);
+ }
+ 
+ /* ============================================================================
+@@ -305,7 +305,7 @@
+   height: 0.5rem;
+   border-radius: 9999px;
+   overflow: hidden;
+-  background-color: #27272a;
++  background-color: var(--bg3);
+   margin-bottom: 0.5rem;
+ }
+ 
+@@ -315,7 +315,7 @@
+ 
+ .audLabel {
+   font-size: 0.75rem;
+-  color: #a1a1a6;
++  color: var(--text-muted);
+   margin: 0;
+ }
+ 
+@@ -331,21 +331,21 @@
+ }
+ 
+ .sumCheck.empty {
+-  background-color: rgba(63, 63, 70, 0.3);
+-  border: 1px solid #3f3f46;
+-  color: #a1a1a6;
++  background-color: rgba(31, 31, 40, 0.3);
++  border: 1px solid var(--line);
++  color: var(--text-muted);
+ }
+ 
+ .sumCheck.ok {
+-  background-color: rgba(22, 101, 52, 0.2);
+-  border: 1px solid #166534;
+-  color: #86efac;
++  background-color: rgba(46, 204, 113, 0.2);
++  border: 1px solid var(--border-glow-green);
++  color: color-mix(in srgb, var(--green) 70%, white);
+ }
+ 
+ .sumCheck.bad {
+-  background-color: rgba(127, 29, 29, 0.2);
+-  border: 1px solid #7f1d1d;
+-  color: #fca5a5;
++  background-color: rgba(255, 68, 68, 0.2);
++  border: 1px solid var(--border-glow-red);
++  color: var(--red-text);
+ }
+ 
+ /* ============================================================================
+@@ -369,12 +369,12 @@
+ }
+ 
+ .btnPrimary {
+-  background-color: #06b6d4;
+-  color: #09090b;
++  background-color: var(--neon-cyan);
++  color: var(--bg);
+ }
+ 
+ .btnPrimary:hover:not(:disabled) {
+-  background-color: #0891b2;
++  background-color: color-mix(in srgb, var(--neon-cyan) 75%, black);
+ }
+ 
+ .btnPrimary:disabled {
+@@ -384,13 +384,13 @@
+ 
+ .btnGhost {
+   background-color: transparent;
+-  border: 1px solid #3f3f46;
+-  color: #d4d4d8;
++  border: 1px solid var(--line);
++  color: var(--text-secondary);
+ }
+ 
+ .btnGhost:hover {
+-  background-color: #27272a;
+-  border-color: #52525b;
++  background-color: var(--bg3);
++  border-color: var(--line2);
+ }
+ 
+ /* ============================================================================
+@@ -398,8 +398,8 @@
+    ============================================================================ */
+ .logPanel {
+   border-radius: 0.5rem;
+-  border: 1px solid #3f3f46;
+-  background-color: rgba(63, 63, 70, 0.3);
++  border: 1px solid var(--line);
++  background-color: rgba(31, 31, 40, 0.3);
+   padding: 1rem;
+   cursor: pointer;
+ }
+@@ -410,7 +410,7 @@
+ 
+ .logSummary {
+   font-weight: 500;
+-  color: #d4d4d8;
++  color: var(--text-secondary);
+   user-select: none;
+ }
+ 
+@@ -423,31 +423,31 @@
+ 
+ .logEmpty {
+   font-size: 0.875rem;
+-  color: #a1a1a6;
++  color: var(--text-muted);
+   margin: 0;
+ }
+ 
+ .logEntry {
+-  border-left: 2px solid #3f3f46;
++  border-left: 2px solid var(--line);
+   padding-left: 0.75rem;
+   font-size: 0.875rem;
+ }
+ 
+ .logEntry time {
+   display: block;
+-  color: #a1a1a6;
++  color: var(--text-muted);
+   font-family: 'Monaco', 'Courier New', monospace;
+   font-size: 0.75rem;
+   margin-bottom: 0.25rem;
+ }
+ 
+ .logEntry span {
+-  color: #d4d4d8;
++  color: var(--text-secondary);
+   font-weight: 500;
+ }
+ 
+ .logEntry div {
+-  color: #f4f4f5;
++  color: var(--text-primary);
+   margin-top: 0.25rem;
+ }
+ 
+@@ -459,10 +459,10 @@
+   margin-bottom: 0.375rem;
+   padding: 0.25rem 0.5rem;
+   border-radius: 0.25rem;
+-  background-color: rgba(63, 63, 70, 0.5);
++  background-color: rgba(31, 31, 40, 0.5);
+   font-size: 0.75rem;
+   font-weight: 600;
+-  color: #a1a1a6;
++  color: var(--text-muted);
+   text-transform: uppercase;
+   letter-spacing: 0.05em;
+ }
+diff --git a/src/components/screens/OnboardingScreen.tsx b/src/components/screens/OnboardingScreen.tsx
+index 95f2352..14adce8 100644
+--- a/src/components/screens/OnboardingScreen.tsx
++++ b/src/components/screens/OnboardingScreen.tsx
+@@ -83,7 +83,7 @@ interface LogEntry {
+   changes: string[]
+ }
+ 
+-const AUD_COLORS = ['#06b6d4', '#fbbf24', '#a78bfa', '#ef4444']
++const AUD_COLORS = ['var(--neon-cyan)', 'var(--amber)', 'var(--acc2)', 'var(--red)']
+ 
+ export default function OnboardingScreen({
+   clientId,
+diff --git a/src/lib/onboarding/enums.ts b/src/lib/onboarding/enums.ts
+index 261009d..751e6f2 100644
+--- a/src/lib/onboarding/enums.ts
++++ b/src/lib/onboarding/enums.ts
+@@ -6,6 +6,15 @@
+ // `Priority` nunca existiu como tipo nomeado — é só o literal inline de
+ // `SchwatzValue.priority`; derivado aqui via indexed access em vez de
+ // inventar um tipo novo em orbit.ts sem confirmação.
++//
++// ✅ UX (copy otimizada — 15/09/2026): rótulos reescritos em linguagem
++// mais natural para o cliente final (menos jargão de schema, mais frase
++// de produto). Uma correção feita nesta rodada: ENUM_CONFIDENCE chegou
++// com L0/L2 invertidos (L0 marcado como "Confirmado" e L2 como "precisa
++// de confirmação") — o resto do projeto (orbit.ts, AlertCard.tsx,
++// ENUM_CONFIDENCE anterior) trata L0 = nível mais baixo de confiança
++// (sem confirmação) e L2 = mais alto (confirmado). Mantida a copy nova,
++// corrigida a direção.
+ import type {
+   CTAType,
+   FunnelMaturity,
+@@ -21,77 +30,77 @@ import type {
+ export type Priority = SchwatzValue['priority']
+ 
+ export const ENUM_TOTAL_FOLLOWERS_SOURCE: Array<[TotalFollowersSource, string]> = [
+-  ['manual_print_confirmado', 'Manual (print confirmado)'],
+-  ['instagram_api', 'Instagram API'],
+-  ['estimate', 'Estimativa'],
+-  ['scrape_perfil_confirmado', 'Scrape de perfil confirmado'],
++  ['manual_print_confirmado', 'Confirmado manualmente (com print)'],
++  ['instagram_api', 'Conectado via Instagram'],
++  ['estimate', 'Estimativa baseada em dados'],
++  ['scrape_perfil_confirmado', 'Verificado pelo perfil (dados públicos)'],
+ ]
+ 
+ export const ENUM_CTA: Array<[CTAType, string]> = [
+-  ['link_direto', 'Link direto'],
+-  ['linktree_multilink', 'Linktree / multilink'],
+-  ['dm_comentario', 'DM / comentário'],
+-  ['link_bio', 'Link na bio'],
+-  ['nenhum', 'Nenhum'],
++  ['link_direto', 'Link direto no post'],
++  ['linktree_multilink', 'Linktree ou agregador de links'],
++  ['dm_comentario', 'Contato via DM ou comentários'],
++  ['link_bio', 'Link na bio do perfil'],
++  ['nenhum', 'Sem chamada para ação identificada'],
+ ]
+ 
+ export const ENUM_FUNNEL: Array<[FunnelMaturity, string]> = [
+-  ['nao_implementado', 'Não implementado'],
+-  ['implementado_fragmentado', 'Implementado (fragmentado)'],
+-  ['implementado_unificado', 'Implementado (unificado)'],
+-  ['funil_basico', 'Funil básico'],
++  ['nao_implementado', 'Sem funil de vendas estruturado'],
++  ['implementado_fragmentado', 'Funil em desenvolvimento (múltiplas plataformas)'],
++  ['implementado_unificado', 'Funil integrado e organizado'],
++  ['funil_basico', 'Funil básico funcionando'],
+ ]
+ 
+ export const ENUM_SETOR: Array<[SetorBenchmark, string]> = [
+-  ['comercio_direto_ecommerce_social', 'Comércio direto / e-commerce social'],
+-  ['comissionamento_afiliados', 'Comissionamento de afiliados'],
+-  ['infoprodutor_educador_pago', 'Infoprodutor / educador pago'],
+-  ['servico_consultoria_profissional', 'Serviço / consultoria profissional'],
+-  ['patrocinio_publicidade_marca', 'Patrocínio / publicidade de marca'],
+-  ['membership_assinatura_comunidade', 'Membership / assinatura de comunidade'],
+-  ['monetizacao_nativa_plataforma', 'Monetização nativa de plataforma'],
+-  ['autoridade_personal_branding_b2b', 'Autoridade / personal branding B2B'],
+-  ['saas_ferramenta', 'SaaS / ferramenta'],
+-  ['pre_monetizacao_a_validar', 'Pré-monetização (a validar)'],
++  ['comercio_direto_ecommerce_social', 'Venda direta / e-commerce nas redes'],
++  ['comissionamento_afiliados', 'Renda por indicações (afiliados)'],
++  ['infoprodutor_educador_pago', 'Cursos, treinamentos e conteúdo pago'],
++  ['servico_consultoria_profissional', 'Serviços e consultoria profissional'],
++  ['patrocinio_publicidade_marca', 'Parcerias e publicidade de marcas'],
++  ['membership_assinatura_comunidade', 'Comunidade ou assinatura mensal'],
++  ['monetizacao_nativa_plataforma', 'Ganhos diretos da plataforma (ads, tips)'],
++  ['autoridade_personal_branding_b2b', 'Autoridade e parcerias B2B'],
++  ['saas_ferramenta', 'Software ou ferramenta SaaS'],
++  ['pre_monetizacao_a_validar', 'Em fase de teste (modelo ainda incerto)'],
+ ]
+ 
+ export const ENUM_PROOF: Array<[ProofMechanism, string]> = [
+-  ['prova_social', 'Prova social'],
+-  ['autoridade', 'Autoridade'],
+-  ['escassez_urgencia', 'Escassez / urgência'],
+-  ['associacao_marca', 'Associação de marca'],
+-  ['resultado_documentado', 'Resultado documentado'],
+-  ['clientes_ativos_gestao', 'Clientes ativos em gestão'],
+-  ['nenhum_observavel', 'Nenhum observável'],
++  ['prova_social', 'Comunidade engajada (comentários, compartilhamentos)'],
++  ['autoridade', 'Reconhecimento e expertise na área'],
++  ['escassez_urgencia', 'Oferta limitada ou prazo curto'],
++  ['associacao_marca', 'Parcerias com marcas conhecidas'],
++  ['resultado_documentado', 'Resultados comprovados (cases, antes/depois)'],
++  ['clientes_ativos_gestao', 'Clientes ativos trabalhando com você'],
++  ['nenhum_observavel', 'Sem elementos de prova visíveis'],
+ ]
+ 
+ export const ENUM_PANKSEPP: Array<[PankseppSystem, string]> = [
+-  ['SEEKING', 'SEEKING'],
+-  ['CARE', 'CARE'],
+-  ['PLAY', 'PLAY'],
+-  ['LUST', 'LUST'],
+-  ['FEAR', 'FEAR'],
+-  ['RAGE', 'RAGE'],
+-  ['PANIC_GRIEF', 'PANIC_GRIEF'],
++  ['SEEKING', 'Busca e descoberta'],
++  ['CARE', 'Cuidado e proteção'],
++  ['PLAY', 'Diversão e leveza'],
++  ['LUST', 'Desejo e atração'],
++  ['FEAR', 'Segurança e proteção'],
++  ['RAGE', 'Justiça e indignação'],
++  ['PANIC_GRIEF', 'Perda e urgência'],
+ ]
+ 
+ export const ENUM_AFFECT_SOURCE: Array<[ValuesAffectSource, string]> = [
+-  ['onboarding', 'Onboarding'],
+-  ['client_feedback', 'Feedback do cliente'],
+-  ['manual', 'Manual'],
+-  ['bio_oficial_zip_insights_decisao_canal', 'Bio oficial + zip Insights'],
++  ['onboarding', 'Informações do seu cadastro'],
++  ['client_feedback', 'Feedback que você nos passou'],
++  ['manual', 'Dados inseridos manualmente'],
++  ['bio_oficial_zip_insights_decisao_canal', 'Análise da sua bio + dados públicos'],
+ ]
+ 
+ export const ENUM_CONFIDENCE: Array<[ConfidenceLevel, string]> = [
+-  ['L0', 'L0 — sem confirmação'],
+-  ['L1', 'L1 — parcialmente confirmado'],
+-  ['L2', 'L2 — confirmado'],
++  ['L0', 'Estimado — precisa de confirmação'],
++  ['L1', 'Calculado — baseado em dados parciais'],
++  ['L2', 'Confirmado — dados diretos da fonte'],
+ ]
+ 
+ export const ENUM_PRIORITY: Array<[Priority, string]> = [
+-  ['high', 'Alta'],
+-  ['medium', 'Média'],
+-  ['low', 'Baixa'],
++  ['high', 'Alta prioridade'],
++  ['medium', 'Média prioridade'],
++  ['low', 'Baixa prioridade'],
+ ]
+ 
+ export const SCHWARTZ_SUGESTOES = [
+@@ -114,4 +123,4 @@ export function labelFor<T extends string>(
+   if (!val) return null
+   const hit = list.find(([v]) => v === val)
+   return hit ? hit[1] : val
+-}
++}
+\ No newline at end of file
+diff --git a/src/lib/repositories/alertsRepository.ts b/src/lib/repositories/alertsRepository.ts
+index 055202d..2b2e1e5 100644
+--- a/src/lib/repositories/alertsRepository.ts
++++ b/src/lib/repositories/alertsRepository.ts
+@@ -304,6 +304,13 @@ export async function createAlert(
+       probable_cause: draft.probableCause ?? null,
+       confidence_level: draft.confidenceLevel ?? null,
+       data_source: draft.dataSource ?? null,
++      // ✅ FIX (P0 — v8.2, mesmo gap #4 do createAlertsBatch): sem isso o
++      // alerta único também nascia sem metric/threshold/snapshot/ação.
++      metric_name: draft.metricName ?? null,
++      metric_value: draft.metricValue ?? null,
++      threshold_value: draft.thresholdValue ?? null,
++      snapshot_id: draft.snapshotId ?? null,
++      suggested_action: draft.immediateAction ?? null,
+     })
+     .select(ALERT_SELECT_FIELDS)
+     .single()
+@@ -337,7 +344,7 @@ export async function createAlertsBatch(
+ 
+   const rows = validDrafts.map((d) => {
+     const alertType = d.draft.type as AlertType
+-    
++
+     return {
+       client_id: d.clientId,
+       alert_type: alertType,
+@@ -348,6 +355,16 @@ export async function createAlertsBatch(
+       probable_cause: d.draft.probableCause ?? null,
+       confidence_level: d.draft.confidenceLevel ?? null,
+       data_source: d.draft.dataSource ?? null,
++      // ✅ FIX (P0 — v8.2, gap #4 "Sem ação"): o engine (contentContractEngine.ts)
++      // já produz metricName/metricValue/thresholdValue/snapshotId/immediateAction
++      // em AlertDraft — mas o writer nunca os incluía no INSERT, então
++      // chegavam sempre NULL no banco (Central "não persiste"). Sem isso,
++      // o chip de métrica em AlertCard.tsx nunca tem o que mostrar.
++      metric_name: d.draft.metricName ?? null,
++      metric_value: d.draft.metricValue ?? null,
++      threshold_value: d.draft.thresholdValue ?? null,
++      snapshot_id: d.draft.snapshotId ?? null,
++      suggested_action: d.draft.immediateAction ?? null,
+     }
+   })
+ 
+diff --git a/src/lib/repositories/instagramOverviewRepository.ts b/src/lib/repositories/instagramOverviewRepository.ts
+index 64e7a68..bf3a38a 100644
+--- a/src/lib/repositories/instagramOverviewRepository.ts
++++ b/src/lib/repositories/instagramOverviewRepository.ts
+@@ -266,6 +266,12 @@ interface EngagementScoreSnapshotRow {
+   utility_score_pct: number | null
+   polemic_score_pct: number | null
+   reach_total: number | null
++  // ✅ FIX (v8.2 §1.4 — VPS C-02): faltava essa coluna. Sem ela o cálculo
++  // caía pra reach_total/totalFollowers puro (ver comentário no v4.2.0
++  // acima) — é literalmente a métrica errada, "reach/followers", que o
++  // doc chama de "outra variável" e que dá 111% (1985/1785) em vez do
++  // VPS C-02 real (~7,2%).
++  reach_followers_pct: number | null
+   period_end: string
+ }
+ 
+@@ -315,14 +321,19 @@ export async function fetchInstagramOverview(
+     ? results[6].value
+     : null
+ 
+-  // ✅ DIAGNÓSTICO COMPLETO
++  // ✅ FIX (tsc TS2339): `import.meta.env.VITE_*` é Vite — sobrou de antes
++  // da migração pra Next.js, onde env var de cliente é `process.env.NEXT_PUBLIC_*`
++  // (mesma convenção já usada em src/lib/supabase.ts). `import.meta.env`
++  // nem existe no runtime Next/Node, então isso não rodava de verdade —
++  // só quebrava o build. Não logar a key nem truncada: é debug de URL, o
++  // valor da key não ajuda a diagnosticar client_id e não devia ir pro
++  // console de qualquer forma.
+   console.log('[fetchInstagramOverview] Iniciando busca de cliente:', {
+     clientId,
+     clientIdTrimmed: clientId?.trim(),
+     clientIdLength: clientId?.length,
+     clientIdType: typeof clientId,
+-    supabaseUrl: import.meta.env.VITE_SUPABASE_URL,
+-    supabaseKey: import.meta.env.VITE_SUPABASE_ANON_KEY?.substring(0, 20) + '...',
++    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
+   })
+ 
+   const normalizedClientId = clientId?.trim()
+@@ -806,7 +817,7 @@ export async function fetchLatestEngagementScoreSnapshot(
+     supabase
+       .schema('orbit')
+       .from('ig_account_snapshots')
+-      .select('id, er_real_pct, utility_score_pct, polemic_score_pct, reach_total, period_end')
++      .select('id, er_real_pct, utility_score_pct, polemic_score_pct, reach_total, reach_followers_pct, period_end')
+       .eq('client_id', clientId)
+       .lte('period_start', end)
+       .gte('period_end', start)
+@@ -825,11 +836,27 @@ export async function fetchLatestEngagementScoreSnapshot(
+ 
+   if (!data) return null
+ 
+-  const { id, er_real_pct, utility_score_pct, polemic_score_pct, reach_total } = data
+-
++  const { id, er_real_pct, utility_score_pct, polemic_score_pct, reach_total, reach_followers_pct } = data
++
++  // ✅ FIX (v8.2 §1.4 — VPS C-02, gap #7 do doc): a fórmula anterior era
++  // reach_total / totalFollowers * 100 — isso é "alcance / seguidores",
++  // não VPS. Dá 111% quando reach passa da base de seguidores num
++  // período agregado (exatamente o card "Alcance acumulado na base em
++  // 111,2%" que aparece hardcoded como aviso separado na tela, prova de
++  // que essa métrica errada já tinha vazado pra outro lugar da UI).
++  //
++  // VPS C-02 real: (reach × reach_followers_pct/100) / followers × 100.
++  // "Só classificar se reach_followers_pct ≠ null" (doc) — sem esse dado
++  // não existe VPS pra esse snapshot, não cai pra a fórmula errada como
++  // fallback.
+   const vpsPct =
+-    reach_total != null && totalFollowers != null && totalFollowers > 0
+-      ? Math.round((reach_total / totalFollowers) * 100 * 10000) / 10000
++    reach_total != null &&
++    reach_followers_pct != null &&
++    totalFollowers != null &&
++    totalFollowers > 0
++      ? Math.round(
++          ((reach_total * (reach_followers_pct / 100)) / totalFollowers) * 100 * 10000
++        ) / 10000
+       : null
+ 
+   if (er_real_pct == null || utility_score_pct == null || polemic_score_pct == null || vpsPct == null) {
+diff --git a/src/styles/ssot-design-tokens.css b/src/styles/ssot-design-tokens.css
+index b82a419..d871c94 100644
+--- a/src/styles/ssot-design-tokens.css
++++ b/src/styles/ssot-design-tokens.css
+@@ -63,11 +63,23 @@
+   --acc2: #8B5CF6;
+   --acc3: #FF6B35;
+ 
++  /* FIX WCAG 1.4.3 (15/09/2026): --acc2 usado como cor de TEXTO falha AA
++     (4.17:1 sobre --bg2, 3.86:1 sobre --bg3). --acc2 continua válido para
++     bordas/fundos/ícones, que só precisam de 3:1. Para texto, usar
++     --acc2-text (mesmo roxo, 20% mais claro — 5.7:1+ em qualquer fundo). */
++  --acc2-text: #a27df8;
++
+   --red: #FF4444;
+   --amber: #FFB020;
+   --green: #2ECC71;
+   --blue: #4A90FF;
+ 
++  /* Variantes claras p/ texto sobre badge já tingido (ex.: rgba(--red, 0.15)
++     de fundo) — mantém legibilidade sem introduzir tom fora do sistema.
++     Consolida os hex que existiam soltos (#ff8080, #7eb3ff) em tokens nomeados. */
++  --red-text: #ff8080;
++  --blue-text: #7eb3ff;
++
+   --neon-cyan: #00FFFF;
+   --neon-red: #FF4444;
+   --neon-gold: #FFC300;

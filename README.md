@@ -5,6 +5,18 @@
 
 ---
 
+## Foco do produto (ADR-011 · 20/09/2026)
+
+Três pilares: **Funil Real**, **Avatar Alignment** e **Alertas acionáveis**.
+
+- **Funil Real:** alcance → visitas ao perfil → cliques no link → vendas estimadas. Dado do export oficial com nível de confiança (L0/L1/L2); o que é estimado aparece como estimado.
+- **Avatar Alignment:** público esperado vs. público real (gênero, idade, cidade).
+- **Alertas:** cada alerta traz a informação, a causa provável e a ação.
+
+A análise psicográfica (Panksepp/Schwartz) foi descontinuada como diferencial; os dados legados foram preservados. Detalhes em `ORBIT_GOVERNANCE.md` (ADR-011).
+
+---
+
 ## Fluxo da Informação
 
 ```

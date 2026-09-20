@@ -125,8 +125,6 @@ export async function upsertClientOnboarding(onboarding: ClientOnboarding): Prom
           // v1.1.1 no topo do arquivo. ClientOnboarding continua estrito
           // em orbit.ts; isso não afasta a interface do SSOT.
           bio_links: onboarding.bio_links as unknown as Json,
-          expected_schwartz: onboarding.expected_schwartz as unknown as Json | null,
-          real_schwartz: onboarding.real_schwartz as unknown as Json | null,
         },
         { onConflict: 'client_id' }
       )

@@ -67,7 +67,11 @@ function mapKPICardDataToKPI(data: KPICardData): KPI {
     value: data.value,
     delta: data.delta,
     trend: data.delta > 0 ? 'up' : data.delta < 0 ? 'down' : 'neutral',
-    flagLevel: (data.sourceLevel as 'L0' | 'L1' | 'L2') || 'L0',
+    // FIX (19/09/2026): fallback era 'L0' — mostrava badge verde "Medido"
+    // quando sourceLevel vem null/undefined, ou seja, quando na verdade não
+    // sabemos a origem do dado. O fallback correto pro pior caso é 'L2'
+    // (Hipótese), não o melhor. Ver KPICard.tsx FLAG_TOKENS.
+    flagLevel: (data.sourceLevel as 'L0' | 'L1' | 'L2') || 'L2',
     ...(data.unit ? { unit: data.unit } : {}),
   }
 }

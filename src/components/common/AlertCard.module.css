@@ -120,7 +120,7 @@
 }
 
 .severityBadge.critical {
-  color: #ff8080;
+  color: var(--red-text); /* FIX (19/09/2026): hex cru #ff8080 voltou numa edição posterior — reaplicado o token */
   border-color: var(--border-glow-red);
   background: rgba(255, 68, 68, 0.15);
 }
@@ -130,7 +130,7 @@
   background: rgba(255, 195, 0, 0.12);
 }
 .severityBadge.info {
-  color: #7eb3ff;
+  color: var(--blue-text); /* FIX (19/09/2026): hex cru #7eb3ff voltou numa edição posterior — reaplicado o token */
   border-color: var(--border-glow-cyan);
   background: rgba(0, 255, 255, 0.1);
 }
@@ -188,14 +188,17 @@
    sem glow (é rótulo de metadado, não status de alerta). */
 .chipNatureza {
   border-color: var(--border-glow-cyan);
-  color: #7eb3ff;
+  color: var(--blue-text); /* FIX (19/09/2026): novo desde a última rodada — nasceu com hex cru #7eb3ff em vez do token, mesmo drift dos outros dois badges */
   background: rgba(0, 255, 255, 0.06);
 }
 
-/* confidence_level: L0/L1/L2 — L2 (confirmado) em verde, L1 em âmbar,
-   L0 (sem confirmação) neutro. Selo de confiança do dado, não severidade
-   do alerta. */
-.chipConfidenceL2 {
+/* confidence_level: L0/L1/L2 — FIX (19/09/2026): as cores estavam na
+   direção errada (L2 verde/melhor, L0 neutro/pior). Confirmado contra
+   contentContractEngine.ts (15+ usos: L0 = dado real/direto, L2 = fallback
+   sem breakdown ou amostra insuficiente) e contra KPICard.tsx (L0 sempre
+   foi verde ali). L0 = Medido (melhor) → verde. L1 = Estimado → âmbar.
+   L2 = Hipótese (pior) → neutro, sem alarmar como se fosse erro. */
+.chipConfidenceL0 {
   border-color: var(--green);
   color: var(--green);
   background: rgba(46, 204, 113, 0.1);
@@ -205,7 +208,7 @@
   color: var(--amber);
   background: rgba(255, 195, 0, 0.1);
 }
-.chipConfidenceL0 {
+.chipConfidenceL2 {
   border-color: var(--border-default);
   color: var(--text-muted);
   background: rgba(255, 255, 255, 0.04);

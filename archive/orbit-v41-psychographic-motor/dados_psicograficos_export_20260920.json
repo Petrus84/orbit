@@ -1,0 +1,61 @@
+{
+  "exportado_em": "2026-09-20T04:50:24Z",
+  "motivo": "Backup antes de eventual DROP COLUMN (ADR-011, Fase 2). Origem: orbit.client_onboarding",
+  "linhas": [
+    {
+      "handle": "cpimportstore",
+      "client_id": "2141d077-0d82-4fda-83df-558377f105ff",
+      "expected_panksepp_system": "LUST",
+      "real_panksepp_system": "SEEKING",
+      "expected_schwartz": {
+        "Poder": {
+          "value": "100",
+          "priority": "high"
+        }
+      },
+      "real_schwartz": null
+    },
+    {
+      "handle": "eupetruchio84",
+      "client_id": "c4722cfc-cff2-4a03-a457-f14ee8c9e0e7",
+      "expected_panksepp_system": "SEEKING",
+      "real_panksepp_system": "PLAY",
+      "expected_schwartz": {
+        "Poder": {
+          "value": "30",
+          "priority": "high"
+        },
+        "Estimulo": {
+          "value": "30",
+          "priority": "high"
+        },
+        "Autodirecao": {
+          "value": "40",
+          "priority": "high"
+        }
+      },
+      "real_schwartz": {
+        "Poder": {
+          "value": "25",
+          "priority": "medium"
+        },
+        "Estimulo": {
+          "value": "35",
+          "priority": "medium"
+        },
+        "Hedonismo": {
+          "value": "40",
+          "priority": "medium"
+        }
+      }
+    }
+  ],
+  "dependencias_no_banco": {
+    "views": [],
+    "funcoes": [],
+    "constraints": [
+      "client_onboarding_expected_panksepp_system_check",
+      "client_onboarding_real_panksepp_system_check"
+    ]
+  }
+}

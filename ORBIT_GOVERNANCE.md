@@ -271,6 +271,40 @@ Formato: `[DATA] ID — Título` · Contexto · Decisão · Status
 
 ---
 
+### 2026-09-20 — ADR-011: Descontinuar psicografia (Panksepp/Schwartz) como diferencial
+- **Contexto:** o ORBIT vinha sendo posicionado com três pilares (Funil + Avatar + Psicografia).
+  Análise externa reportada pelo Lobo em 20/09/2026 (motor `orbit_v41.py`, **não reproduzida nesta
+  sessão**): léxico de 150 termos deixa ~79% dos posts sem sinal; correlação fraca com o ER real
+  (r ≈ 0,12 no melhor caso; n ≤ 26). Verificado no banco: a psicografia vive só em 4 colunas de
+  `orbit.client_onboarding` (`expected/real_panksepp_system`, `expected/real_schwartz`), com dado
+  preenchido para 2 de 5 clientes (`cpimportstore`, `eupetruchio84`); nenhuma view ou função depende
+  delas (só 2 constraints `CHECK`). No app: ~127 referências em 11 arquivos, concentradas em
+  `OnboardingScreen` (seções 06 e 07), schema zod, mapper e tipos gerados.
+- **Decisão:** pivotar para **Funil Real + Avatar Alignment + Alertas acionáveis**. Psicografia
+  deixa de ser pilar; pode voltar se for validada com léxico maior e n > 50.
+- **Fase 1 — aplicada, reversível:** (1) `SHOW_PSYCHOGRAPHY = false` em
+  `src/lib/onboarding/flags.ts` oculta as seções 06/07 do onboarding e renumera Metadados para 06;
+  (2) `completeness()` deixa de contar os 4 campos ocultos (senão 3 de 5 clientes ficariam presos
+  abaixo de 100%); (3) scripts Python arquivados em `archive/orbit-v41-psychographic-motor/`, com
+  exportação dos dados em JSON; (4) dados no banco intocados.
+- **Fase 2C — código morto removido (20/09/2026, pronta para deploy):** zod schema, mapper,
+  `enums.ts` (2 cópias), `helpers.ts`, `orbit.ts`, `onboardingRepository.ts` e `OnboardingScreen.tsx`
+  sem qualquer referência funcional à psicografia (restam só comentários históricos, sem efeito em
+  runtime). `src/lib/onboarding/flags.ts` (`SHOW_PSYCHOGRAPHY`) foi deletado. Dados no banco
+  permanecem intocados — o upsert deixa de enviar as 4 colunas, mas elas continuam existindo até a
+  Fase 2B. Validado: `tsc --noEmit` limpo; schema/mapper testados isoladamente aceitando linha SEM
+  as 4 colunas (simulação do pós-DROP). `npm run build` não pôde ser validado neste ambiente
+  (bloqueio de rede a fonts.googleapis.com, não relacionado ao código).
+- **Fase 2B — `DROP COLUMN`, pendente (exige aprovação explícita do Lobo):** SQL, verificação e
+  rollback em `archive/orbit-v41-psychographic-motor/FASE2B_drop_columns.sql` (a criar). **Ordem
+  obrigatória: 2C → deploy em produção → confirmar app funcionando → só então 2B.** Rodar antes do
+  deploy quebraria a validação do onboarding para todos os clientes (schema da Fase 1 exigia as 4
+  colunas — testado).
+- **Nota de numeração:** ADR-006 já pertence ao "Protótipo HTML"; ADR-010 segue reservada à
+  recomendação de escopo de escrita client-side (ver ADR-005). Por isso esta é a ADR-011.
+- **Status:** Fase 1 `ACCEPTED`; Fase 2C `READY` (código, aguardando deploy); Fase 2B `PENDING`
+  (DROP COLUMN, aguarda deploy da 2C + aprovação do Lobo).
+
 ## 3. Ledger de Dívida Técnica (vivo — atualizar a cada sessão)
 
 | ID | Item | Módulo | Descoberto em | Status |

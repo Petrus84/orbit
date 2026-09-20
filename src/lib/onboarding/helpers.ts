@@ -18,10 +18,6 @@ export const FIELD_ORDER: (keyof ClientOnboarding)[] = [
   'setor_benchmark',
   'nicho',
   'proof_mechanism',
-  'expected_panksepp_system',
-  'real_panksepp_system',
-  'expected_schwartz',
-  'real_schwartz',
 ]
 
 export const HELP: Record<string, string> = {
@@ -32,15 +28,11 @@ export const HELP: Record<string, string> = {
   q3: 'Hipótese central de por que a conta não performa como o cliente espera.',
   audience:
     '· Núcleo fiel = engajamento genuíno e recorrente\n· Consumo passivo = curte mas não salva\n· Curiosidade externa = alcance de não seguidores\n· Alta rotatividade = entra uma vez e sai',
-  real_panksepp:
-    'Trate como evidência de suporte: padrão recorrente em comentários, taxa de salvamento.',
 }
 
 export function isFilled(id: keyof ClientOnboarding, record: Partial<ClientOnboarding>): boolean {
   const v = record[id]
   if (id === 'bio_links') return Array.isArray(v) && v.length > 0
-  if (id === 'expected_schwartz' || id === 'real_schwartz')
-    return !!v && Object.keys(v as Record<string, unknown>).length > 0
   if (v === null || v === undefined) return false
   if (typeof v === 'string') return v.trim() !== ''
   return true
@@ -108,10 +100,6 @@ export function summarizeChanges(
     setor_benchmark: 'setor/benchmark',
     nicho: 'nicho',
     proof_mechanism: 'mecanismo de prova',
-    expected_panksepp_system: 'Panksepp esperado',
-    real_panksepp_system: 'Panksepp real',
-    expected_schwartz: 'Schwartz esperado',
-    real_schwartz: 'Schwartz real',
     values_affect_confidence: 'confiança',
   }
   const changed: string[] = []

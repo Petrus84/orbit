@@ -49,23 +49,18 @@ import {
   ENUM_FUNNEL,
   ENUM_SETOR,
   ENUM_PROOF,
-  ENUM_PANKSEPP,
   ENUM_AFFECT_SOURCE,
   ENUM_CONFIDENCE,
-  ENUM_PRIORITY,
-  SCHWARTZ_SUGESTOES,
   labelFor,
 } from '@/lib/onboarding/enums'
 import type {
   ClientOnboarding,
   BioLink,
-  SchwatzValue,
   CTAType,
   FunnelMaturity,
   TotalFollowersSource,
   SetorBenchmark,
   ProofMechanism,
-  PankseppSystem,
   ValuesAffectSource,
   ConfidenceLevel,
 } from '@/types/orbit'
@@ -233,63 +228,6 @@ export default function OnboardingScreen({
   }
 
   // ============================================================================
-  // SCHWARTZ
-  // ============================================================================
-  const addSchwartzRow = (field: 'expected_schwartz' | 'real_schwartz'): void => {
-    if (!draft) return
-    const obj = draft[field] || {}
-    let counter = 1
-    let key = `novo_valor_${counter}`
-    while (obj[key]) {
-      counter += 1
-      key = `novo_valor_${counter}`
-    }
-    setDraft({
-      ...draft,
-      [field]: {
-        ...obj,
-        [key]: { value: '', priority: 'medium' } satisfies SchwatzValue,
-      },
-    })
-  }
-
-  const updateSchwartzRow = (
-    field: 'expected_schwartz' | 'real_schwartz',
-    oldKey: string,
-    newKey: string,
-    value: string,
-    priority: SchwatzValue['priority']
-  ): void => {
-    if (!draft) return
-    const obj = draft[field] || {}
-    const updated: Record<string, SchwatzValue> = { ...obj }
-    const effectiveKey = newKey || oldKey
-
-    if (newKey && newKey !== oldKey && !updated[newKey]) {
-      const existing = updated[oldKey]
-      if (existing) updated[newKey] = existing
-      delete updated[oldKey]
-    }
-
-    const entry = updated[effectiveKey]
-    if (entry) {
-      updated[effectiveKey] = { value, priority }
-    } else {
-      updated[effectiveKey] = { value, priority }
-    }
-
-    setDraft({ ...draft, [field]: updated })
-  }
-
-  const removeSchwartzRow = (field: 'expected_schwartz' | 'real_schwartz', key: string): void => {
-    if (!draft) return
-    const obj = draft[field] || {}
-    const updated = { ...obj }
-    delete updated[key]
-    setDraft({ ...draft, [field]: updated })
-  }
-
-  // ============================================================================
   // RENDER: VIEW MODE
   // ============================================================================
   const renderView = (): React.ReactElement => {
@@ -303,13 +241,6 @@ export default function OnboardingScreen({
     ]
     const audSum = audVals.reduce((a: number, v) => a + (parseFloat(String(v)) || 0), 0)
     const audAny = audVals.some((v) => v !== null && v !== undefined)
-
-    const schwartzText = (obj: Record<string, SchwatzValue> | null): string => {
-      if (!obj || Object.keys(obj).length === 0) return 'vazio'
-      return Object.entries(obj)
-        .map(([k, v]) => `${k} — ${v.value} (${v.priority})`)
-        .join(', ')
-    }
 
     return (
       <div className={styles.sections}>
@@ -455,44 +386,10 @@ export default function OnboardingScreen({
           </div>
         </section>
 
-        {/* 06. Panksepp */}
+        {/* 06. Metadados */}
         <section className={styles.card}>
           <h2 className={styles.sectionTitle}>
-            <span className={styles.idx}>06</span> Psicografia — Panksepp
-          </h2>
-          <div className={styles.grid2}>
-            <div>
-              <dt>Esperado</dt>
-              <dd>{labelFor(ENUM_PANKSEPP, effectiveRecord.expected_panksepp_system) || '—'}</dd>
-            </div>
-            <div>
-              <dt>Real</dt>
-              <dd>{labelFor(ENUM_PANKSEPP, effectiveRecord.real_panksepp_system) || '—'}</dd>
-            </div>
-          </div>
-        </section>
-
-        {/* 07. Schwartz */}
-        <section className={styles.card}>
-          <h2 className={styles.sectionTitle}>
-            <span className={styles.idx}>07</span> Psicografia — Schwartz
-          </h2>
-          <div className={styles.spaceY}>
-            <div>
-              <dt>Esperado</dt>
-              <dd>{schwartzText(effectiveRecord.expected_schwartz)}</dd>
-            </div>
-            <div>
-              <dt>Real</dt>
-              <dd>{schwartzText(effectiveRecord.real_schwartz)}</dd>
-            </div>
-          </div>
-        </section>
-
-        {/* 08. Metadados */}
-        <section className={styles.card}>
-          <h2 className={styles.sectionTitle}>
-            <span className={styles.idx}>08</span> Metadados
+            <span className={styles.idx}>06</span> Metadados
           </h2>
           <div className={styles.grid2}>
             {(
@@ -539,62 +436,6 @@ export default function OnboardingScreen({
       ['audience_curiosidade_externa_pct', 'Curiosidade externa (%)'],
       ['audience_alta_rotatividade_pct', 'Alta rotatividade (%)'],
     ] as const
-
-    const renderSchwartzEditor = (field: 'expected_schwartz' | 'real_schwartz', title: string) => (
-      <div>
-        <label className={styles.label}>{title}</label>
-        <div className={styles.repRows}>
-          {Object.entries(draft[field] || {}).map(([key, val]) => (
-            <div key={key} className={`${styles.repRow} ${styles.schwartz}`}>
-              <input
-                type="text"
-                placeholder="chave"
-                list="schwartzSuggestions"
-                defaultValue={key}
-                onBlur={(e) => updateSchwartzRow(field, key, e.target.value, val.value, val.priority)}
-                className={styles.input}
-              />
-              <input
-                type="text"
-                placeholder="valor"
-                value={val.value}
-                onChange={(e) => updateSchwartzRow(field, key, key, e.target.value, val.priority)}
-                className={styles.input}
-              />
-              <select
-                value={val.priority}
-                onChange={(e) =>
-                  updateSchwartzRow(
-                    field,
-                    key,
-                    key,
-                    val.value,
-                    e.target.value as SchwatzValue['priority']
-                  )
-                }
-                className={styles.select}
-              >
-                {ENUM_PRIORITY.map(([v, l]) => (
-                  <option key={v} value={v}>
-                    {l}
-                  </option>
-                ))}
-              </select>
-              <button
-                onClick={() => removeSchwartzRow(field, key)}
-                className={styles.btnRemove}
-                type="button"
-              >
-                ✕
-              </button>
-            </div>
-          ))}
-        </div>
-        <button onClick={() => addSchwartzRow(field)} className={styles.btnAdd} type="button">
-          + Adicionar valor ({field === 'expected_schwartz' ? 'esperado' : 'real'})
-        </button>
-      </div>
-    )
 
     return (
       <div className={styles.sections}>
@@ -869,67 +710,10 @@ export default function OnboardingScreen({
           </div>
         </section>
 
-        {/* 06. Panksepp */}
+        {/* 06. Metadados */}
         <section className={styles.card}>
           <h2 className={styles.sectionTitle}>
-            <span className={styles.idx}>06</span> Psicografia — Panksepp
-          </h2>
-          <div className={styles.grid2}>
-            <div className={styles.field}>
-              <label>Panksepp Esperado</label>
-              <select
-                value={draft.expected_panksepp_system || ''}
-                onChange={(e) =>
-                  setDraft({
-                    ...draft,
-                    expected_panksepp_system: e.target.value as PankseppSystem,
-                  })
-                }
-                className={styles.select}
-              >
-                <option value="">— selecione —</option>
-                {ENUM_PANKSEPP.map(([v, l]) => (
-                  <option key={v} value={v}>
-                    {l}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className={styles.field}>
-              <label>Panksepp Real</label>
-              <select
-                value={draft.real_panksepp_system || ''}
-                onChange={(e) =>
-                  setDraft({ ...draft, real_panksepp_system: e.target.value as PankseppSystem })
-                }
-                className={styles.select}
-              >
-                <option value="">— selecione —</option>
-                {ENUM_PANKSEPP.map(([v, l]) => (
-                  <option key={v} value={v}>
-                    {l}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </section>
-
-        {/* 07. Schwartz */}
-        <section className={styles.card}>
-          <h2 className={styles.sectionTitle}>
-            <span className={styles.idx}>07</span> Psicografia — Schwartz
-          </h2>
-          <div className={styles.spaceY}>
-            {renderSchwartzEditor('expected_schwartz', 'Esperado')}
-            {renderSchwartzEditor('real_schwartz', 'Real')}
-          </div>
-        </section>
-
-        {/* 08. Metadados */}
-        <section className={styles.card}>
-          <h2 className={styles.sectionTitle}>
-            <span className={styles.idx}>08</span> Metadados
+            <span className={styles.idx}>06</span> Metadados
           </h2>
           <div className={styles.fieldGrid}>
             <div className={styles.field}>
@@ -985,11 +769,6 @@ export default function OnboardingScreen({
           </div>
         </section>
 
-        <datalist id="schwartzSuggestions">
-          {SCHWARTZ_SUGESTOES.map((s) => (
-            <option key={s} value={s} />
-          ))}
-        </datalist>
       </div>
     )
   }

@@ -19,9 +19,9 @@ interface KPICardProps {
 // ─── Flag badge ───────────────────────────────────────────────
 
 const FLAG_TOKENS: Record<FlagLevel, { bg: string; text: string; label: string }> = {
-  L0: { bg: 'bg-emerald-500/20', text: 'text-emerald-400', label: 'L0' },
-  L1: { bg: 'bg-amber-500/20',   text: 'text-amber-400',   label: 'L1' },
-  L2: { bg: 'bg-red-500/20',     text: 'text-red-400',     label: 'L2' },
+  L0: { bg: 'bg-emerald-500/20', text: 'text-emerald-400', label: 'Medido' },
+  L1: { bg: 'bg-amber-500/20',   text: 'text-amber-400',   label: 'Estimado' },
+  L2: { bg: 'bg-red-500/20',     text: 'text-red-400',     label: 'Hipótese' },
 };
 
 // ─── Delta arrow ──────────────────────────────────────────────

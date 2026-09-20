@@ -1,0 +1,1158 @@
+diff --git a/orbit-dashboard-clean.tar.gz b/orbit-dashboard-clean.tar.gz
+index 2874fdc..4da5d61 100644
+Binary files a/orbit-dashboard-clean.tar.gz and b/orbit-dashboard-clean.tar.gz differ
+diff --git a/package-lock.json b/package-lock.json
+index b7c0be0..ff6def6 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -9,7 +9,7 @@
+       "version": "0.1.0",
+       "dependencies": {
+         "@supabase/ssr": "^0.10.3",
+-        "@supabase/supabase-js": "^2.106.2",
++        "@supabase/supabase-js": "^2.116.0",
+         "@types/adm-zip": "^0.5.8",
+         "@types/react-router-dom": "^5.3.3",
+         "adm-zip": "^0.6.0",
+@@ -2150,9 +2150,9 @@
+       "license": "MIT"
+     },
+     "node_modules/@supabase/auth-js": {
+-      "version": "2.112.4",
+-      "resolved": "https://registry.npmjs.org/@supabase/auth-js/-/auth-js-2.112.4.tgz",
+-      "integrity": "sha512-z8DesgwLzKM5PiT0yNmJU8VJyh1zAhYi+20Z7drdJQLXg/wWW4yGt/un+He5ERYUo94Vz66t5aeyr1DIDemI5A==",
++      "version": "2.116.0",
++      "resolved": "https://registry.npmjs.org/@supabase/auth-js/-/auth-js-2.116.0.tgz",
++      "integrity": "sha512-Cmosty12gyKGK9N3bQb+lMmuAFev5nmUzaR1AsmZHqKOAGzqX1VQzmp49CNPwOx/pw0H9Qqk4rs9yhwTlKpfDg==",
+       "license": "MIT",
+       "dependencies": {
+         "tslib": "2.8.1"
+@@ -2169,9 +2169,9 @@
+       "license": "ISC"
+     },
+     "node_modules/@supabase/functions-js": {
+-      "version": "2.112.4",
+-      "resolved": "https://registry.npmjs.org/@supabase/functions-js/-/functions-js-2.112.4.tgz",
+-      "integrity": "sha512-DQ0aVH8wSQAccVqNoEkec62qCu2QRNyoGN53RqsVZ1k6F1zq4/v8scrlR6LNT2RJmT97apiTmORijPVhErCS2g==",
++      "version": "2.116.0",
++      "resolved": "https://registry.npmjs.org/@supabase/functions-js/-/functions-js-2.116.0.tgz",
++      "integrity": "sha512-E+VOc2QDcni/fySqkBFiZhnoB3SGydEdZgFI6/dEAGAHx6yEhB46TN9qb2wXs+E+RSzOBV0R6dasiSlw4xlZAA==",
+       "license": "MIT",
+       "dependencies": {
+         "tslib": "2.8.1"
+@@ -2187,9 +2187,9 @@
+       "license": "MIT"
+     },
+     "node_modules/@supabase/postgrest-js": {
+-      "version": "2.112.4",
+-      "resolved": "https://registry.npmjs.org/@supabase/postgrest-js/-/postgrest-js-2.112.4.tgz",
+-      "integrity": "sha512-uaubtPSeg2TR4wrtfQoQWgkTAe+a0qWX2KhmwvTfNl5mGN9+U7owiJt6abk3o/V6O899PSRD1yzxs5RlF4xTug==",
++      "version": "2.116.0",
++      "resolved": "https://registry.npmjs.org/@supabase/postgrest-js/-/postgrest-js-2.116.0.tgz",
++      "integrity": "sha512-kGpVZTDHxFTJS3tu+rU0iTAZ+4U0bcLVjxwCk8f3gRhjw3qdCZjTBlgYvc4kGH2XccmAzbkKwXL/mrNHMGSc+A==",
+       "license": "MIT",
+       "dependencies": {
+         "tslib": "2.8.1"
+@@ -2199,9 +2199,9 @@
+       }
+     },
+     "node_modules/@supabase/realtime-js": {
+-      "version": "2.112.4",
+-      "resolved": "https://registry.npmjs.org/@supabase/realtime-js/-/realtime-js-2.112.4.tgz",
+-      "integrity": "sha512-vZ+j079SKrM0Xiq7MJCvQKLDpaH2kfKfLY68xuQE1sqsCsMmx1CyrDBJHsxZ3cX01VOs5SI9igmoZAF3BmdZxw==",
++      "version": "2.116.0",
++      "resolved": "https://registry.npmjs.org/@supabase/realtime-js/-/realtime-js-2.116.0.tgz",
++      "integrity": "sha512-MHAnlXxi2s6yiJsZsQMfs2B3RFxeVfQWxerqYhIMqcCQV/FuY3LIeouPEkXw/ah7wUWMLYwempF9MOCUScyddg==",
+       "license": "MIT",
+       "dependencies": {
+         "@supabase/phoenix": "0.4.5",
+@@ -2224,9 +2224,9 @@
+       }
+     },
+     "node_modules/@supabase/storage-js": {
+-      "version": "2.112.4",
+-      "resolved": "https://registry.npmjs.org/@supabase/storage-js/-/storage-js-2.112.4.tgz",
+-      "integrity": "sha512-lQ0JemuTlMIXVKgSci1qez8yPnM5hyDngeAfEBjZS2Om4D+Cus0EE5BE6glFobrxdyii1OF4UzWfF0zcQgDq5A==",
++      "version": "2.116.0",
++      "resolved": "https://registry.npmjs.org/@supabase/storage-js/-/storage-js-2.116.0.tgz",
++      "integrity": "sha512-6/3hR6vccBP6oGM5B6RfbwZcTCKmQOodd/ZWQdsw8yJsU5zO/a//oBL6yLnmgxcjnHSrelW8rsO7hL5DPybyUQ==",
+       "license": "MIT",
+       "dependencies": {
+         "iceberg-js": "^0.8.1",
+@@ -2237,16 +2237,16 @@
+       }
+     },
+     "node_modules/@supabase/supabase-js": {
+-      "version": "2.112.4",
+-      "resolved": "https://registry.npmjs.org/@supabase/supabase-js/-/supabase-js-2.112.4.tgz",
+-      "integrity": "sha512-UiCX1udlFY1fQQrO7Z3GU7obQsju0w5Vk9mOOwalfo/+Gy+tahWVenSSuu5E/GTy/q//HxvGv2IrCdW66/61kw==",
++      "version": "2.116.0",
++      "resolved": "https://registry.npmjs.org/@supabase/supabase-js/-/supabase-js-2.116.0.tgz",
++      "integrity": "sha512-YyWmKXt2NspV9iO8FPnlswUFJIRnrLd3oTCb+3ZyYRuKZtBH0xCUDgnUqoyA0fGUxpM/UhfwDjYf/dht/9bp7g==",
+       "license": "MIT",
+       "dependencies": {
+-        "@supabase/auth-js": "2.112.4",
+-        "@supabase/functions-js": "2.112.4",
+-        "@supabase/postgrest-js": "2.112.4",
+-        "@supabase/realtime-js": "2.112.4",
+-        "@supabase/storage-js": "2.112.4"
++        "@supabase/auth-js": "2.116.0",
++        "@supabase/functions-js": "2.116.0",
++        "@supabase/postgrest-js": "2.116.0",
++        "@supabase/realtime-js": "2.116.0",
++        "@supabase/storage-js": "2.116.0"
+       },
+       "engines": {
+         "node": ">=22.0.0"
+diff --git a/package.json b/package.json
+index 920e489..5250348 100644
+--- a/package.json
++++ b/package.json
+@@ -13,7 +13,7 @@
+   },
+   "dependencies": {
+     "@supabase/ssr": "^0.10.3",
+-    "@supabase/supabase-js": "^2.106.2",
++    "@supabase/supabase-js": "^2.116.0",
+     "@types/adm-zip": "^0.5.8",
+     "@types/react-router-dom": "^5.3.3",
+     "adm-zip": "^0.6.0",
+diff --git a/src/components/common/AlertCard.tsx b/src/components/common/AlertCard.tsx
+index 7210241..99cdfd0 100644
+--- a/src/components/common/AlertCard.tsx
++++ b/src/components/common/AlertCard.tsx
+@@ -52,11 +52,17 @@ interface AlertCardProps {
+   onAcknowledge?: () => Promise<void> | void
+ }
+ 
++// PR-F (parcial) / TS2322: com `noUncheckedIndexedAccess`, o import de
++// AlertCard.module.css (só tem index signature, sem propriedades
++// declaradas) faz `styles.critical` etc. tiparem como `string | undefined`
++// — mesmo as 4 classes existindo de fato no CSS (confirmado acima:
++// .critical/.warning/.info/.success). `?? ''` satisfaz o tsc sem mudar
++// comportamento em runtime (a classe real nunca é undefined de verdade).
+ const SEVERITY_CLASS: Record<Alert['severity'], string> = {
+-  critical: styles.critical,
+-  warning: styles.warning,
+-  info: styles.info,
+-  success: styles.success,
++  critical: styles.critical ?? '',
++  warning: styles.warning ?? '',
++  info: styles.info ?? '',
++  success: styles.success ?? '',
+ }
+ 
+ const SEVERITY_LABEL: Record<Alert['severity'], string> = {
+diff --git a/src/components/common/AvatarCard.tsx b/src/components/common/AvatarCard.tsx
+index 4092616..589c273 100644
+--- a/src/components/common/AvatarCard.tsx
++++ b/src/components/common/AvatarCard.tsx
+@@ -37,8 +37,16 @@ function getMostCommonAgeRange(ageRange: AvatarProfile['ageRange']): string {
+ // equivalente de localização é `geo` (string única, já resolvida no
+ // repositório). Substituído por leitura direta, sem inventar um shape que
+ // não existe no contrato.
++//
++// PR-B / N1: `geo || 'Não especificado'` só cobria string vazia. O
++// avatarRepository já normaliza "", "null", "undefined" antes de montar o
++// profile, mas este componente não deve depender só disso — defesa em
++// profundidade contra o mesmo dado sentinela, sem `String(null)`.
++const EMPTY_GEO_SENTINELS = new Set(['', 'null', 'undefined'])
++
+ function getTopLocation(geo: AvatarProfile['geo']): string {
+-  return geo || 'Não especificado'
++  const trimmed = (geo ?? '').trim()
++  return EMPTY_GEO_SENTINELS.has(trimmed.toLowerCase()) ? 'Não especificado' : trimmed
+ }
+ 
+ export function AvatarCard({
+diff --git a/src/components/common/ClientCard.tsx b/src/components/common/ClientCard.tsx
+index 229f991..7e6ff94 100644
+--- a/src/components/common/ClientCard.tsx
++++ b/src/components/common/ClientCard.tsx
+@@ -75,6 +75,18 @@ const STATUS_BADGE_CLASS: Record<ClientHealthStatus, string> = {
+   unknown: styles.statusUnknown,
+ }
+ 
++// ✅ FIX (SSOT — 11/09/2026): `.accentHealthy/.accentWarning/.accentCritical/
++// .accentUnknown` já existiam em ClientCard.module.css (filete de 3px no
++// topo do card, cores --neon-cyan/--neon-gold/--neon-red) mas nunca eram
++// aplicadas aqui — CSS morto. Era a causa do card parecer monocromático
++// mesmo tendo os tokens de destaque prontos.
++const ACCENT_CLASS: Record<ClientHealthStatus, string> = {
++  healthy: styles.accentHealthy,
++  warning: styles.accentWarning,
++  critical: styles.accentCritical,
++  unknown: styles.accentUnknown,
++}
++
+ interface MetricColProps {
+   label: string
+   value: string
+@@ -118,7 +130,7 @@ export default function ClientCard({
+     <button
+       type="button"
+       onClick={() => router.push(`/clients/${client.id}`)}
+-      className={styles.card}
++      className={`${styles.card} ${ACCENT_CLASS[healthStatus]}`}
+       aria-label={`Abrir cliente ${client.name}`}
+     >
+       <div className={styles.header}>
+diff --git a/src/components/common/FunnelResult.tsx b/src/components/common/FunnelResult.tsx
+index 7a31ed8..eda5f2c 100644
+--- a/src/components/common/FunnelResult.tsx
++++ b/src/components/common/FunnelResult.tsx
+@@ -30,6 +30,7 @@ interface FunnelResultProps {
+ 
+ function formatValue(v: number): string {
+   if (!Number.isFinite(v)) return '—'
++  if (v == null || isNaN(v)) return '0'
+   if (v >= 1_000_000) return `${(v / 1_000_000).toFixed(2)}M`
+   if (v >= 1_000) return `${(v / 1_000).toFixed(1)}k`
+   return Math.round(v).toLocaleString('pt-BR')
+diff --git a/src/components/common/FunnelSimulator.tsx b/src/components/common/FunnelSimulator.tsx
+index 5773842..fde5dad 100644
+--- a/src/components/common/FunnelSimulator.tsx
++++ b/src/components/common/FunnelSimulator.tsx
+@@ -96,9 +96,10 @@ export default function FunnelSimulator({
+             onChange={(v) => set('ctrBio', v)}
+             unit="%"
+           />
++↳ 
+           {razaoEscala > 1 && (
+             <div className={styles.degradedHint}>
+-              ↳ Aplicado na simulação: {ctrEfetivo.toFixed(2)}% (degradado pela escala)
++              ↳ Aplicado na simulação: {(ctrEfetivo ?? 0).toFixed(2)}% (degradado pela escala)
+             </div>
+           )}
+         </div>
+@@ -116,7 +117,7 @@ export default function FunnelSimulator({
+           />
+           {razaoEscala > 1 && (
+             <div className={styles.degradedHint}>
+-              ↳ Aplicado na simulação: {convEfetivo.toFixed(2)}% (degradado pela escala)
++              ↳ Aplicado na simulação: {(convEfetivo ?? 0).toFixed(2)}% (degradado pela escala)
+             </div>
+           )}
+         </div>
+@@ -130,15 +131,15 @@ export default function FunnelSimulator({
+             step={5}
+             value={state.ticketMedio}
+             onChange={(v) => set('ticketMedio', v)}
+-            formatDisplay={(v) => `R$ ${v.toFixed(0)}`}
+-          />
++            formatDisplay={(v) => `R$ ${(v ?? 0).toFixed(0)}`}
++                      />
+         </div>
+       </div>
+ 
+       {isSaturated && (
+         <div className={styles.saturationAlert}>
+           <strong>Alerta de saturação:</strong> escala de público frio detectada fora da bolha
+-          histórica ({razaoEscala.toFixed(1)}x). O CTR e a conversão acima já estão sendo
++          histórica ({ (razaoEscala ?? 1).toFixed(1) }x). O CTR e a conversão acima já estão sendo
+           reduzidos nas vendas estimadas — não é só um aviso, é o número que você está vendo.
+         </div>
+       )}
+diff --git a/src/components/common/FunnelStep.tsx b/src/components/common/FunnelStep.tsx
+index 5845126..84f7662 100644
+--- a/src/components/common/FunnelStep.tsx
++++ b/src/components/common/FunnelStep.tsx
+@@ -30,6 +30,7 @@ interface FunnelStepProps {
+ 
+ function formatValue(v: number | string): string {
+   if (typeof v === 'string') return v
++  if (v == null || isNaN(v)) return '0'
+   if (v >= 1_000_000) return `${(v / 1_000_000).toFixed(1)}M`
+   if (v >= 1_000) return `${(v / 1_000).toFixed(1)}k`
+   return v.toLocaleString('pt-BR')
+@@ -57,7 +58,7 @@ export default function FunnelStep({ step, isLast = false, barWidthPct, unitLabe
+               {formatValue(step.value)} {unitLabel}
+             </span>
+           </div>
+-          <span className={styles.percentage}>{step.percentage.toFixed(1)}%</span>
++          <span className={styles.percentage}>{(step?.percentage ?? 0).toFixed(1)}%</span>
+         </div>
+ 
+         {(hasNumericDropoff || step.dropoffLabel) && (
+diff --git a/src/components/common/GlassCard.tsx b/src/components/common/GlassCard.tsx
+index 7f21cf7..cb25fac 100644
+--- a/src/components/common/GlassCard.tsx
++++ b/src/components/common/GlassCard.tsx
+@@ -10,17 +10,17 @@ import type { GlowColor } from '@/types/orbit'
+ export interface GlassCardProps {
+   children:  ReactNode
+   glowColor?: GlowColor
+-  className?: string
++  className?: string | undefined
+   onClick?:   MouseEventHandler<HTMLDivElement>
+   role?:      string
+   tabIndex?:  number
+ }
+ 
+ const GLOW_CLASS: Record<GlowColor, string> = {
+-  cyan: styles.glowCyan,
+-  red:  styles.glowRed,
+-  gold: styles.glowGold,
+-  none: styles.glowNone,
++  cyan: styles.glowCyan ?? '',
++  red:  styles.glowRed ?? '',
++  gold: styles.glowGold ?? '',
++  none: styles.glowNone ?? '',
+ }
+ 
+ export function GlassCard({
+@@ -41,4 +41,4 @@ export function GlassCard({
+       {children}
+     </div>
+   )
+-}
++}
+\ No newline at end of file
+diff --git a/src/components/screens/CarteiraScreen.module.css b/src/components/screens/CarteiraScreen.module.css
+index ebbd9c3..b98e095 100644
+--- a/src/components/screens/CarteiraScreen.module.css
++++ b/src/components/screens/CarteiraScreen.module.css
+@@ -3,17 +3,20 @@
+    ============================================================================ */
+ 
+ .main {
+-  margin-left: auto;
+-  margin-right: auto;
+   display: flex;
++  /* ✅ FIX (aproveitamento de tela — 11/09/2026): removido `max-width: 80rem`
++     + `margin: auto`. Isso centralizava um bloco fixo de 1280px e deixava
++     área morta em telas largas — comparar com InstagramOverviewPage.module.css
++     `.main`, que usa `flex: 1` sem teto de largura. Carteira agora ocupa
++     100% do espaço que o layout pai (`(dashboard)/layout.tsx`) já reserva
++     para o conteúdo, igual à Visão Geral IG. */
++  width: 100%;
+   /* ✅ FIX (proporção dos cards): removido min-height:100vh — o layout
+      pai (src/app/(dashboard)/layout.tsx) já força 100vh na linha
+      Sidebar+conteúdo. Manter aqui também empilhava dois 100vh e criava
+      a sobra vazia vista no devtools. min-height:100% deixa este .main
+      preencher só o espaço que o pai já reservou. */
+   min-height: 100%;
+-  width: 100%;
+-  max-width: 80rem;
+   flex-direction: column;
+   gap: 1.5rem;
+   padding-left: 1rem;
+@@ -113,6 +116,26 @@
+   border: 1px solid var(--line);
+   background-color: var(--bg2);
+   padding: 1rem;
++  transition: border-color var(--transition-base, 150ms), box-shadow var(--transition-base, 150ms);
++}
++
++/* ✅ FIX (SSOT — 11/09/2026): os 3 KPIs eram visualmente idênticos, sem
++   nenhum destaque de severidade — mesmos tokens de glow que GlassCard.tsx
++   já usa em glowCyan/glowGold/glowRed (Visão Geral IG), aplicados aqui via
++   classe própria porque este card não passa por <GlassCard>. */
++.kpiCardNeutral {
++  border-color: var(--border-glow-cyan);
++  box-shadow: var(--shadow-inner-cyan);
++}
++
++.kpiCardWarning {
++  border-color: var(--border-glow-gold);
++  box-shadow: var(--shadow-inner-gold);
++}
++
++.kpiCardCritical {
++  border-color: var(--border-glow-red);
++  box-shadow: var(--shadow-inner-red);
+ }
+ 
+ .kpiLabel {
+@@ -125,7 +148,7 @@
+ 
+ .kpiValue {
+   margin-top: 0.5rem;
+-  font-family: monospace;
++  font-family: var(--mono);
+   font-size: 1.5rem;
+   font-weight: 700;
+   color: var(--t0);
+@@ -392,7 +415,7 @@
+   padding-right: 0.5rem;
+   padding-top: 0.25rem;
+   padding-bottom: 0.25rem;
+-  font-family: monospace;
++  font-family: var(--mono);
+   font-size: 0.625rem;
+   font-weight: 600;
+   color: var(--red);
+@@ -402,4 +425,4 @@
+   display: flex;
+   flex-direction: column;
+   gap: 0.5rem;
+-}
++}
+\ No newline at end of file
+diff --git a/src/components/screens/CarteiraScreen.tsx b/src/components/screens/CarteiraScreen.tsx
+index 4011957..affe8a5 100644
+--- a/src/components/screens/CarteiraScreen.tsx
++++ b/src/components/screens/CarteiraScreen.tsx
+@@ -92,7 +92,13 @@ function CarteiraScreen({
+   useAlerts,
+ }: CarteiraScreenProps): React.ReactElement {
+   const { data, status, error, refetch } = useClients()
+-  const { data: criticalAlerts, refetch: refetchAlerts } = useAlerts('critical')
++  // PR-B / N9: "Com alerta" e os AlertCards embaixo de cada ClientCard são
++  // sobre alertas em geral (qualquer severity) — precisam de useAlerts()
++  // sem filtro. "Alertas críticos" + a seção "urgentes" continuam restritos
++  // a useAlerts('critical'). Antes, os dois liam da mesma chamada filtrada
++  // e "Com alerta" só contava cliente com alerta crítico.
++  const { data: allAlerts, refetch: refetchAllAlerts } = useAlerts()
++  const { data: criticalAlerts, refetch: refetchCriticalAlerts } = useAlerts('critical')
+   const [activeTab, setActiveTab] = useState<FilterTab>('all')
+ 
+   const allClients: Client[] = data ?? []
+@@ -103,10 +109,15 @@ function CarteiraScreen({
+   const isLoading = status === 'loading' || status === 'idle'
+ 
+   const clientsWithAlerts = allClients.filter((c) =>
+-    criticalAlerts.some((a) => a.clientId === c.id)
++    allAlerts.some((a) => a.clientId === c.id)
+   ).length
+   const totalAlerts = criticalAlerts.length
+ 
++  const refetchAlerts = (): void => {
++    refetchAllAlerts()
++    refetchCriticalAlerts()
++  }
++
+   const subtitle =
+     status === 'success'
+       ? `${allClients.length} cliente${allClients.length !== 1 ? 's' : ''} ativo${allClients.length !== 1 ? 's' : ''}${
+@@ -123,7 +134,16 @@ function CarteiraScreen({
+   return (
+     <main className={styles.main}>
+       <div className={styles.headRow}>
+-        <SectionHead title="Carteira de clientes" subtitle={subtitle} />
++        <SectionHead
++          title="Carteira de clientes"
++          {...(subtitle !== undefined ? { subtitle } : {})}
++        />
++        {/* PR-F (parcial) / TS2375: `subtitle` é `string | undefined`
++            (calculado condicionalmente acima), mas SectionHeadProps.subtitle
++            é opcional sob exactOptionalPropertyTypes — passar
++            subtitle={undefined} explicitamente não é o mesmo que omitir a
++            prop. Spread condicional garante que a chave só existe quando
++            há valor. */}
+ 
+         <div
+           className={styles.tabsContainer}
+@@ -150,15 +170,15 @@ function CarteiraScreen({
+       </div>
+ 
+       <div className={styles.kpiGrid}>
+-        <div className={styles.kpiCard}>
++        <div className={`${styles.kpiCard} ${styles.kpiCardNeutral}`}>
+           <p className={styles.kpiLabel}>Clientes ativos</p>
+           <p className={styles.kpiValue}>{allClients.length}</p>
+         </div>
+-        <div className={styles.kpiCard}>
++        <div className={`${styles.kpiCard} ${styles.kpiCardWarning}`}>
+           <p className={styles.kpiLabel}>Com alerta</p>
+           <p className={`${styles.kpiValue} ${styles.kpiValueWarning}`}>{clientsWithAlerts}</p>
+         </div>
+-        <div className={styles.kpiCard}>
++        <div className={`${styles.kpiCard} ${styles.kpiCardCritical}`}>
+           <p className={styles.kpiLabel}>Alertas críticos</p>
+           <p className={`${styles.kpiValue} ${styles.kpiValueError}`}>{totalAlerts}</p>
+         </div>
+@@ -181,16 +201,24 @@ function CarteiraScreen({
+       ) : (
+         <div className={styles.clientsGrid}>
+           {clients.map((client: Client) => {
+-            const clientAlerts = criticalAlerts.filter((a) => a.clientId === client.id)
++            const clientAlerts = allAlerts.filter((a) => a.clientId === client.id)
+ 
+             return (
+               <div key={client.id} className={styles.clientWrapper}>
+                 <ClientCard
+                   client={client}
+                   healthStatus={client.status}
+-                  snapshotCount={client.snapshotCount}
+-                  lastSnapshotDate={client.lastSnapshotDate}
++                  {...(client.snapshotCount !== undefined
++                    ? { snapshotCount: client.snapshotCount }
++                    : {})}
++                  {...(client.lastSnapshotDate !== undefined
++                    ? { lastSnapshotDate: client.lastSnapshotDate }
++                    : {})}
+                 />
++                {/* PR-F (parcial) / TS2375: snapshotCount?: number e
++                    lastSnapshotDate?: string | null em Client — ambos podem
++                    vir `undefined`. `healthStatus` fica direto porque
++                    `client.status: ClientHealthStatus` nunca é undefined. */}
+ 
+                 {clientAlerts.length > 0 && (
+                   <div className={styles.alertsContainer}>
+diff --git a/src/lib/repositories/alertsRepository.ts b/src/lib/repositories/alertsRepository.ts
+index 76f275f..055202d 100644
+--- a/src/lib/repositories/alertsRepository.ts
++++ b/src/lib/repositories/alertsRepository.ts
+@@ -50,6 +50,26 @@ export function isAlertType(value: string): value is AlertType {
+   return (ALERT_TYPES as readonly string[]).includes(value)
+ }
+ 
++// ✅ FIX (P0-A — regressão do guard de href): sanitizeActionUrl() já existia
++// em orbitAlert.mapper.ts, mas mapOrbitAlertRowToContract() não é importado
++// por nenhum caminho de leitura ativo — fetchAlerts/fetchCriticalAlerts (o
++// que alimenta AlertCard via useAlerts) passam por fromOrbitRow() aqui
++// embaixo, que montava `action.url` direto de `row.action_url` sem guard.
++// Duplicado aqui como o comentário do mapper já previa ("mesmo guard
++// aplicado em alertsRepository.ts P0.1") — mas nunca tinha sido escrito.
++const PLACEHOLDER_HOSTS: readonly string[] = ['example.com', 'example.org', 'localhost']
++
++function sanitizeActionUrl(url: string | null): string | null {
++  if (!url) return null
++  if (url.startsWith('/')) return url // rota interna: sempre segura
++  try {
++    const host = new URL(url).hostname
++    return PLACEHOLDER_HOSTS.includes(host) ? null : url
++  } catch {
++    return null // URL malformada: sem link
++  }
++}
++
+ // ── Campos padrão de seleção para reutilização e consistência ─────────────
+ const ALERT_SELECT_FIELDS = `
+   id, client_id, alert_type, severity, title, description,
+@@ -110,8 +130,8 @@ function fromOrbitRow(row: OrbitAlertRow): Alert {
+     thresholdValue: row.threshold_value,
+     isResolved: row.is_resolved,
+     createdAt: row.created_at,
+-    action: row.action_url
+-      ? { type: 'link', label: 'Ver detalhes', url: row.action_url }
++    action: sanitizeActionUrl(row.action_url)
++      ? { type: 'link', label: 'Ver detalhes', url: sanitizeActionUrl(row.action_url) as string }
+       : null,
+     natureza: row.natureza ?? undefined,
+     probableCause: row.probable_cause ?? undefined,
+@@ -126,12 +146,21 @@ function fromOrbitRow(row: OrbitAlertRow): Alert {
+ }
+ 
+ // ── Base query — orbit.alerts ─────────────────────────────────────────────
++// ✅ P0.3 (09/09/2026): faltava o filtro de snooze — is_resolved=false já
++// existia, mas um alerta adiado (is_snoozed=true, snoozed_until no futuro)
++// continuava aparecendo na lista igual a um alerta ativo. Guard: nunca
++// mostrar alerta com is_snoozed=true E snoozed_until ainda no futuro.
++// `.not('is_snoozed', 'is', true)` cobre null e false (nunca esconde por
++// engano um alerta que nunca foi adiado); o OR cobre "nunca foi adiado"
++// (snoozed_until null) e "foi adiado mas o prazo já passou".
+ function orbitBaseQuery() {
+   return supabase
+     .schema('orbit')
+     .from('alerts')
+     .select(ALERT_SELECT_FIELDS)
+     .eq('is_resolved', false)
++    .not('is_snoozed', 'is', true)
++    .or(`snoozed_until.is.null,snoozed_until.lt.${new Date().toISOString()}`)
+     .order('created_at', { ascending: false })
+ }
+ 
+diff --git a/src/lib/repositories/avatarRepository.ts b/src/lib/repositories/avatarRepository.ts
+index 11a6f46..29d0bbf 100644
+--- a/src/lib/repositories/avatarRepository.ts
++++ b/src/lib/repositories/avatarRepository.ts
+@@ -1,15 +1,31 @@
+ /* ==========================================================================
+-   ORBIT · Repository - Avatar Alignment (v4.0 Sem Fallback Tóxico)
+-   
+-   Mudanças Críticas:
++   ORBIT · Repository - Avatar Alignment (v5.0 Conectado ao Mapper)
++
++   v5.0 (conexão ao mapper — 11/09/2026):
++   - 🔌 Repositório religado a @/lib/mappers/avatarAlignment. A interface
++     local `AvatarAlignmentRow` + `validateAvatarRow()` (validação manual
++     campo a campo, escrita à mão) foram substituídas por
++     `avatarAlignmentViewRowSchema.parse()` (barreira Zod, gerada a partir
++     do shape real de `Database['orbit']['Views']['v_avatar_alignment']`)
++     seguido de `mapAvatarAlignmentViewRowToContract()`.
++   - ➕ Adicionado `id` à query de select: o schema do mapper exige a coluna
++     `id` (presente na view) mesmo que este repositório não a consuma
++     diretamente — sem ela, `avatarAlignmentViewRowSchema.parse()` falha
++     porque a chave está ausente do objeto, não apenas nula.
++   - 🛡️ `OrbitValidationError` (lançado pelo mapper quando `client_id` vem
++     nulo — join quebrado) e `ZodError` (schema drift real do Postgres)
++     agora são capturados e traduzidos para `AvatarRepositoryError` com
++     code 'VALIDATION_FAILED', mantendo a mesma taxonomia de erro que o
++     resto do app já espera deste repositório.
++
++   Mudanças Críticas (mantidas de v4.0):
+    1. Elimina fallback silencioso — retorna erro explícito
+-   2. Valida estrutura de dados antes de usar
+-   3. Diferencia entre "sem dados" e "erro de conexão"
+-   4. real_interest vem do banco, não é fabricado
++   2. Diferencia entre "sem dados" e "erro de conexão"
++   3. real_interest vem do banco, não é fabricado
+    ========================================================================== */
+ 
+ import { supabase } from '@/lib/supabase'
+-import { repairMojibake } from '@/lib/textRepair'
++import { ZodError } from 'zod'
+ import type {
+   AlignmentBar,
+   AlignmentStatus,
+@@ -18,24 +34,12 @@ import type {
+   AvatarRecommendation,
+ } from '@/types/avatar'
+ import { ALIGNMENT_THRESHOLDS, ALIGNMENT_STATUS_COLOR } from '@/types/avatar'
+-
+-interface AvatarAlignmentRow {
+-  client_id: string
+-  handle: string
+-  name: string
+-  expected_gender_male: number
+-  expected_gender_female: number
+-  expected_age_range: string
+-  expected_interest: string | null
+-  expected_geo: string
+-  real_gender_male: number
+-  real_gender_female: number
+-  real_age_range: string
+-  real_interest: string | null
+-  real_geo: string
+-  alignment_score: number
+-  alignment_status: string
+-}
++import type { AvatarAlignmentRow } from '@/types/orbit'
++import {
++  avatarAlignmentViewRowSchema,
++  mapAvatarAlignmentViewRowToContract,
++} from '@/lib/mappers/avatarAlignment'
++import { OrbitValidationError } from '@/lib/mappers/shared/types'
+ 
+ // ─── TIPOS DE ERRO EXPLÍCITOS ─────────────────────────────────────────────
+ 
+@@ -50,91 +54,6 @@ export class AvatarRepositoryError extends Error {
+   }
+ }
+ 
+-// ─── VALIDAÇÃO DE DADOS ───────────────────────────────────────────────────
+-
+-function validateAvatarRow(data: unknown): AvatarAlignmentRow {
+-  if (!data || typeof data !== 'object') {
+-    throw new AvatarRepositoryError(
+-      'VALIDATION_FAILED',
+-      'Dados recebidos não são um objeto válido',
+-      { received: typeof data }
+-    )
+-  }
+-
+-  const obj = data as Record<string, unknown>
+-
+-  // Validar campos obrigatórios
+-  const requiredFields = [
+-    'client_id',
+-    'handle',
+-    'name',
+-    'expected_gender_male',
+-    'expected_gender_female',
+-    'expected_age_range',
+-    'expected_geo',
+-    'real_gender_male',
+-    'real_gender_female',
+-    'real_age_range',
+-    'real_geo',
+-    'alignment_score',
+-    'alignment_status',
+-  ]
+-
+-  const missing = requiredFields.filter((field) => !(field in obj))
+-  if (missing.length > 0) {
+-    throw new AvatarRepositoryError(
+-      'VALIDATION_FAILED',
+-      `Campos obrigatórios faltando: ${missing.join(', ')}`,
+-      { missing }
+-    )
+-  }
+-
+-  // Validar tipos numéricos
+-  if (typeof obj.expected_gender_male !== 'number' || obj.expected_gender_male < 0 || obj.expected_gender_male > 100) {
+-    throw new AvatarRepositoryError(
+-      'VALIDATION_FAILED',
+-      'expected_gender_male deve ser número entre 0-100',
+-      { received: obj.expected_gender_male }
+-    )
+-  }
+-
+-  if (typeof obj.alignment_score !== 'number' || obj.alignment_score < 0 || obj.alignment_score > 100) {
+-    throw new AvatarRepositoryError(
+-      'VALIDATION_FAILED',
+-      'alignment_score deve ser número entre 0-100',
+-      { received: obj.alignment_score }
+-    )
+-  }
+-
+-  // Validar status
+-  const validStatuses = ['critical', 'warning', 'healthy']
+-  if (!validStatuses.includes(String(obj.alignment_status).toLowerCase())) {
+-    throw new AvatarRepositoryError(
+-      'VALIDATION_FAILED',
+-      `alignment_status deve ser um de: ${validStatuses.join(', ')}`,
+-      { received: obj.alignment_status }
+-    )
+-  }
+-
+-  return {
+-    client_id: String(obj.client_id),
+-    handle: String(obj.handle),
+-    name: String(obj.name),
+-    expected_gender_male: Number(obj.expected_gender_male),
+-    expected_gender_female: Number(obj.expected_gender_female),
+-    expected_age_range: String(obj.expected_age_range),
+-    expected_interest: obj.expected_interest ? String(obj.expected_interest) : null,
+-    expected_geo: String(obj.expected_geo),
+-    real_gender_male: Number(obj.real_gender_male),
+-    real_gender_female: Number(obj.real_gender_female),
+-    real_age_range: String(obj.real_age_range),
+-    real_interest: obj.real_interest ? String(obj.real_interest) : null, // ✅ Vem do banco
+-    real_geo: repairMojibake(String(obj.real_geo)) ?? String(obj.real_geo),
+-    alignment_score: Number(obj.alignment_score),
+-    alignment_status: String(obj.alignment_status),
+-  }
+-}
+-
+ // ─── UTILITIES ───────────────────────────────────────────────────────────────
+ 
+ function scoreToStatus(score: number): AlignmentStatus {
+@@ -153,11 +72,33 @@ function categoricalVariance(expected: string, real: string): number {
+   return expected.trim().toLowerCase() === real.trim().toLowerCase() ? 0 : 100
+ }
+ 
++// PR-B / N1 (expected_geo/real_geo = "null"): o mapper (avatarAlignment.mapper.ts)
++// só substitui `null` real por 'N/A' — uma linha em que a VIEW devolve o
++// texto literal "null"/"undefined" (dado corrompido na ingestão, não o
++// `null` do JS) passa pela barreira Zod como string válida e chega aqui
++// intacta. Normalizado no ponto de consumo, sem tocar mapper/schema
++// (fora do escopo deste PR). Nunca fazer `String(valor)` nesse caminho:
++// se `valor` puder ser `null`/`undefined`, `String(null) === 'null'`
++// fabricaria exatamente o texto sentinela que este guard evita.
++const EMPTY_GEO_SENTINELS = new Set(['', 'null', 'undefined'])
++
++function normalizeGeoText(value: string | null | undefined): string {
++  if (value == null) return 'Não especificado'
++  const trimmed = value.trim()
++  return EMPTY_GEO_SENTINELS.has(trimmed.toLowerCase()) ? 'Não especificado' : trimmed
++}
++
+ function buildBars(row: AvatarAlignmentRow): AlignmentBar[] {
+   const genderVariance = Math.abs(row.real_gender_male - row.expected_gender_male)
+   const ageVariance = categoricalVariance(row.expected_age_range, row.real_age_range)
+   const interestVariance = categoricalVariance(row.expected_interest ?? '', row.real_interest ?? '')
+-  const geoVariance = categoricalVariance(row.expected_geo, row.real_geo)
++  // Normalizado antes de comparar: sem isso, "null" (expected) === "null"
++  // (real) bateria como alinhamento saudável (variance 0) em vez de
++  // sinalizar ausência de dado dos dois lados.
++  const geoVariance = categoricalVariance(
++    normalizeGeoText(row.expected_geo),
++    normalizeGeoText(row.real_geo)
++  )
+ 
+   const toBar = (label: string, expected: number, real: number, variance: number): AlignmentBar => {
+     const status = varianceToStatus(variance)
+@@ -237,14 +178,14 @@ function rowToAvatarAlignment(row: AvatarAlignmentRow): AvatarAlignment {
+     gender: { male: row.expected_gender_male, female: row.expected_gender_female },
+     ageRange: row.expected_age_range,
+     interest: row.expected_interest ?? 'Não mapeado',
+-    geo: row.expected_geo,
++    geo: normalizeGeoText(row.expected_geo),
+   }
+ 
+   const real: AvatarProfile = {
+     gender: { male: row.real_gender_male, female: row.real_gender_female },
+     ageRange: row.real_age_range,
+     interest: row.real_interest ?? 'Não mapeado',
+-    geo: row.real_geo,
++    geo: normalizeGeoText(row.real_geo),
+   }
+ 
+   const score = Number(row.alignment_score)
+@@ -286,11 +227,11 @@ export async function fetchAvatarAlignment(clientId: string): Promise<AvatarAlig
+ 
+   try {
+     const { data, error } = await supabase
+-      .schema('orbit')
+       .schema('orbit')
+       .from('v_avatar_alignment')
+       .select(
+         `
++        id,
+         client_id,
+         handle,
+         name,
+@@ -299,11 +240,13 @@ export async function fetchAvatarAlignment(clientId: string): Promise<AvatarAlig
+         expected_age_range,
+         expected_interest,
+         expected_geo,
++        expected_geo_pct,
+         real_gender_male,
+         real_gender_female,
+         real_age_range,
+         real_interest,
+         real_geo,
++        real_geo_pct,
+         alignment_score,
+         alignment_status
+       `
+@@ -328,11 +271,14 @@ export async function fetchAvatarAlignment(clientId: string): Promise<AvatarAlig
+       )
+     }
+ 
+-    // ✅ VALIDAÇÃO: Estrutura de dados
+-    const validatedRow = validateAvatarRow(data)
++    // ✅ BARREIRA ZOD: valida o shape cru da view antes de mapear
++    const parsedRow = avatarAlignmentViewRowSchema.parse(data)
++
++    // ✅ MAPPER: view row → AvatarAlignmentRow (Contract, orbit.ts)
++    const contractRow = mapAvatarAlignmentViewRowToContract(parsedRow)
+ 
+-    // ✅ CONVERSÃO: Sem fabricação de dados
+-    return rowToAvatarAlignment(validatedRow)
++    // ✅ CONVERSÃO: Contract → AvatarAlignment (domínio de UI)
++    return rowToAvatarAlignment(contractRow)
+   } catch (err) {
+     // Se já é AvatarRepositoryError, relança como está
+     if (err instanceof AvatarRepositoryError) {
+@@ -340,6 +286,28 @@ export async function fetchAvatarAlignment(clientId: string): Promise<AvatarAlig
+       throw err
+     }
+ 
++    // client_id nulo na view (JOIN quebrado) — sinalizado pelo mapper
++    if (err instanceof OrbitValidationError) {
++      const wrapped = new AvatarRepositoryError(
++        'VALIDATION_FAILED',
++        err.message,
++        { details: err.details }
++      )
++      console.error(`[avatarRepository] ${wrapped.code}: ${wrapped.message}`, wrapped.details)
++      throw wrapped
++    }
++
++    // Schema drift real do Postgres — coluna removida/tipo trocado
++    if (err instanceof ZodError) {
++      const wrapped = new AvatarRepositoryError(
++        'VALIDATION_FAILED',
++        'Payload de orbit.v_avatar_alignment fora do schema esperado',
++        { zodIssues: err.issues }
++      )
++      console.error(`[avatarRepository] ${wrapped.code}: ${wrapped.message}`, wrapped.details)
++      throw wrapped
++    }
++
+     // Outros erros são UNKNOWN
+     const message = err instanceof Error ? err.message : 'Erro desconhecido'
+     console.error(`[avatarRepository] UNKNOWN: ${message}`, err)
+diff --git a/src/lib/repositories/funnelRepository.ts b/src/lib/repositories/funnelRepository.ts
+index e6d4faa..1b245b2 100644
+--- a/src/lib/repositories/funnelRepository.ts
++++ b/src/lib/repositories/funnelRepository.ts
+@@ -5,7 +5,7 @@
+ 
+ import { supabase } from '@/lib/supabase'
+ import { buildFunnelInsight } from './contentContractEngine'
+-import type { FunnelMetrics, InsightData, SetorBenchmark } from '@/types/orbit'
++import type { FunnelMetrics, InsightData, SetorBenchmark } from '@/types/funnel'
+ import type { AlertContractFields } from './contentContractEngine'
+ 
+ interface AccountSnapshotRow {
+diff --git a/src/types/funnel.ts b/src/types/funnel.ts
+index d78efbe..32c5380 100644
+--- a/src/types/funnel.ts
++++ b/src/types/funnel.ts
+@@ -24,4 +24,6 @@ export type {
+   UseFunnelResult,
+   FunnelData,
+   FunnelMetricsRow,
+-} from './orbit'
+\ No newline at end of file
++  InsightData, 
++  SetorBenchmark,
++} from './orbit'
+diff --git a/src/types/orbit.ts b/src/types/orbit.ts
+index f1307e5..ac5b164 100644
+--- a/src/types/orbit.ts
++++ b/src/types/orbit.ts
+@@ -1,80 +1,3 @@
+-// ============================================================================
+-// src/types/orbit.ts — VERSÃO ÚNICA GOZA DE PLENA RECONCILIAÇÃO//
+-//
+-// Este arquivo consolida DUAS versões do mesmo SSOT em momentos
+-// distintos (Doc.A = com AlertCounts/UseAlertsResult ao final; Doc.B = sem
+-// eles, com o bloco de Onboarding reordenado). Não é refatoração — é
+-// reconciliação: nada foi removido sem sinalização, nada foi "corrigido"
+-// silenciosamente. 
+-// LISTA COMPLETA DE OBSERVAÇÕES (pontuais, sem recomendação de próximo passo):
+-//
+-// 1) DIVERGÊNCIA REAL ENTRE OS DOIS DOCUMENTOS: `AlertCounts` e
+-//    `UseAlertsResult` existem no Documento A e NÃO existem no Documento B.
+-//    É a única diferença de conteúdo (não cosmética) entre as duas versões.
+-//    Os dois arquivos que deveriam ser a mesma fonte de verdade estão
+-//    dessincronizados — um tem um hook de contagem de alertas modelado,
+-//    o outro não.
+-//
+-//
+-// 4) Vocabulário de status/cor fragmentado em ~8 tipos que representam o
+-//    mesmo conceito semântico (bom/atenção/ruim), cada um com convenção
+-//    própria (PT vs EN, palavra vs cor): AlertSeverity, ClientHealthStatus,
+-//    AlignmentStatus, StatusVariant, SemaphoreColor, GlowColor, TrendColor,
+-//    AlignmentColor, MetaAdsKPIStatus. O próprio autor original documenta
+-//    isso no comentário de MetaAdsKPIStatus como "terceiro vocabulário de
+-//    cor no projeto" — problema identificado e conscientemente não resolvido.
+-//
+-// 5) `AvatarProfile` é declarada DUAS VEZES no mesmo arquivo (em ambos os
+-//    documentos). TypeScript faz merge de interfaces homônimas, então
+-//    compila — mas isso mascara a forma real do tipo e sugere que quem
+-//    editou não sabia que a interface já existia.
+-//
+-// 6) Duplicidade semântica entre `IGOverviewLegacyData` e
+-//    `IGAccountOverviewData`: mesmos 7 campos, nomes diferentes, ambos
+-//    mantidos "por segurança" sem confirmação de uso real.
+-//
+-// 7) Três representações da entidade "Campanha" — `CampaignRow` (snake_case,
+-//    linha crua do banco), `MetaCampaignRow extends CampaignRow` (idem +
+-//    campos de ads) e `Campaign` (camelCase, já processada por um
+-//    `rowToCampaign()` que não está neste arquivo) — sem um tipo/camada de
+-//    mapper explícito documentado junto às interfaces.
+-//
+-// 8) Tipos "mortos" mantidos por precaução, sem consumidor confirmado:
+-//    `FunnelActualMetrics`, `IGAccountOverviewData`. Acúmulo de dívida
+-//    técnica em vez de remoção — típico de quem tem medo de quebrar algo
+-//    que não entende completamente.
+-//
+-// 9) `MetaCampaignRow` foi estendido (roas, ctr, frequency, fatigue_percent,
+-//    cpl) por INFERÊNCIA do uso no frontend, não por verificação do schema
+-//    Supabase — o próprio comentário original admite isso (⚠️ "Não validado
+-//    contra Supabase ainda"). Isso inverte a direção de verdade esperada de
+-//    um SSOT (deveria nascer do schema, não do consumo).
+-//
+-// 10) `validateMetaCampaignRow` ficou defasada: não valida os campos novos
+-//     (roas, ctr, frequency, fatigue_percent, cpl) que a interface declara.
+-//     A função de type-guard não protege o que o tipo promete.
+-//
+-// 11) Mistura de idioma dentro do mesmo domínio: campos do funil em PT-BR
+-//     (`alcance`, `cliques`, `taxaConv`) convivem com o tipo legado em EN
+-//     (`reach`, `linkClicks`, `conversionRate`) sem convenção de tradução
+-//     única — reflexo de features implementadas por pessoas diferentes.
+-//
+-// 12) `FetchStatus` e `FetchStatusLegacy` têm o MESMO shape literal
+-//     (`'idle'|'loading'|'success'|'error'`) — dois nomes para o mesmo tipo,
+-//     sem diferença de forma que justifique a duplicação.
+-//
+-// 13) `AlertSeverity` (info/warning/critical) e `ClientHealthStatus`
+-//     (healthy/warning/critical/unknown) e `AlignmentStatus`
+-//     (healthy/warning/critical) se sobrepõem parcialmente sem hierarquia
+-//     comum — cada domínio (alerta, saúde de cliente, alinhamento de
+-//     avatar) reinventou seu próprio enum de severidade.
+-//
+-// Nada abaixo foi "corrigido" por conta própria: onde os dois documentos
+-// concordam, o shape foi mantido como está (é o que o código real consome,
+-// segundo os comentários originais). Onde divergem, ambos os shapes foram
+-// preservados e sinalizados.
+-// ============================================================================
+-
+ import type { ReactNode } from 'react'
+ 
+ // ============================================================================
+@@ -389,22 +312,22 @@ export interface Alert {
+    * valor. Antes era `boolean` obrigatório (forçava o mapper a inventar
+    * um valor); agora ausência real é representável sem type-cast forçado.
+    */
+-  exportable?: boolean  // 🟢=true, 🟡/🔴=false — TODO: confirmar regra
+-  confidenceLevel?: 'L0' | 'L1' | 'L2'  // Selo L2
+-  personaType?: 'ecommerce' | 'creator' | 'agency' | 'infoprodutor'
++  exportable?: boolean | undefined  // 🟢=true, 🟡/🔴=false — TODO: confirmar regra
++  confidenceLevel?: 'L0' | 'L1' | 'L2' | undefined  // Selo L2
++  personaType?: 'ecommerce' | 'creator' | 'agency' | 'infoprodutor' | undefined
+   /**
+    * ✅ PATCH (content contract 14/08): campos do Content Contract Tree.
+    */
+-  natureza?: AlertNatureza
++  natureza?: AlertNatureza | undefined
+   // ausente = ainda não classificado pelo motor (contentContractEngine.ts).
+   // NÃO tratar ausência como 'tecnica' por default em nenhuma camada — é
+   // exatamente o que a coluna correspondente em orbit.alerts evita não
+   // tendo DEFAULT. Ver orbit.alerts.natureza.
+-  probableCause?: string | null
++  probableCause?: string | null | undefined
+   // causa nomeada pelo resolver, nunca escrita à mão na UI. `null` explícito
+   // = resolver rodou e concluiu que a causa é indeterminável com o dado
+   // atual (não confundir com `undefined` = resolver nem rodou ainda).
+-dataSource?: 'real_snapshot' | 'fallback_by_client' | 'fallback_by_error' | 'fallback_by_empty' | 'empty_database' | 'error' | 'estimate'
++  dataSource?: 'real_snapshot' | 'fallback_by_client' | 'fallback_by_error' | 'fallback_by_empty' | 'empty_database' | 'error' | 'estimate' | undefined
+   // obrigatório expor quando = 'fallback_by_client': é o campo que existe
+   // porque o Funil (funnelRepository.ts) hoje cai em FALLBACK_BY_CLIENT sem
+   // marcar a origem do dado que chega à UI.
+@@ -415,15 +338,15 @@ dataSource?: 'real_snapshot' | 'fallback_by_client' | 'fallback_by_error' | 'fal
+    * `Alert`/`fromOrbitRow()`. Todos opcionais/nuláveis, mesmo padrão dos
+    * campos do Content Contract acima — ausência ≠ erro, é estado válido.
+    */
+-  snapshotId?: string
++  snapshotId?: string | undefined
+   // referência ao snapshot (orbit.ig_account_snapshots ou equivalente) que
+   // originou o metricValue. `undefined`/`null` = alerta ainda sem
+   // proveniência registrada (ver observação sobre o gerador de
+   // ctr_below_threshold — nenhuma rotina hoje preenche esta coluna).
+-  suggestedAction?: string | null
+-  resolvedAt?: string | null
+-  snoozedUntil?: string | null
+-  resolvedBy?: string | null
++  suggestedAction?: string | null | undefined
++  resolvedAt?: string | null | undefined
++  snoozedUntil?: string | null | undefined
++  resolvedBy?: string | null | undefined
+ }
+ 
+ 
+@@ -1470,13 +1393,34 @@ export interface BioLink {
+   label: string
+ }
+ 
+-export type CTAType = 'link_direto' | 'linktree_multilink' | 'dm_comentario' | 'nenhum'
++/**
++ * ✅ PATCH (verificação ao vivo pg_constraint, 11/09/2026):
++ * `client_onboarding_cta_type_check` no Postgres tem 5 valores — faltava
++ * 'link_bio'. Query: information_schema/pg_constraint em orbit.client_onboarding.
++ */
++export type CTAType =
++  | 'link_direto'
++  | 'linktree_multilink'
++  | 'dm_comentario'
++  | 'nenhum'
++  | 'link_bio'
+ 
++/**
++ * ✅ PATCH (verificação ao vivo pg_constraint, 11/09/2026):
++ * `client_onboarding_funnel_maturity_check` no Postgres tem 4 valores —
++ * faltava 'funil_basico'.
++ */
+ export type FunnelMaturity =
+   | 'nao_implementado'
+   | 'implementado_fragmentado'
+   | 'implementado_unificado'
++  | 'funil_basico'
+ 
++/**
++ * ✅ PATCH (verificação ao vivo pg_constraint, 11/09/2026):
++ * `client_onboarding_proof_mechanism_check` no Postgres tem 7 valores —
++ * faltava 'clientes_ativos_gestao'.
++ */
+ export type ProofMechanism =
+   | 'prova_social'
+   | 'autoridade'
+@@ -1484,6 +1428,8 @@ export type ProofMechanism =
+   | 'associacao_marca'
+   | 'resultado_documentado'
+   | 'nenhum_observavel'
++  | 'clientes_ativos_gestao'
++
+ 
+ /** ⚠️ CORRIGIDO: schema real usa 'PANIC_GRIEF', não 'PANIC'; 'mixed' não
+  * existe na CHECK constraint do banco — removido. */
+@@ -1495,13 +1441,36 @@ export interface SchwatzValue {
+   priority: 'high' | 'medium' | 'low'
+ }
+ 
+-export type ValuesAffectSource = 'onboarding' | 'client_feedback' | 'manual'
++/**
++ * ✅ PATCH (verificação ao vivo pg_constraint, 11/09/2026):
++ * `client_onboarding_values_affect_source_check` no Postgres tem 4 valores —
++ * faltava 'bio_oficial_zip_insights_decisao_canal'.
++ */
++export type ValuesAffectSource =
++  | 'onboarding'
++  | 'client_feedback'
++  | 'manual'
++  | 'bio_oficial_zip_insights_decisao_canal'
++
++/**
++ * ✅ PATCH (verificação ao vivo pg_constraint, 11/09/2026):
++ * `client_onboarding_total_followers_source_check` no Postgres tem 4
++ * valores — a union inline em `ClientOnboarding.total_followers_source`
++ * tinha só 3 (faltava 'scrape_perfil_confirmado'). Nomeado aqui para virar
++ * a fonte única — `ClientOnboarding` referencia este tipo em vez de repetir
++ * a union inline.
++ */
++export type TotalFollowersSource =
++  | 'manual_print_confirmado'
++  | 'instagram_api'
++  | 'estimate'
++  | 'scrape_perfil_confirmado'
+ 
+ /** SSOT: orbit.client_onboarding (schema confirmado 2026-07-28). */
+ export interface ClientOnboarding {
+   client_id: string
+   total_followers: number
+-  total_followers_source: 'manual_print_confirmado' | 'instagram_api' | 'estimate'
++  total_followers_source: TotalFollowersSource
+   bio_links: BioLink[]
+   cta_type: CTAType | null
+   funnel_maturity: FunnelMaturity | null
+@@ -1580,6 +1549,9 @@ export interface UseAlertsResult {
+ // nenhuma das duas linhagens de orbit.ts (TS2305 no relatório forense).
+ // Valores conforme o próprio relatório forense (Documento 6, avatarRepository
+ // Erro #2) — não confirmados contra tabela/enum do Supabase.
++// ✅ PATCH (verificação ao vivo pg_constraint, 11/09/2026):
++// `client_onboarding_setor_benchmark_check` no Postgres tem 10 valores —
++// faltava 'saas_ferramenta'.
+ export type SetorBenchmark =
+   | 'comercio_direto_ecommerce_social'
+   | 'comissionamento_afiliados'
+@@ -1590,6 +1562,7 @@ export type SetorBenchmark =
+   | 'monetizacao_nativa_plataforma'
+   | 'autoridade_personal_branding_b2b'
+   | 'pre_monetizacao_a_validar'
++  | 'saas_ferramenta'
+ 
+ // ⚠️ OBSERVAÇÃO (16) — GAP FECHADO: `CalculationResult` vivia apenas local
+ // em funnelRepository.calc.ts (fora do SSOT). Centralizado aqui conforme o
+diff --git a/tsconfig.json b/tsconfig.json
+index 82dc904..8396aa2 100644
+--- a/tsconfig.json
++++ b/tsconfig.json
+@@ -1,6 +1,6 @@
+ {
+   "compilerOptions": {
+-    "target": "ES2017",
++    "target": "ES2022",
+     "lib": [
+       "dom",
+       "dom.iterable",
+@@ -10,6 +10,17 @@
+     "skipLibCheck": true,
+     "skipDefaultLibCheck": true,
+     "strict": true,
++    "noUncheckedIndexedAccess": true,
++    "exactOptionalPropertyTypes": true,
++    "noImplicitReturns": true,
++    "noFallthroughCasesInSwitch": true,
++    "noImplicitOverride": true,
++    "noPropertyAccessFromIndexSignature": false,
++    "noUnusedLocals": true,
++    "noUnusedParameters": true,
++    "allowUnreachableCode": false,
++    "allowUnusedLabels": false,
++    "useUnknownInCatchVariables": true,
+     "noEmit": true,
+     "esModuleInterop": true,
+     "module": "esnext",
+@@ -23,7 +34,7 @@
+     "allowImportingTsExtensions": true,
+     "resolveJsonModule": true,
+     "isolatedModules": true,
+-    "jsx": "react-jsx",
++    "jsx": "preserve",
+     "incremental": true,
+     "plugins": [
+       {
+@@ -56,4 +67,4 @@
+     "orbit-dashboard/compare.ts",
+     "src/types/check-schema-drift.ts"
+   ]
+-}
++}
+\ No newline at end of file

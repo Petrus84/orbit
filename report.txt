@@ -1,0 +1,1183 @@
+scripts/check-ingestion.ts(28,15): error TS4111: Property 'NEXT_PUBLIC_SUPABASE_URL' comes from an index signature, so it must be accessed with ['NEXT_PUBLIC_SUPABASE_URL'].
+scripts/check-ingestion.ts(29,15): error TS4111: Property 'SUPABASE_SERVICE_ROLE_KEY' comes from an index signature, so it must be accessed with ['SUPABASE_SERVICE_ROLE_KEY'].
+scripts/ingest-from-zip.ts(22,43): error TS2532: Object is possibly 'undefined'.
+scripts/ingest-from-zip.ts(42,13): error TS4111: Property 'NEXT_PUBLIC_SUPABASE_URL' comes from an index signature, so it must be accessed with ['NEXT_PUBLIC_SUPABASE_URL'].
+scripts/ingest-from-zip.ts(43,13): error TS4111: Property 'SUPABASE_SERVICE_ROLE_KEY' comes from an index signature, so it must be accessed with ['SUPABASE_SERVICE_ROLE_KEY'].
+scripts/ingest-from-zip.ts(231,32): error TS18048: 'startPart' is possibly 'undefined'.
+scripts/ingest-from-zip.ts(232,28): error TS18048: 'endPart' is possibly 'undefined'.
+scripts/ingest-from-zip.ts(234,27): error TS2538: Type 'undefined' cannot be used as an index type.
+scripts/ingest-from-zip.ts(235,25): error TS2538: Type 'undefined' cannot be used as an index type.
+scripts/ingest-from-zip.ts(240,43): error TS18048: 'startDay' is possibly 'undefined'.
+scripts/ingest-from-zip.ts(241,37): error TS18048: 'endDay' is possibly 'undefined'.
+scripts/ingest-from-zip.ts(245,12): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(245,27): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(273,30): error TS2345: Argument of type 'Record<string, { value?: string | undefined; }>' is not assignable to parameter of type 'Record<string, { value?: string; }>'.
+  'string' index signatures are incompatible.
+    Type '{ value?: string | undefined; }' is not assignable to type '{ value?: string; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'value' are incompatible.
+        Type 'string | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(291,48): error TS18048: 'first' is possibly 'undefined'.
+scripts/ingest-from-zip.ts(292,22): error TS18048: 'first' is possibly 'undefined'.
+scripts/ingest-from-zip.ts(295,20): error TS18048: 'first' is possibly 'undefined'.
+scripts/ingest-from-zip.ts(300,46): error TS18048: 'first' is possibly 'undefined'.
+scripts/ingest-from-zip.ts(302,18): error TS18048: 'first' is possibly 'undefined'.
+scripts/ingest-from-zip.ts(351,42): error TS2345: Argument of type 'Record<string, { href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }>' is not assignable to parameter of type 'StringMapLike'.
+  'string' index signatures are incompatible.
+    Type '{ href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }' is not assignable to type 'MetricEntryLike' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'value' are incompatible.
+        Type 'string | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(356,37): error TS2345: Argument of type 'Record<string, { href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }>' is not assignable to parameter of type 'StringMapLike'.
+  'string' index signatures are incompatible.
+    Type '{ href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }' is not assignable to type 'MetricEntryLike' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'value' are incompatible.
+        Type 'string | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(357,36): error TS2345: Argument of type 'Record<string, { href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }>' is not assignable to parameter of type 'StringMapLike'.
+  'string' index signatures are incompatible.
+    Type '{ href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }' is not assignable to type 'MetricEntryLike' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'value' are incompatible.
+        Type 'string | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(358,36): error TS2345: Argument of type 'Record<string, { href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }>' is not assignable to parameter of type 'StringMapLike'.
+  'string' index signatures are incompatible.
+    Type '{ href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }' is not assignable to type 'MetricEntryLike' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'value' are incompatible.
+        Type 'string | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(359,39): error TS2345: Argument of type 'Record<string, { href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }>' is not assignable to parameter of type 'StringMapLike'.
+  'string' index signatures are incompatible.
+    Type '{ href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }' is not assignable to type 'MetricEntryLike' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'value' are incompatible.
+        Type 'string | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(360,38): error TS2345: Argument of type 'Record<string, { href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }>' is not assignable to parameter of type 'StringMapLike'.
+  'string' index signatures are incompatible.
+    Type '{ href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }' is not assignable to type 'MetricEntryLike' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'value' are incompatible.
+        Type 'string | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(361,37): error TS2345: Argument of type 'Record<string, { href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }>' is not assignable to parameter of type 'StringMapLike'.
+  'string' index signatures are incompatible.
+    Type '{ href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }' is not assignable to type 'MetricEntryLike' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'value' are incompatible.
+        Type 'string | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(362,37): error TS2345: Argument of type 'Record<string, { href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }>' is not assignable to parameter of type 'StringMapLike'.
+  'string' index signatures are incompatible.
+    Type '{ href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }' is not assignable to type 'MetricEntryLike' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'value' are incompatible.
+        Type 'string | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(363,36): error TS2345: Argument of type 'Record<string, { href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }>' is not assignable to parameter of type 'StringMapLike'.
+  'string' index signatures are incompatible.
+    Type '{ href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }' is not assignable to type 'MetricEntryLike' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'value' are incompatible.
+        Type 'string | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(380,18): error TS2532: Object is possibly 'undefined'.
+scripts/ingest-from-zip.ts(381,32): error TS2345: Argument of type 'Record<string, { href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }>' is not assignable to parameter of type 'StringMapLike'.
+  'string' index signatures are incompatible.
+    Type '{ href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }' is not assignable to type 'MetricEntryLike' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'value' are incompatible.
+        Type 'string | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(382,35): error TS2345: Argument of type 'Record<string, { href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }>' is not assignable to parameter of type 'StringMapLike'.
+  'string' index signatures are incompatible.
+    Type '{ href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }' is not assignable to type 'MetricEntryLike' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'value' are incompatible.
+        Type 'string | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(383,38): error TS2345: Argument of type 'Record<string, { href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }>' is not assignable to parameter of type 'StringMapLike'.
+  'string' index signatures are incompatible.
+    Type '{ href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }' is not assignable to type 'MetricEntryLike' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'value' are incompatible.
+        Type 'string | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(384,36): error TS2345: Argument of type 'Record<string, { href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }>' is not assignable to parameter of type 'StringMapLike'.
+  'string' index signatures are incompatible.
+    Type '{ href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }' is not assignable to type 'MetricEntryLike' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'value' are incompatible.
+        Type 'string | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(385,46): error TS2345: Argument of type 'Record<string, { href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }>' is not assignable to parameter of type 'StringMapLike'.
+  'string' index signatures are incompatible.
+    Type '{ href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }' is not assignable to type 'MetricEntryLike' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'value' are incompatible.
+        Type 'string | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(393,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(394,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(451,29): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(495,28): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(496,29): error TS2538: Type 'undefined' cannot be used as an index type.
+scripts/ingest-from-zip.ts(498,7): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type 'AgeRangeData'.
+scripts/ingest-from-zip.ts(498,36): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type 'AgeRangeData'.
+scripts/ingest-from-zip.ts(515,42): error TS2345: Argument of type 'Record<string, { href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }>' is not assignable to parameter of type 'StringMapLike'.
+  'string' index signatures are incompatible.
+    Type '{ href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }' is not assignable to type 'MetricEntryLike' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'value' are incompatible.
+        Type 'string | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(516,44): error TS2345: Argument of type 'Record<string, { href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }>' is not assignable to parameter of type 'StringMapLike'.
+  'string' index signatures are incompatible.
+    Type '{ href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }' is not assignable to type 'MetricEntryLike' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'value' are incompatible.
+        Type 'string | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(518,38): error TS2345: Argument of type 'Record<string, { href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }>' is not assignable to parameter of type 'StringMapLike'.
+  'string' index signatures are incompatible.
+    Type '{ href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }' is not assignable to type 'MetricEntryLike' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'value' are incompatible.
+        Type 'string | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(519,41): error TS2345: Argument of type 'Record<string, { href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }>' is not assignable to parameter of type 'StringMapLike'.
+  'string' index signatures are incompatible.
+    Type '{ href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }' is not assignable to type 'MetricEntryLike' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'value' are incompatible.
+        Type 'string | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(520,44): error TS2345: Argument of type 'Record<string, { href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }>' is not assignable to parameter of type 'StringMapLike'.
+  'string' index signatures are incompatible.
+    Type '{ href?: string | undefined; value?: string | undefined; timestamp?: number | undefined; }' is not assignable to type 'MetricEntryLike' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'value' are incompatible.
+        Type 'string | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(530,25): error TS2532: Object is possibly 'undefined'.
+scripts/ingest-from-zip.ts(530,58): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(538,28): error TS2532: Object is possibly 'undefined'.
+scripts/ingest-from-zip.ts(538,62): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(745,46): error TS2532: Object is possibly 'undefined'.
+scripts/ingest-from-zip.ts(746,44): error TS2532: Object is possibly 'undefined'.
+scripts/ingest-from-zip.ts(749,60): error TS2345: Argument of type 'string | null | undefined' is not assignable to parameter of type 'string | null'.
+  Type 'undefined' is not assignable to type 'string | null'.
+scripts/lib/resolveClientId.ts(45,22): error TS2532: Object is possibly 'undefined'.
+scripts/seed-dynamic.ts(30,36): error TS4111: Property 'PASTA_OPERATIONAL' comes from an index signature, so it must be accessed with ['PASTA_OPERATIONAL'].
+scripts/seed-dynamic.ts(31,33): error TS4111: Property 'PASTA_LEAD' comes from an index signature, so it must be accessed with ['PASTA_LEAD'].
+scripts/seed-dynamic.ts(56,33): error TS4111: Property 'NEXT_PUBLIC_SUPABASE_URL' comes from an index signature, so it must be accessed with ['NEXT_PUBLIC_SUPABASE_URL'].
+scripts/seed-dynamic.ts(57,40): error TS4111: Property 'SUPABASE_SERVICE_ROLE_KEY' comes from an index signature, so it must be accessed with ['SUPABASE_SERVICE_ROLE_KEY'].
+scripts/seed-dynamic.ts(110,13): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/actions/syncClientAlerts.ts(87,5): error TS2375: Type '{ success: true; alertsGenerated: number; clientHandle: string; message: string | undefined; }' is not assignable to type 'SyncClientAlertsResult' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'message' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/app/(dashboard)/avatar/page.tsx(27,69): error TS2345: Argument of type '"cpimportstore" | "eupetruchio84" | undefined' is not assignable to parameter of type '"cpimportstore" | "eupetruchio84" | (() => "cpimportstore" | "eupetruchio84")'.
+  Type 'undefined' is not assignable to type '"cpimportstore" | "eupetruchio84" | (() => "cpimportstore" | "eupetruchio84")'.
+src/app/(dashboard)/funil/page.tsx(13,80): error TS2345: Argument of type '"cpimportstore" | "eupetruchio84" | undefined' is not assignable to parameter of type '"cpimportstore" | "eupetruchio84" | (() => "cpimportstore" | "eupetruchio84")'.
+  Type 'undefined' is not assignable to type '"cpimportstore" | "eupetruchio84" | (() => "cpimportstore" | "eupetruchio84")'.
+src/app/(dashboard)/onboarding/page.tsx(32,69): error TS2345: Argument of type '"cpimportstore" | "eupetruchio84" | undefined' is not assignable to parameter of type '"cpimportstore" | "eupetruchio84" | (() => "cpimportstore" | "eupetruchio84")'.
+  Type 'undefined' is not assignable to type '"cpimportstore" | "eupetruchio84" | (() => "cpimportstore" | "eupetruchio84")'.
+src/app/instagram/page.tsx(27,80): error TS2345: Argument of type '"cpimportstore" | "eupetruchio84" | undefined' is not assignable to parameter of type '"cpimportstore" | "eupetruchio84" | (() => "cpimportstore" | "eupetruchio84")'.
+  Type 'undefined' is not assignable to type '"cpimportstore" | "eupetruchio84" | (() => "cpimportstore" | "eupetruchio84")'.
+src/app/instagram/page.tsx(103,28): error TS4111: Property 'shell' comes from an index signature, so it must be accessed with ['shell'].
+src/app/instagram/page.tsx(105,30): error TS4111: Property 'rightPane' comes from an index signature, so it must be accessed with ['rightPane'].
+src/app/instagram/page.tsx(108,33): error TS4111: Property 'main' comes from an index signature, so it must be accessed with ['main'].
+src/app/instagram/page.tsx(111,36): error TS4111: Property 'stateCenter' comes from an index signature, so it must be accessed with ['stateCenter'].
+src/app/instagram/page.tsx(112,39): error TS4111: Property 'loadingDot' comes from an index signature, so it must be accessed with ['loadingDot'].
+src/app/instagram/page.tsx(113,39): error TS4111: Property 'loadingDot' comes from an index signature, so it must be accessed with ['loadingDot'].
+src/app/instagram/page.tsx(114,39): error TS4111: Property 'loadingDot' comes from an index signature, so it must be accessed with ['loadingDot'].
+src/app/instagram/page.tsx(120,36): error TS4111: Property 'stateCenter' comes from an index signature, so it must be accessed with ['stateCenter'].
+src/app/instagram/page.tsx(121,36): error TS4111: Property 'errorText' comes from an index signature, so it must be accessed with ['errorText'].
+src/app/instagram/page.tsx(131,46): error TS4111: Property 'kpiRow' comes from an index signature, so it must be accessed with ['kpiRow'].
+src/app/instagram/page.tsx(137,46): error TS4111: Property 'midRow' comes from an index signature, so it must be accessed with ['midRow'].
+src/app/instagram/page.tsx(139,22): error TS2375: Type '{ children: (false | Element)[]; glowColor: "cyan"; className: string | undefined; }' is not assignable to type 'GlassCardProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'className' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/app/instagram/page.tsx(139,67): error TS4111: Property 'rightPanel' comes from an index signature, so it must be accessed with ['rightPanel'].
+src/app/instagram/page.tsx(146,48): error TS4111: Property 'insightStack' comes from an index signature, so it must be accessed with ['insightStack'].
+src/app/instagram/page.tsx(164,44): error TS4111: Property 'tabContent' comes from an index signature, so it must be accessed with ['tabContent'].
+src/app/instagram/page.tsx(184,40): error TS4111: Property 'tabContent' comes from an index signature, so it must be accessed with ['tabContent'].
+src/app/instagram/page.tsx(199,44): error TS4111: Property 'alertRow' comes from an index signature, so it must be accessed with ['alertRow'].
+src/components/common/AlertCard.tsx(56,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/AlertCard.tsx(56,20): error TS4111: Property 'critical' comes from an index signature, so it must be accessed with ['critical'].
+src/components/common/AlertCard.tsx(57,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/AlertCard.tsx(57,19): error TS4111: Property 'warning' comes from an index signature, so it must be accessed with ['warning'].
+src/components/common/AlertCard.tsx(58,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/AlertCard.tsx(58,16): error TS4111: Property 'info' comes from an index signature, so it must be accessed with ['info'].
+src/components/common/AlertCard.tsx(59,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/AlertCard.tsx(59,19): error TS4111: Property 'success' comes from an index signature, so it must be accessed with ['success'].
+src/components/common/AlertCard.tsx(86,66): error TS4111: Property 'info' comes from an index signature, so it must be accessed with ['info'].
+src/components/common/AlertCard.tsx(94,31): error TS4111: Property 'card' comes from an index signature, so it must be accessed with ['card'].
+src/components/common/AlertCard.tsx(95,30): error TS4111: Property 'icon' comes from an index signature, so it must be accessed with ['icon'].
+src/components/common/AlertCard.tsx(105,30): error TS4111: Property 'body' comes from an index signature, so it must be accessed with ['body'].
+src/components/common/AlertCard.tsx(106,32): error TS4111: Property 'headerRow' comes from an index signature, so it must be accessed with ['headerRow'].
+src/components/common/AlertCard.tsx(107,33): error TS4111: Property 'title' comes from an index signature, so it must be accessed with ['title'].
+src/components/common/AlertCard.tsx(108,35): error TS4111: Property 'timestamp' comes from an index signature, so it must be accessed with ['timestamp'].
+src/components/common/AlertCard.tsx(113,52): error TS4111: Property 'text' comes from an index signature, so it must be accessed with ['text'].
+src/components/common/AlertCard.tsx(116,32): error TS4111: Property 'text' comes from an index signature, so it must be accessed with ['text'].
+src/components/common/AlertCard.tsx(126,56): error TS4111: Property 'text' comes from an index signature, so it must be accessed with ['text'].
+src/components/common/AlertCard.tsx(128,32): error TS4111: Property 'action' comes from an index signature, so it must be accessed with ['action'].
+src/components/common/AlertCard.tsx(129,38): error TS4111: Property 'btn' comes from an index signature, so it must be accessed with ['btn'].
+src/components/common/AlertCard.tsx(129,52): error TS4111: Property 'btnGhost' comes from an index signature, so it must be accessed with ['btnGhost'].
+src/components/common/AlertCard.tsx(132,40): error TS4111: Property 'btn' comes from an index signature, so it must be accessed with ['btn'].
+src/components/common/AlertCard.tsx(132,54): error TS4111: Property 'btnGhost' comes from an index signature, so it must be accessed with ['btnGhost'].
+src/components/common/AlertCard.tsx(138,61): error TS4111: Property 'btn' comes from an index signature, so it must be accessed with ['btn'].
+src/components/common/AlertCard.tsx(148,36): error TS4111: Property 'btn' comes from an index signature, so it must be accessed with ['btn'].
+src/components/common/AlertCard.tsx(148,50): error TS4111: Property 'btnGhost' comes from an index signature, so it must be accessed with ['btnGhost'].
+src/components/common/AlignmentBars.tsx(25,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/AlignmentBars.tsx(25,16): error TS4111: Property 'dotCyan' comes from an index signature, so it must be accessed with ['dotCyan'].
+src/components/common/AlignmentBars.tsx(26,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/AlignmentBars.tsx(26,16): error TS4111: Property 'dotGold' comes from an index signature, so it must be accessed with ['dotGold'].
+src/components/common/AlignmentBars.tsx(27,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/AlignmentBars.tsx(27,15): error TS4111: Property 'dotRed' comes from an index signature, so it must be accessed with ['dotRed'].
+src/components/common/AlignmentBars.tsx(28,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/AlignmentBars.tsx(28,16): error TS4111: Property 'dotNone' comes from an index signature, so it must be accessed with ['dotNone'].
+src/components/common/AlignmentBars.tsx(32,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/AlignmentBars.tsx(32,16): error TS4111: Property 'fillCyan' comes from an index signature, so it must be accessed with ['fillCyan'].
+src/components/common/AlignmentBars.tsx(33,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/AlignmentBars.tsx(33,16): error TS4111: Property 'fillGold' comes from an index signature, so it must be accessed with ['fillGold'].
+src/components/common/AlignmentBars.tsx(34,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/AlignmentBars.tsx(34,15): error TS4111: Property 'fillRed' comes from an index signature, so it must be accessed with ['fillRed'].
+src/components/common/AlignmentBars.tsx(35,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/AlignmentBars.tsx(35,16): error TS4111: Property 'fillNone' comes from an index signature, so it must be accessed with ['fillNone'].
+src/components/common/AlignmentBars.tsx(39,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/AlignmentBars.tsx(39,16): error TS4111: Property 'pillCyan' comes from an index signature, so it must be accessed with ['pillCyan'].
+src/components/common/AlignmentBars.tsx(40,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/AlignmentBars.tsx(40,16): error TS4111: Property 'pillGold' comes from an index signature, so it must be accessed with ['pillGold'].
+src/components/common/AlignmentBars.tsx(41,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/AlignmentBars.tsx(41,15): error TS4111: Property 'pillRed' comes from an index signature, so it must be accessed with ['pillRed'].
+src/components/common/AlignmentBars.tsx(42,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/AlignmentBars.tsx(42,16): error TS4111: Property 'pillNone' comes from an index signature, so it must be accessed with ['pillNone'].
+src/components/common/AlignmentBars.tsx(51,32): error TS4111: Property 'wrapper' comes from an index signature, so it must be accessed with ['wrapper'].
+src/components/common/AlignmentBars.tsx(52,31): error TS4111: Property 'sectionLabel' comes from an index signature, so it must be accessed with ['sectionLabel'].
+src/components/common/AlignmentBars.tsx(54,8): error TS2375: Type '{ children: Element; glowColor: "none"; className: string | undefined; }' is not assignable to type 'GlassCardProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'className' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/components/common/AlignmentBars.tsx(54,53): error TS4111: Property 'card' comes from an index signature, so it must be accessed with ['card'].
+src/components/common/AlignmentBars.tsx(55,32): error TS4111: Property 'list' comes from an index signature, so it must be accessed with ['list'].
+src/components/common/AlignmentBars.tsx(63,49): error TS4111: Property 'item' comes from an index signature, so it must be accessed with ['item'].
+src/components/common/AlignmentBars.tsx(63,66): error TS4111: Property 'item' comes from an index signature, so it must be accessed with ['item'].
+src/components/common/AlignmentBars.tsx(63,81): error TS4111: Property 'itemDivider' comes from an index signature, so it must be accessed with ['itemDivider'].
+src/components/common/AlignmentBars.tsx(65,40): error TS4111: Property 'labelRow' comes from an index signature, so it must be accessed with ['labelRow'].
+src/components/common/AlignmentBars.tsx(66,42): error TS4111: Property 'labelLeft' comes from an index signature, so it must be accessed with ['labelLeft'].
+src/components/common/AlignmentBars.tsx(67,46): error TS4111: Property 'dot' comes from an index signature, so it must be accessed with ['dot'].
+src/components/common/AlignmentBars.tsx(68,45): error TS4111: Property 'label' comes from an index signature, so it must be accessed with ['label'].
+src/components/common/AlignmentBars.tsx(70,42): error TS4111: Property 'metricsRight' comes from an index signature, so it must be accessed with ['metricsRight'].
+src/components/common/AlignmentBars.tsx(72,56): error TS4111: Property 'metricValue' comes from an index signature, so it must be accessed with ['metricValue'].
+src/components/common/AlignmentBars.tsx(75,52): error TS4111: Property 'metricValue' comes from an index signature, so it must be accessed with ['metricValue'].
+src/components/common/AlignmentBars.tsx(81,40): error TS4111: Property 'track' comes from an index signature, so it must be accessed with ['track'].
+src/components/common/AlignmentBars.tsx(82,43): error TS4111: Property 'expectedFill' comes from an index signature, so it must be accessed with ['expectedFill'].
+src/components/common/AlignmentBars.tsx(84,40): error TS4111: Property 'realFill' comes from an index signature, so it must be accessed with ['realFill'].
+src/components/common/AlignmentBars.tsx(87,43): error TS4111: Property 'targetLine' comes from an index signature, so it must be accessed with ['targetLine'].
+src/components/common/AlignmentBars.tsx(90,40): error TS4111: Property 'footRow' comes from an index signature, so it must be accessed with ['footRow'].
+src/components/common/AlignmentBars.tsx(91,44): error TS4111: Property 'alignmentPill' comes from an index signature, so it must be accessed with ['alignmentPill'].
+src/components/common/AlignmentBars.tsx(94,43): error TS4111: Property 'legend' comes from an index signature, so it must be accessed with ['legend'].
+src/components/common/AlignmentBars.tsx(96,47): error TS4111: Property 'legendSwatchExpected' comes from an index signature, so it must be accessed with ['legendSwatchExpected'].
+src/components/common/AlignmentBars.tsx(99,48): error TS4111: Property 'legendSwatch' comes from an index signature, so it must be accessed with ['legendSwatch'].
+src/components/common/AlignmentFormula.tsx(26,32): error TS4111: Property 'wrapper' comes from an index signature, so it must be accessed with ['wrapper'].
+src/components/common/AlignmentFormula.tsx(27,31): error TS4111: Property 'sectionLabel' comes from an index signature, so it must be accessed with ['sectionLabel'].
+src/components/common/AlignmentFormula.tsx(29,8): error TS2375: Type '{ children: Element[]; glowColor: "none"; className: string | undefined; }' is not assignable to type 'GlassCardProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'className' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/components/common/AlignmentFormula.tsx(29,53): error TS4111: Property 'card' comes from an index signature, so it must be accessed with ['card'].
+src/components/common/AlignmentFormula.tsx(30,32): error TS4111: Property 'codeBlock' comes from an index signature, so it must be accessed with ['codeBlock'].
+src/components/common/AlignmentFormula.tsx(31,34): error TS4111: Property 'line' comes from an index signature, so it must be accessed with ['line'].
+src/components/common/AlignmentFormula.tsx(32,37): error TS4111: Property 'varName' comes from an index signature, so it must be accessed with ['varName'].
+src/components/common/AlignmentFormula.tsx(33,37): error TS4111: Property 'operator' comes from an index signature, so it must be accessed with ['operator'].
+src/components/common/AlignmentFormula.tsx(34,37): error TS4111: Property 'paren' comes from an index signature, so it must be accessed with ['paren'].
+src/components/common/AlignmentFormula.tsx(36,37): error TS4111: Property 'line' comes from an index signature, so it must be accessed with ['line'].
+src/components/common/AlignmentFormula.tsx(36,52): error TS4111: Property 'indent' comes from an index signature, so it must be accessed with ['indent'].
+src/components/common/AlignmentFormula.tsx(37,37): error TS4111: Property 'varName' comes from an index signature, so it must be accessed with ['varName'].
+src/components/common/AlignmentFormula.tsx(38,37): error TS4111: Property 'operator' comes from an index signature, so it must be accessed with ['operator'].
+src/components/common/AlignmentFormula.tsx(39,37): error TS4111: Property 'weight' comes from an index signature, so it must be accessed with ['weight'].
+src/components/common/AlignmentFormula.tsx(40,37): error TS4111: Property 'weightComment' comes from an index signature, so it must be accessed with ['weightComment'].
+src/components/common/AlignmentFormula.tsx(42,37): error TS4111: Property 'line' comes from an index signature, so it must be accessed with ['line'].
+src/components/common/AlignmentFormula.tsx(42,52): error TS4111: Property 'indent' comes from an index signature, so it must be accessed with ['indent'].
+src/components/common/AlignmentFormula.tsx(43,37): error TS4111: Property 'operator' comes from an index signature, so it must be accessed with ['operator'].
+src/components/common/AlignmentFormula.tsx(44,37): error TS4111: Property 'varName' comes from an index signature, so it must be accessed with ['varName'].
+src/components/common/AlignmentFormula.tsx(45,37): error TS4111: Property 'operator' comes from an index signature, so it must be accessed with ['operator'].
+src/components/common/AlignmentFormula.tsx(46,37): error TS4111: Property 'weight' comes from an index signature, so it must be accessed with ['weight'].
+src/components/common/AlignmentFormula.tsx(47,37): error TS4111: Property 'weightComment' comes from an index signature, so it must be accessed with ['weightComment'].
+src/components/common/AlignmentFormula.tsx(49,37): error TS4111: Property 'line' comes from an index signature, so it must be accessed with ['line'].
+src/components/common/AlignmentFormula.tsx(49,52): error TS4111: Property 'indent' comes from an index signature, so it must be accessed with ['indent'].
+src/components/common/AlignmentFormula.tsx(50,37): error TS4111: Property 'operator' comes from an index signature, so it must be accessed with ['operator'].
+src/components/common/AlignmentFormula.tsx(51,37): error TS4111: Property 'varName' comes from an index signature, so it must be accessed with ['varName'].
+src/components/common/AlignmentFormula.tsx(52,37): error TS4111: Property 'operator' comes from an index signature, so it must be accessed with ['operator'].
+src/components/common/AlignmentFormula.tsx(53,37): error TS4111: Property 'weight' comes from an index signature, so it must be accessed with ['weight'].
+src/components/common/AlignmentFormula.tsx(54,37): error TS4111: Property 'weightComment' comes from an index signature, so it must be accessed with ['weightComment'].
+src/components/common/AlignmentFormula.tsx(56,34): error TS4111: Property 'line' comes from an index signature, so it must be accessed with ['line'].
+src/components/common/AlignmentFormula.tsx(57,37): error TS4111: Property 'paren' comes from an index signature, so it must be accessed with ['paren'].
+src/components/common/AlignmentFormula.tsx(60,34): error TS4111: Property 'divider' comes from an index signature, so it must be accessed with ['divider'].
+src/components/common/AlignmentFormula.tsx(61,36): error TS4111: Property 'subFormula' comes from an index signature, so it must be accessed with ['subFormula'].
+src/components/common/AlignmentFormula.tsx(62,39): error TS4111: Property 'varName' comes from an index signature, so it must be accessed with ['varName'].
+src/components/common/AlignmentFormula.tsx(63,39): error TS4111: Property 'operator' comes from an index signature, so it must be accessed with ['operator'].
+src/components/common/AlignmentFormula.tsx(64,39): error TS4111: Property 'subExpr' comes from an index signature, so it must be accessed with ['subExpr'].
+src/components/common/AlignmentFormula.tsx(69,32): error TS4111: Property 'legendGrid' comes from an index signature, so it must be accessed with ['legendGrid'].
+src/components/common/AlignmentFormula.tsx(71,51): error TS4111: Property 'legendTile' comes from an index signature, so it must be accessed with ['legendTile'].
+src/components/common/AlignmentFormula.tsx(72,39): error TS4111: Property 'legendValue' comes from an index signature, so it must be accessed with ['legendValue'].
+src/components/common/AlignmentFormula.tsx(73,39): error TS4111: Property 'legendLabel' comes from an index signature, so it must be accessed with ['legendLabel'].
+src/components/common/AvatarCard.tsx(66,28): error TS4111: Property 'card' comes from an index signature, so it must be accessed with ['card'].
+src/components/common/AvatarCard.tsx(68,30): error TS4111: Property 'header' comes from an index signature, so it must be accessed with ['header'].
+src/components/common/AvatarCard.tsx(69,33): error TS4111: Property 'icon' comes from an index signature, so it must be accessed with ['icon'].
+src/components/common/AvatarCard.tsx(70,36): error TS4111: Property 'titleBadge' comes from an index signature, so it must be accessed with ['titleBadge'].
+src/components/common/AvatarCard.tsx(74,30): error TS4111: Property 'block' comes from an index signature, so it must be accessed with ['block'].
+src/components/common/AvatarCard.tsx(75,30): error TS4111: Property 'blockLabel' comes from an index signature, so it must be accessed with ['blockLabel'].
+src/components/common/AvatarCard.tsx(78,32): error TS4111: Property 'genderTrack' comes from an index signature, so it must be accessed with ['genderTrack'].
+src/components/common/AvatarCard.tsx(80,34): error TS4111: Property 'genderFill' comes from an index signature, so it must be accessed with ['genderFill'].
+src/components/common/AvatarCard.tsx(86,32): error TS4111: Property 'genderLegend' comes from an index signature, so it must be accessed with ['genderLegend'].
+src/components/common/AvatarCard.tsx(89,40): error TS4111: Property 'genderValue' comes from an index signature, so it must be accessed with ['genderValue'].
+src/components/common/AvatarCard.tsx(95,40): error TS4111: Property 'genderValue' comes from an index signature, so it must be accessed with ['genderValue'].
+src/components/common/AvatarCard.tsx(103,30): error TS4111: Property 'block' comes from an index signature, so it must be accessed with ['block'].
+src/components/common/AvatarCard.tsx(104,30): error TS4111: Property 'blockLabel' comes from an index signature, so it must be accessed with ['blockLabel'].
+src/components/common/AvatarCard.tsx(105,33): error TS4111: Property 'value' comes from an index signature, so it must be accessed with ['value'].
+src/components/common/AvatarCard.tsx(109,30): error TS4111: Property 'block' comes from an index signature, so it must be accessed with ['block'].
+src/components/common/AvatarCard.tsx(110,30): error TS4111: Property 'blockLabel' comes from an index signature, so it must be accessed with ['blockLabel'].
+src/components/common/AvatarCard.tsx(111,32): error TS4111: Property 'geoRow' comes from an index signature, so it must be accessed with ['geoRow'].
+src/components/common/AvatarCard.tsx(113,35): error TS4111: Property 'text' comes from an index signature, so it must be accessed with ['text'].
+src/components/common/AvatarCard.tsx(119,32): error TS4111: Property 'insightBlock' comes from an index signature, so it must be accessed with ['insightBlock'].
+src/components/common/AvatarCard.tsx(120,32): error TS4111: Property 'blockLabel' comes from an index signature, so it must be accessed with ['blockLabel'].
+src/components/common/AvatarCard.tsx(121,32): error TS4111: Property 'insightText' comes from an index signature, so it must be accessed with ['insightText'].
+src/components/common/AvatarComparison.tsx(43,32): error TS4111: Property 'wrapper' comes from an index signature, so it must be accessed with ['wrapper'].
+src/components/common/AvatarComparison.tsx(44,30): error TS4111: Property 'headerRow' comes from an index signature, so it must be accessed with ['headerRow'].
+src/components/common/AvatarComparison.tsx(45,33): error TS4111: Property 'sectionLabel' comes from an index signature, so it must be accessed with ['sectionLabel'].
+src/components/common/AvatarComparison.tsx(49,30): error TS4111: Property 'row' comes from an index signature, so it must be accessed with ['row'].
+src/components/common/AvatarComparison.tsx(50,32): error TS4111: Property 'cardSlot' comes from an index signature, so it must be accessed with ['cardSlot'].
+src/components/common/AvatarComparison.tsx(61,32): error TS4111: Property 'divider' comes from an index signature, so it must be accessed with ['divider'].
+src/components/common/AvatarComparison.tsx(62,35): error TS4111: Property 'dividerLine' comes from an index signature, so it must be accessed with ['dividerLine'].
+src/components/common/AvatarComparison.tsx(63,35): error TS4111: Property 'vsLabel' comes from an index signature, so it must be accessed with ['vsLabel'].
+src/components/common/AvatarComparison.tsx(64,35): error TS4111: Property 'dividerLine' comes from an index signature, so it must be accessed with ['dividerLine'].
+src/components/common/AvatarComparison.tsx(67,32): error TS4111: Property 'cardSlot' comes from an index signature, so it must be accessed with ['cardSlot'].
+src/components/common/CampaignTable.tsx(82,20): error TS2375: Type '{ key: string; campaign: Campaign; onAction: ((id: string) => void) | undefined; }' is not assignable to type 'CampaignRowProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'onAction' are incompatible.
+    Type '((id: string) => void) | undefined' is not assignable to type '(id: string) => void'.
+      Type 'undefined' is not assignable to type '(id: string) => void'.
+src/components/common/ClientCard.tsx(72,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/ClientCard.tsx(72,19): error TS4111: Property 'statusHealthy' comes from an index signature, so it must be accessed with ['statusHealthy'].
+src/components/common/ClientCard.tsx(73,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/ClientCard.tsx(73,19): error TS4111: Property 'statusWarning' comes from an index signature, so it must be accessed with ['statusWarning'].
+src/components/common/ClientCard.tsx(74,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/ClientCard.tsx(74,20): error TS4111: Property 'statusCritical' comes from an index signature, so it must be accessed with ['statusCritical'].
+src/components/common/ClientCard.tsx(75,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/ClientCard.tsx(75,19): error TS4111: Property 'statusUnknown' comes from an index signature, so it must be accessed with ['statusUnknown'].
+src/components/common/ClientCard.tsx(84,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/ClientCard.tsx(84,19): error TS4111: Property 'accentHealthy' comes from an index signature, so it must be accessed with ['accentHealthy'].
+src/components/common/ClientCard.tsx(85,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/ClientCard.tsx(85,19): error TS4111: Property 'accentWarning' comes from an index signature, so it must be accessed with ['accentWarning'].
+src/components/common/ClientCard.tsx(86,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/ClientCard.tsx(86,20): error TS4111: Property 'accentCritical' comes from an index signature, so it must be accessed with ['accentCritical'].
+src/components/common/ClientCard.tsx(87,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/ClientCard.tsx(87,19): error TS4111: Property 'accentUnknown' comes from an index signature, so it must be accessed with ['accentUnknown'].
+src/components/common/ClientCard.tsx(98,28): error TS4111: Property 'metricCol' comes from an index signature, so it must be accessed with ['metricCol'].
+src/components/common/ClientCard.tsx(99,31): error TS4111: Property 'metricLabel' comes from an index signature, so it must be accessed with ['metricLabel'].
+src/components/common/ClientCard.tsx(100,32): error TS4111: Property 'metricValue' comes from an index signature, so it must be accessed with ['metricValue'].
+src/components/common/ClientCard.tsx(100,61): error TS4111: Property 'metricValueDimmed' comes from an index signature, so it must be accessed with ['metricValueDimmed'].
+src/components/common/ClientCard.tsx(133,28): error TS4111: Property 'card' comes from an index signature, so it must be accessed with ['card'].
+src/components/common/ClientCard.tsx(136,30): error TS4111: Property 'header' comes from an index signature, so it must be accessed with ['header'].
+src/components/common/ClientCard.tsx(143,31): error TS4111: Property 'avatarImage' comes from an index signature, so it must be accessed with ['avatarImage'].
+src/components/common/ClientCard.tsx(146,53): error TS4111: Property 'avatarFallback' comes from an index signature, so it must be accessed with ['avatarFallback'].
+src/components/common/ClientCard.tsx(151,32): error TS4111: Property 'identity' comes from an index signature, so it must be accessed with ['identity'].
+src/components/common/ClientCard.tsx(152,35): error TS4111: Property 'name' comes from an index signature, so it must be accessed with ['name'].
+src/components/common/ClientCard.tsx(153,35): error TS4111: Property 'handle' comes from an index signature, so it must be accessed with ['handle'].
+src/components/common/ClientCard.tsx(156,33): error TS4111: Property 'semaphoreWrap' comes from an index signature, so it must be accessed with ['semaphoreWrap'].
+src/components/common/ClientCard.tsx(158,38): error TS4111: Property 'statusBadge' comes from an index signature, so it must be accessed with ['statusBadge'].
+src/components/common/ClientCard.tsx(164,30): error TS4111: Property 'divider' comes from an index signature, so it must be accessed with ['divider'].
+src/components/common/ClientCard.tsx(167,32): error TS4111: Property 'snapshotInfo' comes from an index signature, so it must be accessed with ['snapshotInfo'].
+src/components/common/ClientCard.tsx(168,35): error TS4111: Property 'snapshotLabel' comes from an index signature, so it must be accessed with ['snapshotLabel'].
+src/components/common/ClientCard.tsx(169,35): error TS4111: Property 'snapshotValue' comes from an index signature, so it must be accessed with ['snapshotValue'].
+src/components/common/ClientCard.tsx(175,30): error TS4111: Property 'metricsRow' comes from an index signature, so it must be accessed with ['metricsRow'].
+src/components/common/FunnelChart.tsx(64,7): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/FunnelChart.tsx(71,7): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/FunnelChart.tsx(79,7): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/FunnelChart.tsx(87,7): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/FunnelChart.tsx(97,28): error TS4111: Property 'list' comes from an index signature, so it must be accessed with ['list'].
+src/components/common/FunnelChart.tsx(103,11): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+src/components/common/FunnelChart.tsx(104,11): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/FunnelChart.tsx(108,30): error TS4111: Property 'footer' comes from an index signature, so it must be accessed with ['footer'].
+src/components/common/FunnelChart.tsx(109,32): error TS4111: Property 'footerStat' comes from an index signature, so it must be accessed with ['footerStat'].
+src/components/common/FunnelChart.tsx(110,35): error TS4111: Property 'footerLabel' comes from an index signature, so it must be accessed with ['footerLabel'].
+src/components/common/FunnelChart.tsx(111,35): error TS4111: Property 'footerValue' comes from an index signature, so it must be accessed with ['footerValue'].
+src/components/common/FunnelChart.tsx(114,32): error TS4111: Property 'footerDivider' comes from an index signature, so it must be accessed with ['footerDivider'].
+src/components/common/FunnelChart.tsx(116,32): error TS4111: Property 'footerStat' comes from an index signature, so it must be accessed with ['footerStat'].
+src/components/common/FunnelChart.tsx(117,35): error TS4111: Property 'footerLabel' comes from an index signature, so it must be accessed with ['footerLabel'].
+src/components/common/FunnelChart.tsx(118,35): error TS4111: Property 'footerValue' comes from an index signature, so it must be accessed with ['footerValue'].
+src/components/common/FunnelResult.tsx(104,24): error TS4111: Property 'deltaUp' comes from an index signature, so it must be accessed with ['deltaUp'].
+src/components/common/FunnelResult.tsx(104,53): error TS4111: Property 'deltaDown' comes from an index signature, so it must be accessed with ['deltaDown'].
+src/components/common/FunnelResult.tsx(104,72): error TS4111: Property 'deltaNeutral' comes from an index signature, so it must be accessed with ['deltaNeutral'].
+src/components/common/FunnelResult.tsx(145,28): error TS4111: Property 'card' comes from an index signature, so it must be accessed with ['card'].
+src/components/common/FunnelResult.tsx(147,35): error TS4111: Property 'bottleneckAlert' comes from an index signature, so it must be accessed with ['bottleneckAlert'].
+src/components/common/FunnelResult.tsx(148,34): error TS4111: Property 'bottleneckMessage' comes from an index signature, so it must be accessed with ['bottleneckMessage'].
+src/components/common/FunnelResult.tsx(149,34): error TS4111: Property 'bottleneckAction' comes from an index signature, so it must be accessed with ['bottleneckAction'].
+src/components/common/FunnelResult.tsx(154,30): error TS4111: Property 'headlineBlock' comes from an index signature, so it must be accessed with ['headlineBlock'].
+src/components/common/FunnelResult.tsx(155,33): error TS4111: Property 'headlineLabel' comes from an index signature, so it must be accessed with ['headlineLabel'].
+src/components/common/FunnelResult.tsx(156,32): error TS4111: Property 'headlineRow' comes from an index signature, so it must be accessed with ['headlineRow'].
+src/components/common/FunnelResult.tsx(157,35): error TS4111: Property 'headline' comes from an index signature, so it must be accessed with ['headline'].
+src/components/common/FunnelResult.tsx(158,38): error TS4111: Property 'delta' comes from an index signature, so it must be accessed with ['delta'].
+src/components/common/FunnelResult.tsx(166,30): error TS4111: Property 'secondaryRow' comes from an index signature, so it must be accessed with ['secondaryRow'].
+src/components/common/FunnelResult.tsx(167,33): error TS4111: Property 'secondaryLabel' comes from an index signature, so it must be accessed with ['secondaryLabel'].
+src/components/common/FunnelResult.tsx(168,32): error TS4111: Property 'secondaryValueBlock' comes from an index signature, so it must be accessed with ['secondaryValueBlock'].
+src/components/common/FunnelResult.tsx(169,35): error TS4111: Property 'secondaryValue' comes from an index signature, so it must be accessed with ['secondaryValue'].
+src/components/common/FunnelResult.tsx(172,36): error TS4111: Property 'secondaryDelta' comes from an index signature, so it must be accessed with ['secondaryDelta'].
+src/components/common/FunnelResult.tsx(173,47): error TS4111: Property 'deltaUp' comes from an index signature, so it must be accessed with ['deltaUp'].
+src/components/common/FunnelResult.tsx(173,64): error TS4111: Property 'deltaDown' comes from an index signature, so it must be accessed with ['deltaDown'].
+src/components/common/FunnelResult.tsx(184,30): error TS4111: Property 'secondaryRow' comes from an index signature, so it must be accessed with ['secondaryRow'].
+src/components/common/FunnelResult.tsx(185,33): error TS4111: Property 'secondaryLabel' comes from an index signature, so it must be accessed with ['secondaryLabel'].
+src/components/common/FunnelResult.tsx(186,33): error TS4111: Property 'secondaryValue' comes from an index signature, so it must be accessed with ['secondaryValue'].
+src/components/common/FunnelResult.tsx(190,28): error TS4111: Property 'insight' comes from an index signature, so it must be accessed with ['insight'].
+src/components/common/FunnelResult.tsx(195,27): error TS4111: Property 'ctaButton' comes from an index signature, so it must be accessed with ['ctaButton'].
+src/components/common/FunnelResult.tsx(203,32): error TS4111: Property 'modal' comes from an index signature, so it must be accessed with ['modal'].
+src/components/common/FunnelResult.tsx(204,34): error TS4111: Property 'modalContent' comes from an index signature, so it must be accessed with ['modalContent'].
+src/components/common/FunnelResult.tsx(205,35): error TS4111: Property 'modalTitle' comes from an index signature, so it must be accessed with ['modalTitle'].
+src/components/common/FunnelResult.tsx(212,33): error TS4111: Property 'modalInput' comes from an index signature, so it must be accessed with ['modalInput'].
+src/components/common/FunnelResult.tsx(217,36): error TS4111: Property 'modalActions' comes from an index signature, so it must be accessed with ['modalActions'].
+src/components/common/FunnelResult.tsx(220,35): error TS4111: Property 'modalCancel' comes from an index signature, so it must be accessed with ['modalCancel'].
+src/components/common/FunnelResult.tsx(231,35): error TS4111: Property 'modalConfirm' comes from an index signature, so it must be accessed with ['modalConfirm'].
+src/components/common/FunnelResult.tsx(240,38): error TS4111: Property 'modalError' comes from an index signature, so it must be accessed with ['modalError'].
+src/components/common/FunnelSimulator.tsx(60,28): error TS4111: Property 'wrap' comes from an index signature, so it must be accessed with ['wrap'].
+src/components/common/FunnelSimulator.tsx(61,30): error TS4111: Property 'diagnosticBox' comes from an index signature, so it must be accessed with ['diagnosticBox'].
+src/components/common/FunnelSimulator.tsx(63,35): error TS4111: Property 'diagnosticStrong' comes from an index signature, so it must be accessed with ['diagnosticStrong'].
+src/components/common/FunnelSimulator.tsx(74,30): error TS4111: Property 'slidersBlock' comes from an index signature, so it must be accessed with ['slidersBlock'].
+src/components/common/FunnelSimulator.tsx(75,32): error TS4111: Property 'sliderGroup' comes from an index signature, so it must be accessed with ['sliderGroup'].
+src/components/common/FunnelSimulator.tsx(88,32): error TS4111: Property 'sliderGroup' comes from an index signature, so it must be accessed with ['sliderGroup'].
+src/components/common/FunnelSimulator.tsx(101,36): error TS4111: Property 'degradedHint' comes from an index signature, so it must be accessed with ['degradedHint'].
+src/components/common/FunnelSimulator.tsx(107,32): error TS4111: Property 'sliderGroup' comes from an index signature, so it must be accessed with ['sliderGroup'].
+src/components/common/FunnelSimulator.tsx(119,36): error TS4111: Property 'degradedHint' comes from an index signature, so it must be accessed with ['degradedHint'].
+src/components/common/FunnelSimulator.tsx(125,32): error TS4111: Property 'sliderGroup' comes from an index signature, so it must be accessed with ['sliderGroup'].
+src/components/common/FunnelSimulator.tsx(140,32): error TS4111: Property 'saturationAlert' comes from an index signature, so it must be accessed with ['saturationAlert'].
+src/components/common/FunnelSimulator.tsx(147,30): error TS4111: Property 'footerActions' comes from an index signature, so it must be accessed with ['footerActions'].
+src/components/common/FunnelSimulator.tsx(148,49): error TS4111: Property 'exportBtn' comes from an index signature, so it must be accessed with ['exportBtn'].
+src/components/common/FunnelStep.tsx(44,28): error TS4111: Property 'stepContainer' comes from an index signature, so it must be accessed with ['stepContainer'].
+src/components/common/FunnelStep.tsx(53,30): error TS4111: Property 'stepInner' comes from an index signature, so it must be accessed with ['stepInner'].
+src/components/common/FunnelStep.tsx(54,32): error TS4111: Property 'bar' comes from an index signature, so it must be accessed with ['bar'].
+src/components/common/FunnelStep.tsx(55,34): error TS4111: Property 'barInfo' comes from an index signature, so it must be accessed with ['barInfo'].
+src/components/common/FunnelStep.tsx(56,37): error TS4111: Property 'name' comes from an index signature, so it must be accessed with ['name'].
+src/components/common/FunnelStep.tsx(57,37): error TS4111: Property 'value' comes from an index signature, so it must be accessed with ['value'].
+src/components/common/FunnelStep.tsx(61,35): error TS4111: Property 'percentage' comes from an index signature, so it must be accessed with ['percentage'].
+src/components/common/FunnelStep.tsx(65,34): error TS4111: Property 'dropoffWrap' comes from an index signature, so it must be accessed with ['dropoffWrap'].
+src/components/common/FunnelStep.tsx(68,41): error TS4111: Property 'dropoffBadge' comes from an index signature, so it must be accessed with ['dropoffBadge'].
+src/components/common/FunnelStep.tsx(69,41): error TS4111: Property 'dropoffLabel' comes from an index signature, so it must be accessed with ['dropoffLabel'].
+src/components/common/FunnelStep.tsx(72,39): error TS4111: Property 'dropoffNote' comes from an index signature, so it must be accessed with ['dropoffNote'].
+src/components/common/FunnelStep.tsx(80,42): error TS4111: Property 'connector' comes from an index signature, so it must be accessed with ['connector'].
+src/components/common/GlassCard.tsx(20,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/GlassCard.tsx(20,16): error TS4111: Property 'glowCyan' comes from an index signature, so it must be accessed with ['glowCyan'].
+src/components/common/GlassCard.tsx(21,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/GlassCard.tsx(21,16): error TS4111: Property 'glowRed' comes from an index signature, so it must be accessed with ['glowRed'].
+src/components/common/GlassCard.tsx(22,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/GlassCard.tsx(22,16): error TS4111: Property 'glowGold' comes from an index signature, so it must be accessed with ['glowGold'].
+src/components/common/GlassCard.tsx(23,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/GlassCard.tsx(23,16): error TS4111: Property 'glowNone' comes from an index signature, so it must be accessed with ['glowNone'].
+src/components/common/GlassCard.tsx(36,26): error TS4111: Property 'card' comes from an index signature, so it must be accessed with ['card'].
+src/components/common/KPICard.tsx(85,46): error TS6133: 'unit' is declared but its value is never read.
+src/components/common/onboarding.tsx(9,29): error TS4111: Property 'clientId' comes from an index signature, so it must be accessed with ['clientId'].
+src/components/common/RecommendationAlert.tsx(90,31): error TS4111: Property 'wrapper' comes from an index signature, so it must be accessed with ['wrapper'].
+src/components/common/RecommendationAlert.tsx(94,27): error TS4111: Property 'headerBtn' comes from an index signature, so it must be accessed with ['headerBtn'].
+src/components/common/RecommendationAlert.tsx(97,32): error TS4111: Property 'iconBadge' comes from an index signature, so it must be accessed with ['iconBadge'].
+src/components/common/RecommendationAlert.tsx(101,32): error TS4111: Property 'headerText' comes from an index signature, so it must be accessed with ['headerText'].
+src/components/common/RecommendationAlert.tsx(102,34): error TS4111: Property 'metaRow' comes from an index signature, so it must be accessed with ['metaRow'].
+src/components/common/RecommendationAlert.tsx(103,37): error TS4111: Property 'badge' comes from an index signature, so it must be accessed with ['badge'].
+src/components/common/RecommendationAlert.tsx(104,37): error TS4111: Property 'scoreText' comes from an index signature, so it must be accessed with ['scoreText'].
+src/components/common/RecommendationAlert.tsx(106,32): error TS4111: Property 'headline' comes from an index signature, so it must be accessed with ['headline'].
+src/components/common/RecommendationAlert.tsx(109,33): error TS4111: Property 'chevron' comes from an index signature, so it must be accessed with ['chevron'].
+src/components/common/RecommendationAlert.tsx(115,32): error TS4111: Property 'body' comes from an index signature, so it must be accessed with ['body'].
+src/components/common/RecommendationAlert.tsx(116,34): error TS4111: Property 'divider' comes from an index signature, so it must be accessed with ['divider'].
+src/components/common/RecommendationAlert.tsx(118,44): error TS4111: Property 'item' comes from an index signature, so it must be accessed with ['item'].
+src/components/common/RecommendationAlert.tsx(119,39): error TS4111: Property 'itemIcon' comes from an index signature, so it must be accessed with ['itemIcon'].
+src/components/common/RecommendationAlert.tsx(123,38): error TS4111: Property 'itemTitle' comes from an index signature, so it must be accessed with ['itemTitle'].
+src/components/common/RecommendationAlert.tsx(124,38): error TS4111: Property 'itemDesc' comes from an index signature, so it must be accessed with ['itemDesc'].
+src/components/common/SectionHead.tsx(11,28): error TS4111: Property 'wrap' comes from an index signature, so it must be accessed with ['wrap'].
+src/components/common/SectionHead.tsx(12,29): error TS4111: Property 'title' comes from an index signature, so it must be accessed with ['title'].
+src/components/common/SectionHead.tsx(13,41): error TS4111: Property 'subtitle' comes from an index signature, so it must be accessed with ['subtitle'].
+src/components/common/Semaphore.tsx(43,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/Semaphore.tsx(43,19): error TS4111: Property 'cyan' comes from an index signature, so it must be accessed with ['cyan'].
+src/components/common/Semaphore.tsx(44,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/Semaphore.tsx(44,19): error TS4111: Property 'gold' comes from an index signature, so it must be accessed with ['gold'].
+src/components/common/Semaphore.tsx(45,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/Semaphore.tsx(45,20): error TS4111: Property 'red' comes from an index signature, so it must be accessed with ['red'].
+src/components/common/Semaphore.tsx(46,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/Semaphore.tsx(46,19): error TS4111: Property 'none' comes from an index signature, so it must be accessed with ['none'].
+src/components/common/Semaphore.tsx(57,29): error TS4111: Property 'wrapper' comes from an index signature, so it must be accessed with ['wrapper'].
+src/components/common/Semaphore.tsx(59,28): error TS4111: Property 'badge' comes from an index signature, so it must be accessed with ['badge'].
+src/components/common/Semaphore.tsx(59,77): error TS4111: Property 'sm' comes from an index signature, so it must be accessed with ['sm'].
+src/components/common/Semaphore.tsx(59,89): error TS4111: Property 'md' comes from an index signature, so it must be accessed with ['md'].
+src/components/common/Semaphore.tsx(66,34): error TS4111: Property 'label' comes from an index signature, so it must be accessed with ['label'].
+src/components/common/Slider.tsx(32,28): error TS4111: Property 'wrap' comes from an index signature, so it must be accessed with ['wrap'].
+src/components/common/Slider.tsx(33,30): error TS4111: Property 'head' comes from an index signature, so it must be accessed with ['head'].
+src/components/common/Slider.tsx(34,32): error TS4111: Property 'labelGroup' comes from an index signature, so it must be accessed with ['labelGroup'].
+src/components/common/Slider.tsx(35,49): error TS4111: Property 'label' comes from an index signature, so it must be accessed with ['label'].
+src/components/common/Slider.tsx(41,33): error TS4111: Property 'tooltipTrigger' comes from an index signature, so it must be accessed with ['tooltipTrigger'].
+src/components/common/Slider.tsx(45,39): error TS4111: Property 'tooltip' comes from an index signature, so it must be accessed with ['tooltip'].
+src/components/common/Slider.tsx(51,33): error TS4111: Property 'valueDisplay' comes from an index signature, so it must be accessed with ['valueDisplay'].
+src/components/common/Slider.tsx(54,30): error TS4111: Property 'trackRow' comes from an index signature, so it must be accessed with ['trackRow'].
+src/components/common/Slider.tsx(55,32): error TS4111: Property 'trackFill' comes from an index signature, so it must be accessed with ['trackFill'].
+src/components/common/Slider.tsx(56,34): error TS4111: Property 'trackFillInner' comes from an index signature, so it must be accessed with ['trackFillInner'].
+src/components/common/Slider.tsx(67,29): error TS4111: Property 'input' comes from an index signature, so it must be accessed with ['input'].
+src/components/common/Slider.tsx(74,30): error TS4111: Property 'rangeLabels' comes from an index signature, so it must be accessed with ['rangeLabels'].
+src/components/common/Slider.tsx(75,33): error TS4111: Property 'rangeLabel' comes from an index signature, so it must be accessed with ['rangeLabel'].
+src/components/common/Slider.tsx(76,33): error TS4111: Property 'rangeLabel' comes from an index signature, so it must be accessed with ['rangeLabel'].
+src/components/common/StatusPill.tsx(25,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/StatusPill.tsx(25,16): error TS4111: Property 'cyan' comes from an index signature, so it must be accessed with ['cyan'].
+src/components/common/StatusPill.tsx(26,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/StatusPill.tsx(26,15): error TS4111: Property 'red' comes from an index signature, so it must be accessed with ['red'].
+src/components/common/StatusPill.tsx(27,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/common/StatusPill.tsx(27,16): error TS4111: Property 'gold' comes from an index signature, so it must be accessed with ['gold'].
+src/components/common/StatusPill.tsx(33,30): error TS4111: Property 'pill' comes from an index signature, so it must be accessed with ['pill'].
+src/components/content/AudienceSummaryPanel.tsx(32,6): error TS2375: Type '{ children: (false | Element)[]; glowColor: "cyan"; className: string | undefined; }' is not assignable to type 'GlassCardProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'className' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/components/content/AudienceSummaryPanel.tsx(32,51): error TS4111: Property 'panel' comes from an index signature, so it must be accessed with ['panel'].
+src/components/content/AudienceSummaryPanel.tsx(33,28): error TS4111: Property 'panelTitle' comes from an index signature, so it must be accessed with ['panelTitle'].
+src/components/content/AudienceSummaryPanel.tsx(35,30): error TS4111: Property 'statsRow' comes from an index signature, so it must be accessed with ['statsRow'].
+src/components/content/AudienceSummaryPanel.tsx(36,32): error TS4111: Property 'stat' comes from an index signature, so it must be accessed with ['stat'].
+src/components/content/AudienceSummaryPanel.tsx(37,32): error TS4111: Property 'statLabel' comes from an index signature, so it must be accessed with ['statLabel'].
+src/components/content/AudienceSummaryPanel.tsx(38,32): error TS4111: Property 'statValue' comes from an index signature, so it must be accessed with ['statValue'].
+src/components/content/AudienceSummaryPanel.tsx(40,32): error TS4111: Property 'stat' comes from an index signature, so it must be accessed with ['stat'].
+src/components/content/AudienceSummaryPanel.tsx(41,32): error TS4111: Property 'statLabel' comes from an index signature, so it must be accessed with ['statLabel'].
+src/components/content/AudienceSummaryPanel.tsx(42,32): error TS4111: Property 'statValue' comes from an index signature, so it must be accessed with ['statValue'].
+src/components/content/AudienceSummaryPanel.tsx(44,32): error TS4111: Property 'stat' comes from an index signature, so it must be accessed with ['stat'].
+src/components/content/AudienceSummaryPanel.tsx(45,32): error TS4111: Property 'statLabel' comes from an index signature, so it must be accessed with ['statLabel'].
+src/components/content/AudienceSummaryPanel.tsx(46,32): error TS4111: Property 'statValue' comes from an index signature, so it must be accessed with ['statValue'].
+src/components/content/AudienceSummaryPanel.tsx(51,32): error TS4111: Property 'genderBlock' comes from an index signature, so it must be accessed with ['genderBlock'].
+src/components/content/AudienceSummaryPanel.tsx(52,32): error TS4111: Property 'blockLabel' comes from an index signature, so it must be accessed with ['blockLabel'].
+src/components/content/AudienceSummaryPanel.tsx(53,34): error TS4111: Property 'genderBar' comes from an index signature, so it must be accessed with ['genderBar'].
+src/components/content/AudienceSummaryPanel.tsx(56,35): error TS4111: Property 'genderBarFemale' comes from an index signature, so it must be accessed with ['genderBarFemale'].
+src/components/content/AudienceSummaryPanel.tsx(62,35): error TS4111: Property 'genderBarMale' comes from an index signature, so it must be accessed with ['genderBarMale'].
+src/components/content/AudienceSummaryPanel.tsx(67,34): error TS4111: Property 'genderLegend' comes from an index signature, so it must be accessed with ['genderLegend'].
+src/components/content/AudienceSummaryPanel.tsx(68,43): error TS4111: Property 'dotFemale' comes from an index signature, so it must be accessed with ['dotFemale'].
+src/components/content/AudienceSummaryPanel.tsx(69,43): error TS4111: Property 'dotMale' comes from an index signature, so it must be accessed with ['dotMale'].
+src/components/content/AudienceSummaryPanel.tsx(78,32): error TS4111: Property 'citiesBlock' comes from an index signature, so it must be accessed with ['citiesBlock'].
+src/components/content/AudienceSummaryPanel.tsx(79,32): error TS4111: Property 'blockLabel' comes from an index signature, so it must be accessed with ['blockLabel'].
+src/components/content/AudienceSummaryPanel.tsx(80,34): error TS4111: Property 'citiesList' comes from an index signature, so it must be accessed with ['citiesList'].
+src/components/content/AudienceSummaryPanel.tsx(82,54): error TS4111: Property 'cityRow' comes from an index signature, so it must be accessed with ['cityRow'].
+src/components/content/AudienceSummaryPanel.tsx(83,41): error TS4111: Property 'cityName' comes from an index signature, so it must be accessed with ['cityName'].
+src/components/content/AudienceSummaryPanel.tsx(84,41): error TS4111: Property 'cityPct' comes from an index signature, so it must be accessed with ['cityPct'].
+src/components/content/AudienceSummaryPanel.tsx(92,30): error TS4111: Property 'emptyState' comes from an index signature, so it must be accessed with ['emptyState'].
+src/components/content/CriticalAlert.tsx(51,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/content/CriticalAlert.tsx(51,20): error TS4111: Property 'critical' comes from an index signature, so it must be accessed with ['critical'].
+src/components/content/CriticalAlert.tsx(52,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/content/CriticalAlert.tsx(52,19): error TS4111: Property 'warning' comes from an index signature, so it must be accessed with ['warning'].
+src/components/content/CriticalAlert.tsx(53,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/content/CriticalAlert.tsx(53,16): error TS4111: Property 'info' comes from an index signature, so it must be accessed with ['info'].
+src/components/content/CriticalAlert.tsx(54,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/content/CriticalAlert.tsx(54,19): error TS4111: Property 'success' comes from an index signature, so it must be accessed with ['success'].
+src/components/content/CriticalAlert.tsx(69,26): error TS4111: Property 'card' comes from an index signature, so it must be accessed with ['card'].
+src/components/content/CriticalAlert.tsx(73,31): error TS4111: Property 'icon' comes from an index signature, so it must be accessed with ['icon'].
+src/components/content/CriticalAlert.tsx(76,30): error TS4111: Property 'content' comes from an index signature, so it must be accessed with ['content'].
+src/components/content/CriticalAlert.tsx(77,30): error TS4111: Property 'title' comes from an index signature, so it must be accessed with ['title'].
+src/components/content/CriticalAlert.tsx(78,30): error TS4111: Property 'body' comes from an index signature, so it must be accessed with ['body'].
+src/components/content/CriticalAlert.tsx(79,90): error TS4111: Property 'body' comes from an index signature, so it must be accessed with ['body'].
+src/components/content/CriticalAlert.tsx(80,51): error TS4111: Property 'action' comes from an index signature, so it must be accessed with ['action'].
+src/components/content/FormatPerformanceTable.tsx(164,28): error TS4111: Property 'postRow' comes from an index signature, so it must be accessed with ['postRow'].
+src/components/content/FormatPerformanceTable.tsx(166,31): error TS4111: Property 'postDate' comes from an index signature, so it must be accessed with ['postDate'].
+src/components/content/FormatPerformanceTable.tsx(169,31): error TS4111: Property 'postMetrics' comes from an index signature, so it must be accessed with ['postMetrics'].
+src/components/content/FormatPerformanceTable.tsx(176,27): error TS4111: Property 'postCaption' comes from an index signature, so it must be accessed with ['postCaption'].
+src/components/content/FormatPerformanceTable.tsx(189,31): error TS4111: Property 'postBoostSlot' comes from an index signature, so it must be accessed with ['postBoostSlot'].
+src/components/content/FormatPerformanceTable.tsx(191,35): error TS4111: Property 'postBoostBadge' comes from an index signature, so it must be accessed with ['postBoostBadge'].
+src/components/content/FormatPerformanceTable.tsx(199,42): error TS4111: Property 'postScore' comes from an index signature, so it must be accessed with ['postScore'].
+src/components/content/FormatPerformanceTable.tsx(199,61): error TS4111: Property 'postScoreMuted' comes from an index signature, so it must be accessed with ['postScoreMuted'].
+src/components/content/FormatPerformanceTable.tsx(210,28): error TS4111: Property 'wrapper' comes from an index signature, so it must be accessed with ['wrapper'].
+src/components/content/FormatPerformanceTable.tsx(211,28): error TS4111: Property 'title' comes from an index signature, so it must be accessed with ['title'].
+src/components/content/FormatPerformanceTable.tsx(213,32): error TS4111: Property 'table' comes from an index signature, so it must be accessed with ['table'].
+src/components/content/FormatPerformanceTable.tsx(216,35): error TS4111: Property 'th' comes from an index signature, so it must be accessed with ['th'].
+src/components/content/FormatPerformanceTable.tsx(217,35): error TS4111: Property 'th' comes from an index signature, so it must be accessed with ['th'].
+src/components/content/FormatPerformanceTable.tsx(218,35): error TS4111: Property 'th' comes from an index signature, so it must be accessed with ['th'].
+src/components/content/FormatPerformanceTable.tsx(219,35): error TS4111: Property 'th' comes from an index signature, so it must be accessed with ['th'].
+src/components/content/FormatPerformanceTable.tsx(220,35): error TS4111: Property 'th' comes from an index signature, so it must be accessed with ['th'].
+src/components/content/FormatPerformanceTable.tsx(231,38): error TS4111: Property 'tr' comes from an index signature, so it must be accessed with ['tr'].
+src/components/content/FormatPerformanceTable.tsx(231,61): error TS4111: Property 'trClickable' comes from an index signature, so it must be accessed with ['trClickable'].
+src/components/content/FormatPerformanceTable.tsx(234,41): error TS4111: Property 'tdChevron' comes from an index signature, so it must be accessed with ['tdChevron'].
+src/components/content/FormatPerformanceTable.tsx(242,56): error TS4111: Property 'chevronOpen' comes from an index signature, so it must be accessed with ['chevronOpen'].
+src/components/content/FormatPerformanceTable.tsx(242,77): error TS4111: Property 'chevron' comes from an index signature, so it must be accessed with ['chevron'].
+src/components/content/FormatPerformanceTable.tsx(254,42): error TS4111: Property 'td' comes from an index signature, so it must be accessed with ['td'].
+src/components/content/FormatPerformanceTable.tsx(254,53): error TS4111: Property 'tdFormat' comes from an index signature, so it must be accessed with ['tdFormat'].
+src/components/content/FormatPerformanceTable.tsx(255,45): error TS4111: Property 'formatIcon' comes from an index signature, so it must be accessed with ['formatIcon'].
+src/components/content/FormatPerformanceTable.tsx(260,41): error TS4111: Property 'td' comes from an index signature, so it must be accessed with ['td'].
+src/components/content/FormatPerformanceTable.tsx(261,41): error TS4111: Property 'td' comes from an index signature, so it must be accessed with ['td'].
+src/components/content/FormatPerformanceTable.tsx(262,41): error TS4111: Property 'td' comes from an index signature, so it must be accessed with ['td'].
+src/components/content/FormatPerformanceTable.tsx(269,55): error TS4111: Property 'tdDetail' comes from an index signature, so it must be accessed with ['tdDetail'].
+src/components/content/FormatPerformanceTable.tsx(270,46): error TS4111: Property 'postList' comes from an index signature, so it must be accessed with ['postList'].
+src/components/content/FormatPerformanceTable.v2.tsx(135,28): error TS4111: Property 'filterBar' comes from an index signature, so it must be accessed with ['filterBar'].
+src/components/content/FormatPerformanceTable.v2.tsx(136,30): error TS4111: Property 'field' comes from an index signature, so it must be accessed with ['field'].
+src/components/content/FormatPerformanceTable.v2.tsx(137,34): error TS4111: Property 'visuallyHiddenLabel' comes from an index signature, so it must be accessed with ['visuallyHiddenLabel'].
+src/components/content/FormatPerformanceTable.v2.tsx(146,29): error TS4111: Property 'input' comes from an index signature, so it must be accessed with ['input'].
+src/components/content/FormatPerformanceTable.v2.tsx(150,30): error TS4111: Property 'field' comes from an index signature, so it must be accessed with ['field'].
+src/components/content/FormatPerformanceTable.v2.tsx(151,34): error TS4111: Property 'visuallyHiddenLabel' comes from an index signature, so it must be accessed with ['visuallyHiddenLabel'].
+src/components/content/FormatPerformanceTable.v2.tsx(158,29): error TS4111: Property 'select' comes from an index signature, so it must be accessed with ['select'].
+src/components/content/FormatPerformanceTable.v2.tsx(165,30): error TS4111: Property 'field' comes from an index signature, so it must be accessed with ['field'].
+src/components/content/FormatPerformanceTable.v2.tsx(166,34): error TS4111: Property 'visuallyHiddenLabel' comes from an index signature, so it must be accessed with ['visuallyHiddenLabel'].
+src/components/content/FormatPerformanceTable.v2.tsx(173,29): error TS4111: Property 'select' comes from an index signature, so it must be accessed with ['select'].
+src/components/content/FormatPerformanceTable.v2.tsx(182,30): error TS4111: Property 'resultCount' comes from an index signature, so it must be accessed with ['resultCount'].
+src/components/content/FormatPerformanceTable.v2.tsx(205,28): error TS4111: Property 'group' comes from an index signature, so it must be accessed with ['group'].
+src/components/content/FormatPerformanceTable.v2.tsx(211,27): error TS4111: Property 'groupHeader' comes from an index signature, so it must be accessed with ['groupHeader'].
+src/components/content/FormatPerformanceTable.v2.tsx(214,47): error TS4111: Property 'chevronOpen' comes from an index signature, so it must be accessed with ['chevronOpen'].
+src/components/content/FormatPerformanceTable.v2.tsx(214,73): error TS4111: Property 'chevron' comes from an index signature, so it must be accessed with ['chevron'].
+src/components/content/FormatPerformanceTable.v2.tsx(227,33): error TS4111: Property 'groupTitle' comes from an index signature, so it must be accessed with ['groupTitle'].
+src/components/content/FormatPerformanceTable.v2.tsx(228,33): error TS4111: Property 'groupCount' comes from an index signature, so it must be accessed with ['groupCount'].
+src/components/content/FormatPerformanceTable.v2.tsx(235,37): error TS4111: Property 'postList' comes from an index signature, so it must be accessed with ['postList'].
+src/components/content/FormatPerformanceTable.v2.tsx(243,30): error TS4111: Property 'groupEmpty' comes from an index signature, so it must be accessed with ['groupEmpty'].
+src/components/content/FormatPerformanceTable.v2.tsx(313,28): error TS4111: Property 'wrapper' comes from an index signature, so it must be accessed with ['wrapper'].
+src/components/content/FormatPerformanceTable.v2.tsx(314,33): error TS4111: Property 'title' comes from an index signature, so it must be accessed with ['title'].
+src/components/content/FormatPerformanceTable.v2.tsx(327,32): error TS4111: Property 'emptyState' comes from an index signature, so it must be accessed with ['emptyState'].
+src/components/content/InsightCard.tsx(16,28): error TS4111: Property 'card' comes from an index signature, so it must be accessed with ['card'].
+src/components/content/InsightCard.tsx(17,31): error TS4111: Property 'icon' comes from an index signature, so it must be accessed with ['icon'].
+src/components/content/InsightCard.tsx(18,28): error TS4111: Property 'text' comes from an index signature, so it must be accessed with ['text'].
+src/components/content/InsightCard.tsx(19,35): error TS4111: Property 'label' comes from an index signature, so it must be accessed with ['label'].
+src/components/content/QualityScoresPanel.tsx(31,18): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/content/QualityScoresPanel.tsx(31,32): error TS4111: Property 'boxCyan' comes from an index signature, so it must be accessed with ['boxCyan'].
+src/components/content/QualityScoresPanel.tsx(32,18): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/content/QualityScoresPanel.tsx(32,32): error TS4111: Property 'boxRed' comes from an index signature, so it must be accessed with ['boxRed'].
+src/components/content/QualityScoresPanel.tsx(33,18): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/content/QualityScoresPanel.tsx(33,32): error TS4111: Property 'boxGold' comes from an index signature, so it must be accessed with ['boxGold'].
+src/components/content/QualityScoresPanel.tsx(34,18): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/content/QualityScoresPanel.tsx(34,32): error TS4111: Property 'boxNeutral' comes from an index signature, so it must be accessed with ['boxNeutral'].
+src/components/content/QualityScoresPanel.tsx(40,6): error TS2375: Type '{ children: Element[]; glowColor: "cyan"; className: string | undefined; }' is not assignable to type 'GlassCardProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'className' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/components/content/QualityScoresPanel.tsx(40,51): error TS4111: Property 'panel' comes from an index signature, so it must be accessed with ['panel'].
+src/components/content/QualityScoresPanel.tsx(41,28): error TS4111: Property 'panelTitle' comes from an index signature, so it must be accessed with ['panelTitle'].
+src/components/content/QualityScoresPanel.tsx(43,30): error TS4111: Property 'grid' comes from an index signature, so it must be accessed with ['grid'].
+src/components/content/QualityScoresPanel.tsx(47,32): error TS4111: Property 'scoreBox' comes from an index signature, so it must be accessed with ['scoreBox'].
+src/components/content/QualityScoresPanel.tsx(49,34): error TS4111: Property 'scoreLabel' comes from an index signature, so it must be accessed with ['scoreLabel'].
+src/components/content/QualityScoresPanel.tsx(51,36): error TS4111: Property 'scoreValue' comes from an index signature, so it must be accessed with ['scoreValue'].
+src/components/content/QualityScoresPanel.tsx(53,41): error TS4111: Property 'naValue' comes from an index signature, so it must be accessed with ['naValue'].
+src/components/content/QualityScoresPanel.tsx(65,22): error TS4111: Property 'statusText' comes from an index signature, so it must be accessed with ['statusText'].
+src/components/content/QualityScoresPanel.tsx(66,55): error TS4111: Property 'statusOk' comes from an index signature, so it must be accessed with ['statusOk'].
+src/components/content/QualityScoresPanel.tsx(67,57): error TS4111: Property 'statusWarn' comes from an index signature, so it must be accessed with ['statusWarn'].
+src/components/content/QualityScoresPanel.tsx(68,24): error TS4111: Property 'statusNeutral' comes from an index signature, so it must be accessed with ['statusNeutral'].
+src/components/kpi/DeltaText.tsx(22,29): error TS4111: Property 'wrapper' comes from an index signature, so it must be accessed with ['wrapper'].
+src/components/kpi/DeltaText.tsx(23,44): error TS4111: Property 'positive' comes from an index signature, so it must be accessed with ['positive'].
+src/components/kpi/DeltaText.tsx(23,62): error TS4111: Property 'negative' comes from an index signature, so it must be accessed with ['negative'].
+src/components/kpi/DeltaText.tsx(27,33): error TS4111: Property 'label' comes from an index signature, so it must be accessed with ['label'].
+src/components/kpi/GlowingNumber.tsx(21,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/kpi/GlowingNumber.tsx(21,16): error TS4111: Property 'cyan' comes from an index signature, so it must be accessed with ['cyan'].
+src/components/kpi/GlowingNumber.tsx(22,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/kpi/GlowingNumber.tsx(22,16): error TS4111: Property 'red' comes from an index signature, so it must be accessed with ['red'].
+src/components/kpi/GlowingNumber.tsx(23,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/kpi/GlowingNumber.tsx(23,16): error TS4111: Property 'gold' comes from an index signature, so it must be accessed with ['gold'].
+src/components/kpi/GlowingNumber.tsx(24,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/kpi/GlowingNumber.tsx(24,16): error TS4111: Property 'muted' comes from an index signature, so it must be accessed with ['muted'].
+src/components/kpi/GlowingNumber.tsx(28,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/kpi/GlowingNumber.tsx(28,14): error TS4111: Property 'sizeSm' comes from an index signature, so it must be accessed with ['sizeSm'].
+src/components/kpi/GlowingNumber.tsx(29,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/kpi/GlowingNumber.tsx(29,14): error TS4111: Property 'sizeMd' comes from an index signature, so it must be accessed with ['sizeMd'].
+src/components/kpi/GlowingNumber.tsx(30,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/kpi/GlowingNumber.tsx(30,14): error TS4111: Property 'sizeLg' comes from an index signature, so it must be accessed with ['sizeLg'].
+src/components/kpi/GlowingNumber.tsx(31,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/kpi/GlowingNumber.tsx(31,14): error TS4111: Property 'sizeXl' comes from an index signature, so it must be accessed with ['sizeXl'].
+src/components/kpi/GlowingNumber.tsx(46,29): error TS4111: Property 'wrapper' comes from an index signature, so it must be accessed with ['wrapper'].
+src/components/kpi/GlowingNumber.tsx(48,28): error TS4111: Property 'number' comes from an index signature, so it must be accessed with ['number'].
+src/components/kpi/GlowingNumber.tsx(53,33): error TS4111: Property 'unit' comes from an index signature, so it must be accessed with ['unit'].
+src/components/kpi/KPICard.tsx(23,6): error TS2375: Type '{ children: ("" | Element | null)[]; glowColor: GlowColor; className: string | undefined; }' is not assignable to type 'GlassCardProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'className' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/components/kpi/KPICard.tsx(23,56): error TS4111: Property 'card' comes from an index signature, so it must be accessed with ['card'].
+src/components/kpi/KPICard.tsx(25,30): error TS4111: Property 'header' comes from an index signature, so it must be accessed with ['header'].
+src/components/kpi/KPICard.tsx(26,33): error TS4111: Property 'label' comes from an index signature, so it must be accessed with ['label'].
+src/components/kpi/KPICard.tsx(31,30): error TS4111: Property 'valueRow' comes from an index signature, so it must be accessed with ['valueRow'].
+src/components/kpi/KPICard.tsx(37,32): error TS4111: Property 'unit' comes from an index signature, so it must be accessed with ['unit'].
+src/components/kpi/KPICard.tsx(41,30): error TS4111: Property 'deltaRow' comes from an index signature, so it must be accessed with ['deltaRow'].
+src/components/kpi/KPICard.tsx(47,32): error TS4111: Property 'subtitle' comes from an index signature, so it must be accessed with ['subtitle'].
+src/components/kpi/SemaphoreIndicator.tsx(22,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/kpi/SemaphoreIndicator.tsx(22,20): error TS4111: Property 'verde' comes from an index signature, so it must be accessed with ['verde'].
+src/components/kpi/SemaphoreIndicator.tsx(23,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/kpi/SemaphoreIndicator.tsx(23,20): error TS4111: Property 'ambar' comes from an index signature, so it must be accessed with ['ambar'].
+src/components/kpi/SemaphoreIndicator.tsx(24,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/kpi/SemaphoreIndicator.tsx(24,20): error TS4111: Property 'vermelho' comes from an index signature, so it must be accessed with ['vermelho'].
+src/components/kpi/SemaphoreIndicator.tsx(36,26): error TS4111: Property 'badge' comes from an index signature, so it must be accessed with ['badge'].
+src/components/layout/Header.tsx(50,31): error TS4111: Property 'header' comes from an index signature, so it must be accessed with ['header'].
+src/components/layout/Header.tsx(52,30): error TS4111: Property 'titleBlock' comes from an index signature, so it must be accessed with ['titleBlock'].
+src/components/layout/Header.tsx(53,31): error TS4111: Property 'title' comes from an index signature, so it must be accessed with ['title'].
+src/components/layout/Header.tsx(54,30): error TS4111: Property 'subtitle' comes from an index signature, so it must be accessed with ['subtitle'].
+src/components/layout/Header.tsx(56,35): error TS4111: Property 'dot' comes from an index signature, so it must be accessed with ['dot'].
+src/components/layout/Header.tsx(62,30): error TS4111: Property 'spacer' comes from an index signature, so it must be accessed with ['spacer'].
+src/components/layout/Header.tsx(65,30): error TS4111: Property 'datePill' comes from an index signature, so it must be accessed with ['datePill'].
+src/components/layout/Header.tsx(66,33): error TS4111: Property 'datePillIcon' comes from an index signature, so it must be accessed with ['datePillIcon'].
+src/components/layout/Header.tsx(67,33): error TS4111: Property 'datePillText' comes from an index signature, so it must be accessed with ['datePillText'].
+src/components/layout/Header.tsx(71,30): error TS4111: Property 'tabGroup' comes from an index signature, so it must be accessed with ['tabGroup'].
+src/components/layout/Header.tsx(77,22): error TS4111: Property 'tab' comes from an index signature, so it must be accessed with ['tab'].
+src/components/layout/Header.tsx(78,45): error TS4111: Property 'tabActive' comes from an index signature, so it must be accessed with ['tabActive'].
+src/components/layout/Sidebar.tsx(64,3): error TS2375: Type '{ id: string; label: string; href: string; icon: string; section: "visao-geral"; ruleNumber: string; badge: undefined; badgeVariant: "alert"; }' is not assignable to type 'NavItem' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'badge' are incompatible.
+    Type 'undefined' is not assignable to type 'number'.
+src/components/layout/Sidebar.tsx(141,30): error TS4111: Property 'sidebar' comes from an index signature, so it must be accessed with ['sidebar'].
+src/components/layout/Sidebar.tsx(143,30): error TS4111: Property 'logo' comes from an index signature, so it must be accessed with ['logo'].
+src/components/layout/Sidebar.tsx(144,32): error TS4111: Property 'logoBadge' comes from an index signature, so it must be accessed with ['logoBadge'].
+src/components/layout/Sidebar.tsx(146,32): error TS4111: Property 'logoName' comes from an index signature, so it must be accessed with ['logoName'].
+src/components/layout/Sidebar.tsx(147,32): error TS4111: Property 'logoSub' comes from an index signature, so it must be accessed with ['logoSub'].
+src/components/layout/Sidebar.tsx(153,32): error TS4111: Property 'clientBox' comes from an index signature, so it must be accessed with ['clientBox'].
+src/components/layout/Sidebar.tsx(154,32): error TS4111: Property 'clientLabel' comes from an index signature, so it must be accessed with ['clientLabel'].
+src/components/layout/Sidebar.tsx(155,34): error TS4111: Property 'clientName' comes from an index signature, so it must be accessed with ['clientName'].
+src/components/layout/Sidebar.tsx(158,33): error TS4111: Property 'clientDot' comes from an index signature, so it must be accessed with ['clientDot'].
+src/components/layout/Sidebar.tsx(167,28): error TS4111: Property 'sectionLabel' comes from an index signature, so it must be accessed with ['sectionLabel'].
+src/components/layout/Sidebar.tsx(169,31): error TS4111: Property 'navList' comes from an index signature, so it must be accessed with ['navList'].
+src/components/layout/Sidebar.tsx(182,28): error TS4111: Property 'sectionLabel' comes from an index signature, so it must be accessed with ['sectionLabel'].
+src/components/layout/Sidebar.tsx(184,31): error TS4111: Property 'navList' comes from an index signature, so it must be accessed with ['navList'].
+src/components/layout/Sidebar.tsx(250,18): error TS2345: Argument of type 'TabId | undefined' is not assignable to parameter of type 'TabId'.
+  Type 'undefined' is not assignable to type 'TabId'.
+src/components/layout/Sidebar.tsx(260,18): error TS4111: Property 'navItem' comes from an index signature, so it must be accessed with ['navItem'].
+src/components/layout/Sidebar.tsx(261,29): error TS4111: Property 'navItemActive' comes from an index signature, so it must be accessed with ['navItemActive'].
+src/components/layout/Sidebar.tsx(269,33): error TS4111: Property 'navIcon' comes from an index signature, so it must be accessed with ['navIcon'].
+src/components/layout/Sidebar.tsx(272,33): error TS4111: Property 'navLabel' comes from an index signature, so it must be accessed with ['navLabel'].
+src/components/layout/Sidebar.tsx(276,22): error TS4111: Property 'badge' comes from an index signature, so it must be accessed with ['badge'].
+src/components/layout/Sidebar.tsx(278,26): error TS4111: Property 'badgeAlert' comes from an index signature, so it must be accessed with ['badgeAlert'].
+src/components/layout/Sidebar.tsx(279,26): error TS4111: Property 'badgeDefault' comes from an index signature, so it must be accessed with ['badgeDefault'].
+src/components/panels/SectorPositioningPanel.tsx(47,12): error TS4111: Property 'badgeDanger' comes from an index signature, so it must be accessed with ['badgeDanger'].
+src/components/panels/SectorPositioningPanel.tsx(49,14): error TS4111: Property 'badgeWarning' comes from an index signature, so it must be accessed with ['badgeWarning'].
+src/components/panels/SectorPositioningPanel.tsx(50,14): error TS4111: Property 'badgeNeutral' comes from an index signature, so it must be accessed with ['badgeNeutral'].
+src/components/panels/SectorPositioningPanel.tsx(53,26): error TS4111: Property 'metricCard' comes from an index signature, so it must be accessed with ['metricCard'].
+src/components/panels/SectorPositioningPanel.tsx(54,26): error TS4111: Property 'metricLabel' comes from an index signature, so it must be accessed with ['metricLabel'].
+src/components/panels/SectorPositioningPanel.tsx(55,26): error TS4111: Property 'metricValue' comes from an index signature, so it must be accessed with ['metricValue'].
+src/components/panels/SectorPositioningPanel.tsx(87,4): error TS2375: Type '{ children: ("" | Element | null)[]; glowColor: "cyan"; className: string | undefined; }' is not assignable to type 'GlassCardProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'className' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/components/panels/SectorPositioningPanel.tsx(87,49): error TS4111: Property 'panel' comes from an index signature, so it must be accessed with ['panel'].
+src/components/panels/SectorPositioningPanel.tsx(88,26): error TS4111: Property 'panelTitle' comes from an index signature, so it must be accessed with ['panelTitle'].
+src/components/panels/SectorPositioningPanel.tsx(90,28): error TS4111: Property 'infoRow' comes from an index signature, so it must be accessed with ['infoRow'].
+src/components/panels/SectorPositioningPanel.tsx(91,30): error TS4111: Property 'infoCard' comes from an index signature, so it must be accessed with ['infoCard'].
+src/components/panels/SectorPositioningPanel.tsx(92,30): error TS4111: Property 'infoLabel' comes from an index signature, so it must be accessed with ['infoLabel'].
+src/components/panels/SectorPositioningPanel.tsx(93,30): error TS4111: Property 'infoValue' comes from an index signature, so it must be accessed with ['infoValue'].
+src/components/panels/SectorPositioningPanel.tsx(95,32): error TS4111: Property 'infoSub' comes from an index signature, so it must be accessed with ['infoSub'].
+src/components/panels/SectorPositioningPanel.tsx(98,30): error TS4111: Property 'infoCard' comes from an index signature, so it must be accessed with ['infoCard'].
+src/components/panels/SectorPositioningPanel.tsx(99,30): error TS4111: Property 'infoLabel' comes from an index signature, so it must be accessed with ['infoLabel'].
+src/components/panels/SectorPositioningPanel.tsx(100,30): error TS4111: Property 'infoValue' comes from an index signature, so it must be accessed with ['infoValue'].
+src/components/panels/SectorPositioningPanel.tsx(101,30): error TS4111: Property 'infoSub' comes from an index signature, so it must be accessed with ['infoSub'].
+src/components/panels/SectorPositioningPanel.tsx(107,26): error TS4111: Property 'blockLabel' comes from an index signature, so it must be accessed with ['blockLabel'].
+src/components/panels/SectorPositioningPanel.tsx(114,28): error TS4111: Property 'metricsRow' comes from an index signature, so it must be accessed with ['metricsRow'].
+src/components/panels/SectorPositioningPanel.tsx(134,28): error TS4111: Property 'ruleText' comes from an index signature, so it must be accessed with ['ruleText'].
+src/components/screens/AlertasScreen.tsx(141,8): error TS2375: Type '{ title: string; subtitle: string | undefined; }' is not assignable to type 'SectionHeadProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'subtitle' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/components/screens/AvatarScreen.tsx(42,26): error TS4111: Property 'skeletonStack' comes from an index signature, so it must be accessed with ['skeletonStack'].
+src/components/screens/AvatarScreen.tsx(43,28): error TS4111: Property 'skeletonRow' comes from an index signature, so it must be accessed with ['skeletonRow'].
+src/components/screens/AvatarScreen.tsx(44,33): error TS4111: Property 'skeleton' comes from an index signature, so it must be accessed with ['skeleton'].
+src/components/screens/AvatarScreen.tsx(44,52): error TS4111: Property 'skeletonCard' comes from an index signature, so it must be accessed with ['skeletonCard'].
+src/components/screens/AvatarScreen.tsx(45,30): error TS4111: Property 'skeleton' comes from an index signature, so it must be accessed with ['skeleton'].
+src/components/screens/AvatarScreen.tsx(46,33): error TS4111: Property 'skeleton' comes from an index signature, so it must be accessed with ['skeleton'].
+src/components/screens/AvatarScreen.tsx(46,52): error TS4111: Property 'skeletonCard' comes from an index signature, so it must be accessed with ['skeletonCard'].
+src/components/screens/AvatarScreen.tsx(48,31): error TS4111: Property 'skeleton' comes from an index signature, so it must be accessed with ['skeleton'].
+src/components/screens/AvatarScreen.tsx(48,50): error TS4111: Property 'skeletonBars' comes from an index signature, so it must be accessed with ['skeletonBars'].
+src/components/screens/AvatarScreen.tsx(49,31): error TS4111: Property 'skeleton' comes from an index signature, so it must be accessed with ['skeleton'].
+src/components/screens/AvatarScreen.tsx(49,50): error TS4111: Property 'skeletonFormula' comes from an index signature, so it must be accessed with ['skeletonFormula'].
+src/components/screens/AvatarScreen.tsx(50,31): error TS4111: Property 'skeleton' comes from an index signature, so it must be accessed with ['skeleton'].
+src/components/screens/AvatarScreen.tsx(50,50): error TS4111: Property 'skeletonRecs' comes from an index signature, so it must be accessed with ['skeletonRecs'].
+src/components/screens/AvatarScreen.tsx(57,26): error TS4111: Property 'headerRow' comes from an index signature, so it must be accessed with ['headerRow'].
+src/components/screens/AvatarScreen.tsx(58,28): error TS4111: Property 'headerText' comes from an index signature, so it must be accessed with ['headerText'].
+src/components/screens/AvatarScreen.tsx(59,29): error TS4111: Property 'title' comes from an index signature, so it must be accessed with ['title'].
+src/components/screens/AvatarScreen.tsx(60,28): error TS4111: Property 'subtitle' comes from an index signature, so it must be accessed with ['subtitle'].
+src/components/screens/AvatarScreen.tsx(67,30): error TS4111: Property 'metaLabel' comes from an index signature, so it must be accessed with ['metaLabel'].
+src/components/screens/AvatarScreen.tsx(68,30): error TS4111: Property 'metaValue' comes from an index signature, so it must be accessed with ['metaValue'].
+src/components/screens/AvatarScreen.tsx(99,26): error TS4111: Property 'center' comes from an index signature, so it must be accessed with ['center'].
+src/components/screens/AvatarScreen.tsx(100,28): error TS4111: Property 'centerInner' comes from an index signature, so it must be accessed with ['centerInner'].
+src/components/screens/AvatarScreen.tsx(101,34): error TS4111: Property 'stateIcon' comes from an index signature, so it must be accessed with ['stateIcon'].
+src/components/screens/AvatarScreen.tsx(101,61): error TS4111: Property 'stateIconSpin' comes from an index signature, so it must be accessed with ['stateIconSpin'].
+src/components/screens/AvatarScreen.tsx(102,29): error TS4111: Property 'stateTitle' comes from an index signature, so it must be accessed with ['stateTitle'].
+src/components/screens/AvatarScreen.tsx(103,28): error TS4111: Property 'stateBody' comes from an index signature, so it must be accessed with ['stateBody'].
+src/components/screens/AvatarScreen.tsx(106,32): error TS4111: Property 'detailCard' comes from an index signature, so it must be accessed with ['detailCard'].
+src/components/screens/AvatarScreen.tsx(107,48): error TS4111: Property 'detailTitle' comes from an index signature, so it must be accessed with ['detailTitle'].
+src/components/screens/AvatarScreen.tsx(109,35): error TS4111: Property 'detailList' comes from an index signature, so it must be accessed with ['detailList'].
+src/components/screens/AvatarScreen.tsx(115,49): error TS4111: Property 'errorDetail' comes from an index signature, so it must be accessed with ['errorDetail'].
+src/components/screens/AvatarScreen.tsx(120,32): error TS4111: Property 'actions' comes from an index signature, so it must be accessed with ['actions'].
+src/components/screens/AvatarScreen.tsx(121,37): error TS4111: Property 'btnPrimary' comes from an index signature, so it must be accessed with ['btnPrimary'].
+src/components/screens/AvatarScreen.tsx(124,41): error TS4111: Property 'hint' comes from an index signature, so it must be accessed with ['hint'].
+src/components/screens/AvatarScreen.tsx(145,30): error TS4111: Property 'page' comes from an index signature, so it must be accessed with ['page'].
+src/components/screens/AvatarScreen.tsx(155,30): error TS4111: Property 'page' comes from an index signature, so it must be accessed with ['page'].
+src/components/screens/AvatarScreen.tsx(166,30): error TS4111: Property 'page' comes from an index signature, so it must be accessed with ['page'].
+src/components/screens/AvatarScreen.tsx(181,30): error TS4111: Property 'page' comes from an index signature, so it must be accessed with ['page'].
+src/components/screens/AvatarScreen.tsx(202,30): error TS4111: Property 'page' comes from an index signature, so it must be accessed with ['page'].
+src/components/screens/AvatarScreen.tsx(223,30): error TS4111: Property 'page' comes from an index signature, so it must be accessed with ['page'].
+src/components/screens/AvatarScreen.tsx(224,10): error TS2375: Type '{ icon: string; title: string; body: string; detailTitle: string; detailRaw: string | undefined; primaryAction: { label: string; onClick: () => void; }; hint: string; }' is not assignable to type 'CenterStateProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'detailRaw' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/components/screens/AvatarScreen.tsx(241,30): error TS4111: Property 'page' comes from an index signature, so it must be accessed with ['page'].
+src/components/screens/AvatarScreen.tsx(242,10): error TS2375: Type '{ icon: string; title: string; body: string; detailTitle: string; detailRaw: string | undefined; primaryAction: { label: string; onClick: () => void; }; hint: string; }' is not assignable to type 'CenterStateProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'detailRaw' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/components/screens/AvatarScreen.tsx(259,30): error TS4111: Property 'page' comes from an index signature, so it must be accessed with ['page'].
+src/components/screens/AvatarScreen.tsx(260,32): error TS4111: Property 'genericErrorBanner' comes from an index signature, so it must be accessed with ['genericErrorBanner'].
+src/components/screens/AvatarScreen.tsx(261,35): error TS4111: Property 'stateIcon' comes from an index signature, so it must be accessed with ['stateIcon'].
+src/components/screens/AvatarScreen.tsx(263,34): error TS4111: Property 'genericErrorTitle' comes from an index signature, so it must be accessed with ['genericErrorTitle'].
+src/components/screens/AvatarScreen.tsx(264,34): error TS4111: Property 'genericErrorBody' comes from an index signature, so it must be accessed with ['genericErrorBody'].
+src/components/screens/AvatarScreen.tsx(282,30): error TS4111: Property 'page' comes from an index signature, so it must be accessed with ['page'].
+src/components/screens/AvatarScreen.tsx(300,32): error TS4111: Property 'footer' comes from an index signature, so it must be accessed with ['footer'].
+src/components/screens/AvatarScreen.tsx(301,37): error TS4111: Property 'btnGhost' comes from an index signature, so it must be accessed with ['btnGhost'].
+src/components/screens/AvatarScreen.tsx(312,28): error TS4111: Property 'page' comes from an index signature, so it must be accessed with ['page'].
+src/components/screens/CarteiraScreen.tsx(24,28): error TS4111: Property 'cardSkeleton' comes from an index signature, so it must be accessed with ['cardSkeleton'].
+src/components/screens/CarteiraScreen.tsx(25,30): error TS4111: Property 'skeletonHeader' comes from an index signature, so it must be accessed with ['skeletonHeader'].
+src/components/screens/CarteiraScreen.tsx(26,32): error TS4111: Property 'skeletonAvatar' comes from an index signature, so it must be accessed with ['skeletonAvatar'].
+src/components/screens/CarteiraScreen.tsx(27,32): error TS4111: Property 'skeletonInfo' comes from an index signature, so it must be accessed with ['skeletonInfo'].
+src/components/screens/CarteiraScreen.tsx(28,34): error TS4111: Property 'skeletonLine' comes from an index signature, so it must be accessed with ['skeletonLine'].
+src/components/screens/CarteiraScreen.tsx(29,34): error TS4111: Property 'skeletonLineSmall' comes from an index signature, so it must be accessed with ['skeletonLineSmall'].
+src/components/screens/CarteiraScreen.tsx(31,32): error TS4111: Property 'skeletonDot' comes from an index signature, so it must be accessed with ['skeletonDot'].
+src/components/screens/CarteiraScreen.tsx(33,30): error TS4111: Property 'skeletonDivider' comes from an index signature, so it must be accessed with ['skeletonDivider'].
+src/components/screens/CarteiraScreen.tsx(34,30): error TS4111: Property 'skeletonGrid' comes from an index signature, so it must be accessed with ['skeletonGrid'].
+src/components/screens/CarteiraScreen.tsx(36,42): error TS4111: Property 'skeletonItem' comes from an index signature, so it must be accessed with ['skeletonItem'].
+src/components/screens/CarteiraScreen.tsx(37,36): error TS4111: Property 'skeletonLabel' comes from an index signature, so it must be accessed with ['skeletonLabel'].
+src/components/screens/CarteiraScreen.tsx(38,36): error TS4111: Property 'skeletonValue' comes from an index signature, so it must be accessed with ['skeletonValue'].
+src/components/screens/CarteiraScreen.tsx(55,28): error TS4111: Property 'errorState' comes from an index signature, so it must be accessed with ['errorState'].
+src/components/screens/CarteiraScreen.tsx(56,28): error TS4111: Property 'errorMessage' comes from an index signature, so it must be accessed with ['errorMessage'].
+src/components/screens/CarteiraScreen.tsx(60,27): error TS4111: Property 'retryButton' comes from an index signature, so it must be accessed with ['retryButton'].
+src/components/screens/CarteiraScreen.tsx(77,28): error TS4111: Property 'emptyState' comes from an index signature, so it must be accessed with ['emptyState'].
+src/components/screens/CarteiraScreen.tsx(78,28): error TS4111: Property 'emptyMessage' comes from an index signature, so it must be accessed with ['emptyMessage'].
+src/components/screens/CarteiraScreen.tsx(124,29): error TS4111: Property 'main' comes from an index signature, so it must be accessed with ['main'].
+src/components/screens/CarteiraScreen.tsx(125,30): error TS4111: Property 'headRow' comes from an index signature, so it must be accessed with ['headRow'].
+src/components/screens/CarteiraScreen.tsx(126,10): error TS2375: Type '{ title: string; subtitle: string | undefined; }' is not assignable to type 'SectionHeadProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'subtitle' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/components/screens/CarteiraScreen.tsx(129,29): error TS4111: Property 'tabsContainer' comes from an index signature, so it must be accessed with ['tabsContainer'].
+src/components/screens/CarteiraScreen.tsx(133,34): error TS4111: Property 'tabsList' comes from an index signature, so it must be accessed with ['tabsList'].
+src/components/screens/CarteiraScreen.tsx(141,38): error TS4111: Property 'tab' comes from an index signature, so it must be accessed with ['tab'].
+src/components/screens/CarteiraScreen.tsx(142,49): error TS4111: Property 'tabActive' comes from an index signature, so it must be accessed with ['tabActive'].
+src/components/screens/CarteiraScreen.tsx(142,68): error TS4111: Property 'tabInactive' comes from an index signature, so it must be accessed with ['tabInactive'].
+src/components/screens/CarteiraScreen.tsx(152,30): error TS4111: Property 'kpiGrid' comes from an index signature, so it must be accessed with ['kpiGrid'].
+src/components/screens/CarteiraScreen.tsx(153,35): error TS4111: Property 'kpiCard' comes from an index signature, so it must be accessed with ['kpiCard'].
+src/components/screens/CarteiraScreen.tsx(153,53): error TS4111: Property 'kpiCardNeutral' comes from an index signature, so it must be accessed with ['kpiCardNeutral'].
+src/components/screens/CarteiraScreen.tsx(154,32): error TS4111: Property 'kpiLabel' comes from an index signature, so it must be accessed with ['kpiLabel'].
+src/components/screens/CarteiraScreen.tsx(155,32): error TS4111: Property 'kpiValue' comes from an index signature, so it must be accessed with ['kpiValue'].
+src/components/screens/CarteiraScreen.tsx(157,35): error TS4111: Property 'kpiCard' comes from an index signature, so it must be accessed with ['kpiCard'].
+src/components/screens/CarteiraScreen.tsx(157,53): error TS4111: Property 'kpiCardWarning' comes from an index signature, so it must be accessed with ['kpiCardWarning'].
+src/components/screens/CarteiraScreen.tsx(158,32): error TS4111: Property 'kpiLabel' comes from an index signature, so it must be accessed with ['kpiLabel'].
+src/components/screens/CarteiraScreen.tsx(159,35): error TS4111: Property 'kpiValue' comes from an index signature, so it must be accessed with ['kpiValue'].
+src/components/screens/CarteiraScreen.tsx(159,54): error TS4111: Property 'kpiValueWarning' comes from an index signature, so it must be accessed with ['kpiValueWarning'].
+src/components/screens/CarteiraScreen.tsx(161,35): error TS4111: Property 'kpiCard' comes from an index signature, so it must be accessed with ['kpiCard'].
+src/components/screens/CarteiraScreen.tsx(161,53): error TS4111: Property 'kpiCardCritical' comes from an index signature, so it must be accessed with ['kpiCardCritical'].
+src/components/screens/CarteiraScreen.tsx(162,32): error TS4111: Property 'kpiLabel' comes from an index signature, so it must be accessed with ['kpiLabel'].
+src/components/screens/CarteiraScreen.tsx(163,35): error TS4111: Property 'kpiValue' comes from an index signature, so it must be accessed with ['kpiValue'].
+src/components/screens/CarteiraScreen.tsx(163,54): error TS4111: Property 'kpiValueError' comes from an index signature, so it must be accessed with ['kpiValueError'].
+src/components/screens/CarteiraScreen.tsx(171,29): error TS4111: Property 'skeletonsGrid' comes from an index signature, so it must be accessed with ['skeletonsGrid'].
+src/components/screens/CarteiraScreen.tsx(182,32): error TS4111: Property 'clientsGrid' comes from an index signature, so it must be accessed with ['clientsGrid'].
+src/components/screens/CarteiraScreen.tsx(187,54): error TS4111: Property 'clientWrapper' comes from an index signature, so it must be accessed with ['clientWrapper'].
+src/components/screens/CarteiraScreen.tsx(188,18): error TS2375: Type '{ client: Client; healthStatus: ClientHealthStatus; snapshotCount: number | undefined; lastSnapshotDate: string | null | undefined; }' is not assignable to type 'ClientCardProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'snapshotCount' are incompatible.
+    Type 'number | undefined' is not assignable to type 'number'.
+      Type 'undefined' is not assignable to type 'number'.
+src/components/screens/CarteiraScreen.tsx(196,42): error TS4111: Property 'alertsContainer' comes from an index signature, so it must be accessed with ['alertsContainer'].
+src/components/screens/CarteiraScreen.tsx(214,29): error TS4111: Property 'globalAlertsSection' comes from an index signature, so it must be accessed with ['globalAlertsSection'].
+src/components/screens/CarteiraScreen.tsx(217,34): error TS4111: Property 'globalAlertsHeader' comes from an index signature, so it must be accessed with ['globalAlertsHeader'].
+src/components/screens/CarteiraScreen.tsx(218,34): error TS4111: Property 'globalAlertsLabel' comes from an index signature, so it must be accessed with ['globalAlertsLabel'].
+src/components/screens/CarteiraScreen.tsx(221,37): error TS4111: Property 'globalAlertsBadge' comes from an index signature, so it must be accessed with ['globalAlertsBadge'].
+src/components/screens/CarteiraScreen.tsx(225,34): error TS4111: Property 'globalAlertsList' comes from an index signature, so it must be accessed with ['globalAlertsList'].
+src/components/screens/FunnelScreen.tsx(52,31): error TS4111: Property 'skeletonRows' comes from an index signature, so it must be accessed with ['skeletonRows'].
+src/components/screens/FunnelScreen.tsx(52,54): error TS4111: Property 'skeletonPulse' comes from an index signature, so it must be accessed with ['skeletonPulse'].
+src/components/screens/FunnelScreen.tsx(54,40): error TS4111: Property 'skeletonRow' comes from an index signature, so it must be accessed with ['skeletonRow'].
+src/components/screens/FunnelScreen.tsx(55,34): error TS4111: Property 'skeletonLineRow' comes from an index signature, so it must be accessed with ['skeletonLineRow'].
+src/components/screens/FunnelScreen.tsx(56,36): error TS4111: Property 'skeletonLine' comes from an index signature, so it must be accessed with ['skeletonLine'].
+src/components/screens/FunnelScreen.tsx(57,36): error TS4111: Property 'skeletonLine' comes from an index signature, so it must be accessed with ['skeletonLine'].
+src/components/screens/FunnelScreen.tsx(59,34): error TS4111: Property 'skeletonBar' comes from an index signature, so it must be accessed with ['skeletonBar'].
+src/components/screens/FunnelScreen.tsx(60,36): error TS4111: Property 'skeletonBarFill' comes from an index signature, so it must be accessed with ['skeletonBarFill'].
+src/components/screens/FunnelScreen.tsx(70,31): error TS4111: Property 'skeletonRows' comes from an index signature, so it must be accessed with ['skeletonRows'].
+src/components/screens/FunnelScreen.tsx(70,54): error TS4111: Property 'skeletonPulse' comes from an index signature, so it must be accessed with ['skeletonPulse'].
+src/components/screens/FunnelScreen.tsx(71,30): error TS4111: Property 'skeletonBlock' comes from an index signature, so it must be accessed with ['skeletonBlock'].
+src/components/screens/FunnelScreen.tsx(78,31): error TS4111: Property 'skeletonRows' comes from an index signature, so it must be accessed with ['skeletonRows'].
+src/components/screens/FunnelScreen.tsx(78,54): error TS4111: Property 'skeletonPulse' comes from an index signature, so it must be accessed with ['skeletonPulse'].
+src/components/screens/FunnelScreen.tsx(80,40): error TS4111: Property 'skeletonRow' comes from an index signature, so it must be accessed with ['skeletonRow'].
+src/components/screens/FunnelScreen.tsx(81,34): error TS4111: Property 'skeletonLineRow' comes from an index signature, so it must be accessed with ['skeletonLineRow'].
+src/components/screens/FunnelScreen.tsx(82,36): error TS4111: Property 'skeletonLine' comes from an index signature, so it must be accessed with ['skeletonLine'].
+src/components/screens/FunnelScreen.tsx(83,36): error TS4111: Property 'skeletonLine' comes from an index signature, so it must be accessed with ['skeletonLine'].
+src/components/screens/FunnelScreen.tsx(85,34): error TS4111: Property 'skeletonBar' comes from an index signature, so it must be accessed with ['skeletonBar'].
+src/components/screens/FunnelScreen.tsx(88,30): error TS4111: Property 'skeletonBlock' comes from an index signature, so it must be accessed with ['skeletonBlock'].
+src/components/screens/FunnelScreen.tsx(95,6): error TS2375: Type '{ children: Element[]; glowColor: "cyan"; className: string | undefined; }' is not assignable to type 'GlassCardProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'className' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/components/screens/FunnelScreen.tsx(95,51): error TS4111: Property 'panel' comes from an index signature, so it must be accessed with ['panel'].
+src/components/screens/FunnelScreen.tsx(96,28): error TS4111: Property 'panelTitle' comes from an index signature, so it must be accessed with ['panelTitle'].
+src/components/screens/FunnelScreen.tsx(97,30): error TS4111: Property 'panelBody' comes from an index signature, so it must be accessed with ['panelBody'].
+src/components/screens/FunnelScreen.tsx(168,29): error TS4111: Property 'main' comes from an index signature, so it must be accessed with ['main'].
+src/components/screens/FunnelScreen.tsx(175,32): error TS4111: Property 'errorBox' comes from an index signature, so it must be accessed with ['errorBox'].
+src/components/screens/FunnelScreen.tsx(176,32): error TS4111: Property 'errorText' comes from an index signature, so it must be accessed with ['errorText'].
+src/components/screens/FunnelScreen.tsx(179,77): error TS4111: Property 'retryBtn' comes from an index signature, so it must be accessed with ['retryBtn'].
+src/components/screens/FunnelScreen.tsx(184,32): error TS4111: Property 'grid' comes from an index signature, so it must be accessed with ['grid'].
+src/components/screens/FunnelScreen.tsx(185,34): error TS4111: Property 'colStretch' comes from an index signature, so it must be accessed with ['colStretch'].
+src/components/screens/FunnelScreen.tsx(190,40): error TS4111: Property 'chartWrap' comes from an index signature, so it must be accessed with ['chartWrap'].
+src/components/screens/FunnelScreen.tsx(197,34): error TS4111: Property 'colStretch' comes from an index signature, so it must be accessed with ['colStretch'].
+src/components/screens/FunnelScreen.tsx(232,32): error TS4111: Property 'colStretch' comes from an index signature, so it must be accessed with ['colStretch'].
+src/components/screens/IGOverviewScreen.tsx(36,3): error TS2375: Type '{ label: string; value: number; delta: number; trend: "up" | "down" | "neutral"; flagLevel: "L0" | "L1" | "L2"; unit: string | undefined; }' is not assignable to type 'KPI' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'unit' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/components/screens/IGOverviewScreen.tsx(61,3): error TS2375: Type '{ format: string; postCount: number; shareCount: number; trend: string; trendColor: "red" | "cyan" | "gold" | undefined; }' is not assignable to type 'PerformanceMetric' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'trendColor' are incompatible.
+    Type '"red" | "cyan" | "gold" | undefined' is not assignable to type '"red" | "cyan" | "gold"'.
+      Type 'undefined' is not assignable to type '"red" | "cyan" | "gold"'.
+src/components/screens/IGOverviewScreen.tsx(196,8): error TS2375: Type '{ title: string; subtitle: string | undefined; }' is not assignable to type 'SectionHeadProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'subtitle' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/components/screens/OnboardingScreen.tsx(101,5): error TS2322: Type '{ url?: string; label?: string; }' is not assignable to type 'BioLink'.
+  Property 'url' is optional in type '{ url?: string; label?: string; }' but required in type 'BioLink'.
+src/lib/auth/admin-guard.ts(8,23): error TS4111: Property 'ADMIN_USER_IDS' comes from an index signature, so it must be accessed with ['ADMIN_USER_IDS'].
+src/lib/mappers/clientOnboarding/clientOnboarding.mapper.ts(24,7): error TS6133: 'FALLBACK_TEXT' is declared but its value is never read.
+src/lib/mappers/clientOnboarding/clientOnboarding.mapper.ts(25,7): error TS6133: 'FALLBACK_PCT' is declared but its value is never read.
+src/lib/mappers/orbitAlert/orbitAlert.mapper.ts(52,3): error TS2375: Type '{ id: string; clientId: string; clientName: string; clientHandle: string; type: AlertType; severity: AlertSeverity; title: string; description: string; metricName: string | null; metricValue: number | null; ... 12 more ...; snapshotId: string | undefined; }' is not assignable to type 'Alert' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'confidenceLevel' are incompatible.
+    Type 'ConfidenceLevel | undefined' is not assignable to type '"L0" | "L1" | "L2"'.
+      Type 'undefined' is not assignable to type '"L0" | "L1" | "L2"'.
+src/lib/mappers/refThreshold/refThreshold.schema.ts(137,4): error TS1360: Type 'ZodObject<{ metric_name: ZodString; category: ZodNullable<ZodString>; tier_normalized: ZodNullable<ZodString>; tier: ZodOptional<ZodNullable<ZodString>>; ... 22 more ...; benchmark_note: ZodNullable<...>; }, $strip>' does not satisfy the expected type 'ZodType<RefThresholdRow, unknown, $ZodTypeInternals<RefThresholdRow, unknown>>'.
+  The types of '_output.tier' are incompatible between these types.
+    Type 'string | null | undefined' is not assignable to type 'string | null'.
+      Type 'undefined' is not assignable to type 'string | null'.
+src/lib/repositories/alertsRepository.ts(99,3): error TS2375: Type '{ id: string; clientId: string; clientName: string; clientHandle: string; type: AlertType; severity: AlertSeverity; title: string; description: string | null; metricName: string | null; ... 13 more ...; resolvedBy: string | undefined; }' is not assignable to type 'Alert' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'confidenceLevel' are incompatible.
+    Type 'ConfidenceLevel | undefined' is not assignable to type '"L0" | "L1" | "L2"'.
+      Type 'undefined' is not assignable to type '"L0" | "L1" | "L2"'.
+src/lib/repositories/avatarRepository.ts(151,42): error TS18048: 'worst' is possibly 'undefined'.
+src/lib/repositories/clientsRepository.ts(59,3): error TS2375: Type '{ id: string; handle: string; name: string; avatar: undefined; status: ClientHealthStatus; snapshotCount: number; lastSnapshotDate: string | null; metrics: { follower_balance: number; ... 4 more ...; segment: { ...; }; }; lastUpdated: string; }' is not assignable to type 'Client' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'avatar' are incompatible.
+    Type 'undefined' is not assignable to type 'string'.
+src/lib/repositories/contentContractEngine.ts(253,26): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/lib/repositories/instagramOverviewRepository.ts(402,31): error TS4111: Property 'id' comes from an index signature, so it must be accessed with ['id'].
+src/lib/repositories/instagramOverviewRepository.ts(403,31): error TS4111: Property 'score_key' comes from an index signature, so it must be accessed with ['score_key'].
+src/lib/repositories/instagramOverviewRepository.ts(404,24): error TS4111: Property 'score_value' comes from an index signature, so it must be accessed with ['score_value'].
+src/lib/repositories/instagramOverviewRepository.ts(404,65): error TS4111: Property 'score_value' comes from an index signature, so it must be accessed with ['score_value'].
+src/lib/repositories/instagramOverviewRepository.ts(406,31): error TS4111: Property 'status_text' comes from an index signature, so it must be accessed with ['status_text'].
+src/lib/repositories/instagramOverviewRepository.ts(407,25): error TS4111: Property 'status_variant' comes from an index signature, so it must be accessed with ['status_variant'].
+src/lib/repositories/instagramOverviewRepository.ts(408,40): error TS4111: Property 'status_variant' comes from an index signature, so it must be accessed with ['status_variant'].
+src/lib/repositories/instagramOverviewRepository.ts(487,30): error TS4111: Property 'format_name' comes from an index signature, so it must be accessed with ['format_name'].
+src/lib/repositories/instagramOverviewRepository.ts(489,31): error TS4111: Property 'id' comes from an index signature, so it must be accessed with ['id'].
+src/lib/repositories/instagramOverviewRepository.ts(491,39): error TS4111: Property 'post_count' comes from an index signature, so it must be accessed with ['post_count'].
+src/lib/repositories/instagramOverviewRepository.ts(492,39): error TS4111: Property 'share_count' comes from an index signature, so it must be accessed with ['share_count'].
+src/lib/repositories/instagramOverviewRepository.ts(493,31): error TS4111: Property 'trend_label' comes from an index signature, so it must be accessed with ['trend_label'].
+src/lib/repositories/instagramOverviewRepository.ts(494,25): error TS4111: Property 'trend_color' comes from an index signature, so it must be accessed with ['trend_color'].
+src/lib/repositories/instagramOverviewRepository.ts(523,12): error TS18048: 'row' is possibly 'undefined'.
+src/lib/repositories/instagramOverviewRepository.ts(524,21): error TS18048: 'row' is possibly 'undefined'.
+src/lib/repositories/instagramOverviewRepository.ts(524,43): error TS18048: 'row' is possibly 'undefined'.
+src/lib/repositories/onboardingRepository.ts(44,12): error TS4111: Property 'client_id' comes from an index signature, so it must be accessed with ['client_id'].
+src/lib/repositories/onboardingRepository.ts(44,36): error TS4111: Property 'client_id' comes from an index signature, so it must be accessed with ['client_id'].
+src/lib/repositories/onboardingRepository.ts(50,18): error TS4111: Property 'total_followers' comes from an index signature, so it must be accessed with ['total_followers'].
+src/lib/repositories/onboardingRepository.ts(50,54): error TS4111: Property 'total_followers' comes from an index signature, so it must be accessed with ['total_followers'].
+src/lib/repositories/onboardingRepository.ts(56,29): error TS4111: Property 'audience_nucleo_fiel_pct' comes from an index signature, so it must be accessed with ['audience_nucleo_fiel_pct'].
+src/lib/repositories/onboardingRepository.ts(56,73): error TS4111: Property 'audience_nucleo_fiel_pct' comes from an index signature, so it must be accessed with ['audience_nucleo_fiel_pct'].
+src/lib/repositories/onboardingRepository.ts(57,30): error TS4111: Property 'audience_consumo_passivo_pct' comes from an index signature, so it must be accessed with ['audience_consumo_passivo_pct'].
+src/lib/repositories/onboardingRepository.ts(57,78): error TS4111: Property 'audience_consumo_passivo_pct' comes from an index signature, so it must be accessed with ['audience_consumo_passivo_pct'].
+src/lib/repositories/onboardingRepository.ts(58,34): error TS4111: Property 'audience_curiosidade_externa_pct' comes from an index signature, so it must be accessed with ['audience_curiosidade_externa_pct'].
+src/lib/repositories/onboardingRepository.ts(58,86): error TS4111: Property 'audience_curiosidade_externa_pct' comes from an index signature, so it must be accessed with ['audience_curiosidade_externa_pct'].
+src/lib/repositories/onboardingRepository.ts(59,35): error TS4111: Property 'audience_alta_rotatividade_pct' comes from an index signature, so it must be accessed with ['audience_alta_rotatividade_pct'].
+src/lib/repositories/onboardingRepository.ts(59,85): error TS4111: Property 'audience_alta_rotatividade_pct' comes from an index signature, so it must be accessed with ['audience_alta_rotatividade_pct'].
+src/lib/repositories/supabaseAdmin.ts(14,25): error TS4111: Property 'NEXT_PUBLIC_SUPABASE_URL' comes from an index signature, so it must be accessed with ['NEXT_PUBLIC_SUPABASE_URL'].
+src/lib/repositories/supabaseAdmin.ts(15,36): error TS4111: Property 'SUPABASE_SERVICE_ROLE_KEY' comes from an index signature, so it must be accessed with ['SUPABASE_SERVICE_ROLE_KEY'].
+src/lib/supabase.ts(5,33): error TS4111: Property 'NEXT_PUBLIC_SUPABASE_URL' comes from an index signature, so it must be accessed with ['NEXT_PUBLIC_SUPABASE_URL'].
+src/lib/supabase.ts(6,33): error TS4111: Property 'NEXT_PUBLIC_SUPABASE_ANON_KEY' comes from an index signature, so it must be accessed with ['NEXT_PUBLIC_SUPABASE_ANON_KEY'].
+src/lib/supabase/server.ts(10,17): error TS4111: Property 'NEXT_PUBLIC_SUPABASE_URL' comes from an index signature, so it must be accessed with ['NEXT_PUBLIC_SUPABASE_URL'].
+src/lib/supabase/server.ts(11,17): error TS4111: Property 'NEXT_PUBLIC_SUPABASE_ANON_KEY' comes from an index signature, so it must be accessed with ['NEXT_PUBLIC_SUPABASE_ANON_KEY'].
+src/page.tsx(2,27): error TS6133: 'useEffect' is declared but its value is never read.
+src/page.tsx(26,78): error TS2345: Argument of type '"cpimportstore" | "eupetruchio84" | undefined' is not assignable to parameter of type '"cpimportstore" | "eupetruchio84" | (() => "cpimportstore" | "eupetruchio84")'.
+  Type 'undefined' is not assignable to type '"cpimportstore" | "eupetruchio84" | (() => "cpimportstore" | "eupetruchio84")'.
+src/page.tsx(102,26): error TS4111: Property 'shell' comes from an index signature, so it must be accessed with ['shell'].
+src/page.tsx(104,28): error TS4111: Property 'rightPane' comes from an index signature, so it must be accessed with ['rightPane'].
+src/page.tsx(107,31): error TS4111: Property 'main' comes from an index signature, so it must be accessed with ['main'].
+src/page.tsx(110,34): error TS4111: Property 'stateCenter' comes from an index signature, so it must be accessed with ['stateCenter'].
+src/page.tsx(111,37): error TS4111: Property 'loadingDot' comes from an index signature, so it must be accessed with ['loadingDot'].
+src/page.tsx(112,37): error TS4111: Property 'loadingDot' comes from an index signature, so it must be accessed with ['loadingDot'].
+src/page.tsx(113,37): error TS4111: Property 'loadingDot' comes from an index signature, so it must be accessed with ['loadingDot'].
+src/page.tsx(119,34): error TS4111: Property 'stateCenter' comes from an index signature, so it must be accessed with ['stateCenter'].
+src/page.tsx(120,34): error TS4111: Property 'errorText' comes from an index signature, so it must be accessed with ['errorText'].
+src/page.tsx(130,44): error TS4111: Property 'kpiRow' comes from an index signature, so it must be accessed with ['kpiRow'].
+src/page.tsx(136,44): error TS4111: Property 'midRow' comes from an index signature, so it must be accessed with ['midRow'].
+src/page.tsx(138,20): error TS2375: Type '{ children: (false | Element)[]; glowColor: "cyan"; className: string | undefined; }' is not assignable to type 'GlassCardProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'className' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/page.tsx(138,65): error TS4111: Property 'rightPanel' comes from an index signature, so it must be accessed with ['rightPanel'].
+src/page.tsx(141,46): error TS4111: Property 'insightStack' comes from an index signature, so it must be accessed with ['insightStack'].
+src/page.tsx(159,42): error TS4111: Property 'tabContent' comes from an index signature, so it must be accessed with ['tabContent'].
+src/page.tsx(171,38): error TS4111: Property 'tabContent' comes from an index signature, so it must be accessed with ['tabContent'].
+src/page.tsx(186,42): error TS4111: Property 'alertRow' comes from an index signature, so it must be accessed with ['alertRow'].
+src/types/orbit.ts(780,8): error TS4111: Property 'client_id' comes from an index signature, so it must be accessed with ['client_id'].
+src/types/orbit.ts(780,39): error TS4111: Property 'client_id' comes from an index signature, so it must be accessed with ['client_id'].
+src/types/orbit.ts(781,8): error TS4111: Property 'handle' comes from an index signature, so it must be accessed with ['handle'].
+src/types/orbit.ts(781,36): error TS4111: Property 'handle' comes from an index signature, so it must be accessed with ['handle'].
+src/types/orbit.ts(782,8): error TS4111: Property 'avatar_name' comes from an index signature, so it must be accessed with ['avatar_name'].
+src/types/orbit.ts(782,41): error TS4111: Property 'avatar_name' comes from an index signature, so it must be accessed with ['avatar_name'].
+src/types/orbit.ts(783,8): error TS4111: Property 'metric_count' comes from an index signature, so it must be accessed with ['metric_count'].
+src/types/orbit.ts(783,42): error TS4111: Property 'metric_count' comes from an index signature, so it must be accessed with ['metric_count'].
+src/types/orbit.ts(784,8): error TS4111: Property 'avg_quality_score' comes from an index signature, so it must be accessed with ['avg_quality_score'].
+src/types/orbit.ts(784,47): error TS4111: Property 'avg_quality_score' comes from an index signature, so it must be accessed with ['avg_quality_score'].
+src/types/orbit.ts(785,8): error TS4111: Property 'health_status' comes from an index signature, so it must be accessed with ['health_status'].
+src/types/orbit.ts(785,43): error TS4111: Property 'health_status' comes from an index signature, so it must be accessed with ['health_status'].
+src/types/orbit.ts(786,8): error TS4111: Property 'last_updated' comes from an index signature, so it must be accessed with ['last_updated'].
+src/types/orbit.ts(786,42): error TS4111: Property 'last_updated' comes from an index signature, so it must be accessed with ['last_updated'].
+src/types/orbit.ts(787,8): error TS4111: Property 'days_since_update' comes from an index signature, so it must be accessed with ['days_since_update'].
+src/types/orbit.ts(787,47): error TS4111: Property 'days_since_update' comes from an index signature, so it must be accessed with ['days_since_update'].
+src/types/orbit.ts(788,8): error TS4111: Property 'max_confidence_level' comes from an index signature, so it must be accessed with ['max_confidence_level'].
+src/types/orbit.ts(788,50): error TS4111: Property 'max_confidence_level' comes from an index signature, so it must be accessed with ['max_confidence_level'].
+src/types/orbit.ts(809,19): error TS4111: Property 'name' comes from an index signature, so it must be accessed with ['name'].
+src/types/orbit.ts(809,49): error TS4111: Property 'handle' comes from an index signature, so it must be accessed with ['handle'].
+src/types/orbit.ts(835,14): error TS4111: Property 'id' comes from an index signature, so it must be accessed with ['id'].
+src/types/orbit.ts(836,14): error TS4111: Property 'client_id' comes from an index signature, so it must be accessed with ['client_id'].
+src/types/orbit.ts(837,14): error TS4111: Property 'alert_type' comes from an index signature, so it must be accessed with ['alert_type'].
+src/types/orbit.ts(838,14): error TS4111: Property 'severity' comes from an index signature, so it must be accessed with ['severity'].
+src/types/orbit.ts(839,14): error TS4111: Property 'title' comes from an index signature, so it must be accessed with ['title'].
+src/types/orbit.ts(840,8): error TS4111: Property 'description' comes from an index signature, so it must be accessed with ['description'].
+src/types/orbit.ts(840,41): error TS4111: Property 'description' comes from an index signature, so it must be accessed with ['description'].
+src/types/orbit.ts(841,8): error TS4111: Property 'metric_name' comes from an index signature, so it must be accessed with ['metric_name'].
+src/types/orbit.ts(841,41): error TS4111: Property 'metric_name' comes from an index signature, so it must be accessed with ['metric_name'].
+src/types/orbit.ts(842,8): error TS4111: Property 'metric_value' comes from an index signature, so it must be accessed with ['metric_value'].
+src/types/orbit.ts(842,42): error TS4111: Property 'metric_value' comes from an index signature, so it must be accessed with ['metric_value'].
+src/types/orbit.ts(843,8): error TS4111: Property 'threshold_value' comes from an index signature, so it must be accessed with ['threshold_value'].
+src/types/orbit.ts(843,45): error TS4111: Property 'threshold_value' comes from an index signature, so it must be accessed with ['threshold_value'].
+src/types/orbit.ts(844,8): error TS4111: Property 'action_url' comes from an index signature, so it must be accessed with ['action_url'].
+src/types/orbit.ts(844,40): error TS4111: Property 'action_url' comes from an index signature, so it must be accessed with ['action_url'].
+src/types/orbit.ts(845,14): error TS4111: Property 'is_resolved' comes from an index signature, so it must be accessed with ['is_resolved'].
+src/types/orbit.ts(846,14): error TS4111: Property 'created_at' comes from an index signature, so it must be accessed with ['created_at'].
+src/types/orbit.ts(847,8): error TS4111: Property 'clients' comes from an index signature, so it must be accessed with ['clients'].
+src/types/orbit.ts(847,49): error TS4111: Property 'clients' comes from an index signature, so it must be accessed with ['clients'].
+src/types/orbit.ts(868,14): error TS4111: Property 'id' comes from an index signature, so it must be accessed with ['id'].
+src/types/orbit.ts(869,14): error TS4111: Property 'client_id' comes from an index signature, so it must be accessed with ['client_id'].
+src/types/orbit.ts(870,14): error TS4111: Property 'title' comes from an index signature, so it must be accessed with ['title'].
+src/types/orbit.ts(871,14): error TS4111: Property 'description' comes from an index signature, so it must be accessed with ['description'].
+src/types/orbit.ts(872,14): error TS4111: Property 'severity' comes from an index signature, so it must be accessed with ['severity'].
+src/types/orbit.ts(873,14): error TS4111: Property 'created_at' comes from an index signature, so it must be accessed with ['created_at'].
+src/types/orbit.ts(874,8): error TS4111: Property 'clients' comes from an index signature, so it must be accessed with ['clients'].
+src/types/orbit.ts(874,49): error TS4111: Property 'clients' comes from an index signature, so it must be accessed with ['clients'].
+src/types/orbit.ts(904,14): error TS4111: Property 'client_id' comes from an index signature, so it must be accessed with ['client_id'].
+src/types/orbit.ts(905,14): error TS4111: Property 'handle' comes from an index signature, so it must be accessed with ['handle'].
+src/types/orbit.ts(906,14): error TS4111: Property 'name' comes from an index signature, so it must be accessed with ['name'].
+src/types/orbit.ts(907,14): error TS4111: Property 'expected_gender_male' comes from an index signature, so it must be accessed with ['expected_gender_male'].
+src/types/orbit.ts(908,14): error TS4111: Property 'expected_gender_female' comes from an index signature, so it must be accessed with ['expected_gender_female'].
+src/types/orbit.ts(909,14): error TS4111: Property 'expected_age_range' comes from an index signature, so it must be accessed with ['expected_age_range'].
+src/types/orbit.ts(910,8): error TS4111: Property 'expected_interest' comes from an index signature, so it must be accessed with ['expected_interest'].
+src/types/orbit.ts(910,47): error TS4111: Property 'expected_interest' comes from an index signature, so it must be accessed with ['expected_interest'].
+src/types/orbit.ts(911,14): error TS4111: Property 'expected_geo' comes from an index signature, so it must be accessed with ['expected_geo'].
+src/types/orbit.ts(912,14): error TS4111: Property 'expected_geo_pct' comes from an index signature, so it must be accessed with ['expected_geo_pct'].
+src/types/orbit.ts(913,14): error TS4111: Property 'real_gender_male' comes from an index signature, so it must be accessed with ['real_gender_male'].
+src/types/orbit.ts(914,14): error TS4111: Property 'real_gender_female' comes from an index signature, so it must be accessed with ['real_gender_female'].
+src/types/orbit.ts(915,14): error TS4111: Property 'real_age_range' comes from an index signature, so it must be accessed with ['real_age_range'].
+src/types/orbit.ts(916,8): error TS4111: Property 'real_interest' comes from an index signature, so it must be accessed with ['real_interest'].
+src/types/orbit.ts(916,43): error TS4111: Property 'real_interest' comes from an index signature, so it must be accessed with ['real_interest'].
+src/types/orbit.ts(917,14): error TS4111: Property 'real_geo' comes from an index signature, so it must be accessed with ['real_geo'].
+src/types/orbit.ts(918,14): error TS4111: Property 'real_geo_pct' comes from an index signature, so it must be accessed with ['real_geo_pct'].
+src/types/orbit.ts(919,14): error TS4111: Property 'alignment_score' comes from an index signature, so it must be accessed with ['alignment_score'].
+src/types/orbit.ts(920,14): error TS4111: Property 'alignment_status' comes from an index signature, so it must be accessed with ['alignment_status'].
+src/types/orbit.ts(943,14): error TS4111: Property 'client_id' comes from an index signature, so it must be accessed with ['client_id'].
+src/types/orbit.ts(944,14): error TS4111: Property 'validation_date' comes from an index signature, so it must be accessed with ['validation_date'].
+src/types/orbit.ts(945,8): error TS4111: Property 'observed_interest' comes from an index signature, so it must be accessed with ['observed_interest'].
+src/types/orbit.ts(945,47): error TS4111: Property 'observed_interest' comes from an index signature, so it must be accessed with ['observed_interest'].
+src/types/orbit.ts(946,8): error TS4111: Property 'observed_geo_primary' comes from an index signature, so it must be accessed with ['observed_geo_primary'].
+src/types/orbit.ts(946,50): error TS4111: Property 'observed_geo_primary' comes from an index signature, so it must be accessed with ['observed_geo_primary'].
+src/types/orbit.ts(947,8): error TS4111: Property 'observed_geo_pct' comes from an index signature, so it must be accessed with ['observed_geo_pct'].
+src/types/orbit.ts(947,46): error TS4111: Property 'observed_geo_pct' comes from an index signature, so it must be accessed with ['observed_geo_pct'].
+src/types/orbit.ts(948,44): error TS4111: Property 'source' comes from an index signature, so it must be accessed with ['source'].
+src/types/orbit.ts(949,53): error TS4111: Property 'confidence_level' comes from an index signature, so it must be accessed with ['confidence_level'].
+src/types/orbit.ts(950,8): error TS4111: Property 'notes' comes from an index signature, so it must be accessed with ['notes'].
+src/types/orbit.ts(950,35): error TS4111: Property 'notes' comes from an index signature, so it must be accessed with ['notes'].
+src/types/orbit.ts(968,14): error TS4111: Property 'client_id' comes from an index signature, so it must be accessed with ['client_id'].
+src/types/orbit.ts(969,14): error TS4111: Property 'period_start' comes from an index signature, so it must be accessed with ['period_start'].
+src/types/orbit.ts(970,14): error TS4111: Property 'period_end' comes from an index signature, so it must be accessed with ['period_end'].
+src/types/orbit.ts(971,8): error TS4111: Property 'link_ctr_pct' comes from an index signature, so it must be accessed with ['link_ctr_pct'].
+src/types/orbit.ts(971,42): error TS4111: Property 'link_ctr_pct' comes from an index signature, so it must be accessed with ['link_ctr_pct'].
+src/types/orbit.ts(972,8): error TS4111: Property 'followers_net' comes from an index signature, so it must be accessed with ['followers_net'].
+src/types/orbit.ts(972,43): error TS4111: Property 'followers_net' comes from an index signature, so it must be accessed with ['followers_net'].
+src/types/orbit.ts(1003,14): error TS4111: Property 'client_id' comes from an index signature, so it must be accessed with ['client_id'].
+src/types/orbit.ts(1004,14): error TS4111: Property 'period_start' comes from an index signature, so it must be accessed with ['period_start'].
+src/types/orbit.ts(1005,14): error TS4111: Property 'period_end' comes from an index signature, so it must be accessed with ['period_end'].
+src/types/orbit.ts(1006,8): error TS4111: Property 'gender_male_pct' comes from an index signature, so it must be accessed with ['gender_male_pct'].
+src/types/orbit.ts(1006,45): error TS4111: Property 'gender_male_pct' comes from an index signature, so it must be accessed with ['gender_male_pct'].
+src/types/orbit.ts(1007,8): error TS4111: Property 'gender_female_pct' comes from an index signature, so it must be accessed with ['gender_female_pct'].
+src/types/orbit.ts(1007,47): error TS4111: Property 'gender_female_pct' comes from an index signature, so it must be accessed with ['gender_female_pct'].
+src/types/orbit.ts(1008,8): error TS4111: Property 'gender_other_pct' comes from an index signature, so it must be accessed with ['gender_other_pct'].
+src/types/orbit.ts(1008,46): error TS4111: Property 'gender_other_pct' comes from an index signature, so it must be accessed with ['gender_other_pct'].
+src/types/orbit.ts(1009,8): error TS4111: Property 'top_cities' comes from an index signature, so it must be accessed with ['top_cities'].
+src/types/orbit.ts(1009,47): error TS4111: Property 'top_cities' comes from an index signature, so it must be accessed with ['top_cities'].
+src/types/orbit.ts(1029,8): error TS4111: Property 'reach_total' comes from an index signature, so it must be accessed with ['reach_total'].
+src/types/orbit.ts(1029,41): error TS4111: Property 'reach_total' comes from an index signature, so it must be accessed with ['reach_total'].
+src/types/orbit.ts(1030,8): error TS4111: Property 'profile_visits' comes from an index signature, so it must be accessed with ['profile_visits'].
+src/types/orbit.ts(1030,44): error TS4111: Property 'profile_visits' comes from an index signature, so it must be accessed with ['profile_visits'].
+src/types/orbit.ts(1031,8): error TS4111: Property 'link_clicks' comes from an index signature, so it must be accessed with ['link_clicks'].
+src/types/orbit.ts(1031,41): error TS4111: Property 'link_clicks' comes from an index signature, so it must be accessed with ['link_clicks'].
+src/types/orbit.ts(1057,14): error TS4111: Property 'id' comes from an index signature, so it must be accessed with ['id'].
+src/types/orbit.ts(1058,14): error TS4111: Property 'metric' comes from an index signature, so it must be accessed with ['metric'].
+src/types/orbit.ts(1059,14): error TS4111: Property 'value' comes from an index signature, so it must be accessed with ['value'].
+src/types/orbit.ts(1060,14): error TS4111: Property 'semaphore' comes from an index signature, so it must be accessed with ['semaphore'].
+src/types/orbit.ts(1061,14): error TS4111: Property 'delta_pct' comes from an index signature, so it must be accessed with ['delta_pct'].
+src/types/orbit.ts(1062,14): error TS4111: Property 'period_start' comes from an index signature, so it must be accessed with ['period_start'].
+src/types/orbit.ts(1063,14): error TS4111: Property 'period_end' comes from an index signature, so it must be accessed with ['period_end'].
+src/types/orbit.ts(1079,14): error TS4111: Property 'id' comes from an index signature, so it must be accessed with ['id'].
+src/types/orbit.ts(1080,14): error TS4111: Property 'score_key' comes from an index signature, so it must be accessed with ['score_key'].
+src/types/orbit.ts(1081,14): error TS4111: Property 'score_value' comes from an index signature, so it must be accessed with ['score_value'].
+src/types/orbit.ts(1082,14): error TS4111: Property 'status_text' comes from an index signature, so it must be accessed with ['status_text'].
+src/types/orbit.ts(1083,14): error TS4111: Property 'status_variant' comes from an index signature, so it must be accessed with ['status_variant'].
+src/types/orbit.ts(1100,14): error TS4111: Property 'id' comes from an index signature, so it must be accessed with ['id'].
+src/types/orbit.ts(1101,14): error TS4111: Property 'format_name' comes from an index signature, so it must be accessed with ['format_name'].
+src/types/orbit.ts(1102,14): error TS4111: Property 'post_count' comes from an index signature, so it must be accessed with ['post_count'].
+src/types/orbit.ts(1103,14): error TS4111: Property 'share_count' comes from an index signature, so it must be accessed with ['share_count'].
+src/types/orbit.ts(1104,14): error TS4111: Property 'trend_label' comes from an index signature, so it must be accessed with ['trend_label'].
+src/types/orbit.ts(1105,14): error TS4111: Property 'trend_color' comes from an index signature, so it must be accessed with ['trend_color'].
+src/types/orbit.ts(1122,14): error TS4111: Property 'id' comes from an index signature, so it must be accessed with ['id'].
+src/types/orbit.ts(1123,14): error TS4111: Property 'client_id' comes from an index signature, so it must be accessed with ['client_id'].
+src/types/orbit.ts(1124,14): error TS4111: Property 'age_range' comes from an index signature, so it must be accessed with ['age_range'].
+src/types/orbit.ts(1125,14): error TS4111: Property 'gender_split' comes from an index signature, so it must be accessed with ['gender_split'].
+src/types/orbit.ts(1126,14): error TS4111: Property 'top_city' comes from an index signature, so it must be accessed with ['top_city'].
+src/types/orbit.ts(1127,14): error TS4111: Property 'recorded_at' comes from an index signature, so it must be accessed with ['recorded_at'].
+src/types/orbit.ts(1159,14): error TS4111: Property 'client_id' comes from an index signature, so it must be accessed with ['client_id'].
+src/types/orbit.ts(1160,14): error TS4111: Property 'cpc' comes from an index signature, so it must be accessed with ['cpc'].
+src/types/orbit.ts(1161,14): error TS4111: Property 'fatigue' comes from an index signature, so it must be accessed with ['fatigue'].

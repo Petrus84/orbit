@@ -11,6 +11,7 @@ import { FormatPerformanceTable } from '@/components/content/FormatPerformanceTa
 import { InsightCard } from '@/components/content/InsightCard'
 import { CriticalAlert } from '@/components/content/CriticalAlert'
 import { AudienceSummaryPanel } from '@/components/content/AudienceSummaryPanel'
+import { DataStatusNotice } from '@/components/content/DataStatusNotice'
 import { SectorPositioningPanel } from '@/components/panels/SectorPositioningPanel'
 import { GlassCard } from '@/components/common/GlassCard'
 import { DateRangeControl, type PeriodRange } from '@/components/common/DateRangeControl'
@@ -30,7 +31,11 @@ return {
   value: data.value,
   delta: data.delta,
   trend: data.delta > 0 ? 'up' : data.delta < 0 ? 'down' : 'neutral',
-  flagLevel: (data.sourceLevel as 'L0' | 'L1' | 'L2') || 'L0',
+  // FIX (19/09/2026): fallback era 'L0' — mostrava badge verde "Medido"
+  // quando sourceLevel vem null/undefined, ou seja, quando na verdade não
+  // sabemos a origem do dado. O fallback correto pro pior caso é 'L2'
+  // (Hipótese), não o melhor. Ver KPICard.tsx FLAG_TOKENS.
+  flagLevel: (data.sourceLevel as 'L0' | 'L1' | 'L2') || 'L2',
   ...(data.unit ? { unit: data.unit } : {}),
 }
 }
@@ -144,6 +149,11 @@ return (
         {/* SUCESSO */}
         {status === 'success' && data && (
           <>
+            {/* Por que esta tela está vazia/incompleta — fatos do banco */}
+            {data.dataStatus && data.dataStatus.length > 0 && (
+              <DataStatusNotice notices={data.dataStatus} />
+            )}
+
             {/* TELA 1 — Visão Geral */}
             {activeTab === 'overview' && (
               <>

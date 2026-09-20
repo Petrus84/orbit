@@ -1,0 +1,510 @@
+{
+  "timestamp": "2026-09-19T23:11:09.081Z",
+  "clients": [
+    {
+      "name": "cpimportstore",
+      "id": "2141d077-0d82-4fda-83df-558377f105ff",
+      "truncated": false,
+      "stats": {
+        "total": 18,
+        "reach": 18,
+        "impressions": 16,
+        "likes": 17,
+        "comments": 17,
+        "shares": 17,
+        "saves": 17,
+        "l0": 16,
+        "l1": 2,
+        "l2": 0,
+        "boostCandidates": 1,
+        "negativeMetrics": 0,
+        "inconsistentConfidence": 0,
+        "avgReach": 211,
+        "avgErRealPct": 2.87,
+        "avgUtilityScorePct": 41.67
+      },
+      "byFormat": {
+        "static_post": {
+          "total": 1,
+          "reach": 1,
+          "impressions": 0,
+          "likes": 1,
+          "comments": 1,
+          "shares": 1,
+          "saves": 1,
+          "l0": 0,
+          "l1": 1,
+          "l2": 0,
+          "boostCandidates": 0,
+          "negativeMetrics": 0,
+          "inconsistentConfidence": 0,
+          "avgReach": 213,
+          "avgErRealPct": 4.23,
+          "avgUtilityScorePct": 0
+        },
+        "reel": {
+          "total": 15,
+          "reach": 15,
+          "impressions": 15,
+          "likes": 15,
+          "comments": 15,
+          "shares": 15,
+          "saves": 15,
+          "l0": 15,
+          "l1": 0,
+          "l2": 0,
+          "boostCandidates": 1,
+          "negativeMetrics": 0,
+          "inconsistentConfidence": 0,
+          "avgReach": 205,
+          "avgErRealPct": 2.95,
+          "avgUtilityScorePct": 45
+        },
+        "carousel": {
+          "total": 2,
+          "reach": 2,
+          "impressions": 1,
+          "likes": 1,
+          "comments": 1,
+          "shares": 1,
+          "saves": 1,
+          "l0": 1,
+          "l1": 1,
+          "l2": 0,
+          "boostCandidates": 0,
+          "negativeMetrics": 0,
+          "inconsistentConfidence": 0,
+          "avgReach": 251,
+          "avgErRealPct": 0.34,
+          "avgUtilityScorePct": 37.5
+        }
+      },
+      "samples": {
+        "withReach": [
+          {
+            "published_at": "2026-05-18T23:36:18+00:00",
+            "content_format": "static_post",
+            "reach": 213,
+            "impressions": null,
+            "likes": 2,
+            "confidence_level": "L1"
+          },
+          {
+            "published_at": "2026-06-08T18:21:00+00:00",
+            "content_format": "reel",
+            "reach": 259,
+            "impressions": 352,
+            "likes": 10,
+            "confidence_level": "L0"
+          },
+          {
+            "published_at": "2026-06-05T12:35:00+00:00",
+            "content_format": "reel",
+            "reach": 563,
+            "impressions": 483,
+            "likes": 12,
+            "confidence_level": "L0"
+          }
+        ],
+        "withoutReach": []
+      }
+    },
+    {
+      "name": "eupetruchio84",
+      "id": "c4722cfc-cff2-4a03-a457-f14ee8c9e0e7",
+      "truncated": false,
+      "stats": {
+        "total": 21,
+        "reach": 21,
+        "impressions": 9,
+        "likes": 16,
+        "comments": 16,
+        "shares": 9,
+        "saves": 9,
+        "l0": 13,
+        "l1": 8,
+        "l2": 0,
+        "boostCandidates": 0,
+        "negativeMetrics": 0,
+        "inconsistentConfidence": 0,
+        "avgReach": 477,
+        "avgErRealPct": 1.22,
+        "avgUtilityScorePct": 1.19
+      },
+      "byFormat": {
+        "static_post": {
+          "total": 16,
+          "reach": 16,
+          "impressions": 9,
+          "likes": 16,
+          "comments": 16,
+          "shares": 9,
+          "saves": 9,
+          "l0": 8,
+          "l1": 8,
+          "l2": 0,
+          "boostCandidates": 0,
+          "negativeMetrics": 0,
+          "inconsistentConfidence": 0,
+          "avgReach": 477,
+          "avgErRealPct": 1.22,
+          "avgUtilityScorePct": 1.56
+        },
+        "reel": {
+          "total": 5,
+          "reach": 5,
+          "impressions": 0,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0,
+          "saves": 0,
+          "l0": 5,
+          "l1": 0,
+          "l2": 0,
+          "boostCandidates": 0,
+          "negativeMetrics": 0,
+          "inconsistentConfidence": 0,
+          "avgReach": 477,
+          "avgErRealPct": null,
+          "avgUtilityScorePct": 0
+        }
+      },
+      "samples": {
+        "withReach": [
+          {
+            "published_at": "2026-07-03T02:19:50+00:00",
+            "content_format": "static_post",
+            "reach": 408,
+            "impressions": 448,
+            "likes": 89,
+            "confidence_level": "L1"
+          },
+          {
+            "published_at": "2026-02-01T00:24:34+00:00",
+            "content_format": "static_post",
+            "reach": 477,
+            "impressions": null,
+            "likes": 0,
+            "confidence_level": "L0"
+          },
+          {
+            "published_at": "2026-07-14T21:32:10+00:00",
+            "content_format": "static_post",
+            "reach": 174,
+            "impressions": 212,
+            "likes": 23,
+            "confidence_level": "L1"
+          }
+        ],
+        "withoutReach": []
+      }
+    },
+    {
+      "name": "mauricioartphoto",
+      "id": "344445c9-08c5-4c07-be1b-c9f8f8e12865",
+      "truncated": false,
+      "stats": {
+        "total": 40,
+        "reach": 40,
+        "impressions": 7,
+        "likes": 7,
+        "comments": 7,
+        "shares": 7,
+        "saves": 7,
+        "l0": 33,
+        "l1": 7,
+        "l2": 0,
+        "boostCandidates": 0,
+        "negativeMetrics": 0,
+        "inconsistentConfidence": 0,
+        "avgReach": 134,
+        "avgErRealPct": 1.39,
+        "avgUtilityScorePct": 0.63
+      },
+      "byFormat": {
+        "carousel": {
+          "total": 23,
+          "reach": 23,
+          "impressions": 7,
+          "likes": 7,
+          "comments": 7,
+          "shares": 7,
+          "saves": 7,
+          "l0": 16,
+          "l1": 7,
+          "l2": 0,
+          "boostCandidates": 0,
+          "negativeMetrics": 0,
+          "inconsistentConfidence": 0,
+          "avgReach": 134,
+          "avgErRealPct": 1.39,
+          "avgUtilityScorePct": 1.09
+        },
+        "static_post": {
+          "total": 7,
+          "reach": 7,
+          "impressions": 0,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0,
+          "saves": 0,
+          "l0": 7,
+          "l1": 0,
+          "l2": 0,
+          "boostCandidates": 0,
+          "negativeMetrics": 0,
+          "inconsistentConfidence": 0,
+          "avgReach": 134,
+          "avgErRealPct": null,
+          "avgUtilityScorePct": 0
+        },
+        "reel": {
+          "total": 10,
+          "reach": 10,
+          "impressions": 0,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0,
+          "saves": 0,
+          "l0": 10,
+          "l1": 0,
+          "l2": 0,
+          "boostCandidates": 0,
+          "negativeMetrics": 0,
+          "inconsistentConfidence": 0,
+          "avgReach": 134,
+          "avgErRealPct": null,
+          "avgUtilityScorePct": 0
+        }
+      },
+      "samples": {
+        "withReach": [
+          {
+            "published_at": "2026-03-18T00:22:14+00:00",
+            "content_format": "carousel",
+            "reach": 134,
+            "impressions": 485,
+            "likes": 13,
+            "confidence_level": "L1"
+          },
+          {
+            "published_at": "2026-03-13T22:39:09+00:00",
+            "content_format": "carousel",
+            "reach": 133,
+            "impressions": 485,
+            "likes": 12,
+            "confidence_level": "L1"
+          },
+          {
+            "published_at": "2026-03-09T21:05:57+00:00",
+            "content_format": "carousel",
+            "reach": 133,
+            "impressions": 485,
+            "likes": 12,
+            "confidence_level": "L1"
+          }
+        ],
+        "withoutReach": []
+      }
+    },
+    {
+      "name": "djcaiodogao",
+      "id": "c2779193-d3a0-4fc7-b392-ad64fea4273f",
+      "truncated": false,
+      "stats": {
+        "total": 215,
+        "reach": 26,
+        "impressions": 26,
+        "likes": 26,
+        "comments": 26,
+        "shares": 26,
+        "saves": 26,
+        "l0": 189,
+        "l1": 26,
+        "l2": 0,
+        "boostCandidates": 0,
+        "negativeMetrics": 0,
+        "inconsistentConfidence": 0,
+        "avgReach": 787,
+        "avgErRealPct": 0.74,
+        "avgUtilityScorePct": 0.58
+      },
+      "byFormat": {
+        "static_post": {
+          "total": 26,
+          "reach": 26,
+          "impressions": 26,
+          "likes": 26,
+          "comments": 26,
+          "shares": 26,
+          "saves": 26,
+          "l0": 0,
+          "l1": 26,
+          "l2": 0,
+          "boostCandidates": 0,
+          "negativeMetrics": 0,
+          "inconsistentConfidence": 0,
+          "avgReach": 787,
+          "avgErRealPct": 0.74,
+          "avgUtilityScorePct": 2.88
+        },
+        "carousel": {
+          "total": 4,
+          "reach": 0,
+          "impressions": 0,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0,
+          "saves": 0,
+          "l0": 4,
+          "l1": 0,
+          "l2": 0,
+          "boostCandidates": 0,
+          "negativeMetrics": 0,
+          "inconsistentConfidence": 0,
+          "avgReach": null,
+          "avgErRealPct": null,
+          "avgUtilityScorePct": 0
+        },
+        "reel": {
+          "total": 185,
+          "reach": 0,
+          "impressions": 0,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0,
+          "saves": 0,
+          "l0": 185,
+          "l1": 0,
+          "l2": 0,
+          "boostCandidates": 0,
+          "negativeMetrics": 0,
+          "inconsistentConfidence": 0,
+          "avgReach": null,
+          "avgErRealPct": null,
+          "avgUtilityScorePct": 0.27
+        }
+      },
+      "samples": {
+        "withReach": [
+          {
+            "published_at": "2025-07-26T18:35:00+00:00",
+            "content_format": "static_post",
+            "reach": 587,
+            "impressions": 619,
+            "likes": 22,
+            "confidence_level": "L1"
+          },
+          {
+            "published_at": "2025-07-26T18:33:00+00:00",
+            "content_format": "static_post",
+            "reach": 866,
+            "impressions": 966,
+            "likes": 42,
+            "confidence_level": "L1"
+          },
+          {
+            "published_at": "2025-04-16T13:45:00+00:00",
+            "content_format": "static_post",
+            "reach": 326,
+            "impressions": 336,
+            "likes": 20,
+            "confidence_level": "L1"
+          }
+        ],
+        "withoutReach": [
+          {
+            "published_at": "2025-04-21T18:36:00+00:00",
+            "content_format": "carousel",
+            "caption": "Levou a esse mundo lições de fé, humilda",
+            "confidence_level": "L0"
+          },
+          {
+            "published_at": "2025-04-18T06:54:00+00:00",
+            "content_format": "carousel",
+            "caption": "Treino bi set para ombro frontal\n\nInicia",
+            "confidence_level": "L0"
+          },
+          {
+            "published_at": "2025-04-05T18:36:00+00:00",
+            "content_format": "carousel",
+            "caption": "Sendo Minha Melhor Companhia",
+            "confidence_level": "L0"
+          }
+        ]
+      }
+    },
+    {
+      "name": "dogativo",
+      "id": "e45927a7-4f3d-4fd3-bac7-543cc3545dc1",
+      "truncated": false,
+      "stats": {
+        "total": 172,
+        "reach": 172,
+        "impressions": 172,
+        "likes": 172,
+        "comments": 172,
+        "shares": 172,
+        "saves": 172,
+        "l0": 172,
+        "l1": 0,
+        "l2": 0,
+        "boostCandidates": 1,
+        "negativeMetrics": 0,
+        "inconsistentConfidence": 0,
+        "avgReach": 2743,
+        "avgErRealPct": 0.28,
+        "avgUtilityScorePct": 3.92
+      },
+      "byFormat": {
+        "static_post": {
+          "total": 172,
+          "reach": 172,
+          "impressions": 172,
+          "likes": 172,
+          "comments": 172,
+          "shares": 172,
+          "saves": 172,
+          "l0": 172,
+          "l1": 0,
+          "l2": 0,
+          "boostCandidates": 1,
+          "negativeMetrics": 0,
+          "inconsistentConfidence": 0,
+          "avgReach": 2743,
+          "avgErRealPct": 0.28,
+          "avgUtilityScorePct": 3.92
+        }
+      },
+      "samples": {
+        "withReach": [
+          {
+            "published_at": "2026-06-25T03:00:00+00:00",
+            "content_format": "static_post",
+            "reach": 244,
+            "impressions": 244,
+            "likes": 0,
+            "confidence_level": "L0"
+          },
+          {
+            "published_at": "2026-07-05T03:00:00+00:00",
+            "content_format": "static_post",
+            "reach": 317,
+            "impressions": 317,
+            "likes": 0,
+            "confidence_level": "L0"
+          },
+          {
+            "published_at": "2026-02-28T03:00:00+00:00",
+            "content_format": "static_post",
+            "reach": 4638,
+            "impressions": 4638,
+            "likes": 75,
+            "confidence_level": "L0"
+          }
+        ],
+        "withoutReach": []
+      }
+    }
+  ]
+}

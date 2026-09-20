@@ -156,7 +156,7 @@ const METRIC_LABEL: Record<string, string> = {
 const ZERO_INFLATED_EVENT_NOUN: Record<string, string> = {
   er_real_pct: 'ação de quem viu (curtida, comentário, salvamento ou compartilhamento)',
   vps_pct: 'alcance dentro da própria base de seguidores',
-  polemic_score_pct: 'gente discordando nos comentários (não só curtindo)',
+  polemic_score_pct: 'discordância nos comentários',
   utility_score_pct: 'salvamento ou compartilhamento',
   cta_rate_pct: 'pedido de compra',
   // ✅ NOVO (2026-09-18)
@@ -298,7 +298,9 @@ function medianAfterIqrTrim(values: number[]): number | null {
 }
 
 function buildAlgoRiskText(value: number | null): string {
-  if (value === null) return 'Sem série suficiente para calcular risco algorítmico ainda.'
+  if (value === null) {
+    return `Precisa de ao menos ${ALGO_RISK_N_RECENT_MIN} posts recentes e de um histórico anterior com curtidas e comentários.`
+  }
   if (Math.abs(value) < 0.02) return 'Engajamento recente na mesma faixa do seu histórico — estável.'
   if (value > 0) {
     return `Engajamento recente ${formatPtBr(value * 100)}% abaixo da sua própria mediana histórica.`
@@ -442,6 +444,12 @@ function buildTranslationLine(metricName: string, value: number): string | null 
   return template(value)
 }
 
+// Título de alerta já carrega o valor; a descrição não repete a "Traduzindo:".
+export function stripTranslation(text: string): string {
+  const i = text.indexOf(' Traduzindo:')
+  return (i === -1 ? text : text.slice(0, i)).trim()
+}
+
 function withTranslation(baseText: string, metricName: string, value: number): string {
   if (baseText.includes('Traduzindo:')) return baseText
   const translation = buildTranslationLine(metricName, value)
@@ -488,7 +496,7 @@ function buildRuleDeclaration(
       return `Comparamos com ${setor}, sem separar por tamanho de conta.`
     case 'global':
     default:
-      return 'Ainda não há recorte do seu tipo de negócio. Comparamos com o conjunto geral de contas da base.'
+      return 'Sem recorte para o seu tipo de negócio: comparamos com o conjunto geral de contas.'
   }
 }
 
@@ -509,24 +517,34 @@ function locateValueInRange(value: number, signalRangeLabel: string): string | n
   return 'no meio da sua faixa'
 }
 
+// Faixa vinda do banco ("0.00%–27.04%") -> pt-BR sem casas inúteis ("0%–27%").
+function formatSignalRange(label: string): string {
+  return label.replace(/\d+(?:\.\d+)?/g, (n) => {
+    const v = parseFloat(n)
+    return Number.isInteger(v) || Math.abs(v - Math.round(v)) < 0.05
+      ? String(Math.round(v))
+      : formatPtBr(v)
+  })
+}
+
+// Regra de copy (19/09/2026): cada fato uma vez. O valor já está no número
+// grande do card; o escopo da comparação mora no rodapé do bloco
+// (ruleDeclaration). Aqui só: quão comum é zero, faixa de quem tem, posição.
 function buildZeroInflatedText(
   metricName: string,
-  categoryLabel: string,
+  _categoryLabel: string,
   zeroPct: number,
   signalRangeLabel: string,
   value: number
 ): string {
   const eventNoun = ZERO_INFLATED_EVENT_NOUN[metricName] ?? METRIC_LABEL[metricName] ?? metricName
   const location = locateValueInRange(value, signalRangeLabel)
-  const friendlyFraction = toFriendlyFraction(zeroPct)
-  const zeroPctPhrase = friendlyFraction
-    ? `${friendlyFraction} (${zeroPct.toFixed(0)}%)`
-    : `${zeroPct.toFixed(0)}%`
+  const zeroPhrase = toFriendlyFraction(zeroPct) ?? `${zeroPct.toFixed(0)}%`
 
-  let text = `${zeroPctPhrase} dos posts de ${categoryLabel} não têm ${eventNoun} — isso é o padrão da amostra, não uma falha da conta. Quando o post tem, o volume costuma ficar em ${signalRangeLabel}.`
+  let text = `${zeroPhrase} dos posts da amostra não têm ${eventNoun} — padrão, não falha da conta. Quando têm, o volume fica em ${formatSignalRange(signalRangeLabel)}.`
 
   if (location) {
-    text += ` O seu valor (${formatPtBr(value, 2)}%) está ${location}.`
+    text += ` Você está ${location}.`
   }
 
   return withTranslation(text, metricName, value)
@@ -548,8 +566,8 @@ function buildTechnicalErrorText(metricName: string): string {
 // "classificação indisponível" (isso soa a falha técnica, não a decisão de
 // produto que de fato é).
 function buildNoMarketRecortText(metricName: string): string {
-  const label = METRIC_LABEL[metricName] ?? metricName
-  return `${capitalize(label)}: número real, sem recorte setorial ainda. Sem base de comparação de mercado para esta métrica hoje.`
+  void metricName
+  return 'Sem comparação de mercado.'
 }
 
 function guardOutOfRangePercentMetric(metricName: string, value: number): ClassifiedMetric | null {
@@ -573,7 +591,7 @@ function guardOutOfRangePercentMetric(metricName: string, value: number): Classi
 function buildLowConfidenceCard(
   metricName: string,
   value: number,
-  ruleDeclaration: string,
+  _ruleDeclaration: string,
   confidenceScore: number | null
 ): { title: string; probableCause: string; immediateAction: string } {
   const label = METRIC_LABEL[metricName] ?? metricName
@@ -581,14 +599,14 @@ function buildLowConfidenceCard(
   if (confidenceScore === null) {
     return {
       title: `${capitalize(label)} em ${formatPtBr(value, 2)}% — sem referência para o seu negócio`,
-      probableCause: `${ruleDeclaration} Ainda não há comparação específica para o seu tipo de conta. Confira o setor marcado no onboarding.`,
+      probableCause: 'Não há régua calibrada para o seu tipo de conta. Confira o setor marcado no onboarding.',
       immediateAction: 'Acompanhe este número na sua própria conta, semana a semana. Não mude oferta por ele agora.',
     }
   }
 
   return {
     title: `${capitalize(label)} em ${formatPtBr(value, 2)}% — ainda não dá para julgar este número`,
-    probableCause: `${ruleDeclaration} O número da conta é real; a base de comparação deste recorte ainda é curta.`,
+    probableCause: 'O número da conta é real; a base de comparação deste recorte é curta.',
     immediateAction:
       'Publique no ritmo atual por mais 14 dias antes de mudar oferta, bio ou verba por causa deste cartão.',
   }
@@ -623,7 +641,7 @@ export async function classifyMetric(
       confidenceLevel: 'L2',
       thresholdSource: null,
       confidenceScore: null,
-      ruleDeclaration: 'Ainda não há recorte de mercado calibrado para esta métrica.',
+      ruleDeclaration: 'Sem régua de mercado calibrada para esta métrica.',
       calibrationMethod: null,
       zeroInflated: null,
     }
@@ -737,10 +755,6 @@ function applyConfidenceGate(
     }
   }
   return { semaphore, caveat: null }
-}
-
-function buildLowConfidenceWarning(ruleDeclaration: string): string {
-  return `O sinal existe, mas a base de comparação ainda é curta. ${ruleDeclaration} Não mude estratégia por este cartão.`
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1211,6 +1225,9 @@ export interface AlgoRiskScoreInput {
   algoRiskScore: number | null
   // Número de posts na janela recente (R). Exposto para aviso de confiança.
   nRecent: number | null
+  // Medianas de (curtidas + comentários) por post — dão rastro ao "~X%".
+  recentMedian?: number | null
+  baselineMedian?: number | null
 }
 
 export function resolveAlgoRiskScoreAlert(
@@ -1234,18 +1251,29 @@ export function resolveAlgoRiskScoreAlert(
       ? ` Amostra recente curta (${input.nRecent} posts) — sinal real, mas inconclusivo: publique mais antes de mudar estratégia.`
       : ''
 
+  const hasMedians =
+    typeof input.recentMedian === 'number' && typeof input.baselineMedian === 'number'
+  const fmtMedian = (v: number): string => (Number.isInteger(v) ? String(v) : formatPtBr(v))
+  // Mediana recente 0 = metade ou mais dos posts sem curtida/comentário. Pode
+  // ser queda real ou lacuna do export: checar o dado vem antes de agir.
+  const zeroCheck =
+    hasMedians && input.recentMedian === 0
+      ? 'Metade ou mais dos posts recentes aparece sem curtida nem comentário: confirme no Instagram que é real, e não falha do export, antes de agir. '
+      : ''
+
   return {
     type: 'engagement_collapse',
     severity: isRed ? 'critical' : 'warning',
     title: isRed
       ? `Queda expressiva de engajamento vs. histórico da conta — mediana recente caiu ~${scorePct}%`
       : `Engajamento recente abaixo do histórico da conta — queda de ~${scorePct}% na mediana`,
-    description:
-      `Esta comparação é da conta contra ela mesma (últimos posts vs. período anterior). Não é benchmark de mercado.${lowSampleCaveat}`,
+    description: hasMedians
+      ? `Mediana de curtidas + comentários por post: ${fmtMedian(input.recentMedian as number)} nos ${input.nRecent ?? 12} posts mais recentes, contra ${fmtMedian(input.baselineMedian as number)} no histórico. Comparação da conta com ela mesma, não com o mercado.${lowSampleCaveat}`
+      : `Comparação da conta com ela mesma (últimos posts vs. período anterior), não com o mercado.${lowSampleCaveat}`,
     natureza: 'tecnica',
-    probableCause: isRed
+    probableCause: zeroCheck + (isRed
       ? 'A mediana de engajamento dos posts recentes caiu de forma expressiva em relação ao histórico da mesma conta. Pode ser mudança de tema, de formato ou de frequência — ou limitação algorítmica.'
-      : 'O engajamento recente está abaixo do próprio histórico da conta. Pode ser variação natural ou início de queda — confirme com mais posts antes de agir.',
+      : 'O engajamento recente está abaixo do próprio histórico da conta. Pode ser variação natural ou início de queda — confirme com mais posts antes de agir.'),
     immediateAction: isRed
       ? 'Revise os últimos 12 posts: verificar se houve mudança de formato, tema ou frequência que coincide com a queda. Não mude oferta nem verba antes desse diagnóstico.'
       : 'Acompanhe por mais 14 dias. Se a queda persistir, compare os posts do período B com os do período R para identificar a diferença.',
@@ -1371,10 +1399,10 @@ export async function resolveEngagementScoreAlert(
       title: isWithinNormalRange
         ? `${formatPtBr(input.polemicScorePct)}% dos seus posts têm gente discordando nos comentários — isso é normal no seu segmento`
         : `${formatPtBr(input.polemicScorePct)}% dos seus posts têm gente discordando nos comentários`,
-      description: polemic.statusText,
+      description: stripTranslation(polemic.statusText),
       natureza: 'tecnica',
       probableCause: isWithinNormalRange
-        ? 'A maioria das contas do seu segmento não tem esse tipo de comentário em nenhum post. O seu número está na faixa de quem tem — não é sinal de crise e não é convite para criar briga.'
+        ? 'O seu número está na faixa de quem tem esse tipo de comentário — não é sinal de crise nem convite para criar briga.'
         : 'Há mais gente discordando nos comentários do que o normal do seu segmento. Pode ser dúvida útil ou ataque — o número sozinho não diferencia.',
       immediateAction: isWithinNormalRange
         ? 'Não mude o tom dos posts por este cartão. Releia em 30 dias, com mais posts publicados.'
@@ -1396,7 +1424,7 @@ export async function resolveEngagementScoreAlert(
       type: 'polemic_score_high',
       severity: 'warning',
       title: `${formatPtBr(input.polemicScorePct)}% dos seus posts têm gente discordando nos comentários — acima do normal`,
-      description: withTranslation(polemic.statusText, 'polemic_score_pct', input.polemicScorePct),
+      description: stripTranslation(polemic.statusText),
       natureza: 'tecnica',
       probableCause:
         'Há mais gente discordando nos comentários do que o recorte costuma ver. Pode ser conversa útil ou briga. Não é meta para subir.',
@@ -1430,11 +1458,7 @@ export async function resolveEngagementScoreAlert(
         type: 'engagement_collapse',
         severity: 'warning',
         title: card.title,
-        description: withTranslation(
-          buildLowConfidenceWarning(er.ruleDeclaration ?? ''),
-          'er_real_pct',
-          input.erRealPct
-        ),
+        description: withTranslation(er.statusText, 'er_real_pct', input.erRealPct),
         natureza: 'tecnica',
         probableCause: card.probableCause,
         immediateAction: card.immediateAction,

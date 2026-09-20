@@ -83,9 +83,9 @@ const NATUREZA_LABEL: Record<NonNullable<Alert['natureza']>, string> = {
 }
 
 const CONFIDENCE_LABEL: Record<NonNullable<Alert['confidenceLevel']>, string> = {
-  L0: 'L0 — sem confirmação',
-  L1: 'L1 — parcial',
-  L2: 'L2 — confirmado',
+  L0: 'Medido',
+  L1: 'Estimado',
+  L2: 'Hipótese',
 }
 
 const CONFIDENCE_CLASS: Record<NonNullable<Alert['confidenceLevel']>, string> = {

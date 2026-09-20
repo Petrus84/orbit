@@ -1,13 +1,22 @@
 'use client'
+import React from 'react'
 import { GlassCard } from '@/components/common/GlassCard'
-import styles from './SectorPositioningPanel.module.css'
+import styles from './SectorPositioningPanel.module.css';
+import { stripTranslation } from '@/lib/repositories/contentContractEngine'
 import type { SectorPositioning, ClassifiedMetric } from '@/types/orbit'
 
 export interface SectorPositioningPanelProps {
 positioning: SectorPositioning
 }
 
+// Slug desconhecido nunca vai cru pra tela ("funil_basico" -> "Funil basico").
+function humanizeSlug(slug: string): string {
+  const t = slug.replace(/_/g, ' ').trim()
+  return t.charAt(0).toUpperCase() + t.slice(1)
+}
+
 const SETOR_LABEL: Record<string, string> = {
+saas_ferramenta: 'SaaS / ferramenta',
 comercio_direto_ecommerce_social: 'Comércio direto — e-commerce social',
 comissionamento_afiliados: 'Comissionamento e afiliados',
 infoprodutor_educador_pago: 'Infoprodutor / educador pago',
@@ -20,12 +29,14 @@ pre_monetizacao_a_validar: 'Pré-monetização — a validar',
 }
 
 const FUNNEL_LABEL: Record<string, string> = {
+funil_basico: 'Funil básico',
 nao_implementado: 'Não implementado',
 implementado_fragmentado: 'Implementado, fragmentado',
 implementado_unificado: 'Implementado, unificado',
 }
 
 const PROOF_LABEL: Record<string, string> = {
+clientes_ativos_gestao: 'Clientes ativos em gestão',
 prova_social: 'Prova social',
 autoridade: 'Autoridade',
 escassez_urgencia: 'Escassez / urgência',
@@ -34,12 +45,31 @@ resultado_documentado: 'Resultado documentado',
 nenhum_observavel: 'Nenhum mecanismo observável',
 }
 
-// ✅ CORRIGIDO: Função agora tem corpo completo
+const fmtValue = (v: number) =>
+  `${v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%`
+
+// Badge é pra pílula curta (ex.: "ATENÇÃO"), não pra parágrafo. Métricas
+// zero-inflated (ver contentContractEngine.buildZeroInflatedText) geram um
+// statusText de 2-3 frases — isso vira detail (.ruleText, renderizado uma
+// vez por card abaixo do grid), e o badge mostra só o veredito do semáforo.
+// stripTranslation() tira o "Traduzindo: em X%..." que repete o valor —
+// o valor já está no número grande do card (mesma regra do buildZeroInflatedText).
+const SEMAPHORE_SHORT_LABEL: Record<string, string> = {
+  verde: 'Dentro do esperado',
+  ambar: 'Atenção',
+  vermelho: 'Fora do padrão',
+}
+
+interface MetricCardResult {
+  card: React.ReactNode
+  detail: { label: string; text: string } | null
+}
+
 function metricCard(
 label: string,
 value: number | null,
 metric: ClassifiedMetric | null
-) {
+): MetricCardResult {
 const isAmar = metric?.semaphore === 'ambar'
 const isVerm = metric?.semaphore === 'vermelho'
 const badgeCls = isVerm
@@ -47,18 +77,32 @@ const badgeCls = isVerm
   : isAmar
     ? styles.badgeWarning
     : styles.badgeNeutral
+// Sem régua de mercado (thresholdSource null): sem badge no card — o bloco
+// diz isso UMA vez, em vez de repetir a mesma frase em cada card.
+const hasVerdict = metric != null && metric.thresholdSource !== null
+const isZeroInflated = hasVerdict && metric.zeroInflated !== null
 
-return (
-  <div className={styles.metricCard} key={label}>
-    <p className={styles.metricLabel}>{label}</p>
-    <p className={styles.metricValue}>
-      {value != null ? value.toFixed(2) : '—'}
-    </p>
-    <span className={badgeCls}>
-      {metric?.statusText ?? 'Sem threshold definido ainda'}
-    </span>
-  </div>
-)
+const badgeText = isZeroInflated
+  ? SEMAPHORE_SHORT_LABEL[metric.semaphore] ?? metric.statusText
+  : metric?.statusText
+
+const detail =
+  isZeroInflated
+    ? { label, text: stripTranslation(metric.statusText) }
+    : null
+
+return {
+  card: (
+    <div className={styles.metricCard} key={label}>
+      <p className={styles.metricLabel}>{label}</p>
+      <p className={styles.metricValue}>
+        {value != null ? fmtValue(value) : '—'}
+      </p>
+      {hasVerdict && <span className={badgeCls}>{badgeText}</span>}
+    </div>
+  ),
+  detail,
+}
 }
 
 // ✅ NOVO (18/09/2026) — algo_risk_score, família Ln. Card separado de
@@ -71,11 +115,11 @@ function algoRiskCard(algoRisk: SectorPositioning['algoRisk']) {
     <div className={styles.metricCard} key="algo-risk">
       <p className={styles.metricLabel}>Risco algorítmico (série própria)</p>
       <p className={styles.metricValue}>
-        {value != null ? value.toFixed(2) : '—'}
+        {value != null ? value.toFixed(2).replace('.', ',') : '—'}
       </p>
-      <span className={styles.badgeNeutral}>
-        {algoRisk?.statusText ?? 'Sem série suficiente para calcular risco algorítmico ainda.'}
-      </span>
+      {algoRisk?.statusText && (
+        <span className={styles.badgeNeutral}>{algoRisk.statusText}</span>
+      )}
     </div>
   )
 }
@@ -84,22 +128,41 @@ export function SectorPositioningPanel({
 positioning,
 }: SectorPositioningPanelProps) {
 const setorLabel = positioning.setorBenchmark
-  ? SETOR_LABEL[positioning.setorBenchmark] ?? positioning.setorBenchmark
+  ? SETOR_LABEL[positioning.setorBenchmark] ?? humanizeSlug(positioning.setorBenchmark)
   : 'Não classificado'
 
 const funnelLabel = positioning.funnelMaturity
-  ? FUNNEL_LABEL[positioning.funnelMaturity] ?? positioning.funnelMaturity
+  ? FUNNEL_LABEL[positioning.funnelMaturity] ?? humanizeSlug(positioning.funnelMaturity)
   : '—'
 
 const proofLabel = positioning.proofMechanism
-  ? PROOF_LABEL[positioning.proofMechanism] ?? positioning.proofMechanism
+  ? PROOF_LABEL[positioning.proofMechanism] ?? humanizeSlug(positioning.proofMechanism)
   : '—'
 
-const ruleDeclaration =
-  positioning.polemicScore?.ruleDeclaration ??
-  positioning.erReal?.ruleDeclaration ??
-  positioning.vps?.ruleDeclaration ??
-  null
+const withRule = [positioning.polemicScore, positioning.erReal, positioning.vps].filter(
+  (m): m is ClassifiedMetric => m != null && m.thresholdSource !== null
+)
+const ruleDeclaration = withRule[0]?.ruleDeclaration ?? null
+
+const noMarket: string[] = []
+if (positioning.erReal && positioning.erReal.thresholdSource === null) noMarket.push('ER real')
+if (positioning.vps && positioning.vps.thresholdSource === null) noMarket.push('VPS')
+const noMarketNote = noMarket.length
+  ? `${noMarket.join(' e ')} sem comparação de mercado — acompanhe a evolução da própria conta.`
+  : null
+
+const metrics = [
+  metricCard('ER real', positioning.erReal?.value ?? null, positioning.erReal ?? null),
+  metricCard('VPS', positioning.vps?.value ?? null, positioning.vps ?? null),
+  metricCard(
+    'Score polêmica',
+    positioning.polemicScore?.value ?? null,
+    positioning.polemicScore ?? null
+  ),
+]
+const metricDetails = metrics
+  .map((m) => m.detail)
+  .filter((d): d is { label: string; text: string } => d != null)
 
 return (
   <GlassCard glowColor="cyan" className={styles.panel}>
@@ -130,27 +193,23 @@ return (
     <p className={styles.blockLabel}>BENCHMARKING</p>
 
     <div className={styles.metricsRow}>
-      {/* ✅ CORRIGIDO: Usar campo .value em vez de fazer parse de statusText */}
-      {metricCard(
-        'ER real',
-        positioning.erReal?.value ?? null,
-        positioning.erReal ?? null
-      )}
-      {metricCard(
-        'VPS',
-        positioning.vps?.value ?? null,
-        positioning.vps ?? null
-      )}
-      {metricCard(
-        'Score polêmica',
-        positioning.polemicScore?.value ?? null,
-        positioning.polemicScore ?? null
-      )}
+      {metrics.map((m) => m.card)}
     </div>
+
+    {/* Parágrafo completo de métricas zero-inflated (antes espremido dentro
+        do badge do card, inflando a altura só daquele card). Um bloco por
+        métrica, rotulado, no mesmo estilo de ruleDeclaration/noMarketNote. */}
+    {metricDetails.map((d) => (
+      <p className={styles.ruleText} key={d.label}>
+        <strong>{d.label}:</strong> {d.text}
+      </p>
+    ))}
+
 
     {ruleDeclaration && (
       <p className={styles.ruleText}>{ruleDeclaration}</p>
     )}
+    {noMarketNote && <p className={styles.ruleText}>{noMarketNote}</p>}
 
     {/* ✅ NOVO (18/09/2026): seção separada, rótulo distinto de
         "BENCHMARKING" de propósito — algo_risk_score é família Ln

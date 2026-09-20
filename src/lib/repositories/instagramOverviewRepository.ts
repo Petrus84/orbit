@@ -93,6 +93,7 @@ import type {
 } from '@/types/orbit'
 
 import { buildScoreCopy, type SemaphoreKey } from '@/lib/scoreStatusCopy'
+import { buildDataStatusNotices, type ClientDataFacts } from '@/lib/dataStatusCopy'
 import {
   resolveEngagementScoreAlert,
   resolveAlgoRiskScoreAlert,
@@ -159,6 +160,11 @@ const KpiRowSchema = z.object({
   semaphore:     z.enum(['verde', 'ambar', 'vermelho']).nullable().optional().default('ambar'),
   subtitle:      z.string().nullable().optional().default(null),
   calculated_at: z.string().optional(),
+  // FIX (19/09/2026): coluna existe em orbit.v_kpi_snapshots desde sempre
+  // (confirmado no banco: seguidores-totais = L0, alcance-90d/cliques-no-link
+  // = L1 pro cpimportstore) mas nunca tinha sido lida — kpiRowToCardData()
+  // não populava `sourceLevel`, e o card caía no fallback (ver KPICard.tsx).
+  confidence_level: z.enum(['L0', 'L1', 'L2']).nullable().optional(),
 }).refine(
   (data) => data.metric_key || data.metric,
   { message: "Deve ter 'metric_key' ou 'metric'" }
@@ -223,6 +229,14 @@ function kpiRowToCardData(row: KpiRow): KPICardData {
     semaphore,
     glowColor:  GLOW_MAP[semaphore],
     subtitle:   row.subtitle ?? null,
+    // FIX (19/09/2026): campo existia em KPICardData (orbit.ts:506) e nunca
+    // era preenchido aqui — todo card caía no fallback de KPI.tsx/IGOverview,
+    // mostrando "Hipótese" (ou antes, "Medido" por acidente) pra dado que o
+    // banco já classifica corretamente. `?? undefined`, não `?? 'L2'`: null
+    // aqui é "a view não calculou confiança pra essa linha", que é um caso
+    // genuinamente diferente de "calculou e é baixa confiança" — não
+    // inventar um nível que o dado não afirma.
+    sourceLevel: row.confidence_level ?? undefined,
   }
 }
 
@@ -302,6 +316,7 @@ export async function fetchInstagramOverview(
     fetchAudienceSummary(clientId, periodStart, periodEnd),
     fetchCriticalAlerts(clientId, periodStart, periodEnd),
     fetchSectorPositioning(clientId, periodStart, periodEnd),
+    fetchDataStatus(clientId, periodStart, periodEnd),
   ])
 
   results.forEach((res, idx) => {
@@ -332,6 +347,7 @@ export async function fetchInstagramOverview(
   const positioning: SectorPositioning | null = results[6].status === 'fulfilled'
     ? results[6].value
     : null
+  const dataStatus = results[7].status === 'fulfilled' ? results[7].value : []
 
   // ✅ FIX (tsc TS2339): `import.meta.env.VITE_*` é Vite — sobrou de antes
   // da migração pra Next.js, onde env var de cliente é `process.env.NEXT_PUBLIC_*`
@@ -400,6 +416,7 @@ export async function fetchInstagramOverview(
     insights:       generateInsights(formatPerformance),
     criticalAlerts,
     positioning: positioning as SectorPositioning,
+    dataStatus,
   }
 }
 // ── Funções de busca (queries ao banco) ──────────────────────────────────
@@ -769,6 +786,59 @@ export async function fetchClientOnboarding(
  * histórico da própria conta (computeAlgoRiskScore em
  * contentContractEngine.ts).
  */
+// Fatos do banco que explicam telas vazias/incompletas. Mesmas tabelas que o
+// resto do repositório já lê; falha aqui nunca derruba a tela (retorna []).
+async function fetchDataStatus(
+  clientId: string,
+  start: string,
+  end: string,
+): Promise<{ id: string; text: string }[]> {
+  const [postsRes, snapRes] = await Promise.all([
+    supabase
+      .schema('orbit')
+      .from('ig_posts')
+      .select('published_at, is_estimated')
+      .eq('client_id', clientId)
+      .order('published_at', { ascending: false })
+      .limit(2000)
+      .returns<{ published_at: string; is_estimated: boolean | null }[]>(),
+    supabase
+      .schema('orbit')
+      .from('ig_account_snapshots')
+      .select('period_end, reach_total, impressions_total', { count: 'exact' })
+      .eq('client_id', clientId)
+      .order('period_end', { ascending: false })
+      .limit(1)
+      .returns<{ period_end: string; reach_total: number | null; impressions_total: number | null }[]>(),
+  ])
+
+  if (postsRes.error || snapRes.error) {
+    console.error('[fetchDataStatus]', postsRes.error?.message ?? snapRes.error?.message)
+    return []
+  }
+
+  const posts = postsRes.data ?? []
+  const t0 = Date.parse(start)
+  const t1 = Date.parse(end)
+  const latest = snapRes.data?.[0]
+
+  const facts: ClientDataFacts = {
+    postsTotal: posts.length,
+    postsFirst: posts.length ? posts[posts.length - 1]!.published_at : null,
+    postsLast: posts.length ? posts[0]!.published_at : null,
+    postsInPeriod: posts.filter((p) => {
+      const t = Date.parse(p.published_at)
+      return t >= t0 && t <= t1
+    }).length,
+    postsEstimated: posts.filter((p) => p.is_estimated === true).length,
+    snapshotCount: snapRes.count ?? 0,
+    latestSnapshotReach: latest?.reach_total ?? null,
+    latestSnapshotImpressions: latest?.impressions_total ?? null,
+  }
+
+  return buildDataStatusNotices(facts)
+}
+
 async function fetchAlgoRiskScore(clientId: string): Promise<AlgoRiskScore | null> {
   const { data, error } = await supabase
     .schema('orbit')
@@ -885,6 +955,8 @@ async function fetchCriticalAlerts(
         snapshotId: `algo_risk:${clientId}:${end}`,
         algoRiskScore: algo.value,
         nRecent: algo.recentWindowSize,
+        recentMedian: algo.recentMedian,
+        baselineMedian: algo.baselineMedian,
       })
       if (draft) alerts.push(toCriticalAlert(draft))
     }

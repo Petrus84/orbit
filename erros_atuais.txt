@@ -1,0 +1,126 @@
+scripts/ingest-from-zip.ts(22,43): error TS2532: Object is possibly 'undefined'.
+scripts/ingest-from-zip.ts(231,32): error TS18048: 'startPart' is possibly 'undefined'.
+scripts/ingest-from-zip.ts(232,28): error TS18048: 'endPart' is possibly 'undefined'.
+scripts/ingest-from-zip.ts(234,27): error TS2538: Type 'undefined' cannot be used as an index type.
+scripts/ingest-from-zip.ts(235,25): error TS2538: Type 'undefined' cannot be used as an index type.
+scripts/ingest-from-zip.ts(240,43): error TS18048: 'startDay' is possibly 'undefined'.
+scripts/ingest-from-zip.ts(241,37): error TS18048: 'endDay' is possibly 'undefined'.
+scripts/ingest-from-zip.ts(245,12): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(245,27): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(273,30): error TS2345: Argument of type 'Record<string, { value?: string | undefined; }>' is not assignable to parameter of type 'Record<string, { value?: string; }>'.
+scripts/ingest-from-zip.ts(291,48): error TS18048: 'first' is possibly 'undefined'.
+scripts/ingest-from-zip.ts(292,22): error TS18048: 'first' is possibly 'undefined'.
+scripts/ingest-from-zip.ts(295,20): error TS18048: 'first' is possibly 'undefined'.
+scripts/ingest-from-zip.ts(300,46): error TS18048: 'first' is possibly 'undefined'.
+scripts/ingest-from-zip.ts(302,18): error TS18048: 'first' is possibly 'undefined'.
+scripts/ingest-from-zip.ts(380,18): error TS2532: Object is possibly 'undefined'.
+scripts/ingest-from-zip.ts(393,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(394,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+scripts/ingest-from-zip.ts(451,29): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+scripts/ingest-from-zip.ts(495,28): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+scripts/ingest-from-zip.ts(496,29): error TS2538: Type 'undefined' cannot be used as an index type.
+scripts/ingest-from-zip.ts(498,7): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type 'AgeRangeData'.
+scripts/ingest-from-zip.ts(498,36): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type 'AgeRangeData'.
+scripts/ingest-from-zip.ts(530,25): error TS2532: Object is possibly 'undefined'.
+scripts/ingest-from-zip.ts(530,58): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+scripts/ingest-from-zip.ts(538,28): error TS2532: Object is possibly 'undefined'.
+scripts/ingest-from-zip.ts(538,62): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+scripts/ingest-from-zip.ts(745,46): error TS2532: Object is possibly 'undefined'.
+scripts/ingest-from-zip.ts(746,44): error TS2532: Object is possibly 'undefined'.
+scripts/ingest-from-zip.ts(749,60): error TS2345: Argument of type 'string | null | undefined' is not assignable to parameter of type 'string | null'.
+scripts/lib/resolveClientId.ts(45,22): error TS2532: Object is possibly 'undefined'.
+scripts/seed-dynamic.ts(110,13): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/app/(dashboard)/avatar/page.tsx(27,69): error TS2345: Argument of type '"cpimportstore" | "eupetruchio84" | undefined' is not assignable to parameter of type '"cpimportstore" | "eupetruchio84" | (() => "cpimportstore" | "eupetruchio84")'.
+src/app/(dashboard)/funil/page.tsx(13,80): error TS2345: Argument of type '"cpimportstore" | "eupetruchio84" | undefined' is not assignable to parameter of type '"cpimportstore" | "eupetruchio84" | (() => "cpimportstore" | "eupetruchio84")'.
+src/app/(dashboard)/instagram/avatar/page.tsx(21,1): error TS6133: 'OrbitDashboardProvider' is declared but its value is never read.
+src/app/(dashboard)/instagram/avatar/page.tsx(22,1): error TS6133: 'AvatarScreen' is declared but its value is never read.
+src/app/(dashboard)/instagram/avatar/page.tsx(23,10): error TS6133: 'DateRangeControl' is declared but its value is never read.
+src/app/(dashboard)/instagram/avatar/page.tsx(27,27): error TS6133: 'setActiveClientKey' is declared but its value is never read.
+src/app/(dashboard)/instagram/avatar/page.tsx(27,69): error TS2345: Argument of type '"cpimportstore" | "eupetruchio84" | undefined' is not assignable to parameter of type '"cpimportstore" | "eupetruchio84" | (() => "cpimportstore" | "eupetruchio84")'.
+src/app/(dashboard)/instagram/avatar/page.tsx(28,9): error TS6133: 'activeClient' is declared but its value is never read.
+src/app/(dashboard)/instagram/avatar/page.tsx(30,10): error TS6133: 'period' is declared but its value is never read.
+src/app/(dashboard)/instagram/avatar/page.tsx(30,18): error TS6133: 'setPeriod' is declared but its value is never read.
+src/app/(dashboard)/onboarding/page.tsx(32,69): error TS2345: Argument of type '"cpimportstore" | "eupetruchio84" | undefined' is not assignable to parameter of type '"cpimportstore" | "eupetruchio84" | (() => "cpimportstore" | "eupetruchio84")'.
+src/app/(dashboard)/onboarding/page.tsx(80,11): error TS2322: Type '{ clientId: "2141d077-0d82-4fda-83df-558377f105ff" | "c4722cfc-cff2-4a03-a457-f14ee8c9e0e7"; initialData: ClientOnboarding | null; onSave: (data: ClientOnboarding) => Promise<...>; isSaving: boolean; }' is not assignable to type 'IntrinsicAttributes & OnboardingScreenProps'.
+src/app/instagram/page.tsx(2,8): error TS6133: 'React' is declared but its value is never read.
+src/app/instagram/page.tsx(7,10): error TS2614: Module '"@/components/kpi/KPICard"' has no exported member 'KPICard'. Did you mean to use 'import KPICard from "@/components/kpi/KPICard"' instead?
+src/app/instagram/page.tsx(27,80): error TS2345: Argument of type '"cpimportstore" | "eupetruchio84" | undefined' is not assignable to parameter of type '"cpimportstore" | "eupetruchio84" | (() => "cpimportstore" | "eupetruchio84")'.
+src/components/common/AlignmentBars.tsx(25,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/AlignmentBars.tsx(26,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/AlignmentBars.tsx(27,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/AlignmentBars.tsx(28,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/AlignmentBars.tsx(32,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/AlignmentBars.tsx(33,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/AlignmentBars.tsx(34,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/AlignmentBars.tsx(35,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/AlignmentBars.tsx(39,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/AlignmentBars.tsx(40,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/AlignmentBars.tsx(41,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/AlignmentBars.tsx(42,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/ClientCard.tsx(72,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/ClientCard.tsx(73,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/ClientCard.tsx(74,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/ClientCard.tsx(75,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/ClientCard.tsx(84,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/ClientCard.tsx(85,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/ClientCard.tsx(86,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/ClientCard.tsx(87,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/FunnelChart.tsx(59,5): error TS2375: Type '{ label: string; isLast: false; value: number; percentage: number; color: "var(--neon-cyan)"; dropoffPct: undefined; }' is not assignable to type 'FunnelStepDataExtended' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+src/components/common/FunnelChart.tsx(67,5): error TS2375: Type '{ label: string; value: number; percentage: number; color: "var(--neon-cyan)"; dropoffPct: number | undefined; dropoffLabel: string | undefined; }' is not assignable to type 'FunnelStepDataExtended' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+src/components/common/FunnelChart.tsx(75,5): error TS2375: Type '{ label: string; value: string | number; percentage: number; color: "var(--neon-gold)"; dropoffPct: number | undefined; dropoffLabel: string; }' is not assignable to type 'FunnelStepDataExtended' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+src/components/common/FunnelChart.tsx(83,5): error TS2375: Type '{ label: string; value: string | number; percentage: number; color: "var(--neon-red)"; dropoffPct: number | undefined; dropoffLabel: string; }' is not assignable to type 'FunnelStepDataExtended' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+src/components/common/GlassCard.tsx(6,8): error TS6133: 'React' is declared but its value is never read.
+src/components/common/KPICard.tsx(85,46): error TS6133: 'unit' is declared but its value is never read.
+src/components/common/onboarding.tsx(33,7): error TS2322: Type '{ clientId: string; initialData: ClientOnboarding | null; onSave: (data: ClientOnboarding) => Promise<boolean>; isSaving: boolean; }' is not assignable to type 'IntrinsicAttributes & OnboardingScreenProps'.
+src/components/common/Semaphore.tsx(43,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/Semaphore.tsx(44,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/Semaphore.tsx(45,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/Semaphore.tsx(46,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/StatusPill.tsx(15,1): error TS6133: 'React' is declared but its value is never read.
+src/components/common/StatusPill.tsx(25,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/StatusPill.tsx(26,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/common/StatusPill.tsx(27,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/content/AudienceSummaryPanel.tsx(14,1): error TS6133: 'React' is declared but its value is never read.
+src/components/content/CriticalAlert.tsx(51,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/content/CriticalAlert.tsx(52,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/content/CriticalAlert.tsx(53,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/content/CriticalAlert.tsx(54,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/content/InsightCard.tsx(6,1): error TS6133: 'React' is declared but its value is never read.
+src/components/content/QualityScoresPanel.tsx(12,1): error TS6133: 'React' is declared but its value is never read.
+src/components/content/QualityScoresPanel.tsx(31,18): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/content/QualityScoresPanel.tsx(32,18): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/content/QualityScoresPanel.tsx(33,18): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/content/QualityScoresPanel.tsx(34,18): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/kpi/DeltaText.tsx(7,1): error TS6133: 'React' is declared but its value is never read.
+src/components/kpi/GlowingNumber.tsx(7,1): error TS6133: 'React' is declared but its value is never read.
+src/components/kpi/GlowingNumber.tsx(21,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/kpi/GlowingNumber.tsx(22,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/kpi/GlowingNumber.tsx(23,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/kpi/GlowingNumber.tsx(24,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/kpi/GlowingNumber.tsx(28,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/kpi/GlowingNumber.tsx(29,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/kpi/GlowingNumber.tsx(30,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/kpi/GlowingNumber.tsx(31,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/kpi/SemaphoreIndicator.tsx(7,1): error TS6133: 'React' is declared but its value is never read.
+src/components/kpi/SemaphoreIndicator.tsx(22,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/kpi/SemaphoreIndicator.tsx(23,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/kpi/SemaphoreIndicator.tsx(24,3): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/components/layout/Header.tsx(9,1): error TS6133: 'React' is declared but its value is never read.
+src/components/panels/SectorPositioningPanel.tsx(2,1): error TS6133: 'React' is declared but its value is never read.
+src/components/screens/AlertasScreen.tsx(141,8): error TS2375: Type '{ title: string; subtitle: string | undefined; }' is not assignable to type 'SectionHeadProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+src/components/screens/IGOverviewScreen.tsx(36,3): error TS2375: Type '{ label: string; value: number; delta: number; trend: "up" | "down" | "neutral"; flagLevel: "L0" | "L1" | "L2"; unit: string | undefined; }' is not assignable to type 'KPI' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+src/components/screens/IGOverviewScreen.tsx(196,8): error TS2375: Type '{ title: string; subtitle: string | undefined; }' is not assignable to type 'SectionHeadProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+src/context/OrbitDashboardContext.tsx(14,8): error TS6133: 'React' is declared but its value is never read.
+src/lib/mappers/clientOnboarding/clientOnboarding.mapper.ts(24,7): error TS6133: 'FALLBACK_TEXT' is declared but its value is never read.
+src/lib/mappers/clientOnboarding/clientOnboarding.mapper.ts(25,7): error TS6133: 'FALLBACK_PCT' is declared but its value is never read.
+src/lib/mappers/refThreshold/refThreshold.schema.ts(137,4): error TS1360: Type 'ZodObject<{ metric_name: ZodString; category: ZodNullable<ZodString>; tier_normalized: ZodNullable<ZodString>; tier: ZodOptional<ZodNullable<ZodString>>; ... 22 more ...; benchmark_note: ZodNullable<...>; }, $strip>' does not satisfy the expected type 'ZodType<RefThresholdRow, unknown, $ZodTypeInternals<RefThresholdRow, unknown>>'.
+src/lib/repositories/avatarRepository.ts(173,42): error TS18048: 'worst' is possibly 'undefined'.
+src/lib/repositories/clientsRepository.ts(59,3): error TS2375: Type '{ id: string; handle: string; name: string; avatar: undefined; status: ClientHealthStatus; snapshotCount: number; lastSnapshotDate: string | null; metrics: { follower_balance: number; ... 4 more ...; segment: { ...; }; }; lastUpdated: string; }' is not assignable to type 'Client' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+src/lib/repositories/contentContractEngine.ts(253,26): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+src/lib/repositories/instagramOverviewRepository.ts(523,12): error TS18048: 'row' is possibly 'undefined'.
+src/lib/repositories/instagramOverviewRepository.ts(524,21): error TS18048: 'row' is possibly 'undefined'.
+src/lib/repositories/instagramOverviewRepository.ts(524,43): error TS18048: 'row' is possibly 'undefined'.
+src/page.tsx(2,8): error TS6133: 'React' is declared but its value is never read.
+src/page.tsx(2,27): error TS6133: 'useEffect' is declared but its value is never read.
+src/page.tsx(7,10): error TS2614: Module '"@/components/kpi/KPICard"' has no exported member 'KPICard'. Did you mean to use 'import KPICard from "@/components/kpi/KPICard"' instead?
+src/page.tsx(26,78): error TS2345: Argument of type '"cpimportstore" | "eupetruchio84" | undefined' is not assignable to parameter of type '"cpimportstore" | "eupetruchio84" | (() => "cpimportstore" | "eupetruchio84")'.
