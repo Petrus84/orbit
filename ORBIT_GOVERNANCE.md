@@ -295,15 +295,24 @@ Formato: `[DATA] ID — Título` · Contexto · Decisão · Status
   Fase 2B. Validado: `tsc --noEmit` limpo; schema/mapper testados isoladamente aceitando linha SEM
   as 4 colunas (simulação do pós-DROP). `npm run build` não pôde ser validado neste ambiente
   (bloqueio de rede a fonts.googleapis.com, não relacionado ao código).
-- **Fase 2B — `DROP COLUMN`, pendente (exige aprovação explícita do Lobo):** SQL, verificação e
-  rollback em `archive/orbit-v41-psychographic-motor/FASE2B_drop_columns.sql` (a criar). **Ordem
-  obrigatória: 2C → deploy em produção → confirmar app funcionando → só então 2B.** Rodar antes do
-  deploy quebraria a validação do onboarding para todos os clientes (schema da Fase 1 exigia as 4
-  colunas — testado).
+- **Fase 2B — `DROP COLUMN`, ✅ aplicada (verificado no banco em 20/09/2026):** `client_onboarding`
+  não tem mais nenhuma coluna nem constraint de Panksepp/Schwartz (0 colunas encontradas). O app
+  continuou carregando Onboarding, Avatar, Visão da conta, Funil, Alertas e Carteira após o drop.
+  O backup JSON em `archive/orbit-v41-psychographic-motor/` é o único lugar com os dados removidos —
+  guardar também fora do repositório.
+- **Adendo (20/09/2026) — resíduo psicográfico fora das 4 colunas:** (1) `clients.avatar_unconscious_desire`
+  (só `cpimportstore`: "Ativação Primária: LUST… Secundária: CARE…") alimentava, via
+  `v_avatar_alignment.expected_interest`, o texto "Desejo inconsciente mapeado" da tela Avatar — a
+  view agora lê `clients.avatar_expected_interest`, o texto foi renomeado para "Interesse esperado" e
+  a coluna foi marcada como depreciada (remoção física em fase futura, com aprovação);
+  (2) o rótulo "Fonte (values/affect)" virou "Fonte dos dados" (as colunas `values_affect_*` só
+  guardam proveniência e permanecem); (3) `src/lib/onboarding/flags.ts` ficou órfão no repositório
+  (nenhum import) e deve ser apagado com `rm`. SQL correspondente: `sql/01_correcoes_banco_2026-09-20.sql`.
 - **Nota de numeração:** ADR-006 já pertence ao "Protótipo HTML"; ADR-010 segue reservada à
   recomendação de escopo de escrita client-side (ver ADR-005). Por isso esta é a ADR-011.
-- **Status:** Fase 1 `ACCEPTED`; Fase 2C `READY` (código, aguardando deploy); Fase 2B `PENDING`
-  (DROP COLUMN, aguarda deploy da 2C + aprovação do Lobo).
+- **Status:** Fase 1 `ACCEPTED`; Fase 2C `ACCEPTED` (código aplicado); Fase 2B `ACCEPTED`
+  (DROP COLUMN aplicado e verificado); resíduo em `clients.avatar_unconscious_desire` `OPEN`
+  (limpeza de dado no SQL 01; remoção da coluna em fase futura).
 
 ## 3. Ledger de Dívida Técnica (vivo — atualizar a cada sessão)
 

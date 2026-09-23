@@ -33,7 +33,7 @@ import type {
 
 export const ENUM_TOTAL_FOLLOWERS_SOURCE: Array<[TotalFollowersSource, string]> = [
   ['manual_print_confirmado', 'Confirmado manualmente (com print)'],
-  ['instagram_api', 'Conectado via Instagram'],
+  ['instagram_api', 'Conectado à plataforma (API)'],
   ['estimate', 'Estimativa baseada em dados'],
   ['scrape_perfil_confirmado', 'Verificado pelo perfil (dados públicos)'],
 ]

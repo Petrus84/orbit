@@ -495,7 +495,7 @@ export interface KPICardData {
   label: string
   value: number
   unit: string | null
-  delta: number
+  delta: number | null
   deltaLabel: string
   semaphore: SemaphoreColor
   glowColor: GlowColor
@@ -1607,6 +1607,17 @@ export interface ClientOnboarding {
   values_affect_confidence: 'L0' | 'L1' | 'L2'
   updated_by: string
   updated_at: string
+  // Confiança por agrupamento de campos (adicionado 21/09/2026) — substitui
+  // a leitura de `values_affect_confidence` como se valesse para o
+  // formulário inteiro. Ex.: total_followers costuma ser L0 (medido/print),
+  // enquanto q2_content_proxy_notes é quase sempre L1/L2 (estimativa ou
+  // hipótese) — um único valor global não pode representar os dois
+  // honestamente. Nullable: null = "ainda não classificado", não "L0".
+  confidence_seguidores: 'L0' | 'L1' | 'L2' | null
+  confidence_bio_funil: 'L0' | 'L1' | 'L2' | null
+  confidence_diagnostico: 'L0' | 'L1' | 'L2' | null
+  confidence_audiencia: 'L0' | 'L1' | 'L2' | null
+  confidence_negocio: 'L0' | 'L1' | 'L2' | null
 }
 
 export interface OnboardingStep {

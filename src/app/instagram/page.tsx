@@ -29,8 +29,17 @@ function mapKPICardDataToKPI(data: KPICardData): KPI {
 return {
   label: data.label,
   value: data.value,
-  delta: data.delta,
-  trend: data.delta > 0 ? 'up' : data.delta < 0 ? 'down' : 'neutral',
+  // delta null = sem período anterior comparável: não envia delta/trend
+  // (a UI esconde), em vez de fabricar "0%".
+  ...(data.delta !== null
+    ? {
+        delta: data.delta,
+        trend: (data.delta > 0 ? 'up' : data.delta < 0 ? 'down' : 'neutral') as
+          | 'up'
+          | 'down'
+          | 'neutral',
+      }
+    : {}),
   // FIX (19/09/2026): fallback era 'L0' — mostrava badge verde "Medido"
   // quando sourceLevel vem null/undefined, ou seja, quando na verdade não
   // sabemos a origem do dado. O fallback correto pro pior caso é 'L2'

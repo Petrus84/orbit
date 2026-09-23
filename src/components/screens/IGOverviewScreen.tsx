@@ -31,15 +31,15 @@ interface IGOverviewScreenProps {
 interface KPI {
   label: string
   value: string | number
-  delta: number
-  trend: 'up' | 'down' | 'neutral'
+  delta?: number
+  trend?: 'up' | 'down' | 'neutral'
   flagLevel: 'L0' | 'L1' | 'L2'
   unit?: string
 }
 
 function KPICard({ kpi }: { kpi: KPI }): React.ReactElement {
   const trendColor = kpi.trend === 'up' ? 'text-emerald-400' : kpi.trend === 'down' ? 'text-red-400' : 'text-zinc-400'
-  const sign = kpi.delta > 0 ? '+' : ''
+  const sign = kpi.delta !== undefined && kpi.delta > 0 ? '+' : ''
 
   return (
     <div className="flex flex-col gap-3 rounded-2xl bg-[var(--bg-card)] p-4">
@@ -51,9 +51,11 @@ function KPICard({ kpi }: { kpi: KPI }): React.ReactElement {
         <span className="font-sans text-2xl font-semibold text-zinc-100">
           {kpi.value}{kpi.unit ?? ''}
         </span>
-        <span className={`font-sans text-xs font-medium ${trendColor}`}>
-          {sign}{kpi.delta}%
-        </span>
+        {kpi.delta !== undefined && (
+          <span className={`font-sans text-xs font-medium ${trendColor}`}>
+            {sign}{kpi.delta}%
+          </span>
+        )}
       </div>
     </div>
   )
@@ -65,8 +67,17 @@ function mapKPICardDataToKPI(data: KPICardData): KPI {
   return {
     label: data.label,
     value: data.value,
-    delta: data.delta,
-    trend: data.delta > 0 ? 'up' : data.delta < 0 ? 'down' : 'neutral',
+    // delta null = sem período anterior comparável: não envia delta/trend
+    // (a UI esconde), em vez de fabricar "0%".
+    ...(data.delta !== null
+      ? {
+          delta: data.delta,
+          trend: (data.delta > 0 ? 'up' : data.delta < 0 ? 'down' : 'neutral') as
+            | 'up'
+            | 'down'
+            | 'neutral',
+        }
+      : {}),
     // FIX (19/09/2026): fallback era 'L0' — mostrava badge verde "Medido"
     // quando sourceLevel vem null/undefined, ou seja, quando na verdade não
     // sabemos a origem do dado. O fallback correto pro pior caso é 'L2'

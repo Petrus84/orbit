@@ -75,7 +75,7 @@ const NAV_ITEMS: NavItem[] = [
   // ── SEÇÃO: Instagram ───────────────────────────────────────────────────────
   {
     id:         'visao-geral-ig',
-    label:      'Visão geral IG',
+    label: 'Visão da conta',
     href:       '/instagram',
     icon:       '📊',
     section:    'instagram',
@@ -180,8 +180,8 @@ export function Sidebar() {
       </nav>
 
       {/* ── Seção: Instagram ────────────────────────────────────────────────── */}
-      <p className={styles.sectionLabel}>INSTAGRAM</p>
-      <nav aria-label="Navegação de Instagram">
+      <p className={styles.sectionLabel}>PLATAFORMAS</p>
+      <nav aria-label="Navegação por plataforma">
         <ul className={styles.navList} role="list">
           {instagramItems.map(item => {
             const itemIsActive = isNavItemActive(

@@ -54,7 +54,7 @@ export function AvatarComparison({
             title="Avatar Esperado"
             variant="expected"
             status={status}
-            insightLabel="Desejo Inconsciente Mapeado"
+            insightLabel="Interesse Esperado"
             insightText={unconsciousDesireMapped}
           />
         </div>

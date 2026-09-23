@@ -42,6 +42,9 @@ import {
   validateAudienceSum,
   summarizeChanges,
   fmtDate,
+  VOCAB,
+  HELP,
+  isFilled,
 } from '@/lib/onboarding/helpers'
 import {
   ENUM_TOTAL_FOLLOWERS_SOURCE,
@@ -71,6 +74,51 @@ interface OnboardingScreenProps {
 }
 
 type Mode = 'view' | 'edit' | 'loading'
+
+// ── Rótulo de campo com (?) de ajuda e (!) de "sem valor" ───────────────
+// (?) abre um popover com o texto de VOCAB no hover/foco/clique — evita a
+// poluição de um parágrafo de ajuda sempre visível embaixo de cada campo.
+// (!) marca campo vazio de forma explícita, sem depender de cor (vermelho/
+// verde já carregam outro significado nesta tela — ver .sumCheck) — mais
+// fácil de notar rápido do que ficar comparando cores.
+function FieldLabel({
+  children,
+  help,
+  missing,
+}: {
+  children: React.ReactNode
+  help?: string
+  missing?: boolean
+}) {
+  const [show, setShow] = useState(false)
+  return (
+    <label className={styles.fieldLabel}>
+      <span>{children}</span>
+      {missing && (
+        <span className={styles.missingFlag} title="Ainda sem valor" aria-label="Campo sem valor">
+          !
+        </span>
+      )}
+      {help && (
+        <span className={styles.fieldHelp}>
+          <button
+            type="button"
+            className={styles.fieldHelpTrigger}
+            onMouseEnter={() => setShow(true)}
+            onMouseLeave={() => setShow(false)}
+            onFocus={() => setShow(true)}
+            onBlur={() => setShow(false)}
+            onClick={() => setShow((s) => !s)}
+            aria-label="Mais informações sobre este campo"
+          >
+            ?
+          </button>
+          {show && <span className={styles.fieldHelpPopover}>{help}</span>}
+        </span>
+      )}
+    </label>
+  )
+}
 
 interface LogEntry {
   ts: string
@@ -398,7 +446,10 @@ export default function OnboardingScreen({
                   'Fonte (values/affect)',
                   labelFor(ENUM_AFFECT_SOURCE, effectiveRecord.values_affect_source),
                 ],
-                ['Confiança', labelFor(ENUM_CONFIDENCE, effectiveRecord.values_affect_confidence)],
+                [
+                  'Confiança (registro inteiro — legado)',
+                  labelFor(ENUM_CONFIDENCE, effectiveRecord.values_affect_confidence),
+                ],
                 ['Atualizado por', effectiveRecord.updated_by],
                 ['Atualizado em', fmtDate(effectiveRecord.updated_at)],
               ] as const
@@ -406,6 +457,27 @@ export default function OnboardingScreen({
               <div key={label}>
                 <dt>{label}</dt>
                 <dd>{value || '—'}</dd>
+              </div>
+            ))}
+          </div>
+          <p className={styles.help}>
+            O campo Confiança — registro inteiro é herdado e não reflete que partes diferentes
+            do formulário têm origem diferente (ex.: seguidores costuma ser medido, Q3 é quase
+            sempre hipótese). Use a confiança por seção abaixo, preenchida em cada bloco.
+          </p>
+          <div className={styles.grid2}>
+            {(
+              [
+                ['Confiança — Seguidores', labelFor(ENUM_CONFIDENCE, effectiveRecord.confidence_seguidores)],
+                ['Confiança — Bio/CTA/Funil', labelFor(ENUM_CONFIDENCE, effectiveRecord.confidence_bio_funil)],
+                ['Confiança — Diagnóstico', labelFor(ENUM_CONFIDENCE, effectiveRecord.confidence_diagnostico)],
+                ['Confiança — Audiência', labelFor(ENUM_CONFIDENCE, effectiveRecord.confidence_audiencia)],
+                ['Confiança — Negócio', labelFor(ENUM_CONFIDENCE, effectiveRecord.confidence_negocio)],
+              ] as const
+            ).map(([label, value]) => (
+              <div key={label}>
+                <dt>{label}</dt>
+                <dd>{value || '— não classificado —'}</dd>
               </div>
             ))}
           </div>
@@ -450,7 +522,9 @@ export default function OnboardingScreen({
               <input type="text" value={clientId} disabled className={styles.disabled} />
             </div>
             <div className={styles.field}>
-              <label>Total de seguidores</label>
+              <FieldLabel help={VOCAB.total_followers} missing={!isFilled('total_followers', draft)}>
+                Total de seguidores
+              </FieldLabel>
               <input
                 type="number"
                 value={draft.total_followers || 0}
@@ -461,7 +535,12 @@ export default function OnboardingScreen({
               />
             </div>
             <div className={styles.field}>
-              <label>Fonte</label>
+              <FieldLabel
+                help={VOCAB.total_followers_source}
+                missing={!isFilled('total_followers_source', draft)}
+              >
+                Fonte
+              </FieldLabel>
               <select
                 value={draft.total_followers_source || ''}
                 onChange={(e) =>
@@ -480,6 +559,31 @@ export default function OnboardingScreen({
                 ))}
               </select>
             </div>
+            <div className={styles.field}>
+              <FieldLabel
+                help={VOCAB.confidence_section}
+                missing={!isFilled('confidence_seguidores', draft)}
+              >
+                Confiança desta seção
+              </FieldLabel>
+              <select
+                value={draft.confidence_seguidores || ''}
+                onChange={(e) =>
+                  setDraft({
+                    ...draft,
+                    confidence_seguidores: (e.target.value || null) as ConfidenceLevel | null,
+                  })
+                }
+                className={styles.select}
+              >
+                <option value="">— não classificado —</option>
+                {ENUM_CONFIDENCE.map(([v, l]) => (
+                  <option key={v} value={v}>
+                    {l}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </section>
 
@@ -490,7 +594,9 @@ export default function OnboardingScreen({
           </h2>
           <div className={styles.spaceY}>
             <div>
-              <label>Links da bio</label>
+              <FieldLabel help={VOCAB.bio_links} missing={!isFilled('bio_links', draft)}>
+                Links da bio
+              </FieldLabel>
               <div className={styles.repRows}>
                 {(draft.bio_links || []).map((link, idx) => (
                   <div key={idx} className={styles.repRow}>
@@ -524,7 +630,9 @@ export default function OnboardingScreen({
             </div>
             <div className={styles.grid2}>
               <div className={styles.field}>
-                <label>Tipo de CTA</label>
+                <FieldLabel help={VOCAB.cta_type} missing={!isFilled('cta_type', draft)}>
+                  Tipo de CTA
+                </FieldLabel>
                 <select
                   value={draft.cta_type || ''}
                   onChange={(e) => setDraft({ ...draft, cta_type: e.target.value as CTAType })}
@@ -539,7 +647,12 @@ export default function OnboardingScreen({
                 </select>
               </div>
               <div className={styles.field}>
-                <label>Maturidade do funil</label>
+                <FieldLabel
+                  help={VOCAB.funnel_maturity}
+                  missing={!isFilled('funnel_maturity', draft)}
+                >
+                  Maturidade do funil
+                </FieldLabel>
                 <select
                   value={draft.funnel_maturity || ''}
                   onChange={(e) =>
@@ -556,6 +669,31 @@ export default function OnboardingScreen({
                 </select>
               </div>
             </div>
+            <div className={styles.field}>
+              <FieldLabel
+                help={VOCAB.confidence_section}
+                missing={!isFilled('confidence_bio_funil', draft)}
+              >
+                Confiança desta seção
+              </FieldLabel>
+              <select
+                value={draft.confidence_bio_funil || ''}
+                onChange={(e) =>
+                  setDraft({
+                    ...draft,
+                    confidence_bio_funil: (e.target.value || null) as ConfidenceLevel | null,
+                  })
+                }
+                className={styles.select}
+              >
+                <option value="">— não classificado —</option>
+                {ENUM_CONFIDENCE.map(([v, l]) => (
+                  <option key={v} value={v}>
+                    {l}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </section>
 
@@ -566,7 +704,9 @@ export default function OnboardingScreen({
           </h2>
           <div className={styles.fieldGrid}>
             <div className={styles.field}>
-              <label>Q1 — Período de engajamento</label>
+              <FieldLabel help={VOCAB.q1} missing={!isFilled('q1_engagement_period_notes', draft)}>
+                Q1 — Período de engajamento
+              </FieldLabel>
               <textarea
                 value={draft.q1_engagement_period_notes || ''}
                 onChange={(e) =>
@@ -577,7 +717,9 @@ export default function OnboardingScreen({
               />
             </div>
             <div className={styles.field}>
-              <label>Q2 — Proxy de conteúdo</label>
+              <FieldLabel help={VOCAB.q2} missing={!isFilled('q2_content_proxy_notes', draft)}>
+                Q2 — Proxy de conteúdo
+              </FieldLabel>
               <textarea
                 value={draft.q2_content_proxy_notes || ''}
                 onChange={(e) =>
@@ -588,7 +730,9 @@ export default function OnboardingScreen({
               />
             </div>
             <div className={styles.field}>
-              <label>Q3 — Desalinhamento</label>
+              <FieldLabel help={VOCAB.q3} missing={!isFilled('q3_misalignment_notes', draft)}>
+                Q3 — Desalinhamento
+              </FieldLabel>
               <textarea
                 value={draft.q3_misalignment_notes || ''}
                 onChange={(e) =>
@@ -597,6 +741,31 @@ export default function OnboardingScreen({
                 rows={3}
                 className={styles.textarea}
               />
+            </div>
+            <div className={styles.field}>
+              <FieldLabel
+                help={VOCAB.confidence_section}
+                missing={!isFilled('confidence_diagnostico', draft)}
+              >
+                Confiança desta seção
+              </FieldLabel>
+              <select
+                value={draft.confidence_diagnostico || ''}
+                onChange={(e) =>
+                  setDraft({
+                    ...draft,
+                    confidence_diagnostico: (e.target.value || null) as ConfidenceLevel | null,
+                  })
+                }
+                className={styles.select}
+              >
+                <option value="">— não classificado —</option>
+                {ENUM_CONFIDENCE.map(([v, l]) => (
+                  <option key={v} value={v}>
+                    {l}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
         </section>
@@ -609,7 +778,9 @@ export default function OnboardingScreen({
           <div className={styles.grid2}>
             {audienceFields.map(([id, label]) => (
               <div key={id} className={styles.field}>
-                <label>{label}</label>
+                <FieldLabel help={VOCAB.audience} missing={!isFilled(id, draft)}>
+                  {label}
+                </FieldLabel>
                 <input
                   type="number"
                   step="0.1"
@@ -625,6 +796,7 @@ export default function OnboardingScreen({
               </div>
             ))}
           </div>
+          <p className={styles.help}>{HELP.audience}</p>
           <div
             className={`${styles.sumCheck} ${!audAny ? styles.empty : audOk ? styles.ok : styles.bad}`}
           >
@@ -644,6 +816,26 @@ export default function OnboardingScreen({
                 />
               ))}
             </div>
+          </div>
+          <div className={styles.field}>
+            <label>Confiança desta seção</label>
+            <select
+              value={draft.confidence_audiencia || ''}
+              onChange={(e) =>
+                setDraft({
+                  ...draft,
+                  confidence_audiencia: (e.target.value || null) as ConfidenceLevel | null,
+                })
+              }
+              className={styles.select}
+            >
+              <option value="">— não classificado —</option>
+              {ENUM_CONFIDENCE.map(([v, l]) => (
+                <option key={v} value={v}>
+                  {l}
+                </option>
+              ))}
+            </select>
           </div>
         </section>
 
@@ -701,6 +893,26 @@ export default function OnboardingScreen({
               >
                 <option value="">— selecione —</option>
                 {ENUM_PROOF.map(([v, l]) => (
+                  <option key={v} value={v}>
+                    {l}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className={styles.field}>
+              <label>Confiança desta seção</label>
+              <select
+                value={draft.confidence_negocio || ''}
+                onChange={(e) =>
+                  setDraft({
+                    ...draft,
+                    confidence_negocio: (e.target.value || null) as ConfidenceLevel | null,
+                  })
+                }
+                className={styles.select}
+              >
+                <option value="">— não classificado —</option>
+                {ENUM_CONFIDENCE.map(([v, l]) => (
                   <option key={v} value={v}>
                     {l}
                   </option>

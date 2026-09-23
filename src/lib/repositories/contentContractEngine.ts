@@ -118,7 +118,7 @@ const CALIBRATED_SETOR_BENCHMARK_CATEGORIES: ReadonlySet<SetorBenchmark> = new S
 ])
 
 const SETOR_LABEL: Record<string, string> = {
-  comercio_direto_ecommerce_social: 'lojas que vendem pelo Instagram',
+  comercio_direto_ecommerce_social: 'lojas que vendem pelas redes sociais',
   comissionamento_afiliados: 'contas de afiliados e comissionamento',
   infoprodutor_educador_pago: 'infoprodutores e cursos',
   servico_consultoria_profissional: 'serviços e consultorias',
@@ -848,6 +848,14 @@ export function resolveCtrBioAlert(input: CtrBioInput): AlertDraft {
     natureza: 'tecnica',
     confidenceLevel: input.originBreakdown ? 'L1' : 'L2',
     dataSource: 'real_snapshot',
+    // ✅ FIX (bug de auditoria): threshold_value é obrigatório sempre que
+    // houver threshold envolvido (Content Contract, tabela de campos
+    // obrigatórios). input.threshold nunca era propagado — ficava
+    // `undefined` no AlertDraft mesmo quando o alerta girava em torno
+    // desse número. O branch "link não funciona" acima não usa threshold
+    // (é falha técnica, não comparação de métrica) e por isso não seta
+    // este campo — correto ficar de fora dali.
+    thresholdValue: input.threshold,
   }
 }
 
@@ -1065,6 +1073,11 @@ export function resolveCreativeFatigueAlert(input: CreativeFatigueInput): AlertD
     natureza: 'tecnica',
     confidenceLevel: input.roasTrend === null ? 'L2' : 'L1',
     dataSource: 'real_snapshot',
+    // ✅ FIX (bug de auditoria): input.fatigueThreshold nunca era propagado
+    // para thresholdValue — o alerta de fadiga de criativo gira inteiro em
+    // torno desse limite, então "obrigatório se houver threshold" se aplica
+    // diretamente aqui.
+    thresholdValue: input.fatigueThreshold,
   }
 }
 
@@ -1087,7 +1100,7 @@ export function resolveRoasBelowMinimumAlert(input: RoasBelowMinimumInput): Aler
 
   const base = withMissingDataGuard(
     input.cpmChangePctMarketBenchmark,
-    'Puxe quanto o Instagram está cobrando para mostrar anúncio no mercado neste período. Sem esse número não dá para saber se ficou caro só para você ou para todo mundo. Enquanto isso, não troque o criativo como primeira resposta.',
+    'Puxe quanto a plataforma está cobrando para mostrar anúncio no mercado neste período. Sem esse número não dá para saber se ficou caro só para você ou para todo mundo. Enquanto isso, não troque o criativo como primeira resposta.',
     (marketCpm) => {
       const marketWide =
         input.cpmChangePctThisAccount !== null &&
@@ -1097,7 +1110,7 @@ export function resolveRoasBelowMinimumAlert(input: RoasBelowMinimumInput): Aler
         return {
           type: 'roas_below_minimum' as const,
           severity: 'critical' as AlertSeverity,
-          title: `Retorno em ${roasPlain} — mostrar anúncio ficou mais caro para todo mundo no Instagram, não só para você`,
+          title: `Retorno em ${roasPlain} — mostrar anúncio ficou mais caro para todo mundo na plataforma, não só para você`,
           description: null,
           probableCause:
             'O custo da sua conta subiu no mesmo ritmo do mercado inteiro. Não é o criativo que piorou; é o preço do anúncio no período.',
@@ -1139,6 +1152,11 @@ export function resolveRoasBelowMinimumAlert(input: RoasBelowMinimumInput): Aler
     natureza: 'tecnica',
     confidenceLevel: input.cpmChangePctMarketBenchmark === null ? 'L2' : 'L1',
     dataSource: 'real_snapshot',
+    // ✅ FIX (bug de auditoria): input.roasMinViable nunca era propagado
+    // para thresholdValue — este alerta é sempre sobre estar abaixo (ou
+    // perto) do piso mínimo de ROAS viável, então o campo é obrigatório
+    // aqui (independentemente de qual dos três branches de causa disparou).
+    thresholdValue: input.roasMinViable,
   }
 }
 
@@ -1258,7 +1276,7 @@ export function resolveAlgoRiskScoreAlert(
   // ser queda real ou lacuna do export: checar o dado vem antes de agir.
   const zeroCheck =
     hasMedians && input.recentMedian === 0
-      ? 'Metade ou mais dos posts recentes aparece sem curtida nem comentário: confirme no Instagram que é real, e não falha do export, antes de agir. '
+      ? 'Metade ou mais dos posts recentes aparece sem curtida nem comentário: confirme na plataforma que é real, e não falha do export, antes de agir. '
       : ''
 
   return {

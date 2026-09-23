@@ -28,7 +28,6 @@ import { useOrbitDashboard } from '@/context/OrbitDashboardContext'
 import { useAvatar } from '@/hooks/useAvatar'
 import { AvatarComparison } from '@/components/common/AvatarComparison'
 import { AlignmentBars } from '@/components/common/AlignmentBars'
-import { AlignmentFormula } from '@/components/common/AlignmentFormula'
 import { RecommendationAlert } from '@/components/common/RecommendationAlert'
 import styles from './AvatarScreen.module.css'
 
@@ -46,7 +45,6 @@ const AvatarScreenSkeleton: React.FC = () => (
       <div className={`${styles.skeleton} ${styles.skeletonCard}`} style={{ flex: 1 }} />
     </div>
     <div className={`${styles.skeleton} ${styles.skeletonBars}`} />
-    <div className={`${styles.skeleton} ${styles.skeletonFormula}`} />
     <div className={`${styles.skeleton} ${styles.skeletonRecs}`} />
   </div>
 )
@@ -181,13 +179,13 @@ export const AvatarScreen: React.FC<AvatarScreenProps> = ({ clientId: propClient
       <div className={styles.page}>
         <CenterState
           icon="📊"
-          title="Avatar não configurado"
-          body="Este cliente ainda não possui um alinhamento de avatar configurado no sistema."
+          title="Alinhamento indisponível"
+          body={error ?? 'O alinhamento de avatar não pôde ser calculado para este cliente.'}
           detailTitle="O que fazer:"
           detailItems={[
-            'Verifique se o cliente foi criado corretamente',
-            'Confirme que os dados de avatar foram sincronizados',
-            'Configure um novo avatar para este cliente se necessário',
+            'Defina o avatar esperado: gênero, faixa etária e localização principal',
+            'Confirme que existe um snapshot de audiência recente (L0 ou L1)',
+            'Por enquanto, a configuração do avatar esperado é feita pela equipe ORBIT',
           ]}
           primaryAction={{ label: '🔄 Tentar Novamente', onClick: refetch }}
         />
@@ -298,8 +296,6 @@ export const AvatarScreen: React.FC<AvatarScreenProps> = ({ clientId: propClient
         />
 
         <AlignmentBars bars={data.bars} />
-
-        <AlignmentFormula />
 
         <RecommendationAlert
           status={data.status}

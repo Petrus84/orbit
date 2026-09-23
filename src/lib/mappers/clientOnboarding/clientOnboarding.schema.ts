@@ -142,6 +142,16 @@ export const clientOnboardingTableRowSchema = z.object({
   updated_by: z.string().nullable(),
   updated_at: z.string().nullable(),
 
+  // Confiança por agrupamento (21/09/2026) — colunas novas, ver migração
+  // sql/2026-09-21_add_confidence_per_group.sql. .optional() além de
+  // .nullable() porque, até a migração rodar em produção, a coluna pode
+  // simplesmente não existir na row retornada pelo Supabase.
+  confidence_seguidores: confidenceLevelEnum.nullable().optional(),
+  confidence_bio_funil: confidenceLevelEnum.nullable().optional(),
+  confidence_diagnostico: confidenceLevelEnum.nullable().optional(),
+  confidence_audiencia: confidenceLevelEnum.nullable().optional(),
+  confidence_negocio: confidenceLevelEnum.nullable().optional(),
+
   // Colunas que existem no banco mas são omitidas intencionalmente do Contract:
   // avatar_expected_age_min, avatar_expected_age_max, avatar_expected_gender,
   // avatar_expected_gender_pct — pertencem ao domínio de avatar/alinhamento,
@@ -189,4 +199,9 @@ export const clientOnboardingContractSchema = z.object({
   values_affect_confidence: confidenceLevelEnum,
   updated_by: z.string(),
   updated_at: z.string(),
+  confidence_seguidores: confidenceLevelEnum.nullable(),
+  confidence_bio_funil: confidenceLevelEnum.nullable(),
+  confidence_diagnostico: confidenceLevelEnum.nullable(),
+  confidence_audiencia: confidenceLevelEnum.nullable(),
+  confidence_negocio: confidenceLevelEnum.nullable(),
 }) satisfies z.ZodType<ClientOnboarding>

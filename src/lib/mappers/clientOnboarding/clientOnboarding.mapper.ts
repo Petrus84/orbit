@@ -85,6 +85,16 @@ export function mapClientOnboardingRowToContract(
     // null hazards de auditoria — ver constantes acima.
     updated_by: row.updated_by ?? FALLBACK_UPDATED_BY,
     updated_at: row.updated_at ?? FALLBACK_UPDATED_AT_UNKNOWN,
+    // Confiança por agrupamento — sem fallback proposital. Diferente de
+    // `values_affect_confidence` (que precisa de um valor não-nulo porque
+    // é exibido como badge único), aqui `null` é um estado válido e
+    // honesto: "esta seção ainda não foi classificada", em vez de mentir
+    // com um L2 padrão que o usuário nunca escolheu.
+    confidence_seguidores: row.confidence_seguidores ?? null,
+    confidence_bio_funil: row.confidence_bio_funil ?? null,
+    confidence_diagnostico: row.confidence_diagnostico ?? null,
+    confidence_audiencia: row.confidence_audiencia ?? null,
+    confidence_negocio: row.confidence_negocio ?? null,
     // `avatar_expected_age_min/max`, `avatar_expected_gender`,
     // `avatar_expected_gender_pct` existem na tabela e não fazem parte do
     // Contract — intencionalmente omitidos, não é um gap deste mapper

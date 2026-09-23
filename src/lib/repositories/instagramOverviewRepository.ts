@@ -156,7 +156,10 @@ const KpiRowSchema = z.object({
   metric:        z.string().optional(),
   metric_value:  z.union([z.number(), z.string()]).nullable().optional(),
   value:         z.union([z.number(), z.string()]).nullable().optional(),
-  delta_pct:     z.union([z.number(), z.string()]).nullable().optional().default(0),
+  // ✅ FIX (20/09/2026): sem `.default(0)`. v_kpi_snapshots não tem coluna de
+  // comparação com período anterior — o default fabricava "→ 0.0% vs período
+  // anterior" em todo KPI. Ausência agora fica null e a UI esconde o delta.
+  delta_pct:     z.union([z.number(), z.string()]).nullable().optional(),
   semaphore:     z.enum(['verde', 'ambar', 'vermelho']).nullable().optional().default('ambar'),
   subtitle:      z.string().nullable().optional().default(null),
   calculated_at: z.string().optional(),
@@ -211,7 +214,7 @@ function kpiRowToCardData(row: KpiRow): KPICardData {
   const key       = row.metric_key ?? row.metric ?? 'unknown'
   const rawVal    = row.metric_value ?? row.value ?? 0
   const numVal    = toFiniteNumber(rawVal)
-  const delta     = toFiniteNumber(row.delta_pct)
+  const delta: number | null = row.delta_pct == null ? null : toFiniteNumber(row.delta_pct)
   const semaphore: SemaphoreColor = (row.semaphore as SemaphoreColor) ?? 'ambar'
 
   return {

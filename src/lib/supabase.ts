@@ -1,3 +1,5 @@
+// src/lib/supabase.ts
+
 import { createClient } from '@supabase/supabase-js'
 import type { Database } from '@/types/database.types'
 
@@ -22,25 +24,33 @@ if (!supabaseUrl || !supabaseKey) {
 // lendo postgrest-js/src/types.ts: IsValidResultOverride só resolve
 // Result como "objeto único" quando o builder já sabe o shape real da
 // tabela). database.types.ts gerado via
-// `supabase gen types typescript --project-id smifhuvzroznlmbrvhaj --schema orbit,public`.
+// `supabase gen types typescript --project-id smifhuvzroznlmbrvhaj --schema orbit`.
 //
-// ✅ UMA ÚNICA DECLARAÇÃO (schema: orbit)
-export const supabase = createClient<Database, 'orbit'>(supabaseUrl || '', supabaseKey || '', {
-  db: { schema: 'orbit' as const },
-  auth: {
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: false,
-  },
-})
+// ✅ SCHEMA: orbit (principal)
+export const supabase = createClient<Database, 'orbit'>(
+  supabaseUrl || '',
+  supabaseKey || '',
+  {
+    db: { schema: 'orbit' as const },
+    auth: {
+      autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: false,
+    },
+  }
+)
 
-// ✅ UMA ÚNICA DECLARAÇÃO (schema: public — fallback)
-export const supabaseLegacy = createClient<Database, 'public'>(supabaseUrl || '', supabaseKey || '', {
-  db: { schema: 'public' as const },
-  auth: {
-    autoRefreshToken: false,
-    persistSession: false,
-    storageKey: 'orbit-legacy',
-    detectSessionInUrl: false,
-  },
-})
+// ✅ SCHEMA: orbit (fallback — mesmo schema, configuração alternativa se necessário)
+export const supabaseLegacy = createClient<Database, 'orbit'>(
+  supabaseUrl || '',
+  supabaseKey || '',
+  {
+    db: { schema: 'orbit' as const },
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+      storageKey: 'orbit-legacy',
+      detectSessionInUrl: false,
+    },
+  }
+)

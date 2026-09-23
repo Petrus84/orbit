@@ -14,6 +14,45 @@ export type Database = {
   }
   orbit: {
     Tables: {
+      _bak_clients_unconscious_desire_20260920: {
+        Row: {
+          avatar_unconscious_desire: string | null
+          handle: string | null
+          id: string | null
+        }
+        Insert: {
+          avatar_unconscious_desire?: string | null
+          handle?: string | null
+          id?: string | null
+        }
+        Update: {
+          avatar_unconscious_desire?: string | null
+          handle?: string | null
+          id?: string | null
+        }
+        Relationships: []
+      }
+      _bak_ig_audience_avatar_scores_20260920: {
+        Row: {
+          avatar_age_alignment_score: number | null
+          avatar_gender_alignment_score: number | null
+          avatar_geo_alignment_score: number | null
+          id: string | null
+        }
+        Insert: {
+          avatar_age_alignment_score?: number | null
+          avatar_gender_alignment_score?: number | null
+          avatar_geo_alignment_score?: number | null
+          id?: string | null
+        }
+        Update: {
+          avatar_age_alignment_score?: number | null
+          avatar_gender_alignment_score?: number | null
+          avatar_geo_alignment_score?: number | null
+          id?: string | null
+        }
+        Relationships: []
+      }
       _migration_audit_log: {
         Row: {
           applied_at: string
@@ -1306,6 +1345,11 @@ export type Database = {
           avatar_expected_gender_pct: number | null
           bio_links: Json
           client_id: string
+          confidence_audiencia: string | null
+          confidence_bio_funil: string | null
+          confidence_diagnostico: string | null
+          confidence_negocio: string | null
+          confidence_seguidores: string | null
           cta_type: string | null
           funnel_maturity: string | null
           nicho: string | null
@@ -1335,6 +1379,11 @@ export type Database = {
           avatar_expected_gender_pct?: number | null
           bio_links?: Json
           client_id: string
+          confidence_audiencia?: string | null
+          confidence_bio_funil?: string | null
+          confidence_diagnostico?: string | null
+          confidence_negocio?: string | null
+          confidence_seguidores?: string | null
           cta_type?: string | null
           funnel_maturity?: string | null
           nicho?: string | null
@@ -1364,6 +1413,11 @@ export type Database = {
           avatar_expected_gender_pct?: number | null
           bio_links?: Json
           client_id?: string
+          confidence_audiencia?: string | null
+          confidence_bio_funil?: string | null
+          confidence_diagnostico?: string | null
+          confidence_negocio?: string | null
+          confidence_seguidores?: string | null
           cta_type?: string | null
           funnel_maturity?: string | null
           nicho?: string | null
@@ -4066,43 +4120,6 @@ export type Database = {
       [_ in never]: never
     }
   }
-  public: {
-    Tables: {
-      [_ in never]: never
-    }
-    Views: {
-      [_ in never]: never
-    }
-    Functions: {
-      show_limit: { Args: never; Returns: number }
-      show_trgm: { Args: { "": string }; Returns: string[] }
-    }
-    Enums: {
-      alert_action_variant: "primary" | "secondary" | "danger"
-      alert_severity: "critical" | "warning" | "info"
-      alignment_color: "green" | "amber" | "red"
-      campaign_objective:
-        | "OUTREACH"
-        | "TRAFFIC"
-        | "ENGAGEMENT"
-        | "LEADS"
-        | "APP_PROMOTION"
-        | "SALES"
-      campaign_status: "ACTIVE" | "PAUSED" | "ARCHIVED"
-      delta_direction: "up" | "down" | "neutral"
-      glow_color: "cyan" | "red" | "gold" | "none"
-      google_ads_kpi_status: "ok" | "warn" | "error"
-      health_status: "critical" | "warning" | "healthy"
-      meta_kpi_status: "green" | "amber" | "red" | "gray"
-      semaphore_color: "verde" | "ambar" | "vermelho"
-      source_level: "L0" | "L1" | "L2"
-      status_variant: "ok" | "warn" | "neutral"
-      trend_color: "cyan" | "red" | "gold"
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
-  }
 }
 
 type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
@@ -4289,31 +4306,6 @@ export const Constants = {
         "manual_input",
       ],
       semaphore_color: ["verde", "ambar", "vermelho"],
-    },
-  },
-  public: {
-    Enums: {
-      alert_action_variant: ["primary", "secondary", "danger"],
-      alert_severity: ["critical", "warning", "info"],
-      alignment_color: ["green", "amber", "red"],
-      campaign_objective: [
-        "OUTREACH",
-        "TRAFFIC",
-        "ENGAGEMENT",
-        "LEADS",
-        "APP_PROMOTION",
-        "SALES",
-      ],
-      campaign_status: ["ACTIVE", "PAUSED", "ARCHIVED"],
-      delta_direction: ["up", "down", "neutral"],
-      glow_color: ["cyan", "red", "gold", "none"],
-      google_ads_kpi_status: ["ok", "warn", "error"],
-      health_status: ["critical", "warning", "healthy"],
-      meta_kpi_status: ["green", "amber", "red", "gray"],
-      semaphore_color: ["verde", "ambar", "vermelho"],
-      source_level: ["L0", "L1", "L2"],
-      status_variant: ["ok", "warn", "neutral"],
-      trend_color: ["cyan", "red", "gold"],
     },
   },
 } as const

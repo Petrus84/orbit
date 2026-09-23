@@ -126,7 +126,7 @@ export function useInstagramOverview({
 
           const message = err instanceof Error
             ? err.message
-            : 'Erro desconhecido ao buscar dados do Instagram.'
+            : 'Erro desconhecido ao buscar dados da plataforma.'
 
           console.error(
             `[useInstagramOverview] Falhou após ${MAX_RETRIES} tentativas:`,
