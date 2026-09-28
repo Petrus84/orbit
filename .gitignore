@@ -42,3 +42,19 @@ yarn-error.log*
 next-env.d.ts
 orbit-dashboard/
 output/
+
+# dumps / pacotes / scrape
+*.sql
+*.tar.gz
+*.zip
+dataset_instagram-scraper_*.json
+
+# relatórios locais
+audit-report*.json
+type-scan-report.txt
+health-reports/
+REMOVIDOS.txt
+
+# cópias no lugar errado
+src/..orbit-dashboard-clean.tar.gz
+..orbit-dashboard-clean.tar.gz
