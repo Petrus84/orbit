@@ -12,10 +12,37 @@
 // `values_affect_confidence`). Ver comentário de cada constante abaixo.
 
 import type { Database } from '@/types/database.types'
-import type { ClientOnboarding } from '@/types/orbit'
-import type { ValidatedClientOnboardingTableRow } from './clientOnboarding.schema'
+import type { ClientOnboarding, SchwatzValue } from '@/types/orbit'
+import type {
+  ValidatedClientOnboardingTableRow,
+  SchwartzRawItem,
+} from './clientOnboarding.schema'
 
 type ClientOnboardingTableRow = Database['orbit']['Tables']['client_onboarding']['Row']
+
+// ── Fallback de apresentação (baixo risco) ──────────────────────
+// `priority` não é gravado no array bruto do JSONB (a coluna só guarda
+// `value`) — 'low' é o fallback mais conservador da union, nunca uma
+// afirmação de que o item foi de fato classificado como baixa prioridade.
+const FALLBACK_SCHWARTZ_PRIORITY = 'low' as const
+
+/**
+ * Converte o ARRAY bruto de `expected_schwartz`/`real_schwartz` (forma real
+ * da coluna JSONB no banco) para o `Record<string, SchwatzValue>` exigido
+ * pelo Contract (`ClientOnboarding`, orbit.ts). A chave do Record é
+ * `item.value` — mesma convenção usada no resto do domínio Schwartz.
+ */
+function schwartzArrayToRecord(
+  items: readonly SchwartzRawItem[] | null
+): Record<string, SchwatzValue> | null {
+  if (!items) return null
+  return Object.fromEntries(
+    items.map((item): [string, SchwatzValue] => [
+      item.value,
+      { value: item.value, priority: item.priority ?? FALLBACK_SCHWARTZ_PRIORITY },
+    ])
+  )
+}
 
 // ── Fallbacks de proveniência (risco médio — decisão de negócio, não de
 //    apresentação; ver nota da Etapa 2) ─────────────────────────────────
@@ -51,7 +78,10 @@ const FALLBACK_UPDATED_AT_UNKNOWN = '1970-01-01T00:00:00.000Z' as const
  * (Etapa 4) — é isso que garante que `bio_links` já chega aqui com a forma
  * estruturada do contrato (não `Json` bruto), e que os campos "enum-like"
  * (`cta_type`, `funnel_maturity` etc.) já chegam estreitados para as unions
- * literais do contrato — sem type assertion neste arquivo.
+ * literais do contrato — sem type assertion neste arquivo. `expected_schwartz`/
+ * `real_schwartz` são a exceção: chegam validados mas ainda na forma ARRAY
+ * real da coluna JSONB — a conversão para `Record<string, SchwatzValue>`
+ * (forma do Contract) é feita aqui por `schwartzArrayToRecord()`.
  *
  * `client_id` já é `NOT NULL` na tabela-base — não há hazard de identidade
  * a guardar aqui, diferente do `client_id` em `AvatarAlignmentRow` (que
@@ -78,6 +108,10 @@ export function mapClientOnboardingRowToContract(
     setor_benchmark: row.setor_benchmark,
     nicho: row.nicho,
     proof_mechanism: row.proof_mechanism,
+    expected_panksepp_system: row.expected_panksepp_system,
+    real_panksepp_system: row.real_panksepp_system,
+    expected_schwartz: schwartzArrayToRecord(row.expected_schwartz),
+    real_schwartz: schwartzArrayToRecord(row.real_schwartz),
     // null hazards de proveniência — ver constantes acima.
     values_affect_source: row.values_affect_source ?? FALLBACK_VALUES_AFFECT_SOURCE,
     values_affect_confidence:
@@ -85,16 +119,6 @@ export function mapClientOnboardingRowToContract(
     // null hazards de auditoria — ver constantes acima.
     updated_by: row.updated_by ?? FALLBACK_UPDATED_BY,
     updated_at: row.updated_at ?? FALLBACK_UPDATED_AT_UNKNOWN,
-    // Confiança por agrupamento — sem fallback proposital. Diferente de
-    // `values_affect_confidence` (que precisa de um valor não-nulo porque
-    // é exibido como badge único), aqui `null` é um estado válido e
-    // honesto: "esta seção ainda não foi classificada", em vez de mentir
-    // com um L2 padrão que o usuário nunca escolheu.
-    confidence_seguidores: row.confidence_seguidores ?? null,
-    confidence_bio_funil: row.confidence_bio_funil ?? null,
-    confidence_diagnostico: row.confidence_diagnostico ?? null,
-    confidence_audiencia: row.confidence_audiencia ?? null,
-    confidence_negocio: row.confidence_negocio ?? null,
     // `avatar_expected_age_min/max`, `avatar_expected_gender`,
     // `avatar_expected_gender_pct` existem na tabela e não fazem parte do
     // Contract — intencionalmente omitidos, não é um gap deste mapper

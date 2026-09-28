@@ -27,13 +27,17 @@ import type {
   TotalFollowersSource,
   SetorBenchmark,
   ProofMechanism,
+  PankseppSystem,
   ValuesAffectSource,
   ConfidenceLevel,
+  SchwatzValue,
 } from '@/types/orbit'
+
+export type Priority = SchwatzValue['priority']
 
 export const ENUM_TOTAL_FOLLOWERS_SOURCE: Array<[TotalFollowersSource, string]> = [
   ['manual_print_confirmado', 'Confirmado manualmente (com print)'],
-  ['instagram_api', 'Conectado à plataforma (API)'],
+  ['instagram_api', 'Conectado via Instagram'],
   ['estimate', 'Estimativa baseada em dados'],
   ['scrape_perfil_confirmado', 'Verificado pelo perfil (dados públicos)'],
 ]
@@ -76,6 +80,16 @@ export const ENUM_PROOF: Array<[ProofMechanism, string]> = [
   ['nenhum_observavel', 'Sem elementos de prova visíveis'],
 ]
 
+export const ENUM_PANKSEPP: Array<[PankseppSystem, string]> = [
+  ['SEEKING', 'Busca e descoberta'],
+  ['CARE', 'Cuidado e proteção'],
+  ['PLAY', 'Diversão e leveza'],
+  ['LUST', 'Desejo e atração'],
+  ['FEAR', 'Segurança e proteção'],
+  ['RAGE', 'Justiça e indignação'],
+  ['PANIC_GRIEF', 'Perda e urgência'],
+]
+
 export const ENUM_AFFECT_SOURCE: Array<[ValuesAffectSource, string]> = [
   ['onboarding', 'Informações do seu cadastro'],
   ['client_feedback', 'Feedback que você nos passou'],
@@ -87,6 +101,25 @@ export const ENUM_CONFIDENCE: Array<[ConfidenceLevel, string]> = [
   ['L0', 'Medido — direto da fonte, sem estimativa'],
   ['L1', 'Estimado — calculado a partir de dado parcial'],
   ['L2', 'Hipótese — ainda sem confirmação'],
+]
+
+export const ENUM_PRIORITY: Array<[Priority, string]> = [
+  ['high', 'Alta prioridade'],
+  ['medium', 'Média prioridade'],
+  ['low', 'Baixa prioridade'],
+]
+
+export const SCHWARTZ_SUGESTOES = [
+  'Poder',
+  'Realização',
+  'Hedonismo',
+  'Estimulação',
+  'Autodireção',
+  'Universalismo',
+  'Benevolência',
+  'Tradição',
+  'Conformidade',
+  'Segurança',
 ]
 
 export function labelFor<T extends string>(

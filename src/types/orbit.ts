@@ -495,7 +495,7 @@ export interface KPICardData {
   label: string
   value: number
   unit: string | null
-  delta: number | null
+  delta: number
   deltaLabel: string
   semaphore: SemaphoreColor
   glowColor: GlowColor
@@ -604,8 +604,6 @@ export interface IGOverviewData {
   audienceSummary: AudienceSummary
   clients: Client[]  // ⚠️ OBSERVAÇÃO (15): shape de cliente com `positioning` (nova feature)
   positioning: SectorPositioning  // ✅ mudou aqui
-  // Fatos do banco que explicam telas vazias/incompletas (dataStatusCopy.ts)
-  dataStatus?: { id: string; text: string }[]
 }
 
 export interface AudienceCity {
@@ -1558,6 +1556,16 @@ export type ProofMechanism =
   | 'nenhum_observavel'
   | 'clientes_ativos_gestao'
 
+/** ⚠️ CORRIGIDO: schema real usa 'PANIC_GRIEF', não 'PANIC'; 'mixed' não
+ * existe na CHECK constraint do banco — removido. */
+export type PankseppSystem =
+  | 'SEEKING' | 'RAGE' | 'FEAR' | 'LUST' | 'CARE' | 'PANIC_GRIEF' | 'PLAY'
+
+export interface SchwatzValue {
+  value: string
+  priority: 'high' | 'medium' | 'low'
+}
+
 /**
  * ✅ PATCH (verificação ao vivo pg_constraint, 11/09/2026):
  * `client_onboarding_values_affect_source_check` no Postgres tem 4 valores —
@@ -1603,21 +1611,14 @@ export interface ClientOnboarding {
   setor_benchmark: SetorBenchmark | null
   nicho: string | null
   proof_mechanism: ProofMechanism | null
+  expected_panksepp_system: PankseppSystem | null
+  real_panksepp_system: PankseppSystem | null
+  expected_schwartz: Record<string, SchwatzValue> | null
+  real_schwartz: Record<string, SchwatzValue> | null
   values_affect_source: ValuesAffectSource
   values_affect_confidence: 'L0' | 'L1' | 'L2'
   updated_by: string
   updated_at: string
-  // Confiança por agrupamento de campos (adicionado 21/09/2026) — substitui
-  // a leitura de `values_affect_confidence` como se valesse para o
-  // formulário inteiro. Ex.: total_followers costuma ser L0 (medido/print),
-  // enquanto q2_content_proxy_notes é quase sempre L1/L2 (estimativa ou
-  // hipótese) — um único valor global não pode representar os dois
-  // honestamente. Nullable: null = "ainda não classificado", não "L0".
-  confidence_seguidores: 'L0' | 'L1' | 'L2' | null
-  confidence_bio_funil: 'L0' | 'L1' | 'L2' | null
-  confidence_diagnostico: 'L0' | 'L1' | 'L2' | null
-  confidence_audiencia: 'L0' | 'L1' | 'L2' | null
-  confidence_negocio: 'L0' | 'L1' | 'L2' | null
 }
 
 export interface OnboardingStep {
@@ -1659,7 +1660,13 @@ export interface UseAlertsResult {
   lastUpdated: Date | null
   refetch: () => Promise<void> | void
 }
-
+/** Eixos ativos SSOT v1.3 — orbit.clients.benchmark_category */
+export type SetorBenchmarkOperacional =
+  | 'comercio_direto_ecommerce_social'
+  | 'infoprodutor_autoridade_personal'
+  | 'monetizacao_nativa_plataforma'
+  | 'patrocinio_publicidade_marca'
+  | 'servico_consultoria_profissional'
 // ============================================================================
 // SEÇÃO 12: GAPS RESOLVIDOS PELA LINHAGEM v1.0.1 (Documento 4) + ADRs
 // (rodada de reconciliação nº2 — comparação contra orbit.ts v1.0.1 e o
@@ -1676,7 +1683,7 @@ export interface UseAlertsResult {
 // ✅ PATCH (verificação ao vivo pg_constraint, 11/09/2026):
 // `client_onboarding_setor_benchmark_check` no Postgres tem 10 valores —
 // faltava 'saas_ferramenta'.
-export type SetorBenchmark =
+export type SetorBenchmarkLegado =
   | 'comercio_direto_ecommerce_social'
   | 'comissionamento_afiliados'
   | 'infoprodutor_educador_pago'
@@ -1687,6 +1694,10 @@ export type SetorBenchmark =
   | 'autoridade_personal_branding_b2b'
   | 'pre_monetizacao_a_validar'
   | 'saas_ferramenta'
+
+  
+export type SetorBenchmark = SetorBenchmarkOperacional | SetorBenchmarkLegado
+
 
 // ⚠️ OBSERVAÇÃO (16) — GAP FECHADO: `CalculationResult` vivia apenas local
 // em funnelRepository.calc.ts (fora do SSOT). Centralizado aqui conforme o

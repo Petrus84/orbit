@@ -11,7 +11,7 @@
 // - avatar_expected_gender: enum orbit.gender_category
 // - cta_type, funnel_maturity, values_affect_source,
 //   values_affect_confidence, setor_benchmark, proof_mechanism,
-//   total_followers_source:
+//   expected_panksepp_system, real_panksepp_system, total_followers_source:
 //   text com CHECK constraint (não enum nativo) — confirmado via
 //   pg_constraint, não em Database["orbit"]["Enums"].
 //
@@ -30,6 +30,23 @@ import type { ClientOnboarding } from '@/types/orbit'
 const bioLinkSchema = z.object({
   url: z.string().url(),
   label: z.string(),
+})
+
+// ✅ CORRIGIDO: `SchwatzValue` em orbit.ts (o item DENTRO do Record de saída)
+// é `{ value: string; priority: 'high'|'medium'|'low' }`.
+const schwartzValueSchema = z.object({
+  value: z.string(),
+  priority: z.enum(['high', 'medium', 'low']),
+})
+
+// A coluna JSONB no banco guarda um ARRAY de itens (não um Record ainda
+// indexado por `value`) — `priority` pode não vir preenchido no dado bruto.
+// Este schema valida a forma de ENTRADA; a conversão para
+// `Record<string, SchwatzValue>` (forma exigida pelo Contract) acontece no
+// mapper, não aqui.
+const schwartzRawItemSchema = z.object({
+  value: z.string(),
+  priority: z.enum(['high', 'medium', 'low']).optional(),
 })
 
 // ── Enums de texto (CHECK constraint no banco, não enum nativo Postgres) ─
@@ -68,19 +85,6 @@ const confidenceLevelEnum = z.enum(['L0', 'L1', 'L2'])
 
 /**
  * ✅ NOVO — este campo não era validado (z.string() solto). pg_constraint:
- * client_onboarding_total_followers_source_check (4 valores — a versão
- * anterior deste projeto em orbit.ts só tinha 3, faltava
- * 'scrape_perfil_confirmado'; corrigido em ambos os arquivos).
- */
-const totalFollowersSourceEnum = z.enum([
-  'manual_print_confirmado',
-  'instagram_api',
-  'estimate',
-  'scrape_perfil_confirmado',
-])
-
-/**
- * ✅ CORRIGIDO — pg_constraint:
  * client_onboarding_setor_benchmark_check (10 valores).
  */
 const setorBenchmarkEnum = z.enum([
@@ -110,6 +114,35 @@ const proofMechanismEnum = z.enum([
   'clientes_ativos_gestao',
 ])
 
+/**
+ * ✅ NOVO — este campo não era validado (z.string() solto). pg_constraint:
+ * client_onboarding_expected_panksepp_system_check /
+ * client_onboarding_real_panksepp_system_check (7 valores, maiúsculo,
+ * inclui 'PANIC_GRIEF' — não 'PANIC').
+ */
+const pankseppSystemEnum = z.enum([
+  'SEEKING',
+  'CARE',
+  'PLAY',
+  'LUST',
+  'FEAR',
+  'RAGE',
+  'PANIC_GRIEF',
+])
+
+/**
+ * ✅ NOVO — este campo não era validado (z.string() solto). pg_constraint:
+ * client_onboarding_total_followers_source_check (4 valores — a versão
+ * anterior deste projeto em orbit.ts só tinha 3, faltava
+ * 'scrape_perfil_confirmado'; corrigido em ambos os arquivos).
+ */
+const totalFollowersSourceEnum = z.enum([
+  'manual_print_confirmado',
+  'instagram_api',
+  'estimate',
+  'scrape_perfil_confirmado',
+])
+
 // ── Schema de entrada (row crua do banco) ────────────────────────────────
 
 export const clientOnboardingTableRowSchema = z.object({
@@ -137,20 +170,15 @@ export const clientOnboardingTableRowSchema = z.object({
   setor_benchmark: setorBenchmarkEnum.nullable(),
   nicho: z.string().nullable(),
   proof_mechanism: proofMechanismEnum.nullable(),
+  expected_panksepp_system: pankseppSystemEnum.nullable(),
+  real_panksepp_system: pankseppSystemEnum.nullable(),
+  // Forma bruta do JSONB: array — ver `schwartzRawItemSchema` acima.
+  expected_schwartz: z.array(schwartzRawItemSchema).nullable(),
+  real_schwartz: z.array(schwartzRawItemSchema).nullable(),
   values_affect_source: valuesAffectSourceEnum.nullable(),
   values_affect_confidence: confidenceLevelEnum.nullable(),
   updated_by: z.string().nullable(),
   updated_at: z.string().nullable(),
-
-  // Confiança por agrupamento (21/09/2026) — colunas novas, ver migração
-  // sql/2026-09-21_add_confidence_per_group.sql. .optional() além de
-  // .nullable() porque, até a migração rodar em produção, a coluna pode
-  // simplesmente não existir na row retornada pelo Supabase.
-  confidence_seguidores: confidenceLevelEnum.nullable().optional(),
-  confidence_bio_funil: confidenceLevelEnum.nullable().optional(),
-  confidence_diagnostico: confidenceLevelEnum.nullable().optional(),
-  confidence_audiencia: confidenceLevelEnum.nullable().optional(),
-  confidence_negocio: confidenceLevelEnum.nullable().optional(),
 
   // Colunas que existem no banco mas são omitidas intencionalmente do Contract:
   // avatar_expected_age_min, avatar_expected_age_max, avatar_expected_gender,
@@ -171,6 +199,9 @@ export const clientOnboardingTableRowListSchema = z.array(
 export type ValidatedClientOnboardingTableRow = z.infer<
   typeof clientOnboardingTableRowSchema
 >
+
+/** Item bruto de `expected_schwartz`/`real_schwartz` (forma array, pré-conversão). */
+export type SchwartzRawItem = z.infer<typeof schwartzRawItemSchema>
 
 /**
  * Schema de saída — valida o shape que atravessa para a UI.
@@ -195,13 +226,12 @@ export const clientOnboardingContractSchema = z.object({
   setor_benchmark: setorBenchmarkEnum.nullable(),
   nicho: z.string().nullable(),
   proof_mechanism: proofMechanismEnum.nullable(),
+  expected_panksepp_system: pankseppSystemEnum.nullable(),
+  real_panksepp_system: pankseppSystemEnum.nullable(),
+  expected_schwartz: z.record(z.string(), schwartzValueSchema).nullable(),
+  real_schwartz: z.record(z.string(), schwartzValueSchema).nullable(),
   values_affect_source: valuesAffectSourceEnum,
   values_affect_confidence: confidenceLevelEnum,
   updated_by: z.string(),
   updated_at: z.string(),
-  confidence_seguidores: confidenceLevelEnum.nullable(),
-  confidence_bio_funil: confidenceLevelEnum.nullable(),
-  confidence_diagnostico: confidenceLevelEnum.nullable(),
-  confidence_audiencia: confidenceLevelEnum.nullable(),
-  confidence_negocio: confidenceLevelEnum.nullable(),
 }) satisfies z.ZodType<ClientOnboarding>
