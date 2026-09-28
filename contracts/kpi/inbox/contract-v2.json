@@ -1,0 +1,323 @@
+[
+  {
+    "kpi_id": "followers_net_balance",
+    "kpi_nome": "Saldo de Seguidores do Período",
+    "camada": "C2",
+    "familia_regua": "B_serie_parcela",
+    "regra_calculo": "saldo_seguidores = follower_count(T1) - follower_count(T0)",
+    "fonte_preferencial": "client_onboarding.total_followers e/ou ig_account_snapshots.followers_total",
+    "confidence_level": "L1",
+    "status": "mantida"
+  },
+  {
+    "kpi_id": "followers_semaphore",
+    "kpi_nome": "Semáforo de Seguidores",
+    "camada": "C2",
+    "familia_regua": "B_serie_parcela",
+    "regra_calculo": "verde se saldo_semana >= 0; ambar se saldo_semana_n < 0 e semana_n-1 >= 0; vermelho SE saldo_semana_n < 0 E saldo_semana_n-1 < 0",
+    "confidence_level": "L1",
+    "status": "mantida_refinada"
+  },
+  {
+    "kpi_id": "engagement_period_delta",
+    "kpi_nome": "Engajamento do Período",
+    "camada": "C2",
+    "familia_regua": "B_serie_parcela",
+    "regra_calculo": "engajamento_delta_pct = ((eng_T1 - eng_T0) / eng_T0) * 100",
+    "confidence_level": "L1",
+    "guarda": "eng_T0 = 0 → não divide. Não chamar isso de er_real_pct.",
+    "status": "mantida"
+  },
+  {
+    "kpi_id": "engagement_semaphore",
+    "kpi_nome": "Semáforo de Engajamento (série)",
+    "camada": "C2",
+    "familia_regua": "B_serie_parcela",
+    "regra_calculo": "vermelho se delta < -30; ambar se -30 <= delta < 0; verde se delta >= 0",
+    "confidence_level": "L1",
+    "status": "mantida_como_gestao"
+  },
+  {
+    "kpi_id": "cpr_vs_goal",
+    "kpi_nome": "Custo por Resultado vs Meta",
+    "camada": "C3",
+    "familia_regua": "C_meta_cliente_ads",
+    "regra_calculo": "cpr_vs_meta_pct = (custo_resultado_real / meta_custo_resultado) * 100",
+    "confidence_level": "L0 se vier da Ads API; L2 se meta ausente",
+    "guarda": "Sem meta no cliente → não abre alerta. Não é Instagram orgânico.",
+    "status": "mantida_com_skip"
+  },
+  {
+    "kpi_id": "cpr_semaphore",
+    "kpi_nome": "Semáforo de Custo por Resultado",
+    "camada": "C3",
+    "familia_regua": "C_meta_cliente_ads",
+    "regra_calculo": "vermelho se cpr_vs_meta_pct > 120; ambar se 100 < x <= 120; verde se <= 100",
+    "confidence_level": "L1",
+    "guarda": "Meta obrigatória. resolveRoasBelowMinimumAlert manda se houver CPM de mercado.",
+    "status": "mantida_com_skip"
+  },
+  {
+    "kpi_id": "ctr_ads",
+    "kpi_nome": "CTR de anúncio (Meta / Google)",
+    "camada": "C3_C4",
+    "familia_regua": "C_meta_cliente_ads",
+    "regra_calculo": "CTR_ads = (cliques / impressoes) * 100",
+    "defaults_legado_recusados": {
+      "meta": 1.0,
+      "google_search": 2.0,
+      "nota": "eram clients.threshold_ctr_* orfaos; proibido reutilizar"
+    },
+    "regra_refinada": "Limiar = meta da conta OU série 14d da própria conta. Card Instagram orgânico não usa este KPI.",
+    "confidence_level": "L0",
+    "status": "separada_do_ctr_bio"
+  },
+  {
+    "kpi_id": "ctr_bio_organic",
+    "kpi_nome": "CTR da bio (orgânico)",
+    "camada": "C2",
+    "familia_regua": "B_serie_parcela",
+    "regra_calculo": "ctr_bio = (link_clicks / profile_visits) * 100",
+    "alerta": "resolveCtrBioAlert — nunca threshold 2.00 do Google. Sem visitas no período → skip.",
+    "confidence_level": "L0 no zip Insights",
+    "status": "NOVA_SEPARACAO_obrigatoria"
+  },
+  {
+    "kpi_id": "ctr_below_threshold_alert",
+    "kpi_nome": "Alerta de CTR Abaixo do Threshold",
+    "camada": "C3_ou_C2",
+    "familia_regua": "C_ou_B_conforme_tipo",
+    "regra_calculo_antiga_recusada": "SE CTR_meta < 1 OR CTR_google < 2 ENTÃO alerta",
+    "regra_refinada": "ctr_below_threshold só para Ads com meta da conta; bio usa o mesmo type apenas se o writer passar metric_name=ctr_bio e threshold da conta.",
+    "writer": "syncClientAlerts -> resolveCtrBioAlert | skip Ads se sem spend",
+    "status": "reescrever_writer"
+  },
+  {
+    "kpi_id": "cpa",
+    "kpi_nome": "CPA — Custo por Aquisição",
+    "camada": "C3",
+    "familia_regua": "C_meta_cliente_ads",
+    "regra_calculo": "CPA = spend / conversions; alerta se CPA > 1.5 * media_CPA_14d",
+    "guarda": "n >= 7 dias com spend. Skip sem Ads.",
+    "confidence_level": "L0",
+    "status": "mantida_com_guarda_n"
+  },
+  {
+    "kpi_id": "ad_frequency",
+    "kpi_nome": "Frequência de Anúncio",
+    "camada": "C3",
+    "familia_regua": "C_meta_cliente_ads",
+    "regra_calculo_antiga_recusada": "alerta SE frequency > 3",
+    "regra_refinada": "ambar se frequency > 2.5 E ROAS estável; warning se frequency > 2.5 E ROAS caindo (resolveCreativeFatigueAlert / resolveRoasBelowMinimumAlert). Frequência sozinha não vira critical.",
+    "confidence_level": "L1",
+    "status": "refinada_arvore_engine"
+  },
+  {
+    "kpi_id": "confidence_l0",
+    "kpi_nome": "Flag de Confiança L0",
+    "camada": "transversal",
+    "familia_regua": "epistemologia",
+    "regra_calculo": "origem in (instagram_export, meta_api, google_ads_api) E sem imputação",
+    "status": "mantida_alinhada_contract"
+  },
+  {
+    "kpi_id": "confidence_l1",
+    "kpi_nome": "Flag de Confiança L1",
+    "camada": "transversal",
+    "familia_regua": "epistemologia",
+    "nao_usar": "margem_erro < 40% como criterio unico - briefing antigo de estimativa de alcance",
+    "status": "mantida_sem_40pct"
+  },
+  {
+    "kpi_id": "confidence_l2",
+    "kpi_nome": "Flag de Confiança L2",
+    "camada": "transversal",
+    "familia_regua": "epistemologia",
+    "regra_calculo": "origem in (benchmark_mercado, fallback_by_client, fallback_by_empty, estimate) OU confidence_score < 0.75",
+    "excluir_de_calculos_automaticos": true,
+    "status": "refinada_cor_e_permissao"
+  },
+  {
+    "kpi_id": "organic_funnel_sales_estimate",
+    "kpi_nome": "Vendas Estimadas pelo Funil Orgânico",
+    "camada": "C5_simulador",
+    "familia_regua": "L2_slider",
+    "regra_calculo": "vendas_estimadas = alcance * ctr_perfil * ctr_link * taxa_conversao",
+    "confidence_level": "L2",
+    "status": "mantida_como_simulador"
+  },
+  {
+    "kpi_id": "polemic_score_pct",
+    "kpi_nome": "Score de Polêmica / Discussão nos comentários",
+    "camada": "C2",
+    "familia_regua": "A_tarifario_empirico",
+    "regra_calculo": "polemic_score_pct = (comentarios / curtidas) * 100",
+    "regra_alerta_antiga_RECUSADA": "ALERTA SE > 20%",
+    "regua_vigente": "orbit.fn_classify_metric('polemic_score_pct', valor, category, tier) com dataset benchmark_58_v2_real_schema",
+    "writer": "resolveEngagementScoreAlert ramo polemic",
+    "confidence_level": "L1 valor; semáforo L1/L2 conforme confidence_score da linha",
+    "guarda": "likes=0 ou null → não divide.",
+    "status": "substituir_20pct_por_RPC"
+  },
+  {
+    "kpi_id": "utility_score_pct",
+    "kpi_nome": "Score de Utilidade (Insights)",
+    "camada": "C2",
+    "familia_regua": "B_parcela_sem_tarifario",
+    "regra_calculo": "utility_score_pct = ((salvamentos + compartilhamentos) / alcance) * 100",
+    "regra_antiga_RECUSADA": "ÂMBAR SE < 1%; SAUDÁVEL SE >= 2%",
+    "regua_vigente": "Sem linha no JSON v2. Mostrar número cru. 1%/2% só hover L2 mercado.",
+    "confidence_level": "L1 o número; semáforo indisponível",
+    "status": "refinada_sem_semaforo_2pct"
+  },
+  {
+    "kpi_id": "er_real_pct",
+    "kpi_nome": "ER Real (C-01)",
+    "camada": "C2",
+    "familia_regua": "B_parcela_sem_tarifario",
+    "regra_calculo": "er_real_pct = ((saves + shares + comments) / reach) * 100",
+    "regua_vigente": "Sem linha v2. classifyMetric devolve indisponível.",
+    "status": "INCLUSA_explicitamente"
+  },
+  {
+    "kpi_id": "vps_c02",
+    "kpi_nome": "Alcance na base (VPS C-02)",
+    "camada": "C2",
+    "familia_regua": "B_parcela_sem_tarifario",
+    "regra_calculo": "vps_c02_pct = (reach_total * reach_followers_pct / 100) / followers_total * 100",
+    "formula_ERRADA_na_view": "reach_total / followers_total → 111% na tela",
+    "guarda_engine": "valor > 100 = agregado de vários posts no período; não classificar como um post",
+    "regua_vigente": "Sem linha v2. Não pintar vermelho com 40% de manual (vps_pct antigo).",
+    "status": "INCLUSA_e_corrigir_view"
+  },
+  {
+    "kpi_id": "sparkline_8w",
+    "kpi_nome": "Sparkline de Tendência — Slope de 8 Semanas",
+    "camada": "C2_C3",
+    "familia_regua": "B_serie_parcela",
+    "regra_calculo": "slope = regressao_linear(8 valores semanais)",
+    "alerta_refinado": "só se n_pontos >= 6 E slope < 0 em >= 2 semanas consecutivas",
+    "status": "mantida_com_n_minimo"
+  },
+  {
+    "kpi_id": "boost_candidate",
+    "kpi_nome": "Candidato a Boost",
+    "camada": "C5",
+    "familia_regua": "C5_regras_com_null_safe",
+    "regra_calculo_antiga": "c1 shares > 0.02*base; c2 saves/reach > 0.03; c3 reach_nao_seg/reach > 0.40",
+    "regra_refinada": "Campo null não conta como falha. 0 observáveis = sem badge. 1 verdadeira = candidato. 2+ = forte.",
+    "status": "refinada_null_safe"
+  },
+  {
+    "kpi_id": "creative_fatigue_score",
+    "kpi_nome": "Score de Fadiga de Criativo",
+    "camada": "C3",
+    "familia_regua": "C_meta_cliente_ads",
+    "regra_calculo": "fadiga_pct = ((CTR_semana1 - CTR_semana_atual) / CTR_semana1) * 100 por ad_id",
+    "status": "mantida"
+  },
+  {
+    "kpi_id": "creative_fatigue_cause",
+    "kpi_nome": "Diagnóstico de Causa da Fadiga",
+    "camada": "C3",
+    "familia_regua": "C_arvore_engine",
+    "regra_calculo_antiga": "fadiga>40 e freq>2.5 → saturacao; fadiga>40 e freq<2.5 → segmentacao",
+    "regra_refinada": "Usar resolveCreativeFatigueAlert: fadiga alta + ROAS falling → trocar criativo; fadiga alta + ROAS estável/rising → não trocar só por frequência. 40% e 2.5 são gestão, não percentil das 58.",
+    "status": "alinhada_engine_v151"
+  },
+  {
+    "kpi_id": "avatar_gender",
+    "kpi_nome": "Alinhamento de Avatar — Gênero",
+    "camada": "C1",
+    "familia_regua": "C1_com_guarda_conversao",
+    "regra_antiga": "CRITICO SE alinhamento < 70",
+    "regra_refinada": "desvio_pp = abs(esperado - real). verde <=15pp; ambar 15-30pp; vermelho >30pp SOMENTE se isRealFromConversionData. Senão warning L2.",
+    "status": "refinada_nao_critical_em_demo_de_like"
+  },
+  {
+    "kpi_id": "avatar_age",
+    "kpi_nome": "Alinhamento de Avatar — Faixa Etária",
+    "camada": "C1",
+    "familia_regua": "C1_com_guarda_conversao",
+    "regra_refinada": "Comparar soma da faixa DECLARADA vs soma real dessa faixa. Mesmos cortes 15/30pp.",
+    "status": "refinada"
+  },
+  {
+    "kpi_id": "avatar_city",
+    "kpi_nome": "Alinhamento de Avatar — Cidade",
+    "camada": "C1",
+    "familia_regua": "C1_geo",
+    "regra_antiga_RECUSADA": "CRITICO SE percentual na cidade alvo < 70",
+    "regra_refinada": "verde se alvo no top 5 real OU soma das cidades declaradas >= 25%; ambar 10-25%; vermelho <10% com lista declarada não vazia.",
+    "status": "reescrever_70pct"
+  },
+  {
+    "kpi_id": "reach_follower_split",
+    "kpi_nome": "Alcance Orgânico — Seguidores vs Não-Seguidores",
+    "camada": "C2",
+    "familia_regua": "B_parcela",
+    "regra_calculo": "alcance_seguidores = reach * reach_followers_pct/100; nao_seguidores = resto",
+    "status": "mantida"
+  },
+  {
+    "kpi_id": "save_rate",
+    "kpi_nome": "Engajamento Qualificado — Save Rate",
+    "camada": "C2",
+    "familia_regua": "B_parcela",
+    "regra_calculo": "save_rate = (salvamentos / alcance) * 100",
+    "nao_usar_3pct_como_semaforo_global": true,
+    "status": "mantida_sem_3pct_global"
+  },
+  {
+    "kpi_id": "format_performance",
+    "kpi_nome": "Performance por Formato",
+    "camada": "C2_C5",
+    "familia_regua": "B_parcela",
+    "regra_calculo": "agrupar content_format; media reach, media interacoes, save_rate por grupo",
+    "guarda_ui": "NÃO filtrar insight com shares > 0 (zera Reels).",
+    "status": "mantida_corrigir_view"
+  },
+  {
+    "kpi_id": "audience_peak",
+    "kpi_nome": "Pico de Atividade da Audiência",
+    "camada": "C2_C5",
+    "familia_regua": "B_parcela",
+    "regra_calculo": "top 3 janelas dia×hora",
+    "status": "mantida"
+  },
+  {
+    "kpi_id": "ads_pace",
+    "kpi_nome": "Gasto Real vs Planejado (Burn Rate)",
+    "camada": "C3",
+    "familia_regua": "C_meta_cliente_ads",
+    "regra_calculo": "burn_rate_diario = spend_acumulado / dias_decorridos; pace_esperado = budget / dias_totais",
+    "guarda": "Skip sem Ads.",
+    "status": "mantida_com_skip"
+  },
+  {
+    "kpi_id": "google_impression_share",
+    "kpi_nome": "Impression Share — Intenção de Busca (Google)",
+    "camada": "C4",
+    "familia_regua": "C4_google",
+    "guarda": "Não misturar com card Instagram. Sem Google Ads → não renderizar.",
+    "status": "mantida_isolada_c4"
+  },
+  {
+    "kpi_id": "lp_cvr",
+    "kpi_nome": "Taxa de Conversão de Landing Page",
+    "camada": "C4",
+    "familia_regua": "C4_ga4",
+    "regra_calculo": "conversoes / sessoes * 100 por canal",
+    "status": "mantida_isolada_c4"
+  },
+  {
+    "kpi_id": "cpm_market_delta",
+    "kpi_nome": "Δ CPM conta vs mercado",
+    "camada": "C3",
+    "familia_regua": "C_mercado_L2",
+    "regra_calculo": "delta_conta_pct vs delta_mercado_pct no mesmo objetivo/geo/placement",
+    "nao_usar": "AdRiseLab como empirical_percentile",
+    "confidence_level": "L2 o mercado; L0 o CPM da conta",
+    "status": "INCLUSA"
+  }
+]
