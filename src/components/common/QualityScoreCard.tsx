@@ -114,7 +114,7 @@ export function useInstagramData() {
         setError(null);
       } catch (err) {
         const message = err instanceof Error ? err.message : "Erro desconhecido";
-        console.error("Falha na requisição à plataforma:", message);
+        console.error("Falha na requisição Instagram:", message);
         setError(message);
         setData(null);
       } finally {
@@ -136,7 +136,7 @@ export function InstagramOverviewScreen(): React.ReactElement {
   const { data, loading, error } = useInstagramData();
 
   if (loading) {
-    return <div className="p-4 text-zinc-400">⏳ Carregando dados da plataforma...</div>;
+    return <div className="p-4 text-zinc-400">⏳ Carregando dados do Instagram...</div>;
   }
 
   if (error) {

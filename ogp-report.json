@@ -1,0 +1,5310 @@
+{
+  "timestamp": "2026-09-29T12:22:30.230Z",
+  "protocol": "OGP",
+  "catalog": [
+    {
+      "screen": "carteira",
+      "table": "clients",
+      "requiredForReady": true,
+      "note": "cliente existe"
+    },
+    {
+      "screen": "carteira",
+      "table": "client_onboarding",
+      "requiredForReady": false,
+      "note": "onboarding 1:1"
+    },
+    {
+      "screen": "instagram",
+      "table": "ig_account_snapshots",
+      "requiredForReady": true,
+      "note": "KPI followers/reach/ER"
+    },
+    {
+      "screen": "instagram",
+      "table": "ig_posts",
+      "requiredForReady": false,
+      "note": "grade de conteúdo"
+    },
+    {
+      "screen": "instagram",
+      "table": "ig_import_sessions",
+      "requiredForReady": false,
+      "note": "vigência da ingestão"
+    },
+    {
+      "screen": "avatar",
+      "table": "ig_audience_snapshots",
+      "requiredForReady": true,
+      "note": "audiência observada"
+    },
+    {
+      "screen": "avatar",
+      "table": "avatar_alignment_snapshot",
+      "requiredForReady": false,
+      "note": "score vs esperado"
+    },
+    {
+      "screen": "avatar",
+      "table": "avatar_validations",
+      "requiredForReady": false,
+      "note": "validação humana"
+    },
+    {
+      "screen": "alertas",
+      "table": "alerts",
+      "requiredForReady": false,
+      "note": "empty é produto"
+    },
+    {
+      "screen": "funil",
+      "table": "funnel_data",
+      "requiredForReady": true,
+      "note": "alcance→visita→clique→venda"
+    },
+    {
+      "screen": "instagram",
+      "table": "raw_ig_ingest",
+      "requiredForReady": false,
+      "note": "pipeline bruto"
+    }
+  ],
+  "universe": {
+    "knownMap": 5,
+    "dbClients": 129,
+    "extraInDb": [],
+    "missingInDb": [],
+    "skippedBenchmark": []
+  },
+  "clients": [
+    {
+      "handle": "cpimportstore",
+      "clientId": "2141d077-0d82-4fda-83df-558377f105ff",
+      "source": "map",
+      "client": {
+        "id": "2141d077-0d82-4fda-83df-558377f105ff",
+        "handle": "cpimportstore",
+        "name": "CP Import Store",
+        "ig_username": null,
+        "instagram_user_id": null,
+        "health_status": "healthy",
+        "avatar_expected_gender": null,
+        "avatar_expected_age_min": 18,
+        "avatar_expected_age_max": 65,
+        "avatar_expected_geo_primary": null,
+        "avatar_unconscious_desire": null,
+        "is_benchmark": false
+      },
+      "counts": {
+        "ig_account_snapshots": {
+          "count": 6,
+          "error": null
+        },
+        "ig_posts": {
+          "count": 18,
+          "error": null
+        },
+        "ig_audience_snapshots": {
+          "count": 6,
+          "error": null
+        },
+        "avatar_alignment_snapshot": {
+          "count": 3,
+          "error": null
+        },
+        "avatar_validations": {
+          "count": 0,
+          "error": null
+        },
+        "alerts": {
+          "count": 0,
+          "error": null
+        },
+        "funnel_data": {
+          "count": 1,
+          "error": null
+        },
+        "client_onboarding": {
+          "count": 1,
+          "error": null
+        },
+        "ig_import_sessions": {
+          "count": 1,
+          "error": null
+        },
+        "raw_ig_ingest": {
+          "count": 2,
+          "error": null
+        }
+      },
+      "pipeline": {
+        "sessions": 1,
+        "failedSessions": 0,
+        "pendingSessions": 0,
+        "lastSession": {
+          "id": "f6ec140e-4e5f-4d2b-84ff-b3017cb50df4",
+          "status": "done",
+          "export_period_start": "2026-05-29",
+          "export_period_end": "2026-05-19",
+          "files_missing": [],
+          "error_log": null,
+          "processed_at": "2026-08-31T18:54:50.203+00:00"
+        },
+        "rawUnparsed": 0,
+        "rawError": null
+      },
+      "quality": {
+        "snapshots": {
+          "total": 6,
+          "withoutFollowers": 5,
+          "followersL0": 6
+        },
+        "latestSnap": {
+          "id": "68dfdd46-39d2-4640-9af1-5b5edeab99bc",
+          "period_start": "2026-05-27",
+          "period_end": "2026-08-24",
+          "followers_total": null,
+          "followers_confidence": "L0",
+          "reach_total": 1985,
+          "reach_confidence": "L1",
+          "profile_visits": 53,
+          "link_clicks": 5,
+          "er_real_pct": 0.1008
+        },
+        "posts": {
+          "rows": [
+            {
+              "id": "96d574ae-b660-4161-99c9-fad2b9bdf2d4",
+              "reach": 67,
+              "impressions": 78,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "365fcd88-8e0f-4d6a-8b1a-57ffba539f98",
+              "reach": 106,
+              "impressions": 117,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "c21105cf-ca11-4db0-a724-2afbbfb31db9",
+              "reach": 273,
+              "impressions": 336,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "26212a24-6c52-40b0-9352-fd82b28f626c",
+              "reach": 67,
+              "impressions": 83,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "0f7cd28a-71b1-4f6b-8d72-b3d492cfcbbd",
+              "reach": 52,
+              "impressions": 61,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "f5aa3f9d-7791-4749-8f2b-83945c320811",
+              "reach": 431,
+              "impressions": 501,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "110d3114-783b-43d4-a503-e3a574db3e68",
+              "reach": 88,
+              "impressions": 112,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "40a11b15-0901-4050-b851-eec459a3cd02",
+              "reach": 70,
+              "impressions": 90,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "03a4c419-e70e-4e9d-8a0f-fc3a91df7753",
+              "reach": 159,
+              "impressions": 203,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "10eeeb7b-5720-448d-90a1-6b765ba8f24f",
+              "reach": 406,
+              "impressions": 506,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "4dbf5206-e5c9-4855-9ae8-319363c93333",
+              "reach": 191,
+              "impressions": 217,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "bf4f9ffc-8c11-4bdb-989a-2fcf6dfc8f8c",
+              "reach": 161,
+              "impressions": 218,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "3b12c5b6-1de6-47ed-997f-7ce0ee0771d8",
+              "reach": 563,
+              "impressions": 483,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "d69df4fa-a72e-41e5-b34d-f33c9798dafb",
+              "reach": 259,
+              "impressions": 352,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "ed91b39f-d890-4aab-adfd-379e08485905",
+              "reach": 188,
+              "impressions": 213,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "117c94a3-1f93-43ed-975f-70f6001dbc1a",
+              "reach": 213,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "b0c3baa3-c41b-4cfa-b931-a981e8b993f2",
+              "reach": 211,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "carousel"
+            },
+            {
+              "id": "ed2a2715-3675-4f9f-8743-3c4df8cbc5f6",
+              "reach": 290,
+              "impressions": 1209,
+              "confidence_level": "L1",
+              "content_format": "carousel"
+            }
+          ],
+          "truncated": false,
+          "error": null,
+          "confidenceSumMismatch": false,
+          "total": 18
+        },
+        "latestAudience": {
+          "id": "57d37314-397f-4a23-867e-62f47e746e55",
+          "period_end": "2026-08-31",
+          "gender_female_pct": 71.5,
+          "gender_male_pct": 28.4,
+          "avatar_composite_score": null,
+          "confidence_level": "L1"
+        }
+      },
+      "screens": {
+        "carteira": {
+          "gate": "RWP",
+          "reasons": [
+            "clients row existe",
+            "onboarding presente"
+          ]
+        },
+        "instagram": {
+          "gate": "C_HOLD_INGEST",
+          "reasons": [
+            "snapshots=6",
+            "posts=18 reach=18",
+            "último período 2026-05-27→2026-08-24",
+            "import done"
+          ]
+        },
+        "avatar": {
+          "gate": "C_HOLD_INGEST",
+          "reasons": [
+            "avatar esperado INCOMPLETO em clients",
+            "audience_snapshots=6",
+            "alignment=3",
+            "validations=0"
+          ]
+        },
+        "alertas": {
+          "gate": "RWP",
+          "reasons": [
+            "alerts=0",
+            "abertos=0"
+          ]
+        },
+        "funil": {
+          "gate": "RWP",
+          "reasons": [
+            "funnel_data=1",
+            "snapshot tem profile_visits (origem derivável)"
+          ]
+        }
+      },
+      "errors": []
+    },
+    {
+      "handle": "eupetruchio84",
+      "clientId": "c4722cfc-cff2-4a03-a457-f14ee8c9e0e7",
+      "source": "map",
+      "client": {
+        "id": "c4722cfc-cff2-4a03-a457-f14ee8c9e0e7",
+        "handle": "eupetruchio84",
+        "name": "Eupetruchio",
+        "ig_username": null,
+        "instagram_user_id": null,
+        "health_status": "healthy",
+        "avatar_expected_gender": null,
+        "avatar_expected_age_min": 30,
+        "avatar_expected_age_max": 60,
+        "avatar_expected_geo_primary": null,
+        "avatar_unconscious_desire": null,
+        "is_benchmark": false
+      },
+      "counts": {
+        "ig_account_snapshots": {
+          "count": 9,
+          "error": null
+        },
+        "ig_posts": {
+          "count": 21,
+          "error": null
+        },
+        "ig_audience_snapshots": {
+          "count": 8,
+          "error": null
+        },
+        "avatar_alignment_snapshot": {
+          "count": 3,
+          "error": null
+        },
+        "avatar_validations": {
+          "count": 0,
+          "error": null
+        },
+        "alerts": {
+          "count": 1,
+          "error": null
+        },
+        "funnel_data": {
+          "count": 1,
+          "error": null
+        },
+        "client_onboarding": {
+          "count": 1,
+          "error": null
+        },
+        "ig_import_sessions": {
+          "count": 5,
+          "error": null
+        },
+        "raw_ig_ingest": {
+          "count": 14,
+          "error": null
+        }
+      },
+      "pipeline": {
+        "sessions": 5,
+        "failedSessions": 0,
+        "pendingSessions": 0,
+        "lastSession": {
+          "id": "92e7d69c-9b1c-4fd7-92f8-cbcf14a30a21",
+          "status": "done",
+          "export_period_start": "2026-01-01",
+          "export_period_end": "2026-02-28",
+          "files_missing": null,
+          "error_log": null,
+          "processed_at": "2026-09-07T20:22:41.005147+00:00"
+        },
+        "rawUnparsed": 0,
+        "rawError": null
+      },
+      "quality": {
+        "snapshots": {
+          "total": 9,
+          "withoutFollowers": 8,
+          "followersL0": 9
+        },
+        "latestSnap": {
+          "id": "ae12c705-7eba-4db6-bc96-f49fd1e3c8cb",
+          "period_start": "2026-05-20",
+          "period_end": "2026-08-17",
+          "followers_total": null,
+          "followers_confidence": "L0",
+          "reach_total": 1207,
+          "reach_confidence": "L1",
+          "profile_visits": 562,
+          "link_clicks": 1,
+          "er_real_pct": 1.1599
+        },
+        "posts": {
+          "rows": [
+            {
+              "id": "f60fa1e0-c703-4ae7-9064-729b8021700e",
+              "reach": 493,
+              "impressions": 641,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "c98a2d3c-59af-4f0d-b096-352004ec5f06",
+              "reach": 484,
+              "impressions": 593,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "5f638887-21d5-4c8a-aede-0d0309f8556c",
+              "reach": 424,
+              "impressions": 528,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "963d27fd-f4ca-4133-8a2a-b741badc3113",
+              "reach": 522,
+              "impressions": 635,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "5559b6e2-c78b-4545-9997-8e0ffb7c91ea",
+              "reach": 355,
+              "impressions": 428,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "97a9a008-51d3-4f17-8d1b-70d42730da80",
+              "reach": 797,
+              "impressions": 1017,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "9a1b7d49-4a38-4e2f-811b-68a0b69798e2",
+              "reach": 174,
+              "impressions": 212,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "61ec55ab-d027-421d-8b74-37d91f6e06c7",
+              "reach": 408,
+              "impressions": 448,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "2f1815b3-0215-4d57-a702-f6661fce2ad3",
+              "reach": 640,
+              "impressions": 824,
+              "confidence_level": "L0",
+              "content_format": "static_post"
+            },
+            {
+              "id": "8d978b91-0f46-4624-8964-a72fa8c6bfc4",
+              "reach": 477,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "reel"
+            },
+            {
+              "id": "166302b3-35be-4f56-a712-80c1acada757",
+              "reach": 477,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "reel"
+            },
+            {
+              "id": "c5848ea6-3aa2-4e38-8dee-0390dfb7401e",
+              "reach": 477,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "reel"
+            },
+            {
+              "id": "54c42329-899e-4097-9a28-16a5adb71e22",
+              "reach": 477,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "reel"
+            },
+            {
+              "id": "98fcb6d9-e8fc-47dc-bd29-efbee3303cd2",
+              "reach": 477,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "reel"
+            },
+            {
+              "id": "b92e0ecc-469e-4f09-9eed-332cec26ed8e",
+              "reach": 477,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "33dd79c6-04a5-47c0-a5d7-11c293acd9f2",
+              "reach": 477,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "53b7aefd-b640-4854-b431-8628f7ff9e61",
+              "reach": 477,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "4bf27547-5984-48bc-ba42-158d78534946",
+              "reach": 477,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "1e0d27db-e98a-41ea-8f12-0698bf39738f",
+              "reach": 477,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "2001e81c-682e-4ec9-a170-49fcb8044df3",
+              "reach": 477,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "9bb19360-c6fe-4460-bd9c-3f17eb553159",
+              "reach": 477,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            }
+          ],
+          "truncated": false,
+          "error": null,
+          "confidenceSumMismatch": false,
+          "total": 21
+        },
+        "latestAudience": {
+          "id": "18fe1fbc-bb54-4cfa-9baa-c95d7155e8b0",
+          "period_end": "2026-08-31",
+          "gender_female_pct": 4.2,
+          "gender_male_pct": 95.7,
+          "avatar_composite_score": null,
+          "confidence_level": "L1"
+        }
+      },
+      "screens": {
+        "carteira": {
+          "gate": "RWP",
+          "reasons": [
+            "clients row existe",
+            "onboarding presente"
+          ]
+        },
+        "instagram": {
+          "gate": "C_HOLD_INGEST",
+          "reasons": [
+            "snapshots=9",
+            "posts=21 reach=21",
+            "último período 2026-05-20→2026-08-17",
+            "import done"
+          ]
+        },
+        "avatar": {
+          "gate": "C_HOLD_INGEST",
+          "reasons": [
+            "avatar esperado INCOMPLETO em clients",
+            "audience_snapshots=8",
+            "alignment=3",
+            "validations=0"
+          ]
+        },
+        "alertas": {
+          "gate": "RWP",
+          "reasons": [
+            "alerts=1",
+            "abertos=1"
+          ]
+        },
+        "funil": {
+          "gate": "RWP",
+          "reasons": [
+            "funnel_data=1",
+            "snapshot tem profile_visits (origem derivável)"
+          ]
+        }
+      },
+      "errors": []
+    },
+    {
+      "handle": "mauricioartphoto",
+      "clientId": "344445c9-08c5-4c07-be1b-c9f8f8e12865",
+      "source": "map",
+      "client": {
+        "id": "344445c9-08c5-4c07-be1b-c9f8f8e12865",
+        "handle": "mauricioartphoto",
+        "name": "mauricioartphoto",
+        "ig_username": null,
+        "instagram_user_id": null,
+        "health_status": "healthy",
+        "avatar_expected_gender": null,
+        "avatar_expected_age_min": null,
+        "avatar_expected_age_max": null,
+        "avatar_expected_geo_primary": null,
+        "avatar_unconscious_desire": null,
+        "is_benchmark": false
+      },
+      "counts": {
+        "ig_account_snapshots": {
+          "count": 2,
+          "error": null
+        },
+        "ig_posts": {
+          "count": 40,
+          "error": null
+        },
+        "ig_audience_snapshots": {
+          "count": 1,
+          "error": null
+        },
+        "avatar_alignment_snapshot": {
+          "count": 1,
+          "error": null
+        },
+        "avatar_validations": {
+          "count": 0,
+          "error": null
+        },
+        "alerts": {
+          "count": 0,
+          "error": null
+        },
+        "funnel_data": {
+          "count": 0,
+          "error": null
+        },
+        "client_onboarding": {
+          "count": 1,
+          "error": null
+        },
+        "ig_import_sessions": {
+          "count": 3,
+          "error": null
+        },
+        "raw_ig_ingest": {
+          "count": 0,
+          "error": null
+        }
+      },
+      "pipeline": {
+        "sessions": 3,
+        "failedSessions": 0,
+        "pendingSessions": 0,
+        "lastSession": {
+          "id": "8f8bc21d-5322-486a-ad78-6936f784511f",
+          "status": "done",
+          "export_period_start": "2025-12-09",
+          "export_period_end": "2026-05-23",
+          "files_missing": [],
+          "error_log": null,
+          "processed_at": "2026-09-15T19:33:12.019+00:00"
+        },
+        "rawUnparsed": 0,
+        "rawError": null
+      },
+      "quality": {
+        "snapshots": {
+          "total": 2,
+          "withoutFollowers": 1,
+          "followersL0": 2
+        },
+        "latestSnap": {
+          "id": "768208d5-ef17-4445-9397-24b3ef939f9b",
+          "period_start": "2026-02-25",
+          "period_end": "2026-05-25",
+          "followers_total": null,
+          "followers_confidence": "L0",
+          "reach_total": 1470,
+          "reach_confidence": "L1",
+          "profile_visits": 87,
+          "link_clicks": 1,
+          "er_real_pct": 1.8367
+        },
+        "posts": {
+          "rows": [
+            {
+              "id": "43b2ec0c-b4cb-4de3-a9ad-d1efa53d3e75",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "carousel"
+            },
+            {
+              "id": "b1d70261-112f-49c9-824d-233cf030525a",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "carousel"
+            },
+            {
+              "id": "1917b70a-68ad-414b-83e5-d065ae7bb089",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "carousel"
+            },
+            {
+              "id": "04ff7739-c928-46fd-b2cd-15ec452c0994",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "carousel"
+            },
+            {
+              "id": "917b5203-7d70-4a2e-a699-e760cfd529b1",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "carousel"
+            },
+            {
+              "id": "18a1013c-faaf-41ad-993f-8de4f677641f",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "carousel"
+            },
+            {
+              "id": "85da9ef5-15e3-4b3a-8f7e-2b5eb8f96fa0",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "f8c23586-a1da-40a4-b2f8-0de820a32637",
+              "reach": 133,
+              "impressions": 485,
+              "confidence_level": "L1",
+              "content_format": "carousel"
+            },
+            {
+              "id": "9438e1d1-c4d3-4503-ab68-e7ad0f440073",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "carousel"
+            },
+            {
+              "id": "75100800-3ca9-4755-b28b-12482efa763f",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "4463d735-039e-4d80-aa29-8e4c5988515d",
+              "reach": 134,
+              "impressions": 485,
+              "confidence_level": "L1",
+              "content_format": "carousel"
+            },
+            {
+              "id": "a923349b-9f7c-40b3-b551-b1ad2b6ad655",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "carousel"
+            },
+            {
+              "id": "67a38122-2818-4c29-b414-ac79461c52f8",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "carousel"
+            },
+            {
+              "id": "b38e0a5c-6582-4b62-ab86-5d1574128e77",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "carousel"
+            },
+            {
+              "id": "1c15f55e-1995-4345-92e2-88620d244b54",
+              "reach": 134,
+              "impressions": 485,
+              "confidence_level": "L1",
+              "content_format": "carousel"
+            },
+            {
+              "id": "e8966522-817e-44f5-8acd-262dbeb3beca",
+              "reach": 133,
+              "impressions": 485,
+              "confidence_level": "L1",
+              "content_format": "carousel"
+            },
+            {
+              "id": "7f0a7954-ddb7-41ff-bb47-1164d00d478b",
+              "reach": 133,
+              "impressions": 485,
+              "confidence_level": "L1",
+              "content_format": "carousel"
+            },
+            {
+              "id": "6b204b43-20f1-425d-9673-00f5179470ba",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "93bfb9b8-f33b-4849-9ffc-affc631ea48c",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "2de4b116-20ee-4c2a-aa7e-301ac0bebead",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "2690b5cd-ad0c-4426-a2c3-aa52ce8df113",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "carousel"
+            },
+            {
+              "id": "9a0e6ea9-77b0-49b2-a5a8-bef6543ce2cd",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "carousel"
+            },
+            {
+              "id": "e8618223-29e1-474e-9a41-bb60f6bf98e2",
+              "reach": 134,
+              "impressions": 485,
+              "confidence_level": "L1",
+              "content_format": "carousel"
+            },
+            {
+              "id": "06df5df7-6cc3-4ac8-b8ca-8f55420782c9",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "53985cf6-5520-4416-8c53-315421188e34",
+              "reach": 134,
+              "impressions": 486,
+              "confidence_level": "L1",
+              "content_format": "carousel"
+            },
+            {
+              "id": "5f2b1086-feec-4f51-91c8-516758ecc134",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "carousel"
+            },
+            {
+              "id": "2f408b33-95ae-4f40-a0fd-2b2ce8898456",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "carousel"
+            },
+            {
+              "id": "8b01d79f-c2af-46aa-b863-798d48f012ca",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "carousel"
+            },
+            {
+              "id": "81c3b978-10bc-4847-83a1-4a816b2b8006",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "carousel"
+            },
+            {
+              "id": "393627ee-42ab-4416-a790-855038874b29",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "71fc5a83-1575-44b3-a99b-be3791ff6e80",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "reel"
+            },
+            {
+              "id": "a38d55cb-1351-40f5-a4da-36f7e67c5f4e",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "reel"
+            },
+            {
+              "id": "eff8a7ea-9e9f-4bac-947d-885d6d277f88",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "reel"
+            },
+            {
+              "id": "13b2917f-d693-4420-bfff-9145f7614762",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "reel"
+            },
+            {
+              "id": "f7de14a8-e728-442e-a9ab-517d894d6888",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "reel"
+            },
+            {
+              "id": "08f1b128-dbbc-4952-a01e-15aa22c3d125",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "reel"
+            },
+            {
+              "id": "d4acf4b0-200b-4e87-9319-e37c271bb643",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "reel"
+            },
+            {
+              "id": "8c3a795c-2fbd-4730-b07f-36d645ae0cec",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "reel"
+            },
+            {
+              "id": "70d9e495-13d2-4a9c-8106-5b445252b1d3",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "reel"
+            },
+            {
+              "id": "60dac868-8cfe-413b-ad0b-d128c1ce4d2e",
+              "reach": 134,
+              "impressions": null,
+              "confidence_level": "L2",
+              "content_format": "reel"
+            }
+          ],
+          "truncated": false,
+          "error": null,
+          "confidenceSumMismatch": false,
+          "total": 40
+        },
+        "latestAudience": {
+          "id": "02103754-8355-498d-b02c-a532f5719096",
+          "period_end": "2026-05-25",
+          "gender_female_pct": 55.5,
+          "gender_male_pct": 44.4,
+          "avatar_composite_score": null,
+          "confidence_level": "L1"
+        }
+      },
+      "screens": {
+        "carteira": {
+          "gate": "RWP",
+          "reasons": [
+            "clients row existe",
+            "onboarding presente"
+          ]
+        },
+        "instagram": {
+          "gate": "C_HOLD_INGEST",
+          "reasons": [
+            "snapshots=2",
+            "posts=40 reach=40",
+            "último período 2026-02-25→2026-05-25",
+            "import done"
+          ]
+        },
+        "avatar": {
+          "gate": "C_HOLD_INGEST",
+          "reasons": [
+            "avatar esperado INCOMPLETO em clients",
+            "audience_snapshots=1",
+            "alignment=1",
+            "validations=0"
+          ]
+        },
+        "alertas": {
+          "gate": "RWP",
+          "reasons": [
+            "alerts=0",
+            "abertos=0"
+          ]
+        },
+        "funil": {
+          "gate": "C_HOLD_INGEST",
+          "reasons": [
+            "funnel_data=0",
+            "snapshot tem profile_visits (origem derivável)"
+          ]
+        }
+      },
+      "errors": []
+    },
+    {
+      "handle": "djcaiodogao",
+      "clientId": "c2779193-d3a0-4fc7-b392-ad64fea4273f",
+      "source": "map",
+      "client": {
+        "id": "c2779193-d3a0-4fc7-b392-ad64fea4273f",
+        "handle": "djcaiodogao",
+        "name": "djcaiodogao",
+        "ig_username": null,
+        "instagram_user_id": null,
+        "health_status": "healthy",
+        "avatar_expected_gender": null,
+        "avatar_expected_age_min": null,
+        "avatar_expected_age_max": null,
+        "avatar_expected_geo_primary": null,
+        "avatar_unconscious_desire": null,
+        "is_benchmark": false
+      },
+      "counts": {
+        "ig_account_snapshots": {
+          "count": 0,
+          "error": null
+        },
+        "ig_posts": {
+          "count": 215,
+          "error": null
+        },
+        "ig_audience_snapshots": {
+          "count": 1,
+          "error": null
+        },
+        "avatar_alignment_snapshot": {
+          "count": 1,
+          "error": null
+        },
+        "avatar_validations": {
+          "count": 0,
+          "error": null
+        },
+        "alerts": {
+          "count": 0,
+          "error": null
+        },
+        "funnel_data": {
+          "count": 0,
+          "error": null
+        },
+        "client_onboarding": {
+          "count": 1,
+          "error": null
+        },
+        "ig_import_sessions": {
+          "count": 2,
+          "error": null
+        },
+        "raw_ig_ingest": {
+          "count": 0,
+          "error": null
+        }
+      },
+      "pipeline": {
+        "sessions": 2,
+        "failedSessions": 0,
+        "pendingSessions": 0,
+        "lastSession": {
+          "id": "eca438df-b15a-4d74-9025-9568dd3b189c",
+          "status": "done",
+          "export_period_start": "2024-11-28",
+          "export_period_end": "2025-11-26",
+          "files_missing": [],
+          "error_log": null,
+          "processed_at": "2026-09-13T14:24:50.253+00:00"
+        },
+        "rawUnparsed": 0,
+        "rawError": null
+      },
+      "quality": {
+        "snapshots": {
+          "total": 0,
+          "withoutFollowers": 0,
+          "followersL0": 0
+        },
+        "latestSnap": null,
+        "posts": {
+          "rows": [
+            {
+              "id": "1206ab29-d8e3-4782-b108-0a9e5c833d83",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "carousel"
+            },
+            {
+              "id": "66974b73-d10d-4b83-9eb2-655975080403",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "carousel"
+            },
+            {
+              "id": "5c0b690d-7392-44fc-9a1c-6848978bd3e4",
+              "reach": 587,
+              "impressions": 619,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "2ac612c1-ba4c-405f-b575-c54a83d82887",
+              "reach": 866,
+              "impressions": 966,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "4c6871a9-113c-44e4-b089-1b5b1ddd611d",
+              "reach": 326,
+              "impressions": 336,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "2a027c59-0957-4e91-9d44-6bcf3b5454b5",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "carousel"
+            },
+            {
+              "id": "c7509173-ac27-4e73-9224-18bc5d0204bb",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "carousel"
+            },
+            {
+              "id": "ca523eb9-979d-4075-90c1-e37a6a1d862f",
+              "reach": 872,
+              "impressions": 921,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "6d2e05b4-f71d-447a-b80d-5f74cd8585df",
+              "reach": 378,
+              "impressions": 408,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "7e098ca5-2a78-4019-a4db-4be7fcf4c54a",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "5c8aa506-8e19-4cf7-aa43-03bffe263e55",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "0a7d696c-0fb2-4c2c-ac1f-884a533272eb",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "3fb7f166-71c4-4ec5-a2b0-75a9039d1ec9",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "12c6242e-46b3-4da5-852c-cbf9dc098d2f",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "ae816f44-7b4b-49f6-866e-47151a0a08f3",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "674cc392-193e-451e-b2b2-ac96b4b6c35f",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "82da0dbf-576d-47fb-bcf0-080f3539decd",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "123554ef-4031-4bee-9d1d-30e7e5135db3",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "40d4dde1-61b3-47d5-a63e-a832287e229b",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "633e7e1e-bcbc-49b8-8119-fa9cdf0d1aa4",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "7bed0b80-f84d-4fc0-8f54-9f47880e3416",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "05282efb-7945-4cec-8aba-cbef7a1e22d3",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "bc565b92-2649-4934-a164-0440c78f0599",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "2e468a44-04a3-4bee-9993-c9244826eccc",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "0ceac3f9-8bfb-47be-8da9-f7bf0c918d37",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "d0646db3-3d22-44a3-b283-45b43ccb320b",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "97632d13-160c-4c23-87ac-6364b3b887e7",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "b8ae1a1a-a044-4210-86ba-44557d272925",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "1f2704be-098a-48d3-9eca-b06bc80b2bfc",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "4ad2968d-f4c4-445b-b83b-7ab9ad59b220",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "0b592b6d-96d0-4f6d-a20e-ae9960dc43e6",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "f6c7fab6-c9e3-454d-ae59-732890f200e6",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "e9201e78-b69c-445b-8541-c318834b33d5",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "eccad0a8-9a9c-4236-a4ab-91b3ed100639",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "d3e192a0-e72e-456f-af94-563b5c5ffe16",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "7652acfe-34b9-4182-9777-a50db5a6d9f2",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "053ea76d-5be4-4edf-805a-e5b5287982a9",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "13d3dc7c-c4da-4ef9-a41f-04cde96e0b2e",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "6d62d78f-a75a-43c0-aee9-566f310e2c90",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "f9a7347b-d0ee-48a2-8180-a34b6f75d964",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "2b6c1936-4d99-4530-bfa0-ac7530a74d79",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "efb7cdc0-a3f0-4b3f-97d0-7655ea772b1a",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "46d82310-0e6a-4ac8-8553-5c2e0510d458",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "b68ce629-4baf-4ac0-b5fd-38680cc08744",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "6fb9f454-8bfb-4425-ab0a-269132e7d161",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "aaefbaf3-d677-4b90-a18d-ccf0b0640d93",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "e2171fc1-b2a9-46b3-8c12-b93dd8356f55",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "d18de371-11dd-4fd1-82bf-133c505094c2",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "b6f95034-b5ec-4801-aad9-6ead0323a378",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "65704c38-02b4-40b0-9c2e-72334a3dd1b8",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "ed9ed704-e337-45ae-874d-87187f91f676",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "74ad120b-153c-4a0a-b0bc-4d39fb749c6f",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "ec6b75ae-1e15-443e-beec-7457dadfca71",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "36980ed9-5969-4ad7-b5a2-818045309c09",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "b331252d-2f77-468f-9848-062116ae7949",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "bb7b1789-825b-4842-bc7e-d58f56096434",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "42d9e2a1-4338-43b5-9b50-887dd0836025",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "6197a0e6-0d33-4664-8a65-78d21540ea3b",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "83b03c1d-e718-4ddb-8836-fc3f13196c25",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "3a9d439b-be52-4c24-b6ba-bb4078a75570",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "f51eacae-f6cc-4be6-abef-efe86a4afc02",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "23e85201-2562-470c-843b-59ff3b6cf22b",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "b2cd58ea-980b-4b7f-8aef-a200596e5652",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "3251c69b-54a5-4d39-a004-13d96af4cf72",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "1367b18f-d286-43f6-8470-2ae5be3af387",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "cd7c5303-ed29-4d7d-9ce2-77b9fe2dbeb8",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "07733d6e-09a2-4733-be18-35db968e086f",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "088d82a5-23d4-4b78-b531-9fb63bb320bc",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "2ee7a2c9-466a-4aab-9bd0-e5bfeebc0cd8",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "fc926ced-2afe-49be-84de-2eb2d6ba1ba6",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "254abe73-91d8-4184-a404-06630b923dbe",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "20277d1c-7f14-43f2-9106-bdbb87842a2f",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "205c64d8-e1ae-4fee-b54f-3be67c20b55e",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "c067c259-cd82-4dba-a9af-b15fb67a68d3",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "0f312a65-bf25-4fdc-a23e-49d25add93df",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "6902f124-f09b-4244-83be-4ed80943b64c",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "b7672af8-6808-484b-9f7a-113ada8b7039",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "95ab786a-76ca-44a8-a15f-0841f4e08ac7",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "470ffd4a-b906-496d-95bf-7a5e72c1485e",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "08383557-a6d3-47b7-8576-eca283718ab1",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "4b38a81e-a8ee-4300-80b7-d5fca61341f6",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "1e0904e9-d355-44c7-91c8-5ca5b1353fcd",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "ca5246f7-3cf1-4019-b56b-03c8e76cedeb",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "ba2743c3-835e-4a84-8a0e-51b80101c372",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "02f2e3c8-3b7f-4fb4-bbff-26a24fe30aca",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "2c0f7a62-4e7a-4f77-bda0-bfc0c46f7bf6",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "085c5d61-271f-435c-8043-ed6ad31363ba",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "f4acc70c-7fb7-44b9-a376-5c06b9bc150e",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "18474656-ec3a-4b2a-9cc5-0e9dbbf2fb9f",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "88150ab4-e630-4e0d-a34c-b93fa80c06ce",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "69dcea9a-bafa-468a-a9dd-0be633de82d7",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "75e1eb78-ea11-474c-aff6-8292d7e0d49c",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "6c184497-a14e-48fa-b349-2189c018d2d3",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "69fdd9f2-e202-4f47-a5f9-d50f065091ef",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "08e526e4-00c5-4e89-81aa-6a9cdc6079ea",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "2014f3a2-bf8c-4080-8400-2badd0a46ead",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "e9323838-32d1-4bfb-9911-818fc4378470",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "10d33939-9771-47b7-b029-0492494e8005",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "d068bf3a-0f13-4d6f-937c-dcdda6da2969",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "64c60e44-73e9-46f7-a676-053da47e4be0",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "70ce2a89-e9a2-4d30-8ee9-226d2314bf71",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "cde85b7d-c999-4a06-9f8e-a315ee44f873",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "ecd6fd36-1fa6-4a5c-90bc-13a647be51d0",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "9a2bd14d-0574-44b8-9f54-fc1e66e33362",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "22f8b631-2aa8-4dcc-86b9-88f2beb87d70",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "6c4ae558-a285-4439-8c2a-a5cbfab18679",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "79ac5cd7-0a12-48c1-90cc-0f90d7ccb6c7",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "306dc721-44bf-471e-ad8e-651a8102d4eb",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "87e9c43e-59e5-4d21-874e-dff0f9889233",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "dfd06c34-88d7-4ae1-9580-c25b9b117eec",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "22fa0f30-c09d-431a-bd1f-065ce21e4d98",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "5a7511bb-5fa2-464b-a877-6efb484313ba",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "77edbd07-8cfa-4973-8238-986fb21ec740",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "e4465b87-1dfd-4764-b439-2dbaa2787a88",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "c42a5990-85d0-4fbb-9f59-3b3f7c260223",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "dab70a78-0028-4674-8e2f-23310982d187",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "68883bda-c394-498e-a2c5-54f106b41179",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "8a013d1d-e874-436c-9c1c-286738d50354",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "f0e93329-0c21-47f1-a558-027c9eaba0c7",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "756ea8f1-0859-4d17-b048-09031cc4639e",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "6d3c43b4-90d7-49df-9278-34d6cf42bf97",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "bf05d904-6ca6-46a0-94da-89fc19457b17",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "bcb012ab-c9b2-48df-bfab-2e24e56f77f9",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "1f424d8d-e328-4cd0-967f-649928a5b6be",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "fb4dd262-31b7-4e37-9517-f314cf8ece61",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "2bf14c6a-82ee-45a4-a7c0-ce3a19137c81",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "ff8e1ba5-ddba-4ea1-9d08-1f9229df677d",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "6ca56aab-eea8-461c-b500-70a97968fd0d",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "12beead0-b892-4aa7-ad34-5b19a49de327",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "5a2c586b-a393-454e-b251-34b7bf3dbce1",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "8c8dcc28-5dba-49b1-a8b1-bb4bb23f5f91",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "2d95dac3-d4d1-4129-8856-ac850eec8db2",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "dd0628b8-24f5-4e13-96d6-008e896b7566",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "c4eb84a3-af45-4169-b9e8-c26d46ffb7d1",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "bdf752fe-1734-4919-bc43-f715a54a04b2",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "94a96482-527d-474e-a8d6-9de126c704d3",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "95aabb45-1f37-409d-bda2-41ffbf84f789",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "233b1f35-1820-4bef-870f-5fb896359faf",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "b68bbb4b-f94a-47a7-8532-3fdcf281c6ec",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "b29cf2e8-e119-4940-9b58-0ebf2b8fd8c2",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "79c06f6c-7d14-4bdc-a8a8-d37542af89f7",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "3ce87ced-1d6c-49e3-adf6-2776ebfed112",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "bbb459fd-aa09-4190-ae29-c89f23954bfb",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "90ddd58f-bd49-4de3-9eb3-b4ec51503bf2",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "6b200756-4ada-4551-a019-2f0d15ab35c9",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "7f1e0fa9-8925-433f-bb46-ed0fe1da770a",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "66593ffe-4f51-4603-8762-861de3172685",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "58bb4ab9-ea83-49b2-8713-9a544cc6ecfa",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "8ca828e0-2e40-497e-9009-9a3492a70b40",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "fe8af616-c6a0-4108-b963-2bc00b93d2d7",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "27ac206d-9fe1-4684-b265-5d6af1daaa06",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "4f136485-a479-482c-b134-4511dbda9287",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "10479fc7-012f-4877-b25b-2fc61b757a34",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "cfc5ae1d-4d50-4d4b-a624-abaa8118f70e",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "40e53401-58e1-4fb8-9729-32434cadbe4c",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "6de1bec1-b065-4ec8-9a52-8529fef0c9e2",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "4cb90785-2b62-4b3a-a240-29dd99cc3c1f",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "dd8bc6bf-596e-4bea-9813-f77ea437f005",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "d4b471b5-ab57-44e0-b3b8-6292cd794c86",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "bc4bcc3d-e144-421d-9669-7bb14a8b4daa",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "e83b47f7-24f3-4b8d-868a-93545c12cd31",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "6d87c77d-8d0a-45c8-919b-b2d0e96f7b69",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "b9370f3d-4bff-4282-a1f0-9e4a85b3b8f9",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "30fbae73-b3dd-4497-b7c0-520c578ed8fd",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "0f628200-68f6-4fc4-b5bc-74d9d2ada42c",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "3ae52536-df9d-40d0-bca4-4a461063d5bd",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "a694b4e0-9ef6-4553-a0af-6d655b7ff362",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "582df140-cfbf-44e9-93d0-529e802868b7",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "5c19b2ce-1c4b-4c73-8853-3d840ae30820",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "589b39f7-99f2-4157-860a-e17b10fe96ce",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "d8d16513-715d-4bda-adac-9471f6703d5f",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "d6b373cd-1e3a-4fc2-af85-60edf666f8c4",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "bdc59cd0-65b3-4bb8-8c13-3eb6db89935e",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "2899e572-ed99-4d8e-b810-bd6b472e212b",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "4145fe48-c481-48f8-9fa0-03db26b89eb5",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "cdb9d4f5-12ae-4150-926f-64c37ab061e1",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "c4d4b8b2-08a2-4213-aa6c-dc3117743bca",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "0d77f267-45fd-49ef-a61c-5b2618ab2a31",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "5e06f1cc-c6f3-4432-a060-896b2cc2776f",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "9b18dec9-8f9e-441e-af52-e0463df4b0ad",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "3f447b52-b114-4401-844d-b92fc60156c5",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "d40f6416-76f4-4553-a6b9-bb33e1e0604c",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "2944b457-3db9-4213-9942-2cb9de1e1aad",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "431ea94d-c3e1-497f-a3b6-3902d377bb47",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "8c29f842-6beb-4b4a-889a-81c222ec828e",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "ae35b248-10ce-40f8-842f-8be3c108b6ee",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "d43fb76c-e8eb-4e2e-9d6f-c317233e0fa6",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "a9845d0d-dced-4459-8cb5-cdaeb0f580c5",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "3c00d64a-c98a-4a16-81ec-e876b3c7122b",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "95e501e7-da94-40e9-b430-85b04f4d100a",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "08854ef2-3a75-4cc2-9597-ca0cb289939f",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "ac2d1853-2596-4989-b7fa-295fc497542e",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "68a2b323-3c05-4bf4-86ae-292d0a28a0bd",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "b486db22-a528-448d-8af0-9c55471ebd31",
+              "reach": null,
+              "impressions": null,
+              "confidence_level": "L0",
+              "content_format": "reel"
+            },
+            {
+              "id": "96372c15-e2d1-4030-9049-8bc9d8042ba7",
+              "reach": 727,
+              "impressions": 743,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "08ed7bab-f336-41b0-92ec-7b195c048d07",
+              "reach": 873,
+              "impressions": 938,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "16e992f4-ec5d-4aea-bbc7-92e786be237a",
+              "reach": 449,
+              "impressions": 466,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "86f19283-27a0-4f33-94bd-a9ac4b8bcfac",
+              "reach": 464,
+              "impressions": 521,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "05d49c20-16d0-490d-81ca-fe8b13b70145",
+              "reach": 810,
+              "impressions": 874,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "1531f3df-575e-4a2c-861f-6c2fadf28851",
+              "reach": 789,
+              "impressions": 850,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "1a56992e-f5c4-4b8e-9f2e-d021dbaf8533",
+              "reach": 687,
+              "impressions": 715,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "d58672f6-124c-4817-987c-79eed2a9b41f",
+              "reach": 1049,
+              "impressions": 1093,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "121978eb-fec6-485c-88a5-7b33989031d5",
+              "reach": 1129,
+              "impressions": 1194,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "65a29613-25f0-46cd-8ad5-aebf08f90ade",
+              "reach": 646,
+              "impressions": 688,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "09e13da8-5a9f-48d9-88cc-aac326646574",
+              "reach": 1545,
+              "impressions": 1579,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "ca00b6fe-6a55-4567-ac57-5e230c21ff07",
+              "reach": 373,
+              "impressions": 374,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "4266b336-ffd5-4e9b-9d1f-dc8eb3a81e1d",
+              "reach": 1290,
+              "impressions": 1330,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "1ab408e4-a53e-4484-9623-4d1635941444",
+              "reach": 465,
+              "impressions": 490,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "d76ce929-041e-43dc-9626-b664378a2840",
+              "reach": 926,
+              "impressions": 970,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "68dbcfb0-9f60-4b4f-8246-57f7aa900b1f",
+              "reach": 1615,
+              "impressions": 1726,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "bda5d79c-ae7a-4214-8aa9-deb8c8bf36ce",
+              "reach": 706,
+              "impressions": 752,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "1c2ca030-662b-4fd9-aee7-3b90af46563f",
+              "reach": 1370,
+              "impressions": 1464,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "5e399a7b-0643-4c9b-b894-a86bd14da6d9",
+              "reach": 575,
+              "impressions": 603,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "a1df52b9-ec64-4575-b851-a70e731b4e32",
+              "reach": 628,
+              "impressions": 652,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            },
+            {
+              "id": "cdb785b5-b3e5-4cb8-a6ae-8e8bddb3b8da",
+              "reach": 328,
+              "impressions": 339,
+              "confidence_level": "L1",
+              "content_format": "static_post"
+            }
+          ],
+          "truncated": false,
+          "error": null,
+          "confidenceSumMismatch": false,
+          "total": 215
+        },
+        "latestAudience": {
+          "id": "df6e97cc-edb8-4c76-bd71-73b6fc951253",
+          "period_end": "2025-11-26",
+          "gender_female_pct": 48,
+          "gender_male_pct": 51.9,
+          "avatar_composite_score": null,
+          "confidence_level": "L1"
+        }
+      },
+      "screens": {
+        "carteira": {
+          "gate": "RWP",
+          "reasons": [
+            "clients row existe",
+            "onboarding presente"
+          ]
+        },
+        "instagram": {
+          "gate": "C_HOLD_INGEST",
+          "reasons": [
+            "snapshots=0",
+            "posts=215 reach=26",
+            "sem período",
+            "import done"
+          ]
+        },
+        "avatar": {
+          "gate": "C_HOLD_INGEST",
+          "reasons": [
+            "avatar esperado INCOMPLETO em clients",
+            "audience_snapshots=1",
+            "alignment=1",
+            "validations=0"
+          ]
+        },
+        "alertas": {
+          "gate": "RWP",
+          "reasons": [
+            "alerts=0",
+            "abertos=0"
+          ]
+        },
+        "funil": {
+          "gate": "C_HOLD_INGEST",
+          "reasons": [
+            "funnel_data=0",
+            "snapshot sem profile_visits"
+          ]
+        }
+      },
+      "errors": []
+    },
+    {
+      "handle": "dogativo",
+      "clientId": "e45927a7-4f3d-4fd3-bac7-543cc3545dc1",
+      "source": "map",
+      "client": {
+        "id": "e45927a7-4f3d-4fd3-bac7-543cc3545dc1",
+        "handle": "dogativo",
+        "name": "dogativo",
+        "ig_username": null,
+        "instagram_user_id": null,
+        "health_status": "healthy",
+        "avatar_expected_gender": null,
+        "avatar_expected_age_min": null,
+        "avatar_expected_age_max": null,
+        "avatar_expected_geo_primary": null,
+        "avatar_unconscious_desire": null,
+        "is_benchmark": false
+      },
+      "counts": {
+        "ig_account_snapshots": {
+          "count": 2,
+          "error": null
+        },
+        "ig_posts": {
+          "count": 344,
+          "error": null
+        },
+        "ig_audience_snapshots": {
+          "count": 1,
+          "error": null
+        },
+        "avatar_alignment_snapshot": {
+          "count": 1,
+          "error": null
+        },
+        "avatar_validations": {
+          "count": 0,
+          "error": null
+        },
+        "alerts": {
+          "count": 0,
+          "error": null
+        },
+        "funnel_data": {
+          "count": 0,
+          "error": null
+        },
+        "client_onboarding": {
+          "count": 1,
+          "error": null
+        },
+        "ig_import_sessions": {
+          "count": 8,
+          "error": null
+        },
+        "raw_ig_ingest": {
+          "count": 0,
+          "error": null
+        }
+      },
+      "pipeline": {
+        "sessions": 8,
+        "failedSessions": 0,
+        "pendingSessions": 0,
+        "lastSession": {
+          "id": "6b8d45e2-54d2-4720-aca9-3e5f9abf7bae",
+          "status": "done",
+          "export_period_start": "2025-12-01",
+          "export_period_end": "2026-08-17",
+          "files_missing": [
+            "your_instagram_activity/media/posts_1.json",
+            "logged_information/past_instagram_insights/content_interactions.json",
+            "logged_information/past_instagram_insights/audience_insights.json"
+          ],
+          "error_log": null,
+          "processed_at": "2026-09-29T10:21:59.933+00:00"
+        },
+        "rawUnparsed": 0,
+        "rawError": null
+      },
+      "quality": {
+        "snapshots": {
+          "total": 2,
+          "withoutFollowers": 1,
+          "followersL0": 2
+        },
+        "latestSnap": {
+          "id": "b12b27b9-2760-43b8-b250-8f0adb69511b",
+          "period_start": "2025-12-01",
+          "period_end": "2026-08-17",
+          "followers_total": null,
+          "followers_confidence": "L0",
+          "reach_total": 1207,
+          "reach_confidence": "L1",
+          "profile_visits": 5009,
+          "link_clicks": 373,
+          "er_real_pct": 185.5841
+        },
+        "posts": {
+          "rows": [
+            {
+              "id": "e1660f0d-9a56-4e15-921d-602cf4147481",
+              "reach": null,
+              "impressions": 244,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "18503646-7967-4296-a0ba-e0451538e0b9",
+              "reach": null,
+              "impressions": 317,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "bdef9b4e-9f93-4da3-abf1-8bd7362bcbe0",
+              "reach": null,
+              "impressions": 280,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "ff14bc6a-e9b0-4470-b386-135465ab17ce",
+              "reach": null,
+              "impressions": 4638,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "1daa0dff-74e8-44e1-b119-329a0d642a94",
+              "reach": null,
+              "impressions": 99,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "72cab1ba-3ba5-435d-a40d-43a0adb2b97a",
+              "reach": null,
+              "impressions": 89,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "0745fa9d-38c0-4c64-aae0-8ddc131be7d5",
+              "reach": null,
+              "impressions": 424,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "3ddf9b2d-d7dc-4cee-bc1b-93acd2037e48",
+              "reach": null,
+              "impressions": 3483,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "ebe166c5-bc9b-437f-9122-b64b43467047",
+              "reach": null,
+              "impressions": 43,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "2f6a45a4-e9a3-45be-be8b-7838633b9f84",
+              "reach": null,
+              "impressions": 4692,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "15497d46-9db7-49f5-a2c8-5edafb640cfa",
+              "reach": null,
+              "impressions": 6681,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "a1ce4fae-eae1-4b1f-948b-2a81739725ca",
+              "reach": null,
+              "impressions": 230,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "13881ae9-95e1-40dc-a48b-37c12f73203e",
+              "reach": null,
+              "impressions": 2812,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "f0eed9f0-a983-4440-90e2-078eaaea1c67",
+              "reach": null,
+              "impressions": 2640,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "3034d0b2-b676-405e-85be-f4ec6aaacc24",
+              "reach": null,
+              "impressions": 387,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "1880d6a4-0566-4a6b-83c8-f3f33ad6f366",
+              "reach": null,
+              "impressions": 4149,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "3142e1e1-87f8-4e69-a038-a30f8963c75b",
+              "reach": null,
+              "impressions": 4217,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "12760a0e-f57e-41f0-8126-5ae0538a0c94",
+              "reach": null,
+              "impressions": 185,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "e575fbdd-b9a6-45d2-8207-71b5405db32d",
+              "reach": null,
+              "impressions": 194,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "f7c815cf-9eb8-4eb3-b233-38ff3fd63922",
+              "reach": null,
+              "impressions": 4628,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "4dd4ea58-258a-42a4-8042-873d0ae08047",
+              "reach": null,
+              "impressions": 4315,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "e48080a3-9c39-48b5-8f8f-98dab77b1c58",
+              "reach": null,
+              "impressions": 3774,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "6994f1e4-beb1-4a64-a94c-337e7e2f464d",
+              "reach": null,
+              "impressions": 5600,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "c48d596f-eef7-41ad-b874-27b21d81cdba",
+              "reach": null,
+              "impressions": 7467,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "af720e35-e1b3-4417-b0eb-c3a739cf72de",
+              "reach": null,
+              "impressions": 291,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "a0d6c81b-c7a1-42db-9346-2251a64e4a6a",
+              "reach": null,
+              "impressions": 4821,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "448dfe05-9f13-40ed-b49e-09852d4b1d93",
+              "reach": null,
+              "impressions": 5176,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "9d0efbea-0a59-4b9e-8484-108bd4f43395",
+              "reach": null,
+              "impressions": 4696,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "5f7c903a-4115-4053-a58f-fdbda717cb0c",
+              "reach": null,
+              "impressions": 4744,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "a00c0bde-6946-4381-844e-5869b5bc3daf",
+              "reach": null,
+              "impressions": 6178,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "326a67f2-f622-41c5-97dc-37a56cafe90f",
+              "reach": null,
+              "impressions": 5222,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "4e0367f3-91d8-4ca2-8d49-2642bd4c7d4d",
+              "reach": null,
+              "impressions": 6588,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "05c4cbcc-1607-4249-87f4-3103655ff0f0",
+              "reach": null,
+              "impressions": 9556,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "4fc5b4ad-95e6-4605-a3d2-e7fc499831ba",
+              "reach": null,
+              "impressions": 5033,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "dd5969f5-9131-40b7-9f8b-4c748ce61bd1",
+              "reach": null,
+              "impressions": 4579,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "57e72cec-2a3a-4e50-9b4e-c137da31cf06",
+              "reach": null,
+              "impressions": 3913,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "7f9951b6-73ed-431f-b9bd-f803f30d4703",
+              "reach": null,
+              "impressions": 4579,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "b8f4d133-aab0-4577-b3ed-256af7fb005f",
+              "reach": null,
+              "impressions": 4701,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "0917914f-19e4-49cf-952f-28fa8d337e39",
+              "reach": null,
+              "impressions": 8095,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "3dd4636d-059d-4848-810f-504abb29bbd1",
+              "reach": null,
+              "impressions": 3955,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "196a8d10-2674-4432-808c-7b184883518a",
+              "reach": null,
+              "impressions": 4472,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "71d4a34b-72ff-470b-8fb4-32206c9cfaf1",
+              "reach": null,
+              "impressions": 154,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "0f7445fb-a268-4e66-9be6-e5933a5a146c",
+              "reach": null,
+              "impressions": 3072,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "f86e99e2-23ed-4915-93a2-afee7fce1950",
+              "reach": null,
+              "impressions": 3755,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "1ef9b4c5-1a00-4770-844a-d3c2b48da03f",
+              "reach": null,
+              "impressions": 1161,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "052bf74a-0c77-48a3-b5d5-a553a79242a3",
+              "reach": null,
+              "impressions": 5342,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "dd698885-231a-4dc5-9ac0-a13d98535821",
+              "reach": null,
+              "impressions": 189,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "bcee79c0-c5cf-430a-bc89-ce634f9a196a",
+              "reach": null,
+              "impressions": 4799,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "64d18ca7-ffd4-4953-a61b-f4763e32ae17",
+              "reach": null,
+              "impressions": 4004,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "8a1d0c3a-bea6-44b8-b7ae-e6b6091860f6",
+              "reach": null,
+              "impressions": 2204,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "1ceb99b7-ef4b-49fb-a76f-a711570c94d6",
+              "reach": null,
+              "impressions": 4492,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "a7ac8b4f-3eb7-4894-8768-7bfcbf5ad601",
+              "reach": null,
+              "impressions": 4851,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "cf635314-7e57-4ad4-9203-1abaa6e97330",
+              "reach": null,
+              "impressions": 4485,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "485ac122-0101-4f1b-9d87-71d1fa712773",
+              "reach": null,
+              "impressions": 4666,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "6f41d553-3751-4f36-8709-6a568991c544",
+              "reach": null,
+              "impressions": 9247,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "52340612-b669-41b5-a6d4-4049ed21cc7f",
+              "reach": null,
+              "impressions": 4339,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "728204b9-efe6-4d55-8a82-b32b7cd62cbd",
+              "reach": null,
+              "impressions": 3252,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "624178de-56c1-4ef8-9090-bd5d6a449fd0",
+              "reach": null,
+              "impressions": 6032,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "5d42eacc-132a-4c85-b8e0-4dbc234d0015",
+              "reach": null,
+              "impressions": 6887,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "86e382ee-cff7-4ea6-9240-b335e16be216",
+              "reach": null,
+              "impressions": 5720,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "f516c048-d81c-45e7-8774-8ce8857358a9",
+              "reach": null,
+              "impressions": 3483,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "870d2700-d3cd-4bd7-b49f-a3a9909fb831",
+              "reach": null,
+              "impressions": 4160,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "69d27537-423f-470f-83aa-5e3a27e5a4a2",
+              "reach": null,
+              "impressions": 3361,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "e9b438ad-02be-461f-8aaf-6e6d34739262",
+              "reach": null,
+              "impressions": 2902,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "303c07c7-a7a7-428e-92ce-7bfbda38b8e3",
+              "reach": null,
+              "impressions": 5188,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "fbe54aa4-e770-4f7b-b115-969b5aa34c6a",
+              "reach": null,
+              "impressions": 189,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "a50d9f71-34bc-4c92-88e1-94f024b2401b",
+              "reach": null,
+              "impressions": 5665,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "451d7a20-b4c1-4963-b3e2-f7f7fa7f5316",
+              "reach": null,
+              "impressions": 3352,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "98d21b58-fd7b-40da-aeb2-baa821cbbeb9",
+              "reach": null,
+              "impressions": 3462,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "a340d8d6-dc0a-468b-be74-511dde6031d1",
+              "reach": null,
+              "impressions": 5642,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "938b176b-67bc-40c8-b8ad-b5bcb3171710",
+              "reach": null,
+              "impressions": 111,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "fb65c4b2-496e-4815-94a8-96d256a8d1a1",
+              "reach": null,
+              "impressions": 2167,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "8c7966bc-701a-48f6-85d8-be220fa6c368",
+              "reach": null,
+              "impressions": 3711,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "2cda3d54-705c-439a-a9b8-496c36147e14",
+              "reach": null,
+              "impressions": 1035,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "2a8a45c5-ad8b-4283-92d0-11c7532ac97d",
+              "reach": null,
+              "impressions": 6526,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "07e6b759-a0b8-481b-8cf5-b30609bf3515",
+              "reach": null,
+              "impressions": 4536,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "f1890be2-dac6-4cd2-afa3-fd79e248af6f",
+              "reach": null,
+              "impressions": 2250,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "f747b8d6-3212-447c-bba4-e73400cb35a6",
+              "reach": null,
+              "impressions": 5240,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "d1d39518-760c-4863-8198-87a59ec05a8e",
+              "reach": null,
+              "impressions": 5791,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "d917128b-e2a4-4242-bae7-f0d23136e4cc",
+              "reach": null,
+              "impressions": 2185,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "54c39e22-07a5-4ad9-86b4-c1fee93509a3",
+              "reach": null,
+              "impressions": 4417,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "6904f47a-0949-4094-9ad1-4136ff11dc66",
+              "reach": null,
+              "impressions": 146,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "fee0cefc-364b-4bed-85fa-8b62b5230564",
+              "reach": null,
+              "impressions": 4922,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "c96343bf-01d6-4e79-a9d8-076ca56a8385",
+              "reach": null,
+              "impressions": 2148,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "ac6815e1-002e-4915-887c-145d3843e4fc",
+              "reach": null,
+              "impressions": 3591,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "2bf7be1f-ac14-4f7e-b412-2f0364273aff",
+              "reach": null,
+              "impressions": 9930,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "628ca761-4256-438f-b281-85107fc62869",
+              "reach": null,
+              "impressions": 5459,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "cd20c21f-368f-4f20-a39c-23ae107e544e",
+              "reach": null,
+              "impressions": 2245,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "78b85e42-90a6-4004-bc87-bf963f29cbc0",
+              "reach": null,
+              "impressions": 253,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "14bd6316-f5b4-40d4-aab6-6a81cf56adac",
+              "reach": null,
+              "impressions": 153,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "0168ead7-8a85-404c-b68a-e930cfc0f990",
+              "reach": null,
+              "impressions": 184,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "1ad6ead9-75a9-44f3-b451-aeaf4a3488d5",
+              "reach": null,
+              "impressions": 147,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "cf03a798-896d-454a-9552-0c7b0a1848b6",
+              "reach": null,
+              "impressions": 2046,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "b2007d67-9157-4b0c-8f30-58cfee07ca1f",
+              "reach": null,
+              "impressions": 187,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "3d051e42-cde2-421f-8771-c8b5e83b35d8",
+              "reach": null,
+              "impressions": 1132,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "84f65c5c-916e-40a9-a0bc-df88a436d0bf",
+              "reach": null,
+              "impressions": 637,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "b29f0bb9-fd7a-4e9d-ab6a-40ec59a29163",
+              "reach": null,
+              "impressions": 85,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "2053f126-a564-409f-9bcc-2953d1df7cae",
+              "reach": null,
+              "impressions": 2438,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "795b18ee-b749-4056-a774-0a47777945fb",
+              "reach": null,
+              "impressions": 104,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "92b3add9-4135-4594-bfe0-a229772201a3",
+              "reach": null,
+              "impressions": 1803,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "71f7f2c9-d9fa-4e62-a0c1-38485046d46e",
+              "reach": null,
+              "impressions": 118,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "e3aacfa3-bb13-4ab3-b956-58351c486499",
+              "reach": null,
+              "impressions": 215,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "6676ccfc-ba31-439b-8020-15b2c082a9f7",
+              "reach": null,
+              "impressions": 1753,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "8baec3b3-4fe8-47e7-a31e-35985f823d3c",
+              "reach": null,
+              "impressions": 317,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "76654230-a6c0-4d0b-8283-ef09fde0ec2a",
+              "reach": null,
+              "impressions": 294,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "e6ca3e03-5c39-4dfb-9962-a774c5183902",
+              "reach": null,
+              "impressions": 3544,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "89278059-687d-474b-83c6-933171678746",
+              "reach": null,
+              "impressions": 1640,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "471f33cd-31b2-4f17-bf3b-ea7da17a005c",
+              "reach": null,
+              "impressions": 2263,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "7203115b-7229-40bb-81fc-821cacf738bb",
+              "reach": null,
+              "impressions": 252,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "be6df5c9-42bf-4014-a57a-e9e78b443ad3",
+              "reach": null,
+              "impressions": 783,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "c6e222bd-eeef-41b5-afea-d96ee180b0ef",
+              "reach": null,
+              "impressions": 174,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "35bfc39a-ef1b-4e8b-b4b4-4dcac1732a9d",
+              "reach": null,
+              "impressions": 112,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "fbd75a34-328e-4375-8fae-9e02c1354c4f",
+              "reach": null,
+              "impressions": 4901,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "008e3f41-e558-4376-999b-7c6c35150277",
+              "reach": null,
+              "impressions": 196,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "e7da060e-10fd-411c-b375-d619fb43ee82",
+              "reach": null,
+              "impressions": 195,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "db79db41-bd21-4906-809d-da819078d157",
+              "reach": null,
+              "impressions": 3704,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "50f5e1d4-102c-40b5-b5ac-54ec231bda7e",
+              "reach": null,
+              "impressions": 2876,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "fdaadebd-ac6f-49ac-b88b-326d61ee0ebb",
+              "reach": null,
+              "impressions": 789,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "8fa316f0-2e57-413d-9ae4-2e895d804fd0",
+              "reach": null,
+              "impressions": 641,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "4c5ad77a-0e0b-47c0-955c-fef1f8f48337",
+              "reach": null,
+              "impressions": 6521,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "53e6a4f7-c8a2-456d-9081-ce2b2b2b1a49",
+              "reach": null,
+              "impressions": 1834,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "a8577874-720e-45a4-9dcf-de76b7a2e0cc",
+              "reach": null,
+              "impressions": 287,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "7e917d34-90ea-49e1-95ff-9833a88f4a66",
+              "reach": null,
+              "impressions": 139,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "9927fe7e-a446-4656-bf7c-fcf8b9a4c35b",
+              "reach": null,
+              "impressions": 3606,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "c34422a8-13d6-4292-84dd-ca651e15fbc0",
+              "reach": null,
+              "impressions": 2096,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "ebccf33f-6992-4b01-8c85-4be7d0907f0b",
+              "reach": null,
+              "impressions": 3127,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "66f66f8e-869a-456e-aa59-69bf735a19ce",
+              "reach": null,
+              "impressions": 209,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "4a907c48-f25a-44d2-98b2-5a6f3e8470b6",
+              "reach": null,
+              "impressions": 2877,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "12f45c36-d595-4cd6-b421-8c9f8b4286ad",
+              "reach": null,
+              "impressions": 4292,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "47675e6c-6e41-4847-a01e-a4400396be06",
+              "reach": null,
+              "impressions": 2576,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "4312729b-fe27-44cf-9bd5-6719b1512374",
+              "reach": null,
+              "impressions": 560,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "ffdefc72-cb19-42a4-b4bb-3c26cbf7af4e",
+              "reach": null,
+              "impressions": 4178,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "f640143b-9bf6-4f9f-b443-f38930526192",
+              "reach": null,
+              "impressions": 3276,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "2972d83b-3c9e-42de-9644-f3c4a71971bd",
+              "reach": null,
+              "impressions": 197,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "ea62a6aa-b5c3-4464-bd97-ca81b6b57e36",
+              "reach": null,
+              "impressions": 156,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "eabc99cc-b875-49ac-9c23-70e9e8c95229",
+              "reach": null,
+              "impressions": 1210,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "43fb3437-f074-4b4d-a47a-1f940ab31939",
+              "reach": null,
+              "impressions": 2206,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "6c637c20-2204-46bd-84af-0692fb744ef8",
+              "reach": null,
+              "impressions": 2047,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "0ec5599e-a2d3-408a-99d3-c0d9e6423975",
+              "reach": null,
+              "impressions": 605,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "29e3733a-fab0-45f2-9bbf-7a2960c487d6",
+              "reach": null,
+              "impressions": 1883,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "c4c67a83-e263-459e-aa9c-1cd65bd29ba8",
+              "reach": null,
+              "impressions": 3169,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "b7d42cb9-c429-4258-a61a-f7de966a6aa5",
+              "reach": null,
+              "impressions": 1931,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "e533f59d-8adf-4373-800c-f8dbd35b0aec",
+              "reach": null,
+              "impressions": 3202,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "82d41d23-e274-480a-b0da-b28084dbaef7",
+              "reach": null,
+              "impressions": 3678,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "8a27c7df-3fe4-49af-8686-2f51af6d0189",
+              "reach": null,
+              "impressions": 117,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "b9a77606-6a4d-4096-ab85-d118ba8e34b8",
+              "reach": null,
+              "impressions": 182,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "945eff3c-50a1-4356-a03c-620ce193a0ef",
+              "reach": null,
+              "impressions": 341,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "f6cece80-1df9-4c07-b905-31ac80d02f62",
+              "reach": null,
+              "impressions": 258,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "bf275e87-9bca-440d-a679-a2e0c39b529e",
+              "reach": null,
+              "impressions": 2480,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "d26a1f4d-8099-41a5-8300-b9268694cb14",
+              "reach": null,
+              "impressions": 1972,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "6a769462-9464-4027-8503-0b851665faf1",
+              "reach": null,
+              "impressions": 2102,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "f29c8c5b-e6ad-44fd-b4fc-8f982ad39347",
+              "reach": null,
+              "impressions": 256,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "33eaa4d1-3a7a-41a1-a889-e3b0cce29c28",
+              "reach": null,
+              "impressions": 2408,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "a93b6374-3979-47ca-8e62-70f2a4358cfb",
+              "reach": null,
+              "impressions": 3011,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "b0aa7b63-c8ad-455f-ab82-50bd4045368c",
+              "reach": null,
+              "impressions": 6259,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "6147eb14-d9f7-4859-8830-ecbd3e719239",
+              "reach": null,
+              "impressions": 2774,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "8bb26828-59c6-4649-b75a-f23b9f579d8a",
+              "reach": null,
+              "impressions": 1984,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "e09cf0a5-c114-4164-9f73-d04e60989e04",
+              "reach": null,
+              "impressions": 2306,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "4f95381a-a60c-472e-889c-b34f973028df",
+              "reach": null,
+              "impressions": 3055,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "526ad80f-12a3-4b93-8497-6192c7ba37a3",
+              "reach": null,
+              "impressions": 2972,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "df30ebef-cee6-468a-a0d6-1f5a74d7801c",
+              "reach": null,
+              "impressions": 360,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "69a5813e-c9b0-4471-b77a-c6fa27c1ab14",
+              "reach": null,
+              "impressions": 2154,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "d8e768a9-9d93-46ae-b749-1a80e1727d33",
+              "reach": null,
+              "impressions": 2206,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "372c9d24-5d07-49aa-b037-c8824c583b2f",
+              "reach": null,
+              "impressions": 3024,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "a9e1dabd-45ab-4398-9ff7-c7554ca0e265",
+              "reach": null,
+              "impressions": 2862,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "63b791ef-ee9c-4eca-aa52-6fd300fbaf51",
+              "reach": null,
+              "impressions": 187,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "0ace2bf1-d38b-43bc-b93e-a32e64514fbd",
+              "reach": null,
+              "impressions": 1998,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "2d33817d-18c0-40d5-89e4-3d359cb9a5aa",
+              "reach": null,
+              "impressions": 3399,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "9da1e03e-66c4-48c4-992b-381796ba978d",
+              "reach": null,
+              "impressions": 330,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "387548f0-874a-4c27-90db-bae466595ac4",
+              "reach": null,
+              "impressions": 2027,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "8e1b00a6-aa0f-4cb2-8bc9-5d0de5294c85",
+              "reach": null,
+              "impressions": 203,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "ba031ff8-7ee4-4a21-a80d-d317c27080f6",
+              "reach": null,
+              "impressions": 181,
+              "confidence_level": "L2",
+              "content_format": "static_post"
+            },
+            {
+              "id": "2675e658-8996-44ed-b323-1ab9f0b837b7",
+              "reach": 1727,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "53d90de7-818c-400e-90b1-45cd7a7d86e2",
+              "reach": 244,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "cfc532bd-0309-4c52-a26e-3c74e599f607",
+              "reach": 271,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "6f29319a-db51-4ec8-af4d-f16103a858e9",
+              "reach": 211,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "cea3b822-e71b-4c82-b0d3-c5b1d343f1d4",
+              "reach": 2021,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "1e197c64-f560-439b-8b22-8fd4716ccea4",
+              "reach": 216,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "fdb89e90-3326-48f0-868e-40caea622011",
+              "reach": 90,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "f7e54d6a-baf6-417d-b6b8-9559b498c29a",
+              "reach": 80,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "b8677bd2-1d4c-4007-b329-e3b1cab9acc6",
+              "reach": 2306,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "5f825e4a-3e1a-4f90-85ad-04ad0b07657f",
+              "reach": 277,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "a396a286-1a7b-427a-96b6-a32b71315f02",
+              "reach": 279,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "be97161b-ff79-4a0a-a0b6-ddd434e4989c",
+              "reach": 324,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "baccb247-080f-4ac5-9a1f-656bb3cdb337",
+              "reach": 1316,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "f6287d92-c794-43df-a631-53eee97bc424",
+              "reach": 1362,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "b25f60d6-cb0a-4785-9f17-a5f86bfe6e83",
+              "reach": 665,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "dc7f8faf-db95-4586-a2ef-39f4e2d64d17",
+              "reach": 1869,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "2479f6be-7835-47af-87f3-35064d56442a",
+              "reach": 2051,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "178686e9-b647-4385-a6ba-73c166b62672",
+              "reach": 1841,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "7b2855e1-551c-4744-be9b-c4cd13a9930f",
+              "reach": 2135,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "43230eab-9cb4-460f-912d-1f3fcc631c18",
+              "reach": 2424,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "d8fbb153-fe9f-40ff-a65c-5fa2632daacb",
+              "reach": 1548,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "a22c0685-db86-4069-b7b0-e35c69adc1d8",
+              "reach": 2954,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "dcbf475b-4852-4c44-a1c0-a85d8594c616",
+              "reach": 2614,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "252d4c70-00bd-4578-8dff-577dbd9e237d",
+              "reach": 178,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "66b2e69a-34bc-41c4-93d4-a7823907b286",
+              "reach": 2146,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "ed8ae6f5-77b8-4b9f-888e-00bf21fe8888",
+              "reach": 2832,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "6e571129-be4e-4f5b-a5ba-d782446b181e",
+              "reach": 147,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "d8006ac4-e80a-43df-a0dc-70aa5fac70c7",
+              "reach": 3961,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "b8fe1822-afec-485e-823b-4eb415090594",
+              "reach": 2889,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "51ef441b-68a2-4a3e-83e1-53f483980bb0",
+              "reach": 159,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "899c5eb5-e5ed-44c2-a6b1-5530c9dc8ada",
+              "reach": 2193,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "2bab2616-d4fc-4f71-ba77-5e6e568f6e19",
+              "reach": 2804,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "005ca356-0abe-4f1d-b8e9-17df8383981e",
+              "reach": 98,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "ea865ed3-4b84-4774-9f88-2bf72981457d",
+              "reach": 2623,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "b11346bf-e8c7-4858-aea3-eb5304d38a3e",
+              "reach": 100,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "fb0872d8-6543-4b63-8c96-e200bd14861b",
+              "reach": 2619,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "4b1d1cbd-56a8-487c-8e98-3bc6f7fb3dee",
+              "reach": 2534,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "67adaa95-5f4d-4780-a311-1529d9c3595e",
+              "reach": 2185,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "15ff3742-0bcd-4f23-a6a4-16364a460d19",
+              "reach": 235,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "29f6e538-4a5a-4313-ab21-2cebfce918e6",
+              "reach": 2543,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "07694dd0-fc23-4971-b2f5-ce65c99a8f1b",
+              "reach": 2377,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "9030c585-fff6-4102-81a5-e0d1a5cbd968",
+              "reach": 2556,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "e2d20989-77f6-4a5d-bdd2-fd52bd8f69ff",
+              "reach": 2388,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "42ea9642-894d-4ce2-aa1d-475b29539782",
+              "reach": 160,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "c2c7ae74-b232-4c2a-bcbf-12002e9aa130",
+              "reach": 3582,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "e7a1d6e0-a900-4774-84ad-d98a187979e0",
+              "reach": 1665,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "327d2a57-5e27-4548-a12a-6682dbb63bec",
+              "reach": 1859,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "8d1f67b0-bb81-4068-9351-20f1b75f7f41",
+              "reach": 170,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "66de3502-e1b1-4ac1-a508-21516cc3cf68",
+              "reach": 157,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "2552b898-592d-46d9-aa12-73b0def56835",
+              "reach": 152,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "0da98eae-111d-4853-ac0d-eaabe46fd956",
+              "reach": 211,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "7c7080b3-3173-4ddb-b67d-b2cfa96f41be",
+              "reach": 393,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "f4555d68-f3e1-4490-bbc8-4ad83784ef66",
+              "reach": 2682,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "1e14c77b-7bf3-4632-bb7d-36e63a7b842a",
+              "reach": 2649,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "15775b1c-bbaa-43b9-a0d6-cda633983538",
+              "reach": 2611,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "cb8e529a-100c-4903-ba3a-c490eea20741",
+              "reach": 164,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "9bc97f8b-cc92-42bd-883d-1ce18f1fac7a",
+              "reach": 129,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "8b80ed82-8384-4a1a-884b-cd106c083ac5",
+              "reach": 3315,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "a9086a21-c1d1-4d56-9131-93993d070e95",
+              "reach": 3072,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "321f8a5b-181a-4b1d-a76d-da77eedd3e5d",
+              "reach": 2854,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "4bb09d64-215f-493d-95b7-4324607f0256",
+              "reach": 4064,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "d0546244-4e64-4572-8e6d-e13e7860669f",
+              "reach": 2535,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "a3cc3e18-ba39-48a4-82ca-f0faa65c6c44",
+              "reach": 163,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "6b37751c-e2b7-4dd3-9d1a-b815f893a97e",
+              "reach": 3297,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "614ef97f-d8a4-4fe2-bcba-7222955e0ea7",
+              "reach": 3081,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "64acec05-bb4e-448a-9be1-ecb22522a78e",
+              "reach": 2922,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "e58e28d4-b3ec-4394-9adf-5d1012b87645",
+              "reach": 154,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "0186d286-68de-4f4a-bcec-7a648170d463",
+              "reach": 158,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "d737f78f-8c7d-4c1e-ba1e-03ac2d1e9bd4",
+              "reach": 3122,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "4a296ff1-158b-4b69-ba6a-bbae58f38417",
+              "reach": 709,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "b709327e-c22c-4e9f-b55d-b581afa41652",
+              "reach": 2621,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "bb31c931-a854-400e-9222-94391a0f2cc9",
+              "reach": 2020,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "4cb50782-8583-4b01-8b55-f901b8ec12ad",
+              "reach": 1675,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "bdbf942b-3bfc-434f-ac1c-8de689d626ef",
+              "reach": 2183,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "df22b0eb-1a3f-4f4f-9ca8-0153c4f74b50",
+              "reach": 130,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "2fb8426f-556b-46e5-95c7-8d115257d09c",
+              "reach": 1425,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "7288978a-4707-4a5f-8c10-96128fff7058",
+              "reach": 2972,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "ca112200-2883-42f3-95d3-f51d8960c6d1",
+              "reach": 124,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "69e5d431-5b7a-4d48-9dc9-d2badf9920f4",
+              "reach": 1783,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "81d45620-bc43-427c-b3a7-d4a9165de189",
+              "reach": 1869,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "0a52f2c2-86a5-4066-88ed-d8943c97cce5",
+              "reach": 2445,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "62667344-8a29-4294-bea5-311b5a4c90e3",
+              "reach": 165,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "b32cd3fe-3017-40e2-aabb-60ec2e63adf9",
+              "reach": 2639,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "a1250343-87b2-403e-b357-cd18215ae790",
+              "reach": 1332,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "db0455c4-8f19-41ba-b1b8-e6cf531edf96",
+              "reach": 131,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "20ca0398-f0f5-4fa7-a957-7deeba2f257d",
+              "reach": 514,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "86bed2ce-3fa9-43ac-b50d-b092aca81eea",
+              "reach": 145,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "410408a7-b670-4253-8130-d527f1972682",
+              "reach": 416,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "630e867f-3113-433a-b7cb-a86440353e20",
+              "reach": 735,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "fb66a2a8-be3c-40da-a785-b4749fed9d2d",
+              "reach": 763,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "216cbe5a-1e5b-4b44-8223-23536f77f12a",
+              "reach": 2959,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "2a23bfda-2004-4e47-ab49-004727f02cc9",
+              "reach": 2487,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "c4a09865-f3a8-47a4-ac7d-033887023684",
+              "reach": 2378,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "dfb64999-4490-44af-9ed8-6aa5861b29b3",
+              "reach": 1186,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "8602b3ee-5e8f-49b6-b041-224e4d237587",
+              "reach": 413,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "7eaa1945-79cf-485c-93fe-223d6e4687f5",
+              "reach": 2760,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "91703881-40af-420b-9e86-43b268f2a289",
+              "reach": 72,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "ceb15b94-37c9-44a9-acca-4e984c2619d0",
+              "reach": 1331,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "e70c821c-0db2-4960-9474-cd73fc37f92a",
+              "reach": 1460,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "191a97e7-9cb3-4614-9273-7542d4596710",
+              "reach": 1579,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "39afc6df-9161-45b3-a5ca-6e51e6c674b5",
+              "reach": 2354,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "9ac46c65-09cc-4a4f-aced-466fa06fe0a0",
+              "reach": 232,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "a4348201-b4a9-44be-9e5e-3d5cd380b549",
+              "reach": 88,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "57eb286d-e6e7-49d6-957b-3f36e167983f",
+              "reach": 393,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "e0a1be57-a783-464b-a13b-60bb77cf1b93",
+              "reach": 1167,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "16e157c1-32bf-4b6f-9dd6-ab0075c5399f",
+              "reach": 99,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "3312a5d1-3e28-4059-8bdf-f58d5b46acb6",
+              "reach": 3077,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "a5bae837-8cd8-4c05-995f-0ef5f291a523",
+              "reach": 3061,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "aa7a97b2-b778-4b8a-8726-dcd903ce7783",
+              "reach": 2405,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "d11ccfd7-59a7-44a4-b76f-03cb82e8d6ad",
+              "reach": 1948,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "01bba70e-8143-4bcb-b588-d6e6f9aa3888",
+              "reach": 113,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "04ddac7c-bf82-41a4-935c-9607f4e335f8",
+              "reach": 179,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "391688e8-bff8-4bdf-9876-15a5c4318020",
+              "reach": 4425,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "23ef5ccf-226d-4fea-a1c3-9ee09948a207",
+              "reach": 1957,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "c6036db0-8474-462e-ac9c-2df5e1e7a083",
+              "reach": 1221,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "ef346533-bd00-48b3-8d11-6c7795571afb",
+              "reach": 1405,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "4660e9c0-e400-4e37-917a-be3d3e5c4a24",
+              "reach": 151,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "2680f1b7-80b3-4ad8-aa55-9e6120ecb14a",
+              "reach": 1719,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "ff753ee1-c14a-41bf-92f3-a90e64eff449",
+              "reach": 1779,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "aa8d3eb7-545d-448a-9d27-bd308e9e015b",
+              "reach": 1132,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "b1a875a2-71db-45ec-8bc1-e4ac214a63f8",
+              "reach": 1246,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "b7293d11-d2d0-49bd-bd56-656807d863dd",
+              "reach": 280,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "dfbf7f66-5135-4771-96ef-df54517b6e80",
+              "reach": 261,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "2da9e1d8-84de-40e6-805b-e266025344e3",
+              "reach": 189,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "2f23a2dd-6489-4e2e-83c4-6f92d22b1a70",
+              "reach": 212,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "ba952945-eab2-4076-af2c-8781fec4c5b3",
+              "reach": 242,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "7ec5ec2b-37c6-485e-8464-48fab0d08af3",
+              "reach": 303,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "f2b5cf00-6e45-474a-80f4-ab324365af35",
+              "reach": 1879,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "c774c733-0f7f-48b1-b334-7f58b166116e",
+              "reach": 1885,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "7bf92ff8-31f8-4272-887f-fd31ab51b857",
+              "reach": 1765,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "6eae7367-4945-4a45-bb2f-ad25d5e33d00",
+              "reach": 2207,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "56e58225-83d9-4b4d-a306-f51c431ee42a",
+              "reach": 2015,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "9c2f85a1-02b9-4148-b5f3-4b6fd4bcf57c",
+              "reach": 1601,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "fe47f34e-fb55-4928-9b2d-8a0c04bee843",
+              "reach": 1059,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "e435d7c2-c33f-43b9-8314-2c6ca5c3f306",
+              "reach": 1390,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "97dbbf16-b2e8-4271-bcf2-62435357cff3",
+              "reach": 1278,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "052daf4c-c584-40af-995e-bd489a3c555c",
+              "reach": 1848,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "a7ae4639-5ca7-4512-9cd2-fbf8c808a891",
+              "reach": 1281,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "2205b8bc-ec53-4ca3-a68b-b0120724d263",
+              "reach": 1357,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "d26126b0-b891-4864-9779-b42b85f27e13",
+              "reach": 632,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "de686fdf-a967-4c41-8b1c-695f35cbb7b1",
+              "reach": 1878,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "fb67265b-534f-4962-9d84-b0527386d791",
+              "reach": 211,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "636916fc-337d-4c62-bea3-cd9bcce4ce7a",
+              "reach": 2799,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "9a75c8c4-b370-487a-9ec1-07d3299071a9",
+              "reach": 2844,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "f079e89f-764b-4d0d-96cd-bccdd1127455",
+              "reach": 1563,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "ec209d7b-dc73-4f8b-b02e-7f03a02118c3",
+              "reach": 1465,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "aaeb8525-ba51-4a96-882a-eafd5b50c68f",
+              "reach": 2991,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "4b7caf2d-76f9-4fb5-8ef6-9da003bc0317",
+              "reach": 1632,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "1d47f929-443c-4f39-a840-7b723cdf0717",
+              "reach": 1428,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "ffba8e28-f18c-47d4-ba8e-dc4dd1387bea",
+              "reach": 1493,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "b17ea78d-866a-4586-bbb5-f6cc215b1717",
+              "reach": 1415,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "2a8ba3a5-0b9f-4840-86d5-d8e9091194d1",
+              "reach": 2393,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "cc3235e5-17b0-474b-9d64-7487331cd7a2",
+              "reach": 112,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "1178aad8-b2df-4cb0-9989-dab62fe6c43f",
+              "reach": 3391,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "c86122f1-2c94-4f5e-9bec-aa3a0fbb3f07",
+              "reach": 1639,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "e12dff3d-11a7-43fd-9999-c58b942ce7e9",
+              "reach": 1657,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "a6bee6d0-4c4b-4ec7-a5fa-f197de7e6fd9",
+              "reach": 1796,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "4eaacae9-407b-48bf-8776-dbff13ef48a3",
+              "reach": 1852,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "3dcd2b6e-8b12-430a-b2c8-863d9f12567b",
+              "reach": 1923,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "8170d081-f4d8-4f47-b04f-b6ad1c152d22",
+              "reach": 2535,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "18dbe7de-1c27-4743-8679-f74c3c13cab7",
+              "reach": 57,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "87b30007-843a-4ab0-a549-c10ef82ae0d9",
+              "reach": 1644,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "48bd8957-a820-4003-89f2-0a18520e49a8",
+              "reach": 1789,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "fe9ced80-41a5-40a4-93dd-2f72dcfd9370",
+              "reach": 3354,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "bcc99f50-2161-401d-84a4-4c4702975257",
+              "reach": 2043,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "e0e65744-ff8f-4689-afd1-613ffb2263d5",
+              "reach": 1434,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "d1ca2b64-6368-4193-bf96-febad3d45e09",
+              "reach": 85,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "f83f81da-0c73-4ed3-8ad5-9e950a93cbfe",
+              "reach": 1911,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "8d892cc9-238b-40fb-b0fa-8114f4eb9a65",
+              "reach": 2390,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "220b05cb-e504-4a33-9632-aa8642c2e204",
+              "reach": 153,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "bc9b1dd0-6c67-4109-99be-16313583aee9",
+              "reach": 2275,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            },
+            {
+              "id": "e0b3e7c5-64c4-4dca-82eb-19228d712511",
+              "reach": 1889,
+              "impressions": null,
+              "confidence_level": "L1",
+              "content_format": "reel"
+            }
+          ],
+          "truncated": false,
+          "error": null,
+          "confidenceSumMismatch": false,
+          "total": 344
+        },
+        "latestAudience": {
+          "id": "cf74462d-80b7-4920-a067-705722fb7e0a",
+          "period_end": "2026-08-17",
+          "gender_female_pct": null,
+          "gender_male_pct": null,
+          "avatar_composite_score": null,
+          "confidence_level": "L0"
+        }
+      },
+      "screens": {
+        "carteira": {
+          "gate": "RWP",
+          "reasons": [
+            "clients row existe",
+            "onboarding presente"
+          ]
+        },
+        "instagram": {
+          "gate": "C_HOLD_INGEST",
+          "reasons": [
+            "snapshots=2",
+            "posts=344 reach=172",
+            "último período 2025-12-01→2026-08-17",
+            "import done"
+          ]
+        },
+        "avatar": {
+          "gate": "C_HOLD_INGEST",
+          "reasons": [
+            "avatar esperado INCOMPLETO em clients",
+            "audience_snapshots=1",
+            "alignment=1",
+            "validations=0"
+          ]
+        },
+        "alertas": {
+          "gate": "RWP",
+          "reasons": [
+            "alerts=0",
+            "abertos=0"
+          ]
+        },
+        "funil": {
+          "gate": "C_HOLD_INGEST",
+          "reasons": [
+            "funnel_data=0",
+            "snapshot tem profile_visits (origem derivável)"
+          ]
+        }
+      },
+      "errors": []
+    }
+  ]
+}

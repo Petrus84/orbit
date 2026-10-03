@@ -1,8 +1,6 @@
 'use client'
-import React from 'react'
 import { GlassCard } from '@/components/common/GlassCard'
-import styles from './SectorPositioningPanel.module.css';
-import { stripTranslation } from '@/lib/repositories/contentContractEngine'
+import styles from './SectorPositioningPanel.module.css'
 import type { SectorPositioning, ClassifiedMetric } from '@/types/orbit'
 
 export interface SectorPositioningPanelProps {
@@ -48,28 +46,11 @@ nenhum_observavel: 'Nenhum mecanismo observável',
 const fmtValue = (v: number) =>
   `${v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%`
 
-// Badge é pra pílula curta (ex.: "ATENÇÃO"), não pra parágrafo. Métricas
-// zero-inflated (ver contentContractEngine.buildZeroInflatedText) geram um
-// statusText de 2-3 frases — isso vira detail (.ruleText, renderizado uma
-// vez por card abaixo do grid), e o badge mostra só o veredito do semáforo.
-// stripTranslation() tira o "Traduzindo: em X%..." que repete o valor —
-// o valor já está no número grande do card (mesma regra do buildZeroInflatedText).
-const SEMAPHORE_SHORT_LABEL: Record<string, string> = {
-  verde: 'Dentro do esperado',
-  ambar: 'Atenção',
-  vermelho: 'Fora do padrão',
-}
-
-interface MetricCardResult {
-  card: React.ReactNode
-  detail: { label: string; text: string } | null
-}
-
 function metricCard(
 label: string,
 value: number | null,
 metric: ClassifiedMetric | null
-): MetricCardResult {
+) {
 const isAmar = metric?.semaphore === 'ambar'
 const isVerm = metric?.semaphore === 'vermelho'
 const badgeCls = isVerm
@@ -80,29 +61,16 @@ const badgeCls = isVerm
 // Sem régua de mercado (thresholdSource null): sem badge no card — o bloco
 // diz isso UMA vez, em vez de repetir a mesma frase em cada card.
 const hasVerdict = metric != null && metric.thresholdSource !== null
-const isZeroInflated = hasVerdict && metric.zeroInflated !== null
 
-const badgeText = isZeroInflated
-  ? SEMAPHORE_SHORT_LABEL[metric.semaphore] ?? metric.statusText
-  : metric?.statusText
-
-const detail =
-  isZeroInflated
-    ? { label, text: stripTranslation(metric.statusText) }
-    : null
-
-return {
-  card: (
-    <div className={styles.metricCard} key={label}>
-      <p className={styles.metricLabel}>{label}</p>
-      <p className={styles.metricValue}>
-        {value != null ? fmtValue(value) : '—'}
-      </p>
-      {hasVerdict && <span className={badgeCls}>{badgeText}</span>}
-    </div>
-  ),
-  detail,
-}
+return (
+  <div className={styles.metricCard} key={label}>
+    <p className={styles.metricLabel}>{label}</p>
+    <p className={styles.metricValue}>
+      {value != null ? fmtValue(value) : '—'}
+    </p>
+    {hasVerdict && <span className={badgeCls}>{metric.statusText}</span>}
+  </div>
+)
 }
 
 // ✅ NOVO (18/09/2026) — algo_risk_score, família Ln. Card separado de
@@ -151,19 +119,6 @@ const noMarketNote = noMarket.length
   ? `${noMarket.join(' e ')} sem comparação de mercado — acompanhe a evolução da própria conta.`
   : null
 
-const metrics = [
-  metricCard('ER real', positioning.erReal?.value ?? null, positioning.erReal ?? null),
-  metricCard('VPS', positioning.vps?.value ?? null, positioning.vps ?? null),
-  metricCard(
-    'Score polêmica',
-    positioning.polemicScore?.value ?? null,
-    positioning.polemicScore ?? null
-  ),
-]
-const metricDetails = metrics
-  .map((m) => m.detail)
-  .filter((d): d is { label: string; text: string } => d != null)
-
 return (
   <GlassCard glowColor="cyan" className={styles.panel}>
     <p className={styles.panelTitle}>POSICIONAMENTO</p>
@@ -193,18 +148,23 @@ return (
     <p className={styles.blockLabel}>BENCHMARKING</p>
 
     <div className={styles.metricsRow}>
-      {metrics.map((m) => m.card)}
+      {/* ✅ CORRIGIDO: Usar campo .value em vez de fazer parse de statusText */}
+      {metricCard(
+        'ER real',
+        positioning.erReal?.value ?? null,
+        positioning.erReal ?? null
+      )}
+      {metricCard(
+        'VPS',
+        positioning.vps?.value ?? null,
+        positioning.vps ?? null
+      )}
+      {metricCard(
+        'Score polêmica',
+        positioning.polemicScore?.value ?? null,
+        positioning.polemicScore ?? null
+      )}
     </div>
-
-    {/* Parágrafo completo de métricas zero-inflated (antes espremido dentro
-        do badge do card, inflando a altura só daquele card). Um bloco por
-        métrica, rotulado, no mesmo estilo de ruleDeclaration/noMarketNote. */}
-    {metricDetails.map((d) => (
-      <p className={styles.ruleText} key={d.label}>
-        <strong>{d.label}:</strong> {d.text}
-      </p>
-    ))}
-
 
     {ruleDeclaration && (
       <p className={styles.ruleText}>{ruleDeclaration}</p>

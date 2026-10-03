@@ -38,7 +38,7 @@
 }
 
 .varName {
-  color: var(--acc2); /* roxo secundário — identidade da marca */
+  color: var(--acc2-text); /* FIX WCAG: --acc2 puro é 4.17:1 sobre --bg2 (falha AA). --acc2-text mantém a identidade roxa com 5.7:1+ */
 }
 
 .operator {

@@ -49,7 +49,7 @@ export function Header() {
     <header className={styles.header} role="banner">
       {/* Título + contexto */}
       <div className={styles.titleBlock}>
-        <h1 className={styles.title}>Visão da conta — {meta?.clientHandle ?? '—'}</h1>
+        <h1 className={styles.title}>Instagram — {meta?.clientHandle ?? '—'}</h1>
         <p className={styles.subtitle}>
           {meta?.periodLabel ?? '—'}
         </p>

@@ -2,8 +2,7 @@
    ORBIT · contentContractEngine.ts
    Content Contract v1.5.1 + textos de cliente (06/09/2026)
    Patch 15/09/2026: fix TS2345 (formatPtBr(vpsPct) sem guarda de null) +
-   P0a (categorias comissionamento_afiliados/pre_monetizacao_a_validar) +
-   P0b (template cta_rate_pct) — ver ANALISE_CONVERGENTE_ORBIT.md
+    P0b (template cta_rate_pct) — ver ANALISE_CONVERGENTE_ORBIT.md
 
    REGRA DE OURO: nenhuma função aqui reimplementa threshold em JS.
    A régua vive em orbit.fn_classify_metric (Postgres). Este arquivo
@@ -100,27 +99,23 @@ interface FnClassifyMetricRow {
 /*  Recortes calibrados                                                       */
 /* -------------------------------------------------------------------------- */
 
-// ✅ P0a (ANALISE_CONVERGENTE_ORBIT.md, "Categoria gap: 7 vs 9"): faltavam
-// 'comissionamento_afiliados' e 'pre_monetizacao_a_validar' — clientes
-// nesses 2 setores caíam sempre no recorte 'global' (sem benchmark de
-// categoria), mesmo já existindo em client_onboarding_setor_benchmark_check
-// no banco. Adicionadas em 15/09/2026.
+// ✅ critério operacional revisado em SSOT Operacional v1.3 — 
+// Coerente com orbit.clients (Estado Real).md, o ciclo atual tem **5 categorias ativas em `benchmark_category`**: 
+// 1. `comercio_direto_ecommerce_social`  2. `infoprodutor_autoridade_personal` 3. `monetizacao_nativa_plataforma` 
+// 4. `patrocinio_publicidade_marca` 5. `servico_consultoria_profissional`precisa refletir no codigo - refatorar*/
+
+
 const CALIBRATED_SETOR_BENCHMARK_CATEGORIES: ReadonlySet<SetorBenchmark> = new Set([
   'comercio_direto_ecommerce_social',
-  'comissionamento_afiliados',
-  'infoprodutor_educador_pago',
-  'servico_consultoria_profissional',
-  'patrocinio_publicidade_marca',
-  'membership_assinatura_comunidade',
+  'infoprodutor_autoridade_personal',
   'monetizacao_nativa_plataforma',
-  'autoridade_personal_branding_b2b',
-  'pre_monetizacao_a_validar',
+  'patrocinio_publicidade_marca',
+  'servico_consultoria_profissional',
 ])
 
 const SETOR_LABEL: Record<string, string> = {
   comercio_direto_ecommerce_social: 'lojas que vendem pelas redes sociais',
-  comissionamento_afiliados: 'contas de afiliados e comissionamento',
-  infoprodutor_educador_pago: 'infoprodutores e cursos',
+  infoprodutor_autoridade_personal: 'infoprodutores e cursos',
   servico_consultoria_profissional: 'serviços e consultorias',
   patrocinio_publicidade_marca: 'marcas que vivem de publicidade',
   membership_assinatura_comunidade: 'assinaturas e comunidades',

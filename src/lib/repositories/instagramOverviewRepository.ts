@@ -93,7 +93,6 @@ import type {
 } from '@/types/orbit'
 
 import { buildScoreCopy, type SemaphoreKey } from '@/lib/scoreStatusCopy'
-import { buildDataStatusNotices, type ClientDataFacts } from '@/lib/dataStatusCopy'
 import {
   resolveEngagementScoreAlert,
   resolveAlgoRiskScoreAlert,
@@ -156,10 +155,7 @@ const KpiRowSchema = z.object({
   metric:        z.string().optional(),
   metric_value:  z.union([z.number(), z.string()]).nullable().optional(),
   value:         z.union([z.number(), z.string()]).nullable().optional(),
-  // ✅ FIX (20/09/2026): sem `.default(0)`. v_kpi_snapshots não tem coluna de
-  // comparação com período anterior — o default fabricava "→ 0.0% vs período
-  // anterior" em todo KPI. Ausência agora fica null e a UI esconde o delta.
-  delta_pct:     z.union([z.number(), z.string()]).nullable().optional(),
+  delta_pct:     z.union([z.number(), z.string()]).nullable().optional().default(0),
   semaphore:     z.enum(['verde', 'ambar', 'vermelho']).nullable().optional().default('ambar'),
   subtitle:      z.string().nullable().optional().default(null),
   calculated_at: z.string().optional(),
@@ -214,7 +210,7 @@ function kpiRowToCardData(row: KpiRow): KPICardData {
   const key       = row.metric_key ?? row.metric ?? 'unknown'
   const rawVal    = row.metric_value ?? row.value ?? 0
   const numVal    = toFiniteNumber(rawVal)
-  const delta: number | null = row.delta_pct == null ? null : toFiniteNumber(row.delta_pct)
+  const delta     = toFiniteNumber(row.delta_pct)
   const semaphore: SemaphoreColor = (row.semaphore as SemaphoreColor) ?? 'ambar'
 
   return {
@@ -319,7 +315,6 @@ export async function fetchInstagramOverview(
     fetchAudienceSummary(clientId, periodStart, periodEnd),
     fetchCriticalAlerts(clientId, periodStart, periodEnd),
     fetchSectorPositioning(clientId, periodStart, periodEnd),
-    fetchDataStatus(clientId, periodStart, periodEnd),
   ])
 
   results.forEach((res, idx) => {
@@ -350,7 +345,6 @@ export async function fetchInstagramOverview(
   const positioning: SectorPositioning | null = results[6].status === 'fulfilled'
     ? results[6].value
     : null
-  const dataStatus = results[7].status === 'fulfilled' ? results[7].value : []
 
   // ✅ FIX (tsc TS2339): `import.meta.env.VITE_*` é Vite — sobrou de antes
   // da migração pra Next.js, onde env var de cliente é `process.env.NEXT_PUBLIC_*`
@@ -419,7 +413,6 @@ export async function fetchInstagramOverview(
     insights:       generateInsights(formatPerformance),
     criticalAlerts,
     positioning: positioning as SectorPositioning,
-    dataStatus,
   }
 }
 // ── Funções de busca (queries ao banco) ──────────────────────────────────
@@ -789,59 +782,6 @@ export async function fetchClientOnboarding(
  * histórico da própria conta (computeAlgoRiskScore em
  * contentContractEngine.ts).
  */
-// Fatos do banco que explicam telas vazias/incompletas. Mesmas tabelas que o
-// resto do repositório já lê; falha aqui nunca derruba a tela (retorna []).
-async function fetchDataStatus(
-  clientId: string,
-  start: string,
-  end: string,
-): Promise<{ id: string; text: string }[]> {
-  const [postsRes, snapRes] = await Promise.all([
-    supabase
-      .schema('orbit')
-      .from('ig_posts')
-      .select('published_at, is_estimated')
-      .eq('client_id', clientId)
-      .order('published_at', { ascending: false })
-      .limit(2000)
-      .returns<{ published_at: string; is_estimated: boolean | null }[]>(),
-    supabase
-      .schema('orbit')
-      .from('ig_account_snapshots')
-      .select('period_end, reach_total, impressions_total', { count: 'exact' })
-      .eq('client_id', clientId)
-      .order('period_end', { ascending: false })
-      .limit(1)
-      .returns<{ period_end: string; reach_total: number | null; impressions_total: number | null }[]>(),
-  ])
-
-  if (postsRes.error || snapRes.error) {
-    console.error('[fetchDataStatus]', postsRes.error?.message ?? snapRes.error?.message)
-    return []
-  }
-
-  const posts = postsRes.data ?? []
-  const t0 = Date.parse(start)
-  const t1 = Date.parse(end)
-  const latest = snapRes.data?.[0]
-
-  const facts: ClientDataFacts = {
-    postsTotal: posts.length,
-    postsFirst: posts.length ? posts[posts.length - 1]!.published_at : null,
-    postsLast: posts.length ? posts[0]!.published_at : null,
-    postsInPeriod: posts.filter((p) => {
-      const t = Date.parse(p.published_at)
-      return t >= t0 && t <= t1
-    }).length,
-    postsEstimated: posts.filter((p) => p.is_estimated === true).length,
-    snapshotCount: snapRes.count ?? 0,
-    latestSnapshotReach: latest?.reach_total ?? null,
-    latestSnapshotImpressions: latest?.impressions_total ?? null,
-  }
-
-  return buildDataStatusNotices(facts)
-}
-
 async function fetchAlgoRiskScore(clientId: string): Promise<AlgoRiskScore | null> {
   const { data, error } = await supabase
     .schema('orbit')
@@ -958,8 +898,6 @@ async function fetchCriticalAlerts(
         snapshotId: `algo_risk:${clientId}:${end}`,
         algoRiskScore: algo.value,
         nRecent: algo.recentWindowSize,
-        recentMedian: algo.recentMedian,
-        baselineMedian: algo.baselineMedian,
       })
       if (draft) alerts.push(toCriticalAlert(draft))
     }

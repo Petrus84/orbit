@@ -30,7 +30,7 @@ O relatório entrega: (1) diagnóstico de variáveis e lacunas (Before); (2) sep
 | Nicho/tema de conteúdo | **Fora do escopo** — dimensão separada | Dimensão própria |
 | Proof mechanism (prova social, autoridade, resultado, etc.) | **Fora do escopo** — dimensão separada | Dimensão própria |
 
-**HIPÓTESE 1:** o "setor de benchmark" é a variável com maior poder explicativo sobre *como* o dinheiro entra (mecânica de monetização), enquanto nicho explica *sobre o que se fala* e proof_mechanism explica *por que confiam o suficiente para comprar*. → **Validação:** análise de variância (ANOVA) ou regressão múltipla usando receita/CPM/ticket como variável dependente e as três dimensões como fatores independentes, testando se "setor de benchmark" explica variância incremental além de nicho e proof_mechanism.
+**HIPÓTESE 1:** o "categoria de benchmark" é a variável com maior poder explicativo sobre *como* o dinheiro entra (mecânica de monetização), enquanto nicho explica *sobre o que se fala* e proof_mechanism explica *por que confiam o suficiente para comprar*. → **Validação:** análise de variância (ANOVA) ou regressão múltipla usando receita/CPM/ticket como variável dependente e as três dimensões como fatores independentes, testando se "setor de benchmark" explica variância incremental além de nicho e proof_mechanism.
 
 ### 1.2 Dados necessários para fundamentar o número ideal de categorias
 

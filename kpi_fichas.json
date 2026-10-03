@@ -1,6 +1,12 @@
 {
+  "gerado_em": "2026-09-29",
+  "modo": "KCR-ONLY | C5 screens=[] no tile Utilidade | zero UI neste arquivo",
+  "decisoes": [
+    "2026-09-29 KCR-C5: Score Utilidade some do QualityScoresPanel",
+    "2026-09-29 KCR-C4: dois tokens; colisão de nome não recusa o fato Insights",
+    "play_to_view: classificar só se reel_views>=50; mediana_conta, nunca média"
+  ],
   "kpis": [
-
     {
       "kpi_id": "polemic_score_pct",
       "nome": "Score de Polêmica / Discussão nos comentários",

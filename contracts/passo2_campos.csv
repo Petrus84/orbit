@@ -1,0 +1,696 @@
+﻿rede,path_arquivo,path_campo,tipo,n_preenchido,n_null,unidade,exemplo
+x,Exports do X/account_analytics_content_2025-12-01_2026-09-29.csv,ID do post,numerico,172,0,count,2089455956010930293
+x,Exports do X/account_analytics_content_2025-12-01_2026-09-29.csv,Data,data,172,0,data,"Mon, Aug 17, 2026"
+x,Exports do X/account_analytics_content_2025-12-01_2026-09-29.csv,Texto do post,texto,172,0,texto,@AllPop_BR Delícia
+x,Exports do X/account_analytics_content_2025-12-01_2026-09-29.csv,Postar link,texto,172,0,texto,https://x.com/DogAtivo/status/2089455956
+x,Exports do X/account_analytics_content_2025-12-01_2026-09-29.csv,Impressões,numerico,172,0,count,70
+x,Exports do X/account_analytics_content_2025-12-01_2026-09-29.csv,Curtidas,numerico,172,0,count,0
+x,Exports do X/account_analytics_content_2025-12-01_2026-09-29.csv,Engajamentos,numerico,172,0,count,0
+x,Exports do X/account_analytics_content_2025-12-01_2026-09-29.csv,Itens salvos,numerico,172,0,count,0
+x,Exports do X/account_analytics_content_2025-12-01_2026-09-29.csv,Compartilhamentos,numerico,172,0,count,0
+x,Exports do X/account_analytics_content_2025-12-01_2026-09-29.csv,Novos seguidores,numerico,172,0,count,0
+x,Exports do X/account_analytics_content_2025-12-01_2026-09-29.csv,Respostas,numerico,172,0,count,0
+x,Exports do X/account_analytics_content_2025-12-01_2026-09-29.csv,Reposts,numerico,172,0,count,0
+x,Exports do X/account_analytics_content_2025-12-01_2026-09-29.csv,Visitas ao perfil,numerico,172,0,count,0
+x,Exports do X/account_analytics_content_2025-12-01_2026-09-29.csv,Expansões de detalhes,numerico,172,0,count,0
+x,Exports do X/account_analytics_content_2025-12-01_2026-09-29.csv,Cliques de URL,numerico,172,0,count,0
+x,Exports do X/account_analytics_content_2025-12-01_2026-09-29.csv,Cliques de hashtag,numerico,172,0,count,0
+x,Exports do X/account_analytics_content_2025-12-01_2026-09-29.csv,Cliques de link permanente,numerico,172,0,count,0
+x,Exports do X/account_overview_analytics (2).csv,Date,data,303,0,data,"Tue, Sep 29, 2026"
+x,Exports do X/account_overview_analytics (2).csv,Impressões,numerico,303,0,count,229
+x,Exports do X/account_overview_analytics (2).csv,Curtidas,numerico,303,0,count,2
+x,Exports do X/account_overview_analytics (2).csv,Engajamentos,numerico,303,0,count,8
+x,Exports do X/account_overview_analytics (2).csv,Itens salvos,numerico,303,0,count,2
+x,Exports do X/account_overview_analytics (2).csv,Compartilhamentos,numerico,303,0,count,0
+x,Exports do X/account_overview_analytics (2).csv,Novos seguidores,numerico,303,0,count,0
+x,Exports do X/account_overview_analytics (2).csv,Deixar de seguir,numerico,303,0,count,0
+x,Exports do X/account_overview_analytics (2).csv,Respostas,numerico,303,0,count,0
+x,Exports do X/account_overview_analytics (2).csv,Reposts,numerico,303,0,count,0
+x,Exports do X/account_overview_analytics (2).csv,Visitas ao perfil,numerico,303,0,count,4
+x,Exports do X/account_overview_analytics (2).csv,Criar post,numerico,303,0,count,0
+x,Exports do X/account_overview_analytics (2).csv,Visualizações de vídeo,numerico,303,0,count,0
+x,Exports do X/account_overview_analytics (2).csv,Visualizações de mídia,numerico,303,0,count,0
+x,Exports do X/account_overview_analytics (3).csv,Date,data,303,0,data,"Tue, Sep 29, 2026"
+x,Exports do X/account_overview_analytics (3).csv,Impressões,numerico,303,0,count,267
+x,Exports do X/account_overview_analytics (3).csv,Curtidas,numerico,303,0,count,2
+x,Exports do X/account_overview_analytics (3).csv,Engajamentos,numerico,303,0,count,8
+x,Exports do X/account_overview_analytics (3).csv,Itens salvos,numerico,303,0,count,2
+x,Exports do X/account_overview_analytics (3).csv,Compartilhamentos,numerico,303,0,count,0
+x,Exports do X/account_overview_analytics (3).csv,Novos seguidores,numerico,303,0,count,0
+x,Exports do X/account_overview_analytics (3).csv,Deixar de seguir,numerico,303,0,count,0
+x,Exports do X/account_overview_analytics (3).csv,Respostas,numerico,303,0,count,0
+x,Exports do X/account_overview_analytics (3).csv,Reposts,numerico,303,0,count,0
+x,Exports do X/account_overview_analytics (3).csv,Visitas ao perfil,numerico,303,0,count,4
+x,Exports do X/account_overview_analytics (3).csv,Criar post,numerico,303,0,count,0
+x,Exports do X/account_overview_analytics (3).csv,Visualizações de vídeo,numerico,303,0,count,0
+x,Exports do X/account_overview_analytics (3).csv,Visualizações de mídia,numerico,303,0,count,0
+x,Exports do X/video_overview_analytics (1).csv,[tabela diaria].Data,data,365,0,data,"Tue, Sep 29, 2026"
+x,Exports do X/video_overview_analytics (1).csv,[tabela diaria].Visualizações,numerico,365,0,count,20
+x,Exports do X/video_overview_analytics (1).csv,[tabela diaria].Tempo de exibição (ms),numerico,365,0,ms,307126
+x,Exports do X/video_overview_analytics (1).csv,[tabela diaria].Taxa de conclusões,numerico,365,0,pct,2.70
+x,Exports do X/video_overview_analytics (1).csv,[tabela diaria].Tempo médio de exibição (ms),numerico,365,0,ms,4150
+x,Exports do X/video_overview_analytics (1).csv,[tabela diaria].Receita estimada,numerico,365,0,count,0
+x,Exports do X/video_overview_analytics (1).csv,[tabela videos].Carregado em:,data,30,0,data,"Aug 8, 2026"
+x,Exports do X/video_overview_analytics (1).csv,[tabela videos].ID do vídeo,texto,30,0,texto,13_2086136620219043840
+x,Exports do X/video_overview_analytics (1).csv,[tabela videos].Título do vídeo,enum,30,0,texto,Sem título
+x,Exports do X/video_overview_analytics (1).csv,[tabela videos].Visualizações,numerico,30,0,count,1015
+x,Exports do X/video_overview_analytics (1).csv,[tabela videos].Duração,texto(mm:ss),30,0,mm:ss,0:57
+x,Exports do X/video_overview_analytics (1).csv,[tabela videos].Link do vídeo,texto,30,0,texto,https://studio.x.com/library/13_20861366
+x,Exports do X/video_overview_analytics (1).csv,[tabela videos].Monetizado,enum,30,0,texto,Não
+x,Exports do X/video_overview_analytics (1).csv,[tabela videos].Receita estimada,numerico,30,0,count,0
+x,Exports do X/video_overview_analytics (1).csv,[tabela videos].Data de publicação,vazio,0,30,-,-
+x,Exports do X/video_overview_analytics (1).csv,[tabela videos].Postar link,vazio,0,30,-,-
+linkedin,Exports do Linkedin/AggregateAnalytics_Petr#U00facio Barros_2025-10-03_2026-10-02 (1).xlsx,Descoberta.Impressões,numerico,1,0,count,289
+linkedin,Exports do Linkedin/AggregateAnalytics_Petr#U00facio Barros_2025-10-03_2026-10-02 (1).xlsx,Descoberta.Usuários alcançados,numerico,1,0,count,59
+linkedin,Exports do Linkedin/AggregateAnalytics_Petr#U00facio Barros_2025-10-03_2026-10-02 (1).xlsx,Engajamento.Data,data,365,0,data,03/10/2025
+linkedin,Exports do Linkedin/AggregateAnalytics_Petr#U00facio Barros_2025-10-03_2026-10-02 (1).xlsx,Engajamento.Impressões,numerico,365,0,count,0
+linkedin,Exports do Linkedin/AggregateAnalytics_Petr#U00facio Barros_2025-10-03_2026-10-02 (1).xlsx,Engajamento.Engajamentos,numerico,365,0,count,0
+linkedin,Exports do Linkedin/AggregateAnalytics_Petr#U00facio Barros_2025-10-03_2026-10-02 (1).xlsx,Publicações mais em alta.[lista engajamento].URL da publicação,vazio,0,1,-,-
+linkedin,Exports do Linkedin/AggregateAnalytics_Petr#U00facio Barros_2025-10-03_2026-10-02 (1).xlsx,Publicações mais em alta.[lista engajamento].Data de publicação,vazio,0,1,-,-
+linkedin,Exports do Linkedin/AggregateAnalytics_Petr#U00facio Barros_2025-10-03_2026-10-02 (1).xlsx,Publicações mais em alta.[lista engajamento].Engajamentos,vazio,0,1,-,-
+linkedin,Exports do Linkedin/AggregateAnalytics_Petr#U00facio Barros_2025-10-03_2026-10-02 (1).xlsx,Publicações mais em alta.[lista impressoes].URL da publicação,texto,1,0,texto,https://www.linkedin.com/posts/petrucion
+linkedin,Exports do Linkedin/AggregateAnalytics_Petr#U00facio Barros_2025-10-03_2026-10-02 (1).xlsx,Publicações mais em alta.[lista impressoes].Data de publicação,data,1,0,data,23/09/2026
+linkedin,Exports do Linkedin/AggregateAnalytics_Petr#U00facio Barros_2025-10-03_2026-10-02 (1).xlsx,Publicações mais em alta.[lista impressoes].Impressões,numerico,1,0,count,21
+linkedin,Exports do Linkedin/AggregateAnalytics_Petr#U00facio Barros_2025-10-03_2026-10-02 (1).xlsx,Seguidores.Total de seguidores,numerico,1,0,count,2571
+linkedin,Exports do Linkedin/AggregateAnalytics_Petr#U00facio Barros_2025-10-03_2026-10-02 (1).xlsx,Seguidores.Data,data,365,0,data,03/10/2025
+linkedin,Exports do Linkedin/AggregateAnalytics_Petr#U00facio Barros_2025-10-03_2026-10-02 (1).xlsx,Seguidores.Novos seguidores,numerico,365,0,count,0
+linkedin,Exports do Linkedin/AggregateAnalytics_Petr#U00facio Barros_2025-10-03_2026-10-02 (1).xlsx,Dados demográficos do público.Principais dados demográficos,enum,58,0,texto,Cargo | Empresa | Localidade | Nível de 
+linkedin,Exports do Linkedin/AggregateAnalytics_Petr#U00facio Barros_2025-10-03_2026-10-02 (1).xlsx,Dados demográficos do público.Valor,texto,58,0,texto,Suzano
+linkedin,Exports do Linkedin/AggregateAnalytics_Petr#U00facio Barros_2025-10-03_2026-10-02 (1).xlsx,Dados demográficos do público.Porcentagem,numerico,58,0,pct,3%
+linkedin,Exports do Linkedin/AggregateAnalytics_Petr#U00facio Barros_2025-10-03_2026-10-02 (1).xlsx,Dados demográficos do conteúdo.Principais dados demográficos,enum,7,0,texto,Localidade | Nível de experiência | Seto
+linkedin,Exports do Linkedin/AggregateAnalytics_Petr#U00facio Barros_2025-10-03_2026-10-02 (1).xlsx,Dados demográficos do conteúdo.Valor,texto,7,0,texto,São Paulo e Região
+linkedin,Exports do Linkedin/AggregateAnalytics_Petr#U00facio Barros_2025-10-03_2026-10-02 (1).xlsx,Dados demográficos do conteúdo.Porcentagem,numerico,7,0,pct,20%
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/audience_insights.json,.organic_insights_audience[].title,texto,1,0,texto,Público
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/audience_insights.json,.organic_insights_audience[].string_map_data.Intervalo de datas.value,texto,1,0,texto,Aug 29 - Nov 26
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/audience_insights.json,.organic_insights_audience[].string_map_data.Total de seguidores.value,numerico,1,0,count,13275
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/audience_insights.json,.organic_insights_audience[].string_map_data.Variação de seguidores.value,texto,1,0,texto,"-0,6% vs May 31 - Aug 28"
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/audience_insights.json,.organic_insights_audience[].string_map_data.Seguiu.value,numerico,1,0,count,246
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/audience_insights.json,.organic_insights_audience[].string_map_data.Deixou de seguir.value,numerico,1,0,count,317
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/audience_insights.json,.organic_insights_audience[].string_map_data.Saldo geral de seguidores.value,numerico,1,0,count,-71
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/audience_insights.json,.organic_insights_audience[].string_map_data.Porcentagem de seguidores por cidade.value,texto,1,0,texto,"São Paulo: 9,2%, Santos: 2,9%, Rio de Ja"
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/audience_insights.json,.organic_insights_audience[].string_map_data.Porcentagem de seguidores por país.value,texto,1,0,texto,"Brazil: 95,2%, Portugal: 0,7%, United St"
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/audience_insights.json,.organic_insights_audience[].string_map_data.Porcentagem de seguidores por idade para todos os gêneros.value,texto,1,0,texto,"13-17: 2%, 18-24: 27,6%, 25-34: 31,3%, 3"
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/audience_insights.json,.organic_insights_audience[].string_map_data.Porcentagem de seguidores por idade para homens.value,texto,1,0,texto,"13-17: 1%, 18-24: 15,4%, 25-34: 32,8%, 3"
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/audience_insights.json,.organic_insights_audience[].string_map_data.Porcentagem de seguidores por idade para mulheres.value,texto,1,0,texto,"13-17: 2,4%, 18-24: 31%, 25-34: 27,8%, 3"
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/audience_insights.json,.organic_insights_audience[].string_map_data.Porcentagem do total de seguidores para homens.value,numerico,1,0,pct,"51,9%"
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/audience_insights.json,.organic_insights_audience[].string_map_data.Porcentagem do total de seguidores para mulheres.value,numerico,1,0,pct,48%
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/audience_insights.json,.organic_insights_audience[].string_map_data.Atividade de seguidores na segunda-feira.value,numerico,1,0,count,6063
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/audience_insights.json,.organic_insights_audience[].string_map_data.Atividade de seguidores na terça-feira.value,numerico,1,0,count,6059
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/audience_insights.json,.organic_insights_audience[].string_map_data.Atividade de seguidores na quarta-feira.value,numerico,1,0,count,6033
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/audience_insights.json,.organic_insights_audience[].string_map_data.Atividade de seguidores na quinta-feira.value,numerico,1,0,count,6009
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/audience_insights.json,.organic_insights_audience[].string_map_data.Atividade de seguidores na sexta-feira.value,numerico,1,0,count,6066
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/audience_insights.json,.organic_insights_audience[].string_map_data.Atividade de seguidores no sábado.value,numerico,1,0,count,6063
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/audience_insights.json,.organic_insights_audience[].string_map_data.Atividade de seguidores no domingo.value,numerico,1,0,count,6052
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].title,texto,1,0,texto,Interações com o conteúdo
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Intervalo de datas.value,texto,1,0,texto,Aug 29 - Nov 26
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Interações com o conteúdo (total).value,numerico,1,0,count,1006
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Variação das interações com o conteúdo.value,texto,1,0,texto,-53% vs May 31 - Aug 28
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Interações com posts (total).value,numerico,1,0,count,49
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Variação das interações com posts.value,texto,1,0,texto,-78.3% vs May 31 - Aug 28
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Curtidas do post.value,numerico,1,0,count,43
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Comentários do post.value,numerico,1,0,count,3
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Compartilhamento do post.value,numerico,1,0,count,1
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Salvamentos do post.value,numerico,1,0,count,1
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Interações com stories (total).value,numerico,1,0,count,212
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Variação das interações com stories.value,texto,1,0,texto,+16.4% vs May 31 - Aug 28
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Respostas a stories.value,numerico,1,0,count,186
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Interações com vídeos (total).value,numerico,1,0,count,0
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Variação das interações com vídeos.value,texto,1,0,texto,-100% vs May 31 - Aug 28
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Interações com Reels (total).value,numerico,1,0,count,745
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Variação das interações com Reels.value,texto,1,0,texto,-57% vs May 31 - Aug 28
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Curtidas em vídeos do Reels.value,numerico,1,0,count,613
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Comentários em reels.value,numerico,1,0,count,40
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Compartilhamentos de vídeos do Reels.value,numerico,1,0,count,34
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Salvamentos de vídeos do Reels.value,numerico,1,0,count,24
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Interações com vídeos ao vivo (total).value,numerico,1,0,count,0
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Variação das interações com vídeos ao vivo.value,texto,1,0,texto,0% vs May 31 - Aug 28
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Contas engajadas.value,numerico,1,0,count,342
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Variação de contas engajadas.value,texto,1,0,texto,-49.8% vs May 31 - Aug 28
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Contas engajadas por tipo de seguidor.value,texto,1,0,texto,"Followers: 74.7%, Non-followers: 25.2%"
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/content_interactions.json,.organic_insights_interactions[].string_map_data.Variação de contas não seguidoras engajadas.value,texto,1,0,texto,-59.9% vs May 31 - Aug 28
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/posts.json,.organic_insights_posts[].media_map_data.Mídia.uri,texto,26,0,texto,media/other/17843332104612306.heic
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/posts.json,.organic_insights_posts[].string_map_data.Data de publicação.value,data,26,0,data,"Nov 20, 2025 1:46 am"
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/posts.json,.organic_insights_posts[].string_map_data.Visitas ao perfil.value,numerico,26,0,count,0
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/posts.json,.organic_insights_posts[].string_map_data.Impressões.value,numerico,26,0,count,490
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/posts.json,.organic_insights_posts[].string_map_data.Seguidores.value,numerico,26,0,count,0
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/posts.json,.organic_insights_posts[].string_map_data.Contas alcançadas.value,numerico,26,0,count,465
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/posts.json,.organic_insights_posts[].string_map_data.Salvamentos.value,numerico,26,0,count,0
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/posts.json,.organic_insights_posts[].string_map_data.Curtidas.value,numerico,26,0,count,7
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/posts.json,.organic_insights_posts[].string_map_data.Comentários.value,numerico,26,0,count,3
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/posts.json,.organic_insights_posts[].string_map_data.Compartilhamentos.value,numerico,26,0,count,0
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/posts.json,.organic_insights_posts[].string_map_data.External link taps.value,numerico,6,0,count,1
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/logged_information/posts.json,.organic_insights_posts[].string_map_data.Business Address Taps.value,numerico,1,0,count,1
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/your_instagram_activity/media/posts_1.json,[].media[].uri,texto,34,0,texto,media/other/17843332104612306.heic
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/your_instagram_activity/media/posts_1.json,[].media[].creation_timestamp,numerico,34,0,epoch_s,1763603160
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/your_instagram_activity/media/posts_1.json,[].media[].title,vazio,0,34,-,-
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/your_instagram_activity/media/posts_1.json,[].title,texto,26,4,texto,Os quatro senadores bolsonaristas que vi
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/your_instagram_activity/media/posts_1.json,[].creation_timestamp,numerico,30,0,epoch_s,1763603160
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/your_instagram_activity/media/reels.json,.ig_reels_media[].media[].uri,texto,185,0,texto,media/reels/202511/18115097656576856.mp4
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/your_instagram_activity/media/reels.json,.ig_reels_media[].media[].creation_timestamp,numerico,185,0,epoch_s,1764128160
+instagram,instagram-caiopanighel-2025-11-27-KfYnGM4q/your_instagram_activity/media/reels.json,.ig_reels_media[].media[].title,texto,174,11,texto,Mais um poukin do que foi a alegria de e
+instagram,cpimportstore/ads_about_meta.json,.label_values[][Desativou a exibição de anúncios sobre a Meta].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/ads_about_meta.json,.label_values[][Última vez que você desativou a exibição de anúncios sobre a Meta].timestamp_value,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/ads_about_meta.json,.fbid,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/ads_viewed.json,[].timestamp,numerico,5,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/ads_viewed.json,[].label_values[][URL público da Biblioteca de Anúncios].value,texto,5,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/ads_viewed.json,[].label_values[][URL público da Biblioteca de Anúncios].href,texto,5,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/ads_viewed.json,[].label_values[][URL].value,texto,5,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/ads_viewed.json,[].label_values[][URL].href,texto,5,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/ads_viewed.json,[].label_values[][Legenda].value,texto,5,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/ads_viewed.json,[].label_values[][Título].value,vazio,0,5,-,-
+instagram,cpimportstore/ads_viewed.json,[].label_values[].title,enum,10,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/ads_viewed.json,[].label_values[].dict[].dict[][URL].value,texto,5,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/ads_viewed.json,[].label_values[].dict[].dict[][Nome].value,enum,5,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/ads_viewed.json,[].label_values[].dict[].dict[][Nome de usuário].value,enum,5,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/ads_viewed.json,[].label_values[].dict[].title,vazio,0,5,-,-
+instagram,cpimportstore/ads_viewed.json,[].fbid,texto,5,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/advertisers_using_your_activity_or_information.json,.label_values[][Anunciantes que carregaram uma lista de público contendo entradas que correspondem ao seu perfil do Instagram].vec[].value,misto,5096,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/advertisers_using_your_activity_or_information.json,".label_values[][Anunciantes que carregaram uma lista de público que corresponde ao seu perfil com base em interações que você pode ter tido com o site, app ou loja do anunciante].vec[].value",texto,5355,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/advertisers_using_your_activity_or_information.json,.fbid,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/audience_insights.json,.organic_insights_audience[].title,vazio,0,1,-,-
+instagram,cpimportstore/audience_insights.json,.organic_insights_audience[].string_map_data.Intervalo de datas.value,texto,1,0,texto,Apr 2 - Jun 30
+instagram,cpimportstore/audience_insights.json,.organic_insights_audience[].string_map_data.Seguidores.value,numerico,1,0,count,14
+instagram,cpimportstore/audience_insights.json,.organic_insights_audience[].string_map_data.Variação de seguidores.value,texto,1,0,texto,-3.3% vs Jan 2 - Apr 1
+instagram,cpimportstore/audience_insights.json,.organic_insights_audience[].string_map_data.Deixaram de seguir.value,numerico,1,0,count,73
+instagram,cpimportstore/audience_insights.json,.organic_insights_audience[].string_map_data.Total de seguidores.value,numerico,1,0,count,-59
+instagram,cpimportstore/audience_insights.json,.organic_insights_audience[].string_map_data.Porcentagem de seguidores por cidade.value,texto,1,0,texto,"São Paulo: 9.1%, Rio de Janeiro: 2.2%, S"
+instagram,cpimportstore/audience_insights.json,.organic_insights_audience[].string_map_data.Porcentagem de seguidores por país.value,texto,1,0,texto,"Brazil: 97%, Portugal: 1.1%, Nigeria: 0."
+instagram,cpimportstore/audience_insights.json,.organic_insights_audience[].string_map_data.Porcentagem de seguidores por idade para todos os gêneros.value,texto,1,0,texto,"13-17: 1%, 18-24: 47.6%, 25-34: 35%, 35-"
+instagram,cpimportstore/audience_insights.json,.organic_insights_audience[].string_map_data.Porcentagem de seguidores por idade para homens.value,texto,1,0,texto,"13-17: 0.3%, 18-24: 31%, 25-34: 39.3%, 3"
+instagram,cpimportstore/audience_insights.json,.organic_insights_audience[].string_map_data.Porcentagem de seguidores por idade para mulheres.value,texto,1,0,texto,"13-17: 1%, 18-24: 50.1%, 25-34: 32.2%, 3"
+instagram,cpimportstore/audience_insights.json,.organic_insights_audience[].string_map_data.Porcentagem do total de seguidores para homens.value,numerico,1,0,pct,28.4%
+instagram,cpimportstore/audience_insights.json,.organic_insights_audience[].string_map_data.Porcentagem do total de seguidores para mulheres.value,numerico,1,0,pct,71.5%
+instagram,cpimportstore/audience_insights.json,.organic_insights_audience[].string_map_data.Atividade de seguidores de segunda-feira.value,numerico,1,0,count,475
+instagram,cpimportstore/audience_insights.json,.organic_insights_audience[].string_map_data.Atividade de seguidores de terça-feira.value,numerico,1,0,count,475
+instagram,cpimportstore/audience_insights.json,.organic_insights_audience[].string_map_data.Atividade de seguidores de quarta-feira.value,numerico,1,0,count,479
+instagram,cpimportstore/audience_insights.json,.organic_insights_audience[].string_map_data.Atividade de seguidores de quinta-feira.value,numerico,1,0,count,473
+instagram,cpimportstore/audience_insights.json,.organic_insights_audience[].string_map_data.Atividade de seguidores de sexta-feira.value,numerico,1,0,count,472
+instagram,cpimportstore/audience_insights.json,.organic_insights_audience[].string_map_data.Atividade de seguidores de sábado.value,numerico,1,0,count,473
+instagram,cpimportstore/audience_insights.json,.organic_insights_audience[].string_map_data.Atividade de seguidores de domingo.value,numerico,1,0,count,474
+instagram,cpimportstore/camera_information.json,[].timestamp,numerico,3,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/camera_information.json,[].label_values[][Identificação do dispositivo].value,texto,3,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/camera_information.json,[].label_values[][Metadados].dict[][Compressão].value,enum,3,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/camera_information.json,[].label_values[][Metadados].dict[][Versão do rastreador de rosto].value,numerico,3,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/camera_information.json,[].label_values[][Metadados].dict[][Versões de SDK aceitas].value,numerico,3,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/camera_information.json,[].fbid,numerico,3,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.title,vazio,0,1,-,-
+instagram,cpimportstore/checkout_payment_information.json,.timestamp,numerico,1,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.label_values[][Região].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.label_values[][Horário em que a oferta de marketing foi vista].timestamp_value,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.label_values[][Horário da atualização].timestamp_value,numerico,1,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.label_values[][Nome].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.label_values[][Primeiro nome].value,vazio,0,1,-,-
+instagram,cpimportstore/checkout_payment_information.json,.label_values[][Sobrenome].value,vazio,0,1,-,-
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].dict[].dict[][Email].value,texto,3,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].dict[].dict[][Email principal].value,enum,3,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].dict[].dict[][Horário da atualização].timestamp_value,numerico,30,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].dict[].dict[][Verificado].value,enum,13,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].dict[].dict[][Hora da verificação].timestamp_value,numerico,3,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].dict[].dict[].timestamp_value,numerico,15,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].dict[].title,vazio,0,15,-,-
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].title,texto,4,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].dict[].dict[][Nome].value,enum,9,1,texto,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].dict[].dict[][Rua].value,enum,9,1,texto,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].dict[].dict[][Apto./sala/outro].value,texto,1,9,texto,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].dict[].dict[][Cidade].value,enum,8,2,texto,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].dict[].dict[][Estado].value,enum,7,3,texto,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].dict[].dict[][País].value,enum,10,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].dict[].dict[][CEP].value,enum,8,2,texto,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].dict[].dict[][Primeiro nome].value,enum,5,5,texto,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].dict[].dict[][Sobrenome].value,enum,5,5,texto,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].dict[].dict[][Empresa].value,vazio,0,10,-,-
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].dict[].dict[][Endereço padrão].value,enum,10,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].dict[].dict[][Extensão do código postal].value,vazio,0,10,-,-
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].dict[].dict[][Distrito].value,vazio,0,10,-,-
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].dict[].dict[][Subdistrito].value,vazio,0,10,-,-
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].dict[].dict[].value,vazio,0,9,-,-
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].dict[].dict[][Telefone].value,numerico,2,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.label_values[].dict[].dict[][Código do país].value,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/checkout_payment_information.json,.fbid,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].title,vazio,0,2,-,-
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].string_map_data.Intervalo de datas.value,texto,2,0,texto,Apr 2 - Jun 30
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].string_map_data.Interações com o conteúdo.value,numerico,2,0,count,225
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].string_map_data.Variação de interações com o conteúdo.value,texto,2,0,texto,-- vs Jan 2 - Apr 1
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].string_map_data.Interações com posts.value,numerico,2,0,count,41
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].string_map_data.Variação de interações com posts.value,texto,2,0,texto,-- vs Jan 2 - Apr 1
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].string_map_data.Curtidas do post.value,numerico,2,0,count,23
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].string_map_data.Compartilhamento do post.value,numerico,2,0,count,8
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].string_map_data.Salvamentos do post.value,numerico,2,0,count,2
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].string_map_data.Interações com stories.value,numerico,2,0,count,4
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].string_map_data.Variação de interações com stories.value,texto,2,0,texto,-- vs Jan 2 - Apr 1
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].string_map_data.Interações com vídeos.value,numerico,2,0,count,0
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].string_map_data.Variação de interações com vídeos.value,texto,2,0,texto,0% vs Jan 2 - Apr 1
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].string_map_data.Interações com reels.value,numerico,2,0,count,180
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].string_map_data.Variação das interações com vídeos do Reels.value,texto,2,0,texto,-- vs Jan 2 - Apr 1
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].string_map_data.Curtidas em vídeos do Reels.value,numerico,2,0,count,65
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].string_map_data.Comentários em reels.value,numerico,2,0,count,4
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].string_map_data.Compartilhamentos de vídeos do Reels.value,numerico,2,0,count,53
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].string_map_data.Salvamentos de vídeos do Reels.value,numerico,2,0,count,5
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].string_map_data.Interações com vídeos ao vivo.value,numerico,2,0,count,0
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].string_map_data.Variação de interações com vídeos ao vivo.value,texto,2,0,texto,0% vs Jan 2 - Apr 1
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].string_map_data.Contas com engajamento.value,numerico,2,0,count,33
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].string_map_data.Variação de contas com engajamento.value,texto,2,0,texto,-- vs Jan 2 - Apr 1
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].string_map_data.Conta engajada por tipo de seguidor.value,texto,2,0,texto,"Followers: 29.4%, Non-followers: 70.6%"
+instagram,cpimportstore/content_interactions.json,.organic_insights_interactions[].string_map_data.Você engajou delta% mais contas que não estavam seguindo você em comparação com o período anterior.value,texto,2,0,texto,-- vs Jan 2 - Apr 1
+instagram,cpimportstore/eligibility.json,.monetization_eligibility[].title,vazio,0,2,-,-
+instagram,cpimportstore/eligibility.json,.monetization_eligibility[].string_map_data.Nome do produto.value,texto,2,0,texto,BRANDED CONTENT
+instagram,cpimportstore/eligibility.json,.monetization_eligibility[].string_map_data.Decisão.value,texto,2,0,texto,Eligible
+instagram,cpimportstore/eligibility.json,.monetization_eligibility[].string_map_data.Motivo.value,vazio,0,2,-,-
+instagram,cpimportstore/emoji_story_reactions.json,.timestamp,numerico,1,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/emoji_story_reactions.json,.label_values[][URL].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/emoji_story_reactions.json,.label_values[][URL].href,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/emoji_story_reactions.json,.label_values[].title,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/emoji_story_reactions.json,.label_values[].dict[].dict[][URL].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/emoji_story_reactions.json,.label_values[].dict[].dict[][Nome].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/emoji_story_reactions.json,.label_values[].dict[].dict[][Nome de usuário].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/emoji_story_reactions.json,.label_values[].dict[].title,vazio,0,1,-,-
+instagram,cpimportstore/emoji_story_reactions.json,.label_values[][Emoji].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/emoji_story_reactions.json,.fbid,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/followers_1.json,[].title,vazio,0,13,-,-
+instagram,cpimportstore/followers_1.json,[].string_list_data[].href,texto,13,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/followers_1.json,[].string_list_data[].value,texto,13,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/followers_1.json,[].string_list_data[].timestamp,numerico,13,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/following.json,.relationships_following[].title,texto,105,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/following.json,.relationships_following[].string_list_data[].href,texto,105,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/following.json,.relationships_following[].string_list_data[].timestamp,numerico,105,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/igtv_information.json,[].label_values[][Título].value,enum,6,0,texto,CALÇADOS | Camisas | Look Completo | cue
+instagram,cpimportstore/igtv_information.json,[].label_values[][Descrição].value,vazio,0,6,-,-
+instagram,cpimportstore/igtv_information.json,[].label_values[].dict[].dict[][URL].value,texto,3,0,texto,https://www.instagram.com/tv/Cb-zh8AJ9v7
+instagram,cpimportstore/igtv_information.json,[].label_values[].dict[].dict[][URL].href,texto,3,0,texto,https://www.instagram.com/tv/Cb-zh8AJ9v7
+instagram,cpimportstore/igtv_information.json,[].label_values[].dict[].dict[][Legenda].value,texto,3,0,texto,"VOCÊ TEM SEU ESTILO, A PREMIUM STORE TEM"
+instagram,cpimportstore/igtv_information.json,[].label_values[].dict[].dict[][Título].value,vazio,0,3,-,-
+instagram,cpimportstore/igtv_information.json,[].label_values[].dict[].dict[].dict[].dict[][Nome].value,texto,68,0,texto,short
+instagram,cpimportstore/igtv_information.json,[].label_values[].dict[].dict[].dict[].title,vazio,0,68,-,-
+instagram,cpimportstore/igtv_information.json,[].label_values[].dict[].dict[].title,enum,6,0,texto,Dono | Hashtags
+instagram,cpimportstore/igtv_information.json,[].label_values[].dict[].dict[].dict[].dict[][URL].value,texto,3,0,texto,https://linktr.ee/cpimportstore
+instagram,cpimportstore/igtv_information.json,[].label_values[].dict[].dict[].dict[].dict[][Nome de usuário].value,enum,3,0,texto,cpimportstore
+instagram,cpimportstore/igtv_information.json,[].label_values[].dict[].title,vazio,0,3,-,-
+instagram,cpimportstore/igtv_information.json,[].label_values[].title,enum,6,0,texto,Episódios
+instagram,cpimportstore/igtv_information.json,[].fbid,numerico,6,0,count,17990122450456144
+instagram,cpimportstore/instagram_profile_information.json,.label_values[][Sincronização de contatos].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/instagram_profile_information.json,.label_values[][Código do primeiro país].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/instagram_profile_information.json,.label_values[][Último login].timestamp_value,numerico,1,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/instagram_profile_information.json,.label_values[][Última desconexão].timestamp_value,numerico,1,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/instagram_profile_information.json,.label_values[][Horário do primeiro story].timestamp_value,numerico,1,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/instagram_profile_information.json,.label_values[][Compartilhou o vídeo ao vivo].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/instagram_profile_information.json,.label_values[][Última vez que o endereço de email foi alterado].timestamp_value,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/instagram_profile_information.json,.label_values[][Último email enviado durante o processo de confirmação de email].value,vazio,0,1,-,-
+instagram,cpimportstore/instagram_profile_information.json,.label_values[][Horário do último story].timestamp_value,numerico,1,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/instagram_profile_information.json,.label_values[][Última vez que você limpou o selo de notificação clicando no seu perfil (recurso descontinuado)].timestamp_value,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/instagram_profile_information.json,.label_values[][Última vez que você limpou o selo de notificação clicando na seção Facebook do seu perfil (recurso descontinuado)].timestamp_value,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/instagram_profile_information.json,.label_values[][Horário do primeiro story para Amigos Próximos].timestamp_value,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/instagram_profile_information.json,.label_values[][Última vez que um email foi enviado depois de você ter feito login].timestamp_value,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/instagram_profile_information.json,.label_values[][Você tem algum reel arquivado?].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/instagram_profile_information.json,.label_values[][Última vez que enviamos um SMS com ajuda para entrar].timestamp_value,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/instagram_profile_information.json,.fbid,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/last_known_location.json,.account_history_imprecise_last_known_location[].title,vazio,0,1,-,-
+instagram,cpimportstore/last_known_location.json,.account_history_imprecise_last_known_location[].string_map_data.Latitude imprecisa.value,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/last_known_location.json,.account_history_imprecise_last_known_location[].string_map_data.Longitude imprecisa.value,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/last_known_location.json,.account_history_imprecise_last_known_location[].string_map_data.Latitude precisa.value,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/last_known_location.json,.account_history_imprecise_last_known_location[].string_map_data.Longitude precisa.value,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/last_known_location.json,.account_history_imprecise_last_known_location[].string_map_data.Horário do GPS carregado.value,vazio,0,1,-,-
+instagram,cpimportstore/last_known_location.json,.account_history_imprecise_last_known_location[].string_map_data.Horário do GPS carregado.timestamp,numerico,1,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/liked_posts.json,[].timestamp,numerico,13,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/liked_posts.json,[].label_values[][URL].value,texto,13,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/liked_posts.json,[].label_values[][URL].href,texto,13,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/liked_posts.json,[].label_values[][Legenda].value,texto,13,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/liked_posts.json,[].label_values[][Título].value,vazio,0,13,-,-
+instagram,cpimportstore/liked_posts.json,[].label_values[].dict[].dict[][Nome].value,texto,43,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/liked_posts.json,[].label_values[].dict[].title,vazio,0,43,-,-
+instagram,cpimportstore/liked_posts.json,[].label_values[].title,enum,26,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/liked_posts.json,[].label_values[].dict[].dict[][URL].value,texto,7,6,texto,[omitido: dado pessoal]
+instagram,cpimportstore/liked_posts.json,[].label_values[].dict[].dict[][Nome de usuário].value,texto,13,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/liked_posts.json,[].fbid,numerico,13,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/link_history.json,[].timestamp,numerico,30,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/link_history.json,[].label_values[][Link do site que você visitou].value,texto,30,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/link_history.json,[].label_values[][Título da página do site que você visitou].value,texto,29,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/link_history.json,[].label_values[][Hora de início da sessão do site].value,texto,30,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/link_history.json,[].label_values[][Hora de término da sessão do site].value,texto,30,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/link_history.json,[].fbid,texto,30,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/live_videos.json,.organic_insights_live[].title,vazio,0,3,-,-
+instagram,cpimportstore/live_videos.json,.organic_insights_live[].string_map_data.Hora de início.value,vazio,0,3,-,-
+instagram,cpimportstore/live_videos.json,.organic_insights_live[].string_map_data.Duração.value,numerico,3,0,count,0
+instagram,cpimportstore/live_videos.json,.organic_insights_live[].string_map_data.Contas alcançadas.value,vazio,0,3,-,-
+instagram,cpimportstore/live_videos.json,.organic_insights_live[].string_map_data.Número máximo de espectadores simultâneos.value,vazio,0,3,-,-
+instagram,cpimportstore/live_videos.json,.organic_insights_live[].string_map_data.Comentários.value,vazio,0,3,-,-
+instagram,cpimportstore/live_videos.json,.organic_insights_live[].string_map_data.Compartilhamentos.value,vazio,0,3,-,-
+instagram,cpimportstore/locations_of_interest.json,.label_values[][Localizações de interesse].vec[].value,texto,9,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/locations_of_interest.json,.label_values[][Explicação de uso].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/locations_of_interest.json,.fbid,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/login_activity.json,.account_history_login_history[].title,texto,9,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/login_activity.json,.account_history_login_history[].string_map_data.Nome do cookie.value,enum,9,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/login_activity.json,.account_history_login_history[].string_map_data.Endereço IP.value,misto,9,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/login_activity.json,.account_history_login_history[].string_map_data.Porta.value,numerico,9,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/login_activity.json,.account_history_login_history[].string_map_data.Código de idioma.value,enum,9,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/login_activity.json,.account_history_login_history[].string_map_data.Hora.value,vazio,0,9,-,-
+instagram,cpimportstore/login_activity.json,.account_history_login_history[].string_map_data.Hora.timestamp,numerico,9,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/login_activity.json,.account_history_login_history[].string_map_data.Agente de usuário.value,texto,9,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/logout_activity.json,.account_history_logout_history[].title,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/logout_activity.json,.account_history_logout_history[].string_map_data.Nome do cookie.value,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/logout_activity.json,.account_history_logout_history[].string_map_data.Endereço IP.value,misto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/logout_activity.json,.account_history_logout_history[].string_map_data.Porta.value,numerico,2,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/logout_activity.json,.account_history_logout_history[].string_map_data.Código de idioma.value,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/logout_activity.json,.account_history_logout_history[].string_map_data.Hora.value,vazio,0,2,-,-
+instagram,cpimportstore/logout_activity.json,.account_history_logout_history[].string_map_data.Hora.timestamp,numerico,2,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/logout_activity.json,.account_history_logout_history[].string_map_data.Agente de usuário.value,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/message_1.json,.participants[].name,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/message_1.json,.messages[].sender_name,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/message_1.json,.messages[].timestamp_ms,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/message_1.json,.messages[].content,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/message_1.json,.messages[].share.link,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/message_1.json,.messages[].share.share_text,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/message_1.json,.messages[].share.original_content_owner,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/message_1.json,.messages[].is_geoblocked_for_viewer,bool,1,0,enum,[omitido: dado pessoal]
+instagram,cpimportstore/message_1.json,.messages[].is_unsent_image_by_messenger_kid_parent,bool,1,0,enum,[omitido: dado pessoal]
+instagram,cpimportstore/message_1.json,.title,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/message_1.json,.is_still_participant,bool,1,0,enum,[omitido: dado pessoal]
+instagram,cpimportstore/message_1.json,.thread_path,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/note_and_repost_interactions.json,.label_values[].dict[].dict[][URL].value,vazio,0,1,-,-
+instagram,cpimportstore/note_and_repost_interactions.json,.label_values[].dict[].dict[][Nome].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/note_and_repost_interactions.json,.label_values[].dict[].dict[][Nome de usuário].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/note_and_repost_interactions.json,.label_values[].dict[].title,vazio,0,1,-,-
+instagram,cpimportstore/note_and_repost_interactions.json,.label_values[].title,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/note_and_repost_interactions.json,.fbid,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/other_categories_used_to_reach_you.json,.label_values[][Nome].vec[].value,texto,36,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/other_categories_used_to_reach_you.json,.fbid,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/other_content.json,.timestamp,numerico,1,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/other_content.json,.label_values[][Valor arrecadado].value,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/other_content.json,.label_values[][Mídia].media[].uri,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/other_content.json,.label_values[][Mídia].media[].creation_timestamp,numerico,1,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/other_content.json,.label_values[][Mídia].media[].media_metadata.camera_metadata.has_camera_metadata,bool,1,0,enum,[omitido: dado pessoal]
+instagram,cpimportstore/other_content.json,.label_values[][Mídia].media[].title,vazio,0,1,-,-
+instagram,cpimportstore/other_content.json,.label_values[][Mídia].media[].cross_post_source.source_app,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/other_content.json,.label_values[][É um anúncio].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/other_content.json,.label_values[][Horário da atualização].timestamp_value,numerico,1,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/other_content.json,.label_values[].title,enum,6,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/other_content.json,.fbid,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/password_change_activity.json,.account_history_password_change_history[].title,vazio,0,3,-,-
+instagram,cpimportstore/password_change_activity.json,.account_history_password_change_history[].string_map_data.Hora.value,vazio,0,3,-,-
+instagram,cpimportstore/password_change_activity.json,.account_history_password_change_history[].string_map_data.Hora.timestamp,numerico,3,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/pending_follow_requests.json,.timestamp,numerico,1,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/pending_follow_requests.json,.label_values[][URL].value,vazio,0,1,-,-
+instagram,cpimportstore/pending_follow_requests.json,.label_values[][Nome].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/pending_follow_requests.json,.label_values[][Nome de usuário].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/pending_follow_requests.json,.fbid,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/personal_information.json,.profile_user[].title,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/personal_information.json,.profile_user[].media_map_data.Foto do perfil.uri,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/personal_information.json,.profile_user[].media_map_data.Foto do perfil.creation_timestamp,numerico,1,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/personal_information.json,.profile_user[].media_map_data.Foto do perfil.media_metadata.camera_metadata.has_camera_metadata,bool,1,0,enum,[omitido: dado pessoal]
+instagram,cpimportstore/personal_information.json,.profile_user[].media_map_data.Foto do perfil.title,vazio,0,1,-,-
+instagram,cpimportstore/personal_information.json,.profile_user[].media_map_data.Foto do perfil.cross_post_source.source_app,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/personal_information.json,.profile_user[].string_map_data.Email.value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/personal_information.json,.profile_user[].string_map_data.Telefone.value,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/personal_information.json,.profile_user[].string_map_data.Telefone confirmado.value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/personal_information.json,.profile_user[].string_map_data.Método de confirmação do telefone.value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/personal_information.json,.profile_user[].string_map_data.Nome de usuário.value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/personal_information.json,.profile_user[].string_map_data.Nome.value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/personal_information.json,.profile_user[].string_map_data.Bio.value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/personal_information.json,.profile_user[].string_map_data.Gênero.value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/personal_information.json,.profile_user[].string_map_data.Data de nascimento.value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/personal_information.json,.profile_user[].string_map_data.Site.value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/personal_information.json,.profile_user[].string_map_data.Conta privada.value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/personal_information.json,.profile_user[].string_map_data.Recorde no emoji pong.value,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/post_comments_1.json,.media_list_data[].uri,vazio,0,1,-,-
+instagram,cpimportstore/post_comments_1.json,.string_map_data.Comment.value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/post_comments_1.json,.string_map_data.Media Owner.value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/post_comments_1.json,.string_map_data.Time.timestamp,numerico,1,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/posts_insights.json,.organic_insights_posts[].title,vazio,0,1,-,-
+instagram,cpimportstore/posts_insights.json,.organic_insights_posts[].media_map_data.Miniatura de mídia.uri,texto,1,0,texto,media/other/17887771530546386.webp
+instagram,cpimportstore/posts_insights.json,.organic_insights_posts[].media_map_data.Miniatura de mídia.creation_timestamp,numerico,1,0,epoch_s,1779147378
+instagram,cpimportstore/posts_insights.json,.organic_insights_posts[].media_map_data.Miniatura de mídia.media_metadata.photo_metadata.exif_data[].latitude,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/posts_insights.json,.organic_insights_posts[].media_map_data.Miniatura de mídia.media_metadata.photo_metadata.exif_data[].longitude,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/posts_insights.json,.organic_insights_posts[].media_map_data.Miniatura de mídia.media_metadata.photo_metadata.exif_data[].device_id,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/posts_insights.json,.organic_insights_posts[].media_map_data.Miniatura de mídia.media_metadata.photo_metadata.exif_data[].source_type,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/posts_insights.json,.organic_insights_posts[].media_map_data.Miniatura de mídia.media_metadata.camera_metadata.has_camera_metadata,bool,1,0,enum,False
+instagram,cpimportstore/posts_insights.json,.organic_insights_posts[].media_map_data.Miniatura de mídia.title,texto,1,0,texto,​A EVOLUÇÃO 🚀 A excelência que definiu o
+instagram,cpimportstore/posts_insights.json,.organic_insights_posts[].media_map_data.Miniatura de mídia.cross_post_source.source_app,texto,1,0,texto,FB
+instagram,cpimportstore/posts_insights.json,.organic_insights_posts[].string_map_data.Registro de data e hora da criação.value,vazio,0,1,-,-
+instagram,cpimportstore/posts_insights.json,.organic_insights_posts[].string_map_data.Registro de data e hora da criação.timestamp,numerico,1,0,epoch_s,1779147378
+instagram,cpimportstore/posts_insights.json,.organic_insights_posts[].string_map_data.Visitas ao perfil.value,numerico,1,0,count,3
+instagram,cpimportstore/posts_insights.json,.organic_insights_posts[].string_map_data.Impressões.value,numerico,1,0,count,237
+instagram,cpimportstore/posts_insights.json,.organic_insights_posts[].string_map_data.Seguidores.value,numerico,1,0,count,0
+instagram,cpimportstore/posts_insights.json,.organic_insights_posts[].string_map_data.Contas alcançadas.value,numerico,1,0,count,212
+instagram,cpimportstore/posts_insights.json,.organic_insights_posts[].string_map_data.Salvamentos.value,numerico,1,0,count,1
+instagram,cpimportstore/posts_insights.json,.organic_insights_posts[].string_map_data.Curtidas.value,numerico,1,0,count,2
+instagram,cpimportstore/posts_insights.json,.organic_insights_posts[].string_map_data.Comentários.value,numerico,1,0,count,0
+instagram,cpimportstore/posts_insights.json,.organic_insights_posts[].string_map_data.Compartilhamentos.value,numerico,1,0,count,8
+instagram,cpimportstore/posts_media.json,[].timestamp,numerico,3,0,epoch_s,1780076134
+instagram,cpimportstore/posts_media.json,[].label_values[][Marcado como gerado por IA].value,enum,5,0,texto,Falso | Verdadeiro
+instagram,cpimportstore/posts_media.json,[].label_values[][Valor arrecadado].value,numerico,3,0,count,0
+instagram,cpimportstore/posts_media.json,[].label_values[][Mídia].media[].uri,texto,3,0,texto,media/posts/18008540702908048.jpg
+instagram,cpimportstore/posts_media.json,[].label_values[][Mídia].media[].creation_timestamp,numerico,3,0,epoch_s,1780076133
+instagram,cpimportstore/posts_media.json,[].label_values[][Mídia].media[].media_metadata.photo_metadata.exif_data[].latitude,numerico,3,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/posts_media.json,[].label_values[][Mídia].media[].media_metadata.photo_metadata.exif_data[].longitude,numerico,3,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/posts_media.json,[].label_values[][Mídia].media[].media_metadata.photo_metadata.exif_data[].source_type,enum,3,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/posts_media.json,[].label_values[][Mídia].media[].media_metadata.camera_metadata.has_camera_metadata,bool,3,0,enum,False
+instagram,cpimportstore/posts_media.json,[].label_values[][Mídia].media[].title,texto,3,0,texto,Sextou. 🍹  E você merece mais que um dri
+instagram,cpimportstore/posts_media.json,[].label_values[][Mídia].media[].cross_post_source.source_app,enum,3,0,texto,FB
+instagram,cpimportstore/posts_media.json,[].label_values[][É um anúncio].value,enum,3,0,texto,Falso
+instagram,cpimportstore/posts_media.json,[].label_values[][Horário da atualização].timestamp_value,numerico,3,0,epoch_s,1780094137
+instagram,cpimportstore/posts_media.json,[].label_values[][Legenda].value,texto,3,0,texto,Sextou. 🍹  E você merece mais que um dri
+instagram,cpimportstore/posts_media.json,[].label_values[][Título].value,vazio,0,3,-,-
+instagram,cpimportstore/posts_media.json,[].label_values[].dict[].dict[][Valor arrecadado].value,numerico,4,0,count,0
+instagram,cpimportstore/posts_media.json,[].label_values[].dict[].dict[][Mídia].media[].uri,texto,4,0,texto,media/posts/18089799821049385.jpg
+instagram,cpimportstore/posts_media.json,[].label_values[].dict[].dict[][Mídia].media[].creation_timestamp,numerico,4,0,epoch_s,1780076133
+instagram,cpimportstore/posts_media.json,[].label_values[].dict[].dict[][Mídia].media[].media_metadata.camera_metadata.has_camera_metadata,bool,4,0,enum,False
+instagram,cpimportstore/posts_media.json,[].label_values[].dict[].dict[][Mídia].media[].title,vazio,0,4,-,-
+instagram,cpimportstore/posts_media.json,[].label_values[].dict[].dict[][Mídia].media[].cross_post_source.source_app,enum,4,0,texto,FB
+instagram,cpimportstore/posts_media.json,[].label_values[].dict[].dict[][É um anúncio].value,enum,4,0,texto,Falso
+instagram,cpimportstore/posts_media.json,[].label_values[].dict[].dict[][Horário da atualização].timestamp_value,numerico,4,0,epoch_s,1780076471
+instagram,cpimportstore/posts_media.json,[].label_values[].dict[].dict[].title,enum,24,0,texto,Hashtags | Local | Metadados | Metadados
+instagram,cpimportstore/posts_media.json,[].label_values[].dict[].dict[].timestamp_value,numerico,4,0,epoch_s,1780076133
+instagram,cpimportstore/posts_media.json,[].label_values[].dict[].title,vazio,0,12,-,-
+instagram,cpimportstore/posts_media.json,[].label_values[].title,enum,18,0,texto,Hashtags | Local | Metadados | Metadados
+instagram,cpimportstore/posts_media.json,[].label_values[][Modo de publicação].value,enum,3,0,texto,default
+instagram,cpimportstore/posts_media.json,[].label_values[][Está com áudio desativado].value,enum,3,0,texto,Falso
+instagram,cpimportstore/posts_media.json,[].label_values[].dict[].dict[][Nome].value,enum,8,0,texto,Santos - SP | hipertrofia | instagramhub
+instagram,cpimportstore/posts_media.json,[].label_values[].dict[].dict[][Descrição].value,vazio,0,3,-,-
+instagram,cpimportstore/posts_media.json,[].fbid,numerico,3,0,count,18008540702908048
+instagram,cpimportstore/posts_media.json,[].label_values[][Mídia].media[].media_metadata.photo_metadata.exif_data[].device_id,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/posts_viewed.json,[].timestamp,numerico,6,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/posts_viewed.json,[].label_values[][URL].value,texto,6,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/posts_viewed.json,[].label_values[][URL].href,texto,6,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/posts_viewed.json,[].label_values[][Legenda].value,texto,6,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/posts_viewed.json,[].label_values[][Título].value,vazio,0,6,-,-
+instagram,cpimportstore/posts_viewed.json,[].label_values[].dict[].dict[][Nome].value,texto,12,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/posts_viewed.json,[].label_values[].dict[].title,vazio,0,12,-,-
+instagram,cpimportstore/posts_viewed.json,[].label_values[].title,enum,12,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/posts_viewed.json,[].label_values[].dict[].dict[][URL].value,texto,1,5,texto,[omitido: dado pessoal]
+instagram,cpimportstore/posts_viewed.json,[].label_values[].dict[].dict[][Nome de usuário].value,enum,6,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/posts_viewed.json,[].fbid,texto,6,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/posts_you're_interested_or_not_interested_in.json,.timestamp,numerico,1,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/posts_you're_interested_or_not_interested_in.json,.label_values[][Feedback].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/posts_you're_interested_or_not_interested_in.json,.label_values[][Superfície].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/posts_you're_interested_or_not_interested_in.json,.label_values[][Origem].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/posts_you're_interested_or_not_interested_in.json,.label_values[].dict[].dict[][URL].value,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/posts_you're_interested_or_not_interested_in.json,.label_values[].dict[].dict[][URL].href,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/posts_you're_interested_or_not_interested_in.json,.label_values[].dict[].dict[][Legenda].value,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/posts_you're_interested_or_not_interested_in.json,.label_values[].dict[].dict[][Título].value,vazio,0,2,-,-
+instagram,cpimportstore/posts_you're_interested_or_not_interested_in.json,.label_values[].dict[].dict[].dict[].dict[][Nome].value,texto,6,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/posts_you're_interested_or_not_interested_in.json,.label_values[].dict[].dict[].dict[].title,vazio,0,6,-,-
+instagram,cpimportstore/posts_you're_interested_or_not_interested_in.json,.label_values[].dict[].dict[].title,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/posts_you're_interested_or_not_interested_in.json,.label_values[].dict[].dict[].dict[].dict[][URL].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/posts_you're_interested_or_not_interested_in.json,.label_values[].dict[].dict[].dict[].dict[][Nome de usuário].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/posts_you're_interested_or_not_interested_in.json,.label_values[].dict[].title,vazio,0,2,-,-
+instagram,cpimportstore/posts_you're_interested_or_not_interested_in.json,.label_values[].title,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/posts_you're_interested_or_not_interested_in.json,.label_values[].dict[].dict[][Nome].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/posts_you're_interested_or_not_interested_in.json,.label_values[].dict[].dict[][Nome de usuário].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/posts_you're_interested_or_not_interested_in.json,.fbid,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/profile_activity.json,[].timestamp,numerico,47,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/profile_activity.json,[].label_values[][Último login].timestamp_value,numerico,47,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/profile_activity.json,[].label_values[][Tipo].value,enum,47,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profile_activity.json,[].label_values[][Endereço IP].value,misto,45,2,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profile_activity.json,[].label_values[][Número da porta].value,numerico,47,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/profile_activity.json,[].label_values[][App].value,enum,47,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profile_activity.json,[].label_values[][Versão do app].value,numerico,18,29,count,[omitido: dado pessoal]
+instagram,cpimportstore/profile_activity.json,[].label_values[][Agente de usuário].value,texto,45,2,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profile_activity.json,[].label_values[][Idioma].value,enum,47,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profile_activity.json,[].label_values[][Cookie].value,enum,30,17,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profile_activity.json,[].label_values[][Identificação do dispositivo].value,texto,45,2,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profile_activity.json,[].label_values[][Detalhes].dict[][Tipo de email].value,texto,15,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profile_activity.json,[].label_values[][Detalhes].dict[][Endereço de email].value,texto,15,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profile_activity.json,[].fbid,numerico,47,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/profile_activity.json,[].label_values[][Detalhes].dict[][Localização].value,enum,11,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profile_activity.json,[].label_values[][Detalhes].dict[][Tipo].value,texto,15,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profile_activity.json,[].label_values[][Detalhes].dict[][Novo valor].value,texto,15,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profile_activity.json,[].label_values[][Detalhes].dict[][Valor anterior].value,texto,15,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profile_based_in.json,.label_values[][Localização].dict[][País].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profile_based_in.json,.label_values[][Localização].dict[][Região].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profile_based_in.json,.label_values[][Localização].dict[][Cidade].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profile_based_in.json,.fbid,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/profile_changes.json,.profile_profile_change[].title,enum,9,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profile_changes.json,.profile_profile_change[].string_map_data.Alterado.value,enum,9,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profile_changes.json,.profile_profile_change[].string_map_data.Valor anterior.value,texto,6,3,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profile_changes.json,.profile_profile_change[].string_map_data.Novo valor.value,texto,9,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profile_changes.json,.profile_profile_change[].string_map_data.Alterar data.value,vazio,0,9,-,-
+instagram,cpimportstore/profile_changes.json,.profile_profile_change[].string_map_data.Alterar data.timestamp,numerico,9,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/profile_photos.json,.ig_profile_picture[].uri,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profile_photos.json,.ig_profile_picture[].creation_timestamp,numerico,1,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/profile_photos.json,.ig_profile_picture[].media_metadata.camera_metadata.has_camera_metadata,bool,1,0,enum,[omitido: dado pessoal]
+instagram,cpimportstore/profile_photos.json,.ig_profile_picture[].title,vazio,0,1,-,-
+instagram,cpimportstore/profile_photos.json,.ig_profile_picture[].cross_post_source.source_app,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profile_searches.json,.searches_user[].title,enum,4,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profile_searches.json,.searches_user[].string_list_data[].href,texto,4,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profile_searches.json,.searches_user[].string_list_data[].timestamp,numerico,4,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/profile_status_changes.json,.account_history_account_active_status_changes[].string_map_data.Time.timestamp,numerico,1,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/profile_status_changes.json,.account_history_account_active_status_changes[].string_map_data.Activation Type.value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/profiles_reached.json,.organic_insights_reach[].title,vazio,0,1,-,-
+instagram,cpimportstore/profiles_reached.json,.organic_insights_reach[].string_map_data.Intervalo de datas.value,texto,1,0,texto,Apr 2 - Jun 30
+instagram,cpimportstore/profiles_reached.json,.organic_insights_reach[].string_map_data.Contas alcançadas.value,numerico,1,0,count,1639
+instagram,cpimportstore/profiles_reached.json,.organic_insights_reach[].string_map_data.Delta de contas alcançadas.value,texto,1,0,texto,"+3,244% vs Jan 2 - Apr 1"
+instagram,cpimportstore/profiles_reached.json,.organic_insights_reach[].string_map_data.Seguidores.value,numerico,1,0,pct,4.4%
+instagram,cpimportstore/profiles_reached.json,.organic_insights_reach[].string_map_data.Não seguidores.value,numerico,1,0,pct,95.6%
+instagram,cpimportstore/profiles_reached.json,.organic_insights_reach[].string_map_data.Delta de não seguidores.value,texto,1,0,texto,"You reached +3,146% more accounts that w"
+instagram,cpimportstore/profiles_reached.json,.organic_insights_reach[].string_map_data.Impressões.value,numerico,1,0,count,"3,119"
+instagram,cpimportstore/profiles_reached.json,.organic_insights_reach[].string_map_data.Delta de impressões.value,numerico,1,0,pct,"+1,585%"
+instagram,cpimportstore/profiles_reached.json,.organic_insights_reach[].string_map_data.Visitas ao perfil.value,numerico,1,0,count,75
+instagram,cpimportstore/profiles_reached.json,.organic_insights_reach[].string_map_data.Delta de visitas ao perfil.value,numerico,1,0,pct,+36.3%
+instagram,cpimportstore/profiles_reached.json,.organic_insights_reach[].string_map_data.Toques em links externos.value,numerico,1,0,count,4
+instagram,cpimportstore/profiles_reached.json,.organic_insights_reach[].string_map_data.Delta de toques em links externos.value,numerico,1,0,pct,-60%
+instagram,cpimportstore/profiles_reached.json,.organic_insights_reach[].string_map_data.Toques no endereço comercial.value,numerico,1,0,count,1
+instagram,cpimportstore/profiles_reached.json,.organic_insights_reach[].string_map_data.Delta de toques no endereço comercial.value,vazio,0,1,-,-
+instagram,cpimportstore/recent_follow_requests.json,[].timestamp,numerico,2,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/recent_follow_requests.json,[].label_values[][URL].value,vazio,0,2,-,-
+instagram,cpimportstore/recent_follow_requests.json,[].label_values[][Nome].value,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/recent_follow_requests.json,[].label_values[][Nome de usuário].value,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/recent_follow_requests.json,[].fbid,numerico,2,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/recently_deleted_content.json,.timestamp,numerico,1,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/recently_deleted_content.json,.label_values[][Valor arrecadado].value,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/recently_deleted_content.json,.label_values[][Mídia].media[].uri,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/recently_deleted_content.json,.label_values[][Mídia].media[].creation_timestamp,numerico,1,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/recently_deleted_content.json,.label_values[][Mídia].media[].media_metadata.video_metadata.subtitles.uri,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/recently_deleted_content.json,.label_values[][Mídia].media[].media_metadata.video_metadata.subtitles.creation_timestamp,numerico,1,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/recently_deleted_content.json,.label_values[][Mídia].media[].media_metadata.video_metadata.exif_data[].source_type,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/recently_deleted_content.json,.label_values[][Mídia].media[].media_metadata.camera_metadata.has_camera_metadata,bool,1,0,enum,[omitido: dado pessoal]
+instagram,cpimportstore/recently_deleted_content.json,.label_values[][Mídia].media[].title,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/recently_deleted_content.json,.label_values[][Mídia].media[].cross_post_source.source_app,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/recently_deleted_content.json,.label_values[][É um anúncio].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/recently_deleted_content.json,.label_values[][Horário da atualização].timestamp_value,numerico,1,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/recently_deleted_content.json,.label_values[][Legenda].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/recently_deleted_content.json,.label_values[][Título].value,vazio,0,1,-,-
+instagram,cpimportstore/recently_deleted_content.json,.label_values[].title,enum,6,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/recently_deleted_content.json,.label_values[][Modo de publicação].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/recently_deleted_content.json,.label_values[][Está com áudio desativado].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/recently_deleted_content.json,.label_values[][Marcado como gerado por IA].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/recently_deleted_content.json,.label_values[].dict[].dict[][Nome].value,texto,7,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/recently_deleted_content.json,.label_values[].dict[].title,vazio,0,7,-,-
+instagram,cpimportstore/recently_deleted_content.json,.fbid,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/recently_viewed_items.json,.label_values[][Nomes dos produtos].vec[].value,texto,3,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/recently_viewed_items.json,.fbid,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/reels.json,.ig_reels_media[].media[].uri,texto,12,0,texto,media/reels/202606/18455017159112083.mp4
+instagram,cpimportstore/reels.json,.ig_reels_media[].media[].creation_timestamp,numerico,12,0,epoch_s,1781137535
+instagram,cpimportstore/reels.json,.ig_reels_media[].media[].media_metadata.video_metadata.exif_data[].latitude,numerico,8,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/reels.json,.ig_reels_media[].media[].media_metadata.video_metadata.exif_data[].longitude,numerico,8,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/reels.json,.ig_reels_media[].media[].media_metadata.video_metadata.exif_data[].iso,numerico,8,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/reels.json,.ig_reels_media[].media[].media_metadata.video_metadata.exif_data[].lens_model,vazio,0,8,-,-
+instagram,cpimportstore/reels.json,.ig_reels_media[].media[].media_metadata.video_metadata.exif_data[].device_id,enum,10,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/reels.json,.ig_reels_media[].media[].media_metadata.video_metadata.exif_data[].camera_position,enum,10,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/reels.json,.ig_reels_media[].media[].media_metadata.video_metadata.exif_data[].lens_make,vazio,0,8,-,-
+instagram,cpimportstore/reels.json,.ig_reels_media[].media[].media_metadata.video_metadata.exif_data[].source_type,enum,12,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/reels.json,.ig_reels_media[].media[].media_metadata.camera_metadata.has_camera_metadata,bool,12,0,enum,False
+instagram,cpimportstore/reels.json,.ig_reels_media[].media[].title,texto,12,0,texto,O padrão não se discute. Ele se entrega.
+instagram,cpimportstore/reels.json,.ig_reels_media[].media[].cross_post_source.source_app,enum,12,0,texto,FB
+instagram,cpimportstore/reels.json,.ig_reels_media[].media[].media_metadata.video_metadata.subtitles.uri,texto,7,0,texto,media/reels/202606/18102850088471571.srt
+instagram,cpimportstore/reels.json,.ig_reels_media[].media[].media_metadata.video_metadata.subtitles.creation_timestamp,numerico,7,0,epoch_s,1781050523
+instagram,cpimportstore/saved_posts.json,[].timestamp,numerico,2,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/saved_posts.json,[].label_values[][URL].value,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/saved_posts.json,[].label_values[][URL].href,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/saved_posts.json,[].label_values[][Legenda].value,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/saved_posts.json,[].label_values[][Título].value,vazio,0,2,-,-
+instagram,cpimportstore/saved_posts.json,[].label_values[].dict[].dict[][Nome].value,texto,7,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/saved_posts.json,[].label_values[].dict[].title,vazio,0,7,-,-
+instagram,cpimportstore/saved_posts.json,[].label_values[].title,enum,4,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/saved_posts.json,[].label_values[].dict[].dict[][URL].value,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/saved_posts.json,[].label_values[].dict[].dict[][Nome de usuário].value,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/saved_posts.json,[].fbid,numerico,2,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/secret_conversations.json,.ig_secret_conversations.armadillo_devices[].device_type,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/secret_conversations.json,.ig_secret_conversations.armadillo_devices[].device_manufacturer,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/secret_conversations.json,.ig_secret_conversations.armadillo_devices[].device_model,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/secret_conversations.json,.ig_secret_conversations.armadillo_devices[].device_os_version,numerico,2,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/secret_conversations.json,.ig_secret_conversations.armadillo_devices[].last_connected_ip,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/secret_conversations.json,.ig_secret_conversations.armadillo_devices[].last_active_time,numerico,2,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/secret_conversations.json,.ig_secret_conversations.armadillo_devices[].last_connected_full_ip,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/secret_conversations.json,.ig_secret_conversations.armadillo_devices[].current_connected_ip,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/secret_conversations.json,.ig_secret_conversations.armadillo_devices[].current_connected_port_number,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/secret_conversations.json,.ig_secret_conversations.armadillo_devices[].online_since,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/see_less_topics.json,[].timestamp,numerico,2,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/see_less_topics.json,[].label_values[][Horário da atualização].timestamp_value,numerico,2,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/see_less_topics.json,[].label_values[].title,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/see_less_topics.json,[].fbid,numerico,2,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/show_exclusive_story_promo_setting.json,.subscriptions_show_story_teaser_setting[].title,vazio,0,1,-,-
+instagram,cpimportstore/show_exclusive_story_promo_setting.json,.subscriptions_show_story_teaser_setting[].string_map_data.Configuração de promoção de story exclusivo.value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/signup_details.json,.account_history_registration_info[].title,vazio,0,1,-,-
+instagram,cpimportstore/signup_details.json,.account_history_registration_info[].string_map_data.Nome de usuário.value,vazio,0,1,-,-
+instagram,cpimportstore/signup_details.json,.account_history_registration_info[].string_map_data.Endereço de IP.value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/signup_details.json,.account_history_registration_info[].string_map_data.Hora.value,vazio,0,1,-,-
+instagram,cpimportstore/signup_details.json,.account_history_registration_info[].string_map_data.Hora.timestamp,numerico,1,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/signup_details.json,.account_history_registration_info[].string_map_data.Email.value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/signup_details.json,.account_history_registration_info[].string_map_data.Telefone.value,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/signup_details.json,.account_history_registration_info[].string_map_data.Dispositivo.value,vazio,0,1,-,-
+instagram,cpimportstore/stories.json,.ig_stories[].uri,texto,14,0,texto,media/stories/202606/18107735350945432.m
+instagram,cpimportstore/stories.json,.ig_stories[].creation_timestamp,numerico,14,0,epoch_s,1781137548
+instagram,cpimportstore/stories.json,.ig_stories[].media_metadata.video_metadata.exif_data[].device_id,enum,14,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/stories.json,.ig_stories[].media_metadata.video_metadata.exif_data[].camera_position,enum,14,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/stories.json,.ig_stories[].media_metadata.video_metadata.exif_data[].source_type,enum,14,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/stories.json,.ig_stories[].media_metadata.camera_metadata.has_camera_metadata,bool,14,0,enum,False
+instagram,cpimportstore/stories.json,.ig_stories[].title,vazio,0,14,-,-
+instagram,cpimportstore/stories.json,.ig_stories[].cross_post_source.source_app,enum,14,0,texto,FB
+instagram,cpimportstore/stories.json,.ig_stories[].media_metadata.video_metadata.exif_data[].date_time_original,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/stories_viewed.json,[].timestamp,numerico,14,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/stories_viewed.json,[].label_values[][URL].value,texto,14,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/stories_viewed.json,[].label_values[][URL].href,texto,14,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/stories_viewed.json,[].label_values[][Legenda].value,texto,16,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/stories_viewed.json,[].label_values[][Título].value,vazio,0,16,-,-
+instagram,cpimportstore/stories_viewed.json,[].label_values[].title,enum,28,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/stories_viewed.json,[].label_values[].dict[].dict[][URL].value,texto,11,3,texto,[omitido: dado pessoal]
+instagram,cpimportstore/stories_viewed.json,[].label_values[].dict[].dict[][Nome].value,texto,67,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/stories_viewed.json,[].label_values[].dict[].dict[][Nome de usuário].value,texto,14,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/stories_viewed.json,[].label_values[].dict[].title,vazio,0,67,-,-
+instagram,cpimportstore/stories_viewed.json,[].fbid,numerico,14,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/surveys.json,[].timestamp,numerico,2,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/surveys.json,[].label_values[][Respostas da pesquisa].vec[].dict[][Pergunta].value,texto,3,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/surveys.json,[].label_values[][Respostas da pesquisa].vec[].dict[][Resposta].value,vazio,0,3,-,-
+instagram,cpimportstore/surveys.json,[].label_values[][Respostas da pesquisa].description,texto,4,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/surveys.json,[].label_values[][Hora de início da pesquisa].timestamp_value,numerico,2,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/surveys.json,[].label_values[][Hora de início da pesquisa].description,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/surveys.json,[].label_values[][Data/hora da última atualização].timestamp_value,numerico,2,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/surveys.json,[].label_values[][Data/hora da última atualização].description,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/surveys.json,[].label_values[][Hora de conclusão da pesquisa].timestamp_value,numerico,2,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/surveys.json,[].label_values[][Hora de conclusão da pesquisa].description,texto,2,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/surveys.json,[].label_values[][Horário da atualização].timestamp_value,numerico,2,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/surveys.json,[].fbid,numerico,2,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/two-factor_authentication.json,.timestamp,numerico,1,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/two-factor_authentication.json,.label_values[][Apelido].value,texto,1,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/two-factor_authentication.json,.label_values[][Identificação do dispositivo].value,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/two-factor_authentication.json,.label_values[][Nome do dispositivo].value,vazio,0,1,-,-
+instagram,cpimportstore/two-factor_authentication.json,.fbid,numerico,1,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/videos_watched.json,[].timestamp,numerico,16,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/videos_watched.json,[].label_values[][URL].value,texto,16,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/videos_watched.json,[].label_values[][URL].href,texto,16,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/videos_watched.json,[].label_values[][Legenda].value,texto,21,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/videos_watched.json,[].label_values[][Título].value,vazio,0,21,-,-
+instagram,cpimportstore/videos_watched.json,[].label_values[].title,enum,32,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/videos_watched.json,[].label_values[].dict[].dict[][URL].value,texto,12,4,texto,[omitido: dado pessoal]
+instagram,cpimportstore/videos_watched.json,[].label_values[].dict[].dict[][Nome].value,texto,31,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/videos_watched.json,[].label_values[].dict[].dict[][Nome de usuário].value,texto,16,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/videos_watched.json,[].label_values[].dict[].title,vazio,0,31,-,-
+instagram,cpimportstore/videos_watched.json,[].fbid,texto,16,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/word_or_phrase_searches.json,.searches_keyword[].title,vazio,0,5,-,-
+instagram,cpimportstore/word_or_phrase_searches.json,.searches_keyword[].string_map_data.Pesquisar.value,enum,5,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/word_or_phrase_searches.json,.searches_keyword[].string_map_data.Hora.value,vazio,0,5,-,-
+instagram,cpimportstore/word_or_phrase_searches.json,.searches_keyword[].string_map_data.Hora.timestamp,numerico,5,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/your_information_download_requests.json,[].timestamp,numerico,7,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/your_information_download_requests.json,[].label_values[][Hora de conclusão da solicitação].timestamp_value,numerico,7,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/your_information_download_requests.json,[].label_values[][Quantas vezes você tentou baixar o arquivo?].value,numerico,7,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/your_information_download_requests.json,[].label_values[][Data de início].timestamp_value,numerico,7,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/your_information_download_requests.json,[].label_values[][Data de término].timestamp_value,numerico,7,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/your_information_download_requests.json,[].label_values[][Qualidade da mídia].value,enum,7,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/your_information_download_requests.json,[].label_values[][Formato de saída].value,enum,7,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/your_information_download_requests.json,[].label_values[][Você já viu esse arquivo?].value,enum,7,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/your_information_download_requests.json,[].label_values[][Notificamos você sobre a demora para processar sua solicitação?].value,enum,7,0,texto,[omitido: dado pessoal]
+instagram,cpimportstore/your_information_download_requests.json,[].fbid,numerico,7,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/your_link_history_settings.json,[].timestamp,numerico,2,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/your_link_history_settings.json,[].label_values[][Data/hora da última atualização].timestamp_value,numerico,2,0,epoch_s,[omitido: dado pessoal]
+instagram,cpimportstore/your_link_history_settings.json,[].fbid,numerico,2,0,count,[omitido: dado pessoal]
+instagram,cpimportstore/your_muted_story_teaser_creators.json,.subscriptions_muted_story_teaser_creators[].title,vazio,0,1,-,-
+instagram,cpimportstore/your_muted_story_teaser_creators.json,.subscriptions_muted_story_teaser_creators[].string_map_data.Criadores de conteúdo silenciados.value,vazio,0,1,-,-

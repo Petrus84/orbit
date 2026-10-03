@@ -37,27 +37,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "ORBIT",
-  description: "A régua certa pro seu negócio — não a média de todo mundo.",
-  // themeColor movido para 'viewport' export abaixo (Next.js 14+ não aceita
-  // mais themeColor dentro de 'metadata'; ver export separado logo após este).
-  icons: {
-    icon: [
-      { url: "/icon.png", type: "image/png" },
-      { url: "/favicon.ico", sizes: "any" },
-    ],
-    apple: "/apple-icon.png",
-  },
-  openGraph: {
-    title: "ORBIT",
-    description: "A régua certa pro seu negócio — não a média de todo mundo.",
-    images: ["/opengraph-image.png"],
-    locale: "pt_BR",
-    type: "website",
-  },
-};
-
-export const viewport = {
-  themeColor: "#0C0C0F",
+  description: "Sistema de Gestão de Funil e Performance de Contas",
 };
 
 export default function RootLayout({

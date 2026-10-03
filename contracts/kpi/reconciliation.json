@@ -1,0 +1,315 @@
+{
+  "gerado_em": "2026-09-28T01:40:10.159Z",
+  "reconciliacao": [
+    {
+      "kpi_id": "followers_net_balance",
+      "kpi_nome": "Saldo de Seguidores do Período",
+      "presente_no_doc1": true,
+      "regra_doc1": "saldo_seguidores = follower_count(T1) - follower_count(T0)",
+      "regra_doc2": "saldo_seguidores = follower_count(T1) - follower_count(T0)",
+      "regra_recusada_explicita": null,
+      "diff": "igual"
+    },
+    {
+      "kpi_id": "followers_semaphore",
+      "kpi_nome": "Semáforo de Seguidores",
+      "presente_no_doc1": true,
+      "regra_doc1": "SE saldo_seguidores(semana_n) < 0 E saldo_seguidores(semana_n-1) < 0 ENTÃO vermelho; SENÃO verde",
+      "regra_doc2": "verde se saldo_semana >= 0; ambar se saldo_semana_n < 0 e semana_n-1 >= 0; vermelho SE saldo_semana_n < 0 E saldo_semana_n-1 < 0",
+      "regra_recusada_explicita": null,
+      "diff": "refinado"
+    },
+    {
+      "kpi_id": "engagement_period_delta",
+      "kpi_nome": "Engajamento do Período",
+      "presente_no_doc1": true,
+      "regra_doc1": "engajamento_delta = ((engajamento_T1 - engajamento_T0) / engajamento_T0) * 100",
+      "regra_doc2": "engajamento_delta_pct = ((eng_T1 - eng_T0) / eng_T0) * 100",
+      "regra_recusada_explicita": null,
+      "diff": "refinado"
+    },
+    {
+      "kpi_id": "engagement_semaphore",
+      "kpi_nome": "Semáforo de Engajamento (série)",
+      "presente_no_doc1": false,
+      "regra_doc1": null,
+      "regra_doc2": "vermelho se delta < -30; ambar se -30 <= delta < 0; verde se delta >= 0",
+      "regra_recusada_explicita": null,
+      "diff": "novo_no_doc2"
+    },
+    {
+      "kpi_id": "cpr_vs_goal",
+      "kpi_nome": "Custo por Resultado vs Meta",
+      "presente_no_doc1": true,
+      "regra_doc1": "cpr_vs_meta = (custo_resultado_real / meta_custo_resultado) * 100",
+      "regra_doc2": "cpr_vs_meta_pct = (custo_resultado_real / meta_custo_resultado) * 100",
+      "regra_recusada_explicita": null,
+      "diff": "refinado"
+    },
+    {
+      "kpi_id": "cpr_semaphore",
+      "kpi_nome": "Semáforo de Custo por Resultado",
+      "presente_no_doc1": true,
+      "regra_doc1": "SE cpr_vs_meta > 120% ENTÃO vermelho; SE entre 100% e 120% ENTÃO âmbar; SENÃO verde",
+      "regra_doc2": "vermelho se cpr_vs_meta_pct > 120; ambar se 100 < x <= 120; verde se <= 100",
+      "regra_recusada_explicita": null,
+      "diff": "refinado"
+    },
+    {
+      "kpi_id": "ctr_ads",
+      "kpi_nome": "CTR de anúncio (Meta / Google)",
+      "presente_no_doc1": false,
+      "regra_doc1": null,
+      "regra_doc2": "CTR_ads = (cliques / impressoes) * 100",
+      "regra_recusada_explicita": {
+        "meta": 1,
+        "google_search": 2,
+        "nota": "eram clients.threshold_ctr_* orfaos; proibido reutilizar"
+      },
+      "diff": "novo_no_doc2"
+    },
+    {
+      "kpi_id": "ctr_bio_organic",
+      "kpi_nome": "CTR da bio (orgânico)",
+      "presente_no_doc1": false,
+      "regra_doc1": null,
+      "regra_doc2": "ctr_bio = (link_clicks / profile_visits) * 100",
+      "regra_recusada_explicita": null,
+      "diff": "novo_no_doc2"
+    },
+    {
+      "kpi_id": "ctr_below_threshold_alert",
+      "kpi_nome": "Alerta de CTR Abaixo do Threshold",
+      "presente_no_doc1": true,
+      "regra_doc1": "SE CTR_meta < threshold_ctr_meta (padrão 1%) OU CTR_google < threshold_ctr_google (padrão 2%) ENTÃO alerta = true",
+      "regra_doc2": "ctr_below_threshold só para Ads com meta da conta; bio usa o mesmo type apenas se o writer passar metric_name=ctr_bio e threshold da conta.",
+      "regra_recusada_explicita": "SE CTR_meta < 1 OR CTR_google < 2 ENTÃO alerta",
+      "diff": "refinado"
+    },
+    {
+      "kpi_id": "cpa",
+      "kpi_nome": "CPA — Custo por Aquisição",
+      "presente_no_doc1": true,
+      "regra_doc1": "CPA = spend / conversions; alerta SE CPA > 1.5 * media_CPA_14d",
+      "regra_doc2": "CPA = spend / conversions; alerta se CPA > 1.5 * media_CPA_14d",
+      "regra_recusada_explicita": null,
+      "diff": "refinado"
+    },
+    {
+      "kpi_id": "ad_frequency",
+      "kpi_nome": "Frequência de Anúncio",
+      "presente_no_doc1": true,
+      "regra_doc1": "frequency = impressions / reach; alerta SE frequency > 3",
+      "regra_doc2": "ambar se frequency > 2.5 E ROAS estável; warning se frequency > 2.5 E ROAS caindo (resolveCreativeFatigueAlert / resolveRoasBelowMinimumAlert). Frequência sozinha não vira critical.",
+      "regra_recusada_explicita": "alerta SE frequency > 3",
+      "diff": "refinado"
+    },
+    {
+      "kpi_id": "confidence_l0",
+      "kpi_nome": "Flag de Confiança L0",
+      "presente_no_doc1": false,
+      "regra_doc1": null,
+      "regra_doc2": "origem in (instagram_export, meta_api, google_ads_api) E sem imputação",
+      "regra_recusada_explicita": null,
+      "diff": "novo_no_doc2"
+    },
+    {
+      "kpi_id": "confidence_l1",
+      "kpi_nome": "Flag de Confiança L1",
+      "presente_no_doc1": false,
+      "regra_doc1": null,
+      "regra_doc2": null,
+      "regra_recusada_explicita": null,
+      "diff": "novo_no_doc2"
+    },
+    {
+      "kpi_id": "confidence_l2",
+      "kpi_nome": "Flag de Confiança L2",
+      "presente_no_doc1": false,
+      "regra_doc1": null,
+      "regra_doc2": "origem in (benchmark_mercado, fallback_by_client, fallback_by_empty, estimate) OU confidence_score < 0.75",
+      "regra_recusada_explicita": null,
+      "diff": "novo_no_doc2"
+    },
+    {
+      "kpi_id": "organic_funnel_sales_estimate",
+      "kpi_nome": "Vendas Estimadas pelo Funil Orgânico",
+      "presente_no_doc1": true,
+      "regra_doc1": "vendas_estimadas = alcance × CTR_perfil × CTR_link × taxa_conversao",
+      "regra_doc2": "vendas_estimadas = alcance * ctr_perfil * ctr_link * taxa_conversao",
+      "regra_recusada_explicita": null,
+      "diff": "refinado"
+    },
+    {
+      "kpi_id": "polemic_score_pct",
+      "kpi_nome": "Score de Polêmica / Discussão nos comentários",
+      "presente_no_doc1": false,
+      "regra_doc1": null,
+      "regra_doc2": "polemic_score_pct = (comentarios / curtidas) * 100",
+      "regra_recusada_explicita": "ALERTA SE > 20%",
+      "diff": "novo_no_doc2"
+    },
+    {
+      "kpi_id": "utility_score_pct",
+      "kpi_nome": "Score de Utilidade (Insights)",
+      "presente_no_doc1": false,
+      "regra_doc1": null,
+      "regra_doc2": "utility_score_pct = ((salvamentos + compartilhamentos) / alcance) * 100",
+      "regra_recusada_explicita": "ÂMBAR SE < 1%; SAUDÁVEL SE >= 2%",
+      "diff": "novo_no_doc2"
+    },
+    {
+      "kpi_id": "er_real_pct",
+      "kpi_nome": "ER Real (C-01)",
+      "presente_no_doc1": false,
+      "regra_doc1": null,
+      "regra_doc2": "er_real_pct = ((saves + shares + comments) / reach) * 100",
+      "regra_recusada_explicita": null,
+      "diff": "novo_no_doc2"
+    },
+    {
+      "kpi_id": "vps_c02",
+      "kpi_nome": "Alcance na base (VPS C-02)",
+      "presente_no_doc1": false,
+      "regra_doc1": null,
+      "regra_doc2": "vps_c02_pct = (reach_total * reach_followers_pct / 100) / followers_total * 100",
+      "regra_recusada_explicita": null,
+      "diff": "novo_no_doc2"
+    },
+    {
+      "kpi_id": "sparkline_8w",
+      "kpi_nome": "Sparkline de Tendência — Slope de 8 Semanas",
+      "presente_no_doc1": true,
+      "regra_doc1": "slope = regressao_linear(valores_8_semanas); alerta SE slope < 0 por 14 dias consecutivos",
+      "regra_doc2": "slope = regressao_linear(8 valores semanais)",
+      "regra_recusada_explicita": null,
+      "diff": "refinado"
+    },
+    {
+      "kpi_id": "boost_candidate",
+      "kpi_nome": "Candidato a Boost",
+      "presente_no_doc1": false,
+      "regra_doc1": null,
+      "regra_doc2": "Campo null não conta como falha. 0 observáveis = sem badge. 1 verdadeira = candidato. 2+ = forte.",
+      "regra_recusada_explicita": "c1 shares > 0.02*base; c2 saves/reach > 0.03; c3 reach_nao_seg/reach > 0.40",
+      "diff": "novo_no_doc2"
+    },
+    {
+      "kpi_id": "creative_fatigue_score",
+      "kpi_nome": "Score de Fadiga de Criativo",
+      "presente_no_doc1": true,
+      "regra_doc1": "fadiga = ((CTR_semana1 - CTR_semana_atual) / CTR_semana1) * 100",
+      "regra_doc2": "fadiga_pct = ((CTR_semana1 - CTR_semana_atual) / CTR_semana1) * 100 por ad_id",
+      "regra_recusada_explicita": null,
+      "diff": "refinado"
+    },
+    {
+      "kpi_id": "creative_fatigue_cause",
+      "kpi_nome": "Diagnóstico de Causa da Fadiga",
+      "presente_no_doc1": true,
+      "regra_doc1": "SE fadiga > 40% E frequency > 2.5 ENTÃO 'saturacao_criativo'; SE fadiga > 40% E frequency < 2.5 ENTÃO 'problema_segmentacao'; SENÃO 'saudavel'",
+      "regra_doc2": "Usar resolveCreativeFatigueAlert: fadiga alta + ROAS falling → trocar criativo; fadiga alta + ROAS estável/rising → não trocar só por frequência. 40% e 2.5 são gestão, não percentil das 58.",
+      "regra_recusada_explicita": "fadiga>40 e freq>2.5 → saturacao; fadiga>40 e freq<2.5 → segmentacao",
+      "diff": "refinado"
+    },
+    {
+      "kpi_id": "avatar_gender",
+      "kpi_nome": "Alinhamento de Avatar — Gênero",
+      "presente_no_doc1": false,
+      "regra_doc1": null,
+      "regra_doc2": "desvio_pp = abs(esperado - real). verde <=15pp; ambar 15-30pp; vermelho >30pp SOMENTE se isRealFromConversionData. Senão warning L2.",
+      "regra_recusada_explicita": "CRITICO SE alinhamento < 70",
+      "diff": "novo_no_doc2"
+    },
+    {
+      "kpi_id": "avatar_age",
+      "kpi_nome": "Alinhamento de Avatar — Faixa Etária",
+      "presente_no_doc1": false,
+      "regra_doc1": null,
+      "regra_doc2": "Comparar soma da faixa DECLARADA vs soma real dessa faixa. Mesmos cortes 15/30pp.",
+      "regra_recusada_explicita": null,
+      "diff": "novo_no_doc2"
+    },
+    {
+      "kpi_id": "avatar_city",
+      "kpi_nome": "Alinhamento de Avatar — Cidade",
+      "presente_no_doc1": false,
+      "regra_doc1": null,
+      "regra_doc2": "verde se alvo no top 5 real OU soma das cidades declaradas >= 25%; ambar 10-25%; vermelho <10% com lista declarada não vazia.",
+      "regra_recusada_explicita": "CRITICO SE percentual na cidade alvo < 70",
+      "diff": "novo_no_doc2"
+    },
+    {
+      "kpi_id": "reach_follower_split",
+      "kpi_nome": "Alcance Orgânico — Seguidores vs Não-Seguidores",
+      "presente_no_doc1": true,
+      "regra_doc1": "alcance_seguidores = reach[follower]; alcance_nao_seguidores = reach[non_follower]",
+      "regra_doc2": "alcance_seguidores = reach * reach_followers_pct/100; nao_seguidores = resto",
+      "regra_recusada_explicita": null,
+      "diff": "refinado"
+    },
+    {
+      "kpi_id": "save_rate",
+      "kpi_nome": "Engajamento Qualificado — Save Rate",
+      "presente_no_doc1": true,
+      "regra_doc1": "save_rate = (salvamentos / alcance) * 100; usado no boost com threshold > 3%",
+      "regra_doc2": "save_rate = (salvamentos / alcance) * 100",
+      "regra_recusada_explicita": null,
+      "diff": "refinado"
+    },
+    {
+      "kpi_id": "format_performance",
+      "kpi_nome": "Performance por Formato",
+      "presente_no_doc1": false,
+      "regra_doc1": null,
+      "regra_doc2": "agrupar content_format; media reach, media interacoes, save_rate por grupo",
+      "regra_recusada_explicita": null,
+      "diff": "novo_no_doc2"
+    },
+    {
+      "kpi_id": "audience_peak",
+      "kpi_nome": "Pico de Atividade da Audiência",
+      "presente_no_doc1": true,
+      "regra_doc1": "extrair distribuição de audience_online_followers por hora e dia; top 3 janelas de pico",
+      "regra_doc2": "top 3 janelas dia×hora",
+      "regra_recusada_explicita": null,
+      "diff": "refinado"
+    },
+    {
+      "kpi_id": "ads_pace",
+      "kpi_nome": "Gasto Real vs Planejado (Burn Rate)",
+      "presente_no_doc1": true,
+      "regra_doc1": "burn_rate_diario = spend_acumulado / dias_decorridos; pace_esperado = budget_total / dias_totais",
+      "regra_doc2": "burn_rate_diario = spend_acumulado / dias_decorridos; pace_esperado = budget / dias_totais",
+      "regra_recusada_explicita": null,
+      "diff": "refinado"
+    },
+    {
+      "kpi_id": "google_impression_share",
+      "kpi_nome": "Impression Share — Intenção de Busca (Google)",
+      "presente_no_doc1": true,
+      "regra_doc1": "impression_share = impressoes_recebidas / impressoes_elegiveis_estimadas * 100",
+      "regra_doc2": null,
+      "regra_recusada_explicita": null,
+      "diff": "refinado"
+    },
+    {
+      "kpi_id": "lp_cvr",
+      "kpi_nome": "Taxa de Conversão de Landing Page",
+      "presente_no_doc1": true,
+      "regra_doc1": "taxa_conversao_lp = (conversoes / sessoes) * 100; segmentar por canal de origem",
+      "regra_doc2": "conversoes / sessoes * 100 por canal",
+      "regra_recusada_explicita": null,
+      "diff": "refinado"
+    },
+    {
+      "kpi_id": "cpm_market_delta",
+      "kpi_nome": "Δ CPM conta vs mercado",
+      "presente_no_doc1": false,
+      "regra_doc1": null,
+      "regra_doc2": "delta_conta_pct vs delta_mercado_pct no mesmo objetivo/geo/placement",
+      "regra_recusada_explicita": null,
+      "diff": "novo_no_doc2"
+    }
+  ]
+}

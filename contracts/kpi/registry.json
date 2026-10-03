@@ -1,0 +1,352 @@
+{
+  "gerado_em": "2026-09-28T01:40:10.156Z",
+  "kpis": [
+    {
+      "kpi_id": "followers_net_balance",
+      "kpi_nome": "Saldo de Seguidores do Período",
+      "status_doc2": "mantida",
+      "regra_calculo_vigente": "saldo_seguidores = follower_count(T1) - follower_count(T0)",
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "possível match de coluna: client_onboarding.total_followers, ig_account_snapshots.followers_total"
+    },
+    {
+      "kpi_id": "followers_semaphore",
+      "kpi_nome": "Semáforo de Seguidores",
+      "status_doc2": "mantida_refinada",
+      "regra_calculo_vigente": "verde se saldo_semana >= 0; ambar se saldo_semana_n < 0 e semana_n-1 >= 0; vermelho SE saldo_semana_n < 0 E saldo_semana_n-1 < 0",
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "possível match de coluna: verde, ambar, vermelho"
+    },
+    {
+      "kpi_id": "engagement_period_delta",
+      "kpi_nome": "Engajamento do Período",
+      "status_doc2": "mantida",
+      "regra_calculo_vigente": "engajamento_delta_pct = ((eng_T1 - eng_T0) / eng_T0) * 100",
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "NÃO ENCONTRADO: nenhum token reconhecido no dump — confira manualmente"
+    },
+    {
+      "kpi_id": "engagement_semaphore",
+      "kpi_nome": "Semáforo de Engajamento (série)",
+      "status_doc2": "mantida_como_gestao",
+      "regra_calculo_vigente": "vermelho se delta < -30; ambar se -30 <= delta < 0; verde se delta >= 0",
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "possível match de coluna: vermelho, ambar, verde"
+    },
+    {
+      "kpi_id": "cpr_vs_goal",
+      "kpi_nome": "Custo por Resultado vs Meta",
+      "status_doc2": "mantida_com_skip",
+      "regra_calculo_vigente": "cpr_vs_meta_pct = (custo_resultado_real / meta_custo_resultado) * 100",
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "NÃO ENCONTRADO: nenhum token reconhecido no dump — confira manualmente"
+    },
+    {
+      "kpi_id": "cpr_semaphore",
+      "kpi_nome": "Semáforo de Custo por Resultado",
+      "status_doc2": "mantida_com_skip",
+      "regra_calculo_vigente": "vermelho se cpr_vs_meta_pct > 120; ambar se 100 < x <= 120; verde se <= 100",
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "possível match de coluna: vermelho, ambar, verde"
+    },
+    {
+      "kpi_id": "ctr_ads",
+      "kpi_nome": "CTR de anúncio (Meta / Google)",
+      "status_doc2": "separada_do_ctr_bio",
+      "regra_calculo_vigente": "CTR_ads = (cliques / impressoes) * 100",
+      "regra_recusada": {
+        "meta": 1,
+        "google_search": 2,
+        "nota": "eram clients.threshold_ctr_* orfaos; proibido reutilizar"
+      },
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "possível match de coluna: _ads, cliques"
+    },
+    {
+      "kpi_id": "ctr_bio_organic",
+      "kpi_nome": "CTR da bio (orgânico)",
+      "status_doc2": "NOVA_SEPARACAO_obrigatoria",
+      "regra_calculo_vigente": "ctr_bio = (link_clicks / profile_visits) * 100",
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "possível match de coluna: ctr_bio, link_clicks, profile_visits"
+    },
+    {
+      "kpi_id": "ctr_below_threshold_alert",
+      "kpi_nome": "Alerta de CTR Abaixo do Threshold",
+      "status_doc2": "reescrever_writer",
+      "regra_calculo_vigente": "ctr_below_threshold só para Ads com meta da conta; bio usa o mesmo type apenas se o writer passar metric_name=ctr_bio e threshold da conta.",
+      "regra_recusada": "SE CTR_meta < 1 OR CTR_google < 2 ENTÃO alerta",
+      "writer_declarado": "syncClientAlerts -> resolveCtrBioAlert | skip Ads se sem spend",
+      "writer_check": "escrito mas NUNCA CHAMADO fora da própria definição — RWP pendente antes de considerar \"vigente\" em produção",
+      "binding_check": "NÃO ENCONTRADO: nenhum token reconhecido no dump — confira manualmente"
+    },
+    {
+      "kpi_id": "cpa",
+      "kpi_nome": "CPA — Custo por Aquisição",
+      "status_doc2": "mantida_com_guarda_n",
+      "regra_calculo_vigente": "CPA = spend / conversions; alerta se CPA > 1.5 * media_CPA_14d",
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "possível match de coluna: spend, conversions, alerta, media_"
+    },
+    {
+      "kpi_id": "ad_frequency",
+      "kpi_nome": "Frequência de Anúncio",
+      "status_doc2": "refinada_arvore_engine",
+      "regra_calculo_vigente": "ambar se frequency > 2.5 E ROAS estável; warning se frequency > 2.5 E ROAS caindo (resolveCreativeFatigueAlert / resolveRoasBelowMinimumAlert). Frequência sozinha não vira critical.",
+      "regra_recusada": "alerta SE frequency > 3",
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "NÃO ENCONTRADO: nenhum token reconhecido no dump — confira manualmente"
+    },
+    {
+      "kpi_id": "confidence_l0",
+      "kpi_nome": "Flag de Confiança L0",
+      "status_doc2": "mantida_alinhada_contract",
+      "regra_calculo_vigente": "origem in (instagram_export, meta_api, google_ads_api) E sem imputação",
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "possível match de coluna: instagram_export, meta_api, google_ads_api"
+    },
+    {
+      "kpi_id": "confidence_l1",
+      "kpi_nome": "Flag de Confiança L1",
+      "status_doc2": "mantida_sem_40pct",
+      "regra_calculo_vigente": null,
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "NÃO ENCONTRADO: nenhum token reconhecido no dump — confira manualmente"
+    },
+    {
+      "kpi_id": "confidence_l2",
+      "kpi_nome": "Flag de Confiança L2",
+      "status_doc2": "refinada_cor_e_permissao",
+      "regra_calculo_vigente": "origem in (benchmark_mercado, fallback_by_client, fallback_by_empty, estimate) OU confidence_score < 0.75",
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "possível match de coluna: fallback_by_client, estimate, confidence_score"
+    },
+    {
+      "kpi_id": "organic_funnel_sales_estimate",
+      "kpi_nome": "Vendas Estimadas pelo Funil Orgânico",
+      "status_doc2": "mantida_como_simulador",
+      "regra_calculo_vigente": "vendas_estimadas = alcance * ctr_perfil * ctr_link * taxa_conversao",
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "possível match de coluna: alcance, ctr_link"
+    },
+    {
+      "kpi_id": "polemic_score_pct",
+      "kpi_nome": "Score de Polêmica / Discussão nos comentários",
+      "status_doc2": "substituir_20pct_por_RPC",
+      "regra_calculo_vigente": "polemic_score_pct = (comentarios / curtidas) * 100",
+      "regra_recusada": "ALERTA SE > 20%",
+      "writer_declarado": "resolveEngagementScoreAlert ramo polemic",
+      "writer_check": "chamado em: C:\\Projetos\\orbit-dashboard\\src\\actions\\syncClientAlerts.ts, C:\\Projetos\\orbit-dashboard\\src\\lib\\repositories\\instagramOverviewRepository.ts",
+      "binding_check": "possível match de coluna: polemic_score_pct, curtidas"
+    },
+    {
+      "kpi_id": "utility_score_pct",
+      "kpi_nome": "Score de Utilidade (Insights)",
+      "status_doc2": "refinada_sem_semaforo_2pct",
+      "regra_calculo_vigente": "utility_score_pct = ((salvamentos + compartilhamentos) / alcance) * 100",
+      "regra_recusada": "ÂMBAR SE < 1%; SAUDÁVEL SE >= 2%",
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "possível match de coluna: utility_score_pct, alcance"
+    },
+    {
+      "kpi_id": "er_real_pct",
+      "kpi_nome": "ER Real (C-01)",
+      "status_doc2": "INCLUSA_explicitamente",
+      "regra_calculo_vigente": "er_real_pct = ((saves + shares + comments) / reach) * 100",
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "possível match de coluna: er_real_pct, saves, shares, comments, reach"
+    },
+    {
+      "kpi_id": "vps_c02",
+      "kpi_nome": "Alcance na base (VPS C-02)",
+      "status_doc2": "INCLUSA_e_corrigir_view",
+      "regra_calculo_vigente": "vps_c02_pct = (reach_total * reach_followers_pct / 100) / followers_total * 100",
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "possível match de coluna: _pct, reach_total, reach_followers_pct, followers_total"
+    },
+    {
+      "kpi_id": "sparkline_8w",
+      "kpi_nome": "Sparkline de Tendência — Slope de 8 Semanas",
+      "status_doc2": "mantida_com_n_minimo",
+      "regra_calculo_vigente": "slope = regressao_linear(8 valores semanais)",
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "possível match de coluna: slope, valores"
+    },
+    {
+      "kpi_id": "boost_candidate",
+      "kpi_nome": "Candidato a Boost",
+      "status_doc2": "refinada_null_safe",
+      "regra_calculo_vigente": "Campo null não conta como falha. 0 observáveis = sem badge. 1 verdadeira = candidato. 2+ = forte.",
+      "regra_recusada": "c1 shares > 0.02*base; c2 saves/reach > 0.03; c3 reach_nao_seg/reach > 0.40",
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "NÃO ENCONTRADO: nenhum token reconhecido no dump — confira manualmente"
+    },
+    {
+      "kpi_id": "creative_fatigue_score",
+      "kpi_nome": "Score de Fadiga de Criativo",
+      "status_doc2": "mantida",
+      "regra_calculo_vigente": "fadiga_pct = ((CTR_semana1 - CTR_semana_atual) / CTR_semana1) * 100 por ad_id",
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "NÃO ENCONTRADO: nenhum token reconhecido no dump — confira manualmente"
+    },
+    {
+      "kpi_id": "creative_fatigue_cause",
+      "kpi_nome": "Diagnóstico de Causa da Fadiga",
+      "status_doc2": "alinhada_engine_v151",
+      "regra_calculo_vigente": "Usar resolveCreativeFatigueAlert: fadiga alta + ROAS falling → trocar criativo; fadiga alta + ROAS estável/rising → não trocar só por frequência. 40% e 2.5 são gestão, não percentil das 58.",
+      "regra_recusada": "fadiga>40 e freq>2.5 → saturacao; fadiga>40 e freq<2.5 → segmentacao",
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "NÃO ENCONTRADO: nenhum token reconhecido no dump — confira manualmente"
+    },
+    {
+      "kpi_id": "avatar_gender",
+      "kpi_nome": "Alinhamento de Avatar — Gênero",
+      "status_doc2": "refinada_nao_critical_em_demo_de_like",
+      "regra_calculo_vigente": "desvio_pp = abs(esperado - real). verde <=15pp; ambar 15-30pp; vermelho >30pp SOMENTE se isRealFromConversionData. Senão warning L2.",
+      "regra_recusada": "CRITICO SE alinhamento < 70",
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "NÃO ENCONTRADO: nenhum token reconhecido no dump — confira manualmente"
+    },
+    {
+      "kpi_id": "avatar_age",
+      "kpi_nome": "Alinhamento de Avatar — Faixa Etária",
+      "status_doc2": "refinada",
+      "regra_calculo_vigente": "Comparar soma da faixa DECLARADA vs soma real dessa faixa. Mesmos cortes 15/30pp.",
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "NÃO ENCONTRADO: nenhum token reconhecido no dump — confira manualmente"
+    },
+    {
+      "kpi_id": "avatar_city",
+      "kpi_nome": "Alinhamento de Avatar — Cidade",
+      "status_doc2": "reescrever_70pct",
+      "regra_calculo_vigente": "verde se alvo no top 5 real OU soma das cidades declaradas >= 25%; ambar 10-25%; vermelho <10% com lista declarada não vazia.",
+      "regra_recusada": "CRITICO SE percentual na cidade alvo < 70",
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "NÃO ENCONTRADO: nenhum token reconhecido no dump — confira manualmente"
+    },
+    {
+      "kpi_id": "reach_follower_split",
+      "kpi_nome": "Alcance Orgânico — Seguidores vs Não-Seguidores",
+      "status_doc2": "mantida",
+      "regra_calculo_vigente": "alcance_seguidores = reach * reach_followers_pct/100; nao_seguidores = resto",
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "possível match de coluna: reach, reach_followers_pct, resto"
+    },
+    {
+      "kpi_id": "save_rate",
+      "kpi_nome": "Engajamento Qualificado — Save Rate",
+      "status_doc2": "mantida_sem_3pct_global",
+      "regra_calculo_vigente": "save_rate = (salvamentos / alcance) * 100",
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "possível match de coluna: save_rate, alcance"
+    },
+    {
+      "kpi_id": "format_performance",
+      "kpi_nome": "Performance por Formato",
+      "status_doc2": "mantida_corrigir_view",
+      "regra_calculo_vigente": "agrupar content_format; media reach, media interacoes, save_rate por grupo",
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "possível match de coluna: content_format, media, reach, save_rate"
+    },
+    {
+      "kpi_id": "audience_peak",
+      "kpi_nome": "Pico de Atividade da Audiência",
+      "status_doc2": "mantida",
+      "regra_calculo_vigente": "top 3 janelas dia×hora",
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "NÃO ENCONTRADO: nenhum token reconhecido no dump — confira manualmente"
+    },
+    {
+      "kpi_id": "ads_pace",
+      "kpi_nome": "Gasto Real vs Planejado (Burn Rate)",
+      "status_doc2": "mantida_com_skip",
+      "regra_calculo_vigente": "burn_rate_diario = spend_acumulado / dias_decorridos; pace_esperado = budget / dias_totais",
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "possível match de coluna: budget"
+    },
+    {
+      "kpi_id": "google_impression_share",
+      "kpi_nome": "Impression Share — Intenção de Busca (Google)",
+      "status_doc2": "mantida_isolada_c4",
+      "regra_calculo_vigente": null,
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "NÃO ENCONTRADO: nenhum token reconhecido no dump — confira manualmente"
+    },
+    {
+      "kpi_id": "lp_cvr",
+      "kpi_nome": "Taxa de Conversão de Landing Page",
+      "status_doc2": "mantida_isolada_c4",
+      "regra_calculo_vigente": "conversoes / sessoes * 100 por canal",
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "possível match de coluna: canal"
+    },
+    {
+      "kpi_id": "cpm_market_delta",
+      "kpi_nome": "Δ CPM conta vs mercado",
+      "status_doc2": "INCLUSA",
+      "regra_calculo_vigente": "delta_conta_pct vs delta_mercado_pct no mesmo objetivo/geo/placement",
+      "regra_recusada": null,
+      "writer_declarado": null,
+      "writer_check": "sem_writer_declarado",
+      "binding_check": "possível match de coluna: mesmo"
+    },
+    {"utility_caption": "deve mapear para a forma/coluna que representa caption-utility",
+     "utility_score_pct": "deve mapear para score pct."}
+
+  ]
+}

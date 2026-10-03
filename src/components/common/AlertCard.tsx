@@ -94,20 +94,6 @@ const CONFIDENCE_CLASS: Record<NonNullable<Alert['confidenceLevel']>, string> = 
   L2: styles.chipConfidenceL2 ?? '',
 }
 
-// ✅ FIX (20/09/2026): `probableCause` e `dataSource` já chegavam do banco
-// (alertsRepository) mas o card nunca os renderizava — o alerta mostrava só
-// descrição + ação. Regra de proveniência da coluna orbit.alerts.data_source:
-// quando o dado NÃO é um snapshot real, a UI diz isso em vez de esconder.
-const DATA_SOURCE_LABEL: Record<NonNullable<Alert['dataSource']>, string> = {
-  real_snapshot: 'snapshot real',
-  fallback_by_client: 'estimativa por cliente (fallback)',
-  fallback_by_error: 'fallback por erro de leitura',
-  fallback_by_empty: 'fallback por ausência de dado',
-  empty_database: 'banco sem dados',
-  error: 'erro de leitura',
-  estimate: 'estimativa',
-}
-
 export default function AlertCard({ alert, onAcknowledge }: AlertCardProps): React.ReactElement {
   const [isLoading, setIsLoading] = useState(false)
 
@@ -186,22 +172,6 @@ export default function AlertCard({ alert, onAcknowledge }: AlertCardProps): Rea
               </span>
             )}
           </div>
-        )}
-
-        {alert.probableCause ? (
-          <p className={styles.text}>
-            <strong>Causa provável:</strong> {alert.probableCause}
-          </p>
-        ) : (
-          <p className={styles.text}>
-            <em>Causa provável: não registrada para este alerta.</em>
-          </p>
-        )}
-
-        {alert.dataSource && alert.dataSource !== 'real_snapshot' && (
-          <p className={styles.text}>
-            <em>Fonte do dado: {DATA_SOURCE_LABEL[alert.dataSource]}</em>
-          </p>
         )}
 
         {alert.suggestedAction && <p className={styles.text}>💡 {alert.suggestedAction}</p>}
