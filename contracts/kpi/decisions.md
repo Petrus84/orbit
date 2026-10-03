@@ -3,9 +3,12 @@
 ## KCR-C1 — fechado
 2026-10-02 KCR-C1: engagement_public.output.unit = count. Não é percentual.
 
+
 ## KCR-C2 — fechado
-2026-09-29 KCR-C2: engagement_public e play_to_view_ratio permanecem vigente.
-Não restaurar tela de Overview. play_to_view_ratio só em FormatPerformanceTable, por post.
+engagement_public e play_to_view_ratio permanecem vigente, sem tela de Overview.
+O plano antigo pedia refinada. A decisão versionada é a do registry: vigente, screens sem Overview.
+play_to_view_ratio só em FormatPerformanceTable, por post.
+
 
 ## KCR-C3 — fechado
 2026-09-29 KCR-C3: play_to_view_ratio é cálculo (reel_plays / reel_views), não coluna.
@@ -25,6 +28,11 @@ utility_score_pct = (saves + shares) / reach_total (vigente, screens=[]).
 
 ## KCR-C7 — adiado
 2026-10-02 KCR-C7: reach_follower_split — adiado. Não calcular nesta quinzena. Tela AudienceSummaryPanel fora do sprint.
+
+
+## KCR-C9 — adiado
+followers_net_balance: COALESCE faz NULL virar 0. Contraria algo_risk_score ("nunca 0 por ausência").
+Ficha segue vigente. Não corrigir nesta quinzena. Não tratar como bug de tela.
 
 ## Fora do gate
 ctr_below_threshold_alert: dead_writer. Não ligar neste sprint.
