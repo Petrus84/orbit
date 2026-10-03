@@ -1,0 +1,95 @@
+name: Compliance — identificação de contrato
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: compliance-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  identificar-contrato:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Identificar artefatos e falhar se o gate não existe
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          required=(
+            contracts/kpi/registry.json
+            contracts/kpi/decisions.md
+            contracts/ops/board.md
+            docs/adr/kpi-utility-split-c4-c5.md
+          )
+
+          echo "::group::Artefatos exigidos"
+          missing=0
+          for f in "${required[@]}"; do
+            if [[ -f "$f" ]]; then
+              echo "OK  $f"
+            else
+              echo "MISSING  $f"
+              missing=1
+            fi
+          done
+          echo "::endgroup::"
+          [[ "$missing" -eq 0 ]]
+
+          identify() {
+            local f="$1"
+            local n="${2:-20}"
+            echo "::group::HEAD $f"
+            echo "path=$f"
+            echo "bytes=$(wc -c < "$f" | tr -d ' ')"
+            echo "sha256=$(sha256sum "$f" | awk '{print $1}')"
+            echo "----- primeiras $n linhas -----"
+            awk -v n="$n" 'NR<=n { print NR": "$0 }' "$f"
+            echo "::endgroup::"
+          }
+
+          identify contracts/kpi/registry.json 25
+          identify contracts/kpi/decisions.md 40
+          identify contracts/ops/board.md 25
+          identify docs/adr/kpi-utility-split-c4-c5.md 25
+
+          echo "::group::Gate KCR"
+          python3 - << 'PY'
+          import json, pathlib, sys
+          reg = json.loads(pathlib.Path("contracts/kpi/registry.json").read_text())
+          kpis = reg["kpis"] if isinstance(reg, dict) else reg
+          ids = [k.get("kpi_id") for k in kpis]
+          print(f"n_fichas={len(ids)}")
+          if len(ids) < 22:
+              sys.exit("registry com menos de 22 fichas")
+          if len(ids) != len(set(ids)):
+              sys.exit("kpi_id duplicado")
+          need = {"utility_caption", "utility_score_pct", "engagement_public", "play_to_view_ratio"}
+          missing = sorted(need - set(ids))
+          if missing:
+              sys.exit(f"fichas ausentes: {missing}")
+          by = {k["kpi_id"]: k for k in kpis}
+          if by["engagement_public"].get("output", {}).get("unit") != "count":
+              sys.exit("C1: engagement_public.unit != count")
+          if by["utility_score_pct"].get("screens") not in ([], None):
+              sys.exit("C5: utility_score_pct.screens deveria ser []")
+          if by["utility_caption"].get("screens") not in ([], None):
+              sys.exit("C4: utility_caption.screens deveria ser []")
+          print("registry_id_ok")
+          PY
+
+          dec="contracts/kpi/decisions.md"
+          for mark in "KCR-C2" "KCR-C3" "KCR-C4" "KCR-C5" "KCR-C6" "KCR-C7"; do
+            grep -q "$mark" "$dec" || { echo "veredito ausente: $mark"; exit 1; }
+          done
+          echo "decisions_ok"
+          echo "::endgroup::"
