@@ -1,0 +1,18 @@
+=== TOTAL PARA: videoPlayCount ===
+1790396938754_dataset_instagram-profile-scraper_2026-09-23_17-00-31-197.json:0
+1790396938756_dataset_instagram-scraper_2026-09-23_14-25-01-398.json:163
+1790396938757_dataset_instagram-scraper_2026-09-23_14-05-38-440.json:140
+1790396938758_dataset_instagram-scraper_2026-09-23_13-52-13-921.json:165
+
+=== TOTAL PARA: latestComments ===
+1790396938754_dataset_instagram-profile-scraper_2026-09-23_17-00-31-197.json:435
+1790396938756_dataset_instagram-scraper_2026-09-23_14-25-01-398.json:711
+1790396938757_dataset_instagram-scraper_2026-09-23_14-05-38-440.json:1253
+1790396938758_dataset_instagram-scraper_2026-09-23_13-52-13-921.json:1425
+
+=== TOTAL PARA: videoViewCount ===
+1790396938754_dataset_instagram-profile-scraper_2026-09-23_17-00-31-197.json:239
+1790396938756_dataset_instagram-scraper_2026-09-23_14-25-01-398.json:468
+1790396938757_dataset_instagram-scraper_2026-09-23_14-05-38-440.json:779
+1790396938758_dataset_instagram-scraper_2026-09-23_13-52-13-921.json:646
+

@@ -1,0 +1,150 @@
+/* FunnelStep.module.css
+   ============================================================================
+   CORES: a cor de cada etapa (--step-color) chega pronta via inline style,
+   já resolvida em FunnelChart.tsx a partir do vocabulário GlowColor
+   ('cyan' | 'gold' | 'red') — o mesmo usado em KPICardData, QualityScoreItem,
+   FormatPerformanceRow e no glow do GlassCard deste painel. Este arquivo
+   nunca decide cor sozinho; só consome --step-color. Isso evita reintroduzir
+   um tom fora do sistema (ex.: --acc, que no SSOT real é #C8FF57 — verde-
+   lima de marca, não um substituto de azul).
+
+   LAYOUT (cascata): a etapa inteira (barra + badge de queda) encolhe como
+   uma unidade só via `width` real em `.stepInner` (ver FunnelStep.tsx) —
+   nunca via flex-basis num contêiner column, que controla altura, não
+   largura, e era a causa do desalinhamento/overlap anterior.
+   ============================================================================ */
+
+.stepContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2, 0.5rem);
+  padding: var(--space-1, 0.25rem) 0;
+  width: 100%;
+}
+
+.stepInner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1, 0.25rem);
+  min-width: min(220px, 100%);
+  margin: 0 auto;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3, 0.75rem);
+  min-height: 48px;
+  padding: var(--space-2, 0.5rem) var(--space-4, 1rem);
+  border-radius: var(--radius-lg, 8px);
+  /* Glass: sem preenchimento sólido — fundo do card + tint mínimo da cor da
+     etapa, com borda e glow interno seguindo --step-color (mesma linguagem
+     dos variantes glow* do GlassCard). */
+  background:
+    linear-gradient(135deg,
+      color-mix(in srgb, var(--step-color) 8%, transparent) 0%,
+      color-mix(in srgb, var(--step-color) 2%, transparent) 100%),
+    var(--bg-card);
+  border: 1px solid color-mix(in srgb, var(--step-color) 45%, transparent);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.25),
+    inset 0 0 12px color-mix(in srgb, var(--step-color) 10%, transparent);
+  transition:
+    transform var(--transition-fast, 120ms ease),
+    box-shadow var(--transition-fast, 120ms ease),
+    border-color var(--transition-fast, 120ms ease);
+}
+
+.bar:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--step-color) 70%, transparent);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.35),
+    inset 0 0 16px color-mix(in srgb, var(--step-color) 16%, transparent);
+}
+
+.barInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.name,
+.label {
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--text-primary); /* era #fff literal — --t0 é visualmente equivalente e é o token oficial */
+  font-weight: var(--font-weight-semibold, 600);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.value {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs, 0.75rem);
+  color: color-mix(in srgb, var(--text-primary) 82%, transparent); /* era rgba(255,255,255,.82) literal */
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.percentage {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm, 0.875rem);
+  font-weight: var(--font-weight-bold, 700);
+  color: var(--step-color);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.dropoffWrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2, 0.5rem);
+  padding-right: var(--space-1, 0.25rem);
+}
+
+.dropoffBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 0.35rem;
+  border-radius: var(--radius-pill, 9999px);
+  background: color-mix(in srgb, var(--step-color) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--step-color) 35%, transparent);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs, 0.75rem);
+  font-weight: var(--font-weight-bold, 700);
+  letter-spacing: 0.02em;
+  color: var(--step-color);
+}
+
+.dropoffLabel {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs, 0.75rem);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.dropoffNote {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs, 0.75rem);
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: right;
+}
+
+/* Linha fina conectando esta etapa à próxima — reforça a leitura de
+   cascata/funil entre retângulos de largura decrescente. */
+.connector {
+  width: 1px;
+  height: var(--space-3, 0.75rem);
+  background: linear-gradient(180deg, var(--border-default), transparent);
+}

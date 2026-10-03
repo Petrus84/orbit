@@ -1,0 +1,139 @@
+/* RecommendationAlert.module.css
+   Migrado de Tailwind (border-rose-500/60, bg-rose-950/40...) para tokens.
+   Reaproveita o mesmo vocabulário de severidade de AlertCard/Semaphore
+   (critical → --red, warning → --amber, healthy → --green) em vez de uma
+   paleta própria (rose/amber/emerald do Tailwind), pra não criar uma quarta
+   variação de "vermelho" no sistema.
+
+   ✅ FIX: fundo/borda/glow do cartão inteiro agora vêm do <GlassCard> real
+   (mesmo componente usado em AvatarComparison/AlignmentBars), com
+   glowColor mapeado do status (critical→red, warning→gold, healthy→green).
+   .wrapper deixou de desenhar border/background própria — só define
+   --sev-color, usado pelos elementos internos (badge, ícone, headline). */
+
+.wrapper {
+  overflow: hidden;
+  padding: 0 !important;
+}
+
+.critical { --sev-color: var(--red); }
+.warning  { --sev-color: var(--amber); }
+.healthy  { --sev-color: var(--green); }
+
+.headerBtn {
+  display:      flex;
+  align-items:  center;
+  gap:          var(--space-3);
+  width:        100%;
+  padding:      var(--space-4);
+  text-align:   left;
+  background:   transparent;
+  border:       none;
+  cursor:       pointer;
+  transition:   background var(--transition-fast);
+}
+
+.headerBtn:hover {
+  background: var(--bg-hover);
+}
+
+.iconBadge {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  flex-shrink:     0;
+  width:           36px;
+  height:          36px;
+  border-radius:   var(--radius-md);
+  background:      color-mix(in srgb, var(--sev-color) 20%, transparent);
+  font-size:       var(--font-size-lg);
+}
+
+.headerText {
+  flex:      1;
+  min-width: 0;
+}
+
+.metaRow {
+  display:      flex;
+  align-items:  center;
+  gap:          var(--space-2);
+  flex-wrap:    wrap;
+  margin-bottom: 2px;
+}
+
+.badge {
+  font-family:    var(--font-family);
+  font-size:      10px;
+  font-weight:    700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding:        1px 8px;
+  border:         var(--border-width) solid color-mix(in srgb, var(--sev-color) 30%, transparent);
+  border-radius:  var(--radius-sm);
+  background:     color-mix(in srgb, var(--sev-color) 20%, transparent);
+  color:          var(--sev-color);
+}
+
+.scoreText {
+  font-family: var(--font-family);
+  font-size:   var(--font-size-xs);
+  color:       var(--text-muted);
+}
+
+.headline {
+  font-family: var(--font-family);
+  font-size:   var(--font-size-sm);
+  font-weight: 600;
+  color:       var(--sev-color);
+}
+
+.chevron {
+  flex-shrink: 0;
+  font-family: var(--font-family);
+  font-size:   10px;
+  color:       var(--text-muted);
+}
+
+.body {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-2);
+  padding:        0 var(--space-4) var(--space-4);
+}
+
+.divider {
+  height:     1px;
+  background: var(--border-default);
+  margin-bottom: var(--space-1);
+}
+
+.item {
+  display:        flex;
+  gap:            var(--space-3);
+  padding:        var(--space-3);
+  border:         var(--border-width) solid var(--border-default);
+  border-radius:  var(--radius-md);
+  background:     var(--bg-hover);
+}
+
+.itemIcon {
+  flex-shrink: 0;
+  font-size:   var(--font-size-base);
+  margin-top:  1px;
+}
+
+.itemTitle {
+  font-family: var(--font-family);
+  font-size:   var(--font-size-sm);
+  font-weight: 600;
+  color:       var(--text-secondary);
+}
+
+.itemDesc {
+  font-family: var(--font-family);
+  font-size:   var(--font-size-xs);
+  line-height: 1.6;
+  color:       var(--text-muted);
+  margin-top:  2px;
+}

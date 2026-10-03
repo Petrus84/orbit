@@ -1,0 +1,798 @@
+{
+  "handle": "alexandre_psicologia",
+  "setor_benchmark_key": "4_servico_consultoria",
+  "url": "https://www.instagram.com/alexandre_psicologia/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T01:49:39.956Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DbJsC7Fhu5s",
+      "caption": "Participação em agradável entrevista com @pricieleventurini e imagens de @archimedespatricio para falar da importância da amizade para a saúde mental na @redegazetaes \n\nObrigado pela oportunidade! \n\nAlexandre Brito\nPsicólogo (27) 99943 1968\n\n#amizade #saudemental #psicologia #psicanalise #terapia",
+      "timestamp": "2026-07-23T22:00:04.000Z",
+      "content_format": "reel",
+      "likes": 147,
+      "comments": 2,
+      "video_view_count": 214,
+      "video_play_count": 4200,
+      "latest_comments": [
+        "👏👏👏👏",
+        "😍😍👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbiJo-RDVpU",
+      "caption": "“O tempo não para” @cazuza.oficial \n\nSiga @alexandre_psicologia \n\nAlexandre Brito\nPsicólogo (27) 99943 1968\n\n#cazuza #psicologia #psicanalise #pensamentos #filosofia",
+      "timestamp": "2026-08-02T10:00:03.000Z",
+      "content_format": "carousel",
+      "likes": 72,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbM7yyKtqv9",
+      "caption": "Qual sua expressão de autocuidado hoje? Deixa nos comentários!\n\nSiga @alexandre_psicologia \nAlexandre Brito\nPsicólogo 27 99943 1968\n\n#saudemental #terapia #psicologia #psicanalise #filosofia",
+      "timestamp": "2026-07-25T09:00:05.000Z",
+      "content_format": "static_post",
+      "likes": 377,
+      "comments": 11,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "LIVRO",
+        "😂o último é impagável",
+        "O último é libertador 😂😂",
+        "😂😂😂😂😂",
+        "Hoje pode ; porque não me deliciar com uma barra de chocolate 🍫 rs",
+        "Amei o último 😂",
+        "Amo todas kkkkk",
+        "😂😂😂😂",
+        "❤️😂😂😂😂",
+        "amo o último professor !! KKKKKKK"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbZIzjHhwPv",
+      "caption": "Bate-papo sobre Cyberbullying com crianças e adolescentes com @prsobral_ no programa @bdes.tvgazeta com participação do psicólogo @alexandre_psicologia \n\nSe gostou, não deixe de compartilhar com outras famílias!\n\nAlexandre Brito\nPsicólogo (27) 99943 1968\n\n#cyberbullying #saudemental #terapia #psicologia #psicanalise",
+      "timestamp": "2026-07-29T22:00:04.000Z",
+      "content_format": "reel",
+      "likes": 120,
+      "comments": 3,
+      "video_view_count": 642,
+      "video_play_count": 1962,
+      "latest_comments": [
+        "Verdade!",
+        "Esse e o pitangui da psicóloga",
+        "👏🏿👏🏿"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbDJMjnCkNq",
+      "caption": "Qual o seu microluxo?\n\nOs microluxo podem ser modos de se oferecer algo que rompe com a lógica de consumo desenfreado, mas que te oferece uma experiência. Trata-se muito mais de poder usar o tempo e o dinheiro para ter experiências, bem diferente de uma ostentação. Alguns vão dizer que são \"caprichos\", e podem condenar seus \"mimos\", mas sabemos que eles têm um lugar importante na sua saúde. Não é terapia, mas é terapêutico!\n\n(Participação em @tribunaonline deste domingo, dia 19 de julho de 2026)\n\nAlexandre Brito\nPsicólogo (27) 99943 1968\n\n#microluxo #saudemental #psicologia #psicanalise #terapia",
+      "timestamp": "2026-07-21T09:00:25.000Z",
+      "content_format": "carousel",
+      "likes": 81,
+      "comments": 6,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏👏",
+        "Muito legal a perspectiva, concordo plenamente! Parabéns pela matéria!",
+        "👏",
+        "Meu micro luxo é viajar.",
+        "Meu micro luxo e ter uma sessão com vc",
+        "Muito bom conteúdo……"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbnMS92Dbvn",
+      "caption": "A vida acontece entre-linhas! \n\nA psicoterapia é um espaço de desfazer nós, um espaço para cuidar de cada um de nossos nós!\n\nSiga @alexandre_psicologia \n\nAlexandre Brito\nPsicólogo (27) 99943 1968\n\n#frases #pensamentos #psicanalise #psicologia #terapia",
+      "timestamp": "2026-08-04T09:00:02.000Z",
+      "content_format": "carousel",
+      "likes": 342,
+      "comments": 15,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏👏",
+        "👏👏👏❤️",
+        "Perfeito 👏👏👏",
+        "👏👏👏😍",
+        "👏👏👏👏👏muitas verdades e aprendizado",
+        "🔥🔥🔥🔥🔥😍👏",
+        "Maravilhosos pensamentos em forma de arte.",
+        "Maravilhosas essas afirmativas 👏👏👏👏👏👏",
+        "♥️🙏🏻✨",
+        "❤️🔥❤️ sou intensa"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaxHmPWB0Mh",
+      "caption": "Siga @alexandre_psicologia e faça sua própria reflexão!\n\nAlexandre Brito\nPsicólogo (27) 99943 1968\n\n#humor #terapia #psicologia #psicanalise #saudemental",
+      "timestamp": "2026-07-14T09:00:05.000Z",
+      "content_format": "reel",
+      "likes": 113,
+      "comments": 35,
+      "video_view_count": 31,
+      "video_play_count": 3331,
+      "latest_comments": [
+        "O assunto é sério mas não deixa de ser engraçado 😂",
+        "Kkkkkkkkk😂😂😂😂😂😂 rindo muito aqui maninho my Brother😂😂😂😂😂😂",
+        "Vontade absurda de postar e sair correndo. 🏃🏽‍♀️ KKKKKKKKKKKKKK",
+        "Filosofar é uma de suas especialidades rsrsrs",
+        "😂😂😂😂",
+        "😂",
+        "😂😂",
+        "😂😂😂😂",
+        "@maisamaisacosta 😂😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbWn10JkS-T",
+      "caption": "Reconheceram os trechos? Talvez eles façam mais sentido na vida adulta dos “baixinhos”. \n\nSe faz sentido, curte e deixa nos comentários!\n\nSiga @alexandre_psicologia \n\nAlexandre Brito \nPsicólogo (27) 99943 1968\n\n#xuxa #ultimovoodanave #psicologia #psicanalise #terapia @xuxamemorias @xoudaxuxaoficial @xuxameneghel",
+      "timestamp": "2026-07-28T22:33:46.000Z",
+      "content_format": "carousel",
+      "likes": 8304,
+      "comments": 172,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "❤️",
+        "“Procure se ligar, é como o sábio diz… a vida é pra viver, pra todo mundo ser feliz… se você quer sonhar você tem que saber que as coisas acontecem quando tem que acontecer… “",
+        "Rainha, apenas!",
+        "A última foto 😍👏",
+        "Ta eu aqui chorando de novo 🥹😭🫰🏽❌️👑🛸💖✨️",
+        "Xuxa sempre passou tudo nas músicas delas e nos da geração x  sabemos sentíamos pois nós fomos criados de formas diferentes a enfrentar o mundo. Essas frases nunca chocarão a geração de hj que praticamente quer tudo pronto. Lua de cristal marcou minha vida e até hl eu uso a frase . Tudo que quizer será. O cara lá de cima vai me dar . É uma força que não tem limite e uma vontade de vencer muito brande",
+        "👏👏👏❤️",
+        "Conheço sim 🤝😁",
+        "\"Liberte o corpo pra poder sentir, os desejos, as vontades, o que ele pedir\""
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da8D_HAhQ2G",
+      "caption": "Trecho da reportagem do @esnoaroficial na @tvvitoriaes sobre a notável presença cotidiana da internet na vida do brasileiro. Entrevista de @gabi_valdetaro com participação do psicólogo @alexandre_psicologia \n\nA internet exige um uso responsável, pois pode ser tanto aliada na vida pessoal e profissional, quanto perigosa para a saúde mental.\n\n#saudemental #terapia #psicologia #psicanalise",
+      "timestamp": "2026-07-18T15:00:06.000Z",
+      "content_format": "reel",
+      "likes": 34,
+      "comments": 2,
+      "video_view_count": 35,
+      "video_play_count": 1510,
+      "latest_comments": [
+        "@gabi_valdetaro ❤️",
+        "@vilela.kamilapsi ❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbFt9kajaHk",
+      "caption": "🍃\n\nSiga @alexandre_psicologia \n\nAlexandre Brito\nPsicólogo 27 99943 1968\n\n#frases #pensamentos #psicologia #psicanalise #filosofia",
+      "timestamp": "2026-07-22T09:00:03.000Z",
+      "content_format": "carousel",
+      "likes": 344,
+      "comments": 13,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "A bagunça faz parte da reforma.🔥",
+        "😍😍😍😍😍",
+        "👏🏿👏🏿👏🏿",
+        "\"amanhã farei erros melhores\"❤️",
+        "Eu tô comigo até o fim....Frase perfeita!!👏👏👏",
+        "Eu tô comigo até o fim. Não podia ser diferente, perfeito ❤️",
+        "Página maravilhosa 👏😍❤️",
+        "Inspiração para muitos❤️",
+        "👏👏👏👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbgmTbFEf1V",
+      "caption": "Reconheceram os trechos? Talvez eles façam mais sentido na vida adulta dos “baixinhos”. \n\nSe faz sentido, curte e deixa seu comentário!\n\nSiga @alexandre_psicologia \n\nAlexandre Brito \nPsicólogo (27) 99943 1968\n\n#xuxa #ultimovoodanave #psicologia #psicanalise #terapia @xuxamemorias @xoudaxuxaoficial @xuxameneghel",
+      "timestamp": "2026-08-01T19:32:44.000Z",
+      "content_format": "carousel",
+      "likes": 1917,
+      "comments": 62,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "\"Menino ou menina que sabe o que quer\"",
+        "Sempre fez sentido para mim❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️.",
+        "“Fica de preguiça, a vida toda enguiça..” “tô de bem com a vida.. tô de vento em popa.. tô feliz pra burro..to assim com o mundo..”",
+        "@chrispcampos bicha, relações familiares são mais complexas do que uma simples opinião de alguém que não viveu/vive aquela realidade.",
+        "@chrispcampos ódio só vcs que são ignorantes, fecha logo a conta pra parar de postar merda"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da42AeDDcdG",
+      "caption": "O sentido da vida é sentir a vida!\n\nFaz sentido?\n\nSiga @alexandre_psicologia \nPsicólogo (27) 99943 1968\n\n#afeto #saudemental #terapia #psicologia #psicanalise",
+      "timestamp": "2026-07-17T09:00:02.000Z",
+      "content_format": "carousel",
+      "likes": 140,
+      "comments": 6,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏👏👏",
+        "Obrigado por nos trazer tão boas palavras ❤️‍🩹",
+        "O que eu precisava. ❤️👏",
+        "👏👏👏",
+        "Exatamente 🤍",
+        "Bem isso❤️👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbAka5Ljdxd",
+      "caption": "Ao longo da vida, atravessamos diferentes formas de luto: por pessoas, vínculos, sonhos, lugares que ocupamos e futuros que imaginamos viver.\n\nO luto não é uma falha, uma fraqueza ou algo que precisa ser rapidamente eliminado. Ele é um processo de mudança diante de uma nova realidade.\n\nAssim como no esporte, nem toda partida termina como esperávamos. Algumas derrotas encerram ciclos, interrompem caminhos e nos obrigam a reconstruir sentidos.\n\nRespeitar o luto é reconhecer a importância daquilo que perdemos e permitir que uma nova relação com essa história possa ser construída.\n\nNem toda perda encerra a vida. Algumas transformam a forma como seguimos.\n\nSiga @alexandre_psicologia \nPsicólogo (27) 99943 1968\n\n#luto #copa2026 #psicologia #psicanalise #terapia",
+      "timestamp": "2026-07-20T09:00:06.000Z",
+      "content_format": "carousel",
+      "likes": 156,
+      "comments": 11,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Postagens interessantes 🙏🏻👏🏻👏🏻✨",
+        "Perfeito!🙌😢😍💔🙌",
+        "😍😂😂😂😂😂😂😂",
+        "Deu sorte de chegar na final  rera p ter saído antes",
+        "Perfeito! Todas as frases são ceias de conteúdo, mas a quinta é maravilhosa 😍😍😍",
+        "disse na outra live  estava nas maos dele parar com o racismo",
+        "Mesmo assim deixa legado 👏",
+        "💪💪💪💙",
+        "Perfeito!!"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbc5HirDTbS",
+      "caption": "Sua vez de decidir por você! 🍃\n\nSiga @alexandre_psicologia \n\nAlexandre Brito\nPsicólogo (27) 99943 1968\n\n#frases #pensamentos #psicanalise #psicologia #filosofia",
+      "timestamp": "2026-07-31T09:00:00.000Z",
+      "content_format": "carousel",
+      "likes": 147,
+      "comments": 11,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "✊🏾✊🏼✊ Justiça Por Lígia Brasil 🌹 @prof.ligiabrasil 🇧🇷 🇧🇷",
+        "⭐",
+        "✨✨✨✍️",
+        "❤️❤️❤️❤️",
+        "\"Foca nas suas coisinhas e vai\" amei.👏",
+        "Sensacional e fundamental!😍",
+        "Todos os posts NECESSÁRIOS 😍",
+        "@alexandre_psicologia eu não duvido, tah ?!?😁"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbT8ypxxGLz",
+      "caption": "A psicoterapia através da música! Você já viveu um processo parecido com o de @renatorussooficial do @legiaourbanaoficial ❓\n\n⚠️O vídeo é uma metáfora usando bom humor para ilustrar através de trechos das músicas, situações comuns da psicologia na vida cotidiana! Não há nada que seja pessoal sobre os artistas, senão profunda admiração!\n\nSiga @alexandre_psicologia \nAlexandre Brito\nPsicólogo (27) 99943 1968\n\n#renatorusso #legiaourbana #psicologia #psicanalise #terapia",
+      "timestamp": "2026-07-27T21:44:21.000Z",
+      "content_format": "reel",
+      "likes": 977,
+      "comments": 22,
+      "video_view_count": 4750,
+      "video_play_count": 12873,
+      "latest_comments": [
+        "Grande poeta",
+        "Usou logo Renato Russo que morreu Depressivo fazendo seus últimos álbuns quase que um Velório??",
+        "🎶🎵🎶🎵...Agora está tão longe, vê\nA linha do horizonte me distrai\nDos nossos planos é que tenho mais saudade...\nQuando olhávamos juntos na mesma direção 😢\nAonde está você agora\nAlém de aqui dentro de mim?🎶🎵🎶🎶🎵",
+        "Interessante essa colocação,  as letras do Renato russo cada música dele da pra perceber diversos significados dos momentos na vida né compreendo aquilo que ele sentia no momento,  poderia faze reflexão da letra ventos no litoral que música magnífica top uma letra que pode estar relacionada ao término de um romance ou perda de uma pessoa especial né, letra dessa música muito bem montada criada né Renato era gênio demais",
+        "Arte pura amoooo um talento nato ímpar Renato Russo para sempre saudade.",
+        "Estou querendo é desviver!",
+        "🙏🏼👏🏽",
+        "Amei! As letras dele sempre me emocionam. 🫶🏼🎵❤️",
+        "Estou nesse processo",
+        "🎼Se você quiser alguém em quem confiar , confie em si mesmo , quem acredita sempre alcança 🎼"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaaDXe9DSOp",
+      "caption": "“Tô aproveitando cada segundo\nAntes que isso aqui vire uma tragédia” @pitty \n\nSiga @alexandre_psicologia \n\nAlexandre Brito\nPsicólogo (27) 99943 1968\n\n#pitty #psicologia #psicanalise #saudemental #terapia",
+      "timestamp": "2026-07-05T10:00:02.000Z",
+      "content_format": "carousel",
+      "likes": 186,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Perfeição em profissionalismo!!!! “ mas apesar delas” 💛"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaxHsSFDaUq",
+      "caption": "Alguns ciclos já se encerraram há muito tempo, resta compreender para reconhecer e admitir para si. \n\nSiga @alexandre_psicologia \nPsicólogo (27) 99943 1968\n\n#pensamentos #psicologia #psicanalise #terapia #saudemental",
+      "timestamp": "2026-07-14T09:00:02.000Z",
+      "content_format": "carousel",
+      "likes": 238,
+      "comments": 10,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Em algumas situações soltar a corda é libertador; eu não me refiro só em relacionamentos a dois...",
+        "👏👏👏👏👏👏",
+        "Verdade 🤝",
+        "🙌",
+        "E verdade glória  a Deus ❤️",
+        "Aliviooooooooooooo kkkkkkkkk",
+        "👏👏👏👏👏👏",
+        "Eita, que a língua tá afiada!🤭",
+        "Aí vc dar um Glória! 😍🙌",
+        "Isso"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DapZPNDDYFr",
+      "caption": "“Quero me livrar dessa situação precária\nOnde o rico cada vez fica mais rico\nE o pobre cada vez fica mais pobre” - As Meninas.\n\nSiga @alexandre_psicologia \n\nAlexandre Brito\nPsicólogo (27) 99943 1968\n\n#pensamentos #psicologia #psicanalise #saudemental #terapia @bandaasmeninas @bandaasmeninasof",
+      "timestamp": "2026-07-11T09:00:02.000Z",
+      "content_format": "carousel",
+      "likes": 225,
+      "comments": 4,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Muito bom o conteúdo! 👏👏👏",
+        "Não existe saúde mental sem justiça social👏",
+        "Verdade",
+        "👏🏿👏🏿👏🏿 quando o básico não é garantido, não existe saúde👏🏿👏🏿👏🏿"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Das0Ti4kaGq",
+      "caption": "A vida tem suas dores. Dentre elas, a dor da existência e das exigências da vida. E, por mais difícil e paradoxal que isso possa parecer, é preciso sentir sem adiar ou anestesiar a dor. \n\nQuerer desaparecer não significar dar um fim em tudo por causa de uma dor, mas entender que precisamos de um espaço de cuidado responsável com nossas vulnerabilidades.\n\nExistem espaços de cuidado para que você possa escutar o que tem a dizer e sentir sem precisar mentir. \n\nA psicoterapia pode ser uma aliada nesse processo, sem julgamentos e com sigilo profissional! \n\nE quando precisar, peça ajuda sem hesitar!\n\nSiga @alexandre_psicologia \nPsicólogo (27) 99943 1968\n\n#saudemental #terapia #psicologia #psicanalise",
+      "timestamp": "2026-07-12T16:54:35.000Z",
+      "content_format": "carousel",
+      "likes": 282,
+      "comments": 7,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😢😢",
+        "Mas tem carinhos e cuidados que mesmo sem encostar, curam.",
+        "Com certeza",
+        "Verdade!!!",
+        "Vdd",
+        "👏",
+        "Exatamente!"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da-GeL4jQn-",
+      "caption": "Você não precisa assumir todos os problemas do outro. Existem dores que exigem um espaço de cuidado profissional. \n\nPara não carregar tudo nas costas sozinho, talvez seja um bom momento para procurar ou indicar o @alexandre_psicologia \n\nAgenda aberta!\n\nAlexandre Brito\nPsicólogo (27) 99943 1968\n\n#ivetesangalo #saudemental #terapia #psicologia #psicanalise @ivetesangalo",
+      "timestamp": "2026-07-19T10:00:02.000Z",
+      "content_format": "carousel",
+      "likes": 100,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Maravilhoso👏👏👏",
+        "Verdade👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DafGIUIjRvD",
+      "caption": "Não é apenas sobre futebol! Faz sentido?\n\nSiga @alexandre_psicologia \n\nAlexandre Brito\nPsicólogo (27) 99943 1968\n\n#copa2026 #futebol #psicologia #psicanalise #saudemental",
+      "timestamp": "2026-07-07T09:00:03.000Z",
+      "content_format": "carousel",
+      "likes": 234,
+      "comments": 4,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Cabo verde nao deu brega pra espanha vozinha  fechou  com tdo",
+        "Tudo verdade",
+        "❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbknkpvhgs1",
+      "caption": "Muitas vezes sua motivação vem de onde menos se espera! \n\nSiga @alexandre_psicologia \n\nAlexandre Brito\nPsicólogo 27 99943 1968\n\n#humor #terapia #psicologia #psicanalise",
+      "timestamp": "2026-08-03T09:00:05.000Z",
+      "content_format": "reel",
+      "likes": 61,
+      "comments": 10,
+      "video_view_count": 432,
+      "video_play_count": 1224,
+      "latest_comments": [
+        "😂😂😂😂",
+        "😂😂",
+        "😂😂😂😂😂😂😂",
+        "😂😂😂",
+        "😂😂😂😂",
+        "😂😂😂",
+        "😂😂😂😂😂",
+        "😂😂😂😂",
+        "😂😂😂😂😂😂",
+        "Realmente um simples  sinal gera em nós motivação"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaUy2--kR-L",
+      "caption": "A ansiedade costuma aparecer antes do jogo começar, e, muitas vezes, diminui quando a bola já está rolando.\n\nMas, na vida nem sempre existe esse “apito” inicial ou final.\n\nQuando ela começa a ocupar espaço demais e afetar sua saúde, isso merece atenção.\n\nE você não precisa lidar com isso sozinho!\n\nSe gostou do conteúdo siga @alexandre_psicologia \n\nAlexandre Brito\nPsicólogo (27) 99943 1968",
+      "timestamp": "2026-07-03T09:00:02.000Z",
+      "content_format": "carousel",
+      "likes": 47,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏👏👏👏👏",
+        "Muito bem explicado 👏👏👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DakPrjmjYI5",
+      "caption": "Fazer terapia é um processo de cuidado bem diferente de outras áreas da saúde. Nela, a cura não é retornar ao estado anterior das coisas ou sobre ser normal. Cura não é um destino definitivo. Talvez a melhor palavra nem seja cura, pois é impossível se curar do que não é uma doença, é impossível se curar de si mesmo!\n\nNesse processo, sejamos generosos conosco, mas sem abrir mão da rigorosidade dos enfrentamentos e da escuta de si.\n\nSiga @alexandre_psicologia \n\nAlexandre Brito\nPsicólogo (27) 99943 1968\n\n#saudemental #terapia #psicologia #psicanalise",
+      "timestamp": "2026-07-09T09:00:02.000Z",
+      "content_format": "carousel",
+      "likes": 771,
+      "comments": 22,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂😂",
+        "A terceira certamente é a realidade de tantos e tantas ❤️‍🩹",
+        "Amei a primeira foto 😂😂😂 eu toda",
+        "Amei demais essas frases kk",
+        "😂😂😂😂",
+        "😂😂",
+        "Perfeita as frases.😍",
+        "Uma melhor que a outra, mas a última, me pegou! ❤️",
+        "Verdade: seja dita ✨",
+        "@fabiowilhians.psicologo 😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DajEZCLx4Qq",
+      "caption": "Você associa dinheiro com saúde mental? Hoje foi ao ar nossa participação em @agazetaes para falar sobre como o dinheiro afeta nossa saúde mental! A pauta se fundamenta em pesquisas recentes, pois elas apontam que problemas financeiros podem causar estresse e depressão!\n\nEntrevista com @sena.felipe e reportagem completa no g1.globo.com/es\n\nObrigado pela oportunidade!\n\nAlexandre Brito\nPsicólogo (27) 99943 1968\n\n#dinheiro #saudemental #psicologia #psicanalise #terapia",
+      "timestamp": "2026-07-08T22:15:48.000Z",
+      "content_format": "static_post",
+      "likes": 93,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dahq3v6B7me",
+      "caption": "Devia ter enlouquecido mais…\n\nO que achou dessa paródia?\n\nSiga @alexandre_psicologia \n\nAlexandre Brito\nPsicólogo (27) 99943 1968\n\n#humor #terapia #psicologia #psicanalise #saudemental",
+      "timestamp": "2026-07-08T09:00:10.000Z",
+      "content_format": "reel",
+      "likes": 333,
+      "comments": 54,
+      "video_view_count": 1277,
+      "video_play_count": 6606,
+      "latest_comments": [
+        "😂😂😂",
+        "😂😂😂😂😂😂😂😂",
+        "😂😂😂😂😂",
+        "😂😂😂\nMe identifiquei",
+        "😂😂😂😂😂😂",
+        "Bem isso kkkk",
+        "😂😂",
+        "😂😂😂😂😂",
+        "Ter coringado mais... ✨",
+        "😂😂😂😂",
+        "😂😂😂",
+        "Sensacional",
+        "Perfeito😂😂😂😂😂😂😂😂",
+        "😂😂😂muito bom @tiocris.psi",
+        "A última vez q fiquei assim, fiquei sem emprego 😢😢😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dazsb1VDQNU",
+      "caption": "O mundo vai girando cada vez mais veloz\nA gente espera do mundo, o mundo espera de nós\nUm pouco mais de paciência - @lenine \n\nSiga @alexandre_psicologia \nPsicólogo (27) 99943 1968\n\n#lenine #paciencia #psicologia #psicanalise #terapia",
+      "timestamp": "2026-07-15T09:00:02.000Z",
+      "content_format": "carousel",
+      "likes": 236,
+      "comments": 11,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "❤️❤️❤️",
+        "Amo essa música  desse adolescente,mais hj em dia q paro realmente p ouvi -la .",
+        "😍😍",
+        "👏👏",
+        "@tarcianatairine @dayana_jessyca ❤️",
+        "Exatamente! Parece que estamos vivendo no automático o tempo todo, anestesiados sem sentir absolutamente nada.",
+        "Tudo que precisamos nos dias de hoje, paciência ❤️",
+        "Ando devagar prq já tive pressa ...",
+        "@marizana_mueller7 *desde"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da3k15cyeFH",
+      "caption": "Entrevista para TV Gazeta / Globo sobre um assunto que pede socorro no Brasil. Afinal, saúde mental e vida financeira estão associados diretamente. \n\nProblemas com a saúde financeira afetam o corpo, a família, o relacionamento, o trabalho e podem evoluir para um transtorno como depressão e ansiedade. \n\nQuando precisar, peça ajuda sem hesitar. Comece falando com uma pessoa de sua confiança e com profissionais que possam acompanhar sua situação.\n\nObrigado pela oportunidade!\n\nSiga @alexandre_psicologia \nPsicólogo (27) 99943 1968",
+      "timestamp": "2026-07-16T21:19:27.000Z",
+      "content_format": "reel",
+      "likes": 79,
+      "comments": 0,
+      "video_view_count": 31,
+      "video_play_count": 2223,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbB9sRlhTLt",
+      "caption": "Excesso de cuidado ou ciúme possessivo? Você vive uma realidade mais @henriqueediego ou mais @ritalee_oficial ?\n\nSiga @alexandre_psicologia \n\n⚠️O vídeo é apenas uma metáfora usando bom humor para ilustrar através de trechos das músicas, situações comuns da psicologia na vida cotidiana! Não há nada que seja literal ou pessoal sobre os artistas, senão profunda admiração!\n\nAlexandre Brito\nPsicólogo (27) 99943 1968",
+      "timestamp": "2026-07-20T22:00:06.000Z",
+      "content_format": "reel",
+      "likes": 142,
+      "comments": 8,
+      "video_view_count": 91,
+      "video_play_count": 4283,
+      "latest_comments": [
+        "Muito massa",
+        "MT sério, invasão destravar o celular com a digital da pessoal🤬",
+        "Sobre o \"SERTANÔJO\" é tão ruim que não merece nem comentar.",
+        "Já vivi",
+        "Sacrilégio colocar a ritinha no meio dos sertanejos",
+        "👏👏",
+        "Sertanejo moderno tá indo de mau a pior"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dav1SouBUZN",
+      "caption": "Bate-papo sobre a responsabilidade no uso das canetas emagrecedoras no programa @pontodevistaes da @tvtribunaes que foi apresentado pela @deboraprest com participação do psicólogo @alexandre_psicologia \n\nAs canetas precisam de um uso responsável com acompanhamento profissional, tanto no tratamento médico, nutricional, quanto psicológico.\n\nSiga @alexandre_psicologia \n(27) 99943 1968\n\n#saudemental #canetasemagrecedoras #terapia #psicologia #psicanalise",
+      "timestamp": "2026-07-13T21:00:08.000Z",
+      "content_format": "reel",
+      "likes": 210,
+      "comments": 11,
+      "video_view_count": 23,
+      "video_play_count": 4277,
+      "latest_comments": [
+        "👏👏👏👏",
+        "👏👏👏👏👏",
+        "Perfeito 👏👏👏👏",
+        "👏👏👏",
+        "👏👏👏👏👏👏",
+        "Eu fiz cirurgia bariátrica mesmo... rs",
+        "Arrasou 👏👏👏",
+        "👏👏👏👏",
+        "👏👏👏",
+        "Eu não estou usando a caneta!",
+        "Muito bom! 👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 74465,
+  "following_count": 4960,
+  "posts_count": 2331,
+  "follower_tier": "macro",
+  "engagement": {
+    "sample_size": 30,
+    "median_er": 0.002376955616732693,
+    "mean_er": 0.007621030014100584,
+    "er_per_post": [
+      {
+        "short_code": "DbJsC7Fhu5s",
+        "er": 0.0020009400389444706,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbiJo-RDVpU",
+        "er": 0.0009668972000268582,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbM7yyKtqv9",
+        "er": 0.005210501577922514,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbZIzjHhwPv",
+        "er": 0.0016517827167125494,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbDJMjnCkNq",
+        "er": 0.0011683341166991205,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbnMS92Dbvn",
+        "er": 0.004794198616799839,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DaxHmPWB0Mh",
+        "er": 0.0019875109111663195,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbWn10JkS-T",
+        "er": 0.11382528704760626,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "Da8D_HAhQ2G",
+        "er": 0.0004834486000134291,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbFt9kajaHk",
+        "er": 0.004794198616799839,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbgmTbFEf1V",
+        "er": 0.02657624387296045,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "Da42AeDDcdG",
+        "er": 0.0019606526556100183,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbAka5Ljdxd",
+        "er": 0.002242664338951185,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "Dbc5HirDTbS",
+        "er": 0.0021218021889478278,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbT8ypxxGLz",
+        "er": 0.013415698650372659,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaaDXe9DSOp",
+        "er": 0.0025112468945142014,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DaxHsSFDaUq",
+        "er": 0.0033304236889814005,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DapZPNDDYFr",
+        "er": 0.0030752702611965355,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "Das0Ti4kaGq",
+        "er": 0.003881017927885584,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "Da-GeL4jQn-",
+        "er": 0.0013697710333713826,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DafGIUIjRvD",
+        "er": 0.0031961324111998927,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "Dbknkpvhgs1",
+        "er": 0.0009534680722487074,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaUy2--kR-L",
+        "er": 0.0006580272611293896,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DakPrjmjYI5",
+        "er": 0.010649298328073592,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DajEZCLx4Qq",
+        "er": 0.0012489088833680252,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "Dahq3v6B7me",
+        "er": 0.005197072450144363,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dazsb1VDQNU",
+        "er": 0.00331699456120325,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "Da3k15cyeFH",
+        "er": 0.0010609010944739139,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbB9sRlhTLt",
+        "er": 0.002014369166722621,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dav1SouBUZN",
+        "er": 0.002967837238971329,
+        "content_format": "reel"
+      }
+    ]
+  },
+  "external_url": "https://api.whatsapp.com/send?phone=5527999431968&text=Ol%C3%A1%2C+Alexandre",
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "a_validar_pre_monetizacao",
+    "secondary": null,
+    "matches": [],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "a_validar_pre_monetizacao",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "parcial",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T01:49:39.956Z",
+    "versao_framework": "v3.1"
+  }
+}

@@ -1,0 +1,610 @@
+{
+  "handle": "garcia_treinamentos",
+  "setor_benchmark_key": "8_autoridade_b2b",
+  "url": "https://www.instagram.com/garcia_treinamentos/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T02:37:15.234Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "Dbfgx0JIXtP",
+      "caption": "Tem casal que parece uma empresa: um reclama de tudo e o outro faz tudo. O problema é que, quando só um trabalha pela relação, cedo ou tarde a conta chega.",
+      "timestamp": "2026-08-01T09:25:42.000Z",
+      "content_format": "reel",
+      "likes": 23,
+      "comments": 2,
+      "video_view_count": 486,
+      "video_play_count": 1132,
+      "latest_comments": [
+        "Não acredito! O Márcio não pediu o ferro de passar hehehe.",
+        "@cris.andradec Kkk, pois é né, ele pensou bem 😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbLXCMORbgx",
+      "caption": "Um pouquinho dos momentos vivenciados na noite de ontem aqui na ACIG!\n\nFoi uma noite incrível, repleta de alegria, aprendizado e muita energia com a palestra show “A Força do Trabalho em Equipe”!\n\nNosso agradecimento especial aos palestrantes Cris e Márcio, que proporcionaram aos nossos associados um momento único, leve e cheio de experiências, que, com certeza, ficarão na memória!\n\nAgradecemos a todos que estiveram presentes e fizeram parte dessa noite tão especial.",
+      "timestamp": "2026-07-24T13:38:57.000Z",
+      "content_format": "reel",
+      "likes": 20,
+      "comments": 0,
+      "video_view_count": 38,
+      "video_play_count": 1201,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbXr27OoOyh",
+      "caption": "Mulher Empreendedora\n\nEmpreender vai muito além de abrir uma empresa. É ter coragem para recomeçar, aprender todos os dias, transformar desafios em oportunidades e acreditar no próprio potencial.\n\nSe você deseja crescer, fortalecer seu negócio e trocar experiências com outras mulheres que vivem os mesmos desafios, esta oficina é para você.\n\nVenha investir em quem faz a diferença: você! 💜\n\nInscreva-se e participe. O seu próximo passo pode começar aqui.",
+      "timestamp": "2026-07-29T08:28:25.000Z",
+      "content_format": "reel",
+      "likes": 6,
+      "comments": 2,
+      "video_view_count": 66,
+      "video_play_count": 253,
+      "latest_comments": [
+        "Momento significativo, maravilhoso estar contigo, parabéns 👏👏👏",
+        "❤️❤️❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DayPxM6oy6a",
+      "caption": "Na nossa Palestra Show para Casais, cada música tem um propósito. ❤️🎶\n\n\"Menininha\", do Tchê Garotos, traz leveza, carinho e boas lembranças, ajudando os casais a se reconectarem por meio da música e da reflexão. Em meio a momentos de descontração e emoção, reforçamos que cuidar do relacionamento é uma escolha feita todos os dias.\n\nUma experiência que faz rir, emociona e fortalece os laços de quem decidiu caminhar junto. 💕✨\n\n#palestrashow #casais #relacionamentosaudável #família #musicaaovivo",
+      "timestamp": "2026-07-14T19:31:32.000Z",
+      "content_format": "reel",
+      "likes": 19,
+      "comments": 0,
+      "video_view_count": 5,
+      "video_play_count": 1658,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbJBUGhRDJh",
+      "caption": "A comunicação constrói pontes, fortalece equipes e evita conflitos. Quem aprende a ouvir, compreender e se expressar com clareza transforma relacionamentos e alcança melhores resultados.\n\n#comunicação #trabalhoemequipe #lideranca #desenvolvimentohumano #garciatreinamentos",
+      "timestamp": "2026-07-23T15:47:37.000Z",
+      "content_format": "reel",
+      "likes": 6,
+      "comments": 0,
+      "video_view_count": 24,
+      "video_play_count": 507,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da7gW0GI0kx",
+      "caption": "Esse video foi flopado por se tratar de uma mensagem politica, apesar de não citar nomes o video parou de ser veiculado.\nEntão, estamos postando apenas o refrão, mas se quiserem ouvir a paródia na íntegra rolem nosso feed.",
+      "timestamp": "2026-07-18T09:49:17.000Z",
+      "content_format": "reel",
+      "likes": 13,
+      "comments": 0,
+      "video_view_count": 20,
+      "video_play_count": 870,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "C4Ee_4ZpuQj",
+      "caption": "#segurançadotrabalho #treinamento",
+      "timestamp": "2024-03-03T23:11:22.000Z",
+      "content_format": "static_post",
+      "likes": 29,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbNh_ohodOf",
+      "caption": "Não preciso escrever mais nada, o vídeo já diz o que você precisa fazer.",
+      "timestamp": "2026-07-25T09:50:28.000Z",
+      "content_format": "reel",
+      "likes": 7,
+      "comments": 0,
+      "video_view_count": 13,
+      "video_play_count": 286,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbLcH9ixuau",
+      "caption": "A melhor palestra não é aquela em que o público apenas escuta. É aquela em que as pessoas participam, refletem, cantam, sorriem e levam a mensagem para a vida. Na Palestra Show, cada interação transforma o conteúdo em uma experiência inesquecível. Afinal, conhecimento compartilhado é conhecimento que permanece.",
+      "timestamp": "2026-07-24T14:20:15.000Z",
+      "content_format": "reel",
+      "likes": 165,
+      "comments": 1,
+      "video_view_count": 192,
+      "video_play_count": 11927,
+      "latest_comments": [
+        "👏👏👏👏👏😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dapg5mIomQs",
+      "caption": "💍❤️ Casamento também precisa de reunião!\n\nA Palestra Show \"A Reunião Mais Importante\" une música, humor, emoção e reflexões para fortalecer o diálogo, o respeito e a parceria entre o casal.\n\nPorque o melhor investimento que você pode fazer é no seu relacionamento. ❤️✨\n\n#AReuniãoMaisImportante #PalestraShow #Casais #Relacionamento #Família",
+      "timestamp": "2026-07-11T10:08:33.000Z",
+      "content_format": "reel",
+      "likes": 15,
+      "comments": 0,
+      "video_view_count": 2,
+      "video_play_count": 802,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaKhDTSoJBr",
+      "caption": "O mercado mudou. Hoje, conhecimento técnico já não basta. Quem deseja crescer precisa desenvolver liderança, comunicação, inteligência emocional, adaptabilidade e pensamento crítico. O futuro pertence a quem nunca para de aprender.",
+      "timestamp": "2026-06-29T09:13:11.000Z",
+      "content_format": "reel",
+      "likes": 9,
+      "comments": 0,
+      "video_view_count": 176,
+      "video_play_count": 963,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DVJKKPLDTkV",
+      "caption": "🎤🎶 **Palestra com Show Musical: conteúdo que se transforma em experiência!**\n\nUnir palestra e música é uma das formas mais poderosas de gerar conexão real com o público. Enquanto a palavra provoca reflexão, a música desperta emoção — e é nessa combinação que a mensagem ganha força, leveza e memorabilidade.\n\nAs canções/ paródias são estrategicamente escolhidas e adaptadas de acordo com o tema proposto e a demanda do cliente, reforçando conceitos como liderança, trabalho em equipe, motivação, comportamento, vendas, segurança do trabalho, cuidados com a mulher, liderança feminina, relacionamentos \"casais\" entre outros. Cada momento musical dialóga diretamente com o conteúdo, tornando a experiência interativa, dinâmica e participativa.\n\nMais do que assistir, o público vive a palestra.\nMais do que ouvir, ele sente.\nE quando sente, ele transforma.",
+      "timestamp": "2026-02-24T13:55:56.000Z",
+      "content_format": "static_post",
+      "likes": 21,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dam3B9xIVZM",
+      "caption": "Decidir faz parte da rotina. Decidir bem é um diferencial.\n\nNa palestra técnica \"Seja Mais Seguro em Suas Decisões com Inteligência Emocional\", você aprende como controlar as emoções, reduzir decisões impulsivas e agir com mais equilíbrio, clareza e confiança, tanto no trabalho quanto na vida.\n\nPorque decisões inteligentes começam com o domínio das próprias emoções.\n#InteligênciaEmocional #TomadaDeDecisão #DesenvolvimentoHumano #Palestra #lideranca",
+      "timestamp": "2026-07-10T09:24:26.000Z",
+      "content_format": "reel",
+      "likes": 10,
+      "comments": 0,
+      "video_view_count": 4,
+      "video_play_count": 523,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaaI4swIfyU",
+      "caption": "Na Garcia Treinamentos, você encontra uma ampla variedade de treinamentos para capacitar sua equipe, incluindo cursos nas áreas de segurança e saúde no trabalho, prevenção e combate a incêndios, além de desenvolvimento humano e profissional.",
+      "timestamp": "2026-07-05T10:50:02.000Z",
+      "content_format": "reel",
+      "likes": 27,
+      "comments": 0,
+      "video_view_count": 342,
+      "video_play_count": 1369,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dav78NlIX8n",
+      "caption": "Quem disse que segurança precisa ser sinônimo de palestra cansativa? 🎶\n\nNa nossa SIPAT, a música transforma o aprendizado em uma experiência marcante. Paródias, interação e muita energia fazem com que a prevenção seja lembrada muito depois do evento.\n\nPorque quando a mensagem toca o coração, ela também muda atitudes. 💙🎤\n\n#sipat #segurancadotrabalho #prevencao #palestrashow #qualidadedevidaesaúde",
+      "timestamp": "2026-07-13T22:00:19.000Z",
+      "content_format": "reel",
+      "likes": 4,
+      "comments": 0,
+      "video_view_count": 3,
+      "video_play_count": 352,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da3W0R1oWJ5",
+      "caption": "Política passa, mas as consequências do voto ficam. Reclamar é um direito, mas escolher com consciência é um dever de cada cidadão. Nas próximas eleições, pesquise, reflita e vote com responsabilidade. 🇧🇷",
+      "timestamp": "2026-07-16T19:09:30.000Z",
+      "content_format": "reel",
+      "likes": 14,
+      "comments": 0,
+      "video_view_count": 9,
+      "video_play_count": 571,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dam2OHdoT-N",
+      "caption": "Às vezes, a reunião mais importante da semana não acontece na empresa... acontece entre duas pessoas que decidiram construir uma vida juntas.\n\nNa Palestra Show para Casais, inspirada no livro \"A Reunião Mais Importante\", unimos música, humor, emoção e reflexões para fortalecer o diálogo, a parceria e o amor no casamento.\n\nPorque quando um casal aprende a se ouvir, a família inteira cresce junto. ❤️👫\n\n#AReuniãoMaisImportante #PalestraShow #Casais #Relacionamento #Família",
+      "timestamp": "2026-07-10T09:16:26.000Z",
+      "content_format": "reel",
+      "likes": 4,
+      "comments": 0,
+      "video_view_count": 1,
+      "video_play_count": 337,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DacuhBERAEo",
+      "caption": "Operar uma pá carregadeira vai muito além de saber movimentar a máquina. É conhecer seus limites, realizar inspeções, prevenir acidentes e trabalhar com segurança, eficiência e responsabilidade. Capacitação de qualidade protege vidas, preserva equipamentos e aumenta a produtividade. \n#NR11 \n#SegurançaDoTrabalho \n#OperadorDeMáquinas \n#PáCarregadeira \n#Treinamento",
+      "timestamp": "2026-07-06T11:02:39.000Z",
+      "content_format": "reel",
+      "likes": 22,
+      "comments": 0,
+      "video_view_count": 197,
+      "video_play_count": 1380,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DakhLfwxHBX",
+      "caption": "Quem disse que palestra precisa ser séria o tempo todo? 😄🎤\n\nNa nossa Palestra Show sobre Qualidade de Vida, o aprendizado vem acompanhado de muita música, paródias, bom humor e interação com o público. Afinal, quando a gente ri, canta e participa, a mensagem fica muito mais fácil de lembrar.\n\nÉ um momento para refletir, dar boas risadas e sair com a energia renovada, porque cuidar da qualidade de vida também é aprender a enxergar a vida de um jeito mais leve.\n\nAprender pode ser divertido. E a sua equipe vai sentir isso do começo ao fim!\n#PalestraShow #QualidadeDeVida #Humor #Paródias #Motivação TreinamentoCorporativo",
+      "timestamp": "2026-07-09T11:34:17.000Z",
+      "content_format": "reel",
+      "likes": 116,
+      "comments": 10,
+      "video_view_count": 4,
+      "video_play_count": 9210,
+      "latest_comments": [
+        "😂😂😂",
+        "Eu asmeiii",
+        "Arrasam",
+        "😂😂😂😂😂😂😂😂 sou eu 🤣🤣🤣",
+        "👏👏👏",
+        "😂😂😂😂",
+        "😂😂😂😂",
+        "Vocês arrasam 👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZtEkNKIZQ-",
+      "caption": "\"Muitas vezes, o estresse que acumulamos durante o dia não fica no trabalho. Ele viaja conosco e acaba sendo descarregado justamente em quem mais amamos.\"",
+      "timestamp": "2026-06-17T22:46:56.000Z",
+      "content_format": "reel",
+      "likes": 19,
+      "comments": 0,
+      "video_view_count": 208,
+      "video_play_count": 589,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaFfpEuIHfe",
+      "caption": "Em um ambiente em que tudo é muito frágil, pouco se evolui.",
+      "timestamp": "2026-06-27T10:25:01.000Z",
+      "content_format": "reel",
+      "likes": 44,
+      "comments": 0,
+      "video_view_count": 621,
+      "video_play_count": 2339,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaRJTXdFBmU",
+      "caption": "",
+      "timestamp": "2026-07-01T22:59:19.000Z",
+      "content_format": "carousel",
+      "likes": 5,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaC6YXNRXUW",
+      "caption": "\"Quem não aprende a dizer 'não' para os outros, acaba dizendo 'sim' para a própria sobrecarga.\"",
+      "timestamp": "2026-06-26T10:22:56.000Z",
+      "content_format": "reel",
+      "likes": 15,
+      "comments": 0,
+      "video_view_count": 162,
+      "video_play_count": 592,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DGV4nWmRIOX",
+      "caption": "https://garciatreinamentos.com.br/loja/",
+      "timestamp": "2025-02-21T16:41:49.000Z",
+      "content_format": "static_post",
+      "likes": 31,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "https://garciatreinamentos.com.br/cursos-1"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZZmhl6I6H9",
+      "caption": "A palestra \"Ser, Fazer e Estar\" é uma proposta de autorreflexão sobre equilíbrio, identidade e propósito de vida.",
+      "timestamp": "2026-06-10T09:18:00.000Z",
+      "content_format": "reel",
+      "likes": 61,
+      "comments": 4,
+      "video_view_count": 1853,
+      "video_play_count": 3872,
+      "latest_comments": [
+        "🙏🙏🙏🙏🙏🙏",
+        "Ver DEUS em tudo, as vezes qualquer coisa nos deixa tristes, mas se enxergarmos os dons que DEUS nos deu e suas bênçãos, os fardos ficam mais leves.",
+        "Paciência pra ter paz, só mudaria isso.",
+        "@clinica_do_trabalhador_g.r.o 🙏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZhfr-PxbmO",
+      "caption": "A verdade é que muitas pessoas que você sabe que têm tempo vivem dizendo que não têm tempo.\n\nJá as pessoas mais ocupadas costumam surpreender. Mesmo com a agenda cheia.",
+      "timestamp": "2026-06-13T10:51:53.000Z",
+      "content_format": "reel",
+      "likes": 12,
+      "comments": 1,
+      "video_view_count": 233,
+      "video_play_count": 633,
+      "latest_comments": [
+        "Tão verdadeiro"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZr1zppxbxe",
+      "caption": "\"As profissões mudam. As tecnologias mudam. Mas quem desenvolve competências continua sendo necessário em qualquer mercado.\"",
+      "timestamp": "2026-06-17T11:17:20.000Z",
+      "content_format": "reel",
+      "likes": 16,
+      "comments": 0,
+      "video_view_count": 420,
+      "video_play_count": 1863,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DasHCW6oDLR",
+      "caption": "Às vezes, a vida nos ensina que antes de fazer, precisamos aprender a ser. E quando sabemos quem somos, o lugar onde estamos ganha um novo significado.\n\nNa Palestra Show Ser, Fazer e Estar, a música Catedral emociona, inspira e nos convida a refletir sobre propósito, escolhas e transformação.\n\n🎶 Porque algumas mensagens não são apenas faladas... elas também são cantadas.\n#SerFazerEstar #PalestraShow #DesenvolvimentoHumano #InteligênciaEmocional #propósito",
+      "timestamp": "2026-07-12T10:19:50.000Z",
+      "content_format": "reel",
+      "likes": 14,
+      "comments": 1,
+      "video_view_count": 2,
+      "video_play_count": 607,
+      "latest_comments": [
+        "Muito linda Deus Abençoe muito"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZzoPfaRoFg",
+      "caption": "",
+      "timestamp": "2026-06-20T11:52:32.000Z",
+      "content_format": "static_post",
+      "likes": 7,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaIvS1Po86a",
+      "caption": "Nâo é só saber vender, tem que saber cobrar também. \"Quem trabalha cobrando aprende que criatividade não falta... nas desculpas.\"",
+      "timestamp": "2026-06-28T16:38:47.000Z",
+      "content_format": "reel",
+      "likes": 27,
+      "comments": 0,
+      "video_view_count": 923,
+      "video_play_count": 2673,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 31302,
+  "following_count": 837,
+  "posts_count": 327,
+  "follower_tier": "mid",
+  "engagement": {
+    "sample_size": 30,
+    "median_er": 0.0004951760270909207,
+    "mean_er": 0.0008551104295785148,
+    "er_per_post": [
+      {
+        "short_code": "Dbfgx0JIXtP",
+        "er": 0.0007986710114369689,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbLXCMORbgx",
+        "er": 0.0006389368091495751,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbXr27OoOyh",
+        "er": 0.00025557472365983003,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DayPxM6oy6a",
+        "er": 0.0006069899686920963,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbJBUGhRDJh",
+        "er": 0.00019168104274487253,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Da7gW0GI0kx",
+        "er": 0.0004153089259472238,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "C4Ee_4ZpuQj",
+        "er": 0.0009264583732668839,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbNh_ohodOf",
+        "er": 0.0002236278832023513,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbLcH9ixuau",
+        "er": 0.005303175515941473,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dapg5mIomQs",
+        "er": 0.00047920260686218135,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaKhDTSoJBr",
+        "er": 0.0002875215641173088,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DVJKKPLDTkV",
+        "er": 0.0006708836496070539,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "Dam3B9xIVZM",
+        "er": 0.00031946840457478757,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaaI4swIfyU",
+        "er": 0.0008625646923519264,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dav78NlIX8n",
+        "er": 0.00012778736182991502,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Da3W0R1oWJ5",
+        "er": 0.0004472557664047026,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dam2OHdoT-N",
+        "er": 0.00012778736182991502,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DacuhBERAEo",
+        "er": 0.0007028304900645326,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DakhLfwxHBX",
+        "er": 0.0040253018976423235,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZtEkNKIZQ-",
+        "er": 0.0006069899686920963,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaFfpEuIHfe",
+        "er": 0.0014056609801290651,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaRJTXdFBmU",
+        "er": 0.00015973420228739378,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DaC6YXNRXUW",
+        "er": 0.00047920260686218135,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DGV4nWmRIOX",
+        "er": 0.0010222988946393201,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DZZmhl6I6H9",
+        "er": 0.002076544629736119,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZhfr-PxbmO",
+        "er": 0.0004153089259472238,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZr1zppxbxe",
+        "er": 0.0005111494473196601,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DasHCW6oDLR",
+        "er": 0.00047920260686218135,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZzoPfaRoFg",
+        "er": 0.0002236278832023513,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DaIvS1Po86a",
+        "er": 0.0008625646923519264,
+        "content_format": "reel"
+      }
+    ]
+  },
+  "external_url": "https://garciatreinamentos.com.br/loja/",
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "a_validar_pre_monetizacao",
+    "secondary": null,
+    "matches": [],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "a_validar_pre_monetizacao",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "parcial",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T02:37:15.234Z",
+    "versao_framework": "v3.1"
+  }
+}

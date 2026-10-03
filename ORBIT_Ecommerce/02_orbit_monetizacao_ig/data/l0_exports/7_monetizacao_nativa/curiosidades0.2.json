@@ -1,0 +1,601 @@
+{
+  "handle": "curiosidades0.2",
+  "setor_benchmark_key": "7_monetizacao_nativa",
+  "url": "https://www.instagram.com/curiosidades0.2/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T02:24:38.432Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "Dbiy4fuG5vB",
+      "caption": "El majestuoso Cóndor Andino",
+      "timestamp": "2026-08-02T16:01:42.000Z",
+      "content_format": "reel",
+      "likes": 15,
+      "comments": 0,
+      "video_view_count": 284,
+      "video_play_count": 681,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbUKAc-jo69",
+      "caption": "Maravilla de la Naturaleza#animales #Naturaleza",
+      "timestamp": "2026-07-27T23:35:16.000Z",
+      "content_format": "reel",
+      "likes": 6,
+      "comments": 0,
+      "video_view_count": 54,
+      "video_play_count": 454,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbi2boyAFnc",
+      "caption": "¿POR QUÉ LOS PANDAS TIENEN 6 DEDOS? 🐼🎋",
+      "timestamp": "2026-08-02T16:32:47.000Z",
+      "content_format": "reel",
+      "likes": 7,
+      "comments": 0,
+      "video_view_count": 170,
+      "video_play_count": 484,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbTnn1rExgV",
+      "caption": "\"Así alimenta un cuidador a una adorable Beluga\"",
+      "timestamp": "2026-07-27T18:35:09.000Z",
+      "content_format": "reel",
+      "likes": 22,
+      "comments": 0,
+      "video_view_count": 522,
+      "video_play_count": 1821,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbT6OCGANn0",
+      "caption": "¡Mamá Mapache al Rescate! 🦝 La Misión Imposible en el Cerco",
+      "timestamp": "2026-07-27T21:17:30.000Z",
+      "content_format": "reel",
+      "likes": 29,
+      "comments": 3,
+      "video_view_count": 304,
+      "video_play_count": 1207,
+      "latest_comments": [
+        "Uno se fue a la porra 😂😂",
+        "❤️❤️❤️❤️❤️❤️❤️❤️❤️",
+        "❤️❤️❤️❤️❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbTe9AHndPc",
+      "caption": "El superpoder SECRETO del Búfalo de Agua que NO sabías 😲🚿",
+      "timestamp": "2026-07-27T17:19:02.000Z",
+      "content_format": "reel",
+      "likes": 703,
+      "comments": 0,
+      "video_view_count": 7919,
+      "video_play_count": 41395,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbPPWznFCKN",
+      "caption": "No todas las Aguilas son Iguales",
+      "timestamp": "2026-07-26T01:45:45.000Z",
+      "content_format": "reel",
+      "likes": 66,
+      "comments": 0,
+      "video_view_count": 51,
+      "video_play_count": 1805,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbT1OxsivEP",
+      "caption": "Así tragan los cormoranes a sus presas enteras 😮",
+      "timestamp": "2026-07-27T20:33:36.000Z",
+      "content_format": "reel",
+      "likes": 13,
+      "comments": 0,
+      "video_view_count": 253,
+      "video_play_count": 1245,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da7dJNaEjd7",
+      "caption": "Que tan Grande puede llegar a ser un Gallo 🐓",
+      "timestamp": "2026-07-18T09:21:14.000Z",
+      "content_format": "reel",
+      "likes": 13,
+      "comments": 1,
+      "video_view_count": 20,
+      "video_play_count": 1054,
+      "latest_comments": [
+        "El mas grande es el gallo Claudio de cartoon networks😂😂😂😂😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaEt2nGFY07",
+      "caption": "Cuidado ⚠️ con lo que Comes!!",
+      "timestamp": "2026-06-27T03:09:03.000Z",
+      "content_format": "reel",
+      "likes": 17,
+      "comments": 0,
+      "video_view_count": 448,
+      "video_play_count": 1169,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbThhbdm9Eo",
+      "caption": "EL RÍO NO PERDONA: Solo uno será el ganador",
+      "timestamp": "2026-07-27T17:41:28.000Z",
+      "content_format": "reel",
+      "likes": 27,
+      "comments": 0,
+      "video_view_count": 432,
+      "video_play_count": 2172,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DakdtVilPcs",
+      "caption": "⚠️ Parece muerto... pero todo es parte de su plan",
+      "timestamp": "2026-07-09T11:03:49.000Z",
+      "content_format": "reel",
+      "likes": 83,
+      "comments": 0,
+      "video_view_count": 8,
+      "video_play_count": 3004,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da72d8BgQ3x",
+      "caption": "",
+      "timestamp": "2026-07-18T13:02:42.000Z",
+      "content_format": "reel",
+      "likes": 113,
+      "comments": 1,
+      "video_view_count": 70,
+      "video_play_count": 6020,
+      "latest_comments": [
+        "Hermoso ❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dafety_ArKI",
+      "caption": "Parecen Agresivos pero son los más Inofensivos",
+      "timestamp": "2026-07-07T12:36:20.000Z",
+      "content_format": "reel",
+      "likes": 16,
+      "comments": 0,
+      "video_view_count": 212,
+      "video_play_count": 886,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbTtF_BDl1M",
+      "caption": "#animales #animalestimacao",
+      "timestamp": "2026-07-27T19:23:44.000Z",
+      "content_format": "reel",
+      "likes": 27,
+      "comments": 0,
+      "video_view_count": 415,
+      "video_play_count": 1780,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da_CXr-ggyz",
+      "caption": "TOP 5 Animales que Podrían Desaparecer en los Próximos Años",
+      "timestamp": "2026-07-19T18:44:50.000Z",
+      "content_format": "reel",
+      "likes": 24,
+      "comments": 0,
+      "video_view_count": 11,
+      "video_play_count": 911,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da8_T-Ygl2j",
+      "caption": "COMO se le Dice a este Animalito'?",
+      "timestamp": "2026-07-18T23:39:06.000Z",
+      "content_format": "reel",
+      "likes": 7,
+      "comments": 2,
+      "video_view_count": 20,
+      "video_play_count": 836,
+      "latest_comments": [
+        "En general les decimos chanchos del monte. Este es un pecarí de collar, como bien indica el guía. Gracias por la invitación. Pregunta para nuestro guía: ¿Puede ser que en el NOA  a este chancho le digan Rosillo? Porque hay otro,el Majano, que es solitario y mas grande en tamaño. El rosillo suele moverse en piaras importantes. Gracias.",
+        "Gracias por compartir! Es un pecarí de collar. Registrado en el Parque Nacional El Impenetrable 🙌🏻🌳 están todos invitados a venir a conocerlo"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaxGU3hAgII",
+      "caption": "Puede sobrevivir sin Agua 💧",
+      "timestamp": "2026-07-14T08:57:20.000Z",
+      "content_format": "reel",
+      "likes": 18,
+      "comments": 0,
+      "video_view_count": 5,
+      "video_play_count": 842,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da76gmEjdgV",
+      "caption": "¿Cuáles de estos cocodrilos comen humanos? ❌😱 ¡Te vas a sorprender!",
+      "timestamp": "2026-07-18T13:37:57.000Z",
+      "content_format": "reel",
+      "likes": 61,
+      "comments": 0,
+      "video_view_count": 93,
+      "video_play_count": 4692,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbTWdU1jIlF",
+      "caption": "**¡Cazador Implacable! El Abubilla y su Batalla Técnica Contra el Grillo Topo**",
+      "timestamp": "2026-07-27T16:04:46.000Z",
+      "content_format": "reel",
+      "likes": 15,
+      "comments": 1,
+      "video_view_count": 131,
+      "video_play_count": 899,
+      "latest_comments": [
+        "🐖"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaDBfIkAZMn",
+      "caption": "Este es un Crestado Chino",
+      "timestamp": "2026-06-26T11:22:01.000Z",
+      "content_format": "reel",
+      "likes": 13,
+      "comments": 0,
+      "video_view_count": 268,
+      "video_play_count": 984,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaDkmjZFA-x",
+      "caption": "¿Por qué los osos solo dan UN MORDISCO a estos salmones? 😱🐻",
+      "timestamp": "2026-06-26T16:29:07.000Z",
+      "content_format": "reel",
+      "likes": 237,
+      "comments": 1,
+      "video_view_count": 13608,
+      "video_play_count": 22525,
+      "latest_comments": [
+        "😎👍👍👍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbEgxy6E-rn",
+      "caption": "El Amor y la Resistencia se Vuelve uno Solo",
+      "timestamp": "2026-07-21T21:46:11.000Z",
+      "content_format": "reel",
+      "likes": 11,
+      "comments": 0,
+      "video_view_count": 10,
+      "video_play_count": 568,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaJihzmChGi",
+      "caption": "🐦 EL CARPINTERO DEL BOSQUE QUE CONSTRUYE HOGARES PARA DECENAS DE ANIMALES\nCada golpe de su pico parece un simple sonido del bosque... pero en realidad está haciendo mucho más que buscar alimento.\nLos pájaros carpinteros pueden golpear un árbol miles de veces al día con una fuerza impresionante, sin sufrir daño cerebral gracias a la increíble estructura de su cráneo, que actúa como un amortiguador natural.\nPero lo más fascinante ocurre cuando terminan su trabajo.\nDespués de excavar una cavidad para anidar, muchas veces la abandonan al año siguiente. Entonces, ese refugio es ocupado por búhos, loros, murciélagos, ardillas e incluso pequeños mamíferos que no pueden construir un hogar por sí mismos.\nEs decir, un solo pájaro carpintero puede beneficiar a decenas de especies durante su vida.\n🌳 A veces, los verdaderos héroes de la naturaleza no son los más grandes... sino los que, sin saberlo, ayudan a que todo un ecosistema siga vivo.\n❤️ Cuidar un árbol también es cuidar el hogar de cientos de animales.\n👇 ¿Ya sabías que el pájaro carpintero era considerado un \"arquitecto del bosque\"?\n#Curiosidades #Animales #PájaroCarpintero #Naturaleza #VidaSalvaje #SabíasQue #DatosCuriosos #Bosques #ProtejamosLaNaturaleza #Curiosidades02",
+      "timestamp": "2026-06-29T00:05:51.000Z",
+      "content_format": "static_post",
+      "likes": 2,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaDEpallIog",
+      "caption": "El Despertadoras Ruidoso",
+      "timestamp": "2026-06-26T11:49:36.000Z",
+      "content_format": "reel",
+      "likes": 10,
+      "comments": 0,
+      "video_view_count": 186,
+      "video_play_count": 774,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaD5WPNicKT",
+      "caption": "¡Los 2 gatos tan GRANDES que parecen editados! 😱🐱",
+      "timestamp": "2026-06-26T19:30:24.000Z",
+      "content_format": "reel",
+      "likes": 132,
+      "comments": 1,
+      "video_view_count": 1117,
+      "video_play_count": 2432,
+      "latest_comments": [
+        "El Main Coon"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaDowbVlZ6X",
+      "caption": "¡El sonido de este buey almizclero parece sacado de una película de terror! 😱🐃",
+      "timestamp": "2026-06-26T17:05:26.000Z",
+      "content_format": "reel",
+      "likes": 22,
+      "comments": 0,
+      "video_view_count": 394,
+      "video_play_count": 1053,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaDxKn4AWnB",
+      "caption": "",
+      "timestamp": "2026-06-26T18:18:55.000Z",
+      "content_format": "reel",
+      "likes": 23,
+      "comments": 0,
+      "video_view_count": 655,
+      "video_play_count": 1508,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da-nbD-gR1j",
+      "caption": "Está es la Razón del porque los Avestruces Comen Piedras?",
+      "timestamp": "2026-07-19T14:48:54.000Z",
+      "content_format": "reel",
+      "likes": 72,
+      "comments": 1,
+      "video_view_count": 72,
+      "video_play_count": 6617,
+      "latest_comments": [
+        "Hay un loro o periquito qué come arcilla"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbTZitWlb0w",
+      "caption": "**¡Cazador Implacable! El Abubilla y su Batalla Técnica Contra el Grillo Topo**",
+      "timestamp": "2026-07-27T16:31:44.000Z",
+      "content_format": "reel",
+      "likes": 10,
+      "comments": 0,
+      "video_view_count": 77,
+      "video_play_count": 635,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 29806,
+  "following_count": 0,
+  "posts_count": 311,
+  "follower_tier": "mid",
+  "engagement": {
+    "sample_size": 30,
+    "median_er": 0.0006710058377507884,
+    "mean_er": 0.0020409760898253146,
+    "er_per_post": [
+      {
+        "short_code": "Dbiy4fuG5vB",
+        "er": 0.0005032543783130913,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbUKAc-jo69",
+        "er": 0.00020130175132523654,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dbi2boyAFnc",
+        "er": 0.00023485204321277596,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbTnn1rExgV",
+        "er": 0.0007381064215258673,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbT6OCGANn0",
+        "er": 0.0010736093404012615,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbTe9AHndPc",
+        "er": 0.023585855196940213,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbPPWznFCKN",
+        "er": 0.0022143192645776018,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbT1OxsivEP",
+        "er": 0.0004361537945380125,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Da7dJNaEjd7",
+        "er": 0.0004697040864255519,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaEt2nGFY07",
+        "er": 0.0005703549620881702,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbThhbdm9Eo",
+        "er": 0.0009058578809635644,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DakdtVilPcs",
+        "er": 0.002784674226665772,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Da72d8BgQ3x",
+        "er": 0.003824733275179494,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dafety_ArKI",
+        "er": 0.0005368046702006308,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbTtF_BDl1M",
+        "er": 0.0009058578809635644,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Da_CXr-ggyz",
+        "er": 0.0008052070053009462,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Da8_T-Ygl2j",
+        "er": 0.0003019526269878548,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaxGU3hAgII",
+        "er": 0.0006039052539757096,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Da76gmEjdgV",
+        "er": 0.002046567805139905,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbTWdU1jIlF",
+        "er": 0.0005368046702006308,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaDBfIkAZMn",
+        "er": 0.0004361537945380125,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaDkmjZFA-x",
+        "er": 0.007984969469234382,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbEgxy6E-rn",
+        "er": 0.00036905321076293363,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaJihzmChGi",
+        "er": 0.00006710058377507885,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DaDEpallIog",
+        "er": 0.00033550291887539423,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaD5WPNicKT",
+        "er": 0.004462188821042743,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaDowbVlZ6X",
+        "er": 0.0007381064215258673,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaDxKn4AWnB",
+        "er": 0.0007716567134134067,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Da-nbD-gR1j",
+        "er": 0.002449171307790378,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbTZitWlb0w",
+        "er": 0.00033550291887539423,
+        "content_format": "reel"
+      }
+    ]
+  },
+  "external_url": "https://www.youtube.com/@curiosidades0.2",
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "a_validar_pre_monetizacao",
+    "secondary": null,
+    "matches": [],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "a_validar_pre_monetizacao",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "parcial",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T02:24:38.432Z",
+    "versao_framework": "v3.1"
+  }
+}

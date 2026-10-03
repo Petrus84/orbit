@@ -1,0 +1,86 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  height: 100%;
+}
+
+.diagnosticBox {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: var(--space-2) var(--space-3);
+  border: var(--border-width) solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: var(--bg-hover);
+}
+
+.diagnosticStrong {
+  color: var(--text-primary);
+}
+
+.slidersBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sliderGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.degradedHint {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--amber);
+}
+
+.saturationAlert {
+  padding: var(--space-3);
+  border: var(--border-width) solid color-mix(in srgb, var(--amber) 30%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--amber) 10%, transparent);
+  font-family: var(--font-family);
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--amber);
+}
+
+.footerActions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto;
+}
+
+.exportBtn {
+  appearance: none;
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-4);
+  background: var(--acc);
+  color: var(--bg-base);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+}
+
+.exportBtn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.04);
+}
+
+.exportBtn:focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 2px;
+}
+
+.exportBtn:active {
+  transform: translateY(0);
+}

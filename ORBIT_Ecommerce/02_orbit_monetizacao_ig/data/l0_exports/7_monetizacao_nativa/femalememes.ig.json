@@ -1,0 +1,749 @@
+{
+  "handle": "femalememes.ig",
+  "setor_benchmark_key": "7_monetizacao_nativa",
+  "url": "https://www.instagram.com/femalememes.ig/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T02:16:24.341Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DbTxecltJ-h",
+      "caption": "",
+      "timestamp": "2026-07-27T20:00:24.000Z",
+      "content_format": "reel",
+      "likes": 1169,
+      "comments": 3,
+      "video_view_count": 10788,
+      "video_play_count": 76264,
+      "latest_comments": [
+        "😂😂😂",
+        "опять ошибся🤦🏼‍♀️ он хотел узнать \"кто этА красавица?\"",
+        "😂😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbS1lagNw5V",
+      "caption": "",
+      "timestamp": "2026-07-27T11:17:16.000Z",
+      "content_format": "reel",
+      "likes": 32054,
+      "comments": 843,
+      "video_view_count": 107039,
+      "video_play_count": 530551,
+      "latest_comments": [
+        "Так же Генри Кавилл в 40лет.🤣",
+        "😂😂😂😂",
+        "😂😂😂😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZ98moNtWbU",
+      "caption": "",
+      "timestamp": "2026-06-24T12:02:49.000Z",
+      "content_format": "static_post",
+      "likes": 2697,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DakQ-vCt30s",
+      "caption": "",
+      "timestamp": "2026-07-09T09:12:01.000Z",
+      "content_format": "static_post",
+      "likes": 5991,
+      "comments": 35,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Вухахахахахахаахахчхвххвсххсхвххвхыхвхв😂😂😂😂😂😂😂😂фууухххххххх",
+        "Ну вот мам не жди !!!! 😂😂😂",
+        "АХАХЭСХСХСЗСХСХСЗС😭😭😭😭",
+        "@pavlin_35 какие вопросы такие и ответы",
+        "@neskromniy.dm логично"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZxJzZ8NBis",
+      "caption": "",
+      "timestamp": "2026-06-19T12:48:04.000Z",
+      "content_format": "static_post",
+      "likes": 12854,
+      "comments": 30,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂😂😂",
+        "Не понял",
+        "Блин девочки прекратите",
+        "Орууу",
+        "😂😂😂😂😂😂😂😂",
+        "Разьебало 😂😂😂",
+        "почему инстаграм думает что я целевая аудитория этой публикации😭",
+        "@susboyye 🌹"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaDWxPpN0wd",
+      "caption": "",
+      "timestamp": "2026-06-26T14:27:46.000Z",
+      "content_format": "static_post",
+      "likes": 1552,
+      "comments": 5,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂😂😂",
+        "Ой хамелеонки писать первой вы будете где то после 35 а пока гуляйте развлекайтесь",
+        "@life_freedom_flowers я хочу быть вами когда вырасту"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaVBCCnIKpn",
+      "caption": "",
+      "timestamp": "2026-07-03T11:04:05.000Z",
+      "content_format": "static_post",
+      "likes": 1580,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaDi6_ptRX_",
+      "caption": "",
+      "timestamp": "2026-06-26T16:13:51.000Z",
+      "content_format": "static_post",
+      "likes": 266753,
+      "comments": 864,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "@edkhnvaa.hava @_ssaii.b @a_ais04 @becauseitisnecessary",
+        "Нет ….",
+        "@itsnotmari__ че лайкаешь? мне не показывала",
+        "лучший лазер это александритовый, но очень больно в зоне бикини, мне адски было больно на первом сеансе😰",
+        "@_karbonara"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZxsx_st9cC",
+      "caption": "",
+      "timestamp": "2026-06-19T17:53:41.000Z",
+      "content_format": "static_post",
+      "likes": 7433,
+      "comments": 146,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂",
+        "@romano_typing заходите в Гугл, и ищите что это",
+        "@_nika.in.china_ Ну так не интересно"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DY_x4oGtrH_",
+      "caption": "",
+      "timestamp": "2026-05-31T08:36:29.000Z",
+      "content_format": "reel",
+      "likes": 683,
+      "comments": 0,
+      "video_view_count": 14765,
+      "video_play_count": 38494,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbF5QgPNep6",
+      "caption": "",
+      "timestamp": "2026-07-22T10:38:56.000Z",
+      "content_format": "static_post",
+      "likes": 1408,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "На подумать прям😒"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DY_v2T4tNsr",
+      "caption": "Ну что, кто на каком остановился?",
+      "timestamp": "2026-05-31T08:18:53.000Z",
+      "content_format": "reel",
+      "likes": 1545,
+      "comments": 17,
+      "video_view_count": 23802,
+      "video_play_count": 72904,
+      "latest_comments": [
+        "Мне нравится D",
+        "хочу С 🔥❤️🙌",
+        "С😂",
+        "D",
+        "C",
+        "А где сарай и верёвка?",
+        "Целибат, основа спокойной жизни и целой менталки",
+        "В, сразу после А 😁"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZVKCgvNrmP",
+      "caption": "любая уважающая себя пара",
+      "timestamp": "2026-06-08T15:51:31.000Z",
+      "content_format": "static_post",
+      "likes": 1237,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da0ucw8jZcL",
+      "caption": "подруги как футболисты",
+      "timestamp": "2026-07-15T18:37:20.000Z",
+      "content_format": "carousel",
+      "likes": 2339,
+      "comments": 16,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Кристиан ШЕЙК-вынесло.  Но я хохланд😂",
+        "Я Кристиан Шейк🤣",
+        "😂😂😂👏",
+        "Ламин Ямиль",
+        "А где белингем",
+        "Окау",
+        "Это круто ,Роналду правда внешка богини 😂😂😂",
+        "😂😂😂🔥👏",
+        "😂😂😂😂",
+        "Кристина 😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZPzwnVt5Wt",
+      "caption": "",
+      "timestamp": "2026-06-06T14:00:28.000Z",
+      "content_format": "static_post",
+      "likes": 3096,
+      "comments": 7,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂😂😂",
+        "😂😂😂😂😂😂",
+        "😂😂😂😂",
+        "😂",
+        "😂😂😂😂😂😂😂",
+        "😂",
+        "АХАХАХ😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZKcp1WNGqZ",
+      "caption": "",
+      "timestamp": "2026-06-04T12:02:29.000Z",
+      "content_format": "static_post",
+      "likes": 2324,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZUh8iwtNgR",
+      "caption": "",
+      "timestamp": "2026-06-08T10:01:01.000Z",
+      "content_format": "static_post",
+      "likes": 4332,
+      "comments": 15,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂😂😂",
+        "😂😂😂😂",
+        "😂😂😂😂😂",
+        "😂😂😂😂😂",
+        "@stasyf_",
+        "@al_bochkov 😂😂😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZfeRUMtn-H",
+      "caption": "Сейчас чемпионат мира, девочки, давайте заявим команду из наших гарэмов. Кого еще возьмем?",
+      "timestamp": "2026-06-12T16:00:48.000Z",
+      "content_format": "static_post",
+      "likes": 230,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "И от этой команды бабы пропускают так много голов между ног? Ахахахахахахахах",
+        "И ни одго миллионера даже не попалось? 😀"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DY9E-b8sgPD",
+      "caption": "",
+      "timestamp": "2026-05-30T07:25:20.000Z",
+      "content_format": "static_post",
+      "likes": 3221,
+      "comments": 22,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "База",
+        "😂😂😂",
+        "😂😂😂😂😂",
+        "@satsuki_gran.at не ніхуя, а твою мамку😀"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYy55XltigC",
+      "caption": "",
+      "timestamp": "2026-05-26T08:36:07.000Z",
+      "content_format": "static_post",
+      "likes": 9846,
+      "comments": 15,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "ultra strawberry dreams",
+        "@vados_aux",
+        "@nastenka_pershina mango loco",
+        "@kemalexey",
+        "Манго локо",
+        "АХАХАХАХПХХПХАХАХАХАХХА",
+        "Jam monster strawberry 🥲",
+        "надеюсь тропический микс",
+        "@bb.vano с каким бро?"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZXROTmtcE0",
+      "caption": "",
+      "timestamp": "2026-06-09T11:32:37.000Z",
+      "content_format": "static_post",
+      "likes": 5690,
+      "comments": 8,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Ай хороша 😂😂😂",
+        "😂",
+        "Он оптимист )",
+        "Хорошо 🤣🤣🤣",
+        "а сам без кроссовок стоит",
+        "@datebaka футфетишисты в чате"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DY5IXtDtOCn",
+      "caption": "Романтека 🥰",
+      "timestamp": "2026-05-28T18:38:08.000Z",
+      "content_format": "static_post",
+      "likes": 1565,
+      "comments": 4,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Мой опыт с +9 лет. Изобретай это того стоит)",
+        "😄🤦🏼‍♀️🤦🏼‍♀️🤦🏼‍♀️ вот заняться нечем))) полно тех, кому 18-20, полно тех, кому 30+, но кто бы с радостью - нет! 🙅‍♀️ нужна именно вот эта!))) 😄🙄",
+        "Видит цель,не видит препятствий 😅",
+        "Это очень мило 😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZVeqCiNHAS",
+      "caption": "",
+      "timestamp": "2026-06-08T18:51:31.000Z",
+      "content_format": "static_post",
+      "likes": 1531,
+      "comments": 5,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "@o_darrka",
+        "@karinka9304 @nfx_lsss",
+        "Люди, посоветуйте впн для нормальной жизни, а не для издевательств. А то у меня щас - в экран смотрю больше, чем на ролики: сначала реклама, потом виснет, потом переподключайся заново, бред.",
+        "@poecilotheria_ta аххахахаха"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DY1Qf-4tnWQ",
+      "caption": "",
+      "timestamp": "2026-05-27T06:32:10.000Z",
+      "content_format": "static_post",
+      "likes": 4411,
+      "comments": 15,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😁😁😁",
+        "😂😂😂 пес ебаный",
+        "Ну это позор так унижаться ради секса",
+        "Еб*ть Ооооор 😂😂🙌🔥🔥👏😂",
+        "Почему то уверен что это написали мужчине)",
+        "Ахах блять 🤣",
+        "@freemen076 почему то я думаю что ты автор этой переписки 😂",
+        "Вот собака сутулая 😂",
+        "Я чуть чаем не подавилась"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DY33irNtlXe",
+      "caption": "",
+      "timestamp": "2026-05-28T06:52:14.000Z",
+      "content_format": "static_post",
+      "likes": 19782,
+      "comments": 18,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂😂😂👏 по факту",
+        "@zl.kristi.zl",
+        "🫣",
+        "Все ,давай малой.Связь ✊",
+        "😂",
+        "😂",
+        "А меня разочаровывают мужики с маленькой зарплатой, он по своей логике теперь должен миллиона родить?",
+        "Ахахахаххахах😂😂😂😂😂 кайф же… неженки, епта😂😂😂😂😂",
+        "Хорошааа)))",
+        "😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZMpaEsNQe5",
+      "caption": "",
+      "timestamp": "2026-06-05T08:32:18.000Z",
+      "content_format": "static_post",
+      "likes": 279861,
+      "comments": 612,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂😂😂😂😂😂😂",
+        "🤣🤣🤣🤣🤣",
+        "😂😂😂😂😂😂😂😂",
+        "😂😂",
+        "Раньше любила такое. После того как начала колоть тирзетту, почему то перестало тянуть. теперь на пп сижу)",
+        "😂😂а моя стала меня поддерживать) худею с тирзеттой, стали питаться правильно🔥",
+        "это тооочнооо)) Я еще и на тирзетте, вообще маме не объяснить, почему я не могу есть тонну масла",
+        "😂😂",
+        "Мама права 😂😂",
+        "😂😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYw5KsUNvca",
+      "caption": "До слез🥲",
+      "timestamp": "2026-05-25T13:51:35.000Z",
+      "content_format": "static_post",
+      "likes": 412,
+      "comments": 5,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "как же он хорошо нассал в уши 🔥",
+        "Какой романтичный. Пизда главное- но потом)",
+        "Начали за здравие…",
+        "Романтик 🥲😌",
+        "Срочно нужна подмога, люди! Мой впн уже не вывозит — и дорого, и медленно, и рекламы больше чем контента. Что брать?"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYzbKzqN6sW",
+      "caption": "",
+      "timestamp": "2026-05-26T13:26:52.000Z",
+      "content_format": "static_post",
+      "likes": 948,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂😂😂😂😂😂😂😂😂😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaxZCgLt639",
+      "caption": "",
+      "timestamp": "2026-07-14T11:32:34.000Z",
+      "content_format": "static_post",
+      "likes": 292893,
+      "comments": 1543,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "@kugubamba",
+        "😂",
+        "Выгоднее всего срать на работе, это время ещё и оплачивается",
+        "@ninoffka @escobar0n23 🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣",
+        "Суперспособность",
+        "@amwndr 🤗",
+        "Школьные годы все помнят . Кто не заходил за год 😂🔥",
+        "@engbyamina",
+        "@__maskh_",
+        "@m1kkioff",
+        "Люди которые могут срать без стульчика 😢",
+        "😂😂😂",
+        "Уахахахаххаахха",
+        "И с кем угодно",
+        "Я почему то  это иначе поняла совсем. Срать не в прямом смысле «срать»"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DY4sCFYNddd",
+      "caption": "",
+      "timestamp": "2026-05-28T14:30:25.000Z",
+      "content_format": "static_post",
+      "likes": 562,
+      "comments": 3,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Высокоинтеллектуальный юмор 🤭"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 216566,
+  "following_count": 1,
+  "posts_count": 453,
+  "follower_tier": "mega",
+  "engagement": {
+    "sample_size": 30,
+    "median_er": 0.011663880756905515,
+    "mean_er": 0.14995213160576143,
+    "er_per_post": [
+      {
+        "short_code": "DbTxecltJ-h",
+        "er": 0.005411745149284744,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbS1lagNw5V",
+        "er": 0.15190288410923228,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZ98moNtWbU",
+        "er": 0.012453478385342113,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DakQ-vCt30s",
+        "er": 0.027825235724906035,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DZxJzZ8NBis",
+        "er": 0.05949225640220533,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DaDWxPpN0wd",
+        "er": 0.007189494195764801,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DaVBCCnIKpn",
+        "er": 0.007295697385554519,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DaDi6_ptRX_",
+        "er": 1.2357295235632555,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DZxsx_st9cC",
+        "er": 0.034996259800707405,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DY_x4oGtrH_",
+        "er": 0.0031537729837555293,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbF5QgPNep6",
+        "er": 0.006506099757117923,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DY_v2T4tNsr",
+        "er": 0.007212581845719088,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZVKCgvNrmP",
+        "er": 0.005711884598690468,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "Da0ucw8jZcL",
+        "er": 0.01087428312846892,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DZPzwnVt5Wt",
+        "er": 0.014328195561630173,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DZKcp1WNGqZ",
+        "er": 0.0107357572287432,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DZUh8iwtNgR",
+        "er": 0.02007240287025664,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DZfeRUMtn-H",
+        "er": 0.0010712669578788914,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DY9E-b8sgPD",
+        "er": 0.014974649760350194,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DYy55XltigC",
+        "er": 0.045533463239843745,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DZXROTmtcE0",
+        "er": 0.02631068588790484,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DY5IXtDtOCn",
+        "er": 0.007244904555655089,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DZVeqCiNHAS",
+        "er": 0.007092526065956798,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DY1Qf-4tnWQ",
+        "er": 0.020437187739534367,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DY33irNtlXe",
+        "er": 0.09142709381897435,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DZMpaEsNQe5",
+        "er": 1.295092489125717,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DYw5KsUNvca",
+        "er": 0.0019255100061874903,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DYzbKzqN6sW",
+        "er": 0.004386653491314426,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DaxZCgLt639",
+        "er": 1.3595670603880572,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DY4sCFYNddd",
+        "er": 0.002608904444834369,
+        "content_format": "static_post"
+      }
+    ]
+  },
+  "external_url": "https://t.me/femalememes",
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "a_validar_pre_monetizacao",
+    "secondary": null,
+    "matches": [],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "a_validar_pre_monetizacao",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "parcial",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T02:16:24.341Z",
+    "versao_framework": "v3.1"
+  }
+}

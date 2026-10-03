@@ -1,0 +1,768 @@
+{
+  "handle": "ricardocastro_",
+  "setor_benchmark_key": "6_membership_comunidade",
+  "url": "https://www.instagram.com/ricardocastro_/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T02:10:03.566Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "Dbg_pZyouR7",
+      "caption": "Há dois anos, cada detalhe do Al'Mar @almarcucina começou a ganhar vida muito antes de chegar à mesa.\n\nO chef @chefmarciliocavalcante ainda recorda de cada talher escolhido, de cada prato, de cada peça de decoração pensada para fazer parte dessa história.\n\nTodo mundo vê o prato pronto, o guardanapo bem dobrado, as taças polidas, o salão impecável e as plantas bem cuidadas. Mas existe um universo inteiro que acontece nos bastidores.\n\nSão pessoas que fazem tudo acontecer. A produção, a confeitaria exclusiva do café da manhã, a massaria, a gestão de compras e estoque, o financeiro, o RH, as lideranças e tantas outras mãos que trabalham diariamente para transformar cada visita em um momento especial.\n\nO que você acha disso?\n\nNeste mês de aniversário, a casa quer abrir as portas dessa história e mostrar capítulos que vocês ainda não conhecem.\n\nPorque, no fim, tudo isso sempre foi sobre pessoas.\nDo coração do Chef Marcílio Cavalcante para a mesa dos clientes.\n\nAcompanhem os próximos capítulos dessa linda história.\n\nAl'Mar Cucina. Dois anos de história, dedicação e propósito.",
+      "timestamp": "2026-08-01T23:18:32.000Z",
+      "content_format": "reel",
+      "likes": 38,
+      "comments": 3,
+      "video_view_count": 899,
+      "video_play_count": 2481,
+      "latest_comments": [
+        "Esse restaurante tem uma seleção de ingredientes e pratos incríveis ❤️",
+        "Parabéns e sucesso👏👏",
+        "Maravilhoso 👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbjEqD7oi2Z",
+      "caption": "Mais um milagre na Venezuela!!\n\nO gato\"Félix\" foi resgatado com vida nesta última  sexta-feira, 31 de julho, entre os escombros de uma zona afetada pelos terremotos em Catia La Mar, estado La Guaira.\n\nO animal foi levado às pressas para o centro de atendimento veterinário instalado no McDonald's de Caraballeda.\n\nA equipe médica veterinária, composta pelo Dr.\nSebastián Ures, pela Dra. Ludeimar Rosendo e seus auxiliares, atendeu o felino, que apresentava um quadro de desidratação severa, desnutrição e várias lesões.\n\nSegundo os socorristas, antes da tragédia, Félix era um gato com sobrepeso.\n\nSua tutora o procurou por mais de um mês sem perder a esperança. Ao saber da descoberta, ela chegou ao centro veterinário justamente quando a equipe médica lhe prestava atendimento, protagonizando um reencontro emocionante.\n\nSimplesmente milagroso e maravilhoso! Todas as vidas são importantes",
+      "timestamp": "2026-08-02T18:38:04.000Z",
+      "content_format": "reel",
+      "likes": 306,
+      "comments": 21,
+      "video_view_count": 3085,
+      "video_play_count": 6172,
+      "latest_comments": [
+        "Que se recupere bem!",
+        "Que se recupere, eles tem 7 vidas de vdd",
+        "😢😢👏👏👏👏❤️🙌",
+        "Jeová com senhor misericordioso 🙌😍",
+        "❤️❤️❤️",
+        "Deus abençoe para que ele se recupere!",
+        "🙌🙌🙌🙌🙌🙌🙌🙌",
+        "😢",
+        "🙏🙏🙏🙏🙏😢😢",
+        "As lágrimas caindo 😭😭😭😭"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DblNNaux_Cs",
+      "caption": "Na próxima quarta-feira (5), feriado que celebra o aniversário de fundação de João Pessoa, a Data Magna do Estado da Paraíba e o Dia de Nossa Senhora das Neves, padroeira da capital, o Manaira e o Mangabeira Shopping funcionarão normalmente com as lojas, quiosques, praças de alimentação, restaurantes e lazer das 10h às 22h.\n\nApenas algumas operações terão horário de funcionamento diferenciado. Seguem abaixo:\n\n*Manaira Shopping*\nBanco do Brasil: fechado\nCaixa Econômica Federal: fechada\nCasa da Cidadania e Polícia Federal: fechadas\nDaycoval Câmbio: fechado\nBoa Viagem Câmbio: fechado\nLabor Câmbio: das 10h às 18h\nLotérica: das 10h às 20h\nSmart Fit: das 8h às 17h\n\n*Mangabeira Shopping*\nLotérica: fechada\nSelfit: das 8h às 18h\nSicredi: fechado",
+      "timestamp": "2026-08-03T14:30:02.000Z",
+      "content_format": "static_post",
+      "likes": 12,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DblOIXBx1hV",
+      "caption": "O mercado imobiliário de Cabedelo movimentou R$ 90,79 milhões em Valor Global de Vendas (VGV) em maio de 2026, praticamente o dobro do registrado no mesmo mês de 2025, quando o município somou R$ 45,74 milhões, segundo o Índice Creci 360º. O avanço no valor superou o crescimento em volume. Foram 87 unidades comercializadas em maio de 2026, ante 66 no mesmo período do ano anterior, uma alta de 31,8%.",
+      "timestamp": "2026-08-03T14:37:49.000Z",
+      "content_format": "static_post",
+      "likes": 76,
+      "comments": 4,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Nossa cidade Cabedelo ❤️",
+        "❤️❤️❤️❤️❤️❤️❤️👏👏😍😍😍",
+        "👏👏👏👏",
+        "👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DboPwvSoH-T",
+      "caption": "O Camarote OCEAN segue com vendas abertas para quem deseja viver uma experiência diferenciada durante as comemorações dos 441 anos de João Pessoa, nesta quarta-feira, 05 de agosto. Instalado em frente ao palco principal, no Busto de Tamandaré, o espaço oferece conforto, segurança e uma vista privilegiada para os shows da Orquestra 5 de Agosto com a Companhia Municipal de Dança, Fábio Jr. e Roupa Nova, atrações que prometem reunir milhares de pessoas na orla da capital. Os ingressos seguem à venda pelo site Ingresso Nacional.\n\nÍcone da música romântica brasileira, Fábio Jr. sobe ao palco trazendo uma sequência de sucessos que atravessam gerações. Canções como Alma Gêmea, Caça e Caçador, Só Você e 20 e Poucos Anos fazem parte de um repertório que emociona o público e transforma cada apresentação em um grande encontro de memórias e sentimentos.\n\nJá o Roupa Nova, uma das bandas mais longevas e consagradas da música nacional, promete uma noite repleta de clássicos. Com mais de quatro décadas de carreira, o grupo apresenta sucessos como Whisky a Go Go, Dona, Volta pra Mim, A Viagem e Linda Demais, em um espetáculo marcado pela qualidade musical e pela forte conexão com o público.\n\nCom ingressos a partir de R$ 80,00 (meia-entrada) para o setor individual, o Camarote OCEAN conta com uma estrutura completa, incluindo bares, banheiros exclusivos, áreas VIP, mesas em piso elevado e uma ampla varanda com vista panorâmica para toda a programação, proporcionando uma experiência diferenciada para o público.\n\nIngressos: a partir de R$ 80,00 (meia-entrada)\nVendas: https://www.ingressonacional.com.br/evento/34672/aniversariodejoaopessoa\nContato: (47) 99914-5764",
+      "timestamp": "2026-08-04T18:49:53.000Z",
+      "content_format": "static_post",
+      "likes": 29,
+      "comments": 4,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Ne de graça o show pq vai pagar",
+        "Link na minha bio 🩵",
+        "Noite 🌙 inesquecível regada de grandes sucessos da nossa música 🎶 🎶 popular brasileira👏👏👏",
+        "👏👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DblipRoI4t1",
+      "caption": "João Pessoa recebe, no dia 29 de agosto, o evento Elas Podem João Pessoa, que terá entre suas atrações a jornalista e escritora best-seller Maria Cândida. Com mais de 30 anos de carreira na comunicação, ela é uma das vozes de destaque no Brasil quando o assunto é longevidade, maturidade feminina e reinvenção profissional. Em sua palestra, Maria Cândida promete inspirar o público a transformar experiência em diferencial competitivo e assumir o protagonismo da própria jornada em um mundo cada vez mais multigeracional.\n\nO encontro acontece das 9h às 18h e também contará com as palestrantes Adelaide Conduta, diretora executiva do BNI; Ingrid Lopes, CEO da Muud; e Priscila Andrade, especialista em posicionamento, imagem e comportamento. Uma programação voltada para mulheres que desejam ampliar horizontes, fortalecer sua trajetória profissional e descobrir novas possibilidades de crescimento e realização.",
+      "timestamp": "2026-08-03T17:37:06.000Z",
+      "content_format": "static_post",
+      "likes": 30,
+      "comments": 6,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏👏👏",
+        "Maravilhosa👏👏👏",
+        "👏👏👏👏",
+        "👏👏👏👏👏👏👏👏",
+        "👏👏👏",
+        "👏👏👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbls1tFoIf_",
+      "caption": "Seu pai merece estar impecável em todos os momentos. Aproveite a promoção especial da Minha Lavanderia @minhalavanderia.jpmanaira e ganhe 20% de desconto em itens masculinos.\n\nCamisas, calças, jaquetas, ternos e muito mais com o cuidado e a qualidade que suas roupas merecem.\n\nPromoção válida de 03/08 a 08/08.\n\nPasse na Minha Lavanderia e surpreenda quem sempre cuidou de você.\n\nWhatsApp：（83)99161-9340\nAv. Esperança, n°. 1126 - Bairro Manaíra - João Pessoa / PB",
+      "timestamp": "2026-08-03T19:07:38.000Z",
+      "content_format": "static_post",
+      "likes": 3,
+      "comments": 3,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏👏👏👏",
+        "😍😍😍😍😍😍",
+        "Vamos aproveitar esses descontos da semana dos pais👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbng7tkxA9Y",
+      "caption": "João Pessoa recebe, no próximo dia 9 de agosto, a segunda edição do Comunicador de Elite – Creators e Influentes, evento voltado para comunicação, empreendedorismo e posicionamento digital. O encontro será realizado no Teatro Pedra do Reino e reunirá empresários, criadores de conteúdo, influenciadores e profissionais de diferentes áreas.\n\nA programação contará com palestras de Flávio Augusto, fundador da Geração de Valor, além de Daniel Ribeiro, Dr. Renan Botelho, Mirela Janis, Alan Smith, Marcos Strider, Alê Oliveira e Leandro Santos.\n\nO *Comunicador de Elite – Creators e Influentes* acontece no dia 9 de agosto, das 9h às 21h, no Teatro Pedra do Reino, em João Pessoa. Os ingressos estão disponíveis em comunicadordeelite.com.br.",
+      "timestamp": "2026-08-04T12:00:57.000Z",
+      "content_format": "static_post",
+      "likes": 4,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏👏👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbljkoeopEy",
+      "caption": "A cantora paraibana Elba Ramalho @elbaramalho aproveita uma pausa na agenda para desfrutar de merecidos dias de férias pela Europa, colecionando paisagens, encontros e novas memórias. Em suas redes sociais, a artista compartilhou um registro especial da passagem pela Bósnia, encantando os fãs com a viagem e revelando que, apesar de estar vivendo momentos inesquecíveis, já sente saudade dos palcos e do público.\n\nEm breve, Elba Ramalho estará de volta à Europa, desta vez para cumprir uma nova agenda de shows. Enquanto isso, a artista segue aproveitando cada momento da viagem e recarregando as energias antes de reencontrar seus fãs através da música.",
+      "timestamp": "2026-08-03T17:45:37.000Z",
+      "content_format": "static_post",
+      "likes": 28,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Aí sim férias merecidas, chegando bora pra estrada ne Elbissima ❤️💄🥰🎶🔥👏🏻👏🏻👏🏻👏🏻👏🏻👏🏻",
+        "👏👏👏👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbnldUlRpM_",
+      "caption": "O MAG Shopping @magshopping informa o horário de funcionamento nesta quarta-feira, 5 de agosto, em razão do feriado de aniversário de João Pessoa. As lojas e quiosques funcionarão das 09h às 21h, a praça de alimentação estará aberta das 10h às 22h e a alameda de serviços terá funcionamento normal e o Centerplex Cinemas funcionará das 13h às 22h. \n\nCom opções de compras, gastronomia, cinema e lazer para toda a família, o MAG Shopping é uma alternativa para quem deseja aproveitar o feriado na capital paraibana. \n\n*Ferreira Costa* \n\nA Ferreira Costa @ferreiracosta informa os horários especiais de funcionamento da unidade de João Pessoa (PB) durante o feriado de fundação do estado da Paraíba.\n\nNa quarta-feira, 5 de agosto, o atendimento será reduzido, das 9h às 20h. As compras também podem ser realizadas por meio do site e do aplicativo da Ferreira Costa, disponíveis para atendimento durante todo o período.",
+      "timestamp": "2026-08-04T12:40:51.000Z",
+      "content_format": "static_post",
+      "likes": 9,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Bom sabermos horários e que vamos aproveitar 👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbnkEISRv-L",
+      "caption": "A talentosa arquiteta paraibana Camila Sales @camilasalesarquiteta acaba de celebrar uma conquista que merece todos os aplausos. Ela foi uma das profissionais homenageadas pelo Club&Casa Design @clubecasadesign durante o prestigiado Yearbook 2026, considerado a maior premiação nacional dedicada aos grandes nomes da arquitetura e do design de interiores do Brasil.\n\nA solenidade aconteceu na icônica Sala São Paulo, um dos mais belos espaços culturais do país, reunindo arquitetos e designers que se destacam pela excelência, criatividade e contribuição ao mercado. Em um cenário de elegância e reconhecimento, Camila viveu uma noite inesquecível, marcada pela emoção e pela valorização de sua trajetória profissional.\n\nO prêmio reforça o talento, a dedicação e a sensibilidade que fazem de Camila Sales uma referência na arquitetura contemporânea, levando o nome da Paraíba a ocupar lugar de destaque no cenário nacional. Sem dúvida, um momento memorável que ficará eternizado em sua carreira e inspira novos desafios e conquistas.",
+      "timestamp": "2026-08-04T12:28:53.000Z",
+      "content_format": "reel",
+      "likes": 43,
+      "comments": 18,
+      "video_view_count": 407,
+      "video_play_count": 1236,
+      "latest_comments": [
+        "👏🏼👏🏼👏🏼👏🏼 🔝",
+        "Muito merecido esse reconhecimento parabéns @camilasalesarquiteta 👏🏻🏆",
+        "Ela arrasou! Representou lindamente a Paraíba ❤️",
+        "👏👏👏👏👏👏",
+        "@camilasalesarquiteta  tenho tanto orgulho ❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DboVKKBFLO8",
+      "caption": "Mais uma marca passa a contar com a consultoria estratégica de Paulo Navarro Filho @paulonavarroconsultor , da Plugue Marketing @pluguemarketing . Desta vez, o trabalho será desenvolvido junto ao Grupo Skyler João Pessoa @skylerjoaopessoa e Guarabira @skylerguarabirq , sob a liderança da empresária Jaynna Maia @jaynnamaia .\n\nA consultoria terá foco no fortalecimento do posicionamento da marca, planejamento estratégico, análise de mercado e desenvolvimento de ações voltadas para crescimento sustentável e resultados consistentes.",
+      "timestamp": "2026-08-04T19:36:51.000Z",
+      "content_format": "carousel",
+      "likes": 81,
+      "comments": 18,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Sou cliente da loja,  vou pedir um desconto 😂. 👏👏👏👏",
+        "👏👏👏👏👏",
+        "👏👏👏👏",
+        "👏👏👏👏👏👏👏",
+        "Parabéns pelo comprometimento e profissionalismo que vem mostrando 👏👏 #tmj 💪🚀",
+        "👏👏👏👏👏",
+        "Parabéns pela escolha 👏👏👏",
+        "Que seja o início de uma parceria de muito sucesso! Vamos juntos! 🚀👏",
+        "👏👏👏👏 parabéns! 🚀🚀🚀",
+        "Parabéns e sucesso👏👏👏",
+        "PROFISSIONAL INCRIVEEELLL 👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbdS2QPxQYZ",
+      "caption": "O cantor piauiense @davidsingeroficial, de 22 anos, se apresentou no programa Mais Você, com Ana Maria Braga, nesta quarta-feira (29). Conhecido por cantar na Avenida Paulista, em São Paulo, o ex-trabalhador braçal alcançou a marca de 500 mil seguidores ao vivo durante a transmissão na TV Globo.\n\nDurante o programa, David interpretou o clássico\n\"Classic\", de Adrian Gurvitz, e revelou suas inspirações:\n\n\"Comecei a ver vídeos de grandes cantores, como Michael Jackson, e decidi que era aquilo que eu queria para a minha vida.\"\n\nImagens: TV Globo",
+      "timestamp": "2026-07-31T12:49:01.000Z",
+      "content_format": "reel",
+      "likes": 682,
+      "comments": 41,
+      "video_view_count": 4645,
+      "video_play_count": 9637,
+      "latest_comments": [
+        "❤️❤️❤️❤️❤️❤️",
+        "Onde ele faz Live, gostaria de encontrar",
+        "👏👏👏👏👏",
+        "👏👏👏👏👏👏 parabéns para você Devd muito sucesso lindo",
+        "🙌 Deus abençoe você e sua jornada que só está começando ❤️",
+        "Carreira promissora...Parabéns!👏👏",
+        "Sensacional 👏❤️🙌",
+        "Gostei muito desse menino que canta na rua David vai no programa do Ratinho da audiência total",
+        "Quero cd👏👏",
+        "Lindooooo❤️👏👏😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbeYMRhI2Fp",
+      "caption": "Um resort com uma proposta inédita promete movimentar o turismo no litoral da Paraíba. \n\nO Villamor Tambaba Resort, que será o primeiro resort liberal do Brasil e da América do Sul, terá 284 apartamentos, piscinas, spa, áreas de convivência e até uma boate instalada dentro de um Boeing 737 desativado. Exclusivo para maiores de 18 anos, o empreendimento será construído próximo à Praia de Tambaba, conhecida pelo naturismo.\n\nVocê visitaria um resort com essa proposta?",
+      "timestamp": "2026-07-31T22:51:29.000Z",
+      "content_format": "static_post",
+      "likes": 29,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Já vou dar meu show nessa boate👏👏 parabéns e sucesso👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbbP_dyIeIP",
+      "caption": "O Café de La Musique On Tour @cafedelamusiqueoficial desembarca pela primeira vez em João Pessoa no dia 22 de agosto, levando para a capital paraibana a atmosfera sofisticada e vibrante de uma das labels mais desejadas do Brasil. A edição inédita acontece à beira-mar, no Goa Shantti @goashantti , na praia do Bessa, em uma experiência que promete reunir música, gastronomia, lifestyle e o clima descontraído dos grandes beach clubs.\n\nA grande atração será a DJ Thais Barja @thaisbarja referência da cena eletrônica nacional, que construiu uma trajetória marcada por uma identidade sonora envolvente e apresentações nos principais clubs, festivais e beach clubs do país. Com o conceito que consagrou o Café de La Musique On Tour, o evento promete transformar o litoral do Bessa em um dos points mais disputados da cidade, reunindo boa música, experiências e muita energia. As vendas já estão disponíveis.",
+      "timestamp": "2026-07-30T17:43:07.000Z",
+      "content_format": "static_post",
+      "likes": 233,
+      "comments": 23,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏👏👏👏",
+        "Ansiosa já 😍 @thaisbarja",
+        "😍😍😍😍😍😍😍",
+        "Achei q era a demi lovato 🗣️🗣️🗣️",
+        "Meudeuduceu minha diva divando 💃🏾🚀❤️",
+        "🙌🏻",
+        "Show👏👏",
+        "Que delícia"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbbUrsEoWSz",
+      "caption": "O advogado Enio Nascimento explica como o Tema 1462 garante proventos mais justos ao aplicar o redutor de 5 anos no cálculo proporcional.\n\nMesmo após a repercussão inicial do julgamento do Tema 1462 pelo Supremo Tribunal Federal, em junho de 2026, a decisão continua gerando dúvidas práticas entre professores da rede pública. Para Enio Nascimento, referência em Direito Previdenciário na Paraíba, o entendimento da Corte ainda precisa ser bem compreendido por quem pode se beneficiar: o redutor constitucional de cinco anos deve ser aplicado no cálculo dos proventos de aposentadoria por incapacidade permanente (antiga invalidez) quando o benefício é proporcional.\n\nTexto completo: https://docs.google.com/document/d/1yzMGFpjy5AaTjEVHoGBEo3nCTj5VWSoWxHRiby6stjE/edit?usp=sharing",
+      "timestamp": "2026-07-30T18:22:54.000Z",
+      "content_format": "static_post",
+      "likes": 7,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbgGHD8xS-s",
+      "caption": "A Construtora Galvão Amorim @galvaoamorim e a Artefacto @artefactojp apresentam oficialmente, na próxima terça-feira (4), o Haus Artefacto, primeiro branded residence vertical da marca no Nordeste. O lançamento acontece durante a abertura da Mostra Artefacto João Pessoa 2026, que integra as celebrações dos 50 anos da Artefacto e reúne ambientes assinados por arquitetos e designers de interiores paraibanos. \n\nLocalizado à beira-mar do bairro Jardim Oceania, uma das regiões mais valorizadas da capital paraibana, o empreendimento será construído em um terreno de 3 mil metros quadrados, com 60 metros de frente para o mar, e contará com apenas 28 unidades residenciais. Mesmo antes do lançamento oficial, o residencial já demonstra a força do projeto, com cerca de 50% das unidades comercializadas. \n\nO Haus Artefacto representa o encontro de duas empresas familiares que transformaram tradição, qualidade e visão de longo prazo em pilares de suas trajetórias. De um lado, a Galvão Amorim, referência em empreendimentos de alto padrão na Paraíba. Do outro, a Artefacto, que há cinco décadas figura entre os principais nomes do mobiliário e do design brasileiro e amplia sua atuação no segmento de branded residences.\n\n\"Assim como a Galvão Amorim, a Artefacto é uma empresa familiar. Nós admiramos muito a marca e, para a gente, é motivo de orgulho estarmos juntos nesse empreendimento. O Haus Artefacto é o nosso presente para João Pessoa e para as famílias que buscam o mais alto patamar de moradia. É a celebração da vida em sua forma mais pura, com arte, com alma e com a imensidão do horizonte como quintal\", afirma Victor Amorim, CEO da Galvão Amorim.",
+      "timestamp": "2026-08-01T14:52:56.000Z",
+      "content_format": "static_post",
+      "likes": 35,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Parabéns e sucesso👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbePjdKFOC_",
+      "caption": "A passagem da colunista social alagoana Aninha Monteiro @aninhamonteirooficial por São Paulo foi marcada por um encontro repleto de boas histórias, amizade e elegância. A jornalista foi recebida por Celina Ferreira e Amaury Junior no QG do casal, em um momento de confraternização entre amigos de longa data. Também participaram da ocasião Márcia Siqueira, editora da Revista Opinião, e a empresária de turismo Flávia Monteiro, da Vip Guest Brasil.\n\nCom uma trajetória consolidada no colunismo social, Aninha Monteiro é um dos nomes mais reconhecidos de Alagoas na cobertura de personalidades, eventos e grandes acontecimentos. Conhecida pelo olhar atento para o luxo, cultura e comportamento, a colunista mantém uma carreira marcada pela valorização de histórias e personagens que movimentam a sociedade brasileira.",
+      "timestamp": "2026-07-31T21:35:28.000Z",
+      "content_format": "carousel",
+      "likes": 24,
+      "comments": 4,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😍😍😍😍😍😍",
+        "Amigo vc é fantástico😍😍😍😍😍",
+        "😍😍😍😍😍",
+        "👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbeQEFgoU6i",
+      "caption": "A psicóloga, artista plástica e escritora Odegine Graça @odeginearte_of celebra uma fase especial em sua trajetória com o sucesso do seu quinto livro, “O Elo de Ouro”, que alcançou a marca de best-seller. Reconhecida por unir arte, literatura e desenvolvimento humano, a autora se prepara para novos momentos de destaque: em setembro, participa da Bienal do Livro de São Paulo e, em outubro, levará suas obras e livros para uma exposição no Museu do Louvre, em Paris.",
+      "timestamp": "2026-07-31T21:40:12.000Z",
+      "content_format": "static_post",
+      "likes": 48,
+      "comments": 7,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏👏👏👏👏",
+        "Parabéns e sucesso 👏👏👏👏👏👏👏😍😍😍😍😍😍😍",
+        "👏👏👏👏",
+        "Odegine, da sensibilidade das suas palavras para a grandiosidade do Louvre. Que sua viagem seja tão fascinante e inesquecível quanto as histórias que você escreve!!!!",
+        "Que gigante da arte e da psicologia! Uma alma leve como a dela merece voos altos mesmo ! Além de ser um ser riquíssimo tem o poder de se doar ao próximo de maneira nobre ! Voe Odegine , daqui sempre ficarei torcendo para que seu sucesso sempre se expanda !",
+        "parabens querida, sucesso 👏👏👏👏",
+        "Parabéns e sucesso👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbdTwmYRBxx",
+      "caption": "O grupo paraibano Ojú-Òrun se apresenta no dia 08 de agosto, às 20h, no Teatro do Sesc, em João Pessoa, abrindo uma nova fase de um trabalho que começou em 2019 e que segue vivo na pesquisa de ritmos como toques de angola, sambas, cocos e ijexás, sempre em diálogo com arranjos contemporâneos. Os ingressos já estão à venda pelo Sympla.",
+      "timestamp": "2026-07-31T12:53:11.000Z",
+      "content_format": "static_post",
+      "likes": 27,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏👏👏👏👏👏👏",
+        "Que maravilha! Parabéns e sucesso👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbeQVTZIddD",
+      "caption": "A empresária Urânia Costa @uraniaemax , à frente da Rayssa Imports @rayssaimports , preparou a campanha “A Cara do Pai” para celebrar o Dia dos Pais, reunindo uma seleção especial de perfumes importados, kits presenteáveis, lançamentos, novidades, promoções e brindes. A loja também disponibiliza uma Revista Especial dos Pais, com sugestões pensadas para diferentes estilos e perfis.\n\nPara completar a experiência, o serviço de delivery funciona normalmente todos os dias, garantindo praticidade, rapidez e segurança para quem deseja escolher o presente sem sair de casa. Uma oportunidade para surpreender o pai com sofisticação, elegância e fragrâncias inesquecíveis.",
+      "timestamp": "2026-07-31T21:42:44.000Z",
+      "content_format": "static_post",
+      "likes": 21,
+      "comments": 5,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏👏👏👏👏👏",
+        "Presentes marcantes e inesquecível 👏👏",
+        "😍😍",
+        "👏👏👏👏👏👏👏👏",
+        "Perfumes são sempre ótimos presentes 🎁 🎁 viva o dia de nossos amados pais👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbgK033kT4D",
+      "caption": "O Cristo Redentor é uma das obras de arte mais reconhecidas do planeta. Mas... e se ele tivesse sido criado por outros grandes artistas?\n\nComo seria se Oscar Niemeyer tivesse priorizado as curvas? E se Antoni Gaudí levasse sua arquitetura orgânica ao Corcovado? Ou se Aleijadinho imprimisse sua força ao monumento?\n\nA inteligência artificial nos permite brincar com hipóteses como essa e imaginar diferentes interpretações de um dos maiores símbolos do Brasil.\nPasse as imagens até o fim e me diga:\nQual versão mais chamou sua atenção? E qual você escolheria para representar o Brasil?",
+      "timestamp": "2026-08-01T15:32:38.000Z",
+      "content_format": "carousel",
+      "likes": 47,
+      "comments": 9,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😍😍👏👏🙌❤️Ameii",
+        "Ficaria com a maravilhosa Tarsila Do Amaral e suas cores vibrantes, que mostram bem nossa cara brasileira e também Antoni Gaudí, apesar de todos estarem lindos!👏👏👏",
+        "Tds belos",
+        "👏👏👏👏👏👏👏",
+        "lindosss",
+        "Todos belíssimos!!!😍😍",
+        "👏👏👏👏",
+        "👏👏👏👏👏👏",
+        "que lindo"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbgMEEnRciO",
+      "caption": "Seu pai merece mais do que um presente. Ele merece a Lavie @lavie.jpa \n\nEle merece um momento para relaxar, descansar e viver uma experiência ao lado de quem mais ama.\n\nNo SPA Lavie, pal e filho(a) compartilham uma jornada de bem-estar com massagens relaxantes, banheira de imersão, escalda-pés e um ambiente pensado para transformar cuidado em lembrança.\n\nÉ o tipo de presente que não fica na prateleira.\nFica na memória.\n\nExperiência SPA exclusiva para o Dia dos Pais. Um presente diferente. Um momento inesquecível.\n\nLavie Instituto de Estética e Autocuidado\nVille des Plantes @villedesplantes \nRua Prefeito Joaquim Gonçalves de Assis, 50\nJardim Oceania • João Pessoa - PB\n\nFale agora com a equipe Lavie e reserve seu horário:\n(83) 99185-0841",
+      "timestamp": "2026-08-01T15:45:51.000Z",
+      "content_format": "reel",
+      "likes": 18,
+      "comments": 3,
+      "video_view_count": 484,
+      "video_play_count": 1538,
+      "latest_comments": [
+        "👏👏👏👏👏👏",
+        "👏👏👏👏😍😍😍",
+        "Viva todos os pais👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbbhULMo3tO",
+      "caption": "O feriado de 5 de agosto, que celebra o aniversário de João Pessoa e o Dia de Nossa Senhora das Neves, é uma oportunidade para moradores da Paraíba e visitantes aproveitarem dias de descanso com conforto, lazer e entretenimento. Localizado no Polo Turístico Cabo Branco, o Tauá Resort João Pessoa @tauaresorts apresenta-se como uma das principais opções para quem deseja reunir a família e os amigos durante o período.\n\nRecém-inaugurado, o resort oferece estrutura para todas as idades, com piscinas, espaços de lazer, programação recreativa, gastronomia diversificada e experiências voltadas para toda a família.\n\nAlém disso, os moradores do Nordeste podem aproveitar a Tarifa Especial Nordestino, que garante 10% de desconto nas hospedagens, além de 5% de desconto adicional para pagamentos via Pix. A campanha é válida para reservas realizadas até 29 de novembro de 2026, com hospedagens até 30 de novembro de 2026, mediante apresentação de comprovante de residência atualizado no momento do check-in.\n\nA promoção contempla moradores de Alagoas, Bahia, Ceará, Maranhão, Paraíba, Pernambuco, Piauí, Rio Grande do Norte e Sergipe. O benefício não é cumulativo com outras promoções ou tarifas especiais e está sujeito à disponibilidade de apartamentos destinados à campanha.\n\nMais informações: www.tauaresorts.com.br",
+      "timestamp": "2026-07-30T20:13:47.000Z",
+      "content_format": "static_post",
+      "likes": 25,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "que tudoooo",
+        "👏👏👏👏👏👏👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbYOuO-Rm-N",
+      "caption": "Falta uma semana para a 6ª edição do Festival MêiMundo. Nos dias 3 e 4 de agosto, o Centro de Comunicação, Turismo e Artes (CCTA) da Universidade Federal da Paraíba (UFPB) recebe uma programação gratuita que reúne música, oficinas, rodas de conversa, apresentações culturais e a feira criativa. Com o slogan \"Onde as vozes se encontram\", o evento convida o público a vivenciar dois dias dedicados à arte, à cultura e à valorização da identidade de João Pessoa.\n\nA programação começa no dia 3 de agosto com a Imersão Cultural, que contará com cine-debate, rodas de conversa sobre cultura periférica, tradição, ancestralidade e ritmos dos Orixás, além de oficinas de DJ e de Vogue Femme, incluindo momentos práticos de interação e vivência. Durante os dois dias, o público também poderá visitar a Feira Mercado Criativo, com expositores de gastronomia e artesanato.\n\nJá no dia 4 de agosto, o festival reúne apresentações musicais e culturais com artistas e grupos da cena paraibana. O evento será apresentado por Arya Reis e Aru Valência, nomes atuantes da cena cultural de João Pessoa, e contará com atrações que transitam por diferentes linguagens e ritmos, reforçando a proposta de diversidade que marca o MêiMundo.\n\n*Atrações confirmadas*\n\nA programação reúne o coletivo Sistah's Selectas, Nel no Beat, Ala Ursa Amigo Batucada, PriCler e as Panteronas, Blakk Mania e o músico Helinho Medeiros. As atrações representam diferentes manifestações artísticas e musicais, passando pelo reggae, hip hop, música instrumental, cultura popular, pagodão, ritmos afro-brasileiros e experimentações da música contemporânea.\n\nA programação completa pode ser acessada pelo instagram do evento: www.instagram.com/festivalmeimundo/",
+      "timestamp": "2026-07-29T13:33:29.000Z",
+      "content_format": "static_post",
+      "likes": 16,
+      "comments": 3,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏🏽👏🏽👏🏽👏🏽",
+        "😍😍😍",
+        "👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbYfjDNRbsw",
+      "caption": "As noites de quinta-feira têm um charme especial no Al’Mar Cucina @almarcucina . A partir das 20h, o restaurante ganha uma atmosfera sofisticada e acolhedora com o Jazz ao Vivo by Arnauld Neto @arnnooficial , criando o cenário perfeito para transformar o jantar em uma experiência memorável.\n\nPara completar o momento, a casa oferece uma carta de vinhos cuidadosamente selecionada e ainda brinda seus clientes com a promoção Rolha Free: você pode levar o seu rótulo preferido e apreciá-lo sem pagar taxa de rolha.\n\nUma combinação perfeita de alta gastronomia, boa música e excelentes vinhos espera por você.\n\nReserve sua mesa!\n\nAl’Mar Cucina – Icon Hotel, João Pessoa\nReservas: (83) 98843-4300.",
+      "timestamp": "2026-07-29T16:00:55.000Z",
+      "content_format": "static_post",
+      "likes": 21,
+      "comments": 7,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏👏👏👏👏👏👏",
+        "Muito bom 👏🏽👏🏽👏🏽",
+        "Imperdível  show👏👏",
+        "Da um show ❤️",
+        "👏👏👏👏👏👏👏",
+        "👏👏👏👏👏👏👏",
+        "Que delicia ouviu um sopro perfeito, parabéns ao artista músico👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbZAjzoIYiT",
+      "caption": "A construtora Alliance @allianceoficial levou o conceito de experiência do cliente a outro patamar durante o evento de entrega do Horizon, novo empreendimento no Altiplano.\n\nSob o convite \"Sua emoção em uma palavra\", os futuros moradores e convidados compartilharam os sentimentos que marcam esse novo ciclo. A artista Marcela Quirino transformou cada relato em arte ao vivo, personalizando um jarro imponente de dois metros de altura. \n\nA peça, carregada de significado, agora fará parte da decoração definitiva do empreendimento, registrando para sempre a essência de quem faz parte dessa história.",
+      "timestamp": "2026-07-29T20:48:59.000Z",
+      "content_format": "static_post",
+      "likes": 31,
+      "comments": 5,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Amei demais! 🤩",
+        "Ficou incrível! 😍😍",
+        "Alegria enorme por fazer as emoções dessa noite perdurarem em forma de arte. 💛",
+        "😍😍😍😍",
+        "👏👏👏👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbbO-ljos9G",
+      "caption": "O chef Onildo Rocha @onildorocha , um dos nomes de destaque da gastronomia paraibana, será palestrante no palco BEYOND – Feeding the Future, no SP2B, em São Paulo, no dia 12 de agosto, às 11h30. À frente da Cozinha Roccia, o chef participa do painel “Cultura que Alimenta: Quando Tradição Encontra Inovação”, que propõe uma reflexão sobre como a gastronomia pode reafirmar identidade, território e memória, além de valorizar produtores locais, alimentos tradicionais, biodiversidade e saberes culinários como elementos estratégicos para um futuro mais autêntico e sustentável.",
+      "timestamp": "2026-07-30T17:33:21.000Z",
+      "content_format": "static_post",
+      "likes": 54,
+      "comments": 6,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🖤",
+        "🖤",
+        "👏👏👏",
+        "@onildorocha 😍😍",
+        "Levando a Paraíba onde quer que eu vá!",
+        "arrasou 👏👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbbM_OlFIBg",
+      "caption": "A Artefacto João Pessoa @artefactojp celebra os 50 anos da marca com a Mostra Artefacto 2026, que traz como tema “Maturidade”, propondo uma reflexão sobre o tempo, a experiência e a sofisticação construída ao longo dos anos. \n\nA exposição reúne importantes nomes da arquitetura e do design de interiores paraibano, entre eles Alice Medeiros @alicemedeirosarquiteta , Antonio Neves @antonionevesarquiteto , Bethania Tejo @bethaniatejoarquitetura , João Braz @joaobraznetto , João Romualdo, João Coura e Taty Travassos, da JT Arquitetos @jtarquitetos , Ana Cristina, Daniella Figueiredo e Yuri Fernandes, da Oficina Arquitetura @oficinaarquitetura , Gesiel Soares e Raphael Barbosa, da Ponto3 Arquitetura @ponto3arquitetura , Sandra Moura @sandramouraarquitetura e Tainá Andrade @tainaandrade.arq , que apresentam ambientes autorais e inspiradores, explorando diferentes interpretações do morar contemporâneo e valorizando memória, identidade, permanência e escolhas conscientes. \n\nA programação também destaca a Artefacto Edition 2026 – Cosmos, coleção assinada pela diretora criativa Patricia Anastassiadis, que traduz em peças de mobiliário o diálogo entre legado, inovação e futuro.",
+      "timestamp": "2026-07-30T17:15:19.000Z",
+      "content_format": "carousel",
+      "likes": 36,
+      "comments": 6,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "❤️❤️❤️❤️",
+        "👏👏👏",
+        "Ansiosa 🤍",
+        "Viva elaaa😍👏👏👏🎉",
+        "Parabéns e sucesso👏👏👏",
+        "👏🏻👏🏻👏🏻"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbbPkXYImpM",
+      "caption": "Fortes rajadas de vento, de mais de 100 km/h, com a chegada de uma frente fria provocaram o caos no Rio de Janeiro e em cidades da Região Metropolitana na tarde desta quarta-feira (29). \n\nDuas pessoas morreram, e um apagão afetou bairros da capital e da Baixada, paralisou trens e metrô e apagou sinais de trânsito. Segundo especialistas, a explicação está no avanço de uma frente",
+      "timestamp": "2026-07-30T17:39:15.000Z",
+      "content_format": "reel",
+      "likes": 602,
+      "comments": 24,
+      "video_view_count": 9804,
+      "video_play_count": 21635,
+      "latest_comments": [
+        "A força da mãe natureza.",
+        "Meu Deus que assustador 😱😱😱😱😱😢😢😢😢😢😢",
+        "É o retorno da natureza! Sr humano está acabando com ela !",
+        "Muita gente sem noção do que estar acontecendo e do que ainda vem...",
+        "😳🙄😳🙄😳🙄😳🙄😧😧😧😧😧😧😳😢😢😢😢😢😢😢😢",
+        "Foi tenso demais",
+        "Sinais do fim dis tempos !",
+        "A natureza é soberana e cobra os desmatamentos e desmantelos das ambições humanas! O resultado é esse e outros, muito triste😢",
+        "😮",
+        "GenTE VAO OLHAR A METEOROLOGIA ANTES DE SAIR"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 67948,
+  "following_count": 7364,
+  "posts_count": 22649,
+  "follower_tier": "macro",
+  "engagement": {
+    "sample_size": 30,
+    "median_er": 0.0005077412138694296,
+    "mean_er": 0.0013966562665567788,
+    "er_per_post": [
+      {
+        "short_code": "Dbg_pZyouR7",
+        "er": 0.0006034026019897568,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbjEqD7oi2Z",
+        "er": 0.0048125036792841585,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DblNNaux_Cs",
+        "er": 0.0001913227762406546,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DblOIXBx1hV",
+        "er": 0.0011773709307117206,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DboPwvSoH-T",
+        "er": 0.0004856655089185848,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DblipRoI4t1",
+        "er": 0.0005298169188202743,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "Dbls1tFoIf_",
+        "er": 0.00008830281980337905,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "Dbng7tkxA9Y",
+        "er": 0.00007358568316948254,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbljkoeopEy",
+        "er": 0.00044151409901689527,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbnldUlRpM_",
+        "er": 0.00014717136633896508,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbnkEISRv-L",
+        "er": 0.000897745334667687,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DboVKKBFLO8",
+        "er": 0.0014569965267557544,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbdS2QPxQYZ",
+        "er": 0.010640489786307177,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbeYMRhI2Fp",
+        "er": 0.00044151409901689527,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbbP_dyIeIP",
+        "er": 0.003767586978277506,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbbUrsEoWSz",
+        "er": 0.00011773709307117207,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbgGHD8xS-s",
+        "er": 0.0005298169188202743,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbePjdKFOC_",
+        "er": 0.00041207982574910227,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbeQEFgoU6i",
+        "er": 0.000809442514864308,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbdTwmYRBxx",
+        "er": 0.00042679696238299877,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbeQVTZIddD",
+        "er": 0.0003826455524813092,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbgK033kT4D",
+        "er": 0.0008241596514982045,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbgMEEnRciO",
+        "er": 0.0003090598693118267,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbbhULMo3tO",
+        "er": 0.00039736268911520577,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbYOuO-Rm-N",
+        "er": 0.00027962559604403366,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbYfjDNRbsw",
+        "er": 0.00041207982574910227,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbZAjzoIYiT",
+        "er": 0.0005298169188202743,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbbO-ljos9G",
+        "er": 0.0008830281980337905,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbbM_OlFIBg",
+        "er": 0.0006181197386236534,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbbPkXYImpM",
+        "er": 0.009212927532819215,
+        "content_format": "reel"
+      }
+    ]
+  },
+  "external_url": "http://rcvips.com.br/",
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "1_ecommerce_direto",
+    "secondary": "3_infoprodutor",
+    "matches": [
+      {
+        "category": "1_ecommerce_direto",
+        "score": 3,
+        "evidence": [
+          "external_url próprio (não agregador/infoproduto/membership) + legenda com CTA de venda: \"R$ 9\""
+        ]
+      },
+      {
+        "category": "3_infoprodutor",
+        "score": 2,
+        "evidence": [
+          "legenda com padrão de lançamento: \"imersão\""
+        ]
+      }
+    ],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "1_ecommerce_direto",
+    "setor_benchmark_secundario": "3_infoprodutor",
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "implementado",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T02:10:03.566Z",
+    "versao_framework": "v3.1"
+  }
+}

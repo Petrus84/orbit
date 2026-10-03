@@ -1,0 +1,16 @@
+/* ==========================================================================
+   ORBIT · App Globals (Dual Design System)
+   Versão: 2.1.0  |  Data: 2026-09-07
+   ========================================================================== */
+
+/* Os arquivos CSS Modules são descobertos pelo Tailwind a partir do entrypoint global. */
+@import 'tailwindcss';
+
+/* Restaura o fundo absoluto do Orbit (camada base #0C0C0F) */
+@layer base {
+  body {
+    background-color: #0C0C0F;
+    color: #F0EFE8;
+    font-family: 'DM Sans', sans-serif;
+  }
+}

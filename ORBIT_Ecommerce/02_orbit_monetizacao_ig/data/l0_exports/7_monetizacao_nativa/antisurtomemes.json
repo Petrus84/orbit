@@ -1,0 +1,662 @@
+{
+  "handle": "antisurtomemes",
+  "setor_benchmark_key": "7_monetizacao_nativa",
+  "url": "https://www.instagram.com/antisurtomemes/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T02:23:58.410Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DboTi4Vp2hO",
+      "caption": "",
+      "timestamp": "2026-08-04T19:23:03.000Z",
+      "content_format": "reel",
+      "likes": 130,
+      "comments": 1,
+      "video_view_count": 1235,
+      "video_play_count": 2673,
+      "latest_comments": [
+        "Me torno uma pedra"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbnkUVHxH24",
+      "caption": ".\n.\n#antisurtomemes #memesbrasil",
+      "timestamp": "2026-08-04T12:30:05.000Z",
+      "content_format": "reel",
+      "likes": 38,
+      "comments": 0,
+      "video_view_count": 265,
+      "video_play_count": 843,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DblWm3LNGzJ",
+      "caption": "Por algum motivo isso passa a acontecer...\n.\n#antisurtomemes #memesbrasil #mães",
+      "timestamp": "2026-08-03T15:52:46.000Z",
+      "content_format": "reel",
+      "likes": 45,
+      "comments": 0,
+      "video_view_count": 712,
+      "video_play_count": 1695,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DboAWWaRTeQ",
+      "caption": "",
+      "timestamp": "2026-08-04T16:35:06.000Z",
+      "content_format": "reel",
+      "likes": 112,
+      "comments": 2,
+      "video_view_count": 903,
+      "video_play_count": 1907,
+      "latest_comments": [
+        "Chama a nine nine 💛",
+        "se não for assim, ficam cancelando a corrida, kkkkkkkkkkk"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbon-_XpiIg",
+      "caption": "vou trabalhar dobrado pelo mesmo salário...",
+      "timestamp": "2026-08-04T22:21:38.000Z",
+      "content_format": "reel",
+      "likes": 20,
+      "comments": 0,
+      "video_view_count": 243,
+      "video_play_count": 578,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DblnntTxEcE",
+      "caption": "Ele nunca mais tentou aprender inglês depois disso\n.\n#antisurtomemes #memesbrasil #ingles",
+      "timestamp": "2026-08-03T18:20:04.000Z",
+      "content_format": "reel",
+      "likes": 122,
+      "comments": 0,
+      "video_view_count": 622,
+      "video_play_count": 1612,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbgp7SJpUcK",
+      "caption": "#antisurtomemes #memesbrasil #humor",
+      "timestamp": "2026-08-01T20:06:16.000Z",
+      "content_format": "reel",
+      "likes": 55,
+      "comments": 2,
+      "video_view_count": 468,
+      "video_play_count": 1194,
+      "latest_comments": [
+        "So f1",
+        "E esse olho vermelho?"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbiYfWChXZP",
+      "caption": "Sentar no pau e comer o bolo ou sentar no bolo e comer o pau\n\n#antisurtomemes #memesbrasil #humor",
+      "timestamp": "2026-08-02T12:10:06.000Z",
+      "content_format": "reel",
+      "likes": 34,
+      "comments": 2,
+      "video_view_count": 664,
+      "video_play_count": 1659,
+      "latest_comments": [
+        "Olk mn cabe tudo? E do seu tamanho",
+        "Claramente ele escolheu comer o bolo...."
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DQuBb4pEZpl",
+      "caption": "Ficou de fora \n#novayork #worldtradecenter",
+      "timestamp": "2025-11-06T14:54:47.000Z",
+      "content_format": "reel",
+      "likes": 217589,
+      "comments": 911,
+      "video_view_count": 1357946,
+      "video_play_count": 2508753,
+      "latest_comments": [
+        "ADM NÃO CONCÓRDIA COM ISSO❤️‍🩹❤️‍🩹❤️‍🩹",
+        "Tadinho do Concórdia ❤️‍🩹❤️‍🩹❤️‍🩹",
+        "qual foi do véi lá atrás evaporando?",
+        "Até tinha, mas ela caiu sem nada bater nela, pesquisem \"edifício número 7\""
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbeUsW2BM2o",
+      "caption": "Você não pode sair correndo. Eles irão atrás até te achar e agradecer.\n#enigmadotrem #dilemadotrem",
+      "timestamp": "2026-07-31T22:20:05.000Z",
+      "content_format": "reel",
+      "likes": 95,
+      "comments": 3,
+      "video_view_count": 734,
+      "video_play_count": 2118,
+      "latest_comments": [
+        "A página tem outros memes bons pra você conferir 🙂",
+        "¯\\_(ツ)_/¯"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbgsFFUJZYb",
+      "caption": "#antisurtomemes #memesbrasil #humor",
+      "timestamp": "2026-08-01T20:23:39.000Z",
+      "content_format": "reel",
+      "likes": 158,
+      "comments": 14,
+      "video_view_count": 4469,
+      "video_play_count": 13329,
+      "latest_comments": [
+        "Você pensou eu pensei☠️",
+        "Você pensou, eu pensei, todos pensamos, mas com certeza não 😂",
+        "Pena que n sei desenhar o @_nicolasfariaa mulher",
+        "Nós pensamos"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbg-m8Sh-Si",
+      "caption": "#antisurtomemes #memesbrasil #humor",
+      "timestamp": "2026-08-01T23:05:05.000Z",
+      "content_format": "reel",
+      "likes": 58,
+      "comments": 0,
+      "video_view_count": 679,
+      "video_play_count": 1871,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbV8_8_Dex2",
+      "caption": "Não, obrigado",
+      "timestamp": "2026-07-28T16:19:46.000Z",
+      "content_format": "reel",
+      "likes": 96,
+      "comments": 2,
+      "video_view_count": 980,
+      "video_play_count": 2432,
+      "latest_comments": [
+        "😂😂😂😂😂😂",
+        "A página tem outros memes bons pra você conferir 🙂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbOkefxJc6O",
+      "caption": "",
+      "timestamp": "2026-07-25T19:30:43.000Z",
+      "content_format": "reel",
+      "likes": 173,
+      "comments": 1,
+      "video_view_count": 147,
+      "video_play_count": 2731,
+      "latest_comments": [
+        "A página tem outros memes bons pra você conferir 🙂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbVi5C9ChfF",
+      "caption": "Quais as chances?",
+      "timestamp": "2026-07-28T12:31:42.000Z",
+      "content_format": "reel",
+      "likes": 231,
+      "comments": 4,
+      "video_view_count": 1574,
+      "video_play_count": 3369,
+      "latest_comments": [
+        "quando o pastor falta falar seu nome no culto",
+        "Sim mano, eu 100%",
+        "Eu ai",
+        "A página tem outros memes bons pra você conferir 🙂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbTgec8tbWf",
+      "caption": "Era para eu ser o melhor dentre todos os eus....",
+      "timestamp": "2026-07-27T17:32:09.000Z",
+      "content_format": "reel",
+      "likes": 98,
+      "comments": 1,
+      "video_view_count": 287,
+      "video_play_count": 1626,
+      "latest_comments": [
+        "A página tem outros memes bons pra você conferir 🙂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZFG3YQN-TG",
+      "caption": "O pessoal deve estar todo mundo querendo andar perto dela no recreio\n\n#copadomundo #Brasil #futebolbrasileiro #futebolfemininobrasil",
+      "timestamp": "2026-06-02T10:16:39.000Z",
+      "content_format": "reel",
+      "likes": 1202348,
+      "comments": 13084,
+      "video_view_count": 6186447,
+      "video_play_count": 16125949,
+      "latest_comments": [
+        "Farmou muita aura.",
+        "🗿🍷",
+        "🔥🔥🔥",
+        "...pra fazer isso? 🤷🏽‍♂️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbUAVD5DtnV",
+      "caption": "Só quem dirige sabe a sensação quando alguém liga a luz",
+      "timestamp": "2026-07-27T22:10:20.000Z",
+      "content_format": "reel",
+      "likes": 221,
+      "comments": 3,
+      "video_view_count": 1277,
+      "video_play_count": 7315,
+      "latest_comments": [
+        "Q maneiro",
+        "Meu pai mudou muito comigo depois que eu capotei a camionete dele , não  da nem bença pra mim",
+        "KKKKKKKKKKK cara, isso é traumatizante"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbWpZi9ivrP",
+      "caption": "Só quem viveu, viveu....\n\n#picoschool",
+      "timestamp": "2026-07-28T22:47:46.000Z",
+      "content_format": "reel",
+      "likes": 68,
+      "comments": 12,
+      "video_view_count": 1035,
+      "video_play_count": 2382,
+      "latest_comments": [
+        "Alguém explica?",
+        "Alguém explica?",
+        "Alguém explica?",
+        "@animesplatinum todo mundo morre?",
+        "Quase todo mundo mas e um pouco pior"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbmKgwjxXoJ",
+      "caption": ".\n.\n#antisurtomemes #memesbrasil",
+      "timestamp": "2026-08-03T23:25:06.000Z",
+      "content_format": "reel",
+      "likes": 191,
+      "comments": 4,
+      "video_view_count": 1847,
+      "video_play_count": 4320,
+      "latest_comments": [
+        "Lara sensual? Sim!! Vadia?? Jamais!",
+        "Nem me pagando todo o dinheiro do mundo eu faria isso",
+        "Ei pera aí tem alguma coisa estranha"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbizYIhh938",
+      "caption": "Gravando pro tiktok \n#antisurtomemes #memesbrasil #humor\n\n@yass_cmxz",
+      "timestamp": "2026-08-02T16:05:06.000Z",
+      "content_format": "reel",
+      "likes": 7,
+      "comments": 0,
+      "video_view_count": 493,
+      "video_play_count": 1476,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DTMDe0_jH9d",
+      "caption": "Seu bebê é feio, para de mentir.\n\n#memes #antisurtomemes",
+      "timestamp": "2026-01-06T23:52:57.000Z",
+      "content_format": "reel",
+      "likes": 412612,
+      "comments": 5141,
+      "video_view_count": 2264697,
+      "video_play_count": 4193836,
+      "latest_comments": [
+        "Só da câmera tirar foto o celular apaga de tão feio q o coitadinho fica",
+        "😂😂😂",
+        "Sobrinha não é desse jeito ela nasceu eu já faz oito dias só e eu vou colocar uma foto aqui dela no comentários para vocês para vocês falarem falarem de nota vocês dão para ela de 0 a 10",
+        "😂😂😂😂😂😂😂😂😂😂😂😂😂😂😂😂😂😂😂😂😂😂😂😂😂😂😂😂😂😂😂😂😂😂",
+        "😂😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DblzGukJJnP",
+      "caption": "Escuta essa que contaram aqui, vizinho \n.\n.\n#antisurtomemes #piada",
+      "timestamp": "2026-08-03T20:01:35.000Z",
+      "content_format": "reel",
+      "likes": 86,
+      "comments": 0,
+      "video_view_count": 932,
+      "video_play_count": 1890,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbTP9oPNJyr",
+      "caption": "O herói da vizinhança \n.\n#meme #viralizou #homem-aranha #marvel",
+      "timestamp": "2026-07-27T15:07:47.000Z",
+      "content_format": "reel",
+      "likes": 101,
+      "comments": 3,
+      "video_view_count": 439,
+      "video_play_count": 5259,
+      "latest_comments": [
+        "Homem aranha salva engarrafamento de cadeirante ! Pronto AGR s",
+        "👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbl14HzxcDc",
+      "caption": "Era só pra ficar um pouco contrariada\n.\n#antisurtomemes #memesbrasil #foca",
+      "timestamp": "2026-08-03T20:25:05.000Z",
+      "content_format": "reel",
+      "likes": 302,
+      "comments": 4,
+      "video_view_count": 1634,
+      "video_play_count": 3621,
+      "latest_comments": [
+        "Depois pega uma facada e não sabe o porquê 😂",
+        "@easy_2_1",
+        "Se acalma aí que tem mais incomodação 😂",
+        "😂😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbQ8oHKtN9S",
+      "caption": "#Endrick #Kendrick #Naruto #Boruto",
+      "timestamp": "2026-07-26T17:40:00.000Z",
+      "content_format": "static_post",
+      "likes": 46,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Não  irei opinar sobre",
+        "Achei que seria Bob como o grande ídolo dele."
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbZdDZzM3ws",
+      "caption": "",
+      "timestamp": "2026-07-30T00:57:16.000Z",
+      "content_format": "static_post",
+      "likes": 29,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Fnf referênces"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbQ6TDJtZUR",
+      "caption": "#Endrick #Kendrick #Naruto #Boruto",
+      "timestamp": "2026-07-26T17:20:21.000Z",
+      "content_format": "reel",
+      "likes": 394,
+      "comments": 5,
+      "video_view_count": 415,
+      "video_play_count": 12999,
+      "latest_comments": [
+        "Kendrick me lembra um passarinho",
+        "O cara nasceu com 3 apelidos fodas, Ken, Rick e Drick.",
+        "@erick_aaooii"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbjCRBoBzYj",
+      "caption": "O Joãozinho foi vítima da troca de sinais\n\n#antisurtomemes #memesbrasil #humor",
+      "timestamp": "2026-08-02T18:15:05.000Z",
+      "content_format": "reel",
+      "likes": 67,
+      "comments": 0,
+      "video_view_count": 1207,
+      "video_play_count": 3357,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbeCBNupyTL",
+      "caption": "Pra ninguém te lembrar que você falhou.\n\n.\n#memes #antisurtomemes #miau",
+      "timestamp": "2026-07-31T19:38:38.000Z",
+      "content_format": "reel",
+      "likes": 53,
+      "comments": 1,
+      "video_view_count": 408,
+      "video_play_count": 1210,
+      "latest_comments": [
+        "Uma vez eu tentei. Mas todo mundo percebeu o volume na calça."
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 39645,
+  "following_count": 1519,
+  "posts_count": 1263,
+  "follower_tier": "mid",
+  "engagement": {
+    "sample_size": 30,
+    "median_er": 0.002484550384663892,
+    "mean_er": 1.5594921595829656,
+    "er_per_post": [
+      {
+        "short_code": "DboTi4Vp2hO",
+        "er": 0.0033043258922941104,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbnkUVHxH24",
+        "er": 0.0009585067473830243,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DblWm3LNGzJ",
+        "er": 0.0011350737797956867,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DboAWWaRTeQ",
+        "er": 0.002875520242149073,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dbon-_XpiIg",
+        "er": 0.0005044772354647496,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DblnntTxEcE",
+        "er": 0.003077311136334973,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dbgp7SJpUcK",
+        "er": 0.0014377601210745364,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbiYfWChXZP",
+        "er": 0.0009080590238365494,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DQuBb4pEZpl",
+        "er": 5.51141379745239,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbeUsW2BM2o",
+        "er": 0.0024719384537772735,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbgsFFUJZYb",
+        "er": 0.004338504224996847,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dbg-m8Sh-Si",
+        "er": 0.001462983982847774,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbV8_8_Dex2",
+        "er": 0.0024719384537772735,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbOkefxJc6O",
+        "er": 0.004388951948543322,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbVi5C9ChfF",
+        "er": 0.005927607516710808,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbTgec8tbWf",
+        "er": 0.002497162315550511,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZFG3YQN-TG",
+        "er": 30.65788876276958,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbUAVD5DtnV",
+        "er": 0.005650145037205196,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbWpZi9ivrP",
+        "er": 0.0020179089418589985,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbmKgwjxXoJ",
+        "er": 0.004918653045781309,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbizYIhh938",
+        "er": 0.00017656703241266238,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DTMDe0_jH9d",
+        "er": 10.537343927355279,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DblzGukJJnP",
+        "er": 0.0021692521124984233,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbTP9oPNJyr",
+        "er": 0.0026232816244166983,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dbl14HzxcDc",
+        "er": 0.007718501702610669,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbQ8oHKtN9S",
+        "er": 0.0012107453651153991,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbZdDZzM3ws",
+        "er": 0.0007567158531971245,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbQ6TDJtZUR",
+        "er": 0.010064320847521756,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbjCRBoBzYj",
+        "er": 0.0016899987388069113,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbeCBNupyTL",
+        "er": 0.001362088535754824,
+        "content_format": "reel"
+      }
+    ]
+  },
+  "external_url": "http://linkme.bio/antisurtomemes",
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "a_validar_pre_monetizacao",
+    "secondary": null,
+    "matches": [],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "a_validar_pre_monetizacao",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "parcial",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T02:23:58.410Z",
+    "versao_framework": "v3.1"
+  }
+}

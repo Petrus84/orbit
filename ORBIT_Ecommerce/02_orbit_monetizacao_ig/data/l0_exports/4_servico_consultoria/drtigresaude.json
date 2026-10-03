@@ -1,0 +1,814 @@
+{
+  "handle": "drtigresaude",
+  "setor_benchmark_key": "4_servico_consultoria",
+  "url": "https://www.instagram.com/drtigresaude/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T01:48:46.955Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DJHX2NiROjM",
+      "caption": "Minha fala expressa aquilo que está cheio a minha mente e o meu coração. Isso não é só business.\n\nNão é só sobre “fazer a mágica” na vida dos meus pacientes, é sobre transformá-los.\n\nHoje, eu entendi que você precisa fazer uma escolha, ou trata isso como um negócio, ou trata como uma missão.\n\nQuando mentalidade, fisiologia e espiritualidade se alinham, nasce algo que vai além do faturamento: nasce propósito.\n\nNão existe cura sem verdade, e o que ensino hoje aos médicos não é só técnica. É transformação, de dentro pra fora. \n🇦🇪",
+      "timestamp": "2025-05-01T15:00:00.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 208,
+      "video_view_count": 35140,
+      "video_play_count": 238163,
+      "latest_comments": [
+        "👏👏👏👏",
+        "Drº ql valor da consulta?",
+        "😢🙌❤️🔥😍",
+        "❤️",
+        "👏",
+        "🙌🙌",
+        "👏👏👏👏👏",
+        "😍",
+        "Uauuu 😮"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbWp0_RJyYe",
+      "caption": "Nem toda transformação começa com o desejo de emagrecer. Às vezes, ela começa com o desejo de voltar a viver bem. \n\nEssa paciente chegou ao Instituto Dr. Tigre carregando um grande medo: o reganho de peso após a cirurgia bariátrica. Além disso, enfrentava sintomas intensos da menopausa, que comprometiam sua disposição, autoestima e qualidade de vida, e convivia diariamente com as dores causadas pelo lipedema.\n\nCom um tratamento individualizado, conduzido pela Dra. Beatriz Araújo, o foco nunca foi apenas o número na balança. Foi cuidar da saúde de forma completa.\n\nHoje, além de manter o controle do peso com segurança, ela recuperou a energia, reduziu significativamente os sintomas da menopausa, encontrou alívio para as dores do lipedema e voltou a se sentir bem no próprio corpo.\n\nEsse é o nosso propósito: tratar pessoas, não apenas doenças ou números.\n\nCada história é única. E o seu tratamento também deve ser.\n\nAgende sua avaliação e descubra como um acompanhamento médico personalizado pode transformar sua saúde, sua autoestima e sua qualidade de vida.\n\n📍Av. João Cabral de Mello Neto, 850 - bloco 02 sala 517 - Barra da Tijuca, Rio de Janeiro.",
+      "timestamp": "2026-07-28T22:55:35.000Z",
+      "content_format": "reel",
+      "likes": 65,
+      "comments": 12,
+      "video_view_count": 631,
+      "video_play_count": 2832,
+      "latest_comments": [
+        "Maravilhosa 🫶",
+        "😍👏👏👏👏🙌🙌🙌❤️",
+        "@samyrapenha maravilhosa ❤️",
+        "Eu sou apaixonada por essa equipe e por essas histórias! 🤎🐯",
+        "Parabéns pela sua dedicação 😍",
+        "Parabéns 👏👏👏",
+        "Muito obrigada por tudo @dra.beatrizaraujog e @tamirescorreab_",
+        "A gente só pode agradecer a @dra.beatrizaraujog 🩷🩷"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da3rnFcObo1",
+      "caption": "“Eu como muito pouco e não consigo emagrecer.”\n\nEssa é uma das frases que mais ouvimos no consultório. Mas será que o problema é realmente a quantidade de comida... ou a forma como você está se alimentando?\n\nPular refeições, passar longos períodos sem comer ou cortar grupos alimentares na tentativa de emagrecer pode ter o efeito contrário: aumentar a fome, favorecer episódios de compulsão, reduzir a disposição e dificultar a perda de gordura.\n\nPor outro lado, também é comum consumir alimentos que parecem saudáveis, mas que são ultraprocessados e não oferecem a qualidade nutricional que o organismo precisa.\n\nA verdade é que emagrecer não é apenas comer menos. É comer melhor, com estratégia, equilíbrio e um plano individualizado para o seu corpo e seus objetivos.\n\nNo Instituto Dr. Tigre, você conta com uma equipe multidisciplinar que entende que o emagrecimento saudável vai muito além da balança. Nosso objetivo é transformar hábitos, preservar a massa muscular e promover resultados sustentáveis.\n\nAgende sua consulta e descubra como uma estratégia personalizada pode fazer toda a diferença na sua jornada.\n\nInstituto Dr. Tigre | 📲 (21) 98378-0169\n📍Av. João Cabral de Mello Neto, 850 - bloco 02 sala 517 - Barra da Tijuca, Rio de Janeiro.",
+      "timestamp": "2026-07-16T22:10:57.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 3,
+      "video_view_count": 88,
+      "video_play_count": 1995,
+      "latest_comments": [
+        "As vezes so precisamos fazer o básico bem feito! 😍",
+        "Maravilhosaaa😍",
+        "@dracarolinnebandeira 😍😍😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbQ4LdCxgLh",
+      "caption": "Quem disse que um docinho não pode fazer parte de uma alimentação equilibrada?\n\nEssa receita de cajuzinho fit é prática, deliciosa e leva apenas 4 ingredientes:\n\n➡️ 3 colheres de sopa de amendoim moído\n➡️ 2 colheres de sopa de leite em pó\n➡️ 1 colher de sopa de xilitol\n➡️ Água aos poucos, apenas o suficiente para dar o ponto e modelar os docinhos.\n\nNo Método Dr. Tigre, acreditamos que resultados duradouros acontecem quando a alimentação é prazerosa e sustentável. Não é sobre viver de restrições, mas sobre aprender a fazer boas escolhas.\n\nSalve esse vídeo para testar a receita e envie para quem ama um docinho sem abrir mão dos objetivos!",
+      "timestamp": "2026-07-26T17:02:08.000Z",
+      "content_format": "reel",
+      "likes": 56,
+      "comments": 6,
+      "video_view_count": 156,
+      "video_play_count": 3381,
+      "latest_comments": [
+        "😍",
+        "Pode acrescentar 1 colher de cacau 100%?",
+        "Também vou fazer 😍",
+        "Vou fazeeeeeer",
+        "Que delícia! 👏😍",
+        "Ameiii❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DajI2ZjuHN2",
+      "caption": "Neste depoimento, nossa paciente compartilha como a perda de 40 kg transformou não apenas o seu corpo, mas também sua autoestima, sua disposição e sua qualidade de vida.\n\nEssa conquista foi construída com acompanhamento, estratégia e cuidado em cada etapa. Por isso, ela faz questão de agradecer às profissionais que caminharam ao seu lado durante todo o processo: a endocrinologista Dra. Beatriz Araújo e a nutricionista Patrícia Salvadoretti.\n\nResultados consistentes acontecem quando existe um plano individualizado, acompanhamento contínuo e uma equipe comprometida com a saúde do paciente.\n\nParabéns Annie, por essa trajetória inspiradora! Que sua história motive outras pessoas a entenderem que é possível transformar a própria vida com o suporte certo.\n\nAgende sua avaliação e descubra como podemos ajudar você a conquistar resultados com segurança e saúde.\n\n📍Av. João Cabral de Mello Neto, 850 - bloco 02 sala 517 - Barra da Tijuca, Rio de Janeiro.",
+      "timestamp": "2026-07-08T22:42:46.000Z",
+      "content_format": "reel",
+      "likes": 310,
+      "comments": 66,
+      "video_view_count": 250,
+      "video_play_count": 8474,
+      "latest_comments": [
+        "Meu cenário qnd comecei emagrecimento 40kg acima do peso, agora faltam 30 kg @institutodrtigrenovaiguacu me nota 😂",
+        "Várias reclamações no reclame aqui por falta de suporte médico",
+        "Onde é o instituto?",
+        "Um exemplo ❤️",
+        "Parabéns minha Linda❤️",
+        "Incrível, está ainda mais maravilhosa ❤️❤️",
+        "👏ta ótima  agora!",
+        "Um escândalo de mulher!!!!!",
+        "Parabéns amiga 👏🏻👏🏻👏🏻"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbizfxnx-wm",
+      "caption": "Quem resiste a um bolo de milho quentinho? Melhor ainda quando ele une sabor, saciedade e mais proteínas!\n\nNo Nutri Tigre na Cozinha, a nutricionista Fernanda ensina uma receita prática de bolo de milho proteico, perfeita para o café da manhã ou lanche da tarde.\n\nVocê vai precisar de:\n1 lata de milho\n3 ovos\n1 pote de iogurte integral\n40g de farelo de aveia\n30g de whey protein isolado sabor baunilha\n1 colher de sopa de xilitol\n1 colher de sopa de fermento\n\nÉ só bater os ingredientes no liquidificador (deixando o fermento por último), colocar em uma forma untada e levar ao forno até dourar.\n\nAqui no Instituto Dr. Tigre, acreditamos que uma alimentação saudável vai muito além da restrição. Ela precisa ser saborosa, prática e possível de manter no dia a dia.\n\nSalve essa receita para testar em casa e marque quem vai querer um pedaço desse bolo com você!",
+      "timestamp": "2026-08-02T16:07:23.000Z",
+      "content_format": "reel",
+      "likes": 42,
+      "comments": 6,
+      "video_view_count": 514,
+      "video_play_count": 2226,
+      "latest_comments": [
+        "Deliiii 👏👏😍",
+        "😋😋😋",
+        "Gostei!!!!😍",
+        "Que delícia",
+        "👏👏👏👏👏",
+        "😍😍😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DboqyJTuQOL",
+      "caption": "O que começou com o objetivo de emagrecer, se transformou em uma mudança completa de vida.\n\nForam 22 kg eliminados, mas os maiores resultados não aparecem apenas na balança.\n\nQuando chegou ao Instituto Dr. Tigre, nosso paciente enfrentava a obesidade, estava em estado de pré-diabetes e ainda convivia com um consumo excessivo de álcool que comprometia sua saúde e qualidade de vida.\n\nCom um tratamento individualizado, acompanhamento médico da Dra. Beatriz Araújo e suporte nutricional da Patrícia Salvadoretti, ele conseguiu transformar hábitos, recuperar sua saúde metabólica e construir uma rotina muito mais saudável e sustentável.\n\nHoje, além da impressionante mudança física, ele deixou para trás o pré-diabetes, abandonou o álcool e conquistou muito mais disposição, autoestima e qualidade de vida.\n\nEsse é o verdadeiro propósito do Método Tigre: cuidar da pessoa como um todo, tratando a causa dos problemas e promovendo resultados que vão muito além do emagrecimento.\n\nParabéns por essa conquista! Que essa história inspire muitas outras pessoas a acreditarem que a transformação é possível com acompanhamento, estratégia e constância. \n\n📍Av. João Cabral de Mello Neto, 850 - bloco 02 sala 517 - Barra da Tijuca, Rio de Janeiro.",
+      "timestamp": "2026-08-04T22:48:07.000Z",
+      "content_format": "reel",
+      "likes": 56,
+      "comments": 9,
+      "video_view_count": 408,
+      "video_play_count": 1381,
+      "latest_comments": [
+        "Cara que história sai dos 97kg para os 83kg, estava pré-diabético, testo de menina 😂! Há 1 ano e meio mudei de vida, percentual de gordura beirando os 14% e outra vida.",
+        "Fenômeno",
+        "Orgulho!!!",
+        "Arrasou Thiagao!!!!",
+        "👏👏👏",
+        "🔥👏🏽",
+        "👏👏👏👏",
+        "Esse é o cara!!! @thiago_silva_post",
+        "Amo esse time e vibro com cada história! Só quem passou por essa experiência sabe o quanto é gratificante! 🐯 🤎 🚀"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "C9N44OuOhfN",
+      "caption": "Um vídeo sobre não desistir e nunca deixar de acreditar nos seus sonhos 💛🐯🚀✨🙏",
+      "timestamp": "2024-07-09T21:28:12.000Z",
+      "content_format": "reel",
+      "likes": 22542,
+      "comments": 878,
+      "video_view_count": 160043,
+      "video_play_count": 372494,
+      "latest_comments": [
+        "Qqwqqq",
+        "Sensacional",
+        "Seu padrão de entrega está acima da média do mercado. Já pensou em formalizar seu protocolo através de um livro autoral ou criando um braço de educação da sua empresa?",
+        "👏👏",
+        "Que testemunho!🙌🔥",
+        "Uau 👏❤️",
+        "Que coisa linda Doutor.  Deus é fiel ❤️❤️",
+        "Sem palavras 😭😭",
+        "Belo testemunho 😍👏",
+        "@drtigresaude @drdouglastigre @drraipenaforte  obrigada 🙌"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbELE7dGnoL",
+      "caption": "Resultados que vão muito além da balança.\n\nCada antes e depois deste carrossel representa uma história de dedicação, acompanhamento médico e um tratamento construído de forma individualizada.\n\nNo Método Tigre, o objetivo não é apenas emagrecer. É transformar a composição corporal, preservar e desenvolver massa muscular, melhorar a saúde metabólica e construir resultados que possam ser mantidos ao longo do tempo.\n\nNossa equipe multidisciplinar acompanha cada etapa da jornada, unindo medicina, nutrição, estratégia e ciência para que cada paciente alcance sua melhor versão com segurança.\n\nPorque emagrecer sem perder qualidade de vida não é sorte. É método.\n\nSe você busca um tratamento que enxerga além dos números da balança, agende sua avaliação e descubra como o Método Tigre pode transformar a sua saúde.\n\nInstituto Dr. Tigre | 📲 (21) 98378-0169\n📍Av. João Cabral de Mello Neto, 850 - bloco 02 sala 517 - Barra da Tijuca, Rio de Janeiro.",
+      "timestamp": "2026-07-21T18:36:05.000Z",
+      "content_format": "carousel",
+      "likes": 88,
+      "comments": 4,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Eu adoro ir no Instituto!as meninas da recepção e da enfermagem da Barra são maravilhosas e fazem tb toda a diferença!eu amo estar com vc nessa minha nova fase!😍",
+        "👏👏👏o melhor !",
+        "Somos o melhor time do 🌍\n🐯💛",
+        "Como amo viver essa nova versão! Obrigada time Tigre"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da2_Uzfxo0f",
+      "caption": "Mais do que transformar o corpo, nosso objetivo é transformar a saúde e a qualidade de vida.\n\nEste resultado é consequência de um tratamento individualizado, que associa emagrecimento com preservação e ganho de massa muscular, um dos grandes diferenciais do Método Tigre.\n\nAqui, não buscamos apenas fazer a balança baixar. Trabalhamos para reduzir gordura corporal, melhorar a composição corporal, preservar o metabolismo e construir resultados que possam ser mantidos a longo prazo.\n\nTudo isso com acompanhamento médico especializado, estratégia nutricional, treino individualizado e monitoramento constante da evolução de cada paciente.\n\nCada organismo é único. Por isso, o tratamento também deve ser.\n\nSe você deseja emagrecer com segurança, recuperar sua saúde e conquistar um corpo mais forte e funcional, agende sua consulta e conheça o Método Tigre.\n\nSeu antes e depois pode começar com uma decisão hoje.\n\nInstituto Dr. Tigre | 📲 (21) 98378-0169\n📍Av. João Cabral de Mello Neto, 850 - bloco 02 sala 517 - Barra da Tijuca, Rio de Janeiro.",
+      "timestamp": "2026-07-16T15:44:40.000Z",
+      "content_format": "reel",
+      "likes": 83,
+      "comments": 13,
+      "video_view_count": 261,
+      "video_play_count": 7085,
+      "latest_comments": [
+        "Que 🩷 🩷",
+        "👏👏👏👏",
+        "🔥🔥",
+        "👏👏",
+        "Brabooooo",
+        "Gênio. Craque. Referência.",
+        "Lindão",
+        "TUDOOO",
+        "👏👏👏",
+        "Absurdo!"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZvejdmJuUA",
+      "caption": "O Time Tigre está crescendo! \n\nTemos o prazer de apresentar o Dr. Daniel Winter. Médico endocrinologista, com foco em emagrecimento, performance e qualidade de vida, que agora faz parte do Instituto Dr. Tigre.\n\nAlém de atender em nossa unidade da Barra da Tijuca, o Dr. Daniel também será responsável por levar a experiência, a metodologia e os valores da marca Dr. Tigre para Teresópolis, ampliando o acesso a um atendimento médico de excelência para quem busca mais saúde, longevidade e alta performance.\n\nSeu compromisso com a medicina baseada em evidências, associado a uma visão moderna e individualizada do cuidado, está totalmente alinhado com a missão do Instituto Dr. Tigre.\n\nSeja muito bem-vindo ao time, Dr. Daniel! \n\n📍Atendimentos na Barra da Tijuca e em Teresópolis.\n📲 Entre em contato para agendar sua consulta.",
+      "timestamp": "2026-06-18T21:12:43.000Z",
+      "content_format": "reel",
+      "likes": 219,
+      "comments": 29,
+      "video_view_count": 2307,
+      "video_play_count": 9421,
+      "latest_comments": [
+        "👏👏👏👏🚀🚀🚀🚀",
+        "Parabéns amigo!!!!",
+        "👏👏👏😍😍",
+        "Ahhhhh! Parabéns Dani! 🍾 😍👏🏻🙃🥂😘",
+        "👏👏👏👏",
+        "Voaaa, irmão! 👏👏😍",
+        "Vaaamos",
+        "👏👏👏👏👏👏👏👏👏👏um médico maravilhoso parabéns",
+        "Brilhaaaaaaaa DOC. Deus abençoe essa nova jornada....👏👏👏",
+        "🚀🚀"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaIlLuBRMRd",
+      "caption": "Cada conquista tem uma história. E essa merece ser celebrada. \n\nDepois de iniciar seu protocolo no Instituto Dr. Tigre e contar com um acompanhamento individualizado, ela não transformou apenas os números da balança. Transformou sua relação com o próprio corpo, recuperou a confiança e conquistou mais qualidade de vida.\n\nO resultado? Mais disposição, melhor desempenho nos treinos e a realização de um grande objetivo: completar uma meia maratona. \n\nMais do que perder peso, ela ganhou autoestima, saúde e a certeza de que é capaz de ir muito mais longe.\n\nCada paciente tem uma jornada única, e é por isso que acreditamos em um tratamento personalizado, baseado em acompanhamento contínuo e estratégias pensadas para cada necessidade.\n\nParabéns por essa conquista! Que ela seja apenas o começo de muitas outras.\n\nInstituto Dr. Tigre\n📍Av. João Cabral de Mello Neto, 850 - bloco 02 sala 517 - Barra da Tijuca, Rio de Janeiro.",
+      "timestamp": "2026-06-28T15:12:28.000Z",
+      "content_format": "reel",
+      "likes": 137,
+      "comments": 18,
+      "video_view_count": 1160,
+      "video_play_count": 4933,
+      "latest_comments": [
+        "❤️👏👏👏",
+        "Parabéns! Inspiração 👏🏼👏🏼👏🏼🥰😘",
+        "Que orgulho de você amiga!!! E obrigada por me apresentar a Dra Beatriz, ela também mudou a minha vida 🥹❤️❤️❤️!!! NUNCA mais as mesmas, vamos com tudooooo!!!",
+        "Parabéns!!!! Que conquista lindaaaaa!!!",
+        "Parabéns amiga. Fico feliz por vc. Onde posso encontrar esses Profissionais...???",
+        "👏😍",
+        "Parabéns 👏👏👏",
+        "👏👏",
+        "😍😍😍😍",
+        "@marcoterranova5 nesse insta mesmo amigo"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbLg-_CNv2o",
+      "caption": "Por muito tempo convivi com cólicas intensas e menstruações várias vezes no mesmo mês. Hoje dei mais um passo no meu tratamento: coloquei o implante de gestrinona no @drtigresaude , com o meu ginecologista, o melhor do mundo, @dr.raphaelgumes ✨\n\nAgora é acompanhar essa nova fase! Alguém aqui também sofre com cólicas intensas? 🤍",
+      "timestamp": "2026-07-24T15:03:55.000Z",
+      "content_format": "reel",
+      "likes": 1866,
+      "comments": 24,
+      "video_view_count": 3428,
+      "video_play_count": 133356,
+      "latest_comments": [
+        "Ela tá assim agora 🔥🔥🔥",
+        "Eu",
+        "Maravilhoso",
+        "Melhora a urticaria no corpo causado pelo mounjaro?  Tipo herpes sem dor. Mounjaro comprado na clínica do dr Tigre",
+        "Isso seria o Implanon??",
+        "Trabalhei com Dr Rafael, ele realmente é bom. Além de ser um amor de pessoa.",
+        "Eu estou menstruando a 6 meses!!!! E as cólicas!? Nem me faleee😢\n\nMeu sonho é colocar esse implante."
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZ2s6IexIqX",
+      "caption": "Cada quilômetro percorrido conta uma história. \n\nA Maratona do Rio foi mais do que um desafio esportivo para nossa paciente: foi a celebração de meses de dedicação, disciplina e cuidado com a própria saúde.\n\nCom acompanhamento do nosso nutrologo, Dr. Rai Penaforte, ela construiu uma estratégia individualizada para otimizar sua performance, melhorar sua recuperação e alcançar seus objetivos com segurança.\n\nVer nossos pacientes conquistando metas tão importantes é a maior prova de que resultados consistentes são construídos com acompanhamento adequado e um plano pensado para cada pessoa.\n\nParabéns por essa conquista incrível! Que essa medalha represente não apenas a linha de chegada, mas toda a sua evolução ao longo da jornada.",
+      "timestamp": "2026-06-21T16:34:05.000Z",
+      "content_format": "reel",
+      "likes": 135,
+      "comments": 29,
+      "video_view_count": 1569,
+      "video_play_count": 5993,
+      "latest_comments": [
+        "42 km concluídos com coragem e dedicação. Parabéns, filha! Seu esforço e determinação são inspiradores. ❤️🏅",
+        "Maravilhosa! 😍",
+        "A braba!! Determinada, focada e imparável. Parabéns pela sua conquista e que venham  mais vitórias!!!! Abraço do amigo Sal!!!",
+        "Lindona ! Q saudades … e que exemplo de superação e evolução ! 😘👏🏽",
+        "Que orgulho! 😍👏\nNossa inspiração 👏",
+        "Vc é simplesmente perfeita!",
+        "Tem gente que tenta e ten gente q desiste.E, tem vc q se supera sempre... Continue  brilhado pq o mundo precisa  dessa sua luz!❤️❤️",
+        "Que orgulho!! Você é uma modelo de superação e persistência, amiga. Você é gigante ❤️",
+        "Perfeita, Luuuuu!❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZ-9AY3OQnw",
+      "caption": "Todo mundo sabe que um time campeão não depende de apenas um jogador. É a soma de uma boa estratégia, um elenco equilibrado e um técnico preparado que faz a diferença.\n\nCom a sua saúde acontece exatamente a mesma coisa.\n\nMuitas pessoas procuram uma solução única para emagrecer, ganhar performance ou melhorar a qualidade de vida. Mas resultados consistentes são construídos por uma série de fatores, como: \n\n➡️ qualidade do sono\n➡️ saúde hormonal\n➡️ nutrição\n➡️ atividade física\n➡️ equipe especializada\n\nQuando uma dessas posições falha, o desempenho do time inteiro é afetado. E quando um desses pilares é negligenciado, seus resultados também podem ficar comprometidos.\n\nNo Instituto Dr. Tigre, acreditamos em uma abordagem integrada, olhando para todos os fatores que influenciam sua saúde para construir resultados reais e duradouros.\n\nPare de assistir aos resultados dos outros. É hora de entrar em campo e montar a sua seleção campeã.\n\nConta pra gente: qual posição está faltando no seu time?\n\nInstituto Dr. Tigre\n📍Av. João Cabral de Mello Neto, 850 - bloco 02 sala 517 - Barra da Tijuca, Rio de Janeiro.",
+      "timestamp": "2026-06-24T21:27:36.000Z",
+      "content_format": "reel",
+      "likes": 152,
+      "comments": 27,
+      "video_view_count": 1987,
+      "video_play_count": 8318,
+      "latest_comments": [
+        "👏👏👏👏👏",
+        "A melhor equipe com o melhor técnico 👏👏",
+        "Só nutri maravilhosaaa",
+        "Show de bola👏🏻👏🏻",
+        "Minhas musas lindas ❤️",
+        "👏👏👏👏👏",
+        "Maravilhosasssss",
+        "Time de milhões 🐯🚀🐯",
+        "Que timeee 😍",
+        "@paularezendenutri arrasaram,  Paulinha!!!!"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DabIjeYuudJ",
+      "caption": "A equipe do Instituto Dr. Tigre reunida na torcida pelo Brasil! 🇧🇷💚💛\n\nMomentos como esse reforçam a força da união, da amizade e do espírito de equipe. Celebrar juntos faz parte da nossa essência, dentro e fora do trabalho, compartilhando a paixão que move milhões de brasileiros.\n\nQue a nossa energia positiva empurre a Seleção rumo a mais uma grande conquista. Que o sonho do hexa vire realidade! 🏆✨",
+      "timestamp": "2026-07-05T20:09:37.000Z",
+      "content_format": "reel",
+      "likes": 57,
+      "comments": 2,
+      "video_view_count": 641,
+      "video_play_count": 3666,
+      "latest_comments": [
+        "❤️",
+        "🔥🔥🔥🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaWTQN3B5RD",
+      "caption": "Após seguir o protocolo individualizado desenvolvido no Instituto Dr. Tigre, com a orientação do Dr. Rai Penaforte, nosso paciente alcançou um marco incrível: completar os 42 km da Maratona do Rio.\n\nMais do que cruzar a linha de chegada, esse resultado mostra a diferença que um protocolo bem estruturado pode fazer na preparação, na recuperação e no desempenho. Quando ciência, estratégia e acompanhamento personalizado caminham juntos, o corpo responde e novos desafios se tornam possíveis.\n\nParabéns por essa conquista inspiradora, Alexandre! Que ela seja apenas o começo de muitas outras. 🚀\n\n📍Av. João Cabral de Mello Neto, 850 - bloco 02 sala 517 - Barra da Tijuca, Rio de Janeiro.",
+      "timestamp": "2026-07-03T23:25:42.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 3,
+      "video_view_count": 628,
+      "video_play_count": 3184,
+      "latest_comments": [
+        "Caramba Alexandre, foi meu aluno. Sempre muito focado e dedicado",
+        "Queria ter um sobrinho assim? 👏👏👏",
+        "👏👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZgCEl3vlGU",
+      "caption": "Você toma café logo depois do almoço?\n\nApesar de ser um hábito muito comum, ele pode interferir na absorção de nutrientes importantes, como ferro, zinco e cálcio, especialmente quando consumido imediatamente após as refeições.\n\nIsso merece atenção principalmente para quem apresenta anemia, cansaço frequente ou baixa ingestão de nutrientes no dia a dia.\n\nA boa notícia é que você não precisa abrir mão do seu cafézinho! \n\nA recomendação é aguardar cerca de 1h30 a 2 horas após o almoço para consumir a bebida, aproveitando seus benefícios sem comprometer o aproveitamento nutricional da refeição.\n\nPequenas mudanças de hábito podem fazer uma grande diferença na sua saúde.\n\nQuer orientações personalizadas para melhorar sua alimentação e sua qualidade de vida? Agende sua consulta e cuide da sua saúde de forma completa.",
+      "timestamp": "2026-06-12T21:23:23.000Z",
+      "content_format": "reel",
+      "likes": 66,
+      "comments": 8,
+      "video_view_count": 958,
+      "video_play_count": 3249,
+      "latest_comments": [
+        "👏",
+        "❤️",
+        "Linda essa nutricionista",
+        "A melhor nutri",
+        "😍😍😍😍",
+        "❤️❤️",
+        "😍😍",
+        "🚀🚀🚀nutri maravilhosa ✨"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZdcV5cMxOb",
+      "caption": "Os peptídeos têm chamado a atenção da medicina moderna por seu potencial de atuar de forma estratégica em diferentes funções do organismo.\n\nQuando bem indicados, podem auxiliar em objetivos como melhora da composição corporal, recuperação física, desempenho, controle do apetite e otimização do metabolismo.\n\nMas é importante lembrar: não existe atalho para a saúde.\n\nCada organismo responde de uma forma, e o uso de peptídeos deve ser feito com avaliação médica, critérios bem definidos e acompanhamento especializado para garantir segurança e resultados consistentes.\n\nE vem novidade por aí! \n\nEm breve, o Instituto Dr. Tigre contará com protocolos envolvendo peptídeos dentro da endocrinologia e da medicina da performance, sempre com foco em ciência, individualização e excelência no cuidado.\n\nAcompanhe nossos conteúdos para saber mais sobre essa nova ferramenta e entender se ela pode fazer sentido para os seus objetivos.\n\nInstituto Dr. Tigre | Barra da Tijuca\n📍Av. João Cabral de Mello Neto, 850 - bloco 02 sala 517 - Barra da Tijuca, Rio de Janeiro.",
+      "timestamp": "2026-06-11T21:06:45.000Z",
+      "content_format": "reel",
+      "likes": 218,
+      "comments": 6,
+      "video_view_count": 2388,
+      "video_play_count": 8566,
+      "latest_comments": [
+        "Saudades do meu Doc.",
+        "Melhor Médico da Vida!!👏👏",
+        "o melhor 👏🏻👏🏻👏🏻",
+        "Quero!",
+        "Adoro muito !! Já estou agendada !!😍👏👏👏",
+        "Já vou agendar minha consulta!😍🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZn1PAyGiwV",
+      "caption": "O que você vê nessas fotos não é apenas uma mudança física.\n\nÉ o resultado de um processo construído com estratégia, acompanhamento, constância e comprometimento.\n\nNo Método Dr. Tigre, não buscamos apenas emagrecimento ou ganho de massa muscular. Nosso objetivo é promover uma transformação completa, respeitando a individualidade de cada paciente.\n\nPor trás de cada antes e depois existe uma história de disciplina, superação e escolhas feitas diariamente.\n\nNão existem atalhos.\n\nExistem ciência, planejamento e um método capaz de transformar metas em resultados reais.\n\nParabéns por cada conquista alcançada. \n\nSeu resultado é a prova de que, quando existe direção e acompanhamento adequado, a mudança acontece.\n\nInstituto Dr. Tigre\n📍Av. João Cabral de Mello Neto, 850 - bloco 02 sala 517 - Barra da Tijuca, Rio de Janeiro.",
+      "timestamp": "2026-06-15T21:55:06.000Z",
+      "content_format": "carousel",
+      "likes": 150,
+      "comments": 4,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Queria muito 😍",
+        "Eu nasci novamente, 👏👏👏",
+        "Foi a melhor coisa que aconteceu na minha vida ❤️",
+        "Perfeito!!!"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZtBUYKhJII",
+      "caption": "Conviver com a fibromialgia é enfrentar diariamente dores persistentes, cansaço excessivo, dificuldade para dormir e limitações que impactam diretamente a qualidade de vida.\n\nEm muitos casos, o excesso de peso pode aumentar ainda mais essa sobrecarga, tornando as dores e a fadiga mais intensas.\n\nPor isso, estratégias que promovam o emagrecimento saudável podem fazer parte de uma abordagem mais ampla para esses pacientes. A tirzepatida tem se destacado nesse contexto por auxiliar na perda de peso e na melhora de parâmetros metabólicos, o que pode contribuir para mais disposição, mobilidade e bem-estar.\n\nMas atenção: a fibromialgia é uma condição complexa e não existe tratamento único ou solução pronta. Cada paciente precisa ser avaliado de forma individualizada para que o plano terapêutico seja seguro e adequado à sua realidade.\n\nAqui no Instituto Dr. Tigre, acreditamos em uma medicina que vai além dos sintomas, buscando entender o paciente como um todo e oferecer estratégias personalizadas para melhorar sua saúde e qualidade de vida.\n\nInstituto Dr. Tigre\n📍Av. João Cabral de Mello Neto, 850 - bloco 02 sala 517 - Barra da Tijuca, Rio de Janeiro.",
+      "timestamp": "2026-06-17T22:17:54.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 1,
+      "video_view_count": 533,
+      "video_play_count": 2059,
+      "latest_comments": [
+        "Minha dra ❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbbtTmSstCq",
+      "caption": "Você não precisa comer “mal” para estar alimentando a inflamação do seu corpo.\n\nAlguns hábitos que parecem inofensivos, ou até saudáveis, podem favorecer picos de glicose, aumentar a fome ao longo do dia, dificultar o emagrecimento e contribuir para sintomas como inchaço, cansaço e compulsão alimentar.\n\nO problema é que muitas pessoas tentam resolver esses sintomas apenas cortando alimentos ou fazendo dietas restritivas, quando o que realmente faz diferença é entender as necessidades do próprio organismo e construir uma estratégia alimentar personalizada.\n\nNo Instituto Dr. Tigre, a alimentação faz parte de um tratamento completo, pensado para melhorar sua saúde metabólica, reduzir a inflamação, preservar a massa muscular e promover resultados duradouros.\n\nQuer emagrecer com saúde e um plano feito para a sua realidade? Agende sua avaliação e conheça o Método Dr. Tigre.\n\nInstituto Dr. Tigre | 📲 (21) 98378-0169\n📍Av. João Cabral de Mello Neto, 850 - bloco 02 sala 517 - Barra da Tijuca, Rio de Janeiro.",
+      "timestamp": "2026-07-30T21:58:16.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 5,
+      "video_view_count": 464,
+      "video_play_count": 1805,
+      "latest_comments": [
+        "😍😍😍😍👏👏👏👏",
+        "🔥",
+        "👏",
+        "🔥🔥🔥",
+        "❤️❤️perfeita"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "Dad-aWfGmJ8",
+      "caption": "Cada resultado que você vê aqui representa muito mais do que uma mudança física.\n\nPor trás de cada antes e depois, existem escolhas diárias, constância, acompanhamento profissional e um plano construído de forma individualizada.\n\nNo Instituto Dr. Tigre, acreditamos que emagrecimento e hipertrofia não devem ser encarados como soluções rápidas, mas como processos que promovem saúde, performance, autoestima e qualidade de vida.\n\nOs resultados variam de pessoa para pessoa, porque cada organismo tem sua própria história, seus desafios e suas necessidades. Por isso, nossos protocolos são personalizados e acompanhados por uma equipe multidisciplinar, focada em resultados sustentáveis.\n\nMais do que transformar corpos, nosso objetivo é ajudar pessoas a construírem uma relação mais saudável consigo mesmas.\n\nQual dessas transformações mais te inspirou? \n\nInstituto Dr. Tigre | 📲 (21) 98378-0169\n📍Av. João Cabral de Mello Neto, 850 - bloco 02 sala 517 - Barra da Tijuca, Rio de Janeiro.",
+      "timestamp": "2026-07-06T22:34:17.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DaRGCj-xGRS",
+      "caption": "A busca por medicamentos para emagrecer nunca foi tão grande. Mas uma pergunta precisa ser feita: vale a pena colocar a sua saúde em risco por uma promessa de resultado rápido?\n\nO aumento da procura por tirzepatida em países vizinhos acende um alerta importante: o uso dessas medicações sem avaliação e acompanhamento médico pode trazer consequências sérias.\n\nEmbora sejam medicamentos que podem fazer parte do tratamento da obesidade e do sobrepeso quando bem indicados, eles não são isentos de riscos. Cada paciente possui um histórico de saúde, exames, rotina, objetivos e contraindicações que precisam ser considerados antes de iniciar qualquer tratamento.\n\nO uso inadequado pode favorecer efeitos colaterais como náuseas intensas, desidratação, perda excessiva de massa muscular e outras complicações que comprometem não apenas o emagrecimento, mas a saúde como um todo.\n\nNo Instituto Dr. Tigre, acreditamos que emagrecer vai muito além do número na balança. O objetivo é conquistar resultados duradouros, preservando sua saúde, sua qualidade de vida e sua composição corporal por meio de um acompanhamento individualizado e baseado em evidências.\n\nNão coloque sua saúde nas mãos da sorte ou de informações da internet. Procure orientação médica e faça um tratamento seguro.\n\nAgende sua consulta e comece seu processo de emagrecimento com quem prioriza resultados e, acima de tudo, a sua saúde.\n\nInstituto Dr. Tigre\n📍Av. João Cabral de Mello Neto, 850 - bloco 02 sala 517 - Barra da Tijuca, Rio de Janeiro.",
+      "timestamp": "2026-07-01T22:32:06.000Z",
+      "content_format": "reel",
+      "likes": 124,
+      "comments": 8,
+      "video_view_count": 1047,
+      "video_play_count": 3941,
+      "latest_comments": [
+        "Quanto é a sua consulta ?",
+        "Melhor de todos amo ❤️",
+        "👏👏🚀🚀",
+        "👏👏👏👏",
+        "👏🏽👏🏽👏🏽👏🏽",
+        "👏👏👏👏",
+        "👏👏",
+        "o melhor acompanhamento do mundo 🌍🚀"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZaycRFxMWj",
+      "caption": "Você investe em tênis, planilhas, inscrições em provas e horas de treino.\n\nMas será que está investindo no que realmente faz tudo funcionar?\n\nMuitos corredores amadores treinam com dedicação, mas desconhecem fatores que podem estar limitando sua evolução: alterações hormonais, deficiências nutricionais, baixa recuperação muscular, composição corporal inadequada e desequilíbrios metabólicos.\n\nFoi pensando nisso que criamos o RUN TIGRE.\n\nUm protocolo médico desenvolvido para quem quer ir além dos quilômetros percorridos e alcançar seu verdadeiro potencial na corrida.\n\nCom uma avaliação completa e individualizada, identificamos os obstáculos invisíveis que podem estar comprometendo sua performance, sua recuperação e seus resultados.\n\nPorque correr mais não significa, necessariamente, correr melhor. Seu próximo recorde pessoal começa antes da largada.\n\nAgende sua avaliação RUN TIGRE e descubra o que está limitando sua performance.\n\nInstituto Dr. Tigre | 📲 (21) 98378-0169\n📍Av. João Cabral de Mello Neto, 850 - bloco 02 sala 517 - Barra da Tijuca, Rio de Janeiro.",
+      "timestamp": "2026-06-10T20:21:57.000Z",
+      "content_format": "reel",
+      "likes": 240,
+      "comments": 31,
+      "video_view_count": 2199,
+      "video_play_count": 8966,
+      "latest_comments": [
+        "Ameiii ❤️❤️",
+        "A melhor médica que temos ❤️ sou fã dessa maravilhosa😍",
+        "❤️❤️❤️",
+        "A melhor",
+        "♥️♥️♥️",
+        "🔥🔥",
+        "👏👏👏",
+        "😍😍👏👏",
+        "Essa médica tem todo o meu amor. 😍",
+        "👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZFmvGqRpZC",
+      "caption": "Perder 21 kg foi apenas parte da transformação.\n\nAo longo dessa jornada, ela recuperou algo ainda mais importante: a admiração por si mesma, a confiança no próprio potencial e o compromisso diário com a sua saúde.\n\nCom o acompanhamento da Dra. Beatriz e o Protocolo Dr. Tigre, cada etapa foi construída de forma individualizada, respeitando sua rotina, seus desafios e seus objetivos.\n\nO resultado vai muito além dos números na balança. É sobre voltar a se reconhecer no espelho, sentir orgulho da própria trajetória e entender que cuidar de si é um compromisso que vale a pena.\n\nParabéns Tarcila, por cada escolha, cada conquista e por inspirar tantas pessoas com a sua história.\n\nE se assim como ela, você também quer vivênciar esse processo de transformação, entre em contato conosco!",
+      "timestamp": "2026-06-02T14:56:18.000Z",
+      "content_format": "reel",
+      "likes": 454,
+      "comments": 51,
+      "video_view_count": 18856,
+      "video_play_count": 77193,
+      "latest_comments": [
+        "Perfeita!!! 👏👏👏 exemplo de constância e comprometimento",
+        "Musa 🐯 🔥🤎"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZSj5R6RZ6J",
+      "caption": "Conhecimento que transforma carreiras. 🚀\n\nA Prime Tiger é mais do que uma mentoria: é uma imersão prática, estratégica e enriquecedora para médicos que desejam crescer com segurança, excelência e propósito.\n\nE não somos nós que estamos dizendo. Os depoimentos de quem já participou mostram o impacto real de cada encontro, das trocas de experiências e dos aprendizados compartilhados ao longo da jornada.\n\nInvestir em conhecimento é acelerar resultados. E estar cercado pelas pessoas certas faz toda a diferença.",
+      "timestamp": "2026-06-07T15:42:15.000Z",
+      "content_format": "reel",
+      "likes": 116,
+      "comments": 9,
+      "video_view_count": 1799,
+      "video_play_count": 8317,
+      "latest_comments": [
+        "👏👏👏👏👏👏",
+        "👏👏👏🙏",
+        "👏🏽",
+        "👏👏👏",
+        "👏👏👏👏",
+        "👏👏👏👏",
+        "👏👏👏❤️",
+        "🚀🚀",
+        "🚀🚀"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZKzBq4yT56",
+      "caption": "Neste dia dos namorados, queremos celebrar um amor que vem antes de todos os outros: o amor por si mesmo. ❤️\n\nCuidar da saúde não é apenas uma questão de estética. É uma escolha que impacta sua energia, sua disposição, seus sonhos, sua carreira e as pessoas que você ama.\n\nQuando duas pessoas compartilham o mesmo propósito de viver melhor, o caminho se torna mais leve, motivador e especial.\n\nPor isso, preparamos uma condição exclusiva para casais que desejam investir juntos em saúde, bem-estar e qualidade de vida.\n\n✨ Ao adquirir o Protocolo Integral para Casal, cada um ganha 1 aplicação exclusiva de colágeno.\n\nPorque grandes transformações podem começar individualmente, mas também podem ser vividas a dois.\n\nAgende sua consulta e descubra como cuidar de você pode fortalecer tudo ao seu redor.",
+      "timestamp": "2026-06-04T15:19:44.000Z",
+      "content_format": "reel",
+      "likes": 286,
+      "comments": 39,
+      "video_view_count": 5174,
+      "video_play_count": 16129,
+      "latest_comments": [
+        "👏👏",
+        "Ganhei meu dia 😍",
+        "Ai que alegria, Deus abençoe sempre!!!",
+        "👏👏👏",
+        "Top demais!! 👏🏿😍",
+        "Maravilhososssss ❤️",
+        "❤️❤️❤️❤️",
+        "Amoooo",
+        "Amoooooooo❤️❤️❤️❤️",
+        "Deus abençoe vcs sempre Xedinhaa , vc merece! 👏🙌😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYxuWewJX04",
+      "caption": "Faltam apenas 3 dias para a primeira edição do Prime Tiger.\n\nE nada fala mais alto do que a experiência de quem já viveu essa imersão.\n\nFoi um dia de troca, estratégia, posicionamento e crescimento real na carreira médica. \n\nAgora é a sua vez de dar o próximo passo.\n\nNos vemos lá!",
+      "timestamp": "2026-05-25T21:38:31.000Z",
+      "content_format": "reel",
+      "likes": 238,
+      "comments": 12,
+      "video_view_count": 2961,
+      "video_play_count": 9876,
+      "latest_comments": [
+        "Não consegui 😢😢😢😢",
+        "🚀🚀🚀🚀",
+        "Sou suspeita falar dele 😍 amoooo",
+        "Ídolo e grande inspiração,\nEstou chegando à reta final da minha graduação e quero trilhar esse caminho seguindo sua orientação, seu método e seu exemplo.\nDesde já, quero agradecer pela empatia, pela oportunidade de estar perto de você e por permitir que eu aprenda com alguém que tanto admiro.\nGratidão, ídolo.",
+        "Animadaaa😍😍😍",
+        "👏👏👏🔥🔥🔥🚀🚀🚀",
+        "👏 parabéns 💪🤩",
+        "🔥🔥🔥🔥",
+        "Braboooo…",
+        "Ele é brabo demais . Profissional e ser humano único"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYp0KBepve-",
+      "caption": "Chegou a sua oportunidade de fazer parte de um dos maiores movimentos da nutrição no Brasil. \n\nO TIGRE + NUTRI está com vagas abertas para nutricionistas que querem crescer, trocar experiências e viver uma imersão ao lado de profissionais que fazem a diferença diariamente.\n\nE tem um detalhe importante:\n📍Não teremos valor de investimento. A inscrição é só para controlar os acessos!\n\nEu e o Dr. Tigre estaremos esperando vocês para um encontro especial, cheio de aprendizado, conexão e oportunidades!\n\nAs vagas são limitadas.",
+      "timestamp": "2026-05-22T19:53:49.000Z",
+      "content_format": "reel",
+      "likes": 124,
+      "comments": 29,
+      "video_view_count": 2451,
+      "video_play_count": 10163,
+      "latest_comments": [
+        "Vocês tem alguma vaga para atendimento on-line?",
+        "😍😍😍😍",
+        "😍😍😍",
+        "😍😍😍😍😍",
+        "Lindaaaa ❤️❤️",
+        "👏👏👏",
+        "Melhor nutri! 😍",
+        "Maravilhosa demais!!! 🥰❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 115316,
+  "following_count": 56,
+  "posts_count": null,
+  "follower_tier": "macro",
+  "engagement": {
+    "sample_size": 24,
+    "median_er": 0.001339796732456901,
+    "mean_er": 0.01053048435024917,
+    "er_per_post": [
+      {
+        "short_code": "DbWp0_RJyYe",
+        "er": 0.0006677304103506885,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbQ4LdCxgLh",
+        "er": 0.00053765305768497,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DajI2ZjuHN2",
+        "er": 0.0032606056401540116,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dbizfxnx-wm",
+        "er": 0.00041624752853029935,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DboqyJTuQOL",
+        "er": 0.0005636685282181137,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "C9N44OuOhfN",
+        "er": 0.2030941066287419,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbELE7dGnoL",
+        "er": 0.0007978077630164071,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "Da2_Uzfxo0f",
+        "er": 0.0008324950570605987,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZvejdmJuUA",
+        "er": 0.00215061223073988,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaIlLuBRMRd",
+        "er": 0.001344132644212425,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbLg-_CNv2o",
+        "er": 0.016389746435880537,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZ2s6IexIqX",
+        "er": 0.0014221790558118562,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZ-9AY3OQnw",
+        "er": 0.0015522564084775746,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DabIjeYuudJ",
+        "er": 0.0005116375871518263,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZgCEl3vlGU",
+        "er": 0.0006417149398175448,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZdcV5cMxOb",
+        "er": 0.0019424884664747304,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZn1PAyGiwV",
+        "er": 0.001335460820701377,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DaRGCj-xGRS",
+        "er": 0.0011446807034583232,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZaycRFxMWj",
+        "er": 0.0023500641714939816,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZFmvGqRpZC",
+        "er": 0.004379270873079191,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZSj5R6RZ6J",
+        "er": 0.0010839779388809878,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZKzBq4yT56",
+        "er": 0.0028183426410905684,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYxuWewJX04",
+        "er": 0.0021679558777619756,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYp0KBepve-",
+        "er": 0.0013267889971903292,
+        "content_format": "reel"
+      }
+    ]
+  },
+  "external_url": "http://gotigre.com.br/agendar-consulta",
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "4_servico_consultoria",
+    "secondary": "3_infoprodutor",
+    "matches": [
+      {
+        "category": "4_servico_consultoria",
+        "score": 2,
+        "evidence": [
+          "bio contém registro/título profissional: \"Dr.\""
+        ]
+      },
+      {
+        "category": "3_infoprodutor",
+        "score": 2,
+        "evidence": [
+          "legenda com padrão de lançamento: \"mentoria\""
+        ]
+      }
+    ],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "4_servico_consultoria",
+    "setor_benchmark_secundario": "3_infoprodutor",
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "implementado",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T01:48:46.955Z",
+    "versao_framework": "v3.1"
+  }
+}

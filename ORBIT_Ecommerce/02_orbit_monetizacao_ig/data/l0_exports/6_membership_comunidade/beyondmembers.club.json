@@ -1,0 +1,880 @@
+{
+  "handle": "beyondmembers.club",
+  "setor_benchmark_key": "6_membership_comunidade",
+  "url": "https://www.instagram.com/beyondmembers.club/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T02:11:42.933Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DaQbzmqK3jE",
+      "caption": "Cannes x @beyondmembers.club",
+      "timestamp": "2026-07-01T16:28:30.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 39,
+      "video_view_count": 9572,
+      "video_play_count": 51998,
+      "latest_comments": [
+        "❤️❤️❤️",
+        "🔥",
+        "Get RANK",
+        "You people are insufferable",
+        "🔥🔥🔥🔥",
+        "📺",
+        "I need an invite next year",
+        "🔥🔥",
+        "Became a fan after watching @daviddobrik vlog"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZkTyc2jolH",
+      "caption": "Cannes x @beyondmembers.club vlog is out !\nLink in bio",
+      "timestamp": "2026-06-14T13:05:07.000Z",
+      "content_format": "carousel",
+      "likes": 3804,
+      "comments": 71,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "💯🔥",
+        "Hi i am an artist based in Dubai, if you are interested in any bespoke art work please just let me know.",
+        "Pls Check DMs business inquiry",
+        "VIBES.",
+        "Love 🙌❤️",
+        "changing the game 🔥",
+        "Legendary stuff",
+        "✨✨✨",
+        "Sick",
+        "🔥🔥🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DX3zbCgBtB3",
+      "caption": "Snuck our cameras into Coachella, here is how it went…\n\n@beyondmembers.club \nVideo by @notjvck",
+      "timestamp": "2026-05-03T09:54:41.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 34,
+      "video_view_count": 10953,
+      "video_play_count": 58118,
+      "latest_comments": [
+        "💯🔥🎉",
+        "Looks fun",
+        "From luke to David what a switch",
+        "❤️❤️",
+        "Meoweow",
+        "👏👏",
+        "Sent a dm🌀",
+        "👏👏👏",
+        "So obsessed w this 😍😍 take me back",
+        "THE BESTTT!!!!"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DYuLmXVOBy4",
+      "caption": "Cannes Film Festival with @beyondmembers.club",
+      "timestamp": "2026-05-24T12:37:13.000Z",
+      "content_format": "reel",
+      "likes": 1291,
+      "comments": 21,
+      "video_view_count": 27381,
+      "video_play_count": 97434,
+      "latest_comments": [
+        "🙌",
+        "😍😍😍",
+        "👏👏",
+        "😍🔥",
+        "🔥🔥🔥🔥🔥",
+        "🖤",
+        "🔥🔥",
+        "🔥🔥🔥",
+        "So many chads"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbi-M19DvmN",
+      "caption": "Ibiza x @beyondmembers.club",
+      "timestamp": "2026-08-02T17:40:02.000Z",
+      "content_format": "carousel",
+      "likes": 1194,
+      "comments": 27,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🔥🔥",
+        "💯💯🫶🏼",
+        "@pedrocabrini_ @cbrn.p_ 🔥",
+        "🔥🔥👏",
+        "Unforgettable",
+        "ZOOVIE 🍾",
+        "nice days !",
+        "Sharee mee this poost",
+        "Movie"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbIyzOCiHTK",
+      "caption": "Ibiza x @beyondmembers.club",
+      "timestamp": "2026-07-23T13:40:10.000Z",
+      "content_format": "carousel",
+      "likes": 1639,
+      "comments": 25,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "❤️🔥",
+        "❤Love",
+        "So how do i work for you guys?",
+        "🔥🔥🔥",
+        "what exactly do yall do for work to afford this life style 😭😭",
+        "🚀❤️‍🔥",
+        "🔥🔥",
+        "@blunts4maar prostituti*n",
+        "@jazmin.jp1 😶"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DavFvB-iFc4",
+      "caption": "Ibiza Beyond summer house",
+      "timestamp": "2026-07-13T14:05:22.000Z",
+      "content_format": "carousel",
+      "likes": 2130,
+      "comments": 38,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "The dream",
+        "See you there !",
+        "I just want to take the next flight",
+        "🔥",
+        "🔒",
+        "🫣 so soon",
+        "🤍!!!",
+        "VOTE. FLIP. RISE.",
+        "🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZDQrBPDkDx",
+      "caption": "Beyond x Cannes",
+      "timestamp": "2026-06-01T17:02:57.000Z",
+      "content_format": "carousel",
+      "likes": 1435,
+      "comments": 26,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🔥",
+        "🔥🔥🔥🔥🔥",
+        "😍😍",
+        "😍",
+        "David be everywhere these days😂",
+        "😍😍",
+        "💪🏼",
+        "Crazy spots 🙌",
+        "❤️‍🔥❤️‍🔥",
+        "حلوو"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWwhig8mZfE",
+      "caption": "@beyondmembers.club is back in Monaco for the 2026 Grand Prix. \nOur biggest project yet.",
+      "timestamp": "2026-04-05T17:27:43.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 25,
+      "video_view_count": 19636,
+      "video_play_count": 65233,
+      "latest_comments": [
+        "🔥🔥🔥",
+        "🔥🔥🔥",
+        "🔥❤️",
+        "👏👏",
+        "🔥🔥",
+        "🔥🔥🔥 Fav placee for summer season",
+        "My fav place tbh",
+        "aaaaa this is so cool",
+        "🔥🔥🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DaIPBa6Dm8K",
+      "caption": "Monaco x @beyondmembers.club",
+      "timestamp": "2026-06-28T11:56:08.000Z",
+      "content_format": "carousel",
+      "likes": 2464,
+      "comments": 24,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Beyond",
+        "🔥",
+        "🔥🔥🔥",
+        "😍😍😍😍",
+        "🔥🔥🔥",
+        "beyond",
+        "🔥🔥🔥",
+        "🔥🔥",
+        "🔥🔥",
+        "🙌🙌🙌🙌"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZS4QU3jsFi",
+      "caption": "Beyond x Marrakech",
+      "timestamp": "2026-06-07T18:37:27.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 19,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "The dream",
+        "Fabulous",
+        "Sooo good 🙌🙌🙌",
+        "Too much fun",
+        "🙏🏼♥️",
+        "Memories for life ❤️",
+        "😍",
+        "Wow",
+        "non woooow c’est magique😍😍😍",
+        "Love love love. Looked like a dream! Can’t wait for the YouTube video"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZc2DSJiAJV",
+      "caption": "Beyond x Monaco",
+      "timestamp": "2026-06-11T15:30:35.000Z",
+      "content_format": "carousel",
+      "likes": 2286,
+      "comments": 39,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Would love to shoot for you guys, i've written a private message 🖤",
+        "Beach me baby",
+        "🔥🔥",
+        "best in the biz 🔥",
+        "Beyonddd 👏🔥",
+        "Golden arch 👀",
+        "Soon I will also join this club...",
+        "❤️❤️❤️❤️🔥🔥👏👏🙌🙌",
+        "😍",
+        "Insane Trip"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZz42uGoY9E",
+      "caption": "Monaco GP 26’ x @beyondmembers.club",
+      "timestamp": "2026-06-20T14:20:53.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 51,
+      "video_view_count": 15896,
+      "video_play_count": 68964,
+      "latest_comments": [
+        "🔥🔥",
+        "Just waiting",
+        "Awesome",
+        "Better than Netflix 🌎",
+        "Soy fan del Filmmaker",
+        "Dope 🙌🏼",
+        "😍😍",
+        "Goat",
+        "🔥🔥",
+        "Watched the Monaco GP 2025 vlog from Luke Davi’s’ YT and I just hope I’m in the position to join for 2027 season🙂‍↕️"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZLQ41UjnZ3",
+      "caption": "Cannes x @beyondmembers.club",
+      "timestamp": "2026-06-04T19:38:46.000Z",
+      "content_format": "carousel",
+      "likes": 1690,
+      "comments": 22,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Fabulous",
+        "Another one",
+        "Kings of all kings",
+        "Biggest",
+        "Hey there guyys. I really like your content and lifestyle. I want to be like you and enjoy life. Im only 16 but i hope that one day ill join beyond as an official member. I have 2 questions. I want to be in contact with you so i can be like you, how can i do it ? And 2nd, can i have some of your merch ? I really like it, fir example the towels and some tshirts and hoodies. I cant wait till the Monaco GP 26 vlog comes out. Thanks for reading. Greetings. Tomix",
+        "❤️",
+        "Great to have you onboard. What fun",
+        "DM'd you!",
+        "The dream !!"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWeTkVTCPHS",
+      "caption": "memories from @beyondmembers.club",
+      "timestamp": "2026-03-29T15:42:55.000Z",
+      "content_format": "reel",
+      "likes": 2379,
+      "comments": 65,
+      "video_view_count": 32106,
+      "video_play_count": 101281,
+      "latest_comments": [
+        "this is absolutely peak",
+        "👏👏👏👏",
+        "Check DM",
+        "Lifeeee 🤩",
+        "❤️‍🔥",
+        "🔥🔥🔥",
+        "On le sait tous, les rejetons du Loquidy sont humainement médiocres, mais visiblement l'intellect est également atteint. Le montage est pourri, pourtant les images sont belles.",
+        "😍😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYrve6DiFxw",
+      "caption": "Monaco by @beyondmembers.club",
+      "timestamp": "2026-05-23T13:50:24.000Z",
+      "content_format": "carousel",
+      "likes": 1076,
+      "comments": 8,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😍😍",
+        "Check DM",
+        "🔥",
+        "Insaneee 😍",
+        "Soon 🫢",
+        "Run it backkk",
+        "😮‍💨😮‍💨",
+        "🫶🏻🫶🏻🫶🏻"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXRnjmfAbSD",
+      "caption": "Beyond x Coachella",
+      "timestamp": "2026-04-18T13:49:30.000Z",
+      "content_format": "carousel",
+      "likes": 810,
+      "comments": 19,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Not a single Black or Asian baddies asides",
+        "Unreal @_evelyn_rose",
+        "🕺🕺",
+        "best week ever 🫶🏻",
+        "Thank you guys 🫶🏻🫶🏻🫶🏻🫶🏻",
+        "YESSSS SO MUCH FUN!!!!!!!",
+        "more life 🪂",
+        "🔥",
+        "🫶🏼",
+        "The bestttt ❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DabK9-mjhrM",
+      "caption": "The Monaco vlog is out. Link in bio.\n\nOne of the most beautiful and emotional weeks of my life.\n\nSo proud to see this project keep growing.\n\nThank you to everyone who was part of it.",
+      "timestamp": "2026-07-05T20:26:17.000Z",
+      "content_format": "carousel",
+      "likes": 6242,
+      "comments": 88,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🙌🙌🙌",
+        "🔥🙌❤️",
+        "When is the next vlog bro?",
+        "🌬🚀",
+        "Man your vlogs always keep me motivated",
+        "👏👏",
+        "🔥🔥",
+        "The vlog is insane 🔥🙌",
+        "🔥🔥",
+        "👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWUODBGFOVw",
+      "caption": "lake como x @beyondmembers.club",
+      "timestamp": "2026-03-25T17:32:55.000Z",
+      "content_format": "carousel",
+      "likes": 6150,
+      "comments": 35,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Osea en sicilia es un pecado ser negro solo veo puro batos blancos 😂😂😂",
+        "🔥🔥",
+        "Carrément 🤣",
+        "Pretty pictures, prettier women 🥂🧸😎",
+        "❤️❤️❤️😍😍😍👏👏👏",
+        "Interesting",
+        "😍😍😍",
+        "❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZpyc3SCJvd",
+      "caption": "Thanks everyone for joining the Beyond Monaco Party 2026.\n\nWhat a night. Grateful to everyone who came and helped make it special.\n\nSee you next year.",
+      "timestamp": "2026-06-16T16:09:15.000Z",
+      "content_format": "carousel",
+      "likes": 1383,
+      "comments": 36,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "I felt the energy in Czechia from you guys 🧨❤️‍🔥💣💥💯",
+        "Damn 🔥",
+        "Fabulous",
+        "🕺",
+        "Insanity",
+        "damn @slm allowed Rampa in for a b2b 🔥",
+        "🔥🔥",
+        "🤜🤛",
+        "Thanks to you !!!!🙌❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYFTqHtARjo",
+      "caption": "Beyond x Raja Ampat",
+      "timestamp": "2026-05-08T15:36:08.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 15,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🔥❤️",
+        "🔥🔥",
+        "miss iiiiit",
+        "Such a vibe 🔥",
+        "😍😍",
+        "🔥",
+        "Movie",
+        "❤️",
+        "It was amazing !!!",
+        "such a memorable trip"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZ-Y5i1iJ5e",
+      "caption": "Cannes x @beyondmembers.club",
+      "timestamp": "2026-06-24T16:10:02.000Z",
+      "content_format": "carousel",
+      "likes": 1740,
+      "comments": 17,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "The easiest way to have that experience effortlessly 😍",
+        "🖤",
+        "😍",
+        "View check",
+        "😎🔥",
+        "Never miss a “Beyond” trip 💯💰",
+        "slay 🔥",
+        "🤜🤛",
+        "On fiiiiiire 🔥🔥🔥",
+        "🚀 🚀"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXfwreAARWw",
+      "caption": "Beyond x Bali",
+      "timestamp": "2026-04-24T01:38:35.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 15,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "the best island there is",
+        "👏👏👏👏",
+        "Michi 🐈",
+        "this was such an amazing trip",
+        "🕺🏻🕺🏻",
+        "🔥",
+        "😍😍😍",
+        "🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DVL-AtBCK1H",
+      "caption": "Memories from Maldives",
+      "timestamp": "2026-02-25T16:07:29.000Z",
+      "content_format": "carousel",
+      "likes": 7179,
+      "comments": 29,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Loveee",
+        "😍😍",
+        "❤️",
+        "@datshengie @6nugy @j.dedj @_brattylilbee",
+        "🔥😍❤️",
+        "who said snorkel ?🤓",
+        "i love u guys ❤️",
+        "Slavic porta potties 😍",
+        "Karaoke on a boat",
+        "🌀🌀"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DGYJCGrIf6F",
+      "caption": "",
+      "timestamp": "2025-02-22T13:43:46.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 50,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Beyond",
+        "Beyond",
+        "Beyond",
+        "Beyond",
+        "Beyond",
+        "best of best",
+        "Beyond",
+        "beyond",
+        "Beyond",
+        "Beyond"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DV_dfPwDn8j",
+      "caption": "",
+      "timestamp": "2026-03-17T16:03:48.000Z",
+      "content_format": "carousel",
+      "likes": 4353,
+      "comments": 60,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "tututu",
+        "Another level 🔥",
+        "😍😍😍😍😍😍😍😍😍😍😍",
+        "🔥🔥🙌",
+        "Epic",
+        "Vamos! 🔥🔥🔥🔥",
+        "🔥🔥🔥",
+        "@sabrinankosi I said the era I wanted you in and this is it 😍",
+        "Where’s our gang members at - check these okes",
+        "The best🥰🥰🥰"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DVlr-1vCD2h",
+      "caption": "french alps x @beyondmembers.club",
+      "timestamp": "2026-03-07T15:50:11.000Z",
+      "content_format": "carousel",
+      "likes": 1045,
+      "comments": 25,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🔥🔥",
+        "👏👏",
+        "🏂🏂",
+        "👏",
+        "Whenever @lukedavis.ig is around on these trips everything seems much better 🔥👏",
+        "Miss thissss",
+        "ᯓ ✈︎",
+        "🔥🔥",
+        "❤️🔥",
+        "❤",
+        "so good so fun",
+        "😍😍",
+        "Sthetics 🔥",
+        "The best",
+        "Legendary"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYRs32ihguC",
+      "caption": "Beyond x Raja Ampat",
+      "timestamp": "2026-05-13T11:08:21.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 15,
+      "video_view_count": 9331,
+      "video_play_count": 40073,
+      "latest_comments": [
+        "🩵🩵",
+        "😍😍",
+        "❤️‍🔥",
+        "😍",
+        "We need the vlog ASAP!!",
+        "dreammm",
+        "Xama 😍",
+        "Summer vibes 🔥",
+        "❤️❤️🙌",
+        "💕💕💕",
+        "🫶🏻🫶🏻",
+        "😍😍😍",
+        "banger",
+        "🔥🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DWMkDizGAaM",
+      "caption": "South Africa x @beyondmembers.club",
+      "timestamp": "2026-03-22T18:11:18.000Z",
+      "content_format": "carousel",
+      "likes": 805,
+      "comments": 17,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Crazyy",
+        "Major vibes",
+        "Repeat noww🥹🥹",
+        "Paul you're the Goat",
+        "take me back to",
+        "Think about this every day",
+        "Calm lil flex",
+        "🤎🐆",
+        "⚡️",
+        "😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWo4O6piMeL",
+      "caption": "@beyondmembers.club x french alps",
+      "timestamp": "2026-04-02T18:14:53.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 38,
+      "video_view_count": 11332,
+      "video_play_count": 39776,
+      "latest_comments": [
+        "Hottt",
+        "😍😍🔥🔥 FitandSun/beyond",
+        "😍",
+        "🔥🔥🔥",
+        "🔥",
+        "🥹🥹",
+        "😍this",
+        "⭐️🤸🌟🧚💫",
+        "🏂🏂",
+        "🕺🕺🕺",
+        "😍",
+        "Viibes",
+        "😍😍😍😍😍🔥",
+        "🔥🔥",
+        "😍😍😍🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    }
+  ],
+  "followers_count": 43857,
+  "following_count": 6,
+  "posts_count": 88,
+  "follower_tier": "mid",
+  "engagement": {
+    "sample_size": 20,
+    "median_er": 0.039548988758921044,
+    "mean_er": 0.05904074606106209,
+    "er_per_post": [
+      {
+        "short_code": "DZkTyc2jolH",
+        "er": 0.0883553366623344,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DYuLmXVOBy4",
+        "er": 0.02991540689057619,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dbi-M19DvmN",
+        "er": 0.02784048156508653,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbIyzOCiHTK",
+        "er": 0.03794149166609663,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DavFvB-iFc4",
+        "er": 0.0494333857765009,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DZDQrBPDkDx",
+        "er": 0.033312812093850466,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DaIPBa6Dm8K",
+        "er": 0.05672982648151948,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DZc2DSJiAJV",
+        "er": 0.053013201997400644,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DZLQ41UjnZ3",
+        "er": 0.03903595777184942,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DWeTkVTCPHS",
+        "er": 0.05572656588457943,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYrve6DiFxw",
+        "er": 0.02471669288825045,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DXRnjmfAbSD",
+        "er": 0.018902341701438768,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DabK9-mjhrM",
+        "er": 0.14433271769614886,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DWUODBGFOVw",
+        "er": 0.1410265180016873,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DZpyc3SCJvd",
+        "er": 0.03235515425131678,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DZ-Y5i1iJ5e",
+        "er": 0.04006201974599266,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DVL-AtBCK1H",
+        "er": 0.16435232688054358,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DV_dfPwDn8j",
+        "er": 0.10062247759764689,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DVlr-1vCD2h",
+        "er": 0.02439747360740589,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DWMkDizGAaM",
+        "er": 0.018742732061016485,
+        "content_format": "carousel"
+      }
+    ]
+  },
+  "external_url": "https://linktw.in/UGxCwV",
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "a_validar_pre_monetizacao",
+    "secondary": null,
+    "matches": [],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "a_validar_pre_monetizacao",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "parcial",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T02:11:42.933Z",
+    "versao_framework": "v3.1"
+  }
+}

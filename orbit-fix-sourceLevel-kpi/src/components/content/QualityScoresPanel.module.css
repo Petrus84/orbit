@@ -1,0 +1,229 @@
+/* ==========================================================================
+   ORBIT · Component — QualityScoresPanel.module.css
+   Grade 2×2: Score Utilidade · Score Polêmica · VFE · ER Real
+   Versão: 1.0.2  |  Data: 2026-08-31
+   
+   MUDANÇA v1.0.2:
+   - Adicionado .panel (estava ausente — GlassCard renderiza mas styles.panel era undefined)
+   - Alinhado 100% com TOKENS SSOT (src/lib/tokens.ts)
+   - Adicionado .grid (v1.0.1 — estava ausente)
+   - Adicionado .boxGold (v1.0.1 — TAXA DE SALVAMENTO usa glowColor:'gold')
+   ========================================================================== */
+
+/* ═══════════════════════════════════════════════════════════════
+   PAINEL PRINCIPAL
+   ═══════════════════════════════════════════════════════════════ */
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background-color: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: var(--r12);
+  box-shadow: var(--shadow-glow-cyan);
+  transition: all var(--transition-base);
+}
+
+.panel:hover {
+  border-color: var(--border-glow-cyan);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TÍTULO DO PAINEL
+   ═══════════════════════════════════════════════════════════════ */
+
+.panelTitle {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--neon-cyan);
+  text-transform: uppercase;
+  margin: 0;
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--line);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GRID 2×2 (NOVO v1.0.1)
+   ═══════════════════════════════════════════════════════════════ */
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCORE BOX — BASE
+   ═══════════════════════════════════════════════════════════════ */
+
+.scoreBox {
+  padding: var(--space-3) var(--space-4);
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.05) 0%, rgba(0, 255, 255, 0.02) 100%);
+  border: 1px solid var(--line);
+  border-radius: var(--r8);
+  transition: all var(--transition-fast);
+  cursor: default;
+}
+
+.scoreBox:hover {
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(0, 255, 255, 0.05) 100%);
+  transform: translateY(-2px);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCORE BOX — VARIANTES DE COR (Glow)
+   ═══════════════════════════════════════════════════════════════ */
+
+.boxCyan {
+  border-color: rgba(0, 255, 255, 0.3);
+  box-shadow: inset 0 0 15px rgba(0, 255, 255, 0.1);
+}
+
+.boxCyan:hover {
+  border-color: rgba(0, 255, 255, 0.5);
+  box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.15), 0 0 20px rgba(0, 255, 255, 0.2);
+}
+
+.boxRed {
+  border-color: rgba(255, 68, 68, 0.3);
+  box-shadow: inset 0 0 15px rgba(255, 68, 68, 0.1);
+}
+
+.boxRed:hover {
+  border-color: rgba(255, 68, 68, 0.5);
+  box-shadow: inset 0 0 20px rgba(255, 68, 68, 0.15), 0 0 20px rgba(255, 68, 68, 0.2);
+}
+
+/* NOVO v1.0.1 — usado por TAXA DE SALVAMENTO (glowColor: 'gold') */
+.boxGold {
+  border-color: rgba(255, 195, 0, 0.3);
+  box-shadow: inset 0 0 15px rgba(255, 195, 0, 0.1);
+}
+
+.boxGold:hover {
+  border-color: rgba(255, 195, 0, 0.5);
+  box-shadow: inset 0 0 20px rgba(255, 195, 0, 0.15), 0 0 20px rgba(255, 195, 0, 0.2);
+}
+
+.boxNeutral {
+  border-color: var(--line);
+  box-shadow: none;
+}
+
+.boxNeutral:hover {
+  border-color: var(--line2);
+  background: linear-gradient(135deg, rgba(100, 100, 100, 0.05) 0%, rgba(100, 100, 100, 0.02) 100%);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CONTEÚDO INTERNO DO SCORE BOX
+   ═══════════════════════════════════════════════════════════════ */
+
+.scoreLabel {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--text-muted); /* FIX WCAG: era var(--t2), 3.21:1 sobre hover — falha AA. --text-muted já resolve para --t1 (8:1+) */
+  text-transform: uppercase;
+  margin: 0 0 var(--space-2) 0;
+}
+
+.scoreValue {
+  margin: 0 0 var(--space-2) 0;
+  line-height: 1;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.naValue {
+  font-family: var(--mono);
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--t1);
+  line-height: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   STATUS TEXT (Indicador de Status)
+   ═══════════════════════════════════════════════════════════════ */
+
+.statusText {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.statusOk {
+  color: var(--green);
+}
+
+.statusWarn {
+  color: var(--amber);
+}
+
+.statusDanger {
+  color: var(--red-text);
+}
+
+.statusNeutral {
+  color: var(--text-muted); /* FIX WCAG: era var(--t2), 3.21:1 sobre hover — falha AA. --text-muted já resolve para --t1 (8:1+) */
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVIDADE E ACESSIBILIDADE
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .scoreBox {
+    transition: none;
+  }
+
+  .scoreBox:hover {
+    transform: none;
+  }
+}
+
+/* Focus visible para acessibilidade */
+.panel:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 2px;
+}
+
+.scoreBox:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 1px;
+}
+
+.actionText {
+  margin: var(--space-1, 0.25rem) 0 0;
+  font-size: var(--font-size-xs);
+  line-height: 1.4;
+  color: var(--text-primary);
+}
+
+.referenceNote {
+  margin: var(--space-1, 0.25rem) 0 0;
+  font-size: var(--font-size-xs);
+  line-height: 1.4;
+  font-style: italic;
+  color: var(--text-muted);
+}

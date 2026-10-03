@@ -1,0 +1,291 @@
+/* AvatarScreen.module.css */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-6);
+  /* ✅ FIX: min-height:100vh duplicava o 100vh que já vem do
+     src/app/(dashboard)/layout.tsx (Sidebar+conteúdo). vh sempre mede a
+     viewport, então os dois se somavam em vez de se conterem, deixando
+     uma sobra vazia enorme abaixo do conteúdo — o mesmo sintoma visto
+     no CarteiraScreen. min-height:100% preenche só o espaço que o
+     layout pai já reservou. */
+  min-height: 100%;
+  /* ✅ CORREÇÃO: sem max-width, o conteúdo esticava borda a borda em
+     monitores largos — cards ficavam desproporcionalmente largos/rasos.
+     Mesmo valor (1400px) que FunnelScreen.module.css/.main já usa para
+     o mesmo tipo de tela (área de conteúdo dentro do shell, sem sidebar
+     própria) — não um número novo inventado. */
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  background: var(--bg);
+  font-family: var(--font);
+  color: var(--t0);
+}
+
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.headerText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.title {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.5px;
+  color: var(--t0);
+}
+
+.titleMuted {
+  font-weight: var(--font-weight-normal);
+  color: var(--t1);
+}
+
+/* Corrigido: --t2 sobre --bg fica ~4.2:1 (abaixo de AA 4.5:1) — usar --t1 */
+.subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--t1);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* ─── Skeleton ─── */
+
+.skeletonStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.skeletonRow {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.skeleton {
+  background: var(--bg4);
+  border: var(--border-width) solid var(--line);
+  border-radius: var(--r8);
+  animation: orbitPulse 1.5s ease-in-out infinite;
+}
+
+.skeletonCard {
+  flex: 1;
+  min-width: 0;
+  height: 208px;
+}
+
+.skeletonBars {
+  height: 160px;
+}
+
+.skeletonFormula {
+  height: 128px;
+}
+
+.skeletonRecs {
+  height: 96px;
+}
+
+@keyframes orbitPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ─── Estado centralizado (sem cliente, retrying, erro, idle) ───
+   Reaproveitado pelos 5 estados de erro de useAvatar() + guard de
+   clientId ausente — antes cada bloco improvisava seu próprio wrapper
+   Tailwind (min-h-screen flex items-center...), com paleta genérica
+   (gray-950/gray-900/blue-600) desconectada dos tokens SSOT que o
+   resto da tela (AvatarCard, AvatarComparison) já usa. */
+.center {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+}
+
+.centerInner {
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.stateIcon {
+  font-size: 40px;
+  line-height: 1;
+  margin-bottom: var(--space-2);
+}
+
+.stateIconSpin {
+  animation: orbitSpin 1s linear infinite;
+}
+
+@keyframes orbitSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.stateTitle {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--t0);
+}
+
+.stateBody {
+  font-size: var(--font-size-sm);
+  color: var(--t1);
+  line-height: 1.5;
+}
+
+/* Caixa "O que fazer" / "Possíveis causas" / detalhe técnico do erro —
+   substitui bg-gray-900/50 border-gray-800 (paleta genérica) */
+.detailCard {
+  width: 100%;
+  text-align: left;
+  background: var(--bg2);
+  border: var(--border-width) solid var(--line);
+  border-radius: var(--r8);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.detailTitle {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--t1);
+}
+
+.detailList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--t1);
+  list-style: none;
+}
+
+.errorDetail {
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  color: var(--t1);
+  word-break: break-word;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+/* Botão primário — mesmo acento único do sistema (--acc), nunca azul
+   genérico. Idioma visual de pílula já estabelecido em
+   AlertCard.module.css/.btn e FunnelScreen.module.css/.retryBtn. */
+.btnPrimary {
+  font-family: var(--font);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  padding: var(--space-2) var(--space-6);
+  border-radius: var(--radius-pill);
+  border: var(--border-width) solid var(--acc);
+  background: color-mix(in srgb, var(--acc) 18%, transparent);
+  color: var(--acc);
+  cursor: pointer;
+  transition: background var(--transition-fast), opacity var(--transition-fast);
+  width: 100%;
+}
+
+.btnPrimary:hover { background: color-mix(in srgb, var(--acc) 28%, transparent); }
+.btnPrimary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Botão ghost — ação secundária (Atualizar Dados no rodapé da tela de sucesso) */
+.btnGhost {
+  font-family: var(--font);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  padding: var(--space-2) var(--space-6);
+  border-radius: var(--radius-pill);
+  border: var(--border-width) solid var(--line);
+  background: var(--bg2);
+  color: var(--t1);
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.btnGhost:hover {
+  background: var(--bg3);
+  color: var(--t0);
+}
+
+.hint {
+  font-size: var(--font-size-xs);
+  color: var(--t1);
+}
+
+/* Banner de erro genérico (isError sem errorCode) — full width, não
+   centralizado, aparece no topo da página como CriticalAlert já faz */
+.genericErrorBanner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--r12);
+  border: var(--border-width) solid color-mix(in srgb, var(--red) 30%, transparent);
+  background: color-mix(in srgb, var(--red) 8%, transparent);
+}
+
+.genericErrorTitle {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--red);
+}
+
+.genericErrorBody {
+  font-size: var(--font-size-xs);
+  color: var(--t1);
+  margin-top: var(--space-1);
+}
+
+/* ─── Meta (última atualização) ─── */
+
+.metaLabel {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--t1);
+}
+
+.metaValue {
+  font-size: var(--font-size-xs);
+  color: var(--t1);
+  margin-top: var(--space-1);
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--space-4);
+}

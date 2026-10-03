@@ -1,0 +1,654 @@
+{
+  "handle": "podpah",
+  "nicho": "7_monetizacao_nativa",
+  "url": "https://www.instagram.com/podpah/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-01T16:53:46.654Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DbbxUe7pQ5V",
+      "caption": "deu pra sentir? 😏",
+      "timestamp": "2026-07-30T22:34:04.000Z",
+      "content_format": "reel",
+      "likes": 4307,
+      "comments": 20,
+      "video_view_count": 58267,
+      "video_play_count": 199662,
+      "latest_comments": [
+        "😂😂😂😂😂",
+        "😂😂😂😂😂",
+        "😂😂😂",
+        "😂😂😂😂",
+        "Fica 10 Segundos Então ,Querendo Comer O Matheus Ai😏\n- Vou Ficar 10 Segundos Querendo Te Dar😒🙂‍↔️",
+        "😂😂",
+        "😂😂😂😂😂",
+        "😂😂😂😂😂😂😂",
+        "\"Essa é a tua cara de quem quer dar?\" Kkkkkkkkkkk",
+        "😂😂😂😂😂😂😂"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbdwTcwpx2E",
+      "caption": "Isso é Podpah CORE, já somos 10 milhões 💛\n\nManda aí nos comentários qual momento faltou no vídeo 👇",
+      "timestamp": "2026-07-31T17:03:49.000Z",
+      "content_format": "reel",
+      "likes": 13108,
+      "comments": 192,
+      "video_view_count": 137045,
+      "video_play_count": 565219,
+      "latest_comments": [
+        "Ney e Kevin",
+        "Kevin 🏆",
+        "Pior foi lula 9 dedo",
+        "Mc Kevin Sem Duvidas❤️",
+        "👏👏👏👏👏👏👏❤️",
+        "kevin bueno👑",
+        "\"18 facas na mão, vc n é malandrao, satisfação fa....\" o melhor"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbf5dnyOoZJ",
+      "caption": "Começando o fim de semana já dando play em @kyanmaloka ao vivo no SALA, da @podpahrecords 🔥",
+      "timestamp": "2026-08-01T13:00:06.000Z",
+      "content_format": "reel",
+      "likes": 16180,
+      "comments": 107,
+      "video_view_count": 59053,
+      "video_play_count": 335992,
+      "latest_comments": [
+        "🔥🔥🔥🔥🔥🔥",
+        "goat",
+        "🔥🔥🔥🔥🔥",
+        "Que carai que episódio foda",
+        "top1",
+        "Nosso monstro kyan🔥",
+        "Hino",
+        "Essa arrepia",
+        "chave dms",
+        "😮‍💨 mt coisa"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbbz5JVJCYG",
+      "caption": "que brincadeira esquisita é essa?",
+      "timestamp": "2026-07-30T22:56:40.000Z",
+      "content_format": "reel",
+      "likes": 45928,
+      "comments": 1114,
+      "video_view_count": 460860,
+      "video_play_count": 1260982,
+      "latest_comments": [
+        "Mano",
+        "😂😂😂😂😂😂😂😂",
+        "😂😂😂😂😂😂😂 vocês viaja",
+        "🫥",
+        "Treino com Bola👏👏👏",
+        "Não mano",
+        "😂😂😂😂😂😂😂😂😂😂😂😂😂😂"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbbnOFMJzyH",
+      "caption": "“Mãe” - @kyanmaloka ao vivo no SALA\n\n➡️ Assista o show completo do Kyan na @podpahrecords pelo canal: /PODPAHRECORDS ou ouça agora em seu app favorito",
+      "timestamp": "2026-07-30T21:07:35.000Z",
+      "content_format": "reel",
+      "likes": 20180,
+      "comments": 264,
+      "video_view_count": 83186,
+      "video_play_count": 481267,
+      "latest_comments": [
+        "🥺",
+        "❤️❤️",
+        "❤️",
+        "👏🔥🔥",
+        "Maloka original de verdade ❤️🔥",
+        "😢",
+        "❤️🔥",
+        "Preferita ❤️‍🔥👑",
+        "🔥🔥",
+        "Chorei 🙌😭😭"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbb4Fd1ptZK",
+      "caption": "ah calma aí kkkkkkkkkk",
+      "timestamp": "2026-07-30T23:33:20.000Z",
+      "content_format": "reel",
+      "likes": 15132,
+      "comments": 133,
+      "video_view_count": 119984,
+      "video_play_count": 387935,
+      "latest_comments": [
+        "😂😂😂😂😂😂😂",
+        "😂😂😂😂😂😂😂",
+        "Krlh 😭😭",
+        "😂",
+        "Atualmente o filho do Cristiano Ronaldo tem feito isso com frequência",
+        "A que isso KKKKKKKKKKKK",
+        "Aaah Coe mano 😂😂",
+        "😂😂😂😂"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbbE3h2pe7m",
+      "caption": "mande para 3 amigos para receber a benção 🙏",
+      "timestamp": "2026-07-30T16:05:20.000Z",
+      "content_format": "reel",
+      "likes": 21292,
+      "comments": 182,
+      "video_view_count": 184470,
+      "video_play_count": 623396,
+      "latest_comments": [
+        "Eu levaria até o óleo ungido pra passa na mão dele e orar “Deus pfvr pai eu recebo” KKKKKKKKKKK",
+        "Eu o tempo todo",
+        "Eu sou assim 😂😂",
+        "😂😂",
+        "😂😂😂😂😂😂😂",
+        "@luhmorais0 😂😂😂😂😂😂",
+        "😂😂😂😂",
+        "😂😂😂",
+        "Semi gospel foi a melhor 🔥😂😂😂😂"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "Dba35IlJGTB",
+      "caption": "acho que deu certo galera 🤷‍♂️",
+      "timestamp": "2026-07-30T14:13:25.000Z",
+      "content_format": "reel",
+      "likes": 9487,
+      "comments": 61,
+      "video_view_count": 53873,
+      "video_play_count": 188037,
+      "latest_comments": [
+        "KKKKKKK lindinhos",
+        "O Maciel 😍😍😍",
+        "KKKKKKK Q vídeo fofo",
+        "Quem tem um amigo tem tudo 😍",
+        "😂😂😂",
+        "😍😍😍👏👏😂",
+        "😂😂😂😂😂",
+        "AI CARA EU AMO TA",
+        "@naah_lemes é o homem mais lindo do mundo"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbZcreOpAHm",
+      "caption": "o homem tá amando 🥰",
+      "timestamp": "2026-07-30T00:54:52.000Z",
+      "content_format": "reel",
+      "likes": 132905,
+      "comments": 229,
+      "video_view_count": 647999,
+      "video_play_count": 1673600,
+      "latest_comments": [
+        "o ramon ta com cabelo? quanto tempo eu dormi? 😳😳😳😳😳",
+        "Fofo",
+        "Maciel cd dia mais fofo ❤️",
+        "O amor não tem explicação né véi? É isso ! ✨",
+        "Impossivel gente! Tira esse cara!",
+        "@rrdonatello ❤️❤️❤️"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbbSUhDJzLV",
+      "caption": "Hoje é só resenha e brincadeirinhas gostosas com nossos crias favoritos! 19h tamo on no YouTube 😎🔥",
+      "timestamp": "2026-07-30T18:03:46.000Z",
+      "content_format": "reel",
+      "likes": 42830,
+      "comments": 235,
+      "video_view_count": 273836,
+      "video_play_count": 826267,
+      "latest_comments": [
+        "😂😂😂",
+        "Ele olhando pra boca do Igor dês do começo",
+        "Eu sabia que ele ia fazer isso kkkkkkkkkkkkkk",
+        "😂😂😂😂😂😂😂",
+        "😹😹😹",
+        "😂😂😂😂😂",
+        "😂😂😂😂😂😂",
+        "Kkkkkkkkkkkkkkkkkkkkkkkkkk",
+        "😂😂😂",
+        "🤣🤣🤣🤣"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbgCYb7lq2m",
+      "caption": "papo mais que necessário sobre saúde mental, bom demais ter você aqui irmão @saymon.veiga 💛",
+      "timestamp": "2026-08-01T14:18:51.000Z",
+      "content_format": "carousel",
+      "likes": 1584,
+      "comments": 7,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "boa alan rushel",
+        "bruno fernandes 👏",
+        "Show! Parabéns pela abertura do espaço pra falar de saúde mental 👊",
+        "Parabéns manos episódio fera @saymon.veiga é @mitico",
+        "💛",
+        "❤️"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "Dba_xFvpUG0",
+      "caption": "Podpah Visita com @mcph4m tá no ar, cola e vem desestressar 😮‍💨",
+      "timestamp": "2026-07-30T15:20:22.000Z",
+      "content_format": "reel",
+      "likes": 13855,
+      "comments": 51,
+      "video_view_count": 384201,
+      "video_play_count": 1308174,
+      "latest_comments": [
+        "Até ao dançar têm pausa ❤️🙌 meu ídolo 🔥",
+        "NOSSANNNN 🫦🫦🫦🫦🫦🫦🫦🫦🫦🫦",
+        "😍😍😍😍",
+        "Sem jeito mandou um abraço😂😂😂"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbcCVmZJ1Yy",
+      "caption": "aulas de como não abandonar o filho com @melomatheuss_",
+      "timestamp": "2026-07-31T01:03:04.000Z",
+      "content_format": "reel",
+      "likes": 19034,
+      "comments": 506,
+      "video_view_count": 282719,
+      "video_play_count": 804993,
+      "latest_comments": [
+        "Aaaaahhhhhh véi aí não. Esse corte não foi de boa como pensaram.",
+        "Imagina o filho olhando isso futuramente 😂😂😂",
+        "Não sei oq ficou pior …\nTodo mundo achando tudo “bom” nessa conversa",
+        "😂😂😂😂",
+        "isso não funciona nem brincando"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbbpxRsp0hZ",
+      "caption": "eu não aguento esses mlks kkkkkkkkkkk",
+      "timestamp": "2026-07-30T21:30:14.000Z",
+      "content_format": "reel",
+      "likes": 31005,
+      "comments": 171,
+      "video_view_count": 242171,
+      "video_play_count": 735041,
+      "latest_comments": [
+        "@guaranaantarctica viu ai? a melhor do video",
+        "😂😂😂😂😂😂😂muito bom kkkk",
+        "😂😂😂😂😂",
+        "😂😂😂😂😂😂😂😂😂😂😂",
+        "😂😂😂",
+        "😂😂😂"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "Da0qgPwFhjM",
+      "caption": "O @podpah e o @unicefbrasil estão JUNTOS E MISTURADOS 🤜🤛\nCurtiu? Comenta ai pra fortalecer essa união!",
+      "timestamp": "2026-07-15T18:02:51.000Z",
+      "content_format": "carousel",
+      "likes": 4692,
+      "comments": 50,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Parecendo minhas fotos antigas no sesc itaquera",
+        "@podpah deixei uma mensagem no privado, me responde por favor, sou hemofilico e vivo com hiv há 41 anos e gostaria de contar minha história, me responde por favor!!🙏🙏🙏🙏",
+        "Tem algo que esses caras não façam bem????👏",
+        "@_edireal @adegafortalece qualquer semelhança.....",
+        "Que importante essa parceria! Vocês tem impacto em milhões de jovens no país e trabalham diretamente com pessoas que influenciam muitos grupos, isso é realmente usar a voz pro bem 🙌👏❤️"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbbJUmZJhsK",
+      "caption": "“Sheylong quebrando tudo né?”",
+      "timestamp": "2026-07-30T16:44:33.000Z",
+      "content_format": "reel",
+      "likes": 42938,
+      "comments": 145,
+      "video_view_count": 609933,
+      "video_play_count": 1542575,
+      "latest_comments": [
+        "Que dia Goku lançou Dragon ball?, alguém tem essa informação, não encontrei no Google.",
+        "Dragon Ball pai do resto",
+        "Ela é maravilhosa demais 😂❤️",
+        "😂",
+        "One Piece é o queen",
+        "Dragon ball e o pai do naruto",
+        "Mano essa é menina é chata 🫪"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbesaRYJg6q",
+      "caption": "quando a gente se coloca no lugar do outro o papo muda",
+      "timestamp": "2026-08-01T01:58:54.000Z",
+      "content_format": "reel",
+      "likes": 4759,
+      "comments": 35,
+      "video_view_count": 42600,
+      "video_play_count": 263069,
+      "latest_comments": [
+        "É isso.\nMinha dr0g@ é o doce. E é muito, mas muito difícil resistir",
+        "Visão 👏👏👏",
+        "Isso é ser \"humano \". Parabéns irmão",
+        "A gente tem que ser 2 vezes melhor 😮‍💨",
+        "Muitas vezes o álcool ou até mesmo o cigarro vira um refúgio para camuflar a dor que sentimos. 👏",
+        "👏👏",
+        "Total",
+        "Nem faça essa pergunta! Toda a vez que eu tenho que responder minha dor só aumenta, você não vai conseguir me ajudar! Então na atrapalhe! Fica a dica!",
+        "🔥🔥🔥🔥🔥"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbRuxeBlnIQ",
+      "caption": "💥 AGENDA DA SEMANA 💥\n\n➡️ Amanhã, às 19h, a Batalha da Aldeia #470 chega ao vivo com mais uma noite insana de rimas 🎤\n\n➡️ Na terça, às 11h, tem Falha de Cobertura, com Craque Daniel e Professor Cerginho comentando tudo sobre o futebol ⚽\n\n➡️ Na quarta, às 19h, o Podpah recebe Ramon & Maciel, a dupla irreverente do Aqueles Caras, para um papo cheio de resenha 🎙️\n\n➡️ Na quinta, às 12h, o Podpah Visita cola na casa do MC PH, o “cara do momento” 🏠\n\n➡️ Também às 12h, no Podpah Records, tem Sala com Kyan, em um show acústico exclusivo. 🎶\n\n➡️ Encerrando a quinta, às 19h, o Podpah recebe Jeff Bala, Bryan Sant e Matheus Melo, o trio que vem quebrando a internet com o CPX dos Crias 🎙️\n\n➡️ Na sexta, às 19h, é a vez de Saymon Veiga chegar para um papo importante sobre saúde mental 🎙️\n\n➡️ De segunda a sexta, às 17h30, tem Quebrada FC, com a melhor resenha esportiva da internet. 💜\n\n🔥 Já salva a agenda e não perde nenhum programa da semana!",
+      "timestamp": "2026-07-27T00:58:08.000Z",
+      "content_format": "carousel",
+      "likes": 12450,
+      "comments": 43,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Falta só o @gusttavolima ir no @podpah",
+        "Cadê o melhor @eomixreal ❤️🙌",
+        "Jeff Bala ... Já vi a collab ... Já pode solta o Pix....... 11995297371",
+        "Jeff Bala ......",
+        "@dona19__ @yuri22 quando?",
+        "CHAMA O MAMPHIS 🙏🙏🙏🙏",
+        "Chama o @vereador.luizgs o homem é fenomenal. Vlw vlw tmj 💋",
+        "@mitico @igao KD o especial de 10 milhões ?",
+        "Chama o @coringa, @brabox e o @gabepeixe"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbZjva3JEYP",
+      "caption": "tá aprendendo com o chico",
+      "timestamp": "2026-07-30T01:56:23.000Z",
+      "content_format": "reel",
+      "likes": 18221,
+      "comments": 178,
+      "video_view_count": 164486,
+      "video_play_count": 475196,
+      "latest_comments": [
+        "Confio no Maciel kkkkkk ele é um fofo",
+        "Ele é meu crush master 😍😍",
+        "“Você ouve Sabrina c……” 🧐 a cara dele kkkkkkkk",
+        "😂😂😂😂😂"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbbwB7yJHSe",
+      "caption": "@igao voltou do pós-operatório só pra fazer esse episódio, vem que tamo ao vivo 😂💛",
+      "timestamp": "2026-07-30T22:23:46.000Z",
+      "content_format": "static_post",
+      "likes": 9544,
+      "comments": 27,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Minha música 😍❤️❤️",
+        "@dj_sc_oficial_ 👏❤️",
+        "😂😂🔥",
+        "🔥👏😂",
+        "Faço trabalho com cortes de vídeos \nMinha conta de 30 k foi derrubada quem poder da uma moral ja ajuda demais pro lado de cá 🔥🔥✌🏾",
+        "👏",
+        "Esse é o verdadeiro igao, o que fez a cirurgia é aquele tal de podcreh?",
+        "O igao ta diferente",
+        "@savelfc muito bom te ver magro irmao 👏",
+        "@menor_gustaa01.zs minha música ❤️"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbbYdtvJQ_6",
+      "caption": "É tanta emoção que a pressão até caiu 😂 depois de viver uma experiência inesquecível em Nova York. 💙\n\nvem ver a história completa!\n#publi\n#AmazonBrasil",
+      "timestamp": "2026-07-30T18:57:23.000Z",
+      "content_format": "reel",
+      "likes": 578,
+      "comments": 4,
+      "video_view_count": 9700,
+      "video_play_count": 103124,
+      "latest_comments": [
+        "👏👏👏",
+        "❤️",
+        "essa história é muito foda!!!!!"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbeUgqSJ-zd",
+      "caption": "papo leve e mais do que necessário sobre saúde mental, cola com nois, tamo ao vivo‼️",
+      "timestamp": "2026-07-31T22:19:13.000Z",
+      "content_format": "static_post",
+      "likes": 1355,
+      "comments": 20,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "cadê o igao?",
+        "Showww meu amigo !! sucesso.. grande abraço",
+        "Sucesso 🔥🔥",
+        "👏👏👏",
+        "Uhuuu🤘🤘",
+        "👏👏👏 parabéns, irmão! Sucesso sempre 🙏❤️"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbcFndpFk3i",
+      "caption": "o foda é que eu amo esses fdp 💛",
+      "timestamp": "2026-07-31T01:30:02.000Z",
+      "content_format": "carousel",
+      "likes": 18165,
+      "comments": 35,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Cadê o igao",
+        "Fenômeno 👏🏻 @igao.podcreh",
+        "É ele ali @igao.podcreh",
+        "É ele ali ?",
+        "Kd o IGAO?",
+        "Ja ta na hora de vim lemine yamal ne"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbbjMj-n-SC",
+      "caption": "tá sabendo que o @passaabola agora faz parte do grupo do Podpah? 👀 \n\nUm programa esportivo sobre futebol feminino só com feraaaaas e hoje tem a estreia do Fala, Bebê no YouTube das minas, tá bom demaaaaais!\n\nJá se inscreve lá pra não perder nadinha 💜",
+      "timestamp": "2026-07-30T20:29:23.000Z",
+      "content_format": "carousel",
+      "likes": 6362,
+      "comments": 42,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "maaaaes",
+        "Futebol feminino é horroroso",
+        "👏👏👏",
+        "Meteu o L de Luana 🔥👑🫶",
+        "👏👏👏👏👏",
+        "❤️❤️",
+        "👏",
+        "Aaaa que demais 👏🏼👏🏼👏🏼",
+        "👏👏👏👏👏👏",
+        "🔥🔥🔥",
+        "😍😍😍😍"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbb80RIJSvA",
+      "caption": "o pior é que ela esqueceu mesmo 😂",
+      "timestamp": "2026-07-31T00:15:04.000Z",
+      "content_format": "reel",
+      "likes": 32335,
+      "comments": 111,
+      "video_view_count": 183562,
+      "video_play_count": 632617,
+      "latest_comments": [
+        "Não arruma  meda não esqueça",
+        "Cadê novo amor",
+        "Amém eurecebo eu creio 🙌",
+        "coe 🤣🤣🤣",
+        "😂😂😂😂😂😂😂😂",
+        "😂😂",
+        "😂😂😂😂😂😂",
+        "Sabe aonde ela tá ?",
+        "Ta faltando o homi, JC NAZARENO"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbav2RAFuLT",
+      "caption": "fofoca da copa, fofoca da vida, fofoca de anime\nQUE PAPO BOM FOI ESSE 🥵",
+      "timestamp": "2026-07-30T13:00:41.000Z",
+      "content_format": "carousel",
+      "likes": 42772,
+      "comments": 93,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "não tô aguento com o ramon de cabelo sério KKKKKKKKKKKKK",
+        "Como assim Ramon com cabelo mds",
+        "ramon com cabelo",
+        "Ramon vai fazer algum filme, não é possível kkkkkkkkkk ou fez promessa contrária, se acontecer algo ele deixa o cabelo crescer",
+        "Como assim o Ramon era careca por opção? Kkk",
+        "Cadê o Igão??",
+        "Ramon tira a",
+        "Tira o cabelo ramonnn",
+        "Ramon tira o cabelo agora",
+        "Cadê a foto com a muie??"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbeaKkfpINK",
+      "caption": "já sabiam dessa? 🤔",
+      "timestamp": "2026-07-31T23:11:06.000Z",
+      "content_format": "reel",
+      "likes": 14676,
+      "comments": 183,
+      "video_view_count": 130743,
+      "video_play_count": 369051,
+      "latest_comments": [
+        "Ele esqueceu de fala a verdade.",
+        "Essa semana eu esqueci o ano q iniciei a faculdade 😂😂",
+        "Não chegou débito em conta pra esse rapaz, já que a falta não é de dinheiro",
+        "E eu que pago o aluguel e depois no meio do mês entro em desespero achando que não paguei 😂",
+        "Pior que ele não consegue nem pagar o conserto do notebook pq o banco tava no celular kkkkk",
+        "Acontece cmg sempre 😂😂😂 quando pego em dinheiro esqueço que tenho contas pra pagar só sei gastar 😂😂😂😂😂😂😂😂😂",
+        "Pois se TDAH é falta de compromisso, eu não tenho.",
+        "😂😂😂😂😂",
+        "Sofro muito com esses azar😢",
+        "Debito automático, não existo 🤦🏽",
+        "Irresponsabilidade. Independente de TDA, há inumeras formas de resolver isso: debito automatico, definir datas padrão para pagamento, notificações e etc.",
+        "🫠🫠🫠"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbepUI0JEIS",
+      "caption": "papo de visão! 👀",
+      "timestamp": "2026-08-01T01:22:02.000Z",
+      "content_format": "reel",
+      "likes": 8548,
+      "comments": 58,
+      "video_view_count": 83410,
+      "video_play_count": 284886,
+      "latest_comments": [
+        "O rolê é saber entender e lidar com.",
+        "Estou a fase de mania",
+        "🙁",
+        "Estou nela há 4 anos !",
+        "Passando só pra informar que desregulação de humor pode estar associado a transtorno de personalidade borderline :)",
+        "@basquetepravida mandou o papo",
+        "Sobre bipolaridade precisam chamar o @psi.luisbertuci",
+        "Mudança de manhã de tarde e de noite é borderline",
+        "A mudança vem do remédio? Vem. Mas é importantíssimo identificarmos esses períodos pra lutar contra e continuarmos uma e outra e outra vez sermos seres “normais”. Não tem cura, porém reduzir esses episódios alivia nosso coração 🙏",
+        "Em mania tudo é lindo e eu sou a mulher maravilha em depressão eu não tenho energia  com duas tentativas de s******, sempre bom levar quem entende sobre saúde mental",
+        "Só quem passa sabe 🤯"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbekbrVp11z",
+      "caption": "a importância de respeitar cada individualidade",
+      "timestamp": "2026-08-01T00:39:44.000Z",
+      "content_format": "reel",
+      "likes": 3723,
+      "comments": 34,
+      "video_view_count": 58251,
+      "video_play_count": null,
+      "latest_comments": [
+        "Nooossa, que legal falarem desse estigma. Sofri muito por ser TDHA, mas sempre me desafiei a fazer coisas que as pessoas diziam que eu não fosse capaz. Aliás, até hj algumas vozes ecoam.",
+        "Touché",
+        "👏👏👏👏",
+        "Saymon, você é foda",
+        "Sensacional ❤️",
+        "Brother , falou tudo 🙌",
+        "❤️",
+        "Eu preciso sair disso … isso afeta muito várias áreas da nossa vida .",
+        "Simom é demais nas explicações 😍",
+        "Muito brabo obrigado por isso 👏🔥",
+        "@miticmitico",
+        "é isso",
+        "👏👏👏👏👏 Só ouvi verdades !  A sociedade deveria entender e aceitar melhor que o TDAH existe , não é Frescura ou falta de responsabilidade , ele existe mesmo e não são todos iguais , um pode esquecer nenos e o outro mais , porém é sempre com muitos prejuízos e sofrimentos,  isso é TDAH !"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbeeUwfpBwA",
+      "caption": "somos viciados no caos‼️",
+      "timestamp": "2026-07-31T23:47:11.000Z",
+      "content_format": "reel",
+      "likes": 6190,
+      "comments": 88,
+      "video_view_count": 86140,
+      "video_play_count": 362446,
+      "latest_comments": [
+        "Gratidão, meu deus eu não estou sozinho em meio ao caos.😢",
+        "👏",
+        "Muito obrigado 🔥🔥🔥",
+        "Eu amo viver no caos 😢😂\nA sensação que tá todo mundo desesperado,e eu calma galera eu resolvo vai da tudo certo 😂😂😂",
+        "Depois de tratado, isso é uma delícia... mas antes........ 😮",
+        "Somos diferenciados...😂😂😂😂"
+      ],
+      "anomalies": []
+    }
+  ],
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "5_patrocinio_publicidade",
+    "matches": [
+      {
+        "category": "5_patrocinio_publicidade",
+        "evidence": [
+          "legenda com marcação de publicidade paga: \"#publi\""
+        ]
+      }
+    ],
+    "manual_review_recommended": false,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  }
+}

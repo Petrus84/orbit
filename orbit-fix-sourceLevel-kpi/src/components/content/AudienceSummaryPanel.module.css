@@ -1,0 +1,229 @@
+/* ==========================================================================
+   ORBIT · Component — AudienceSummaryPanel
+   Versão: 1.0.0  |  Data: 2026-08-31
+
+   Design Logic:
+   - .panel: GlassCard container (cyan glow, como QualityScoresPanel)
+   - .statsRow: 3 colunas (flex, gap-3) — padrão de CriticalAlert
+   - .genderBlock: Barra de progresso horizontal (stacked) + legenda
+   - .citiesBlock: Lista com ranking (city name + percentage)
+   - Tipografia: Sans para labels, Monospace para números (FormatPerformanceTable)
+   - Cores: Tokens do SSOT, sem hardcoded
+   - Transições: suaves em hover/expand
+   ========================================================================== */
+
+/* ── Container principal ────────────────────────────────────────────────── */
+
+.panel {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-4);
+}
+
+.panelTitle {
+  font-size: var(--font-size-xs);
+  letter-spacing: 2px;
+  color:          var(--text-dim);
+  font-weight:    var(--font-weight-bold);
+  text-transform: uppercase;
+  margin:         0;
+}
+
+/* ── Stats Row (3 colunas: Alcance, Visitas, Cliques) ──────────────────── */
+
+.statsRow {
+  display:        flex;
+  gap:            var(--space-3);
+  flex-wrap:      wrap;
+}
+
+.stat {
+  flex:           1;
+  min-width:      120px;
+  padding:        var(--space-3) var(--space-3);
+  background:     rgba(0, 255, 255, 0.04);
+  border:         var(--border-width) solid rgba(0, 255, 255, 0.15);
+  border-radius:  var(--r8);
+  transition:     all var(--transition-fast);
+}
+
+.stat:hover {
+  background:     rgba(0, 255, 255, 0.08);
+  border-color:   rgba(0, 255, 255, 0.25);
+}
+
+.statLabel {
+  font-size: var(--font-size-xs);
+  letter-spacing: 1px;
+  color:          var(--text-dim);
+  text-transform: uppercase;
+  margin:         0 0 var(--space-2) 0;
+  font-weight:    var(--font-weight-bold);
+}
+
+.statValue {
+  font-size:      var(--font-size-lg);
+  font-family:    var(--font-mono);
+  color:          var(--neon-cyan);
+  margin:         0;
+  line-height:    1;
+}
+
+/* ── Gender Block (Barra horizontal stacked + legenda) ───────────────────── */
+
+.genderBlock {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-3);
+  padding:        var(--space-3) var(--space-4);
+  background:     rgba(255, 195, 0, 0.04);
+  border:         var(--border-width) solid rgba(255, 195, 0, 0.15);
+  border-radius:  var(--r8);
+}
+
+.blockLabel {
+  font-size: var(--font-size-xs);
+  letter-spacing: 2px;
+  color:          var(--text-dim);
+  font-weight:    var(--font-weight-bold);
+  text-transform: uppercase;
+  margin:         0;
+}
+
+/* ── Gender Bar (Barra de progresso horizontal) ──────────────────────────── */
+
+.genderBar {
+  display:        flex;
+  width:          100%;
+  height:         24px;
+  background:     rgba(31, 31, 40, 0.5);
+  border-radius:  var(--r4);
+  overflow:       hidden;
+  border:         var(--border-width) solid rgba(255, 255, 255, 0.1);
+}
+
+.genderBarFemale {
+  background:     linear-gradient(90deg, rgba(255, 105, 180, 0.6), rgba(255, 105, 180, 0.4));
+  height:         100%;
+  transition:     width var(--transition-fast);
+  position:       relative;
+}
+
+.genderBarFemale::after {
+  content:        '';
+  position:       absolute;
+  top:            0;
+  left:           0;
+  right:          0;
+  bottom:         0;
+  background:     linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent);
+  pointer-events: none;
+}
+
+.genderBarMale {
+  background:     linear-gradient(90deg, rgba(74, 144, 255, 0.6), rgba(74, 144, 255, 0.4));
+  height:         100%;
+  transition:     width var(--transition-fast);
+  position:       relative;
+}
+
+.genderBarMale::after {
+  content:        '';
+  position:       absolute;
+  top:            0;
+  left:           0;
+  right:          0;
+  bottom:         0;
+  background:     linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent);
+  pointer-events: none;
+}
+
+/* ── Gender Legend (Dots + labels) ──────────────────────────────────────── */
+
+.genderLegend {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-2);
+  font-size:      var(--font-size-xs);
+  color:          var(--text-secondary);
+}
+
+.genderLegend span {
+  display:        flex;
+  align-items:    center;
+  gap:            var(--space-2);
+}
+
+.dotFemale {
+  display:        inline-block;
+  width:          8px;
+  height:         8px;
+  border-radius:  50%;
+  background:     rgba(255, 105, 180, 0.8);
+  flex-shrink:    0;
+}
+
+.dotMale {
+  display:        inline-block;
+  width:          8px;
+  height:         8px;
+  border-radius:  50%;
+  background:     rgba(74, 144, 255, 0.8);
+  flex-shrink:    0;
+}
+
+/* ── Cities Block (Lista de cidades com ranking) ──────────────────────────── */
+
+.citiesBlock {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-3);
+  padding:        var(--space-3) var(--space-4);
+  background:     rgba(46, 204, 113, 0.04);
+  border:         var(--border-width) solid rgba(46, 204, 113, 0.15);
+  border-radius:  var(--r8);
+}
+
+.citiesList {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-2);
+}
+
+.cityRow {
+  display:        flex;
+  justify-content: space-between;
+  align-items:    center;
+  padding:        var(--space-2) 0;
+  border-bottom:  var(--border-width) solid rgba(31, 31, 40, 0.3);
+  font-size:      var(--font-size-sm);
+}
+
+.cityRow:last-child {
+  border-bottom: none;
+}
+
+.cityName {
+  color:          var(--text-primary);
+  font-family:    var(--font);
+  font-weight:    var(--font-weight-medium);
+}
+
+.cityPct {
+  color:          var(--text-secondary);
+  font-family:    var(--font-mono);
+  font-size:      var(--font-size-xs);
+  min-width:      40px;
+  text-align:     right;
+}
+
+/* ── Empty State ────────────────────────────────────────────────────────── */
+
+.emptyState {
+  text-align:     center;
+  font-size:      var(--font-size-sm);
+  color:          var(--text-dim);
+  padding:        var(--space-4);
+  margin:         0;
+  font-style:     italic;
+}

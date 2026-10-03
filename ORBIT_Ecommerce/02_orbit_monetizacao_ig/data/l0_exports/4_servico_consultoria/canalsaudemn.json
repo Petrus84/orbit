@@ -1,0 +1,692 @@
+{
+  "handle": "canalsaudemn",
+  "setor_benchmark_key": "4_servico_consultoria",
+  "url": "https://www.instagram.com/canalsaudemn/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T01:53:39.001Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DXM3RayJfNA",
+      "caption": "COMO É FEITO O TRANSPLANTE DE SOBRANCELHAS?\n\nNo #CanalSaúde de hoje, o Dr. Breno Marques ( @drbrenomarques.clinicas ) explica tudo sobre o procedimento que virou febre: o transplante de sobrancelhas. Com a adesão de algumas celebridades, como a influenciadora @bianca Andrade a técnica ganha destaque por devolver o volume e o desenho do olhar de forma definitiva. O médico detalha como funciona o processo e como é possível conquistar um resultado natural e personalizado.\n\nAssista ao episódio completo às 19h no YouTube e Spotify do PodMeio.\n\n#canalsaúde #podmeio #sobrancelha #estética",
+      "timestamp": "2026-04-16T17:30:00.000Z",
+      "content_format": "reel",
+      "likes": 89,
+      "comments": 7,
+      "video_view_count": 6026,
+      "video_play_count": 11996,
+      "latest_comments": [
+        "Valor preciso",
+        "😍😍👏🔝🔝🔝🔝🔝",
+        "Excelente profissional, o Piauí tá de parabéns.",
+        "Valor ?",
+        "Preço",
+        "quem fez esse procedimento nela ?",
+        "🙋‍♀️Fantástico !!! 👏👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbJsHHEhwOp",
+      "caption": "A HARMONIZAÇÃO FACIAL DO VINI JR. RESOLVEU O PROBLEMA?\n\nNo novo corte do Canal Saúde, a especialista (@draerikalaizaa ) analisa a transformação estética de Vini Jr. e explica que, apesar do excelente resultado visual, a harmonização facial não corrige problemas funcionais, como mordida aberta e respiração bucal. Entenda a diferença entre procedimentos estéticos e tratamentos que realmente solucionam alterações na estrutura da face.\n\nAssista ao episódio completo às 19h no YouTube e Spotify do PodMeio.\n\nHOF | Vini Jr. | Estética Facial | Odontologia | Saúde Bucal | Cirurgia Ortognática",
+      "timestamp": "2026-07-23T22:00:06.000Z",
+      "content_format": "reel",
+      "likes": 44,
+      "comments": 0,
+      "video_view_count": 25,
+      "video_play_count": 2219,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaAoAOWp24y",
+      "caption": "CORRIDA EMAGRECE? A VERDADE QUE POUCA GENTE CONTA 🏃‍♂️💪\n\nNo Canal Saúde, o nutricionista Crause Celso (@nutricrausecelso ) explica que a corrida pode sim ajudar no emagrecimento, mas alerta: para quem busca saúde, longevidade e qualidade de vida, o treino de força é indispensável.\n\nAssista ao episódio completo às 19h no YouTube do PodMeio.\n\nCanal Saúde | Emagrecimento | Corrida | Musculação | Treino de Força | Qualidade de Vida",
+      "timestamp": "2026-06-25T13:00:09.000Z",
+      "content_format": "reel",
+      "likes": 12572,
+      "comments": 145,
+      "video_view_count": 85617,
+      "video_play_count": 271210,
+      "latest_comments": [
+        "Fala isso para o Nick bare😂",
+        "Exatamente assim👏,.Mas pode fazer exercício de força sem precisar ir pra academia",
+        "Eu só fazia musculação e subia as escadas ofegante, comecei a correr, melhorei 100%.",
+        "O difícil aí é dormir muito 😂",
+        "Eu amo correr ❤️",
+        "A questão não é só correr ou perder massa muscular: é sim é correr e fazer academia e também é também tem que descansar o corpo para poder recuperar as energias.",
+        "@marllon_philipe custa ouvir 👂 com atenção? Para q vc tenha uma interpretação correta da excelente explicação 🤷🏻‍♀️🤦🏻‍♀️🫪"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbbZMmmJ301",
+      "caption": "😴💙 SONO REPARADOR: O DESCANSO TAMBÉM É CUIDADO COM A SAÚDE!\n\nNo Canal Saúde, a CEO da A.M Farma, Antônia Melo (@toinhamelooficial ) e o farmacêutico (@martinsalissoncamilo ) explicam por que dormir bem é essencial para a saúde, especialmente durante viagens e mudanças de rotina.\n\nAssista ao episódio completo no YouTube e Spotify do PodMeio. 📲\n\nCanal Saúde | Sono Reparador | Autocuidado | Qualidade do Sono | Saúde e Bem-Estar",
+      "timestamp": "2026-07-30T19:12:06.000Z",
+      "content_format": "reel",
+      "likes": 20,
+      "comments": 4,
+      "video_view_count": 258,
+      "video_play_count": 1346,
+      "latest_comments": [
+        "🙌",
+        "👏👏👏",
+        "❤️",
+        "😍😍😍😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbbacITJfOc",
+      "caption": "🏖️💊 VAI VIAJAR? VEJA O QUE NÃO PODE FALTAR NA SUA BAGAGEM!\n\nNo Canal Saúde, os especialista  da A.M Farma, Antonia Melo (@toinhamelooficial ) e Alisson Camilo ( @martinsalissoncamilo ) compartilha recomendações importantes para curtir as férias com mais segurança e tranquilidade.\n\nAssista ao episódio completo no YouTube e Spotify do PodMeio. \n\nDicas de Viagem | Cuidados nas Férias | Medicamentos | Saúde e Prevenção",
+      "timestamp": "2026-07-30T19:18:26.000Z",
+      "content_format": "reel",
+      "likes": 44,
+      "comments": 5,
+      "video_view_count": 411,
+      "video_play_count": 1457,
+      "latest_comments": [
+        "👏👏👏👏👏",
+        "👏👏👏👏",
+        "Excelente informação meu dr.",
+        "👏👏👏👏",
+        "Muito bom esse tipo de informação"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DW7XCMIgdzO",
+      "caption": "EXAME BRCA: A LIÇÃO DO CASO ANGELINA JOLIE\n\nNo #CanalSaúde de hoje, a Dra. Cristiane Napoleão destaca o impacto do caso de Angelina Jolie, que trouxe visibilidade à importância dos testes genéticos, como o BRCA.Mesmo sem diagnóstico de câncer, a atriz tomou decisões preventivas com base na ciência, reforçando como a informação pode ser determinante para reduzir riscos e salvar vidas.\n\nAssista ao episódio completo às 19h no YouTube e Spotify do PodMeio.\n\n#canalsaúde #prevenção #oncogenética #saúde",
+      "timestamp": "2026-04-09T22:22:53.000Z",
+      "content_format": "reel",
+      "likes": 414,
+      "comments": 4,
+      "video_view_count": 11425,
+      "video_play_count": 20161,
+      "latest_comments": [
+        "❤️❤️❤️❤️",
+        "A Angelina retirou os seios por recomendação médica faz tempo e o que ela tem são implantes.",
+        "👏👏👏",
+        "👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbJhxiOvWIW",
+      "caption": "CASO DO JORNALISTA FILIPE PEREIRA: O QUE PODE TER ACONTECIDO? ⚠️\n\nNo Canal Saúde, a cirurgiã-dentista Erika Laiza (@draerikalaizaa ) analisa o caso do jornalista Filipe Pereira e explica como uma aplicação imprecisa da toxina botulínica pode atingir músculos indesejados, provocando efeitos temporários como a queda da pálpebra.Ela também esclarece quanto tempo o quadro costuma durar e quais medidas podem ajudar durante a recuperação.\n\nAssista ao episódio completo às 19h no YouTube e Spotify do PodMeio.\n\nBotox | Toxina Botulínica | Saúde | Estética | Segurança | Procedimentos Estéticos | Riscos | Efeitos Colaterais",
+      "timestamp": "2026-07-23T20:43:57.000Z",
+      "content_format": "reel",
+      "likes": 507,
+      "comments": 42,
+      "video_view_count": 642,
+      "video_play_count": 29887,
+      "latest_comments": [
+        "Filipe que dia vai botar botox no outro olho",
+        "👏👏👏👏👏👏👏👏👏👏👏👏",
+        "No caso são dois músculo diferentes:\n1)Levantador da Palpebra Superior, mais importante, mais externo e superficial que deve ter sido o afetado pela Toxina Botulínica\n2) Musculo de Muller,  na face mais interna do tarso, mais proximo da conjuntiva, com menor função responsável por cerca de 1-2 mm de abertura ocular. Nao deve ter sido afetado no caso e o uso de colírio que o estimulem como a Aproclodinina pode ajudar minimamente. Realmente o tempo fará a toxina perder o efeito e o musculo levar a atividade.",
+        "Mas o outro olho nao ficou, co.o foi então?",
+        "🙌🙌🙌🙌🙌",
+        "Sou fã @draerikalaizaa , como sempre rica em conhecimentos, e sempre com as melhores explicações. Nessa eu confio . 👏🏻🤩",
+        "@flaviaadvprev ela errou 70%"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbJhbCpPW00",
+      "caption": "💉 BOTOX  ALÉM DA ESTÉTICA: AFINAL, O QUE É E PARA QUE SERVE ESSE PROCEDIMENTO? \n\nNo novo corte do Canal Saúde, a especialista Erika Laiza (@draerikalaizaa ) explica o que é a toxina botulínica, como ela age no organismo e por que o tratamento não serve apenas para suavizar rugas. O Botox também pode ser indicado para enxaquecas, espasticidade muscular, tremores, dores faciais e outras condições.\n\nAssista ao episódio completo às 19h no YouTube e Spotify do PodMeio.\n\nCanal Saúde | Botox | Toxina Botulínica | Estética | Saúde | Rejuvenescimento | Bem-estar",
+      "timestamp": "2026-07-23T20:31:27.000Z",
+      "content_format": "reel",
+      "likes": 29,
+      "comments": 1,
+      "video_view_count": 18,
+      "video_play_count": 2438,
+      "latest_comments": [
+        "Perfeita explicação @draerikalaizaa obrigada por ter aceito nosso convite"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWWnFXZx4UA",
+      "caption": "O PERIGO NO ARMAZENAMENTO DAS CANETAS\n\nNo #CanalSaúde de hoje, o presidente do SINCOFARMA-PI, Francisco Lopes,  traz um alerta que muita gente esquece: a forma como você guarda sua caneta emagrecedora muda tudo! Um medicamento fora da temperatura correta pode perder o efeito ou até causar reações graves. Aprenda as dicas essenciais de conservação para garantir que o seu tratamento seja seguro e eficiente.\n\nAssista ao episódio completo às 19h no YouTube e Spotify do PodMeio.\n\n#canalsaúde #saúde #mounjaro #emagrecimento ozempic",
+      "timestamp": "2026-03-26T15:50:00.000Z",
+      "content_format": "reel",
+      "likes": 11,
+      "comments": 1,
+      "video_view_count": 435,
+      "video_play_count": 1346,
+      "latest_comments": [
+        "👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbbqOmNhqFJ",
+      "caption": "POR QUE O FARMACÊUTICO É TÃO IMPORTANTE?\n\nNo Canal Saúde, a CEO da A.M Farma, Antônia Melo (@toinhamelooficial) e o farmacêutico Allison Camilo (@martinsalissoncamilo ) explicam como a orientação profissional faz toda a diferença para o uso seguro dos medicamentos.\n\nAssista ao episódio completo no YouTube e Spotify do PodMeio. 📲\n\nFarmacêutico | Uso Seguro de Medicamentos | Atenção Farmacêutica | Saúde e Prevenção",
+      "timestamp": "2026-07-30T21:30:05.000Z",
+      "content_format": "reel",
+      "likes": 31,
+      "comments": 2,
+      "video_view_count": 283,
+      "video_play_count": 1760,
+      "latest_comments": [
+        "👏👏👏👏",
+        "❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da3INnYBaoI",
+      "caption": "NENHUM PROCEDIMENTO ODONTOLÓGICO DURA PARA SEMPRE.\n\nA dentista Marília Macedo (@dra.mariliamacedo ) explica que manter um sorriso saudável depende de acompanhamento e cuidados contínuos. Mais do que estética, recuperar o sorriso é devolver autoestima, confiança e qualidade de vida.\n\nAssista ao episódio completo às 19h no YouTube e Spotify do PodMeio! \n\nOdontologia | Saúde Bucal | Autoestima | Sorriso | Qualidade de Vida",
+      "timestamp": "2026-07-16T17:00:06.000Z",
+      "content_format": "reel",
+      "likes": 10,
+      "comments": 3,
+      "video_view_count": 4,
+      "video_play_count": 506,
+      "latest_comments": [
+        "🔥🔥🔥🔥",
+        "🙌",
+        "👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da2srf1BV1C",
+      "caption": "SUA SAÚDE COMEÇA PELA BOCA!\n\nNo Canal Saúde, a dentista Marília Macedo (@dra.mariliamacedo ) explica por que a saúde bucal vai muito além do sorriso. Inflamações na boca podem agravar doenças como diabetes, problemas cardiovasculares e até trazer complicações durante a gestação.\n\nAssista ao episódio completo às 19h no YouTube e Spotify do PodMeio.\n\nCanal Saúde | Saúde Bucal | Diabetes | Saúde Cardiovascular | Prevenção | Bem-estar",
+      "timestamp": "2026-07-16T13:00:07.000Z",
+      "content_format": "reel",
+      "likes": 8,
+      "comments": 1,
+      "video_view_count": 4,
+      "video_play_count": 842,
+      "latest_comments": [
+        "😍😍😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWWp-UsxIeT",
+      "caption": "PARA QUEM SÃO AS CANETAS EMAGRECEDORAS?\n\nNo #CanalSaúde de hoje, o gastroenterologista Dr. Litelton Carvalho ( @drlitelton.gastro ) esclarece quem realmente deve usar as canetas emagrecedoras. O medicamento não é para qualquer um: ele tem indicações específicas para pacientes com diabetes, obesidade e casos de esteatose hepática (gordura no fígado).\n\nAssista ao episódio completo às 19h no YouTube e Spotify do PodMeio.\n\n#canalsaúde #ozempic #saúde #emagrecimento diabetes",
+      "timestamp": "2026-03-26T16:15:00.000Z",
+      "content_format": "reel",
+      "likes": 64,
+      "comments": 10,
+      "video_view_count": 512,
+      "video_play_count": 2039,
+      "latest_comments": [
+        "Moro tão longe de onde ele trabalha",
+        "Gostaria muito de ser atendida por esse médico",
+        "Meu médico é excelente",
+        "👏👏👏👏👏👏👏👏👏👏👏👏👏👏👏👏👏👏👏👏👏👏",
+        "👏🏽👏🏽👏🏽👏🏽👏🏽👏🏽 Top 🔝",
+        "Esse eu conheço e digo e repito , médico indo e voltando ! 👏👏👏 parabéns meu Amigo vc é bom no que faz , e aquele ditado Deus dá um dom e esse Dom vc tem ...",
+        "👏👏👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZdaIR1h50b",
+      "caption": "VOCÊ SABE COMO IDENTIFICAR OS SINAIS DA ANEMIA?\n\nA anemia ocorre quando o corpo não tem glóbulos vermelhos saudáveis suficientes, o que reduz o transporte de oxigênio para os tecidos. No #CanalSaúde o hematologista Dr. Luiz Ivando (@luizivando) apontou os sinais mais comuns desse problema. \n\nAssista ao episódio completo às 19h no Youtube e Spotify do PodMeio.\n\nsaúde | podcast | anemia | medicina | exames de sangue | hematologia | especialista",
+      "timestamp": "2026-06-11T20:45:08.000Z",
+      "content_format": "reel",
+      "likes": 7,
+      "comments": 0,
+      "video_view_count": 91,
+      "video_play_count": 365,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaA1vQCJBcp",
+      "caption": "CREATINA: MUITO ALÉM DA ACADEMIA 💊⚡\n\nNo Canal Saúde, o nutricionista Crause Celso (@nutricrausecelso ) desmistifica um dos suplementos mais estudados do mundo: a creatina. \n\nAssista ao episódio completo às 19hno YouTube e Spotify do PodMeio.\n\nCanal Saúde | Creatina | Suplementação | Saúde | Nutrição Esportiva | Longevidade",
+      "timestamp": "2026-06-25T15:00:10.000Z",
+      "content_format": "reel",
+      "likes": 136,
+      "comments": 8,
+      "video_view_count": 1135,
+      "video_play_count": 3520,
+      "latest_comments": [
+        "Dr que tem endrometriose e Ademiose poder toma creatina",
+        "👏🏽👏🏽👏🏽👏🏽",
+        "😍",
+        "🙌",
+        "😍😍😍",
+        "👏👏👏",
+        "Podcast fantástico!!",
+        "@roseliaborges4 pode sim. Não há restrição"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbbf1kWBZJj",
+      "caption": "SUPLEMENTAÇÃO: QUANDO ELA PODE SER UMA ALIADA DA SAÚDE?\n\nNo Canal Saúde, a CEO da A.M Farma, Antônia Melo (@toinhamelooficial ) e o farmacêutico Alisson Camilo (@martinsalissoncamilo ) falam sobre a importância dos nutrientes para o organismo e explica como a suplementação pode complementar a alimentação em diferentes situações.\n\nAssista ao episódio completo no YouTube e Spotify do PodMeio. 📲\n\nSuplementação | Nutrientes | Vitaminas | Alimentação | Saúde e Bem-Estar",
+      "timestamp": "2026-07-30T20:00:05.000Z",
+      "content_format": "reel",
+      "likes": 23,
+      "comments": 1,
+      "video_view_count": 209,
+      "video_play_count": 780,
+      "latest_comments": [
+        "❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da3nFLQh5qC",
+      "caption": "OS DENTES TAMBÉM PODEM ENVELHECER ANTES DA HORA!\n\nNo novo episódio do Canal Saúde, a dentista Marília Macêdo (@dra.mariliamacedo ) explica como estresse, ansiedade, falta de sono e até o uso inadequado das canetas emagrecedoras podem acelerar o desgaste dos dentes e favorecer inflamações bucais.\n\nAssista ao episódio completo às 19h no YouTube e Spotify do PodMeio.\n\nCanal Saúde | Envelhecimento Dentário | Saúde Bucal | Canetas Emagrecedoras | Estresse | Prevenção",
+      "timestamp": "2026-07-16T21:30:06.000Z",
+      "content_format": "reel",
+      "likes": 29,
+      "comments": 3,
+      "video_view_count": 23,
+      "video_play_count": 10022,
+      "latest_comments": [
+        "Obrigada pela participação 👏👏",
+        "😍😍😍",
+        "A realidade é essa !!! Nossa boca sofre muito em consequência do nosso sistêmico desordenado 😮"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da26ck9Bx-E",
+      "caption": "UMA GENGIVA INFLAMADA PODE AFETAR ATÉ O CORAÇÃO. 🦷🫀\n\nNo Canal Saúde, a dentista Marília Macedo (@dra.mariliamacedo ) explica como inflamações bucais e doenças periodontais favorecem a disseminação de bactérias pelo organismo, aumentando os riscos principalmente para pacientes com doenças crônicas.\n\nAssista ao episódio completo às 19h no YouTube e Spotify do PodMeio.\n\nCanal Saúde | Inflamação Bucal | Periodontite | Saúde Bucal | Coração | Prevenção",
+      "timestamp": "2026-07-16T15:00:06.000Z",
+      "content_format": "reel",
+      "likes": 10,
+      "comments": 2,
+      "video_view_count": 3,
+      "video_play_count": 1077,
+      "latest_comments": [
+        "Entrevista maravilhosa 👏",
+        "👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZvdbCTp5bH",
+      "caption": "BOTOX: EXISTE IDADE CERTA PARA COMEÇAR?\n\nNo Canal Saúde, a Dra. Dalyla Viana (@dradalylaviana ) esclarece uma das dúvidas mais comuns sobre harmonização facial: afinal, qual a idade ideal para fazer botox?\n\nAssista ao episódio completo às 19h no YouTube do PodMeio.\n\nCanal Saúde | Botox | Harmonização Facial | Estética Facial | Prevenção do Envelhecimento",
+      "timestamp": "2026-06-18T21:00:11.000Z",
+      "content_format": "reel",
+      "likes": 5,
+      "comments": 1,
+      "video_view_count": 241,
+      "video_play_count": 589,
+      "latest_comments": [
+        "😍😍😍😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZul3CaBlU3",
+      "caption": "O SEGREDO DA HARMONIZAÇÃO NATURAL! ✨\n\nO mercado da beleza mudou, e a regra agora é a naturalidade! No Canal Saúde, a especialista em Harmonização Orofacial, Dra. Dalyla Viana (@dradalylaviana ) , faz uma análise de como os procedimentos evoluíram. Se antes a moda era o exagero, hoje o grande objetivo é realçar a identidade de cada paciente sem transformar seus traços. 💉👄\n\nAssista ao episódio completo no YouTube do PodMeio.\n\nCanal Saúde | Harmonização | Pele | Skin Care",
+      "timestamp": "2026-06-18T12:55:09.000Z",
+      "content_format": "reel",
+      "likes": 28,
+      "comments": 2,
+      "video_view_count": 262,
+      "video_play_count": 967,
+      "latest_comments": [
+        "😍😍😍😍",
+        "👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DVysVkrxBWu",
+      "caption": "O QUE É E COMO ACONTECE O MAL SÚBITO\n\nNo #CanalSaúde de hoje, recebemos o cardiologista Dr. Alcino Sá (@alcino.sa ) para um alerta urgente: o aumento de casos de morte súbita entre jovens. Vamos explicar o que causa esse problema silencioso, os riscos e como exames simples podem salvar vidas.\n\nAssista ao episódio completo às 19h no YouTube e Spotify do PodMeio.\n\n#canalsaúde #podmeio #saúde #coração malsubito",
+      "timestamp": "2026-03-12T17:05:31.000Z",
+      "content_format": "reel",
+      "likes": 97,
+      "comments": 3,
+      "video_view_count": 825,
+      "video_play_count": 2818,
+      "latest_comments": [
+        "👏👏👏👏👏👏.MUITO BOM DR.ALCINO SÁ...MUITA GENTE PRECISA SABER DESTE ENCINAMENTO.",
+        "Boa noite! Dr.Alcino Sá considerado um dos melhores cardiologista do Piauí. Explana todo assunto com muita clareza e atende seus pacientes com carinho, atenção e humildade ❤️😍👏👏👏👏👏",
+        "Boa  tarde !  Vale  muito  ouvir  as  explicações  de  um  dos  melhores  cardiologistas  que  existe.  Nasceu  para  ser  médico,  explica  com  clareza  e  atende  com  total  carisma  e  humildade."
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DVyu1ZmRgCm",
+      "caption": "CORAÇÃO EM RISCO: CASOS ENTRE JOVENS E OS CUIDADOS COM A SAÚDE\n\nDr. Alcino Sá (@alcino.sa ) , cardiologista, faz um alerta sobre os hábitos que estão pesando no coração dos jovens. O uso de cigarro eletrônico, o sedentarismo e a má alimentação são os vilões por trás do aumento das doenças cardíacas. Segundo o médico, cuidar da saúde hoje é a única forma de evitar surpresas graves amanhã.\n\nAssista ao episódio completo às 19h no YouTube e Spotify do PodMeio.\n\n#canalsaúde #podmeio #saúdedocoração #vape #obesidade",
+      "timestamp": "2026-03-12T17:27:34.000Z",
+      "content_format": "reel",
+      "likes": 23,
+      "comments": 0,
+      "video_view_count": 228,
+      "video_play_count": 1117,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZu0xk-hwsA",
+      "caption": "O BARATO QUE SAI CARO NA ESTÉTICA ⚠️💉\n\nNo Canal Saúde, a Dra. Dalyla Viana (@dradalylaviana ) desmistifica a velha ideia de buscar sempre pelo menor preço em procedimentos estéticos e faz um alerta necessário: nem sempre o mais barato é a melhor opção. Investir um pouco mais em um profissional qualificado, em produtos de alta qualidade e em uma estrutura segura é a única garantia real de um resultado perfeito e livre de complicações.\n\nAssista ao episódio completo no YouTube do PodMeio.\n\nCanal Saúde | Harmonizacao Facial | Saúde | Autoestima",
+      "timestamp": "2026-06-18T15:05:09.000Z",
+      "content_format": "reel",
+      "likes": 20,
+      "comments": 3,
+      "video_view_count": 347,
+      "video_play_count": 1471,
+      "latest_comments": [
+        "Pura verdade ! O barato sai caro !",
+        "👏👏",
+        "👏👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DVy4WCWxsLE",
+      "caption": "INFARTO: SINAIS DE ALERTA QUANDO É PRECISO FICAR ATENTO\n\nO cardiologista Alcino Sá (@alcino.sa) explica no #CanalSaúde de hoje os sinais de alerta que você nunca deve ignorar. Dor no peito, suor frio, náusea e palidez são sinais típicos de infarto, e saber identificar esses avisos do corpo pode salvar a sua vida.\n\nAssista ao episódio completo às 19h no YouTube e Spotify do PodMeio.\n\n#canalsaúde #podmeio #saúde #infarto malsubito",
+      "timestamp": "2026-03-12T18:50:54.000Z",
+      "content_format": "reel",
+      "likes": 44,
+      "comments": 0,
+      "video_view_count": 396,
+      "video_play_count": 1735,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DVgOb_aEUfL",
+      "caption": "PODE LASER NO CORPO TODO?\n\nGloria Araújo ( gloria_geralda_araujo ), especialista em depilação a laser, explica no #CanalSaúde de hoje que a tecnologia permite tratar quase todas as áreas do corpo! Das axilas ao rosto, o laser moderno é seguro e eficaz.\n\nAssista ao episódio completo às 19h no YouTube e Spotify do PodMeio.\n\n#canalsaúde #podmeio #depilaçãoalaser #cuidados",
+      "timestamp": "2026-03-05T13:00:00.000Z",
+      "content_format": "reel",
+      "likes": 3,
+      "comments": 1,
+      "video_view_count": 113,
+      "video_play_count": 724,
+      "latest_comments": [
+        "👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbJmYO-hzgF",
+      "caption": "👩‍⚕️ QUEM ESTÁ HABILITADO A FAZER HARMONIZAÇÃO FACIAL?\n\nNo Canal Saúde, a dentista (@draerikalaizaa ) esclarece quais profissionais podem realizar procedimentos de harmonização facial e explica por que o cirurgião-dentista é o único que pode receber o título de especialista em Harmonização Orofacial, conforme as normas vigentes. Informação e segurança são essenciais na hora de escolher quem vai cuidar da sua saúde e da sua estética.\n\nAssista ao episódio completo às 19h no YouTube e Spotify do PodMeio.\n\nHarmonização Facial | Harmonização Orofacial | Cirurgião-Dentista | Estética | Saúde | Procedimentos Estéticos",
+      "timestamp": "2026-07-23T21:10:06.000Z",
+      "content_format": "reel",
+      "likes": 120,
+      "comments": 13,
+      "video_view_count": 56,
+      "video_play_count": 6759,
+      "latest_comments": [
+        "Minha Dra amada 🧡Muito competente !!",
+        "👏👏👏 professional maravilhosa",
+        "Explicação respeitosa é outro nível 👏👏👏🔥🔥🔥.",
+        "👏👏👏",
+        "👏👏👏👏👏",
+        "👏👏👏👏",
+        "👏👏👏👏",
+        "Dra. Érika Laysa maravilhosa!😍😍👏🏾👏🏾👏🏾👏🏾👏🏾👏🏾👏🏾 Na consulta com ela é sempre uma aula. 👏🏾👏🏾👏🏾👏🏾😍😍😍😍Excelente profissional. Confio plenamente no trabalho dela. 😍😍😍😍😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbhzfOjt1vY",
+      "caption": "ANTES DE COMPLETAR SEU PRIMEIRO ANO DE BRASIL, a @geelyauto.brasil já demonstra que chegou para construir uma história de longo prazo. A marca consolidou sua presença no mercado brasileiro com tecnologia, inovação e uma estratégia voltada para a mobilidade sustentável. Agora, inicia uma nova fase ainda mais ambiciosa: produzir veículos no país, reforçando seu compromisso com a indústria nacional, a geração de empregos e o desenvolvimento tecnológico.\nO futuro da Geely já começou — e, em breve, será Made in Brazil. ASSISTA AO VIDEIO ☝️#MundoGeely #GeelyBrasil #Geely #ViaShanghai",
+      "timestamp": "2026-08-02T06:54:09.000Z",
+      "content_format": "reel",
+      "likes": 139,
+      "comments": 0,
+      "video_view_count": 4832,
+      "video_play_count": 29690,
+      "latest_comments": [
+        "Não foi essa emissora que fez matéria na época do ieldson falando mal de carro elétrico ??? Kkkkkk"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaTEdfAutwh",
+      "caption": "A SOP MUDOU DE NOME! 🌸🧬\n\nVocê sabia que ter ovários policísticos não é a mesma coisa que ter a Síndrome? No Canal Saúde, a nutricionista especialista Drª Juliany Alves joga uma luz sobre essa confusão que atinge milhares de mulheres e explica a recente mudança que mexeu com o mundo da saúde feminina: a SOP agora é SOMP (Síndrome Metabólica dos Ovários Policísticos).\n\nAssista ao episódio completo no YouTube do PodMeio. 📲\n\nPodMeio | SOP | SOMP | Saúde da Mulher | Ovários Policísticos | Ginecologia",
+      "timestamp": "2026-07-02T16:57:04.000Z",
+      "content_format": "reel",
+      "likes": 103,
+      "comments": 2,
+      "video_view_count": 1222,
+      "video_play_count": 6126,
+      "latest_comments": [
+        "👏👏👏👏👏👏❤️",
+        "👏👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DVgSYJuEWOZ",
+      "caption": "LÂMINAS SÃO INIMIGAS DA PELE\n\nNo #CanalSaúde, a empresária Gloria Araújo (gloria_geralda_araujo) alerta sobre as consequências do uso prolongado de lâminas na depilação. Além de irritar a pele, elas podem causar foliculite e deixar áreas como axilas e virilhas escurecidas. Descubra como o laser ajuda a recuperar a saúde da sua pele e acabar com esse sofrimento! \n\nAssista ao episódio completo às 19h no YouTube e Spotify do PodMeio.\n\n#canalsaúde #podmeio #pelesaudável #depilaçãoalaser",
+      "timestamp": "2026-03-05T13:30:00.000Z",
+      "content_format": "reel",
+      "likes": 6,
+      "comments": 1,
+      "video_view_count": 312,
+      "video_play_count": 2194,
+      "latest_comments": [
+        "👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DVgNQOKERhL",
+      "caption": "DEPILAÇÃO A LASER: MITO OU VERDADE?\n\nNo episódio de hoje do #CanalSaúde, a empresária Gloria Araújo ( gloria_geralda_araujo ) desvenda tudo o que você sempre quis saber sobre a depilação a laser. Dói? É para todo mundo? Ela explica como a tecnologia certa garante um resultado seguro e sem sofrimento.\n\nAssista ao episódio completo às 19h no YouTube e Spotify do PodMeio.\n\n#canalsaúde #podmeio #mitoseverdades #depilaçãoalaser",
+      "timestamp": "2026-03-05T12:45:00.000Z",
+      "content_format": "reel",
+      "likes": 9,
+      "comments": 0,
+      "video_view_count": 464,
+      "video_play_count": 1632,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 20485,
+  "following_count": 1201,
+  "posts_count": 548,
+  "follower_tier": "mid",
+  "engagement": {
+    "sample_size": 30,
+    "median_er": 0.0015133024164022456,
+    "mean_er": 0.02426165486941665,
+    "er_per_post": [
+      {
+        "short_code": "DXM3RayJfNA",
+        "er": 0.004686355870148889,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbJsHHEhwOp",
+        "er": 0.0021479131071515745,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaAoAOWp24y",
+        "er": 0.6207957041737857,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbbZMmmJ301",
+        "er": 0.0011715889675372223,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbbacITJfOc",
+        "er": 0.0023919941420551625,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DW7XCMIgdzO",
+        "er": 0.020405174517939956,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbJhxiOvWIW",
+        "er": 0.02680009763241396,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbJhbCpPW00",
+        "er": 0.001464486209421528,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DWWnFXZx4UA",
+        "er": 0.0005857944837686112,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbbqOmNhqFJ",
+        "er": 0.0016109348303636807,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Da3INnYBaoI",
+        "er": 0.0006346106907493288,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Da2srf1BV1C",
+        "er": 0.0004393458628264584,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DWWp-UsxIeT",
+        "er": 0.0036123993165731024,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZdaIR1h50b",
+        "er": 0.00034171344886502317,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaA1vQCJBcp",
+        "er": 0.007029533805223334,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dbbf1kWBZJj",
+        "er": 0.0011715889675372223,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Da3nFLQh5qC",
+        "er": 0.0015621186233829632,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Da26ck9Bx-E",
+        "er": 0.0005857944837686112,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZvdbCTp5bH",
+        "er": 0.0002928972418843056,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZul3CaBlU3",
+        "er": 0.001464486209421528,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DVysVkrxBWu",
+        "er": 0.00488162069807176,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DVyu1ZmRgCm",
+        "er": 0.0011227727605565047,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZu0xk-hwsA",
+        "er": 0.0011227727605565047,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DVy4WCWxsLE",
+        "er": 0.0021479131071515745,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DVgOb_aEUfL",
+        "er": 0.0001952648279228704,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbJmYO-hzgF",
+        "er": 0.006492555528435441,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbhzfOjt1vY",
+        "er": 0.006785452770319746,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaTEdfAutwh",
+        "er": 0.005125701732975348,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DVgSYJuEWOZ",
+        "er": 0.00034171344886502317,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DVgNQOKERhL",
+        "er": 0.0004393458628264584,
+        "content_format": "reel"
+      }
+    ]
+  },
+  "external_url": "https://www.meionews.com/",
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "a_validar_pre_monetizacao",
+    "secondary": null,
+    "matches": [],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "a_validar_pre_monetizacao",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "parcial",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T01:53:39.001Z",
+    "versao_framework": "v3.1"
+  }
+}

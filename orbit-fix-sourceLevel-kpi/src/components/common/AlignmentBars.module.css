@@ -1,0 +1,184 @@
+/* AlignmentBars.module.css */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sectionLabel {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--t1);
+}
+
+.card {
+  padding: var(--space-5);
+}
+
+/* Ritmo vertical compacto entre itens */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.itemDivider {
+  padding-top: var(--space-4);
+  border-top: var(--border-width) solid var(--line);
+}
+
+.labelRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.labelLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.label {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--t1);
+}
+
+.metricsRight {
+  display: flex;
+  gap: var(--space-3);
+  font-size: var(--font-size-xs);
+  color: var(--t1);
+}
+
+.metricValue {
+  font-weight: 700;
+  color: var(--t1);
+}
+
+/* ─── Régua compacta — TOLERÂNCIA ZERO acima de 8px ─── */
+/* REDESENHADO (19/09/2026): seguindo o vocabulário visual de
+   FunnelStep.module.css (".bar") — vazado, sem preenchimento sólido.
+   Trilho = glass card (fundo do card + borda), preenchimentos = gradiente
+   translúcido da cor semântica + borda de aresta + glow, não bloco opaco.
+   Nenhum prop/estrutura do componente mudou, só a linguagem visual. */
+.track {
+  position: relative;
+  height: 8px;
+  border-radius: var(--r4);
+  background: var(--bg-card); /* era var(--bg4) sólido */
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+.expectedFill {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  border-radius: var(--r4);
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--acc2) 18%, transparent) 0%,
+    color-mix(in srgb, var(--acc2) 4%, transparent) 100%
+  ); /* era opacidade 35% fixa — gradiente tênue, mesma leitura do Funil */
+  border-right: 1px solid color-mix(in srgb, var(--acc2) 55%, transparent);
+  transition: width var(--transition-slow);
+}
+.realFill {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  border-radius: var(--r4);
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--fill-color, var(--t1)) 32%, transparent) 0%,
+    color-mix(in srgb, var(--fill-color, var(--t1)) 6%, transparent) 100%
+  ); /* era bloco sólido a 90% de opacidade */
+  border-right: 2px solid var(--fill-color, var(--t1));
+  box-shadow: 0 0 6px color-mix(in srgb, var(--fill-color, var(--t1)) 45%, transparent);
+  transition: width var(--transition-slow);
+}
+.targetLine {
+  position: absolute;
+  inset-block: 0;
+  width: 2px;
+  background: var(--acc2);
+  box-shadow: 0 0 4px color-mix(in srgb, var(--acc2) 60%, transparent);
+}
+
+/* Foot row */
+.footRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.alignmentPill {
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  padding: 2px var(--space-2);
+  border-radius: var(--r4);
+  border: var(--border-width) solid transparent;
+}
+
+.legend {
+  display: flex;
+  gap: var(--space-3);
+  font-size: var(--font-size-xs);
+  color: var(--t1);
+}
+
+.legendSwatch,
+.legendSwatchExpected {
+  display: inline-block;
+  width: 10px;
+  height: 4px;
+  border-radius: 2px;
+  margin-right: 4px;
+}
+
+.legendSwatch {
+  background: var(--fill-color, var(--t1)); /* chip pequeno da legenda continua solido de proposito -- so a barra grande virou vazada */
+}
+
+.legendSwatchExpected {
+  background: color-mix(in srgb, var(--acc2) 60%, transparent);
+}
+
+/* Glow classes — mesmo padrão de GlassCard.tsx */
+.dotCyan { background: var(--neon-cyan); }
+.dotGold { background: var(--neon-gold); }
+.dotRed  { background: var(--neon-red); }
+.dotGreen { background: var(--neon-green); }
+.dotNone { background: var(--t2); }
+
+.fillCyan { --fill-color: var(--neon-cyan); }
+.fillGold { --fill-color: var(--neon-gold); }
+.fillRed  { --fill-color: var(--neon-red); }
+.fillGreen { --fill-color: var(--neon-green); }
+.fillNone { --fill-color: var(--t2); }
+
+.pillCyan { color: var(--neon-cyan); border-color: color-mix(in srgb, var(--neon-cyan) 40%, transparent); background: color-mix(in srgb, var(--neon-cyan) 8%, transparent); }
+.pillGold { color: var(--neon-gold); border-color: color-mix(in srgb, var(--neon-gold) 40%, transparent); background: color-mix(in srgb, var(--neon-gold) 8%, transparent); }
+.pillRed  { color: var(--neon-red);  border-color: color-mix(in srgb, var(--neon-red) 40%, transparent); background: color-mix(in srgb, var(--neon-red) 8%, transparent); }
+.pillGreen { color: var(--neon-green); border-color: color-mix(in srgb, var(--neon-green) 40%, transparent); background: color-mix(in srgb, var(--neon-green) 8%, transparent); }
+.pillNone { color: var(--t1);        border-color: var(--line); }

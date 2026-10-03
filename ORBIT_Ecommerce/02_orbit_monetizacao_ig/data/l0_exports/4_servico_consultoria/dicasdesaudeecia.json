@@ -1,0 +1,658 @@
+{
+  "handle": "dicasdesaudeecia",
+  "setor_benchmark_key": "4_servico_consultoria",
+  "url": "https://www.instagram.com/dicasdesaudeecia/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T01:47:30.955Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DbjvjPaBPXW",
+      "caption": "",
+      "timestamp": "2026-08-03T00:51:19.000Z",
+      "content_format": "static_post",
+      "likes": 26,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbjK7JPhoOn",
+      "caption": "",
+      "timestamp": "2026-08-02T19:31:17.000Z",
+      "content_format": "static_post",
+      "likes": 209,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🔥",
+        "Codorna"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbnTY3mBHyf",
+      "caption": "",
+      "timestamp": "2026-08-04T10:02:11.000Z",
+      "content_format": "static_post",
+      "likes": 226,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Eu sempre preferi a água em temperatura ambiente. Tentei beber água morna mas essa foi mais difícil de aceitar 😂. As outras nem chego perto, além da sensibilidade nos dentes, me dão dor de cabeça."
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbo0TAKhLLw",
+      "caption": "",
+      "timestamp": "2026-08-05T00:09:00.000Z",
+      "content_format": "static_post",
+      "likes": 23,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbkvNDYBtlk",
+      "caption": "",
+      "timestamp": "2026-08-03T10:07:31.000Z",
+      "content_format": "static_post",
+      "likes": 69,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbmSjfDBvxF",
+      "caption": "",
+      "timestamp": "2026-08-04T00:35:40.000Z",
+      "content_format": "static_post",
+      "likes": 163,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbo2e1eBGHC",
+      "caption": "",
+      "timestamp": "2026-08-05T00:28:09.000Z",
+      "content_format": "static_post",
+      "likes": 30,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DSoL2m6Drr6",
+      "caption": "\"Xingamentos de antigamente\" são uma verdadeira viagem no tempo! 🕰️ Quem nunca ouviu um \"brucutu\" ou uma \"lambisgoia\" e se perguntou de onde vinha aquilo? Essas palavras, muitas vezes engraçadas e cheias de personalidade, revelam muito sobre a cultura e o humor de outras épocas.\nÉ fascinante como a linguagem evolui e algumas expressões caem em desuso, dando lugar a novas formas de se comunicar – ou de xingar! 😂 Mas é inegável o charme desses termos antigos. Eles nos conectam com a história e nos fazem valorizar a riqueza do nosso vocabulário.\nE você, conhece algum outro xingamento que sua avó usava? Compartilhe nos comentários! 👇\n\n#XingamentosAntigos #LinguagemAntiga #Vocabulario #CuriosidadesLinguisticas #HumorAntigo #Nostalgia #GiriasAntigas #PortuguesBr #MemoriaAfetiva #ResgateCultural #DicasDeSaudeEcia #VejamIsto",
+      "timestamp": "2025-12-24T01:32:59.000Z",
+      "content_format": "static_post",
+      "likes": 39101,
+      "comments": 1963,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Tribufu kkkkkkkkkk",
+        "TOP 👍 👋👋👋👋👋👌",
+        "Só lembrei da minha mãe, era paraibana e usava cada palavra que só ela conhecia. 😂😂",
+        "Destrambelhado/a",
+        "Marmota  muito  boa 😂😂😂😂😂😂😂😂😂",
+        "Verdade 😂😂😂",
+        "Pamonha",
+        "Eu ainda eu falo alguns 🤣🤣🤣🤣",
+        "Zow",
+        "Zo"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DUJtChggbkk",
+      "caption": "🧴 Pomadas mais conhecidas da farmácia: você sabe para que serve cada uma?\n\nNo dia a dia, pequenas dores, inflamações, infecções e problemas de pele são comuns — e as pomadas são grandes aliadas quando usadas corretamente 💊✨\n\n🔹 Diclofenaco – Alívio da dor e inflamação muscular e articular\n🔹 Bacitracina + Neomicina – Proteção contra infecções em feridas, cortes e queimaduras\n🔹 Clobetasol – Indicado para dermatites graves e psoríase\n🔹 Betametasona – Ajuda no controle de inflamações, eczema e dermatites\n🔹 Clotrimazol – Combate infecções fúngicas como frieira e pé de atleta\n🔹 Aciclovir – Tratamento do herpes labial\n🔹 Cetoconazol – Muito usado contra fungos e dermatite seborreica\n\n⚠️ Atenção: apesar de comuns, muitas dessas pomadas exigem orientação profissional. O uso incorreto pode causar efeitos indesejados.\n\n💡 Salve este post, compartilhe com quem precisa e siga perfis que valorizam informação de qualidade!\n\n📌 @dicasdesaudeecia\n📌 @vejamisto \n\n#Pomadas\n#SaúdeDaPele\n#Farmácia\n#DicasDeSaúde\n#Medicamentos\n#CuidadosComAPele\n#InformaçãoÉSaúde\n#UsoConsciente\n#BemEstar\n#SaúdeEmDia\n#CuriosidadesDaSaúde\n#Dermatologia\n#VidaSaudável\n#ConteúdoEducativo\n#instagramsaude",
+      "timestamp": "2026-01-30T22:29:18.000Z",
+      "content_format": "static_post",
+      "likes": 33031,
+      "comments": 83,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏",
+        "Parabéns amei 👏",
+        "A Betricort \"substitui\" todas essas aí e não está na lista. 😂",
+        "@lirajota77atacadista 😊",
+        "No outro posto falou que a pomada de herpes não trata herpes"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dble67-BzjN",
+      "caption": "",
+      "timestamp": "2026-08-03T17:04:29.000Z",
+      "content_format": "static_post",
+      "likes": 38,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbn6CVQB2Rg",
+      "caption": "",
+      "timestamp": "2026-08-04T15:39:54.000Z",
+      "content_format": "static_post",
+      "likes": 13,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbmNYtPhNoK",
+      "caption": "",
+      "timestamp": "2026-08-03T23:50:30.000Z",
+      "content_format": "static_post",
+      "likes": 51,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbeVyx9hhlN",
+      "caption": "",
+      "timestamp": "2026-07-31T22:30:02.000Z",
+      "content_format": "static_post",
+      "likes": 148,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbgZMaeBKB4",
+      "caption": "",
+      "timestamp": "2026-08-01T17:38:14.000Z",
+      "content_format": "static_post",
+      "likes": 56,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbduNDsh4Kn",
+      "caption": "",
+      "timestamp": "2026-07-31T16:44:06.000Z",
+      "content_format": "static_post",
+      "likes": 58,
+      "comments": 3,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏🙌🙌",
+        "O meu foi nós 6."
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbacQJBBt1C",
+      "caption": "",
+      "timestamp": "2026-07-30T10:09:31.000Z",
+      "content_format": "static_post",
+      "likes": 53,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbb-pv_BsKM",
+      "caption": "",
+      "timestamp": "2026-07-31T00:29:21.000Z",
+      "content_format": "static_post",
+      "likes": 55,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbbFxAoBlPS",
+      "caption": "",
+      "timestamp": "2026-07-30T16:12:15.000Z",
+      "content_format": "static_post",
+      "likes": 18,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Boca seca o que e bom"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbYeKSNhk9X",
+      "caption": "",
+      "timestamp": "2026-07-29T15:47:43.000Z",
+      "content_format": "static_post",
+      "likes": 130,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "E quem é limitado faz o que ?"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbX3ZtJhKoE",
+      "caption": "",
+      "timestamp": "2026-07-29T10:09:02.000Z",
+      "content_format": "static_post",
+      "likes": 72,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🔥",
+        "Por isso todos estão estressados!! Rsrs"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbZYtvehYSv",
+      "caption": "",
+      "timestamp": "2026-07-30T00:19:22.000Z",
+      "content_format": "static_post",
+      "likes": 554,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏",
+        "Valeu"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbdA8BHh79q",
+      "caption": "",
+      "timestamp": "2026-07-31T10:08:34.000Z",
+      "content_format": "static_post",
+      "likes": 245,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Boa!",
+        "Amo saber, 👏😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbiap2cBUNS",
+      "caption": "",
+      "timestamp": "2026-08-02T12:29:28.000Z",
+      "content_format": "static_post",
+      "likes": 119,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbb_9pLBFwC",
+      "caption": "",
+      "timestamp": "2026-07-31T00:40:49.000Z",
+      "content_format": "static_post",
+      "likes": 276,
+      "comments": 53,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Uma delícia mesmo assim….",
+        "Faz tempo que não como isso 😮",
+        "😮",
+        "E a ANVISA sabe disso e mesmo assim não tomou nenhuma iniciativa.🤔 Essa publicação é fake!",
+        "Desse jeito mesmo. #Anvisa #vigilância sanitária",
+        "Tô nem ai 🖕🏼 amanhã vou fazer o cachorro quente 🙈",
+        "Que delícia 😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbVRVwuhIc4",
+      "caption": "",
+      "timestamp": "2026-07-28T09:57:58.000Z",
+      "content_format": "static_post",
+      "likes": 6,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbV8ueVhJz5",
+      "caption": "",
+      "timestamp": "2026-07-28T16:17:05.000Z",
+      "content_format": "static_post",
+      "likes": 30,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbW1kfKBgxn",
+      "caption": "",
+      "timestamp": "2026-07-29T00:33:47.000Z",
+      "content_format": "static_post",
+      "likes": 634,
+      "comments": 5,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "❤️",
+        "🔥",
+        "Uma única vitamina que resolva todos essas causas.",
+        "Parar De Bocejar",
+        "Eu quero as receitas"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbUIB4Oh0WJ",
+      "caption": "",
+      "timestamp": "2026-07-27T23:17:23.000Z",
+      "content_format": "static_post",
+      "likes": 303,
+      "comments": 4,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Tenho uma linha marrom clara no polegar esquerdo!!Será  que é  melanoma?Não  é  preta ainda .Ela é  uma linha marrom clara.",
+        "❤️🔥👏😍",
+        "😍😍😍",
+        "Qual que é a unha saudável"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbTrCuBBIrn",
+      "caption": "",
+      "timestamp": "2026-07-27T19:04:04.000Z",
+      "content_format": "static_post",
+      "likes": 2179,
+      "comments": 12,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏👏",
+        "Fiz um check-up geral do rim, muito bom todo ano se possível é bom fazer",
+        "👏👏🙌🙌",
+        "Ótimo",
+        "👏👏",
+        "Show",
+        "Acho muito importante  saber sempre mais",
+        "Acho muito importante  saber sempre mais",
+        "No coprologico funcional gordura nas fezes 10 sudam 3",
+        "Fiz os exames pelos Sus mais exames de coração de pâncreas fígado não foram solicitados  foram outros"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbWy40Qh4E0",
+      "caption": "",
+      "timestamp": "2026-07-29T00:10:21.000Z",
+      "content_format": "static_post",
+      "likes": 45,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 176731,
+  "following_count": 204,
+  "posts_count": 1696,
+  "follower_tier": "mega",
+  "engagement": {
+    "sample_size": 30,
+    "median_er": 0.0004045696567099151,
+    "mean_er": 0.015106763008942026,
+    "er_per_post": [
+      {
+        "short_code": "DbjvjPaBPXW",
+        "er": 0.00014711623880360548,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbjK7JPhoOn",
+        "er": 0.001193904861060029,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbnTY3mBHyf",
+        "er": 0.0012844379310930172,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "Dbo0TAKhLLw",
+        "er": 0.00013014128817242024,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbkvNDYBtlk",
+        "er": 0.0003904238645172607,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbmSjfDBvxF",
+        "er": 0.0009223056509610651,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "Dbo2e1eBGHC",
+        "er": 0.0001697495063118525,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DSoL2m6Drr6",
+        "er": 0.23235312423966367,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DUJtChggbkk",
+        "er": 0.18736950506702277,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "Dble67-BzjN",
+        "er": 0.00021501604132834648,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "Dbn6CVQB2Rg",
+        "er": 0.00007355811940180274,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbmNYtPhNoK",
+        "er": 0.00028857416073014923,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbeVyx9hhlN",
+        "er": 0.0008374308978051388,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbgZMaeBKB4",
+        "er": 0.00031686574511545794,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbduNDsh4Kn",
+        "er": 0.0003451573295007667,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbacQJBBt1C",
+        "er": 0.0002998907944842727,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "Dbb-pv_BsKM",
+        "er": 0.0003112074282383962,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbbFxAoBlPS",
+        "er": 0.00010750802066417324,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbYeKSNhk9X",
+        "er": 0.0007412395108950891,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbX3ZtJhKoE",
+        "er": 0.0004187154489025694,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbZYtvehYSv",
+        "er": 0.0031460241836463324,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbdA8BHh79q",
+        "er": 0.001397604268634252,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "Dbiap2cBUNS",
+        "er": 0.0006733397083703482,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "Dbb_9pLBFwC",
+        "er": 0.0018615862525533154,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbVRVwuhIc4",
+        "er": 0.000033949901262370496,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbV8ueVhJz5",
+        "er": 0.0001697495063118525,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbW1kfKBgxn",
+        "er": 0.0036156644844424577,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbUIB4Oh0WJ",
+        "er": 0.001737103281257957,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbTrCuBBIrn",
+        "er": 0.012397372277642293,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbWy40Qh4E0",
+        "er": 0.0002546242594677787,
+        "content_format": "static_post"
+      }
+    ]
+  },
+  "external_url": "https://linktr.ee/vejamistooficial",
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "2_comissionamento_afiliados",
+    "secondary": null,
+    "matches": [
+      {
+        "category": "2_comissionamento_afiliados",
+        "score": 3,
+        "evidence": [
+          "external_url é agregador de links (linktr.ee)"
+        ]
+      }
+    ],
+    "manual_review_recommended": false,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "2_comissionamento_afiliados",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "parcial",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T01:47:30.955Z",
+    "versao_framework": "v3.1"
+  }
+}

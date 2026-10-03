@@ -1,0 +1,857 @@
+{
+  "handle": "thismodernstyle",
+  "setor_benchmark_key": "5_patrocinio_publicidade",
+  "url": "https://www.instagram.com/thismodernstyle/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T02:02:39.356Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DbLfNq5pX73",
+      "caption": "my long awaited @masayaco lounge chair + matching ottoman has finally arrived! it was absolutely worth the wait, knowing these pieces are handmade from sustainably grown, FSC-Certified teak wood, and woven by hand. in the age of fast furniture, having pieces that will last a lifetime means so much to me. can’t wait for hours of cozy reads and conversations here\n\nad as gifted @masayaco\n#masayaco #sustainablefurniture\n#interiorinspo #solidwoodfurniture\nsustainabledesign",
+      "timestamp": "2026-07-24T14:49:20.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 22,
+      "video_view_count": 200,
+      "video_play_count": 3246,
+      "latest_comments": [
+        "Stunning 😍",
+        "Beauty",
+        "So cozy ❤️",
+        "Beautiful 🤍",
+        "In love with every single details 🤍",
+        "🤍🤍🤍",
+        "So beautiful friend 😍🤍",
+        "she’s GORGEOUS 😍",
+        "For those who want to give a calm and comfortable impression to rooms, there are suitable elegant minimalist typography poster prints and canvas prints"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "C8SURP7PS9e",
+      "caption": "it’s nice to be here 🤍🫶",
+      "timestamp": "2024-06-16T18:13:26.000Z",
+      "content_format": "reel",
+      "likes": 4352,
+      "comments": 175,
+      "video_view_count": 27061,
+      "video_play_count": 103513,
+      "latest_comments": [
+        "Wow🔥🙌",
+        "Love it 🤎",
+        "Beautiful 🤍",
+        "Love your home",
+        "niceeee 🤍",
+        "The styling is effortless here",
+        "Wonderful 🤍",
+        "😍😍",
+        "Stunning 😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dan5x-XvAFl",
+      "caption": "pov: you spend an afternoon with @lazzoni to design your dream closet system. #ad\n\ni had the pleasure of visiting the Costa Mesa flagship to envision the most bespoke closet system, customized down to the walnut interiors, leather touches, storage modules, and lighting system.\n\ni love that Lazzoni prioritizes real materials and craftsmanship, and has been family-owned since 1897, with a global design house and in-house services dedicated to creating top tier custom furniture. it was so easy to book an appointment, view the full scope of design services and finishings, and then design it live with the designer. once designed, Lazzoni will put the project into production, and then send a professional team to install this closet over the course of a few hours.\n\ni can’t wait to bring this into my home one day, and i trust @lazzoni to turn the vision into something I’ll enjoy as a daily ritual for years to come.\n\n📍Lazzoni, Costa Mesa (gifted partnership)",
+      "timestamp": "2026-07-10T19:07:53.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 11,
+      "video_view_count": 239,
+      "video_play_count": 6945,
+      "latest_comments": [
+        "oh my goodness this is so dreamy 😍",
+        "😍😍 thank you for visiting us",
+        "this is so cool 😍😍",
+        "What a dream to design your own closet! It really looks like they make the entire process so seamless and easy! 🥹🤍",
+        "😍😍😍",
+        "❤️",
+        "Omg 😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbT7aSZkuCO",
+      "caption": "slow mornings I’ve enjoyed lately 🥣\n\n#aesthetic #breakfastclub #sabre #ceramics #yogurtbowl",
+      "timestamp": "2026-07-27T21:27:03.000Z",
+      "content_format": "carousel",
+      "likes": 2421,
+      "comments": 41,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "So goood omg",
+        "These all look insane 😍😍😍",
+        "This is so aesthetic. Absolutely loved it",
+        "😍😍",
+        "😍",
+        "Tasty!",
+        "😍😍😍😍😍😍",
+        "Choosing whole, real foods can be one of the best longevity habits to adopt.",
+        "When breakfast is a work of art 🤎",
+        "This is your sign to slow down and simply enjoy the moment. ☁️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbRGJRaj-cX",
+      "caption": "can’t decide, so why not both? 🍵☕️\n\n#slowliving #sundayslow #quietluxury #aesthetic #ａｅｓｔｈｅｔｉｃ",
+      "timestamp": "2026-07-26T19:03:07.000Z",
+      "content_format": "carousel",
+      "likes": 1951,
+      "comments": 79,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Coffee in the morning, matcha for a mid-day pick me up 🖤",
+        "😍😍😍",
+        "😍😍",
+        "Coffee coffee coffee!",
+        "Both",
+        "Bothhh",
+        "😍😍",
+        "both depending on my mood 🤭",
+        "coffee for me",
+        "@maypaperco absolutely 👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da6Jtm4ksg3",
+      "caption": "dream closet with @lazzoni. here are all my favorite aspects of their custom wardrobe system, down to the design process and wood finishes / #ad gifted partnership",
+      "timestamp": "2026-07-17T21:11:46.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 16,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😍😍",
+        "so sleek and functional! 😍",
+        "Luxury !🔥⚜️⚜️⚜️✨️",
+        "So pretty 😍",
+        "😍",
+        "Looks incredible!",
+        "@sincerelybysim I totally agree!!!"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DYLK8bvgZ3r",
+      "caption": "steal my Tokyo coffee shop recs 🎌☕️\n\n1. @koffee_mameya_kakeru \n2. @becausecoffeebrewers \n3. @onibuscoffee \n4. @shiten_coffee \n5. @turretcoffee \n6. @buvettetokyo \n7. @nihonbashi_bongen \n8. @sr_coffeeroaster \n9. @dotcomcoffee_asakusabashi \n10. @perticacoffee \n\n#tokyocafe #tokyocoffee #tokyotravel #japancoffee #tokyoguide​​​​​​​​​​​​​​​​",
+      "timestamp": "2026-05-10T22:15:26.000Z",
+      "content_format": "carousel",
+      "likes": 2459,
+      "comments": 32,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "The visuals 🥹🥹🥹❤️🙌🔥",
+        "aesthetics! ✨️",
+        "😍😍",
+        "Yes to all of the above 😌🤍",
+        "Stunning 🩶🩶",
+        "🧡"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbdfUDtFAz9",
+      "caption": "some small beautiful (and colorful) moments from this summer\n\n#summeraesthetic #slowsummer #ａｅｓｔｈｅｔｉｃ  #seasonalliving #summermornings",
+      "timestamp": "2026-07-31T14:33:56.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 28,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Pure perfection 🫶🏻",
+        "The flowers are gorgeous 😍🙌❤️",
+        "Every single shot here 😍😍😍",
+        "💆‍♂️💆‍♂️",
+        "Crisp! 🌻",
+        "Perfection 😍",
+        "😍 love xx",
+        "Love it all 💛",
+        "😍😍😍",
+        "So aesthetic friend 🥰🤍🌸"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DaspaZpFInj",
+      "caption": "the simple things that keep me busy 🫶\n\n#slowliving #sundayslow #quietluxury #aesthetic #ａｅｓｔｈｅｔｉｃ",
+      "timestamp": "2026-07-12T15:19:24.000Z",
+      "content_format": "carousel",
+      "likes": 2502,
+      "comments": 70,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Love the vibes",
+        "The absolute perfect Sunday",
+        "Love it",
+        "calmed 🤍",
+        "Looks like a perfect Sunday to me ✨🍀",
+        "Enjoy the simple things is like a therapy!! I love to get up slowly and enjoy a cup of coffee in a nice cup...❤️❤️",
+        "Loving these vibes🤍",
+        "The day to wind down 😌☕️",
+        "Perfection 🤍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZ-DhmMmzCc",
+      "caption": "every shop from this Tokyo trip’s ceramics haul 🍵 swipe for the list \n\n#tokyo #japaneseceramics #japanhaul #ceramics #quietluxury",
+      "timestamp": "2026-06-24T13:03:16.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 28,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "The details invite you to stay longer ✨",
+        "Bookmarked — thanks for sharing!!",
+        "No @oribe.shimokita ?!",
+        "😍😍",
+        "😍😍😍",
+        "wow need to make a trip 😍",
+        "So many beautiful places 🥹🤎",
+        "Definitely following this guide when we visit next. Perfect guide 🫶🏻",
+        "How did you read my mind… I was just going to ask you",
+        "I'm going to need an empty suitcase just to bring back all the ceramic pieces next time 🤭 can't wait to check these stores out the next time i visit!",
+        "I want all of them 😭",
+        "Incredible, such a dream, someday..saving for our visit",
+        "😍 love xx",
+        "Stop😍immediately saved",
+        "🏷️"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DaS6k6IlPrn",
+      "caption": "A do-not-disturb kind of weekend 📖\n\n#aesthetic #slowmornings #coffeeandwork #moodyaesthetic #quietluxury",
+      "timestamp": "2026-07-02T15:29:07.000Z",
+      "content_format": "carousel",
+      "likes": 896,
+      "comments": 31,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Love it",
+        "Loveeee The Proper",
+        "❤️❤️❤️",
+        "love this mood 🔥",
+        "ugh love a lazy hotel day 😍",
+        "Lovely ❤️",
+        "😍😍😍",
+        "Love it all",
+        "So nice 🙂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXCeXy7lDFw",
+      "caption": "slow, intentional mornings are my favorite kind of mornings 🫖📖\n\n#sunmoonlake #taiwan #日月潭 #slowmorning #slowliving",
+      "timestamp": "2026-04-12T16:40:38.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 92,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🤍",
+        "Looks serene 🙌🏽✨",
+        "Oh these are so beautiful 😍",
+        "absolutely stunning!!!!! what a dream 😍",
+        "😍😍😍",
+        "such a peaceful way to start the day 🤍"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZpmWr4JnTr",
+      "caption": "slow mornings watching the city come alive from the 33rd floor at @intercontinentalsf #ad\n\n#sanfrancisco #sfhotels #slowliving #hoteldesign",
+      "timestamp": "2026-06-16T14:24:15.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 20,
+      "video_view_count": 731,
+      "video_play_count": 3569,
+      "latest_comments": [
+        "Looks so perfect 😍🤍",
+        "🔥🔥",
+        "We had a great stay! Definitely #dadproved",
+        "Omg the view",
+        "Great video my dear 😍🫶🏼✨",
+        "😍😍😍",
+        "ahhh adore 😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "Da-4GFkmNLq",
+      "caption": "never heard of these, hbu?",
+      "timestamp": "2026-07-19T17:14:01.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 28,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Love this 🤍",
+        "❤️❤️❤️",
+        "😍😍",
+        "Obsessed ❤️",
+        "😍😍",
+        "Love this🔥",
+        "Seriously?! No coffee to go??? Never",
+        "❤️",
+        "Yes! I'm in the same boat as you 🤍 I've never heard of these either hehe",
+        "Love this 🤍",
+        "“What the f*ck is packing light” yassss!",
+        "😍😍😍",
+        "😍😍😍😍",
+        "😍😍",
+        "adore this 👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DXpT5MImU2N",
+      "caption": "slow starts in daikanyama, tokyo ☕️🍰\n\n#slowmorning #morningritual #ａｅｓｔｈｅｔｉｃ #aesthetic #tokyocafe ​​​​​​​​​​",
+      "timestamp": "2026-04-27T18:39:27.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 30,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Love 😍",
+        "Coffee time ☕️🥰",
+        "I like this kind of calm",
+        "❤️",
+        "😍😍",
+        "☕️👍",
+        "these beautiful moments🥰",
+        "😍😍😍",
+        "cute 😍😍",
+        "Perfect ☕️😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DYFSoePlOM4",
+      "caption": "already planning the next trip 💗🗼\n\n#tokyo #tokyotravel #japantravel #tokyocafe #exploretokyo​​​​​​​​​​​​​​​​",
+      "timestamp": "2026-05-08T15:27:10.000Z",
+      "content_format": "carousel",
+      "likes": 1068,
+      "comments": 44,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😍😍😍",
+        "Wow 😍",
+        "You made me want to visit Tokyo so bad 😍",
+        "Aww such a lovely post ❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYvCNg9Egtr",
+      "caption": "missing the version of us that lived slowly in tokyo ☕️ \n\n#slowliving #quietluxury #slowmornings #coffeeritual #aesthetic",
+      "timestamp": "2026-05-24T20:31:47.000Z",
+      "content_format": "carousel",
+      "likes": 1004,
+      "comments": 27,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Love the mood",
+        "This set of photos is beautiful. Really dig the vibe 😍🙌",
+        "Love all Pictures 😍🫶🏼✨",
+        "Gorgeous 😍",
+        "Love 😌🫶",
+        "🔥🔥🔥🔥",
+        "🤎",
+        "♥️♥️",
+        "Smacznej kawki! ☕️☺️",
+        "I can feel the vibe ❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DW31IGnFPFn",
+      "caption": "spring vibes at our place 🌸\n\n#slowliving #springathome #mynordichome #quietluxury #homedecor",
+      "timestamp": "2026-04-08T13:27:49.000Z",
+      "content_format": "carousel",
+      "likes": 1469,
+      "comments": 84,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "big yes to these vibes ✨✨",
+        "Obsessed",
+        "The vibe 🔥👏❤️",
+        "❤️",
+        "Obsessed! This is beautiful ⭐️",
+        "The perfect vibes",
+        "😍😍😍😍",
+        "those orange tulips against the grey are so good 🌷"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWwJnm4FD3P",
+      "caption": "a little list of my favorite chic things 🫶📖\n\n#quietluxury #solodate #slowliving #aestheticgirl #ceramiclovers",
+      "timestamp": "2026-04-05T13:52:58.000Z",
+      "content_format": "carousel",
+      "likes": 998,
+      "comments": 39,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Love some good moody lighting 😍",
+        "Messy coffee tables = best times 🩶🩶",
+        "Your mug collection is so pretty",
+        "Yes to all of these 🙌🙌",
+        "❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXelKF_lFeG",
+      "caption": "did not expect that I’d find the most aesthetic ceramic store in daikanyama, tokyo 🥹💗🥣 / 📍@siki_daikanyama \n\n-\ntokyo, daikanyama, japanese ceramics, ceramic art, handmade ceramics, stoneware, tokyo shopping, tokyo finds, tokyo hidden gems, daikanyama tokyo, japanese pottery, ceramic lover, slow living, interior design, home decor, tableware design, japanese craft, tokyo guide, ceramic design, artisan craft, minimalist decor, tokyo life, japan travel, ceramic therapy, daikanyama shop​​​​​​​​​​​​​​​​",
+      "timestamp": "2026-04-23T14:38:40.000Z",
+      "content_format": "carousel",
+      "likes": 1325,
+      "comments": 36,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Beautiful ones ☕️🥰",
+        "Why I keep having to go to Don Quijote for emergency luggage",
+        "Che spettacolo 😍",
+        "😍😍HEAVEEEN..!!!",
+        "@camnova true 1 am emergency 😂 we literally did that"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXXSglVGLrt",
+      "caption": "a perfect day in tsukiji, according to me #tokyo #tsukiji #tokyotravel #turretcoffee #tokyocafe​​​​​​​​​​​​​​​​\n-\n\ntokyo, tsukiji, turret coffee, tokyo coffee, specialty coffee, tokyo cafe guide, cafe tokyo, tokyo food, tsukiji market, tokyo morning, coffee art, latte art, tokyo hidden gems, tokyo life, slow living, japan travel, tokyo travel, coffee lover, cafe hopping, tokyo eats, japan coffee, tokyo locals, morning ritual, tokyo guide​​​​​​​​​​​​​​​​",
+      "timestamp": "2026-04-20T18:41:02.000Z",
+      "content_format": "carousel",
+      "likes": 1836,
+      "comments": 45,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Omg this aesthetic 🫡🫡",
+        "😍",
+        "😍",
+        "❤️",
+        "Turret coffee ❤️❤️",
+        "Oh wow!! 😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DX9k5SyFEeJ",
+      "caption": "easily one of our favorite coffee shops in Tokyo ☕️ @ogawacoffee_laboratory \n\n#shimokitazawa #ogawacoffee #tokyocafe #japantravel #ａｅｓｔｈｅｔｉｃ",
+      "timestamp": "2026-05-05T15:32:50.000Z",
+      "content_format": "carousel",
+      "likes": 1316,
+      "comments": 35,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Gorgeous",
+        "Gorgeous 😍",
+        "perfection 😍",
+        "😍😍😍",
+        "👌",
+        "Saving all of these, amazing finds 👏",
+        "🤎"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXhOHFYFKH6",
+      "caption": "slow mornings in tokyo ☕️ \n\n#coffeetime #morningritual #slowliving #specialtycoffee #ａｅｓｔｈｅｔｉｃ ​​​​​​​​​​​​​​​",
+      "timestamp": "2026-04-24T15:15:00.000Z",
+      "content_format": "carousel",
+      "likes": 2248,
+      "comments": 59,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "I love!!",
+        "😍",
+        "😍😍😍",
+        "❤️",
+        "❤️",
+        "Que fotos perfeitas, inspirador🤩✨",
+        "Team coffee art lovers 🤍✨",
+        "I love the details 🤍🤍🤍",
+        "❤️",
+        "Yummyyyy love this"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWMgRbnmHvK",
+      "caption": "lately from the home cafe ☕️\n\n—\nhomebody life, slow living, slow living lifestyle, girl apartment, apartment aesthetic, home decor, home decor essentials, home furnishings, interior design, home styling, living room ideas, living room layout, livingroom inspiration, modern cozy living room, cozy home, cozy vibes, cozy breakfasts, Scandinavian home, japandi home, japandi interior, homecafe aesthetic, stainless steel tableware, chrome aesthetic",
+      "timestamp": "2026-03-22T17:38:15.000Z",
+      "content_format": "carousel",
+      "likes": 1895,
+      "comments": 78,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😮😮",
+        "😍😍😍",
+        "So dreamy ❤️",
+        "so chic",
+        "Pretty cups and saucer!!!!! 😮 ❤️",
+        "👏👏👏",
+        "😍😍😍",
+        "Please check @belkibirgunyeniden__ #maybesomedayagain",
+        "🔥🤎☕️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWl_nXOlEcj",
+      "caption": "small things that make home feel like spring 🌷💙🤍\n\n#springhome #springdecor #neutralhome #slowliving #quietluxury​​​​​​​​​​​​​​​​",
+      "timestamp": "2026-04-01T15:13:08.000Z",
+      "content_format": "carousel",
+      "likes": 1686,
+      "comments": 74,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Love the bedding😍",
+        "Beautiful 🤍✨",
+        "Where is the clear vase from? 💆🏻‍♀️",
+        "omg the scalloped plates!!! gorgeous 😍",
+        "Where is the vase from?! 😍",
+        "Beautiful all here ❤️😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXUT3hzFMD4",
+      "caption": "day 1 back in tokyo with some old haunts + new obsessions in ginza/nihonbashi:\n\n📍 caption by hyatt kabutocho\n📍 sr coffee roasters\n📍 kayanoya dashi\n📍 bank / coin / yen\n📍 officine universelle buly​​​​​​​​​​​​​​​​\n📍 chuo-dori (ginza) at night \n\n#tokyo #nihonbashi #ginza #tokyocafe tokyotravel​​​​​​​​​​​​​​",
+      "timestamp": "2026-04-19T14:55:11.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 33,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😍",
+        "Craving this right now 🫶",
+        "So nice ❤️",
+        "So many gorgeous details 😍😍 I love how cozy these shots feel 🤍",
+        "Lovely✨",
+        "Beautiful! Enjoy 🤎",
+        "oooh so much cool architecture 😍",
+        "Enjoy! I can’t wait to be back there soon 🥹🤎",
+        "Cozy 😍",
+        "All so dreamy 😍",
+        "day 1 already looks so lovely! I love the charming stay. the green interiors really grab your attention immediately. and architecture of kayanoya dashi looks incredible! and I bet the interiors must be amazing too 🤍",
+        "😍😍",
+        "such beautiful shots 😍",
+        "I am truly enjoying all these and your stories 😍",
+        "Love!"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DXPE-TFFLVr",
+      "caption": "just the usual, this time in tokyo ☕️\n\n#tokyocafe #tokyocoffee #slowliving #aesthetic #quietluxury​​​​​​​​​​​​​​​​",
+      "timestamp": "2026-04-17T14:08:50.000Z",
+      "content_format": "carousel",
+      "likes": 2906,
+      "comments": 56,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Coffee time ☕️🥰",
+        "❤️❤️❤️",
+        "Love it!😍",
+        "Love this😍",
+        "looks so cozy🥰",
+        "❤️",
+        "Delicious 😍",
+        "🖤🎧🦘",
+        "Prettyy",
+        "So gorgeous 😍😍",
+        "😍😍😍",
+        "🤎☕️",
+        "😍😍😍😍😍😍😍",
+        "😍😍",
+        "☕☕"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DW9E5emFOOO",
+      "caption": "didn’t know I needed this type of calm until I was in it 💙\n\n#sunmoonlake #taiwan #slowtravel #quietliving #slowliving",
+      "timestamp": "2026-04-10T14:21:50.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 121,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "The best and most iconic hotel in Taiwan hands down",
+        "Being one with stillness is relaxing 🙌",
+        "Wow, estetyka tego zdjęcia to absolutny top! 🔥 Kolory, kadr, klimat... wszystko tutaj gra idealnie. Widać, że wkładasz w to serce, a nie tylko klikasz 'zrób zdjęcie'. Mega inspirujące!",
+        "😍😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DWeaEFKlNzV",
+      "caption": "things I do on a Sunday 💐 slow mornings, fresh flowers, and always one more coffee\n\n#slowmornings #homecafe #ａｅｓｔｈｅｔｉｃ #aesthetic #breakfasttime☕️",
+      "timestamp": "2026-03-29T16:30:20.000Z",
+      "content_format": "carousel",
+      "likes": 5598,
+      "comments": 176,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "This is my kind of morning❤️",
+        "🤍🤍🤍",
+        "This is an idyllic Sunday 🩷",
+        "Thats a good sunday",
+        "💐🤍",
+        "this is how it should be 😍",
+        "Yessss this makes the Sunday scaries way less scary😍",
+        "😍😍😍😍😍",
+        "moody + perfect ❤️",
+        "That looks like a Perfect Day 😍",
+        "Amazing sunday😍😍",
+        "💯🎉❤️",
+        "Stunning ❤️",
+        "Beautiful way Sunday",
+        "Perfect Sunday 😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXwseGzFBrs",
+      "caption": "found a corner in toranomon hills and didn’t want to leave #tokyo ☕️\n\n#tokyocafe #toranomon #tokyotravel #kissaten​​​​​​​​​​​​​​​​",
+      "timestamp": "2026-04-30T15:28:54.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 22,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Is that Kuro Mame coffee shop? Thank you!",
+        "Love this 🤍",
+        "😍😍😍",
+        "Love this😍",
+        "ooh this is so stylish 😍",
+        "adore this whole mood 🔥😍",
+        "This is everything",
+        "Looks amazing😍",
+        "Saved🤩",
+        "So gorgeous!",
+        "So nice!!😍 can imagine sitting here for hours!",
+        "Lovely 🤍",
+        "Looks like heaven! Would love tips on where to go in Japan.",
+        "Love the aesthetics! 🤎",
+        "Perfection ☕️"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    }
+  ],
+  "followers_count": 61397,
+  "following_count": 657,
+  "posts_count": 1300,
+  "follower_tier": "macro",
+  "engagement": {
+    "sample_size": 18,
+    "median_er": 0.031385898333794814,
+    "mean_er": 0.035389894185926564,
+    "er_per_post": [
+      {
+        "short_code": "C8SURP7PS9e",
+        "er": 0.07373324429532388,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbT7aSZkuCO",
+        "er": 0.04009967913741714,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbRGJRaj-cX",
+        "er": 0.03306350473150154,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DYLK8bvgZ3r",
+        "er": 0.04057201491929573,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DaspaZpFInj",
+        "er": 0.04189129762040491,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DaS6k6IlPrn",
+        "er": 0.015098457579360555,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DYFSoePlOM4",
+        "er": 0.01811163411893089,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DYvCNg9Egtr",
+        "er": 0.01679235141782172,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DW31IGnFPFn",
+        "er": 0.0252943954916364,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DWwJnm4FD3P",
+        "er": 0.016890076062348325,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DXelKF_lFeG",
+        "er": 0.02216720686678502,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DXXSglVGLrt",
+        "er": 0.030636676059090834,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DX9k5SyFEeJ",
+        "er": 0.022004332459240678,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DXhOHFYFKH6",
+        "er": 0.03757512582047983,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DWMgRbnmHvK",
+        "er": 0.03213512060849879,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DWl_nXOlEcj",
+        "er": 0.02866589572780429,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DXPE-TFFLVr",
+        "er": 0.048243399514634265,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DWeaEFKlNzV",
+        "er": 0.09404368291610339,
+        "content_format": "carousel"
+      }
+    ]
+  },
+  "external_url": null,
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "5_patrocinio_publicidade",
+    "secondary": null,
+    "matches": [
+      {
+        "category": "5_patrocinio_publicidade",
+        "score": 2,
+        "evidence": [
+          "legenda com marcação de publicidade paga: \"#ad\""
+        ]
+      }
+    ],
+    "manual_review_recommended": false,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "5_patrocinio_publicidade",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "nao_implementado",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T02:02:39.356Z",
+    "versao_framework": "v3.1"
+  }
+}

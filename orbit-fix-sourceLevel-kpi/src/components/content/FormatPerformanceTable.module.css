@@ -1,0 +1,206 @@
+/* FormatPerformanceTable.module.css */
+
+.wrapper {
+display:        flex;
+flex-direction: column;
+}
+
+.title {
+font-size: var(--font-size-xs);
+letter-spacing: 2px;
+color:          var(--text-dim);
+font-weight:    var(--font-weight-bold);
+text-transform: uppercase;
+margin-bottom:  var(--space-4);
+}
+
+.table {
+width:           100%;
+border-collapse: collapse;
+}
+
+.th {
+font-size: var(--font-size-xs);
+color:          var(--text-dim);
+letter-spacing: 2px;
+text-align:     left;
+padding:        0 0 var(--space-3);
+border-bottom:  var(--border-width) solid var(--border-default);
+font-weight:    var(--font-weight-bold);
+text-transform: uppercase;
+}
+
+.tr {
+border-bottom: var(--border-width) solid rgba(31, 41, 55, 0.5);
+}
+
+.tr:last-child {
+border-bottom: none;
+}
+
+.td {
+font-size:   var(--font-size-sm);
+color:       var(--text-secondary);
+padding:     var(--space-3) 0;
+font-family: var(--font-mono);
+}
+
+.tdFormat {
+font-family: var(--font-family);
+color:       var(--text-primary);
+font-size:   var(--font-size-base);
+}
+
+/* ── Expansão por posts individuais (v2.0.0) ────────────────────────────── */
+
+.tdChevron {
+width:   20px;
+padding: var(--space-3) 0;
+}
+
+.trClickable {
+cursor: pointer;
+}
+
+.trClickable:hover {
+background: rgba(255, 255, 255, 0.02);
+}
+
+.chevron,
+.chevronOpen {
+color:      var(--text-dim);
+transition: transform var(--transition-fast);
+}
+
+.chevronOpen {
+transform: rotate(90deg);
+}
+
+.formatIcon {
+display:      inline-flex;
+align-items:  center;
+color:        var(--text-dim);
+margin-right: var(--space-2);
+vertical-align: -3px;
+}
+
+.tdDetail {
+padding:       0 0 var(--space-3);
+border-bottom: var(--border-width) solid rgba(31, 41, 55, 0.5);
+}
+
+.postList {
+display:        flex;
+flex-direction: column;
+gap:            2px;
+padding:        var(--space-2) 0 0 26px;
+}
+
+/* ✅ v2.3.0 (grid — corrige 3 bugs reportados em runtime pelo cliente):
+   Antes era `display:flex` com .postCaption em `flex: 0 1 480px` — uma
+   caixa de largura FIXA (480px) reservada pra um texto que já vinha
+   pré-cortado em 60 caracteres via truncateCaption() (FormatPerformance-
+   Table.tsx). Duas truncagens independentes, dimensionadas pra suposições
+   diferentes, empilhadas: a caixa CSS quase nunca enchia (sobrava vão em
+   branco à direita do texto) e o corte em 60 caracteres acontecia mesmo
+   quando a tela tinha espaço de sobra pra mostrar mais legenda.
+
+   Grid com `minmax(0, 1fr)` na coluna de legenda resolve isso na raiz:
+   a coluna PREENCHE exatamente o espaço realmente disponível (não um
+   chute de 480px) e só corta via `text-overflow: ellipsis` quando o
+   texto de fato não cabe — o corte passa a refletir a largura real da
+   tela, não um número de caracteres arbitrário. `truncateCaption()`
+   continua existindo como teto de segurança (ver default em
+   FormatPerformanceTable.tsx), não mais como truncagem primária.
+
+   Grid também dá ao Boost uma coluna própria de largura FIXA, sempre
+   reservada (presente ou não o badge) — antes, por ser um item
+   condicional dentro de um flex row, sua ausência/presença deslocava
+   .postScore horizontalmente entre linhas; "Polêmica: X%" não ficava
+   alinhado na coluna entre um post com Boost e um sem. */
+
+.postRow {
+display:               grid;
+grid-template-columns: 56px 136px minmax(0, 1fr) 64px 104px;
+align-items:           center;
+column-gap:            var(--space-3);
+font-size:             var(--font-size-xs);
+font-family:           var(--font-mono);
+padding:               4px 0;
+}
+
+.postDate {
+color:       var(--text-secondary);
+white-space: nowrap;
+}
+
+.postMetrics {
+color:       var(--text-dim);
+white-space: nowrap;
+overflow:    hidden;
+text-overflow: ellipsis;
+}
+
+/* ✅ Caption ocupa exatamente a coluna que sobra (minmax(0,1fr) no grid
+   acima) — `min-width: 0` é obrigatório aqui: sem ele, um item de grid
+   nunca encolhe abaixo do tamanho intrínseco do conteúdo, e o ellipsis
+   simplesmente não dispara. */
+
+.postCaption {
+min-width:         0;
+color:             var(--text-dim);
+overflow:          hidden;
+text-overflow:     ellipsis;
+white-space:       nowrap;
+cursor:            help;
+border-bottom:     1px dotted rgba(0, 255, 200, 0.2);
+padding-bottom:    2px;
+transition:        color var(--transition-fast);
+}
+
+.postCaption:hover {
+color:             var(--neon-cyan); /* removido fallback #00c8ff — terceiro tom de cyan fora da paleta; --neon-cyan já está sempre definido */
+border-bottom-color: rgba(0, 255, 200, 0.5);
+}
+
+/* ✅ Slot de largura fixa pro badge de Boost — SEMPRE ocupa a coluna do
+   grid, com ou sem o badge dentro. É isso que garante que .postScore
+   nunca se desloque entre uma linha com Boost e outra sem. */
+
+.postBoostSlot {
+display:         flex;
+align-items:     center;
+justify-content: flex-start;
+}
+
+.postScore {
+color:      var(--text-secondary);
+white-space: nowrap;
+text-align: right;
+}
+
+.postScoreMuted {
+color:      var(--text-dim);
+white-space: nowrap;
+text-align: right;
+}
+
+/* ✅ v2.2.0: badge de boost candidate — reusa --acc, o acento único do
+   design (ssot-design-tokens.css), em vez de introduzir uma terceira cor
+   de "destaque positivo" no vocabulário já fragmentado do projeto. */
+
+.postBoostBadge {
+display:        inline-flex;
+align-items:    center;
+gap:            3px;
+padding:        1px 6px;
+border-radius:  var(--radius-pill, 9999px);
+border:         var(--border-width) solid var(--acc);
+color:          var(--acc);
+font-family:    var(--font-family);
+font-size: var(--font-size-xs);
+font-weight:    var(--font-weight-bold);
+letter-spacing: 0.4px;
+text-transform: uppercase;
+white-space:    nowrap;
+}

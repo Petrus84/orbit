@@ -1,0 +1,792 @@
+{
+  "handle": "sylwia_inspires",
+  "setor_benchmark_key": "5_patrocinio_publicidade",
+  "url": "https://www.instagram.com/sylwia_inspires/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T02:04:58.999Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DaZuWe5sLi6",
+      "caption": "Nie pamiętam już, jak smakowały ślimaki... 😅\nZa to minę naszej córki pamiętam doskonale. 😂🐌\n\nTakie wspomnienie z Paryża.\n\nA Wy? Próbowaliście ślimaków? Smakowały czy raz i wystarczy? 👇🇫🇷\n\n#paris #memories #ślimaki #viralfood #viral",
+      "timestamp": "2026-07-05T07:01:19.000Z",
+      "content_format": "reel",
+      "likes": 905,
+      "comments": 22,
+      "video_view_count": 44798,
+      "video_play_count": 792679,
+      "latest_comments": [
+        "Hahaha, czasem smak potrawy ucieka z pamięci, ale takie miny i reakcje zostają na zawsze 😂🤍 Piękne wspomnienie z Paryża 😍",
+        "Nie jadłem! Chciałbym spróbować, ale czy warto aż tak ryzykować? 😱😱😱",
+        "C'est un petit délice français 😍 si t'aimes pas c'est que tu n'as pas goûté 😂",
+        "0% Heineken?????",
+        "Zum kotzen",
+        "Heineken 0.0 🤢🤢🤢🤢🧟‍♂️🧟‍♂️🧟‍♂️",
+        "😅 mina niezastąpiona - pełzaki nawet dobre… ale w panierce 🐌"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbkdhXSIvS-",
+      "caption": "✨ Want to experience something truly extraordinary? ✨\n \nA wonderful adventure and a photography session that will stay with you forever.\n \nThere is no routine here — only pure adrenaline......\nThere are no fixed patterns — only great fun......\nThere is no boredom — only vibrant, meaningful time spent together.\n\nYou don’t need to know how to pose — I will guide you through every step.\n\nIt is much easier than you think.\n\nThe beauty of nature around us will help us create beautifully natural, authentic images.\n \nIn these photos you can see the amazing Joanna , who had never posed for a professional session before — and look at how wonderful the result is!\n \n❤️Only one spot left this Friday evening.❤️\n\nCome for an experience full of adrenaline, and take home photographs that will grace your walls and bring you joy every single day.\n\nText me for more info\n\n \n#photography #empowerment #outdoorsession #adrenaline #naturalphotos",
+      "timestamp": "2026-08-03T07:35:14.000Z",
+      "content_format": "reel",
+      "likes": 119,
+      "comments": 23,
+      "video_view_count": 984,
+      "video_play_count": 2642,
+      "latest_comments": [
+        "Przepiękne kadry 😍 taka sesja mi się marzy!",
+        "Ale niesamowite ujęcie! Joanna wygląda obłędnie, a efekt końcowy udowadnia, że naturalność i świetny fotograf to idealny duet ✨📸",
+        "@darrunieczka zapraszam serdecznie do mnie",
+        "@edytaaluks dziękujemy Edytko, tobie również życzymy cudownego dnia😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbD6AMGMLKo",
+      "caption": "Our trip to Cyprus meant beautiful memories, but also very strong sunshine and high temperatures every single day. ☀️🌊\n\nAs parents, protecting our daughter's delicate skin was our top priority. Thanks to Ziaja Kids, we could enjoy every moment without worrying about sunburn. 💛\n\nThe gentle formula is perfect for children's sensitive skin and gave us peace of mind while Lilly was playing, exploring and making unforgettable holiday memories. Thank you, Ziaja, for helping us keep her skin safe under the Cyprus sun. 💙\n\n#ziajakids #kidsskincare #sunprotection #familytravel #summerwithkids",
+      "timestamp": "2026-07-21T16:08:04.000Z",
+      "content_format": "reel",
+      "likes": 371,
+      "comments": 57,
+      "video_view_count": 24,
+      "video_play_count": 1857,
+      "latest_comments": [
+        "Najlepsze na lato ❤️❤️❤️❤️",
+        "Bezpieczeństwo najważniejsze a spf z Ziaja jest świetny 😍",
+        "Trzeba o tym pamiętać ! Super 😍",
+        "☀️❤️",
+        "@kaklex dokładnie tak 😍"
+      ],
+      "paid_partnership": true,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaxF33zMVBF",
+      "caption": "Najważniejsze jest to, żeby dobrze czuć się we własnym towarzystwie 💕 Kiedy akceptujemy siebie i czujemy się dobrze we własnej skórze, wszystko inne staje się łatwiejsze. Uśmiech, dobre emocje i odrobina koloru potrafią odmienić cały dzień ✨\n\nMam już kolejny termin imprezy. Rozumiem że jesteście!\n\n#dobrzeczujsie #kobiecasiła #pozytywnaenergia #stylzcharakterem #wdzięczność",
+      "timestamp": "2026-07-14T08:47:21.000Z",
+      "content_format": "reel",
+      "likes": 10263,
+      "comments": 166,
+      "video_view_count": 8171,
+      "video_play_count": 804785,
+      "latest_comments": [
+        "😂😂😂😂",
+        "😂😂😂😂😂",
+        "@kati_west 😂",
+        "😂😂😂",
+        "😂😂😂",
+        "😂😂😂",
+        "🤣🤣👍🤘",
+        "😂",
+        "😂😂😂😂😂😂😂😂😂😂😂😂😂",
+        "@malwina.rutkowska.792 oryginalnie jamę❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbb1jhKsD11",
+      "caption": "Mam 44 lata i dopiero teraz naprawdę zrozumiałam, że nie warto odkładać życia na „kiedyś”. Nie czekaj na idealny moment, idealną figurę, więcej czasu czy lepsze okoliczności. Żyj teraz. Ciesz się małymi chwilami, bo to właśnie z nich składa się najpiękniejsze życie. 🤍\n\n#zyjteraz #codziennosc #kobietapo40 #motywacja #lifestyle",
+      "timestamp": "2026-07-30T23:10:40.000Z",
+      "content_format": "reel",
+      "likes": 150,
+      "comments": 21,
+      "video_view_count": 357,
+      "video_play_count": 1238,
+      "latest_comments": [
+        "No zgadzam się z Tobą ❤️",
+        "Dokładnie 😍",
+        "Zgadzam się ❤️🔥",
+        "Nauczyłam się żyć 'teraz' w ubiegłym roku, kiedy dopadła mnie poważna choroba. Teraz żyję spokojnie, cieszę się drobnostkami, spełniam marzenia. Czuję, że czerpię z życia garściami😊",
+        "Zdecydowanie nie ❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZaXO1VMGgV",
+      "caption": "#zona #mąż #motywacja #inspiracja #viral",
+      "timestamp": "2026-06-10T16:23:20.000Z",
+      "content_format": "reel",
+      "likes": 2159,
+      "comments": 83,
+      "video_view_count": 197235,
+      "video_play_count": 350515,
+      "latest_comments": [
+        "Nie ma opcji mój wie że ja wiem😂",
+        "Jak wrócisz, musimy pogadać",
+        "\"Twój rower sam się przewrócił\" ...i nie odbierać telefonu 😂",
+        "??????",
+        "😂😂😂😂😂",
+        "Benzin nebo nafta? Snad jsem natankovala správně 😂",
+        "😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbLFG26M7XP",
+      "caption": "🌿 Mąż: „Tylko nie przytrzyj felg...”\nJa: „Spokojnie, mam swój sposób.” 🤭😂\n\nPowiedzcie szczerze... czy Wasi mężowie też regularnie sprawdzają stan alumfelg w  autach? 😅🚗\n\n#memy #malzenstwo #kobietazakierownica #rolki #humor",
+      "timestamp": "2026-07-24T11:04:42.000Z",
+      "content_format": "reel",
+      "likes": 386,
+      "comments": 30,
+      "video_view_count": 196,
+      "video_play_count": 10635,
+      "latest_comments": [
+        "Najgorzej! 🤣🤣🤣",
+        "Mój już przestał na to patrzeć 😂",
+        "Dlatego nie jeżdżę autem męża, jak coś się stanie to wolę na moim 😂",
+        "Biegnę wypróbować czy u mnie też zadziała 😂",
+        "@lili_arisza zaakceptował😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DarpaRaMTEC",
+      "caption": "Kolagen to nie tylko wsparcie dla wyglądu skóry, ale również dla stawów i całego układu ruchu. 💛\n\nJuż po ok. 25. roku życia nasz organizm stopniowo produkuje go coraz mniej, dlatego wiele osób decyduje się na regularną suplementację.\n\nJa nie przerywam jej nawet podczas wakacji – to jedna z pierwszych rzeczy, które pakuję do walizki. Dlaczego? Bo w suplementacji liczy się przede wszystkim systematyczność. Efektów nie buduje się w 30 dni, a później długą przerwą. To codzienna konsekwencja sprawia, że suplementacja może realnie wspierać organizm.\n\nA Wy zabieracie swoje suplementy na wyjazdy? ✈️\n\n#kolagen #suplementacja #zdrowaskóra #zdrowestawy #besupplepl",
+      "timestamp": "2026-07-12T06:02:51.000Z",
+      "content_format": "reel",
+      "likes": 325,
+      "comments": 26,
+      "video_view_count": 6,
+      "video_play_count": 1664,
+      "latest_comments": [
+        "👏👏👏",
+        "Super jest😍",
+        "Zapisałam go sobie 😍❤️",
+        "Jadłabym 😍",
+        "Musze spróbować bo nie znam 😮",
+        "Suuper rolka 😍",
+        "❤️",
+        "👏👏",
+        "Ja muszę w końcu znaleźć jakiś dla Siebie 😍",
+        "😍🙌"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbI7Ky0smG2",
+      "caption": "Every woman deserves to see herself through someone else's eyes. ✨\nA photoshoot isn't about being perfect—it's about capturing your story, your confidence, and the beauty that already exists within you.\nDon't wait for the \"right moment.\" Celebrate yourself today. 🤍\n\nWhich photo would be your favorite? 📸\n\n#photoshoot #portraitphotography #womensupportingwomen #behindthescenes #reelsinstagram\n\n📸 Photographer: @joanna_mk_photography\n🎥 Videographer: @sylwia_inspires\n✨ Model: @sylwia_inspires",
+      "timestamp": "2026-07-23T15:02:58.000Z",
+      "content_format": "reel",
+      "likes": 524,
+      "comments": 51,
+      "video_view_count": 42,
+      "video_play_count": 1938,
+      "latest_comments": [
+        "Ciekawy pomysł na zdjęcia 👏",
+        "😍😍😍",
+        "Uwielbiam takie sesje a jeszcze roleczka z tego 😍",
+        "Rewelacja🔥❤️🔥",
+        "To prawda 🤍 Każda kobieta zasługuje na moment, w którym może poczuć się wyjątkowo i zobaczyć siebie z zupełnie innej perspektywy. Piękne zdjęcia potrafią zatrzymać nie tylko wygląd, ale też emocje i historię 🥹😍",
+        "Przepiękna rolka 😍 cudowna sesja i piękna kobieta ❤️❤️❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbYk5KeMHBe",
+      "caption": "No to wracamy do codzienności... Chociaż nie na długo. 😉 Tym, którzy kliknęli „unfollow”, życzę trafnych decyzji, bo kolejna podróż jest już bliżej, niż myślą. ✈️🌍\n\n#travel #travelcreator #wanderlust #vacationmode #travelreels",
+      "timestamp": "2026-07-29T16:47:05.000Z",
+      "content_format": "reel",
+      "likes": 91,
+      "comments": 7,
+      "video_view_count": 1519,
+      "video_play_count": 3751,
+      "latest_comments": [
+        "Hahaha to unfollow jest takie prawdziwe 😂 boli ludzi oj boli 😂",
+        "No padłam 😂 a wakacje przynajmniej udane ?",
+        "😍😂",
+        "@fit_mama_czworki oczywiście że udane 😍",
+        "@sunnyside_brunette Ty Edytko wiesz o czym mówię😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbcofTgIVak",
+      "caption": "✨ Those who follow me closely already know @_kate_dunne_ very well — this is my wonderful show model! ✨\n \nSometimes it’s easier to spark your imagination when you can see exactly what’s possible — so I share these example shots full of session ideas just for you.\n \nRemember: everything you see here is always fully adapted to your wishes, your style, and what makes you feel most comfortable.\n \nWe are all visual people — seeing how it looks is often the very best way to find inspiration for your own perfect session. And beyond the photos, I want you to see just how much charm, fun, and wonderful adventure can fit into one special meeting.\n \nThese are unforgettable moments for you — one‑of‑a‑kind images that will look beautiful hanging on your wall or sitting proudly in your favourite frame.\n \nJust send me a message, and let’s book your session. You won’t regret it — and I know you’ll come back for more 🤍\n \n \n \n#WomenPhotography #PortraitSession #MaternityPhotography #OutdoorPhotography #MagicalMoments",
+      "timestamp": "2026-07-31T06:35:44.000Z",
+      "content_format": "reel",
+      "likes": 117,
+      "comments": 30,
+      "video_view_count": 1164,
+      "video_play_count": 3391,
+      "latest_comments": [
+        "👏👏👏👏",
+        "@claudia.nlvibes 😍",
+        "@git_wiesniara prawda 😉😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DabUplAowWb",
+      "caption": "This is the moment — yours, and perfect for a photoshoot.\n \nDon’t wait until later, until you feel “more ready”, or until you think there will be another chance — you can always book another session, but this beautiful light will not come back.\n \n✨ GOLDEN EVENING OUTDOOR SESSIONS\n📅 DATE: Friday, 10 July — evening\n⚠️ ONLY ONE SPOT LEFT!\n \nDon’t let this wonderful opportunity slip away.",
+      "timestamp": "2026-07-05T21:51:39.000Z",
+      "content_format": "reel",
+      "likes": 146,
+      "comments": 5,
+      "video_view_count": 335,
+      "video_play_count": 1797,
+      "latest_comments": [
+        "😍😍😍",
+        "Piękna sesja ❤️",
+        "Uwielbiam sesje zdjęciowe wypełnione blaskiem słonka ☀️",
+        "I love it!",
+        "Wonderful @_kate_dunne_ 😍😍😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da1BoCLMOdC",
+      "caption": "Sunny days are even better with the right protection. ☀️ My holiday must-have is Ziaja Sun SPF 30. It helps protect my skin from UV rays, so I can enjoy every moment outdoors with confidence. \n\nDon't forget your daily SPF – your skin will thank you! 💛\n\n#ziaja #ziajasun #spf30 #sunprotection #skincare",
+      "timestamp": "2026-07-15T21:25:40.000Z",
+      "content_format": "reel",
+      "likes": 224,
+      "comments": 51,
+      "video_view_count": 3,
+      "video_play_count": 1535,
+      "latest_comments": [
+        "Ja też używam 🔥",
+        "Super prezentacja! Spf przez cały rok obowiązkowo 👏",
+        "Świetny produkt ❤️",
+        "Bezpieczeństwo przede wszystkim ❤️",
+        "Uwielbiam kosemtyki ziaja 😍 masło kakaowe obłędne pachnie",
+        "@mrs_wozniak zgadzam się z Tobą 😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DajBuDds1cJ",
+      "caption": "💦 A perfect family day at Paphos Aphrodite Waterpark! 🌴☀️\n\nFrom thrilling water slides and relaxing pools to fantastic play areas for younger children, every member of our family had an unforgettable day.\n\nOne of our favourite travel traditions is bringing home a mascot from every special place we visit... and of course, Lilly couldn't leave without the park's adorable frog mascot. 🐸💚 These little souvenirs always bring back the happiest holiday memories.\n\nIf you're planning a family holiday in Cyprus, Paphos Aphrodite Waterpark is definitely a place worth adding to your itinerary. The park is clean, beautifully maintained, full of attractions for all ages, and the staff made us feel so welcome throughout the day.\n\nHave you ever started a special travel tradition with your family? We'd love to hear about it in the comments! 💙\n\n✨ Invited by @paphoswaterpark\n\n#cyprus #paphos #aphroditewaterpark #familytravel #waterpark",
+      "timestamp": "2026-07-08T21:47:55.000Z",
+      "content_format": "reel",
+      "likes": 504,
+      "comments": 57,
+      "video_view_count": 106,
+      "video_play_count": 4884,
+      "latest_comments": [
+        "Ależ genialne miejsce! Jestem zakochana 😍",
+        "@lili_arisza my Też 😍 wrócimy tu na 100%",
+        "@sylwia_inspires 😂 dziękuję!❤️"
+      ],
+      "paid_partnership": true,
+      "anomalies": []
+    },
+    {
+      "short_code": "DblgsRZsWAM",
+      "caption": "Po czterdziestce? Nie kończy się życie. Ono dopiero zaczyna się na Twoich zasadach. \n\n🔥❤️ Kto też w pewnym momencie zrozumiał, że nigdy nie jest za późno, żeby zawalczyć o siebie? 👇\n\n#mamapoczterdziestce #kobietazpasją #motywacjadodziałania #inspiracja #viralreelsvideo❤️",
+      "timestamp": "2026-08-03T17:27:21.000Z",
+      "content_format": "reel",
+      "likes": 218,
+      "comments": 32,
+      "video_view_count": 2307,
+      "video_play_count": 4216,
+      "latest_comments": [
+        "Prawda 👏👏👏",
+        "Ja dopiero zaczęłam żyć 🥰🔥🔥🔥❤️❤️❤️",
+        "🔥🔥🔥🔥❤️❤️❤️❤️",
+        "Extra 🔥",
+        "Dziękuję 😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbkbfT1My5W",
+      "caption": "If you're looking for the perfect family day out in Ireland, we honestly can't recommend Caragh Open Farm enough! 🤍\n\nJust around 40 minutes from Dublin, this beautiful family-run farm is the kind of place where you instantly slow down, smile, and make memories together.\n\nLilly absolutely loved meeting the friendly animals – sheep, cows and calves, donkeys, ponies, horses, goats, chickens, ducks, geese (okay... the geese might give you a cheeky little nip if you're not careful 😂), and the sweetest rabbits. There are so many animals to see and interact with that you could happily walk around more than once! They even have pony rides, animal feeding, go-karts, playgrounds, an obstacle course and beautiful walking paths.\n\nWhen it's time for a break, the cosy café is the perfect place to enjoy a great coffee, delicious food, homemade treats or a refreshing drink while the kids keep smiling. Picnic areas are available too!\n\n⭐ Our family rating?\n10/10!\n\nIn fact... we're already thinking about going back again today! 😄\n\nIf you're planning a day out with family, friends or little explorers, put Caragh Open Farm on your list. It's peaceful, welcoming, full of happy animals and even happier children. We loved every minute of it! ❤️\n\n#caraghopenfarm #familydayout #irelandwithkids #familyadventures #thingstodoireland",
+      "timestamp": "2026-08-03T07:26:23.000Z",
+      "content_format": "reel",
+      "likes": 460,
+      "comments": 69,
+      "video_view_count": 1358,
+      "video_play_count": 3499,
+      "latest_comments": [
+        "😍😍",
+        "Cudowne miejsce moje dzieci byłyby zachwycone 😍❤️",
+        "przesłodkie!😍",
+        "Ale spędziliście pięknie dzień ❤️",
+        "Kto nie  pokocha takiego miejsca😍",
+        "Ale super 😍",
+        "Ale super mieliście wypadzik❤️",
+        "Woow, super❤️",
+        "Ale super!!! Koniki boskie ❤️❤️❤️kocham"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da5Cr9PM5sR",
+      "caption": "Nie każda wycieczka zostaje w pamięci na lata. Ta zdecydowanie zostanie. ❤️🇨🇾\n\nDzięki @eostourcy odkryliśmy Cypr z zupełnie innej perspektywy. Zobaczyliśmy imponujący wrak EDRO III Shipwreck, odwiedziliśmy malowniczy port w Latchi, Łaźnie Afrodyty (Baths of Aphrodite), a prawdziwą wisienką na torcie był rejs do Blue Lagoon na pokładzie @mediterranean_one Turkusowa woda, fantastyczna atmosfera i widoki, których nie da się zapomnieć.\n\nOgromne podziękowania również dla naszej przewodniczki @gianna_poursanidou \n❤️ Z ogromną pasją, wiedzą i zaangażowaniem opowiadała o każdym miejscu. Dzięki niej nie była to zwykła wycieczka, ale podróż pełna historii, ciekawostek i emocji.\n\nPo tej wycieczce doskonale rozumiemy, dlaczego tak wiele osób poleca @eostourycy Teraz my również dołączamy do tego grona. Jeśli chcecie zobaczyć prawdziwy Cypr, a nie tylko hotel i plażę, to będzie świetny wybór.\n\nDziękujemy za ten wyjątkowy dzień i wspomnienia, które zostaną z nami na bardzo długo. 💙🇨🇾\n\n#wakacje #cypr #podróże #bluelagoon #travel",
+      "timestamp": "2026-07-17T10:52:09.000Z",
+      "content_format": "reel",
+      "likes": 368,
+      "comments": 23,
+      "video_view_count": 22,
+      "video_play_count": 2516,
+      "latest_comments": [
+        "Widać, że było wspaniale 😍❤️",
+        "Świetne wspomnienia zostaną z Wami na zawsze ❤️Piękne miejsce. Znam osobę, która wprost uwielbia Cypr. Tak, ma ciekawą kulturę, smak ale i historię.",
+        "To musiała byc super przygoda 🤍",
+        "Ależ tam jest pięknie!  Prawdziwy Cypr, z dala od hotelowej rutyny, to jest to! Cudowna rodzinna wyprawa🤩",
+        "Przepiękny czas 😍❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DasDmkQMNQW",
+      "caption": "Beach days are better with the right sun protection. 🌊🤍\n\nI've been reaching for the Ziaja Sun Lotion in Spray SPF 50+ because it's easy to apply, water-resistant, and provides very high UVA + UVB protection. A summer essential that's always in my beach bag! 🏖️✨\n\n#spf50 #skincare #suncare #summeressentials #beachdays \n\n☀️ AD | @ziaja.ireland",
+      "timestamp": "2026-07-12T09:52:52.000Z",
+      "content_format": "reel",
+      "likes": 426,
+      "comments": 91,
+      "video_view_count": 3,
+      "video_play_count": 1669,
+      "latest_comments": [
+        "Ochrona przed słońcem to podstawa a Ziaja jest w tym temacie nie zawodna😍🔥😍",
+        "Uwielbiam za ten skład 😍❤️ @ziaja.polska",
+        "Ziaja ma bardzo dobrej jakości kosmetyki😍 kosmetyki z spf mają świetne😍",
+        "Produkty od Ziaja zawsze się sprawdzają 😍",
+        "Uwielbiam ziaje 😍",
+        "@plochockaanna 🙌❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbYiNMWMcNO",
+      "caption": "Back then, every photo mattered. Today, one hour by the pool and suddenly my camera roll is full of pictures of two drinks. 😂🍹\n\nTell me I'm not the only one… How many random photos are sitting in your gallery right now? 😅📸\n\n#viralpost #summervibes #lifestyle #travelgram #viraltravel",
+      "timestamp": "2026-07-29T16:23:26.000Z",
+      "content_format": "reel",
+      "likes": 248,
+      "comments": 5,
+      "video_view_count": 1243,
+      "video_play_count": 3514,
+      "latest_comments": [
+        "No coś w tym jest ❤️Ewidentnie tak",
+        "So true! 🙈 My camera roll is basically 90% aesthetic drinks, food, and 50 almost identical shots trying to get the perfect lighting! The struggle (and memory space overload) is so real! 😂🍹📸",
+        "Oj nie jesteś jedyna 🤭 mam dokładnie tak samo 🤭 Pozdrawiam ❤️",
+        "Ohhh... Kochana! Co najmniej kilka tysięcy za dużo 🤣🤣🤣"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DakcQfXsQjt",
+      "caption": "Blue Lagoon is one of those places that truly lives up to the hype. 💙 Crystal-clear water, breathtaking scenery and an unforgettable boat trip made this one of the highlights of our time in Cyprus.\n\nA huge thank you to @eostourcy for making this experience so easy and enjoyable. If you're looking for a beautiful way to explore the Akamas coastline, this trip is definitely worth adding to your Cyprus itinerary.\n\n#cyprus #bluelagoon #eostours #familytravel #visitcyprus",
+      "timestamp": "2026-07-09T10:53:15.000Z",
+      "content_format": "reel",
+      "likes": 501,
+      "comments": 65,
+      "video_view_count": 8,
+      "video_play_count": 1814,
+      "latest_comments": [
+        "Aż mam ochotę się tam wybrać. 🫠",
+        "😍🔥",
+        "Ależ piękne kolory i ta woda 💙💙💙 Muszę koniecznie polecieć i zobaczyć na własne oczy 🥰",
+        "Mega 😍😍😍 bajka ❤️",
+        "Blue Lagoon jest przepiękne! 💙\nTaki rejs to moje marzenie! ⛵✨",
+        "Normalnie jakbym jakiś film oglądała😍",
+        "To z pewnością niesamowite przeżycie 🩷",
+        "@pablos_1984_ 😍😍😍"
+      ],
+      "paid_partnership": true,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbc1Q-oMaXj",
+      "caption": "There’s something truly magical about walking through a field full of sunflowers. 🌻✨\n\nIf you're in Carlow, Ireland, this beautiful sunflower farm is definitely worth a visit. It’s the perfect place for a peaceful walk, stunning photos, and you can even pick as many sunflowers as you can carry.\n\nI absolutely love this kind of atmosphere—it’s simple, beautiful, and makes me smile every time.\n\nWhat about you? 🌻 Do you love sunflower fields as much as I do? Have you ever visited one?\n\n#sunflowers #carlow #ireland #naturelovers #summervibes",
+      "timestamp": "2026-07-31T08:31:47.000Z",
+      "content_format": "reel",
+      "likes": 461,
+      "comments": 55,
+      "video_view_count": 533,
+      "video_play_count": 2003,
+      "latest_comments": [
+        "😍😍😍",
+        "Jakie piękne wakacyjne zdjęcia 🌞🌞🤩",
+        "Ja uwielbiam te jadalne 🤭",
+        "Piękne zdjęcia, słoneczniki 🌻 motyl 🦋 i modeleczka 😍",
+        "@katarinkowo 😍😍😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DapKGtWMGUz",
+      "caption": "Cypr zachwyca na każdym kroku! 🇨🇾✨\n\nPodczas tej jednodniowej wycieczki odwiedziliśmy Limassol, Larnakę i Nikozję. Spacer po nadmorskiej promenadzie w Limassol, klimatyczne uliczki, Cerkiew św. Łazarza w Larnace oraz Nikozja – jedyna na świecie stolica podzielona na dwie części – to miejsca, które zdecydowanie warto wpisać na swoją listę podczas pobytu na Cyprze. 💙\n\nJeśli, tak jak my, zatrzymujecie się w Coral Bay i chcecie zwiedzić wyspę we własnym tempie, świetnym rozwiązaniem jest wynajem samochodu. My korzystaliśmy z Land & Sea Properties – bez kaucji, w rozsądnej cenie i wszystko przebiegło bez najmniejszych problemów. 🚗\n\nMała ciekawostka! 😉 Na Cyprze samochody z wypożyczalni mają czerwone tablice rejestracyjne. Dzięki temu miejscowi od razu wiedzą, że za kierownicą siedzi turysta i często podchodzą do takich kierowców z większą wyrozumiałością. To naprawdę pomaga, szczególnie jeśli pierwszy raz jedziecie po lewej stronie drogi. Dla nas było to o tyle łatwiejsze, że na co dzień mieszkamy w Irlandii, gdzie również obowiązuje ruch lewostronny.\n\n#cypr #limassol #larnaka #nikozja #podróże",
+      "timestamp": "2026-07-11T06:50:28.000Z",
+      "content_format": "reel",
+      "likes": 337,
+      "comments": 29,
+      "video_view_count": 2,
+      "video_play_count": 1580,
+      "latest_comments": [
+        "Widać, że dobrze sję bawicie😍",
+        "😍😍😍",
+        "Coraz bardziej marzy mi się Cypr! ☀️🇨🇾",
+        "😍😍",
+        "A to udany urlop ❤️👏👏",
+        "Bardzo fajna destynacja na urlop z dziećmi ❤️",
+        "Jeju ale by było gdyby się tam wybrać😍",
+        "Cudownie Kochana❤️",
+        "Jakie przepiękne miejsce ❤️❤️ cudownie",
+        "@drawc_art 😍😍😍😍😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DahehY-Mf_e",
+      "caption": "📍 Pafos Zoo\n\nNo photo or video can truly capture the magic of this place… 🦁✨\n\nSome places simply have to be experienced in person. From unforgettable close encounters with amazing animals to the beautiful surroundings, Pafos Zoo is a place that leaves a lasting impression. 🤍\n\nHave you visited Pafos Zoo yet, or is it on your travel bucket list? Let me know in the comments! 👇\n\n#pafos #cyprus #pafoszoo #travel #travelreels",
+      "timestamp": "2026-07-08T07:15:44.000Z",
+      "content_format": "reel",
+      "likes": 487,
+      "comments": 57,
+      "video_view_count": 164,
+      "video_play_count": 1820,
+      "latest_comments": [
+        "Sama chętnie bym tam wpadła 😍",
+        "Musimy do zoo się wybrać 😍",
+        "Ale macie zdjęcia z lemurami 🥰 super zoo",
+        "😍😍😍 Serdecznie pozdrawiam 👋",
+        "Fajne miejsce, mojej siostrzenicy by tam spodobało 😀",
+        "Fajna pamiatka rodzina🙌Super",
+        "Świetny dzień mieliście. Uwielbiam patrzeć na takie zwierzaki😍",
+        "@diva.monique koniecznie 😍"
+      ],
+      "paid_partnership": true,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbXhDWlIJpi",
+      "caption": "Sometimes it happens even tat this lady @sylwia_inspires  stands in front of my camera as well.\n \nAnd even though matching our schedules has been really hard lately, we finally made it happen.\n \nWOMEN PHOTOSESSIONS  are so much more than just beautiful photos.✨\n \nIt is that wonderful feeling of excitement that grows inside you with every picture you look at later — the adventure you share with us during our time together, those unforgettable moments… and something more: \n✨that spark of joy, happiness, and the quiet certainty of just how beautiful you truly are, seen through the lens of my camera. ✨\n\nBook you session now and you won't regret it 😊",
+      "timestamp": "2026-07-29T06:54:23.000Z",
+      "content_format": "reel",
+      "likes": 86,
+      "comments": 14,
+      "video_view_count": 331,
+      "video_play_count": 1426,
+      "latest_comments": [
+        "Ale cudnie ❤️",
+        "cudowne zdjęcia 😍",
+        "Super rolka😍cudowne zdjecia😍",
+        "@wojcikiewicze dziekuje bardzo😍",
+        "@claudia.nlvibes dziękuję 😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbN3qbBMMNy",
+      "caption": "Obiecałam Wam wrócić z recenzją… i właśnie nadszedł ten moment! 💚\n\nPonad miesiąc regularnego stosowania i mogę już śmiało powiedzieć, że ta kuracja naprawdę pozytywnie mnie zaskoczyła.\n\n✨ Na szczotce zostaje zdecydowanie mniej włosów.\n✨ Włosy są mocniejsze, bardziej lśniące i wyglądają zdrowiej.\n✨ Zniknęło uporczywe swędzenie skóry głowy, które najbardziej dokuczało mi w okolicy karku.\n\nMam włosy, które bardzo szybko się przetłuszczają, dlatego zawsze ostrożnie dobieram kosmetyki. Szampon i maska sprawdziły się u mnie świetnie. Spray przeciw wypadaniu włosów również bardzo polubiłam – jedynie przy moich włosach aplikacja na suchą skórę głowy sprawia, że następnego dnia muszę je umyć. To jednak moja indywidualna reakcja.\n\nMoja ocena? 10/10. ❤️\n\nJeśli macie ochotę wypróbować kosmetyki @verdelove.pl mam dla Was 10% zniżki z kodem GLOW10 na verdelove.pl \n\nDajcie znać, czy znacie już te produkty! 💚\n\n#współpracabarterowa #verdelove #pielęgnacjawłosów #świadomapielęgnacja #zdrowewłosy",
+      "timestamp": "2026-07-25T12:59:48.000Z",
+      "content_format": "reel",
+      "likes": 367,
+      "comments": 24,
+      "video_view_count": 20,
+      "video_play_count": 1321,
+      "latest_comments": [
+        "Właśnie wypadają mi włosy, to może mi pomóc. 🩵",
+        "Zapowiada się super 😍 ciekawe jakby u mnie to wyszło 😍❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbTd0V0spF1",
+      "caption": "Czasem największe zmiany dzieją się po cichu. Nie wszystko musi być opowiedziane światu. 🌊✨\n\n#mindset #lifestyle #travelreels #cypruslife #viral",
+      "timestamp": "2026-07-27T17:12:19.000Z",
+      "content_format": "reel",
+      "likes": 410,
+      "comments": 20,
+      "video_view_count": 171,
+      "video_play_count": 1918,
+      "latest_comments": [
+        "Ale cudownie 😍😍😍 udanego urlopu ❤️",
+        "Ale pięknie ❤️ świetna rolka",
+        "@kaklex dziękuję Kochana 😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da8deDEIUlD",
+      "caption": "🌾🌾WOMAN PHOTOGRAPHY 🌾\n\nSome portrait sessions don’t need many words at all. \n\nI’m truly so happy to share this—this isn’t the first time someone has travelled all the way to Ireland for their holiday and chosen to have their photos taken with me. \n\nThis time, the wonderful Martyna came over from Poland, and together we created beautiful moments she will treasure forever.\n\nWe had such a lovely, joyful evening—one I will remember just as fondly as she will.\n\nDon't wait for tomorrow❤️\n\nBook your photosession with me now \n@joanna_mk_photography",
+      "timestamp": "2026-07-18T18:43:36.000Z",
+      "content_format": "reel",
+      "likes": 104,
+      "comments": 11,
+      "video_view_count": 75,
+      "video_play_count": 1425,
+      "latest_comments": [
+        "Chciałabym mieć kiedyś taką kobieca sesje 😍",
+        "Świetne zdjęcia ❤️",
+        "❤️❤️❤️❤️❤️",
+        "Ależ sesja! 😍 ekstra klimacik",
+        "Przepiękna pamiątka na lata! 🤍 Takie kadry mają ogromną wartość. 📸✨",
+        "Magical shots! Sometimes words are truly unnecessary, because the photos speak for themselves📸😍",
+        "Ale piękna sesja ❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbVuYAYjEPg",
+      "caption": "✨ Some places are more than just beautiful views. They become part of your memories.\nOur stay at Ascos Coral Beach Hotel was all about family time, relaxation and moments we'll remember long after the journey ends.\nIf you're looking for a place to slow down, enjoy the Mediterranean atmosphere and create unforgettable memories, this is definitely worth considering.\n📍 Coral Bay, Paphos, Cyprus\n\n✨ Są miejsca, do których nie jedzie się tylko po piękne widoki. Jedzie się po spokój, wspólnie spędzony czas i wspomnienia, które zostają z nami na długo.\nNasz pobyt w Ascos Coral Beach Hotel był właśnie takim doświadczeniem. Rodzinna atmosfera, piękne otoczenie i chwile, które przypominają, że to właśnie podróże są najlepszą inwestycją we wspomnienia.\n📍 Coral Bay, Pafos, Cypr\n\n#familytravels #coralbay #paphos #cyprus #rodzinnepodróże",
+      "timestamp": "2026-07-28T14:11:37.000Z",
+      "content_format": "carousel",
+      "likes": 478,
+      "comments": 70,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "I love Cyprus! Thanks for recommendation.",
+        "Perfect place for family holiday 😍",
+        "Cudowne miejsce, aż chce się tam wypoczywać ❤️"
+      ],
+      "paid_partnership": true,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbB8BEkMaGc",
+      "caption": "#motywacja #inspiracja #viral",
+      "timestamp": "2026-07-20T21:46:41.000Z",
+      "content_format": "reel",
+      "likes": 208,
+      "comments": 8,
+      "video_view_count": 82,
+      "video_play_count": 2701,
+      "latest_comments": [
+        "I tak też czasem trzeba 😍",
+        "Udanego urlopu 😍",
+        "Ale pieknie❤️ ile stopni tam masz?",
+        "@lili_arisza 😍😍😍😍🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZn45GqMKhe",
+      "caption": "#partnerstwo #mążiżona #ubawpopachy #motywacja #viralreels",
+      "timestamp": "2026-06-15T22:29:30.000Z",
+      "content_format": "reel",
+      "likes": 311,
+      "comments": 10,
+      "video_view_count": 23097,
+      "video_play_count": 37106,
+      "latest_comments": [
+        "😂",
+        "Dobre 😂",
+        "😂😂😂",
+        "😂😂😂😂",
+        "Już bym się z tej trawy nie podniosła 😂😂😂",
+        "@ania.zad01 😂😂😂😂",
+        "@magdalbb 😂😂😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 41198,
+  "following_count": 386,
+  "posts_count": 2505,
+  "follower_tier": "mid",
+  "engagement": {
+    "sample_size": 30,
+    "median_er": 0.009490751978251371,
+    "mean_er": 0.01858180817839054,
+    "er_per_post": [
+      {
+        "short_code": "DaZuWe5sLi6",
+        "er": 0.0225010922860333,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbkdhXSIvS-",
+        "er": 0.0034467692606437207,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbD6AMGMLKo",
+        "er": 0.010388853827855721,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaxF33zMVBF",
+        "er": 0.25314335647361524,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dbb1jhKsD11",
+        "er": 0.004150686926549832,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZaXO1VMGgV",
+        "er": 0.054420117481431135,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbLFG26M7XP",
+        "er": 0.010097577552308364,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DarpaRaMTEC",
+        "er": 0.008519831059760183,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbI7Ky0smG2",
+        "er": 0.01395698820331084,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbYk5KeMHBe",
+        "er": 0.0023787562503034126,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbcofTgIVak",
+        "er": 0.003568134375455119,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DabUplAowWb",
+        "er": 0.003665226467304238,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Da1BoCLMOdC",
+        "er": 0.006675081314626924,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DajBuDds1cJ",
+        "er": 0.013617165881838924,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DblgsRZsWAM",
+        "er": 0.006068255740569931,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbkbfT1My5W",
+        "er": 0.012840429147045973,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Da5Cr9PM5sR",
+        "er": 0.009490751978251371,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DasDmkQMNQW",
+        "er": 0.012549152871498617,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbYiNMWMcNO",
+        "er": 0.00614107480945677,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DakcQfXsQjt",
+        "er": 0.013738530996650324,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dbc1Q-oMaXj",
+        "er": 0.012524879848536336,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DapKGtWMGUz",
+        "er": 0.008883926404194378,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DahehY-Mf_e",
+        "er": 0.01320452449148017,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbXhDWlIJpi",
+        "er": 0.0024273022962279724,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbN3qbBMMNy",
+        "er": 0.009490751978251371,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbTd0V0spF1",
+        "er": 0.01043739987378028,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Da8deDEIUlD",
+        "er": 0.002791397640662168,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbVuYAYjEPg",
+        "er": 0.013301616583329288,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbB8BEkMaGc",
+        "er": 0.00524297295985242,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZn45GqMKhe",
+        "er": 0.007791640370891791,
+        "content_format": "reel"
+      }
+    ]
+  },
+  "external_url": "https://www.tiktok.com/@sylwia_inspires",
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "5_patrocinio_publicidade",
+    "secondary": null,
+    "matches": [
+      {
+        "category": "5_patrocinio_publicidade",
+        "score": 3,
+        "evidence": [
+          "tag nativa \"parceria paga\" (paidPartnership=true) presente em ao menos 1 post da amostra"
+        ]
+      }
+    ],
+    "manual_review_recommended": false,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "5_patrocinio_publicidade",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "parcial",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T02:04:58.999Z",
+    "versao_framework": "v3.1"
+  }
+}

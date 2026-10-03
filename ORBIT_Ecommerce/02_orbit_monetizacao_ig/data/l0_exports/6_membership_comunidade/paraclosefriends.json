@@ -1,0 +1,640 @@
+{
+  "handle": "paraclosefriends",
+  "setor_benchmark_key": "6_membership_comunidade",
+  "url": "https://www.instagram.com/paraclosefriends/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T02:08:39.707Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DXCu5O4j04b",
+      "caption": "Seguro algo debías 🧐 \n\n#closefriends💚 #closefriends #mejoresamigos",
+      "timestamp": "2026-04-12T19:05:01.000Z",
+      "content_format": "static_post",
+      "likes": 1012,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DW1MLYpgHlO",
+      "caption": "Estoy aprendiendo a nadar 🤣\n\n#closefriends💚 #closefriends",
+      "timestamp": "2026-04-07T12:51:32.000Z",
+      "content_format": "static_post",
+      "likes": 2959,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂😂😂😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DW1S70agNBx",
+      "caption": "Algo difícil 😅\n\n#closefriends💚 #closefriends",
+      "timestamp": "2026-04-07T13:50:34.000Z",
+      "content_format": "static_post",
+      "likes": 1741,
+      "comments": 5,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂",
+        "😌😏",
+        "Carlos",
+        "😂😂",
+        "😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DW9idwYkSPd",
+      "caption": "Estoy que me trabajo 😬\n\n#closefriends💚 #closefriends #mejoresamigos",
+      "timestamp": "2026-04-10T18:40:12.000Z",
+      "content_format": "static_post",
+      "likes": 1099,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Full chamba🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWo1_UwAPCq",
+      "caption": "Manejas dos lenguas 😝 \n\n#closefriends💚 #closefriends",
+      "timestamp": "2026-04-02T17:46:45.000Z",
+      "content_format": "static_post",
+      "likes": 1360,
+      "comments": 4,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Embustera xD",
+        "M..BB.........mmmmm..",
+        "Wn como estasMb",
+        "Mee"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DW2wFGbDdU9",
+      "caption": "Un rumor por ahí beibi 😏 \n\n#closefriends💚 #closefriends",
+      "timestamp": "2026-04-08T03:24:29.000Z",
+      "content_format": "static_post",
+      "likes": 1179,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXEyNl6gOzv",
+      "caption": "Mood de actual 😬\n\n#closefriends💚 #closefriends #mejoresamigos",
+      "timestamp": "2026-04-13T14:12:29.000Z",
+      "content_format": "static_post",
+      "likes": 2746,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXKOJKxgMKo",
+      "caption": "Ya quiero que sea ese día \n\n#closefriends💚 #closefriends #mejoresamigos",
+      "timestamp": "2026-04-15T16:52:45.000Z",
+      "content_format": "static_post",
+      "likes": 24315,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Que sea domingo porfi 🙏🏾🙏🏾🙏🏾🙏🏾💭",
+        "Jajaja 😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWrVFgjAF1X",
+      "caption": "No le copio a nadie 🤣\n\n#closefriends💚 #closefriends",
+      "timestamp": "2026-04-03T16:56:58.000Z",
+      "content_format": "static_post",
+      "likes": 1035,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Hahaha🤣"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DW64MJcEX9H",
+      "caption": "Para que preguntan \n\n#closefriends #closefriends💚",
+      "timestamp": "2026-04-09T17:52:19.000Z",
+      "content_format": "carousel",
+      "likes": 2393,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DW6derOAKAK",
+      "caption": "Yo si fui 😔🤣 \n\n#closefriends💚 #closefriends #mejoresamigos",
+      "timestamp": "2026-04-09T13:58:55.000Z",
+      "content_format": "static_post",
+      "likes": 2877,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Yo no fui 😢"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWXEn22D4ls",
+      "caption": "¿Ustedes también? 🥲😂\n\n#closefriends #mejoresamigos",
+      "timestamp": "2026-03-26T20:09:15.000Z",
+      "content_format": "static_post",
+      "likes": 1725,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWfEcUFD8E1",
+      "caption": "",
+      "timestamp": "2026-03-29T22:41:30.000Z",
+      "content_format": "reel",
+      "likes": 68,
+      "comments": 0,
+      "video_view_count": 3494,
+      "video_play_count": 19796,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWmSDH3kRQT",
+      "caption": "Y aun asi, ni nos hablamos💚 \n\n#closefriends💚 #closefriends",
+      "timestamp": "2026-04-01T17:54:15.000Z",
+      "content_format": "static_post",
+      "likes": 3078,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWWjPJugOBT",
+      "caption": "Usted y yo como vamos ? 😂 \n\n#closefriends #closefriends💚 #mejoresamigos #seleccion #selecciondefutbol",
+      "timestamp": "2026-03-26T15:17:54.000Z",
+      "content_format": "static_post",
+      "likes": 1446,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWZvzyYD1HI",
+      "caption": "Ya viene semana santa 🫶🏻 \n\n#closefriends💚 #closefriends #mejoresamigos",
+      "timestamp": "2026-03-27T21:04:11.000Z",
+      "content_format": "static_post",
+      "likes": 1576,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWbj-QkgP7F",
+      "caption": "A que hora me ayudas 🥲🤣\n\n#closefriends💚 #closefriends #mejoresamigos",
+      "timestamp": "2026-03-28T13:59:13.000Z",
+      "content_format": "static_post",
+      "likes": 1165,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😢😂",
+        "Dios: cuando estés bien despierto y coloques la R"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWmlbg0D8ab",
+      "caption": "Ojalá mañana 🙄\n\n#closefriends💚 #closefriends #mejoresamigos",
+      "timestamp": "2026-04-01T20:43:36.000Z",
+      "content_format": "static_post",
+      "likes": 1619,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWjy0DTjyNN",
+      "caption": "No creía en el amor 🤩\n\n#closefriends #mejoresamigos",
+      "timestamp": "2026-03-31T18:43:42.000Z",
+      "content_format": "static_post",
+      "likes": 7230,
+      "comments": 4,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🙌",
+        "😂",
+        "Lo principal es encontrar el problema solo buscar del problema y aplicarlo en alguna rama de metodología de investigación",
+        "😂😂😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWoVBPYgPpc",
+      "caption": "Así son 🙄\n\n#closefriends💚 #closefriends",
+      "timestamp": "2026-04-02T12:58:39.000Z",
+      "content_format": "static_post",
+      "likes": 1070,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "❤️❤️❤️❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWZNiyUAKR6",
+      "caption": "No se puede\n\n#closefriends💚 #closefriends #mejoresamigos",
+      "timestamp": "2026-03-27T16:04:45.000Z",
+      "content_format": "static_post",
+      "likes": 2480,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWKb1PnDz35",
+      "caption": "Otro fin de semana más #closefriends",
+      "timestamp": "2026-03-21T22:21:28.000Z",
+      "content_format": "static_post",
+      "likes": 8552,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWUJdASgHDU",
+      "caption": "Que van a saber de amor 💔\n\n#closefriends #closefriends💚 #mejoresamigos",
+      "timestamp": "2026-03-25T16:53:57.000Z",
+      "content_format": "static_post",
+      "likes": 12578,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWrQCM4gLs5",
+      "caption": "Buenas 🤗 \n\n#closefriends💚\n#closefriends",
+      "timestamp": "2026-04-03T16:12:49.000Z",
+      "content_format": "static_post",
+      "likes": 27739,
+      "comments": 3,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Fiel a mí",
+        "Yooo😂",
+        "Enserio , yo también ❤️❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWPQ1rvD8L0",
+      "caption": "Tal cuál 😅\n\n#closefriends #closefriends💚",
+      "timestamp": "2026-03-23T19:21:10.000Z",
+      "content_format": "static_post",
+      "likes": 3317,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "❤️❤️❤️ igualita",
+        "😂😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWRnuajERws",
+      "caption": "Un screenshot por si se me arrepiento 😅\n\n#closefriends💚 #closefriends #mejoresamigos",
+      "timestamp": "2026-03-24T17:20:39.000Z",
+      "content_format": "static_post",
+      "likes": 5235,
+      "comments": 3,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂😂😂😂",
+        "@karo151097 😂😂",
+        "😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWUcf0-j-ii",
+      "caption": "Todo el contexto la polémica del canal caracol en Colombia 🇨🇴 #closefriends #canalcaracol #caracolnoticias #colombia🇨🇴",
+      "timestamp": "2026-03-25T19:39:52.000Z",
+      "content_format": "static_post",
+      "likes": 851,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWEgTddAE5p",
+      "caption": "Escribe en los comentarios que vendes 🧐🧐\n\n#closefriends💚 #closefriends #mejoresamigos",
+      "timestamp": "2026-03-19T15:04:40.000Z",
+      "content_format": "static_post",
+      "likes": 1335,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWHc9wzEcu4",
+      "caption": "Buenas \n\n#closefriends💚 #closefriends",
+      "timestamp": "2026-03-20T18:33:09.000Z",
+      "content_format": "carousel",
+      "likes": 23805,
+      "comments": 12,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Y si, (no se puede compartir pero si)",
+        "Mientras nadie me presuma, yo le pertenezco al alchol",
+        "Mientras nadie me presuma , borra la cuenta crack.",
+        "Al party por los siglos de los siglos AMÉN",
+        "Mientras nadie me presuma, me presumo yo",
+        "La 1ra 😂",
+        "A puro spinning",
+        "Ponme uno con café con cigarros y con fútbol",
+        "a la cafeina 🙏🙏",
+        "@badbunnypr 😍❤️❤️",
+        "Le pertenezco a la chamba e deudas😢😂",
+        "De 🐰"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWhDZwuEWoz",
+      "caption": "Ya la actualicé \n\n#closefriends💚 #closefriends #mejoresamigos",
+      "timestamp": "2026-03-30T17:10:04.000Z",
+      "content_format": "static_post",
+      "likes": 3315,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 121864,
+  "following_count": 3,
+  "posts_count": 1395,
+  "follower_tier": "macro",
+  "engagement": {
+    "sample_size": 30,
+    "median_er": 0.016982045558983784,
+    "mean_er": 0.04128728199741789,
+    "er_per_post": [
+      {
+        "short_code": "DXCu5O4j04b",
+        "er": 0.008304339263441212,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DW1MLYpgHlO",
+        "er": 0.02428937175868181,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DW1S70agNBx",
+        "er": 0.01432744699008731,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DW9idwYkSPd",
+        "er": 0.009026455721131754,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DWo1_UwAPCq",
+        "er": 0.011192805094203374,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DW2wFGbDdU9",
+        "er": 0.009674719359285761,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DXEyNl6gOzv",
+        "er": 0.022533315827479812,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DXKOJKxgMKo",
+        "er": 0.1995421125188735,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DWrVFgjAF1X",
+        "er": 0.008501280115538632,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DW64MJcEX9H",
+        "er": 0.01963664412788026,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DW6derOAKAK",
+        "er": 0.023616490514015626,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DWXEn22D4ls",
+        "er": 0.014155123744502068,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DWfEcUFD8E1",
+        "er": 0.0005579990809426903,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DWmSDH3kRQT",
+        "er": 0.025257664281494126,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DWWjPJugOBT",
+        "er": 0.01186568633886956,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DWZvzyYD1HI",
+        "er": 0.012932449287730585,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DWbj-QkgP7F",
+        "er": 0.009576248933237051,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DWmlbg0D8ab",
+        "er": 0.013285301647738463,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DWjy0DTjyNN",
+        "er": 0.05936125516969737,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DWoVBPYgPpc",
+        "er": 0.00878848552484737,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DWZNiyUAKR6",
+        "er": 0.02035055471673341,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DWKb1PnDz35",
+        "er": 0.07017659029738069,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DWUJdASgHDU",
+        "er": 0.1032134182367229,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DWrQCM4gLs5",
+        "er": 0.22764721328694282,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DWPQ1rvD8L0",
+        "er": 0.027235278671305718,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DWRnuajERws",
+        "er": 0.042982340970261934,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DWUcf0-j-ii",
+        "er": 0.00698319438062102,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DWEgTddAE5p",
+        "er": 0.010954834897918991,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DWHc9wzEcu4",
+        "er": 0.19543917810017725,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DWhDZwuEWoz",
+        "er": 0.02721066106479354,
+        "content_format": "static_post"
+      }
+    ]
+  },
+  "external_url": "https://www.facebook.com/profile.php?id=61583984963443",
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "a_validar_pre_monetizacao",
+    "secondary": null,
+    "matches": [],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "a_validar_pre_monetizacao",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "parcial",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T02:08:39.707Z",
+    "versao_framework": "v3.1"
+  }
+}

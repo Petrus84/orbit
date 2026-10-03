@@ -1,0 +1,674 @@
+{
+  "handle": "dricaroribeiro",
+  "setor_benchmark_key": "4_servico_consultoria",
+  "url": "https://www.instagram.com/dricaroribeiro/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T01:52:45.644Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "Dbb8qlrR1ju",
+      "caption": "Siga @dricaroribeiro para aprender mais ⭐️\n\nSe ficou alguma dúvida, deixe nos comentários ☝️\n\n#dieta #saude",
+      "timestamp": "2026-07-31T00:12:23.000Z",
+      "content_format": "reel",
+      "likes": 2967,
+      "comments": 72,
+      "video_view_count": 62315,
+      "video_play_count": 133180,
+      "latest_comments": [
+        "não sabia que morango era carboidrato, pois fruta que baixo indice glicemico",
+        "👏👏👏",
+        "👏👏👏👏👏",
+        "Dr. minha insulina 6.5 (rsrs..) mas estou no processo de ganho de massa.",
+        "Iria gostar do vídeo se passasse mais devagar",
+        "116 é pré diabetes.???? Não era a partir de 160",
+        "👏👏👏👏",
+        "Arroz minha mãe foi proibida de comer",
+        "Rápido demais",
+        "🙌"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaJYC-rxPyy",
+      "caption": "Quem disse que diabético não pode aproveitar um bom caldo no friozinho? 🥣✨\n\nO segredo para uma sopa ou caldo perfeito que não dá pico de glicose está em três regras básicas:\n1️⃣ Troque bases ricas em amido (batata inglesa/mandioca) por bases de baixo índice glicêmico (chuchu, couve-flor ou abóbora cabotiá).\n2️⃣ NÃO bata tudo no liquidificador! Deixar os legumes em pedaços te obriga a mastigar e preserva as fibras.\n3️⃣ Nunca esqueça a PROTEÍNA! Carne desfiada, frango ou ovos são os freios de mão da sua glicose.\n\nComer bem para tratar o diabetes e a resistência à insulina é sobre fazer trocas inteligentes, e não sobre cortar tudo o que você gosta.\n\n🔥 Já salva esse post para não esquecer de fazer essas trocas na sua próxima janta!\n\nQual é o seu caldinho favorito? Comenta aqui embaixo para eu saber! 👇\n\n#caldodeabobora #caldoverdelowcarb #diabetestipo2 #sopasaudavel #controledeglicemia nutricaoeficiente saudemetabolica lowcarbbrasil",
+      "timestamp": "2026-06-28T22:38:12.000Z",
+      "content_format": "reel",
+      "likes": 66,
+      "comments": 10,
+      "video_view_count": 598,
+      "video_play_count": 1387,
+      "latest_comments": [
+        "Ótimas dicas! 👏👏👏👏\nObrigada!🙌",
+        "Ah lembrei,  já fiz o 3* e 2* lugar também, amo,  caldo verde e caldo de legumes 😋😋...",
+        "O primeiro lugar já fiz, caldo de abóbora, delícia 😋😋",
+        "👏👏👏👏",
+        "Deus te abençoe e te guarde 🙏🙏",
+        "Obrigada pelas dicas👏👏👏",
+        "Se o Nutri falou , tá falado 👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZvqvgiRZ7L",
+      "caption": "Siga @icaroribeironutri",
+      "timestamp": "2026-06-18T22:58:35.000Z",
+      "content_format": "reel",
+      "likes": 57,
+      "comments": 0,
+      "video_view_count": 1539,
+      "video_play_count": 2870,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZAfY3QvS0_",
+      "caption": "Siga @icaroribeironutri",
+      "timestamp": "2026-05-31T15:14:17.000Z",
+      "content_format": "reel",
+      "likes": 93,
+      "comments": 4,
+      "video_view_count": 1921,
+      "video_play_count": 7186,
+      "latest_comments": [
+        "@markescostta em 12 horas tu mata 90% da lista (já contando o sono)",
+        "Quantas horas vai ter esse dias",
+        "👏👏👏👏👏",
+        "@markescostta me perguntei a mesma coisa kkk"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZGZEczv9Ty",
+      "caption": "Siga @icaroribeironutri",
+      "timestamp": "2026-06-02T22:14:48.000Z",
+      "content_format": "reel",
+      "likes": 22,
+      "comments": 1,
+      "video_view_count": 532,
+      "video_play_count": 1547,
+      "latest_comments": [
+        "A seleta de legumes vc garante q não tem conservantes??"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYDbajXvEIM",
+      "caption": "Me siga @icaroribeironutri para conseguir potencializar ainda mais seus resultados através de uma nutrição realista e eficiente 💡",
+      "timestamp": "2026-05-07T22:08:06.000Z",
+      "content_format": "reel",
+      "likes": 23,
+      "comments": 2,
+      "video_view_count": 1129,
+      "video_play_count": 2189,
+      "latest_comments": [
+        "👏👏👏👏👏",
+        "👏👏👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZqJN9WvAG6",
+      "caption": "Siga @icaroribeironutri \n\n Vamos aproveitar a estação e consumi-la 🍊\n\nLembrando que sempre vale muito a pena priorizar o consumo das frutas da estação 👊",
+      "timestamp": "2026-06-16T19:29:27.000Z",
+      "content_format": "reel",
+      "likes": 24,
+      "comments": 2,
+      "video_view_count": 391,
+      "video_play_count": 811,
+      "latest_comments": [
+        "Diabético pode comer ?",
+        "E também é deliciosa 👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXsXaDkD7OC",
+      "caption": "Siga meu perfil @icaroribeironutri para emagrecer de forma leve 💡",
+      "timestamp": "2026-04-28T23:11:08.000Z",
+      "content_format": "reel",
+      "likes": 38,
+      "comments": 4,
+      "video_view_count": 519,
+      "video_play_count": 1279,
+      "latest_comments": [
+        "👏👏👏👏👏",
+        "Sou mãe de um menino que era constipado e confirmo o poder do kiwi. Nem sabia dessa função dele, rs",
+        "🐐",
+        "👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZ3a__2N9NH",
+      "caption": "Você acha que só o açúcar de mesa é o vilão da sua glicemia? 🚨\n\nA verdade é que muitos alimentos do dia a dia, até alguns disfarçados de “saudáveis”, se comportam como uma verdadeira bomba de glicose no seu sangue. O pãozinho, a tapioca pura e o suco coado causam picos de insulina que esgotam o seu pâncreas porque não possuem fibras ou proteínas para atrasar a digestão.\n\nA forma como o carboidrato é processado antes de chegar à sua mesa importa — e muito! Não se trata de cortar tudo, mas de fazer escolhas inteligentes. 💡\n\n💬 Qual desses você consome ou consumia com mais frequência sem saber? Me conta nos comentários! 👇\n\n#diabetes #diabetestipo2 #glicemia #nutricao #carboidratos saudemetabolica glicose insulina",
+      "timestamp": "2026-06-21T23:17:26.000Z",
+      "content_format": "reel",
+      "likes": 282,
+      "comments": 7,
+      "video_view_count": 5056,
+      "video_play_count": 9379,
+      "latest_comments": [
+        "Valioso demais teu conteúdo",
+        "Eu Joelma tô usando estevia",
+        "👏👏👏👏",
+        "Mascado?",
+        "Não fale que é para diabetes tipo 2, pois um leigo ou um recém diabético tipo 1 ao ver isso irá achar que é somente para diabetes tipo 2. Mas isto não é somente para diabetes tipo 2, diabetes tipo 1 também"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXz3IuWxLny",
+      "caption": "Siga meu perfil @icaroribeironutri para conseguir emagrecer de forma leve 💡",
+      "timestamp": "2026-05-01T21:01:30.000Z",
+      "content_format": "reel",
+      "likes": 15,
+      "comments": 1,
+      "video_view_count": 276,
+      "video_play_count": 723,
+      "latest_comments": [
+        "Muito bem explicado👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DX8CA2aPdIT",
+      "caption": "O mounjaro está quebrando o povo?",
+      "timestamp": "2026-05-05T01:12:32.000Z",
+      "content_format": "reel",
+      "likes": 11,
+      "comments": 0,
+      "video_view_count": 544,
+      "video_play_count": 1281,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYTB3pIsrbG",
+      "caption": "As vezes é mais fácil pro profissional fala: “Não coma mais carboidratos, corte todos…” \n\nDo que educar a pessoa a fazer uma alimentação e um estilo de vida melhor. Da muito mais trabalho… eu sei… mas não deveria ser assim.\n\nA diabetes é um fardo que ela já vai ter que carregar pro resto da vida, porque não ajudarmos a deixá-lo mais leve?",
+      "timestamp": "2026-05-13T23:33:06.000Z",
+      "content_format": "reel",
+      "likes": 23,
+      "comments": 1,
+      "video_view_count": 277,
+      "video_play_count": 669,
+      "latest_comments": [
+        "É isso aí, meu filhão"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZDph7PPS8K",
+      "caption": "Siga @icaroribeironutri",
+      "timestamp": "2026-06-01T20:43:05.000Z",
+      "content_format": "reel",
+      "likes": 19,
+      "comments": 1,
+      "video_view_count": 369,
+      "video_play_count": 883,
+      "latest_comments": [
+        "O que comer antes do exercício físico??"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DY0S3VjRjJH",
+      "caption": "Quero trazer essa discursão sobre:\n\nTratamento da OBESIDADE é diferente de um tratamento puramente para EMAGRECIMENTO\n\nE porque é importante reforçar isto? \n\nPra conscientizar que obesidade não se vence somente com “motivação” “disciplina” “vergonha na cara”.\n\nPrecisa de um plano terapêutico (médico, nutricional, psicológico…), acolhimento e em até mesmo de políticas públicas eficientes.\n\nObesidade é uma doença, não tem cura… mas, tem tratamento.\n\nConte comigo. E minha equipe.\n\n#obesidade #emagrecer #emagrecimento",
+      "timestamp": "2026-05-26T21:41:54.000Z",
+      "content_format": "reel",
+      "likes": 20,
+      "comments": 3,
+      "video_view_count": 275,
+      "video_play_count": 699,
+      "latest_comments": [
+        "👏👏",
+        "👏👏 Excelente",
+        "@gfaustinos 👊"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbT3zhChtyP",
+      "caption": "Se você tem o interesse em receber uma LISTA de alimentos e combinações excelentes para reverter o pré diabetes e controlar o diabetes tipo 2\n\nComenta nos comentários a palavra LISTA que enviarei para seu direct\n\n#diabetes #saude #vidasaudável",
+      "timestamp": "2026-07-27T20:55:05.000Z",
+      "content_format": "reel",
+      "likes": 109,
+      "comments": 8,
+      "video_view_count": 700,
+      "video_play_count": 1649,
+      "latest_comments": [
+        "👏👏👏🏻👏🏻👏🏻",
+        "Eu ja sou magra naturalmente e fiquei pré-diabetica, daí emagreci muito pq ouvi tantas coisas que até a água eu penso se devo ou não ingerir. Vc Dr é o único que me fez abrir o apetite 👏👏👏👏",
+        "Ótimas dicas👏👏👏",
+        "Dica boa demais👏👏👏👏",
+        "@sandra.marques.773776 eu também nesse mesmo dilema magra e agora pré diabética é mais magra ainda com medo de comer tudo!"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXmcuNnj01Q",
+      "caption": "Siga meu perfil @icaroribeironutri para conseguir emagrecer de forma leve 💡\n\n🎬: @rafaela.mrspotato",
+      "timestamp": "2026-04-26T16:01:42.000Z",
+      "content_format": "reel",
+      "likes": 31,
+      "comments": 0,
+      "video_view_count": 460,
+      "video_play_count": 1310,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbgwNzrPI5C",
+      "caption": "O medicamento é uma ferramenta excelente. Mas ele não trabalha sozinho.\n\nQuando o resultado não vem — como uma hemoglobina glicada que continua em 9,8% —, é muito comum surgirem pensamentos como:\n\n“Mas o remédio não está fazendo efeito.”\n\n“Mas meu metabolismo é muito lento.”\n\n“Mas a genética não ajuda.”\n\n“Mas para mim nada funciona.”\n\nE, sem perceber, a medicação passa a carregar um peso que não é dela.\n\nO Xigduo é uma combinação extremamente eficiente para o diabetes tipo 2. Ele atua otimizando a ação da insulina no fígado e ajudando os rins a eliminarem o excesso de glicose pela urina. O remédio faz a parte dele.\n\nMas a pergunta que fica é: o que você está fazendo na cozinha todos os dias?\n\nNenhum tratamento medicamentoso no mundo compensa uma alimentação desalinhada da sua realidade. Tratar o diabetes não é sobre viver de restrições radicais ou dependência exclusiva de farmácia.\n\nÉ sobre entender como combinar os alimentos certos para o seu corpo responder da melhor forma possível, sem que você precise abrir mão de comer bem.\n\nSe a sua glicada continua alta, o problema pode não ser o remédio, mas o pilar que sustenta o seu estilo de vida.\n\nSe você quer ajustar sua alimentação de forma prática para controlar a glicose de verdade e sem dietas malucas, comente CONSULTA aqui que eu te ajudo a construir um plano ajustado à sua rotina.",
+      "timestamp": "2026-08-01T21:00:14.000Z",
+      "content_format": "reel",
+      "likes": 12,
+      "comments": 2,
+      "video_view_count": 392,
+      "video_play_count": 885,
+      "latest_comments": [
+        "Corrigindo: da organela mitocôndria",
+        "Baixe a resistência à insulina ajudando-a passar a membrana plasmática: use selênio, zinco, magnésio bisciglinato. Cuide e muito a organela mitocronia com ácido alpha lipóico 1.850 mg ao dia. SEJA LUZ PARA O MUNDO."
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXxofPmsOg2",
+      "caption": "Siga meu perfil @icaroribeironutri para conseguir emagrecer de forma leve 💡",
+      "timestamp": "2026-05-01T00:14:24.000Z",
+      "content_format": "reel",
+      "likes": 15,
+      "comments": 0,
+      "video_view_count": 286,
+      "video_play_count": 862,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DX5JGyNRPZK",
+      "caption": "Essas 3 coisas é tiro e queda",
+      "timestamp": "2026-05-03T22:14:34.000Z",
+      "content_format": "reel",
+      "likes": 21,
+      "comments": 1,
+      "video_view_count": 325,
+      "video_play_count": 693,
+      "latest_comments": [
+        "👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DX2MlxfRYNr",
+      "caption": "Siga meu perfil @icaroribeironutri para conseguir emagrecer de forma leve 💡",
+      "timestamp": "2026-05-02T18:46:31.000Z",
+      "content_format": "reel",
+      "likes": 10,
+      "comments": 1,
+      "video_view_count": 319,
+      "video_play_count": 768,
+      "latest_comments": [
+        "👏👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DY2z1MuPpYK",
+      "caption": "Siga @icaroribeironutri",
+      "timestamp": "2026-05-27T21:02:53.000Z",
+      "content_format": "reel",
+      "likes": 53,
+      "comments": 3,
+      "video_view_count": 2313,
+      "video_play_count": 4426,
+      "latest_comments": [
+        "Quem foi que tu mandou meu vídeo pô?",
+        "@rilkepinheiro88 nem te conto"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZnu1-WPCog",
+      "caption": "Siga @icaroribeironutri \n\n🗒️: Informações presentes neste vídeo tem caráter educativo, não substitui acompanhamento médico e nutricional.\n\n#fruta #dieta #vida",
+      "timestamp": "2026-06-15T21:03:32.000Z",
+      "content_format": "reel",
+      "likes": 87,
+      "comments": 3,
+      "video_view_count": 2300,
+      "video_play_count": 4490,
+      "latest_comments": [
+        "Muito bom 👏👏👏👏",
+        "Excelente 👏",
+        "@gfaustinos 👊⚡️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXaM8hFJbS0",
+      "caption": "Ter o perfil financeiro mais “gastona” dificulta o emagrecimento",
+      "timestamp": "2026-04-21T21:50:00.000Z",
+      "content_format": "reel",
+      "likes": 8,
+      "comments": 3,
+      "video_view_count": 187,
+      "video_play_count": 532,
+      "latest_comments": [
+        "👏👏👏",
+        "Extremamente gastona, mas você conseguiu me fazer perder 40kgs",
+        "@biancabonoto tu é fera dms dona Bia! Faz sentindo a analogia da gastona?"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXc0nu8jRVm",
+      "caption": "Siga o perfil @icaroribeironutri ⚡️\n\n#emagrecimentosaudavel #emagrecer #emagrecimento",
+      "timestamp": "2026-04-22T22:16:49.000Z",
+      "content_format": "reel",
+      "likes": 20,
+      "comments": 2,
+      "video_view_count": 337,
+      "video_play_count": 953,
+      "latest_comments": [
+        "👏👏👏👏",
+        "👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXkumk6jIqB",
+      "caption": "Siga meu perfil @icaroribeironutri para conseguir emagrecer de forma leve 💡",
+      "timestamp": "2026-04-25T23:57:56.000Z",
+      "content_format": "reel",
+      "likes": 16,
+      "comments": 1,
+      "video_view_count": 190,
+      "video_play_count": 631,
+      "latest_comments": [
+        "👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXj9iVoEalF",
+      "caption": "Siga meu perfil @icaroribeironutri para conseguir emagrecer de forma leve 💡",
+      "timestamp": "2026-04-25T16:48:59.000Z",
+      "content_format": "reel",
+      "likes": 20,
+      "comments": 4,
+      "video_view_count": 197,
+      "video_play_count": 568,
+      "latest_comments": [
+        "👏👏dicas maravilhosas Ícaro!",
+        "👏👏👏👏",
+        "👏👏👏",
+        "👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXh8z1iEcJi",
+      "caption": "Siga meu perfil @icaroribeironutri para conseguir emagrecer de forma leve💡",
+      "timestamp": "2026-04-24T22:05:10.000Z",
+      "content_format": "reel",
+      "likes": 18,
+      "comments": 0,
+      "video_view_count": 203,
+      "video_play_count": 530,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DboUarQPoYT",
+      "caption": "Siga @dricaroribeiro para mais ⭐️",
+      "timestamp": "2026-08-04T19:33:55.000Z",
+      "content_format": "reel",
+      "likes": 16,
+      "comments": 1,
+      "video_view_count": 151,
+      "video_play_count": 419,
+      "latest_comments": [
+        "Eu quero"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXe9xG3EU4v",
+      "caption": "Siga o perfil @icaroribeironutri",
+      "timestamp": "2026-04-23T18:24:51.000Z",
+      "content_format": "reel",
+      "likes": 20,
+      "comments": 2,
+      "video_view_count": 445,
+      "video_play_count": 1200,
+      "latest_comments": [
+        "Concordo!!👏",
+        "👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYBWGgwMywU",
+      "caption": "Me siga @icaroribeironutri para conseguir potencializar ainda mais seus resultados através de uma nutrição realista e eficiente 💡",
+      "timestamp": "2026-05-07T02:41:43.000Z",
+      "content_format": "reel",
+      "likes": 11,
+      "comments": 0,
+      "video_view_count": 295,
+      "video_play_count": 778,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 43288,
+  "following_count": 383,
+  "posts_count": 204,
+  "follower_tier": "mid",
+  "engagement": {
+    "sample_size": 30,
+    "median_er": 0.0005313250785437073,
+    "mean_er": 0.0032849750508223987,
+    "er_per_post": [
+      {
+        "short_code": "Dbb8qlrR1ju",
+        "er": 0.07020421363888375,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaJYC-rxPyy",
+        "er": 0.0017556828682313806,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZvqvgiRZ7L",
+        "er": 0.0013167621511735355,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZAfY3QvS0_",
+        "er": 0.0022408057660321568,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZGZEczv9Ty",
+        "er": 0.0005313250785437073,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYDbajXvEIM",
+        "er": 0.0005775272592866384,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZqJN9WvAG6",
+        "er": 0.0006006283496581039,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DXsXaDkD7OC",
+        "er": 0.0009702457956015524,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZ3a__2N9NH",
+        "er": 0.006676215117353539,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DXz3IuWxLny",
+        "er": 0.00036961744594344855,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DX8CA2aPdIT",
+        "er": 0.0002541119940861209,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYTB3pIsrbG",
+        "er": 0.0005544261689151728,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZDph7PPS8K",
+        "er": 0.00046202180742931065,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DY0S3VjRjJH",
+        "er": 0.0005313250785437073,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbT3zhChtyP",
+        "er": 0.002702827573461467,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DXmcuNnj01Q",
+        "er": 0.0007161338015154315,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbgwNzrPI5C",
+        "er": 0.0003234152652005175,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DXxofPmsOg2",
+        "er": 0.000346516355571983,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DX5JGyNRPZK",
+        "er": 0.0005082239881722418,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DX2MlxfRYNr",
+        "er": 0.0002541119940861209,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DY2z1MuPpYK",
+        "er": 0.00129366106080207,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZnu1-WPCog",
+        "er": 0.002079098133431898,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DXaM8hFJbS0",
+        "er": 0.0002541119940861209,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DXc0nu8jRVm",
+        "er": 0.0005082239881722418,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DXkumk6jIqB",
+        "er": 0.00039271853631491405,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DXj9iVoEalF",
+        "er": 0.0005544261689151728,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DXh8z1iEcJi",
+        "er": 0.0004158196266863796,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DboUarQPoYT",
+        "er": 0.00039271853631491405,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DXe9xG3EU4v",
+        "er": 0.0005082239881722418,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYBWGgwMywU",
+        "er": 0.0002541119940861209,
+        "content_format": "reel"
+      }
+    ]
+  },
+  "external_url": "https://wa.me/message/POSN5H7CCYUWP1",
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "a_validar_pre_monetizacao",
+    "secondary": null,
+    "matches": [],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "a_validar_pre_monetizacao",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "parcial",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T01:52:45.644Z",
+    "versao_framework": "v3.1"
+  }
+}

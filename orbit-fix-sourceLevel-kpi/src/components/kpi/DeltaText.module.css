@@ -1,0 +1,26 @@
+/* DeltaText.module.css */
+
+.wrapper {
+  display:     inline-flex;
+  align-items: center;
+  gap:         var(--space-2);
+}
+
+.positive {
+  font-size:   var(--font-size-sm);
+  font-family: var(--font-mono);
+  color:       var(--neon-cyan);
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+}
+
+.negative {
+  font-size:   var(--font-size-sm);
+  font-family: var(--font-mono);
+  color:       var(--neon-red);
+  text-shadow: 0 0 8px rgba(255, 68, 68, 0.5);
+}
+
+.label {
+  font-size: var(--font-size-xs);
+  color:     var(--text-dim);
+}

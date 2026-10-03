@@ -1,0 +1,596 @@
+{
+  "handle": "mm_membersclub",
+  "setor_benchmark_key": "6_membership_comunidade",
+  "url": "https://www.instagram.com/mm_membersclub/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T02:14:31.657Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DboxkfFAZPR",
+      "caption": "July unfolded through a series of exceptional experiences—from exclusive moments in the South of France with Château Minuty to Bastille Day celebrations, internationally renowned DJs, and curated gatherings across the MM community. Reserve your place at what's next through the Members Portal.",
+      "timestamp": "2026-08-04T23:45:37.000Z",
+      "content_format": "reel",
+      "likes": 8,
+      "comments": 1,
+      "video_view_count": 65,
+      "video_play_count": 486,
+      "latest_comments": [
+        "👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DagZwOjCcMM",
+      "caption": "Join us for an immersive culinary masterclass where Members will learn the techniques behind Mediterranean classics alongside our chefs. From Avocado Green Gazpacho to Salt-Crust Branzino, each dish offers a deeper connection to the flavors and traditions of the region. The evening concludes with a curated dinner inspired by the Aegean coast. Reserve your place through the Members Portal.",
+      "timestamp": "2026-07-07T21:12:08.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 4,
+      "video_view_count": 467,
+      "video_play_count": 4911,
+      "latest_comments": [
+        "😍",
+        "This looks awesome",
+        "@orlandostylemag 🥰"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbWWRPHFQe3",
+      "caption": "Roll the dice, make your move, and stay for the company. Join fellow Members and the Miami Backgammon Society for an evening of backgammon, cocktails, and connection at MILA MM. August 5. RSVP via the Members Portal.",
+      "timestamp": "2026-07-28T20:00:01.000Z",
+      "content_format": "carousel",
+      "likes": 60,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dad7lWEl5Yr",
+      "caption": "July is about where membership can take you. From South of France to Miami and Winter Park, discover a month of exclusive gatherings, culinary experiences, tastings, and celebrations designed to bring Members together. Reserve your place through the Members Portal.",
+      "timestamp": "2026-07-06T22:09:40.000Z",
+      "content_format": "carousel",
+      "likes": 36,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🔥🔥🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da31SdkuiSD",
+      "caption": "A look back at MM’s first Members experience in the South of France. From Château Minuty’s vineyards to a sunset apéritif and curated dinner, every detail reflected the level of access and hospitality reserved for Members.\n\nDiscover the experiences that make MM more than a membership in the link in bio.",
+      "timestamp": "2026-07-17T00:06:25.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 7,
+      "video_view_count": 33,
+      "video_play_count": 4644,
+      "latest_comments": [
+        "It was an amazing evening!! Thank you so much!!!",
+        "It was a dream😍",
+        "👏👏👏",
+        "❤️😍",
+        "@moni_spain305 It was such a pleasure having you, we’re looking forward to the next one already🥂✨",
+        "@lindazimany dream night with dream company! To many more unforgettable evenings 🤍"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZQN8fpgIHm",
+      "caption": "The Art of Summer, the MM way. An evening of champagne, citrus, music, and moments shared. AThank you to @maisonsvalentine , @yuzu_lemons , and @champagne_billecart_salmon for being part of the evening. The night carried on at CASA NEOS Lounge, where members closed out the celebration with @bobmosesmusic. ✨",
+      "timestamp": "2026-06-06T17:49:45.000Z",
+      "content_format": "reel",
+      "likes": 50,
+      "comments": 2,
+      "video_view_count": 493,
+      "video_play_count": 2173,
+      "latest_comments": [
+        "👏👏",
+        "Honored to be part of such a beautiful evening. Thank you for including Matrioshka Caviar by Maison Valentine in this unforgettable celebration ✨🥂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaLvhVqoyW0",
+      "caption": "Your MM membership now extends beyond our own venues. Through our partnership with @onda_life, Members receive six complimentary visits annually to a curated network of private clubs around the world, unlocking exceptional hospitality and elevated experiences wherever they travel. Discover more through your Members Portal.",
+      "timestamp": "2026-06-29T20:38:31.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 0,
+      "video_view_count": 612,
+      "video_play_count": 3201,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "Dav9yiTjpUn",
+      "caption": "Connection defines the MM experience. Set beneath MILA, MILA MM pairs refined cocktails and intimate dining with an atmosphere designed for conversation, community, and unforgettable evenings.",
+      "timestamp": "2026-07-13T22:15:35.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 0,
+      "video_view_count": 14,
+      "video_play_count": 4325,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbbjmXAlPu_",
+      "caption": "From dinner at the Restaurant to a night at the Lounge, experience every side of CASA NEOS in one seamless evening. Reserve your experience via link in bio. MM Members enjoy priority reservations and seamless access to the Lounge.",
+      "timestamp": "2026-07-30T20:34:06.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 1,
+      "video_view_count": 1895,
+      "video_play_count": 10089,
+      "latest_comments": [
+        "💙💙"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZngh24jgJw",
+      "caption": "More than a place to meet. A place to connect. Refined mixology, familiar faces, and evenings that feel effortlessly in rhythm.",
+      "timestamp": "2026-06-15T18:54:37.000Z",
+      "content_format": "reel",
+      "likes": 109,
+      "comments": 3,
+      "video_view_count": 1211,
+      "video_play_count": 4942,
+      "latest_comments": [
+        "😮‍💨😮‍💨",
+        "🤩🍸",
+        "@matteo.bon11 🥂✨"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYYGjnQusjg",
+      "caption": "Step into the season at The Art of Summer: The MM Way on Thursday, June 4th from 7PM–9PM, a celebration welcoming the start of summer with flowing champagne by Billecart-Salmon, vibrant energy, and a live DJ set beneath the summer sky. Guests are invited to embrace the spirit of the evening in all-white attire as the celebration unfolds from sunset into night. Dinner reservations at CASA NEOS are highly recommended to continue the evening before the night carries on after dark at the Lounge with music by Bob Moses.",
+      "timestamp": "2026-05-15T22:48:52.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 3,
+      "video_view_count": 1214,
+      "video_play_count": 7040,
+      "latest_comments": [
+        "Are you ready ? ✨",
+        "Cant wait!!🔥",
+        "👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZd1dt-jMLB",
+      "caption": "Uncover MM Members Club - A private membership offering priority access across Riviera Dining Group venues and with curated experiences around wellness, dining, nightlife, and exclusive moments shared among a like-minded community.\nA place to indulge, cultivate, and awaken.\nDiscover membership via link in bio..",
+      "timestamp": "2026-06-12T00:44:47.000Z",
+      "content_format": "carousel",
+      "likes": 130,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Does not exist",
+        "Me next 😍❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaQ6-hVCuRX",
+      "caption": "On July 13, MM Members are invited behind the gates of Château Minuty @chateauminuty for an evening of discovery and celebration. The journey begins with a private estate visit, continues with a sunset apéritif among the vineyards, and concludes with an intimate dinner overlooking the Provençal landscape. Exclusive to MM Members, discover more on your portal.",
+      "timestamp": "2026-07-01T20:54:39.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 1,
+      "video_view_count": 367,
+      "video_play_count": 2212,
+      "latest_comments": [
+        "👏👏👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DY-ePA_CTzG",
+      "caption": "An evening of Blanc de Blancs, golden light, and meaningful moments above the river. Members joined us at MM Rooftop for an intimate tasting experience with Billecart-Salmon, where every pour invited discovery and the night unfolded effortlessly. 🥂",
+      "timestamp": "2026-05-30T20:25:20.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbEdvTljKoh",
+      "caption": "Discover one of MILA's signature nigiri platters at MILA MM, an intimate setting reserved exclusively for Members. A refined expression of the MILA experience, where exceptional cuisine and meaningful moments come together.\nReserve your table with priority access through the Members Portal.",
+      "timestamp": "2026-07-21T21:19:13.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DXz5kYMjhAV",
+      "caption": "An unforgettable evening with Clase Azul México, unveiling the Spirit of Champions decanter and kicking off a weekend-long exclusive Miami Race Week partnership defined by craftsmanship, culture, and elevated celebration.",
+      "timestamp": "2026-05-01T21:21:30.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 4,
+      "video_view_count": 2367,
+      "video_play_count": 13680,
+      "latest_comments": [
+        "🔊🔊🙏🎷🎷🎷✨✨✨🇧🇷🇧🇷✨😎😎🔥🇧🇷💨🌊🌊🌊",
+        "Looks amazing",
+        "😍😍😍",
+        "🤩🤩"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DYsvbLJDJ2M",
+      "caption": "The evening unfolds differently at AVA Coconut Grove. From cocktails throughout the restaurant to a more tucked away experience inside AVA MM, Members can sip, unwind, and settle into a quieter side of the night. MM Members may reserve through their Members Portal. ✨",
+      "timestamp": "2026-05-23T23:09:14.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Beautiful presentation. The attention to detail in every element makes the experience feel truly elevated."
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZ0aiy_Aost",
+      "caption": "A new side of AVA MM Coconut Grove. Beginning at 9 PM, discover AVA Lounge, where curated cocktails, music, and late-night energy carry the evening a little further. Every Thursday–Saturday.",
+      "timestamp": "2026-06-20T19:12:35.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZI0ao3n9vI",
+      "caption": "Thank you for joining us throughout May, from intimate conversations at MM Circle with Karina Moises, to evenings of art with Ignacio Gana, our Blanc de Blancs tasting with Billecart-Salmon, and spirited play at the Backgammon Tournament. See what June has in store through your Members Portal. ✨",
+      "timestamp": "2026-06-03T20:51:35.000Z",
+      "content_format": "carousel",
+      "likes": 28,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaEJPYSHz3j",
+      "caption": "AVA MM Winter Park offers Members an intimate setting for crafted cocktails, conversation, and evenings that linger long after the last pour. Discover more through your Members Portal.",
+      "timestamp": "2026-06-26T21:48:46.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DYiRq-LjvBw",
+      "caption": "The LOUNGE at CASA NEOS moves with the rhythm of the night, where cocktails flow and the music deepens. Open Thursday through Sunday, MM Members enjoy priority access to the night ahead. ✨",
+      "timestamp": "2026-05-19T21:36:45.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🔥🔥🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DYQL_wkChn4",
+      "caption": "Discreet and refined, MILA MM offers a more intimate way to experience the evening.",
+      "timestamp": "2026-05-12T21:01:02.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DXsckn2De0Q",
+      "caption": "Last week, we hosted a private breathwork experience for MM Members at the gorgeous Reserve Padel Seaplane..\n\nI guided members through a euphoric breathing journey .. and everyone left feeling lighter, clearer, and deeply renewed ✨\n\nMembers also received curated gifting from my incredible partners — ALO, Happy Aging, and a signature Casa Neos candle.\n\nThank you to all of the partners who helped bring this beautiful experience to life..\n\nCan’t wait to breathe with Mila again soon 😌\n\n@mm_membersclub @milagroup_miami @rivieradininggroup @casa_neos @marinegirongaly \n@alo @alowellnessclub \n@happyaging \n@reservepadel @morgangoldstein_",
+      "timestamp": "2026-04-28T23:57:56.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 9,
+      "video_view_count": 1011,
+      "video_play_count": 3955,
+      "latest_comments": [
+        "stunning and magical my girl",
+        "👏👏👏👏👏",
+        "Hi Kira, I really like your content! I would love to present you with a proposal, dm me😊",
+        "🤍✨",
+        "Beautiful evening 🤍✨",
+        "& my girl look great in green, jot that down",
+        "@bylauren.paige thank u angel girl ❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DYQHlqWHxsZ",
+      "caption": "Wednesdays, reserved for Members. At AVA MM Coconut Grove, dinner begins with a complimentary mezze, setting the tone for an evening shaped by connection, intention, and ease. Secure your table through your Members Portal.ava cg perk of the month",
+      "timestamp": "2026-05-12T20:22:25.000Z",
+      "content_format": "carousel",
+      "likes": 30,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "That presentation looks incredible! 🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbgkj67iRe0",
+      "caption": "This month at MM, explore a curated calendar of exclusive experiences across every destination. From Members Mixers and Roll & Revel Backgammon Night to rooftop Sunset Rituals, live music, and exclusive summer sound experiences in Marbella, every gathering is designed to connect our community. Reserve your place through the Members Portal.",
+      "timestamp": "2026-08-01T19:17:36.000Z",
+      "content_format": "carousel",
+      "likes": 75,
+      "comments": 3,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "♥️",
+        "🔥",
+        "🔥🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYDZ6NIE5gy",
+      "caption": "April at MM brought together the richness of the Valrhona chocolate experience, the grounding energy of breathwork, and a refined Clase Azul México kickoff to Miami Race Week, each moment shaped by our pillars of Indulge, Cultivate, and Awaken. Explore what’s ahead through your Members Portal.",
+      "timestamp": "2026-05-07T21:52:33.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DYIW_Z5CrQz",
+      "caption": "An unforgettable Miami Race Week with MM. From priority reservations to exclusive experiences throughout the week, thank you to our Members for making every moment one to remember.",
+      "timestamp": "2026-05-09T20:03:08.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🙌",
+        "Amazing 😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbOf-cIjaAS",
+      "caption": "An afternoon of learning, creating, and gathering. Our Aegean Cooking Masterclass invited Members to discover the craftsmanship, techniques, and attention to detail behind some of AVA Winter Park's signature dishes. From preparing salt-crusted branzino to sharing the meal together, it was an experience that brought our culinary philosophy to life. Explore upcoming Member experiences through the Members Portal.",
+      "timestamp": "2026-07-25T18:52:07.000Z",
+      "content_format": "reel",
+      "likes": 39,
+      "comments": 3,
+      "video_view_count": 111,
+      "video_play_count": 1798,
+      "latest_comments": [
+        "Let’s cook 🍽️",
+        "Looks so fun!! 🤩",
+        "Lovee winter park!"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZ7oNUWOu0-",
+      "caption": "One night in Saint-Tropez. On July 13, MM Members are invited to a private immersive experience.  By invitation only.\nRSVP for the waitlist through the link in bio.",
+      "timestamp": "2026-06-23T14:29:45.000Z",
+      "content_format": "reel",
+      "likes": 220,
+      "comments": 14,
+      "video_view_count": 3147,
+      "video_play_count": 10714,
+      "latest_comments": [
+        "Doing anything in st Tropez for the 4th of July weekend for your members? 😃",
+        "Love to attend",
+        "👸",
+        "❤️",
+        "Who will invite me🥰🥰💁🏼‍♀️💁🏼‍♀️",
+        "Where will be the location of the dinner?",
+        "Love this! I’m a member and will be in Saint Tropez that week!"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaoDyz4Aj7e",
+      "caption": "An exclusive summer offering for MM Members. Join us for Omakase on Thursdays throughout July and August and enjoy a complimentary wine pairing, thoughtfully curated to accompany the menu and enhance every moment of the experience. Available through the Members Portal.",
+      "timestamp": "2026-07-10T20:33:55.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    }
+  ],
+  "followers_count": 19601,
+  "following_count": 82,
+  "posts_count": 481,
+  "follower_tier": "nano",
+  "engagement": {
+    "sample_size": 11,
+    "median_er": 0.002652925871129024,
+    "mean_er": 0.0037799555681296408,
+    "er_per_post": [
+      {
+        "short_code": "DboxkfFAZPR",
+        "er": 0.0004591602469261772,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbWWRPHFQe3",
+        "er": 0.0030610683128411815,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "Dad7lWEl5Yr",
+        "er": 0.0018876587929187287,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DZQN8fpgIHm",
+        "er": 0.002652925871129024,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZngh24jgJw",
+        "er": 0.005713994183970205,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZd1dt-jMLB",
+        "er": 0.0067343502882506,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DZI0ao3n9vI",
+        "er": 0.0014284985459925514,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DYQHlqWHxsZ",
+        "er": 0.0015815519616346105,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "Dbgkj67iRe0",
+        "er": 0.003979388806693536,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbOf-cIjaAS",
+        "er": 0.0021427478189888272,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZ7oNUWOu0-",
+        "er": 0.011938166420080608,
+        "content_format": "reel"
+      }
+    ]
+  },
+  "external_url": "https://link.me/mm_membersclub",
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "a_validar_pre_monetizacao",
+    "secondary": null,
+    "matches": [],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "a_validar_pre_monetizacao",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "parcial",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T02:14:31.657Z",
+    "versao_framework": "v3.1"
+  }
+}

@@ -1,0 +1,686 @@
+{
+  "handle": "zzsmembersclub",
+  "setor_benchmark_key": "6_membership_comunidade",
+  "url": "https://www.instagram.com/zzsmembersclub/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T02:12:31.331Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DblzGBEFZ35",
+      "caption": "Few drinks convey sunny elegance quite like a Spritz. Our Riviera variation begins with a remarkable strawberry amaro crafted from North Fork Strawberry Wine, along with eau de vie, whose gentle bitterness is complemented by nectarine, grapefruit, and prosecco. \n\nEqual parts refreshing and sophisticated, this is the sort of cocktail best enjoyed slowly on a warm evening in Manhattan.",
+      "timestamp": "2026-08-03T20:00:56.000Z",
+      "content_format": "static_post",
+      "likes": 32,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🔥🔥🔥🔥",
+        "#zzsclub #zzsmembersclub #newyork"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaBbi9kFdyz",
+      "caption": "Settle in at ZZ’s Brasserie, order the Sushi Platter, and leave it to us to make Toyosu Market’s finest absolutely shine.",
+      "timestamp": "2026-06-25T20:30:57.000Z",
+      "content_format": "static_post",
+      "likes": 86,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "#zzsclub #zzsmembersclub #newyork"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYnakcXlbGm",
+      "caption": "Now playing at the bar in Miami: The Tokyo Rickey, which takes the classic highball — traditionally made with citrus, sugar, and the bartender’s spirit of choice – on a trip to Japan.",
+      "timestamp": "2026-05-21T21:30:48.000Z",
+      "content_format": "static_post",
+      "likes": 38,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "#zzsclub #zzsmembersclub #miami"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZLMlpKFeVi",
+      "caption": "The Bento Box that dreams are made of, starring the ZZ’s Salmon Avocado Roll. Available exclusively at lunch.",
+      "timestamp": "2026-06-04T19:01:15.000Z",
+      "content_format": "carousel",
+      "likes": 168,
+      "comments": 3,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "@ali.heyer we must have soon",
+        "🔥🔥🔥🔥",
+        "#zzsclub #zzsmembersclub #miami"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbB1GINFRs5",
+      "caption": "At Carbone Privato, the fleeting beauty of peak-season tomatoes finds expression in the beloved Carbone Caprese, featuring Cherry, Sun Gold, and Demi-Sec Tomatoes, along with House Mozzarella, Salsa Verde, and Thai and Opal Basil.",
+      "timestamp": "2026-07-20T20:45:36.000Z",
+      "content_format": "static_post",
+      "likes": 59,
+      "comments": 3,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🔥🔥🔥",
+        "Excellent",
+        "#zzsclub #zzsmembersclub #newyork"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DX9vDLOANNF",
+      "caption": "For two epic nights, Bar Leone brought the World’s Best Bar to ZZ’s. Thank you again to lorenzoantinori_, @sanpellegrino_official, @diageo, and all of our Members for making it one for the record books!",
+      "timestamp": "2026-05-05T17:02:28.000Z",
+      "content_format": "reel",
+      "likes": 168,
+      "comments": 3,
+      "video_view_count": 2523,
+      "video_play_count": 11324,
+      "latest_comments": [
+        "🔥🔥",
+        "😍😍😍",
+        "#zzsclub #zzsmembersclub #newyork"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DY5R4bSnVhk",
+      "caption": "A modern riff on the margarita, The Infante blends blanco tequila, lime, macadamia, orgeat, and orange flower water—finished with a coconut salt rim. Bright, buttery, and made for spring in New York.",
+      "timestamp": "2026-05-28T20:01:13.000Z",
+      "content_format": "static_post",
+      "likes": 61,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🔥🔥🔥",
+        "#zzsclub #zzsmembersclub #newyork"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbbr8wWFUb5",
+      "caption": "A sign that stands for the best night in Miami. Welcome to ZZ’s.",
+      "timestamp": "2026-07-30T21:46:00.000Z",
+      "content_format": "static_post",
+      "likes": 103,
+      "comments": 3,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Absolutely 🔥🔥🔥🔥",
+        "🔥🔥🔥🔥🔥",
+        "#zzsclub #zzsmembersclub #miami"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXw5Wqoxn8n",
+      "caption": "Dear Members, \nWe had a night last night. Let’s do it one more time. Before they go back across the world, don’t miss the final night of the WORLD’S BEST BAR, @barleonehk by @lorenzoantinori_, tonight at ZZ’s.",
+      "timestamp": "2026-04-30T17:22:36.000Z",
+      "content_format": "reel",
+      "likes": 119,
+      "comments": 2,
+      "video_view_count": 1806,
+      "video_play_count": 10014,
+      "latest_comments": [
+        "Great night with you guys!",
+        "Such an epic evening"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbJeaQ4lUsc",
+      "caption": "The Matcha Margarita is one of those drinks that tends to attract repeat visits — especially in summer. Combining blanco tequila, fresh lime, and ceremonial-grade matcha, it remains a perennial favorite among Members in both New York and Miami.",
+      "timestamp": "2026-07-23T20:01:17.000Z",
+      "content_format": "static_post",
+      "likes": 91,
+      "comments": 4,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Best matcha cocktail I’ve ever had!!! 💚",
+        "😍💚",
+        "🙌",
+        "#zzsclub #zzsmembersclub #miami"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DavzkYTFSP-",
+      "caption": "The Daiquiri may be one of the world’s most perfect cocktails, but summertime invites a little improvisation. \n\nThis seasonal variation showcases the concentrated sweetness of seedless watermelon, paired with Mount Gay Rum from Barbados, fresh lime, Thai basil, and a hint of vanilla. The result is impossible to resist on a sunny afternoon in the Magic City.",
+      "timestamp": "2026-07-13T20:45:55.000Z",
+      "content_format": "static_post",
+      "likes": 51,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "#zzsclub #zzsmembersclub #miami"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DX69liHxIl9",
+      "caption": "Some Sundays are better than others. This one belongs to Mom. Sadelle’s brunch returns to ZZ’s New York.",
+      "timestamp": "2026-05-04T15:11:24.000Z",
+      "content_format": "reel",
+      "likes": 117,
+      "comments": 3,
+      "video_view_count": 1845,
+      "video_play_count": 8807,
+      "latest_comments": [
+        "🔥",
+        "🔥🔥🔥",
+        "Fabulous"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYVSGdyFQjg",
+      "caption": "Experience the delicacy of soft shell crab in all its glory. A decadent tempura Spider Roll dressed with shiso, scallion, and wasabi mayonnaise awaits at your Club.",
+      "timestamp": "2026-05-14T20:30:27.000Z",
+      "content_format": "static_post",
+      "likes": 47,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "#zzsclub #zzsmembersclub #newyork #miami"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXpdO0ElfL_",
+      "caption": "Now playing at the bar in Miami: The Grove, a tequila-based drink that celebrates the magic of the region’s incredible mangos. One of dozens of varieties that thrive in South Florida, the mango featured in this cocktail is tree-ripened and hand-picked for optimal flavor. It pairs beautifully with a hit of Thai Chili and Lime. \n\nPS: We love this cocktail so much that you can now find it at all MFG restaurants in Miami.",
+      "timestamp": "2026-04-27T20:01:08.000Z",
+      "content_format": "static_post",
+      "likes": 72,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "#zzsclub #zzsmembersclub #miami"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYxtychFIQf",
+      "caption": "Upstairs at Privato, Mario and team reimagine Whole Tempura Crab with a Carbone-style spin—stuffed with a delicate farce of crab, scallop, and herbs, and paired with lemon agrumato aioli, spring garlic, and tomato. Refined, vibrant, and a joy to eat.",
+      "timestamp": "2026-05-25T21:31:06.000Z",
+      "content_format": "static_post",
+      "likes": 83,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "#zzsclub #zzsmembersclub #newyork"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZVmgYYlbQD",
+      "caption": "We'd like to introduce our Members in New York to the cocktail that Head of Bars Nathan O’Neill is calling “the drink of the summer” — The Aperol Sour. In this take on the classic aperitivo, lemon juice sharpness the profile of the Aperol, with an egg white finish creating the silkiest texture. It’s the perfect thing to sip on a sunny day.",
+      "timestamp": "2026-06-08T20:00:08.000Z",
+      "content_format": "static_post",
+      "likes": 82,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🔥🔥🔥",
+        "#zzsclub #zzsmembersclub #newyork"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DalbOqSFVD8",
+      "caption": "The Caviar & Tomato returns to ZZ's — our seasonal take on the signature Caviar & Avocado. A whole cured heirloom tomato filled with bluefin tuna and yuzu crème fraîche, finished with Black Diamond Golden Ossetra Caviar.",
+      "timestamp": "2026-07-09T20:00:50.000Z",
+      "content_format": "static_post",
+      "likes": 188,
+      "comments": 7,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "YUM!",
+        "Favorite “season” loading…",
+        "🔥🔥🔥",
+        "@goldenreservecaviar",
+        "They use the worst caviar …",
+        "Wow !",
+        "#zzsclub #zzsmembersclub #newyork #miami"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZ5u4FclQBy",
+      "caption": "Now playing at the bar at ZZ’s Club in Miami: The Division Bell, a smoky, vibrant, Mezcal-inspired standout that was first popularized at the legendary Lower East Side bar Mayahuel. Our version highlights the beautiful character of Siete Misterios’ Doba-Yej Mezcal, with layers of bright citrus, orange peel, and dark cherry from Aperol and maraschino liqueur.",
+      "timestamp": "2026-06-22T20:45:55.000Z",
+      "content_format": "static_post",
+      "likes": 60,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "#zzsclub #zzsmembersclub #miami"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaL4_aBlfQv",
+      "caption": "Meet the cocktail of the summer, now playing at all of our restaurants in Miami: The Grove. It’s an irresistible celebration of the array of incredible mangoes that thrive in Florida, featuring Chinola Mango, Cazadores Blanco, Orange, Lime, and Aperol we infuse with Thai chili for a subtle hit of sultry heat.",
+      "timestamp": "2026-06-29T22:00:39.000Z",
+      "content_format": "static_post",
+      "likes": 169,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "❤️❤️",
+        "#zzsclub #zzsmembersclub #miami"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaeC5OEiRgM",
+      "caption": "The sweetest send-off: Ice Cream Sandos at ZZ’s Club 💌\n\nVenue: @zzsmembersclub\nPlanner: @andisoirees\nFloral Design @xquisiteeventsfl\nPhotographer: @erikadelgadophoto\nStationery: @invitorium",
+      "timestamp": "2026-07-06T23:13:27.000Z",
+      "content_format": "carousel",
+      "likes": 330,
+      "comments": 5,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🙌🙌",
+        "🔥🔥🔥🔥",
+        "Ice Cream Sandos are my summer aesthetic 🔥",
+        "Aaahhhh this wedding! 😍😍😍",
+        "😍😍 beautiful work!"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaTj_xdlXmr",
+      "caption": "Scallop Nigiri, gently torched to unforgettable effect.",
+      "timestamp": "2026-07-02T21:31:07.000Z",
+      "content_format": "carousel",
+      "likes": 54,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😍",
+        "#zzsclub #zzsmembersclub #miami"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZa99UEoBIz",
+      "caption": "Watching The Knicks at Leo’s while exploring The Vintage Liquor Cabinet? That’s how you do it.",
+      "timestamp": "2026-06-10T22:01:16.000Z",
+      "content_format": "carousel",
+      "likes": 160,
+      "comments": 3,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Hope to be a member in the future 👏",
+        "Universal Peace and good health for All🙏 Let’s put positive energy into the universe🙏 Thank you 💯💞",
+        "#zzsclub #zzsmembersclub #newyork"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYDJumVFQH1",
+      "caption": "May marks the highly anticipated start of soft shell crab season, now in full swing at ZZ’s, featuring a perfectly fried Tempura Crab paired with a house spicy mayo that incorporates Calabrian Chili.",
+      "timestamp": "2026-05-07T19:30:57.000Z",
+      "content_format": "static_post",
+      "likes": 81,
+      "comments": 3,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😍",
+        "🔥🔥🔥",
+        "#zzsclub #zzsmembersclub #newyork #miami"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbTZekClVC2",
+      "caption": "At Privato, savor our Spaghettini Pomodoro prepared with Grand Reserve Butter and Heirloom Cherry Tomatoes.",
+      "timestamp": "2026-07-27T16:30:37.000Z",
+      "content_format": "static_post",
+      "likes": 88,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏👏",
+        "#zzsclub #zzsmembersclub #newyork"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYfsQQDmLtP",
+      "caption": "Enjoy NBA playoffs in the Sports Bar at ZZ's Miami.\n\nTip-off tonight at 8:30 PM.",
+      "timestamp": "2026-05-18T21:31:22.000Z",
+      "content_format": "carousel",
+      "likes": 311,
+      "comments": 3,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🔥🔥",
+        "😍",
+        "#zzsclub #zzsmembersclub #miami #nba #nbaplayoffs"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZDhzd-FZHd",
+      "caption": "Signs of summer at ZZ’s in Miami: our Yuzu Pineapple, showered in coconut.",
+      "timestamp": "2026-06-01T19:32:43.000Z",
+      "content_format": "carousel",
+      "likes": 73,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🔥🔥🔥",
+        "#zzsclub #zzsmembersclub #miami"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZvWlp5lY7o",
+      "caption": "A friendly reminder for our Members in New York: this is the time to savor The Spaghettini Crab Riviera. It will be saying goodbye for the season next month, leaving us longing for the next time we can taste what happens when Dungeness Crab, jalapeño, butter, and garlic get together in the Privato kitchen.",
+      "timestamp": "2026-06-18T20:01:17.000Z",
+      "content_format": "carousel",
+      "likes": 152,
+      "comments": 3,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🔥🔥🔥",
+        "::whistles at it::",
+        "#zzsclub #zzsmembersclub #newyork"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYPz80cEWC4",
+      "caption": "This past Saturday, @zzsmembersclub Miami invited Members to bring their moms, daughters, sisters, Mahj circle or anyone they love, to celebrate Mother’s Day with an afternoon of mahjong. 🀄️✨\n\nRachel Weissman, @themahjboss, ran the show with a special menu of afternoon bites.",
+      "timestamp": "2026-05-12T17:30:43.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 9,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "So fun, thank you for bringing us together in a beautiful setting, with amazing food, nice people and the mahjong queen herself Rachel 🀄️💃🏻💃🏻♥️ thanks to you I am a smarter, faster player 💋@themahjboss",
+        "You guys should get this on onbrand.com !",
+        "@themahjboss @majorfoodgroup Hi will there be more events here? I’m only seeing the events for Sadelle’s.",
+        "Bummed I missed it. Looks like a great event 💗",
+        "Way to go 👏",
+        "Universal Peace for All🙏 Let’s put positive energy into the universe🙏 Thank you 💯💞",
+        "@michelleshtein Sadelle's in June and stay tuned for more!",
+        "@themahjboss What about ZZ’s ?"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZnoI8glQQV",
+      "caption": "Miami, meet our Moo Shu Short Rib. Prepared with a pastrami brine and galbi marinade, it's served with steamed Mandarin pancakes, housemade pickles, and chili crunch so you can build the perfect bite, every time.",
+      "timestamp": "2026-06-15T20:00:45.000Z",
+      "content_format": "static_post",
+      "likes": 74,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Bet that’s delish!",
+        "#zzsclub #zzsmembersclub #miami"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da3PFFglQOf",
+      "caption": "Sourced from only the most respected purveyors — including Tokyo's Toyosu Market — the traditional sashimi platter is a reminder that the finest ingredients can often speak for themselves.",
+      "timestamp": "2026-07-16T18:01:01.000Z",
+      "content_format": "static_post",
+      "likes": 127,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "#zzsclub #zzsmembersclub #newyork"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 33586,
+  "following_count": 39,
+  "posts_count": 346,
+  "follower_tier": "mid",
+  "engagement": {
+    "sample_size": 29,
+    "median_er": 0.002590365033049485,
+    "mean_er": 0.0034014583252052893,
+    "er_per_post": [
+      {
+        "short_code": "DblzGBEFZ35",
+        "er": 0.0010123265646400286,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DaBbi9kFdyz",
+        "er": 0.002590365033049485,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DYnakcXlbGm",
+        "er": 0.0011611981182635621,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DZLMlpKFeVi",
+        "er": 0.0050914071339248496,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbB1GINFRs5",
+        "er": 0.001846007264931817,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DX9vDLOANNF",
+        "er": 0.0050914071339248496,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DY5R4bSnVhk",
+        "er": 0.0018757815756565235,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "Dbbr8wWFUb5",
+        "er": 0.0031560769368189127,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DXw5Wqoxn8n",
+        "er": 0.0036026915976895136,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbJeaQ4lUsc",
+        "er": 0.002828559518847139,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DavzkYTFSP-",
+        "er": 0.0015482641576847495,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DX69liHxIl9",
+        "er": 0.0035729172869648066,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYVSGdyFQjg",
+        "er": 0.0014291669147859227,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DXpdO0ElfL_",
+        "er": 0.002173524682903591,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DYxtychFIQf",
+        "er": 0.0025010421008753647,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DZVmgYYlbQD",
+        "er": 0.0025010421008753647,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DalbOqSFVD8",
+        "er": 0.005805990591317811,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DZ5u4FclQBy",
+        "er": 0.0018162329542071101,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DaL4_aBlfQv",
+        "er": 0.0050914071339248496,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DaeC5OEiRgM",
+        "er": 0.009974394092776753,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DaTj_xdlXmr",
+        "er": 0.0016673614005835765,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DZa99UEoBIz",
+        "er": 0.004853212648127196,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DYDJumVFQH1",
+        "er": 0.0025010421008753647,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbTZekClVC2",
+        "er": 0.002679687965223605,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DYfsQQDmLtP",
+        "er": 0.009349133567557911,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DZDhzd-FZHd",
+        "er": 0.002233073304353004,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DZvWlp5lY7o",
+        "er": 0.004615018162329542,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DZnoI8glQQV",
+        "er": 0.002262847615077711,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "Da3PFFglQOf",
+        "er": 0.0038111117727624606,
+        "content_format": "static_post"
+      }
+    ]
+  },
+  "external_url": "https://linkstre.am/zzsmembersclub",
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "a_validar_pre_monetizacao",
+    "secondary": null,
+    "matches": [],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "a_validar_pre_monetizacao",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "parcial",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T02:12:31.331Z",
+    "versao_framework": "v3.1"
+  }
+}

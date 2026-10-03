@@ -1,0 +1,677 @@
+{
+  "handle": "professoritamar",
+  "setor_benchmark_key": "8_autoridade_b2b",
+  "url": "https://www.instagram.com/professoritamar/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T02:36:03.783Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "Dbkihs4jjXj",
+      "caption": "Vender pelo WhatsApp é como andar em um campo minado. Uma palavra errada e o cliente visualiza, não responde mais e desaparece. 💣📲\n\nO vendedor amador acha que o problema está no valor do produto ou no mercado, mas na maioria das vezes, o erro está no vocabulário. O cérebro humano reage a estímulos imediatos. Quando você diz \"preço\", \"contrato\" ou \"desconto\", você ativa o modo de alerta e defesa do seu cliente. Ele sente que está gastando dinheiro, assumindo um risco ou entrando em uma burocracia pesada.\n\nO segredo dos grandes fechadores é mudar a percepção de valor apenas ajustando as palavras. Troque a \"despesa\" por \"investimento\", a \"burocracia\" por uma \"parceria\", e o \"barato\" por algo \"acessível\".\n\nVendas não é sobre o que você diz, é sobre o que o cliente entende. Quando você ajusta a sua comunicação, você desarma a objeção antes mesmo de ela nascer na cabeça de quem está do outro lado da tela.\n\nQual dessas palavras você mais usava nas suas negociações e vai cortar do seu vocabulário hoje mesmo? Salve esse post para consultar antes de mandar a próxima mensagem e deixe o seu comentário aqui embaixo! 👇\n\n#VendasNoWhatsApp #TecnicasDeVendas #GatilhosMentais #FechamentoDeVendas #Neurovendas",
+      "timestamp": "2026-08-03T09:00:32.000Z",
+      "content_format": "carousel",
+      "likes": 33,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DTnW7DGDvol",
+      "caption": "Resultado não se discute. Se aplaude. 👏🏆\n\nSe você ainda tem dúvida se o seu time precisa de treinamento, ouça o que quem já passou por aqui tem a dizer. De 30% a 50% a mais de vendas apenas dominando a técnica.\n\nQuem treina, vende. Quem não treina, conta história triste.\n\nQual lado você escolhe para 2026? 🔥\n\n#Vendas #Business #ProfessorItamar #Crescimento #Depoimento",
+      "timestamp": "2026-01-17T15:00:46.000Z",
+      "content_format": "reel",
+      "likes": 80,
+      "comments": 2,
+      "video_view_count": 1274,
+      "video_play_count": 4924,
+      "latest_comments": [
+        "dica de ouro",
+        "@anderson.azevedo.79827 obrigado amigo! 💪💪"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbbMtwVKaOk",
+      "caption": "A técnica só ganha vida de verdade quando é aplicada na linha de frente. 🚀\nDurante a nossa imersão com a equipe do Grupo Comber, em Rio Verde - GO, o foco foi claro: tirar a teoria do papel e transformar o conhecimento comercial em ação e resultados reais.\nMas não há prova maior de que o método funciona do que a voz de quem está no campo de batalha todos os dias. Neste vídeo, você confere os insights e a virada de chave de quem viveu o treinamento de Alta Performance na pele.\nPorque fechar grandes negócios exige mais do que apenas um bom produto ou lábia. Exige estratégia, leitura de cenário e a confiança que só um atendimento de excelência consegue construir.\nMuito obrigado a todo o time do Grupo Comber pela entrega absoluta, pela troca de experiências e pela confiança no nosso trabalho. Vamos juntos elevar o nível do mercado! 🔥\n\n#AltaPerformance #VendasComplexas #TreinamentoDeVendas #GestaoComercial #Lideranca ProfessorItamar VendasB2B GrupoComber",
+      "timestamp": "2026-07-30T17:15:18.000Z",
+      "content_format": "reel",
+      "likes": 18,
+      "comments": 0,
+      "video_view_count": 202,
+      "video_play_count": 1032,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbh-YCEj5KV",
+      "caption": "Tem momentos na vida em que o silêncio não é apenas ouro, é sobrevivência. Nós passamos a vida inteira aprendendo a nos comunicar e a expor nossas opiniões, mas poucos aprendem a hora exata de calar a boca.\nMaturidade é entender que nem tudo precisa ser dito, nem todo mundo precisa saber dos seus bastidores e nem toda emoção precisa virar palavra.\nManda esse vídeo no Whatsapp para aquele amigo que precisa ouvir isso!\n💬 Me conta nos comentários com total sinceridade: hoje, qual desses 3 silêncios é o mais difícil de você conseguir colocar em prática?\n#InteligenciaEmocional #Reflexao #Desenvolvimento #Maturidade #Autocontrole #SaudeMental #Relacionamentos",
+      "timestamp": "2026-08-02T09:00:51.000Z",
+      "content_format": "reel",
+      "likes": 69,
+      "comments": 2,
+      "video_view_count": 557,
+      "video_play_count": 1625,
+      "latest_comments": [
+        "Recapitulando.1- boca fechada, 2- cuidado com o que fala. 3-cuidado com o que fala e promete qdo está triste. Coisas que  não voltam flexas lançadas, oportunidade perdida e palavras ditas.",
+        "👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbfZU_HHT4D",
+      "caption": "Você está sendo o vendedor que resolve problemas ou o vendedor chato que o cliente foge?\nSe você vai visitar um cliente só para \"dar um oi\" e \"bater porteira\" sem um motivo claro, você está apenas perdento tempo, dele e seu.\nClientes de alto valor (os que pagam bem e fecham grandes contratos) não têm tempo para conversinha. \nEles querem saber o que você vai fazer por ele! Como você vai reduzir custo? Como vai aumentar o lucro? Como vai resolver o problema? \nSe você não tem essa resposta antes de sair do escritório, não agende a visita. \nPare de ser panfleteiro e seja um consultor.\n\n📌 Salve este vídeo para não esquecer: cada visita precisa de um objetivo!\n💬 Conta aqui: você já levou um \"bolo\" do cliente porque foi sem um assunto importante?\n\n#VendasConsultivas #Prospeccao #AltaPerformance #GestaoComercial #VendedorAgro #VendasnoAgro",
+      "timestamp": "2026-08-01T09:00:41.000Z",
+      "content_format": "reel",
+      "likes": 36,
+      "comments": 0,
+      "video_view_count": 421,
+      "video_play_count": 1525,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbXq-IrDcpF",
+      "caption": "Em vendas complexas (B2B, Agronegócio, Indústria), atirar para todos os lados é assinar seu atestado falência. Você precisa definir o perfil do seu cliente ideal e concentrar sua energia nele. \nMuitos vendedores reclamam que estão esgotados, que os clientes só pedem desconto e que não conseguem bater metas financeiras altas. O erro, quase sempre, está na forma como escolhem seus clientes.\nVender para o cliente errado custa mais caro do que não vender.\n📌 Salve este conteúdo e revise a sua carteira de clientes hoje. Quantos deles você \"pescou com rede\" e quantos com \"vara\"?\n💬 Me conta nos comentários: qual é a maior dificuldade hoje para encontrar e fechar com o \"cliente top\" no seu ramo hoje?\n#VendasComplexas #VendaConsultiva #Vendas #Prospeccao #GestaoComercial #AltaPerformance",
+      "timestamp": "2026-07-29T09:00:42.000Z",
+      "content_format": "reel",
+      "likes": 27,
+      "comments": 0,
+      "video_view_count": 302,
+      "video_play_count": 999,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbnH3YHARvG",
+      "caption": "Você não mostra os seus clientes nas redes sociais porque tem medo da concorrência ir atrás deles? \nSe você não tem presença digital, a sua concorrência nem precisa saber quem são os seus clientes, ela simplesmente vai roubar sua venda pela falta de autoridade.\nA rede social deve ser usada para mostrar seus resultados. \nRegistrar a sua visita na fazenda, gravar um depoimento do produtor que colheu mais usando seu insumo, provar que o seu produto funciona na prática.\nIsso é construir prova social. Se você não tem orgulho de quem você atende, a sua venda está frágil.\n📌 Salve este vídeo para não esquecer de registrar a sua próxima visita.\n💬 Responda aqui: você usa a sua rede social para construir autoridade ou ainda tem medo de se expor?\n#VendasNoAgro #AgronegocioBrasil #Prospeccao #PresencaDigital #VendaConsultiva #AltaPerformance #GestaoComercial",
+      "timestamp": "2026-08-04T09:00:49.000Z",
+      "content_format": "reel",
+      "likes": 121,
+      "comments": 4,
+      "video_view_count": 2377,
+      "video_play_count": 5499,
+      "latest_comments": [
+        "👏👏👏",
+        "muito bom 👏👏👏",
+        "Tem muiiiiiito gestor com esse pensamento, parabéns pelo conteúdo 👏🏻👏🏻👏🏻",
+        "Muito bom Professor 👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbaPvDPDEJG",
+      "caption": "Você passa o dia inteiro ocupado ou o dia inteiro produtivo? Existe uma diferença gigante entre fazer várias coisas que não geram dinheiro e fazer aquela única coisa difícil que muda o seu resultado.\nA gente adora a parte de fechar o contrato, mas foge do trabalho duro que constrói a venda. \nPare de se esconder atrás de tarefas operacionais fáceis. A produtividade real e a comissão gorda estão escondidas exatamente nas tarefas que você tem preguiça de fazer.\n📌 Salve este vídeo para assistir amanhã, logo cedo, antes de abrir o WhatsApp ou o e-mail, para organizar a sua agenda.\n💬 Me conta aqui nos comentários, sendo muito sincero: qual é a tarefa que você mais procrastina na sua rotina profissional hoje?\n#Produtividade #GestaoDeTempo #Prospeccao #AltaPerformance #GestaoComercial #InteligenciaEmocional",
+      "timestamp": "2026-07-30T09:00:40.000Z",
+      "content_format": "reel",
+      "likes": 33,
+      "comments": 0,
+      "video_view_count": 339,
+      "video_play_count": 1139,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbogC4WiWfF",
+      "caption": "Que energia espetacular hoje aqui em São José do Rio Preto - SP! 🚀🌱\n\nRealizamos o treinamento Atitudes Vencedoras para o time de peso da Next Agro, e o resultado foi simplesmente incrível.\n\nMergulhamos fundo no que realmente faz a diferença no campo e nas negociações: as atitudes corretas para vender mais, o aumento da produtividade diária e a inteligência por trás de uma abordagem impecável.\n\nTrabalhamos na prática como superar objeções, entender os reais motivos de cada visita ao cliente e como blindar a operação para reduzir os erros de processo que custam caro no dia a dia.\n\nE que equipe sensacional! Uma turma extremamente inteligente, rápida e com uma energia contagiante. Quando você tem profissionais com essa postura e velocidade de raciocínio, o salto nos resultados comerciais é consequência.\n\nMuito obrigado, Next Agro, pela recepção, confiança e pela entrega total no nosso encontro! Vocês estão prontos para dominar o mercado. Vamos para cima! 🚜🔥\n\nQuem da equipe estava lá com a gente levanta a mão nos comentários com um \"🚀\"! 👇\n\n#NextAgro #VendasNoAgro #AgronegocioBrasil #TecnicasDeVendas #AltaPerformance",
+      "timestamp": "2026-08-04T21:25:21.000Z",
+      "content_format": "carousel",
+      "likes": 14,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbh9t3XGmGZ",
+      "caption": "Se você acha que as respostas do ChatGPT ou do Claude são genéricas e parecem \"robóticas\", o problema não é a Inteligência Artificial. O problema é a forma como você conversa com ela. 🤖❌\n\nUm comando (prompt) genérico sempre vai gerar uma resposta genérica. A IA precisa de contexto, formato, tom de voz e restrições para entregar um material que você possa copiar, colar e usar no seu negócio sem precisar refazer tudo do zero.\n\nSubstituir o \"melhore isso\" por \"melhore com foco em clareza, ritmo e um CTA forte\" muda completamente a inteligência que a ferramenta aplica no seu texto. Você deixa de tratar a IA como um buscador do Google e passa a tratá-la como um assistente de alta performance.\n\nDe todos os comandos genéricos que listei aqui, qual era o seu \"vício\" na hora de pedir algo para a IA? Salve esse post para ter esses prompts profissionais sempre à mão e confessa o seu erro aqui nos comentários! 👇\n\n#inteligenciaartificial #chatgpt #claude #gemini #tecnologia #produtividade #marketingdigital #criacaodeconteudo #negocios #inovacao",
+      "timestamp": "2026-08-02T09:00:35.000Z",
+      "content_format": "carousel",
+      "likes": 350,
+      "comments": 11,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "is it just me or is everyone suddenly obsessed with paperbleach? lol. but yeah, it does help me fix my grammar without sounding stiff.",
+        "Ótimas dicas",
+        "Sensacional🙌🔥🙌🔥",
+        "É isso aí 👏👏👏👏👏👏",
+        "@marialieber",
+        "👏",
+        "Valeu!! 🤝🤝"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbnvvvYq3hn",
+      "caption": "Sabe o que separa uma equipe mediana de um time campeão? A fome de continuar evoluindo. 🔥\nO mercado muda todos os dias, e quem acha que já aprendeu tudo, acaba ficando para trás. A verdadeira alta performance não é um evento isolado, é um hábito construído com muita repetição e atualização.\nE é por isso que dá um orgulho gigantesco acompanhar a jornada do time da Galassi. Eles entenderam a regra de ouro das vendas: não basta aprender o método uma vez, é preciso manter a ferramenta afiada, estudar as novas dinâmicas e dar continuidade ao processo. Eles não se acomodam!\n▶️ Dá o play neste vídeo e confira o depoimento de quem vive a nossa metodologia na prática e sabe que o treinamento contínuo é o maior diferencial competitivo que uma empresa pode ter.\nParabéns a cada profissional da Galassi pelo comprometimento impecável de sempre. É uma honra ver o brilho nos olhos de vocês e fazer parte dessa construção contínua de resultados. Vamos para cima, o topo é o nosso lugar! 🚀🎯\n#AltaPerformance #TreinamentoDeVendas #Galassi #VendasComplexas #GestaoComercial MetodoDeVendas ProfessorItamar VendasB2B EvolucaoContinua",
+      "timestamp": "2026-08-04T14:11:10.000Z",
+      "content_format": "reel",
+      "likes": 11,
+      "comments": 4,
+      "video_view_count": 159,
+      "video_play_count": 819,
+      "latest_comments": [
+        "👏👏👏",
+        "👏👏👏",
+        "arrasaram👏👏 orgulho de ver todos aplicando e estudando o método 🙌 merecem tudo de bom que há por vir para a @galassinutricaoanimal"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbVf-32lgPC",
+      "caption": "Você já se sentiu frustrado após uma visita comercial, percebendo que gastou tempo, combustível e energia para ouvir um \"vou pensar\"? \nIr para uma reunião sem saber sobre o seu cliente é amadorismo. Você não está indo vender, está apenas \"tirando o pedido\" se o cliente quiser comprar.\nVendedor de alta performance qualifica o objetivo da visita antes de sair do escritório. É para levantar a dor? É para apresentar a solução técnica? É para fechar o contrato? Defina sua meta e use a venda consultiva para conduzir o cliente. Pare de passear e comece a ter estratégia.\n📌 Salve este vídeo para não esquecer de definir seu objetivo antes da próxima visita.\n💬 Me conta nos comentários: qual é o seu objetivo principal quando você agenda uma reunião com um novo lead?\n#InteligenciaEmocional #Prospeccao #VendasComplexas #VendaConsultiva #AltaPerformance #GestaoComercial",
+      "timestamp": "2026-07-28T12:06:34.000Z",
+      "content_format": "reel",
+      "likes": 54,
+      "comments": 3,
+      "video_view_count": 431,
+      "video_play_count": 1441,
+      "latest_comments": [
+        "👏👏👏",
+        "VOCÊ É UMA FIGURA,  TENHO SAUDADES DA ÉPOCA QUE VOCÊ DAVA AULA GINÁSTICA, COMO A GENTE SE DIVERTIA...",
+        "@soeli_salete_sandri_rodrigues saudades minha aluna querida bons tempos"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbc0zgLAnLX",
+      "caption": "Liderar no momento em que as vendas estão altas e os clientes estão felizes é fácil. \nO verdadeiro teste do gestor comercial acontece quando o caos se instala.\nA liderança só é testada de verdade em quatro cenários: quando a máquina quebra, quando o prazo aperta, quando o cliente pressiona e quando a equipe erra. É nessa hora que a sua inteligência emocional é colocada à prova. Você surta e aumenta a tensão, ou você assume o controle e foca em resolver o problema?\nComo líder, a sua força interna dita o ritmo da sua equipe. \nSe você se desespera com a pressão do mercado (especialmente em vendas complexas), o seu time vai paralisar.\n O erro é passageiro, mas a sua reação vai definir a cultura e os resultados da sua empresa a longo prazo.\n\nEnvie esse vídeo para seus líderes de equipe!\n💬 E me responda: qual é a situação que mais testa a sua paciência como líder hoje?\n\n#LiderancaComercial #Gestao #InteligenciaEmocional #Vendas #GestaoDeConflitos #DesenvolvimentoProfissional",
+      "timestamp": "2026-07-31T09:00:55.000Z",
+      "content_format": "reel",
+      "likes": 31,
+      "comments": 0,
+      "video_view_count": 305,
+      "video_play_count": 1164,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbShfVVE0YK",
+      "caption": "No mundo dos negócios, a técnica importa, mas não sustenta a falta de habilidade humana. Se você quer ter sucesso (não apenas em vendas, mas como líder ou empresário) você precisa entender o que realmente significa ter carisma.\nCarisma é a capacidade de atrair pessoas para perto de si. É ser alguém leve, que se comunica bem e com quem os outros querem estar.\nSe as pessoas evitam conversar com você ou se os seus clientes não têm vontade de agendar uma reunião, o problema não é o mercado. É a sua comunicação. Relacionamento é o oxigênio de qualquer negócio.\n\n📌 Salve este vídeo como um lembrete para focar mais nas suas habilidades humanas.\n💬 Me conta com franqueza nos comentários: hoje, você acha que a sua presença atrai ou afasta bons negócios?\n\n#InteligenciaEmocional #Carisma #SucessoProfissional #Networking #Lideranca #DesenvolvimentoPessoal",
+      "timestamp": "2026-07-27T09:00:43.000Z",
+      "content_format": "reel",
+      "likes": 127,
+      "comments": 1,
+      "video_view_count": 223,
+      "video_play_count": 2683,
+      "latest_comments": [
+        "Muito bom!!!!"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbSg6LikrGo",
+      "caption": "Se a sua estratégia de marketing se resume a \"homens, de 30 a 50 anos, moradores do Sudeste\", você está jogando dinheiro no lixo. 💸📉\n\nA demografia te diz onde a pessoa mora e o que está no RG dela. Mas o RG não compra nada. Quem assina o cheque, digita a senha do cartão e decide fechar negócio é o comportamento, a dor e o desejo do cliente.\n\nSe você olhar apenas para os dados frios da planilha, o Padre Marcelo Rossi e o Marcelo D2 seriam exatamente o mesmo público-alvo na sua campanha de anúncios. Mas a linguagem, os valores, os medos e os desejos de cada um são opostos. Tentar usar o mesmo discurso de venda para os dois resultaria no fracasso absoluto.\n\nO vendedor de elite não busca pessoas por planilhas de idade. Ele busca pessoas que compartilham da mesma mentalidade, que estão enfrentando a mesma dor urgente e que buscam a mesma transformação.\n\nPare de vender para cadastros do IBGE. Comece a vender para a mente humana.\n\nVocê já tinha parado para pensar nessa diferença na hora de criar os seus anúncios e abordagens de vendas? Salve o post e deixe o seu comentário aqui embaixo! 👇\n\n#vendas  #persona #marketing #posicionamento #cliente #gestaodevendas",
+      "timestamp": "2026-07-27T09:00:32.000Z",
+      "content_format": "carousel",
+      "likes": 72,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Sensacional",
+        "👏👏🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbi8m3ZK7RQ",
+      "caption": "O cliente do agro não compra promessa, ele compra segurança e domínio técnico! 🚜🚀\nVender soluções e maquinários agrícolas exige muito mais do que apenas “lábia”. Exige um ecossistema de vendas completo, do primeiro contato até o aperto de mão que fecha o negócio.\nFoi exatamente isso que estruturamos em Campo Mourão - PR, durante uma imersão intensa com as equipes da KR Máquinas e da Big Agro. Tiramos a teoria da sala e fomos direto para a mesa de negociação: construímos roteiros blindados e quebramos objeções reais com inteligência comercial.\nMas não acredite apenas nas minhas palavras. ▶️ Dá o play neste vídeo e ouça os insights de quem esteve na linha de frente dessa imersão e já está aplicando o método na prática.\nMuito obrigado a cada profissional da KR Máquinas e da Big Agro pela entrega espetacular, pela coragem nas dinâmicas e por elevarem o nível do mercado! O sucesso de vocês já é realidade. 🔥\n#AltaPerformance #VendasNoAgro #KRMaquinas #BigAgro #Agronegocio TreinamentoDeVendas GestaoComercial ProfessorItamar VendasB2B",
+      "timestamp": "2026-08-02T17:27:16.000Z",
+      "content_format": "reel",
+      "likes": 27,
+      "comments": 1,
+      "video_view_count": 231,
+      "video_play_count": 1012,
+      "latest_comments": [
+        "👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbgrdoqj5ZB",
+      "caption": "Que entrega espetacular em dessas equipes aqui Campo Mourão! 🚀🌾\n\nFoi um dia de imersão profunda e muito aprendizado no treinamento Alta Performance em Vendas com o time sensacional da KR Máquinas e da Big Agro!\n\nPassamos por todo o ecossistema da venda completa: do primeiro contato ao fechamento, construindo um roteiro prático, estruturado e blindado. Não ficou só na teoria: colocamos a mão na massa com simulações reais e desafios intensos na mesa de negociação.\n\nA equipe encarou cada dinâmica com coragem, postura e uma vontade absurda de evoluir, superando cada objeção com técnica e inteligência comercial. O resultado não poderia ser outro: curso concluído com sucesso total e um time pronto para dominar o mercado!\n\nMuito obrigado a cada um de vocês pela confiança, pela entrega e pelo comprometimento do começo ao fim. Vocês deram um show!\n\nDesejo um caminho de muitas vendas, metas batidas e um sucesso gigantesco a toda a equipe da KR Máquinas e da Big Agro. Vamos para cima! 🔥🚜\n\nQuem participou dessa imersão deixa um \"🚀\" aqui nos comentários!\n\n#altaperformance #vendasnoagro #treinamento #agronegocio #gestaocomercial #fechamento #vendas",
+      "timestamp": "2026-08-01T21:00:36.000Z",
+      "content_format": "carousel",
+      "likes": 21,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbWcL7Ikq22",
+      "caption": "Hoje foi dia de eliminar a venda no improviso com o treinamento Alta Performance em Vendas com a equipe comercial Comber direto do coração do agro: Rio Verde, Goiás!\n\nPegamos o roteiro de vendas da operação, dissecamos a ciência por trás do perfil comportamental e blindamos a comunicação de cada um. E que entrega absurda durante todo o dia! \nO time comercial da Comber provou que tem sangue no olho e entendeu que entender a mente é o caminho mais rápido para o fechamento. Agora, essa tropa está 100% capacitada e pronta para o combate no campo. \n\n#VendasNoAgro #RioVerdeGO #Comber #PerfilComportamental #RoteiroDeVendas #AltaPerformanceEmVendas #ProfItamar",
+      "timestamp": "2026-07-28T20:51:59.000Z",
+      "content_format": "carousel",
+      "likes": 28,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbZcoc4GjsG",
+      "caption": "Sem um líder para analisar métricas e exigir a execução do método, o vendedor volta para a vala do improviso no primeiro obstáculo.\nO segundo dia de Alta Performance na Comber foi exclusivo para trazer o método até a gestão! A regra do jogo é certa: a equipe foi treinada para aplicar o roteiro, e a liderança foi forjada para cobrar o que foi ensinado.\n\nObrigado pela entrega, Comber. Uma indústria impecável feita por profissionais belíssimos e com sangue no olho.\n#VendasComplexas #LiderancaComercial #AltaPerformance #Comber #ProfItamar",
+      "timestamp": "2026-07-30T00:53:35.000Z",
+      "content_format": "carousel",
+      "likes": 34,
+      "comments": 5,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Obrigado professor, dia de grande aprendizado 🤝",
+        "Obrigado Prof. Itamar e todo sua equipe, foi muito enriquecedor 👏🏻",
+        "🏆"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DSo6JQRjOBO",
+      "caption": "Você sabia que o cérebro humano sente \"dor física\" quando vê um preço alto? É sério. Neurociência pura.\n\nO trabalho do vendedor inteligente não é só baixar o preço (isso qualquer um faz), é diminuir a percepção de dor do cliente.\n\n👉 Deslize e aprenda a hackear a mente do consumidor.\n\n#Neurovendas #Preficicação #Vendas #ProfessorItamar #Comércio #Varejo #Estratégia",
+      "timestamp": "2025-12-24T09:00:38.000Z",
+      "content_format": "carousel",
+      "likes": 10765,
+      "comments": 68,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Interessante saber como a neurociência influencia as compras!  Vou dar uma olhada nesse conteúdo.",
+        "Interessante essa abordagem da neurociência nas vendas!  Aprender a entender o cliente é fundamental.",
+        "Adorei as dicas muito obrigada 🤝",
+        "👏👏",
+        "Top",
+        "Otimo insight. Dependendo da maneira usada, dá para treinar um agente de I.A para um funil simples e ajudar a stancar um sangramento muito comum nas pequenas Empresas e aumentar o faturamento em no Maximo 30 dias",
+        "Vou aplicar todas",
+        "Excelente",
+        "@berg_albuquerque97",
+        "🔥",
+        "Toop",
+        "Se forem cria do 9 dedos NÃO adianta nada esses ensinamentos eles são jumentos demais para entender o diferencial de atendimento",
+        "a do cifrão pode? se não me engano tem alguma regulamentação sobre",
+        "@henrique_matsuuchi @bianca_matsuuchi",
+        "Evitar o cifrão"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbLNTUbx9hN",
+      "caption": "Quando cliente diz: “Legal, vou analisar e te aviso” dá uma dor no coração, mas será que a culpa é dele ou sua? Você criou o interesse, desejo e chamou pra ação da forma correta? \nA última coisa que você vai fazer em uma reunião de negócios é vender. Antes do fechamento, existe um caminho obrigatório:\nGere conexão real. Faça um elogio sincero, mostre que você pesquisou sobre a empresa do cliente. \nMostre que você está ali por ele, e não apenas para bater a sua meta do mês. \nApresente uma solução que resolva uma dor que talvez ele nem soubesse que tinha. \nSó então, após construir esse valor, você conduz para o fechamento.\n\nSe você quiser pescar peixe grande (o cliente “top”), você precisa usar vara de pescar (estratégia e método), e não jogar a rede (empurrar produto de qualquer jeito). \nPare de vender preço e comece a vender soluções.\n\n📌 Salve este vídeo para aplicar o método AIDA na sua próxima prospecção.\n\n💬 Me conta nos comentários: você já percebeu que perdeu a atenção e o interesse do cliente no meio do processo? O que fez pra recuperar? \n\n#MetodoAIDA #VendasConsultivas #VendasB2B #AltaPerformance #GestaoComercial",
+      "timestamp": "2026-07-24T12:11:58.000Z",
+      "content_format": "reel",
+      "likes": 112,
+      "comments": 2,
+      "video_view_count": 198,
+      "video_play_count": 2590,
+      "latest_comments": [
+        "Gostei da JBL 800wts",
+        "Top🔥👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbkjUcgkcHJ",
+      "caption": "Você faz uma apresentação técnica perfeita do seu produto e, no final, o cliente diz: \"Vou pensar e te aviso\". \nSabe por que isso acontece? Porque você confundiu o cérebro dele.\nO papel do vendedor de alta performance não é dar uma aula, é ancorar a informação técnica em um benefício claro. Por isso, nunca termine uma apresentação sem usar uma destas três palavras mágicas:\n1️⃣ \"Simplificando...\" 2️⃣ \"Traduzindo...\" 3️⃣ \"Resumindo...\"\n\nQuando você diz: \"Deixa eu resumir para o senhor o que tudo isso significa na prática...\", você dá um comando de alívio para o cérebro do comprador. Você tira o peso técnico e entrega a solução mastigada.\n\n📌 Salve este vídeo agora e aplique essas três palavras na sua próxima reunião de fechamento. O seu índice de conversão vai mudar.\n💬 Deixe nos comentários: você tem o costume de simplificar a sua proposta ou acaba se perdendo nos detalhes técnicos?\n#Neurovendas #Vendas #VendasComplexas #VendasAgro #Gestao #Prospeccao",
+      "timestamp": "2026-08-03T09:00:41.000Z",
+      "content_format": "reel",
+      "likes": 67,
+      "comments": 0,
+      "video_view_count": 756,
+      "video_play_count": 2072,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbNXuuon4uM",
+      "caption": "Se você se sente desvalorizado ou sem propósito na carreira, este vídeo é para você.\nA venda de alta performance não é apenas sobre bater metas, trocar produtos por dinheiro ou fechar contratos grandes. \nÉ sobre o impacto real que você causa. \nVender é ser um agente de transformação que ajuda pessoas a realizarem sonhos, empresas a crescerem e riqueza a chegar na mesa de quem trabalha duro. Tenha orgulho do seu papel no mundo dos negócios. \nQuando você se reapaixona pelo seu propósito, o sucesso é uma consequência inevitável. \n\n📌 Salve este vídeo para assistir naqueles dias em que o desânimo profissional tentar dominar.\n💬 Me conta com sinceridade nos comentários: se você pudesse recomeçar hoje, escolheria a mesma profissão?\n\n#Carrreira #Motivacao #Sucesso #AltaPerformance #Vendas #Vendedor",
+      "timestamp": "2026-07-25T09:00:46.000Z",
+      "content_format": "reel",
+      "likes": 36,
+      "comments": 1,
+      "video_view_count": 68,
+      "video_play_count": 1201,
+      "latest_comments": [
+        "👏👏👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbc0HHOj7mQ",
+      "caption": "Virei líder dos meus colegas, e agora? 🏢🎯\n\nEssa é uma transição desafiadora, mas cheia de oportunidades! Mudar o papel de colega para líder exige inteligência emocional, maturidade e novas competências.\n\nNão existe receita de bolo, mas há passos fundamentais para que essa jornada seja bem-sucedida. Liderar pessoas que antes eram seus pares requer um equilíbrio muito fino entre empatia e firmeza.\n\nAliás, a firmeza é fundamental! É muito fácil e tentador voltar ao papel confortável de \"colega\" para evitar conflitos, mas o preço disso é não conseguir entregar os resultados almejados pela empresa. E no final do dia, o líder é medido pelos resultados da sua equipe.\n\nFaz sentido? Salve esse post para guiar a sua postura profissional e compartilhe com alguém que acabou de ser promovido a gestor! 👇\n\n#lideranca #gestaodeequipes #desenvolvimentoprofissional #carreira #recursoshumanos #promocao #gestaodepessoas #liderancanapratica",
+      "timestamp": "2026-07-31T09:00:32.000Z",
+      "content_format": "carousel",
+      "likes": 34,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbP8KfgEg9i",
+      "caption": "A única certeza do mercado de trabalho é que ele vai mudar. ⏳🕰️\n\nOlhando hoje para a figura do acendedor de lampiões, do acordador ou da telefonista, parece quase inacreditável que essas já foram profissões de prestígio, essenciais para o funcionamento das grandes cidades no século XIX.\n\nA tecnologia não acabou com o trabalho; ela apenas transformou as ferramentas. O leitor de fábrica deu lugar ao rádio e ao podcast; o acendedor de lampiões foi substituído pela rede elétrica automática; e o repositor de pinos virou um mecanismo hidráulico.\n\nQuem se apega à forma de fazer a tarefa é engolido pelo tempo. Quem entende a necessidade humana por trás da função aprende a se reinventar. O profissional que quer continuar relevante amanhã precisa cultivar a habilidade mais importante do século: a capacidade de aprender, desaprender e evoluir com as novas ferramentas.\n\nDe todas essas profissões do passado, qual delas você achou a mais bizarra? Salve esse post para compartilhar com os amigos e deixe o seu comentário aqui embaixo! 👇\n\n#historia #mercadodetrabalho #tecnologia #evolucao #curiosidades #futurodotrabalho #carreira #inovacao",
+      "timestamp": "2026-07-26T09:00:36.000Z",
+      "content_format": "carousel",
+      "likes": 93,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "LINDO",
+        "😂😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DHq49s0NFwp",
+      "caption": "É hora de impulsionar 🚀 seu negócio para o próximo nível com experiências TRANSFORMADORAS!\n\nO Prof. Itamar Ribeiro, com mais de 25 anos de experiência e mais de 3 milhões de espectadores, está pronto para te ajudar!\n\n🔹 Com humor contagiante e palestras personalizadas, ele garante total interação com o público entregando conteúdo do início ao fim. ️\n\nImagine comemorar resultados, treinar e motivar seu time de forma divertida e engajadora!\n\nNão perca tempo! ⏳\n\nSolicite um cronograma personalizado de palestras e treinamentos agora mesmo! ️\nChama na DM ou 📱 (45) 99142-1536",
+      "timestamp": "2025-03-26T17:00:19.000Z",
+      "content_format": "carousel",
+      "likes": 140,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "@vitormartins.patrao"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbKyjyCgOTQ",
+      "caption": "Líder de verdade assume a bronca. Quem dá desculpas é chefe omisso. 🏢🛑\n\nA sua equipe não segue alguém que se comporta como uma vítima do sistema. Quando você usa frases para empurrar a responsabilidade para o RH, para a diretoria ou para outro setor, você pode até achar que está tirando a pressão das suas costas, mas a verdade é que você está declarando a sua total incompetência de gestão para todo mundo ver.\n\nO papel do líder não é agradar todo mundo e fingir que \"é só um funcionário cumprindo ordens\". O seu papel é entender a estratégia, defender as decisões com coerência perante a equipe e ter a coragem de assumir a autoria do processo.\n\nSe a decisão foi sua, explique o porquê. Se o erro aconteceu, foque em resolver antes de procurar um culpado para apontar o dedo. O respeito da equipe não se conquista com frases prontas para parecer o \"amigão\", mas sim com critério, clareza e ombros largos para sustentar a posição.\n\nQual dessas 5 frases erradas você mais vê sendo dita no mundo corporativo hoje? Salva esse carrossel para passar longe desse erro e deixa o seu comentário aqui embaixo! 👇\n\n#lideranca #gestaodeequipes #desenvolvimentoprofissional #rh #comunicacao #autoridade #gestaodepessoas #carreira",
+      "timestamp": "2026-07-24T09:00:31.000Z",
+      "content_format": "carousel",
+      "likes": 207,
+      "comments": 7,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Infelizmente isso não vai mudar nunca dos líderes, principalmente essa frase... \"Manda quem pode, obedece quem tem juízo\"",
+        "\"Sempre foi feito assim\",mata a criatividade,sobra autoritarismo e ainda de quebra é uma frase de conformismo.",
+        "👏👏👏",
+        "É o que mais eles falam…",
+        "@luiz.oliveira_mamaozinho tem que mudar! abraços!! 🙏🙏",
+        "@leandrogmendonca infelizmente né amigo, abraços 🙏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbXqj0SFrHm",
+      "caption": "Os maiores exportadores do mundo revelam muito mais do que números. Eles mostram quais economias lideram setores estratégicos, impulsionam a inovação e abastecem mercados em todos os continentes. 🌍🚢\n\nDa tecnologia chinesa à indústria alemã, da logística dos Países Baixos ao agronegócio brasileiro, cada país desempenha um papel fundamental no comércio internacional e na economia global.\n\nNota: Os valores apresentados referem-se às exportações de mercadorias e podem variar ligeiramente conforme a metodologia e o período de atualização de cada instituição.\n\n📊 Fonte: World’s Top Exports (com base em dados da Organização Mundial do Comércio - OMC/WTO e estatísticas oficiais de comércio internacional).\n\nVocê sabia que o Brasil liderava em tantos produtos essenciais para o mundo? Salve esse ranking e deixe a sua opinião nos comentários! 👇\n\n#economia #exportacao #comercioexterior #agronegocio #tecnologia #geopolitica #mercadointernacional #brasil #mundo",
+      "timestamp": "2026-07-29T09:00:32.000Z",
+      "content_format": "carousel",
+      "likes": 46,
+      "comments": 5,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Achei que iria aparecer o PY (Contém ironia)",
+        "Quê conteúdo excelente 👏👏👏",
+        "👏👏🇧🇷",
+        "🔥🔥🔥",
+        "Por mais que Paraguay nao aparezca e o capital de todos eses lugares"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbLvedQql-7",
+      "caption": "Quando o conhecimento faz sentido na prática, os resultados aparecem. 🚀\n\nNo Encontro Comercial 2026 da Adufértil, em Ribeirão Preto, tivemos um dia de muito aprendizado, troca de experiências e desenvolvimento.\n\nMas a melhor forma de mostrar o impacto desse treinamento é ouvir quem esteve lá.\n\nNeste vídeo, alguns participantes compartilham como foi viver o Alta Performance em Vendas e quais insights levaram para a rotina comercial.\n\nPorque vender mais não é apenas dominar técnicas. É entender pessoas, construir confiança e conduzir cada conversa com estratégia.\n\nObrigado à equipe da Adufértil pela confiança e por fazer parte desse momento. Vamos juntos transformar conhecimento em resultados! 🔥🌱\n\n#AltaPerformance #Vendas #TreinamentoDeVendas #VendasNoAgro #Agronegócio DesenvolvimentoComercial Liderança ProfessorItamar\n\n⸻\n\nSe o objetivo for gerar mais conversão para contratar o treinamento, eu faria um CTA no final:\n\n“Quer levar esse treinamento para a sua empresa? Entre em contato e descubra como desenvolver uma equipe comercial de alta performance.”\n\nEsse tipo de fechamento costuma funcionar muito bem para vídeos de depoimentos, porque aproveita a prova social logo após o público assistir aos relatos.",
+      "timestamp": "2026-07-24T17:10:55.000Z",
+      "content_format": "reel",
+      "likes": 28,
+      "comments": 2,
+      "video_view_count": 49,
+      "video_play_count": 1365,
+      "latest_comments": [
+        "👏👏👏",
+        "👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbP8lBRkiFZ",
+      "caption": "Domingo é dia de reflexão. \nMuitas vezes, me perguntam sobre o segredo do sucesso nas vendas e nos negócios. E a resposta, meus amigos, começa com uma verdade simples, mas poderosa: o valor que você gera com a sua comunicação.\nA nossa comunicação tem o poder de gerar riqueza. Mas não estou falando apenas de dinheiro no bolso, embora isso seja uma consequência natural da alta performance. Falo sobre o valor que geramos para nós mesmos, para a nossa família e para o meio que você participa.\nVenda não é apenas sobre técnica e processo. É sobre conexão humana. É sobre usar a sua voz para educar, inspirar e resolver problemas reais dos seus clientes. É sobre gerar valor financeiro e espiritual através de uma comunicação autêntica e consultiva.\n\nNas minhas viagens e bastidores como palestrante e treinador de vendas, vejo muitos vendedores focados apenas no preço, esquecendo-se de que a comunicação consultiva é a chave para abrir portas e fechar grandes contratos.\n\n📌 Salve este vídeo para refletir sobre como você está usando a sua comunicação para gerar valor na sua vida e na sua carreira.\n💬 Me conta com franqueza aqui nos comentários: hoje, você sente que a sua comunicação está gerando o valor que você deseja?\n\n#DesenvolvimentoPessoal #Reflexao #Comunicacao #Sucesso #Gestao #Vendas",
+      "timestamp": "2026-07-26T09:00:46.000Z",
+      "content_format": "reel",
+      "likes": 37,
+      "comments": 0,
+      "video_view_count": 85,
+      "video_play_count": 1186,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 86374,
+  "following_count": 742,
+  "posts_count": 2095,
+  "follower_tier": "macro",
+  "engagement": {
+    "sample_size": 30,
+    "median_er": 0.0004399472063352398,
+    "mean_er": 0.004968316082771822,
+    "er_per_post": [
+      {
+        "short_code": "Dbkihs4jjXj",
+        "er": 0.00038205941602797137,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DTnW7DGDvol",
+        "er": 0.0009493597610392016,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbbMtwVKaOk",
+        "er": 0.0002083960451061662,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dbh-YCEj5KV",
+        "er": 0.0008220066223632111,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbfZU_HHT4D",
+        "er": 0.0004167920902123324,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbXq-IrDcpF",
+        "er": 0.0003125940676592493,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbnH3YHARvG",
+        "er": 0.0014471947576817099,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbaPvDPDEJG",
+        "er": 0.00038205941602797137,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbogC4WiWfF",
+        "er": 0.0001620858128603515,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "Dbh9t3XGmGZ",
+        "er": 0.004179498460184778,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbnvvvYq3hn",
+        "er": 0.00017366337092180516,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbVf-32lgPC",
+        "er": 0.0006599208095028596,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dbc0zgLAnLX",
+        "er": 0.000358904299905064,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbShfVVE0YK",
+        "er": 0.0014819274318660708,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbSg6LikrGo",
+        "er": 0.0008567392965475722,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "Dbi8m3ZK7RQ",
+        "er": 0.000324171625720703,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dbgrdoqj5ZB",
+        "er": 0.00024312871929052724,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbWcL7Ikq22",
+        "er": 0.000324171625720703,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbZcoc4GjsG",
+        "er": 0.0004515247643966934,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DSo6JQRjOBO",
+        "er": 0.1254196864797277,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbLNTUbx9hN",
+        "er": 0.0013198416190057193,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbkjUcgkcHJ",
+        "er": 0.0007756963901173965,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbNXuuon4uM",
+        "er": 0.0004283696482737861,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dbc0HHOj7mQ",
+        "er": 0.00039363697408942506,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbP8KfgEg9i",
+        "er": 0.0010998680158380994,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DHq49s0NFwp",
+        "er": 0.0016324356866649686,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbKyjyCgOTQ",
+        "er": 0.0024775974251510873,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbXqj0SFrHm",
+        "er": 0.0005904554611341376,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbLvedQql-7",
+        "er": 0.0003473267418436103,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbP8lBRkiFZ",
+        "er": 0.0004283696482737861,
+        "content_format": "reel"
+      }
+    ]
+  },
+  "external_url": "https://linktr.ee/prof.itamarpalestrante",
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "2_comissionamento_afiliados",
+    "secondary": "3_infoprodutor",
+    "matches": [
+      {
+        "category": "2_comissionamento_afiliados",
+        "score": 3,
+        "evidence": [
+          "external_url é agregador de links (linktr.ee)"
+        ]
+      },
+      {
+        "category": "3_infoprodutor",
+        "score": 2,
+        "evidence": [
+          "legenda com padrão de lançamento: \"imersão\""
+        ]
+      }
+    ],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "2_comissionamento_afiliados",
+    "setor_benchmark_secundario": "3_infoprodutor",
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "implementado",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T02:36:03.783Z",
+    "versao_framework": "v3.1"
+  }
+}

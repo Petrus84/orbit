@@ -1,0 +1,130 @@
+/* AvatarCard.module.css */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.icon {
+  font-size: var(--font-size-xl);
+  line-height: 1;
+}
+
+.titleBadge {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--t1);
+}
+
+.block {
+  margin-bottom: var(--space-4);
+}
+
+/* Corrigido: labels de dado real (Gênero, Faixa Etária...) saem de --t3 → --t2 */
+.blockLabel {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--t1);
+  margin-bottom: var(--space-2);
+}
+
+/* Gênero — trilho compacto, 8px */
+.genderTrack {
+  position: relative;
+  height: 8px;
+  border-radius: var(--r4);
+  background: var(--bg4);
+  overflow: hidden;
+  margin-bottom: var(--space-2);
+}
+
+.genderFill {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  border-radius: var(--r4);
+  transition: width var(--transition-slow);
+}
+
+.genderLegend {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-xs);
+  color: var(--t1);
+}
+
+.genderValue {
+  font-weight: var(--font-weight-bold);
+}
+
+/* Valores */
+.value {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--t0);
+}
+
+.text {
+  font-size: var(--font-size-base);
+  color: var(--t1);
+  font-weight: 500;
+}
+
+.geoRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-size-base);
+  color: var(--t1);
+  font-weight: 500;
+}
+
+.confidenceTag {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--t1);
+}
+
+/* Insight */
+.insightBlock {
+  margin-top: auto;
+  padding-top: var(--space-4);
+  border-top: var(--border-width) solid var(--line);
+}
+
+.insightText {
+  font-size: var(--font-size-sm);
+  color: var(--t1);
+  line-height: 1.5;
+}
+
+/* Único uso de tom apagado legítimo: placeholder, não dado real */
+.insightFallback {
+  color: var(--text-muted); /* FIX WCAG: era var(--t2), 3.21:1 sobre hover — falha AA. --text-muted já resolve para --t1 (8:1+) */
+  font-style: italic;
+}
+
+/* Glow classes — mesmo padrão de GlassCard.tsx / GlowingNumber.tsx */
+.fillCyan { background: var(--neon-cyan); }
+.fillGold { background: var(--neon-gold); }
+.fillRed  { background: var(--neon-red); }
+.fillGreen { background: var(--neon-green); }
+.fillNone { background: var(--t2); }
+
+.textCyan { color: var(--neon-cyan); }
+.textGold { color: var(--neon-gold); }
+.textRed  { color: var(--neon-red); }
+.textGreen { color: var(--neon-green); }
+.textNone { color: var(--t1); }

@@ -1,0 +1,55 @@
+/* ==========================================================================
+   ORBIT · App Globals (Dual Design System)
+   Versão: 2.0.0  |  Data: 2026-07-05
+   
+   Suporta AMBOS:
+   - CSS Modules antigos (orbit v1.1.0)
+   - Componentes Tailwind novos (SSOT v2.0.0)
+   ========================================================================== */
+
+/* ─── Tailwind v4 (sintaxe única) ─── */
+@import 'tailwindcss';
+
+/* ─── Tokens legados (CSS Modules antigos) ─── */
+@import '../styles/ssot-design-tokens.css';
+
+/* ─── Fundo absoluto do ORBIT (camada base #0C0C0F) ───
+   Regra restaurada de ssot-globals.css (07/09/2026), que deixou de ser
+   importado por src/app/layout.tsx ao corrigir o erro de recursão do
+   Tailwind (@layer sem 'tailwindcss' na própria cadeia). Fica AQUI porque
+   este é o único arquivo que o layout.tsx de fato importa — ssot-globals.css
+   permanece órfão e não deve voltar a ser importado diretamente. */
+@layer base {
+  body {
+    background-color: var(--bg);
+    color: var(--t0);
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* FIX a11y (15/09/2026): 27 dos 35 CSS Modules não tinham nenhum estado
+     de foco. Regra global cobre esses 27 de uma vez, sem editar componente
+     por componente. Onde um módulo já define seu próprio :focus-visible
+     (8 arquivos), aquela regra é mais específica e continua vencendo —
+     esta é só o piso, não substitui nada que já existe. */
+  :focus-visible {
+    outline: 2px solid var(--neon-cyan);
+    outline-offset: 2px;
+    border-radius: var(--radius-xs);
+  }
+
+  /* FIX a11y (15/09/2026): só 2 arquivos respeitavam prefers-reduced-motion,
+     mas há @keyframes contínuas (orbitSpin, orbitPulse) em 5 telas. Regra
+     global cobre todas de uma vez — nenhuma animação é removida, só some
+     para quem pediu isso no SO. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+

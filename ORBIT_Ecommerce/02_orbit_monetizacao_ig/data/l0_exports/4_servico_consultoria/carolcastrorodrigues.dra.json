@@ -1,0 +1,830 @@
+{
+  "handle": "carolcastrorodrigues.dra",
+  "setor_benchmark_key": "4_servico_consultoria",
+  "url": "https://www.instagram.com/carolcastrorodrigues.dra/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T01:46:35.004Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DbjdB_zPAby",
+      "caption": "⚠️ IMUNIDADE INFANTIL é construída TODOS os dias.\n\nMuitas questões interferem no processo de adoecimento como: qualidade do sono, alimentação, doenças de base e uso frequente de antibiótico.\n\nA criança não melhora somente com vitaminas ou com o melhor dos imunomoduladores se o resto estiver comprometido.\n\n📍Tenha um médico de confiança para melhor avaliação e acompanhamento da saúde do seu filho!\n\n#imunidade #voltaasaulas #saúdeinfantil #maedemenina #maedemenino",
+      "timestamp": "2026-08-02T22:11:23.000Z",
+      "content_format": "reel",
+      "likes": 801,
+      "comments": 49,
+      "video_view_count": 14867,
+      "video_play_count": 37009,
+      "latest_comments": [
+        "Quantas vezes no ano pode fazer o ciclo de bronxo Dr?",
+        "@nandah_c_jardim 🤗❤️",
+        "@carolcastrorodrigues.dra Boa tarde, vou entrar e marcar certinho. Obrigada!"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DatNP24vPU3",
+      "caption": "🚨Benefícios do Pelargonium sidoides\n\nReferência: Investigation of the influence of EPs 7630, a herbal drug preparation from Pelargonium sidoides, on replication of a broad panel of respiratory viruses (pubmed).\n\n#umnovojeitodecuidar #saúdeinfantil #mãe #maedeprimeiraviagem \n#maternidadereal",
+      "timestamp": "2026-07-12T20:33:29.000Z",
+      "content_format": "reel",
+      "likes": 473,
+      "comments": 85,
+      "video_view_count": 319,
+      "video_play_count": 33161,
+      "latest_comments": [
+        "Dra. Levei meu filho no otorrino em uma crise, estava usando a lavagem nasal com XT, ele pediu para parar pq essa substância pode criar uma camada no intestino que pode virar um câncer no futuro! Já a pediatra dele indica! Eu fiquei perdida!",
+        "👏👏👏",
+        "Perfeito!",
+        "Extrato do que?",
+        "@maykchgomes",
+        "😍😍",
+        "@carolcastrorodrigues.dra qual a forma correta?"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CxlozX3uJI9",
+      "caption": "Hoje, quero apresentar o local destinado aos meus atendimentos otorrinolaringológicos de bebês e crianças, além das avaliações dos distúrbios do sono infantil.\n\nA clínica tem um conceito diferenciado e visa o cuidado integral e individualizado, seguindo as necessidades de cada criança. Além de ser composta por equipe multidisciplinar, oferece uma estrutura completa, com todo conforto aos nossos pequenos e também aos pais.\n\nO bem estar físico e mental do seu filho é nossa prioridade! \n\nSe o seu filho enfrenta problemas auditivos, respiratórios, no sono ou infecções de repetição, não hesite em entrar em contato. Estou aqui para ajudar!\n\nClique no link da Bio e agende sua consulta.",
+      "timestamp": "2023-09-24T20:35:00.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 48,
+      "video_view_count": 7233,
+      "video_play_count": 21711,
+      "latest_comments": [
+        "😍👏🙌",
+        "👏👏👏👏👏",
+        "Doutora a senhora é um anjo de Deus minha filha tem cinco anos  E está com muita tosse já não sei mas o que fazer tosse com catarro ela vive gripada",
+        "Chique demais",
+        "Atende pelo convênio?"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbRaxRrPOzq",
+      "caption": "📍 Probióticos não são todos iguais\n\nEstudos demonstram que a cepa do Lactobacillus rhamnosus auxilia no controle da dermatite atópica e reduzir a marcha atópica (progressão para asma/rinite).\n\n⚠️ Postagem informativa, converse sobre essa possibilidade com o médico do seu filho.\n\n#maedemenina #maedegemeos #maededois #maternidade #alergia",
+      "timestamp": "2026-07-26T22:05:11.000Z",
+      "content_format": "reel",
+      "likes": 3754,
+      "comments": 236,
+      "video_view_count": 15718,
+      "video_play_count": 242761,
+      "latest_comments": [
+        "A partir de qual idade pode usar",
+        "Para criança de 3 anos que fica só \"gripada\" já fez cirurgia de adenóide, mas sempre tosse  e nariz escorrendo, qual indica?",
+        "Bebe de 11m com dermatite atópica pode usar?",
+        "Doutora, qual melhor horário para dar esse probiotico??",
+        "Pode da pra tomando Anita",
+        "Coceira intensa, mancha vermelha, pele extremamente seca, ele já foi diagnosticado com dermatite atópica",
+        "@manoelamaq minha filha esta com os mesmos sintomas vou agendar dermatologista pra ela obrigada por responder ❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaqCSjAOlMK",
+      "caption": "📍Broncho-Vaxom\n\nLisado Bacteriano que estimula as defesas naturais do organismo e aumenta a resistência às infecções do trato respiratório, prevenindo a recorrência dos processos infecciosos das vias aéreas superiores (rinofaringites, otites, sinusites, amigdalites) e inferiores (exacerbações infecciosas da bronquite)\n\nConverse com seu médico de confiança para avaliar as indicações, muitas vezes será necessário avaliar o ouvido\n(OMS), nariz (tamanho de adenoide e corneto inferior- rinite) e tamanho das amígdalas nessas crianças com infecção de via aérea superior de repetição.\n\n📍Vitamina D\n\nÉ essencial manter a vitamina D em níveis ideais para o controle de doenças respiratórias como asma e rinite. Além de ser fundamental para uma boa resposta do sistema imunológico as infecções respiratórias.\n\n📍 Beta glucana \n\nA beta-glucana otimiza o sistema imunológico reduzindo a recorrência das infecções respiratórias.\nEstudos também apontam que a beta glucana reduz a incidência e gravidade dos sintomas alérgicos, na rinite alérgica.\n\n⚠️ Ressaltando que a avaliação, indicação correta e programação terapêutica realizados por um médico são essenciais.\n\n#imunidade #maededois #maedemenina #mãe #maternidadereal",
+      "timestamp": "2026-07-11T14:59:27.000Z",
+      "content_format": "reel",
+      "likes": 517,
+      "comments": 38,
+      "video_view_count": 375,
+      "video_play_count": 59428,
+      "latest_comments": [
+        "Qual a dosagem do imunoglucam para 11 anos,meu filho sofre muito com imunidade e a vitamina d",
+        "Bucan LF e bom",
+        "Como tomar o Lisado",
+        "Estou fazendo o broncho vaxon. Posso entrar c o beta glucana?",
+        "Doutora e pra rinite?",
+        "Sim eu tenho eu ja usei nela esse ano"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da8BbBHuldP",
+      "caption": "🚨ALERTA AS MÃES ‼️\n\n#maedegemeas #maternidadereal #maternandocomamor #maededois #maedemenina",
+      "timestamp": "2026-07-18T14:40:58.000Z",
+      "content_format": "reel",
+      "likes": 763,
+      "comments": 60,
+      "video_view_count": 958,
+      "video_play_count": 38432,
+      "latest_comments": [
+        "Maravilhosas 😍",
+        "Amo os vídeos com ela",
+        "😍😍😍",
+        "😍😍😍😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbbzUWUD9YA",
+      "caption": "Me conte o que você achava que era amolação de avó?\n\n1) Sair da cama quente e pisar no chão gelado\n\n2) Evitar comer comida muito condimentada\n\n3) Dormir tarde\n\n#maternidade #maedemenina #saúdeinfantil #maedegemeos #avós",
+      "timestamp": "2026-07-30T22:50:15.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 28,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Número 1",
+        "Lindezas❤️",
+        "❤️❤️",
+        "🤗💕"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbZMGKUDxVx",
+      "caption": "PARA CADA PROBLEMA ➡️ UMA POSSÍVEL SOLUÇÃO \n\n🛑 Ressaltando que a avaliação, diagnóstico diferencial, indicação correta e programação terapêutica realizados por um médico são essenciais.\n\n📍 Me conte qual o problema do seu filho?🧒🏼👧🏼\n\n#imunidade #voltaasaulas #maedemenina #maternidade #maebh",
+      "timestamp": "2026-07-29T22:29:03.000Z",
+      "content_format": "carousel",
+      "likes": 3002,
+      "comments": 68,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Broncho vaxon realmente funcionou por aqui, já vamos para 6 meses sem gripes ou resfriado, minha filha de 4 anos tinha gripes de repetição desde que nasceu.",
+        "@francielestrochinski",
+        "Leucogen é vida.",
+        "Como posso fazer uma consulta online?",
+        "Rinite direto eu e ele😢, ele geralmente espirrar, incha os olhos e lacrimeja, eu solto secreção transparente todo dia 😢",
+        "@michellecriscosta 🙌❤"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DajHZukPBsX",
+      "caption": "⚠️ Sofrendo com os quadros de SINUSITE frequentes?\n\n📍 Estudos indicam que o uso de xilitol a 5% em lavagens nasais é um aliado eficaz na prevenção da evolução de quadros de rinite e resfriados para rinossinusite bacteriana, além de ser útil no manejo da rinossinusite crônica.\n\n📍FITOTERÁPICO - Verbena officinalis + Gentiana lutea +\nRumex crispus + Primula veris + Sambucus nigra.\n\nIndicado para tratamento auxiliar de doenças respiratórias, como as rinossinusites agudas e crônicas\n\n💡ME CONTA AQUI SE VOCÊ JÁ CONHECIA ESSAS OPÇÕES?\n\n🛑 Ressaltando que a avaliação, indicação correta e programação terapêutica realizados por um médico são essenciais.\n\n#sinusite #rinite #resfriado #imunidade #maternidade",
+      "timestamp": "2026-07-08T22:29:51.000Z",
+      "content_format": "reel",
+      "likes": 1517,
+      "comments": 59,
+      "video_view_count": 453,
+      "video_play_count": 60493,
+      "latest_comments": [
+        "Este fitoterápico manda manipular? Tudo junto?",
+        "Dra como faz o uso do sinupret?",
+        "Dra @carolcastrorodrigues.dra , minha filha sempre usou busonid por indicação da Pneumo. \nEla teve recente uma sinusite e rinite bacteriano que acometeu o ouvido. \nFicou 15 dias internada … \nLá no hospital ela fez uso do avamys e a médica passou pra casa ele ou nasonex . \nOque acha dos 3 ? Qual melhor ?"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZ3RPcNvjlT",
+      "caption": "✋PROBIÓTICOS NÃO SÃO TODOS IGUAIS\n\n⚠️ Estudo relevante indica que o Bacillus clausii (princípio\nativo da Enterogermina) não apresenta superioridade significativa em relação ao placebo no tratamento da diarreia aguda infantil. Ensaio clínico randomizado, duplo-cego e placebo-controlado, publicado por Lahiri et al. (2022)\n\n📍Probiótico que auxilia na Dermatite, rinite e asma\n\n  Estudos demonstram que o Lactobacillus rhamnosus auxilia no controle da dermatite atópica e reduzir a marcha atópica (progressão para asma/rinite).\n\n#mae #maternandocomamor \n#asma #rinite #alergia",
+      "timestamp": "2026-06-21T21:50:16.000Z",
+      "content_format": "reel",
+      "likes": 1396,
+      "comments": 50,
+      "video_view_count": 18693,
+      "video_play_count": 50728,
+      "latest_comments": [
+        "Aqui os médicos sempre passavam Enterogermina, nem fazia mais efeito . \nPassei ao culturelle … foi maravilhoso. Melhora logo no primeiro dia …",
+        "@carolcastrorodrigues.dra Dra, ao iniciar um antibiótico, é aconselhado um probiótico para proteger a flora intestinal? Se sim, qual deles, por favor?",
+        "Pra dermatite e bom tomar todos os dias e qual deles ?",
+        "Florax, melhor de todos. Sem soja, glúten e lactose. Ainda mais com cepa vivas",
+        "Como posso usar esses probióticos? Por quantos meses?",
+        "Para criança que sempre tem diarreia qnd usa antibiótico, ql seria o melhor probiotico?",
+        "@suzikelmar tbem queria saber"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZlKN7QPfPX",
+      "caption": "🔴 O cuidado da saúde da criança deve ser integral e individual.\n\nVários pontos devem ser avaliados, como sono adequado, carência de vitaminas, necessidade de diagnóstico diferencial e histórico de doenças.\n\nPor isso, tenha sempre um médico de confiança na gestão dos cuidados do seu filho. \n\n#imunidade #saúdeinfantil #maedemenina #maedemenino",
+      "timestamp": "2026-06-14T21:01:19.000Z",
+      "content_format": "reel",
+      "likes": 7898,
+      "comments": 135,
+      "video_view_count": 108568,
+      "video_play_count": 269785,
+      "latest_comments": [
+        "A forma como você enfatiza a abordagem integral da saúde infantil é essencial! A própolis verde pode ser uma aliada, rica em flavonoides para fortalecer a imunidade, complementando esse cuidado individualizado. 🌿.",
+        "😍",
+        "@alvescleani",
+        "@marciaterra.1 @keilasrpaiva @evelinnelopes @nathalia.p.seixas",
+        "Uma bebê de 4 meses pode usar algum ? Começou com nariz escorrendo , febre leve , estamos todos gripados aqui",
+        "Eu estou chocada com o milagre do kaloba por aqui, se tivesse conhecido antes tinha sido tao mais tranquilo \nDei no primeiro dia de gripe e so deu tosse, sem febre sem dor, sem nada so tosse e nada de tosse desesperada, so libera so de muco, assim que ele ficou gripado eu comecei fazer uso e não gripei junto, so usem!",
+        "O becan , pra crianças de 3 anos qual quantidade ,quantas vezes ao dia , e quantos dias ?",
+        "🙌",
+        "Minha filha sofre com sinozite o nariz sempre escorrendo o que vc indica pra ela doutora?"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DY-mhwJv0ab",
+      "caption": "O sistema imunológico infantil é como um exército em treinamento: ele precisa de tempo e dos estímulos certos para aprender a se defender.\n\nA imunidade não é apenas a ausência de doenças, mas a capacidade dinâmica do organismo de responder a desafios ambientais. Na infância, estamos diante de uma “janela de oportunidade” onde o sono de qualidade, a microbiota, a  boa nutrição e o estilo de vida moldam o sistema imune para toda a vida.\n\n🚨 Você quer o SEU FILHO com menos doenças respiratórias?\n\n➡️ ME SIGA\n\n#rinite #resfriado #asma #imunidade #mae",
+      "timestamp": "2026-05-30T21:38:08.000Z",
+      "content_format": "reel",
+      "likes": 1349,
+      "comments": 28,
+      "video_view_count": 39680,
+      "video_play_count": 93164,
+      "latest_comments": [
+        "Desculpa a pergunta, mas qual a associação da lavagem nasal e dor de ouvido? Pq eu adulta qdo faço lavagem nasal, meu ouvido “entope” e da dor.",
+        "Qual Própolis do pra meu filho de 4 anos intimidade muita baixa",
+        "dra onde posso ta encontrando? precisa de prescrição médica para saber a dosagem?",
+        "Perfeito",
+        "A minha faz 1 semana tomando própolis e hedera para tosse carregada e não passa",
+        "Qual o melhor própolis meu filho tem 6 anos",
+        "@pricandido87 tem um vídeo recente explicando isso, na aba dos reels",
+        "@carolcastrorodrigues.dra obrigada"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaX8qKKOqp6",
+      "caption": "⚠️Você sabia desses efeitos colaterais?\n\n📍Já deu alguma dessas medicações para o seu filho?\n\n#maedemenina #maedemenino #mae #maternidade #maternidadereal",
+      "timestamp": "2026-07-04T14:25:19.000Z",
+      "content_format": "reel",
+      "likes": 1055,
+      "comments": 36,
+      "video_view_count": 14895,
+      "video_play_count": 44127,
+      "latest_comments": [
+        "@martinaravani_gianordoli @barbara_bertollo @mahternando @juhvir @lui_vitor @na.fisioterapia",
+        "Por motivos banais? Por motivos de indicação médica! Tipo o bromoprida, é o que sempre dão nós hospitais e receitado pra tomar em casa. Não são motivos banais, no hospital é uma coisa, na internet é outra",
+        "Viva o SUS, só dão isso pra tratamento em casa.",
+        "Meu Deus😮",
+        "👏",
+        "Não sabia sobre a Bromoprida …😮😮 minha filha já fez uso . \nEu usei muito plazil na gravidez .",
+        "@renatica51 Nossa aqui tbm😮"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZqczt-vDzm",
+      "caption": "⚠️ Prejuízos da Rinite:\n\n1) Complicações na via aérea superior:\nA rinite pode evoluir para sinusite, otite secretora e até otite média.\n\n2) Problemas no sono:\nA congestão nasal e a respiração bucal podem interferir no sono, levando a fadiga diurna, comprometimento da aprendizagem e diminuição da função cognitiva.\n\n3) Diminuição da qualidade de vida:\nOs sintomas da rinite quando frequentes podem interferir nas atividades diárias.\n\n4) Problemas de desenvolvimento nas crianças:\nA obstrução nasal crônica em crianças pode levar a respiração bucal, que pode afetar o crescimento craniofacial e o desenvolvimento adequado do maxilar.\n\n5) Outros problemas:\nA rinite pode estar associada a outros problemas, como apneia obstrutiva do sono, ronco, mau hálito e até sangramento nasal.\n\n📍 Tenha um MÉDICO de confiança para avaliar o SEU FILHO, o diagnóstico correto é essencial para uma programação terapêutica assertiva.\n\n#mae #maternidade #alergia #asma #rinite",
+      "timestamp": "2026-06-16T22:20:41.000Z",
+      "content_format": "reel",
+      "likes": 9996,
+      "comments": 199,
+      "video_view_count": 187550,
+      "video_play_count": 571487,
+      "latest_comments": [
+        "Já tem anos que uso o neosoro e não consigo largar, quando Deus me chamar vou pois não vou deixar de usar já que é quase impossível pra mim🤡🤡",
+        "E o amemo?",
+        "Ei estou usando Busonid, uma vez ao dia, resolveu  totalmente. Eu era viciado no tal do Neosoro,  ele não  resolvia nada, até  que descobri o Busonid.",
+        "Ou pode ir direto na farmácia",
+        "Só receitado",
+        "Dymista é a partir de 6 anos ne? Qual semelhante para uso 3 anos?",
+        "Nunca usei esses medicamentos. Curei sinusite e rinite com folhas de eucalipto e água com bicarbonato de sódio. Ambos fazia vaporização 2 x ao dia.",
+        "Neo soro n̈ faz mais mau do qie ficar sem respirar",
+        "@cristina_motta80 Amome é mometasona. Ótima opção"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZBNL1WyL6A",
+      "caption": "⚠️ Prejuízos da Rinite:\n\n1) Complicações na via aérea superior:\nA rinite pode evoluir para sinusite, otite secretora e até otite média.\n\n2) Problemas no sono:\nA congestão nasal e a respiração bucal podem interferir no sono, levando a fadiga diurna, comprometimento da aprendizagem e diminuição da função cognitiva.\n\n3) Diminuição da qualidade de vida:\nOs sintomas da rinite quando frequentes podem interferir nas atividades diárias.\n\n4) Problemas de desenvolvimento nas crianças:\nA obstrução nasal crônica em crianças pode levar a respiração bucal, que pode afetar o crescimento craniofacial e o desenvolvimento adequado do maxilar.\n\n5) Outros problemas:\nA rinite pode estar associada a outros problemas, como apneia obstrutiva do sono, ronco, mau hálito e até sangramento nasal.\n\n📍 Tenha um MÉDICO de confiança para avaliar o SEU FILHO, o diagnóstico correto é essencial para uma programação terapêutica assertiva.\n\n#rinite #asma #alergiarespiratória #sinusite #mae",
+      "timestamp": "2026-05-31T21:56:08.000Z",
+      "content_format": "reel",
+      "likes": 1997,
+      "comments": 55,
+      "video_view_count": 37698,
+      "video_play_count": 101055,
+      "latest_comments": [
+        "Tem indicação de qual Vit D?",
+        "Qual a dose de vit D 1000ui pra criança de 3 anos",
+        "Imunoglucan ❤️❤️❤️",
+        "Indica vitamina boa para criança de 9 anos e sinusite recorrente.",
+        "Minha filha dorme de boca aberta nariz entupido olheiras o que fazer doutora",
+        "@carolcastrorodrigues.dra do meu filho está 32 então não está normal como a pediatra disse",
+        "@carolcastrorodrigues.dra Puravit imune ? Eu gostei muito .. oque acha dele ?"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaJUjI-P865",
+      "caption": "‼️TOSSE É UM SINTOMA‼️\n\n➡️ PARA EFICÁCIA DO TRATAMENTO É ESSENCIAL SABER A\nCAUSA DA TOSSE.\n\n📍Tenha um médico de confiança para estabelecer o diagnóstico  e o tratamento corretamente.\n\n#tosse #maedemenina #maedemenino #maedegemeas #maternidadereal",
+      "timestamp": "2026-06-28T22:11:21.000Z",
+      "content_format": "reel",
+      "likes": 2366,
+      "comments": 50,
+      "video_view_count": 49297,
+      "video_play_count": 163620,
+      "latest_comments": [
+        "Docontosse pode para 1 ano? São asa doss recomendadas?",
+        "Descotosse é bom pra tosse com renite ?",
+        "Não entendi o que falou do gotejamento posterior !!! Qual é indicado",
+        "Meee. Imunoflan custa 200 conto 🤦🏻‍♂️😰",
+        "👏",
+        "Gente, procure avaliação médica. Não querendo questionar a capacidade da médica aqui, mas ela não tá vendo a criança. Criança precisa de avaliação, ausculta e prescrição correta. Parem de perguntar o que fazer aqui. Aqui é apenas uma forma de conhecer a medicação.",
+        "A partir dos dois anos? e qual a dose ?"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CUahodMLDs1",
+      "caption": "Olá,\n\nMe chamo Carolina de Castro Rodrigues.\n\nSou mãe das Gêmeas Maria e Ana. Médica Otorrinolaringologista pelo Hospital das Clínicas da Universidade Federal de Uberlândia (UFU). Com Titulo de Especialista em Otorrinolaringologia pela Associação Brasileira de Otorrinolaringologia (ABORL - CCF) e capacitação em Medicina do Sono pela Associação Brasileira de Otorrinolaringologia (ABORL - CCF).\n\nSou Mestre em educação em saúde e Professora da Faculdade de Ciências Médicas de Minas Gerais (Curso de Medicina).\n\nAcredito que o conhecimento seja a luz do mundo! Segundo Willian Glasser, a melhor forma de aprender é ensinando e praticando. \n\nProcuro nos meus atendimentos conscientizar meus pacientes, para que ocorram mudanças de comportamento positivas, buscando um estado de saúde melhor e maior qualidade de vida.\n\nQuero contribuir para que o seu filho tenha o melhor desenvolvimento possível, respirando e dormindo bem, sem infecções de via aérea superior de repetição, que tanto angustiam os pais.\n\nFaço tudo com muito carinho, levo os ensinamentos do São Josemaría Escrivá: “trabalhar não é cumprir, é amar: é exceder-se alegremente, e sempre, no dever e no sacrifício.” 🥰😘",
+      "timestamp": "2021-09-29T17:47:29.000Z",
+      "content_format": "static_post",
+      "likes": null,
+      "comments": 27,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Excelente profissional. Muito atenciosa. ❤️",
+        "A excelência do seu projeto é gigantesca. Seu protocolo já foi considerado como base para um livro autoral estratégico ou a criação de um braço educacional da sua empresa?",
+        "Bom dia é verdade que agora não pode mais fazer lavagem no ouvido ?",
+        "Médica excelente, cuida  com carinho.",
+        "Melhor médica que meus filhos tem muito obrigado por tudo ❤️😍",
+        "❤️👏👏👏👏🙏💯",
+        "Dra meu filho tinha infecção de repetição, e uma suposta gripe a cada 15 dias que a médica só passava antibiótico, vendo seus conteúdos vi que o caso dele poderia ser renite, leve no otorrino, e confirmou a sinusite, mas esses 4 anos meu filho vinha sendo medicado errado, quero deixar minha gratidão, Deus lhe abençoe. 🫶🏻",
+        "👏. . :' b ;  b;b! Na BB BB BB BB",
+        "❤️",
+        "Sempre muito estudiosa e competente!",
+        "👏👏👏",
+        "Você é brilhante!!! Eu quem agradeço por todo aprendizado que vem dando!! 👏🏻👏🏻👏🏻",
+        "❤️",
+        "👏👏👏👏👏",
+        "Ver você trabalhar com tanto amor e dedicação é impactante e admirável! Sou seu maior fã e escolho te amar mais a cada dia! Sorte a minha, da Maria e da Ana em ter você nas nossas vidas!"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZTJuXuPDrK",
+      "caption": "➡️ RESFRIADO INFANTIL\n\n- Xilitol dificulta a capacidade das bactérias aderirem à superfície da mucosa nasal, dificultando que um resfriado comum evolua com uma infecção bacteriana secundária.\n\n- Própolis tem ação anti-inflamatória e ação antimicrobiana.\n\n- Mel reduz a tosse proveniente do gotejamento pós nasal.\nIMPORTANTE: uso só acima de 1 ano de idade.\n\n- Pelargonium sidoides é um fitoterápico que inibe replicação viral, mas para isso deve ser iniciado nas primeiras 48h do início dos sintomas.\n\n- Spray nasal anti-inflamatório, controla o edema da mucosa e a congestão nasal\n\nEncaminhe para ajudar outras mães 🤗\n\nMe conte como você faz na sua casa ⬇️\n\n#resfriado #maedemenina #maedegemeos #mãe #maternidadereal",
+      "timestamp": "2026-06-07T21:10:53.000Z",
+      "content_format": "reel",
+      "likes": 3558,
+      "comments": 164,
+      "video_view_count": 101224,
+      "video_play_count": 196049,
+      "latest_comments": [
+        "Muito lindas",
+        "😍👏",
+        "Propolis apartir d qntos anos?",
+        "Qual mel seria melhor?",
+        "O propósito deve ser somente quando apresentar sintomas ou recomenda diário?",
+        "Qual diferença entre  Kaloba e imunoflan, sei que possuem mesma composição?",
+        "To dando exatamente tudo isso e minha bebê de 2 anos está há 15 dias resfriada 😢",
+        "@carolcastrorodrigues.dra e para menores de 12 meses?"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZvmBCjP6Ji",
+      "caption": "⚠️ Antialérgicos NÃO são iguais\n\n🔴 anti-alérgicos clássicos, antigos, de “primeira geração”, provocam diminuição do tempo do sono REM (sono reparador) fazendo com que a criança, mesmo dormindo um número satisfatório de horas, ainda assim acorde cansada e irritada.\n\nO problema é que podem comprometer a concentração e o rendimento escolar da criança se usado de forma recorrente.\n\n📍Alguns antialérgicos possuem interação com alimento podendo ter sua ação reduzida.\n\n- Alektos: NÃO deve ser ingerido com alimentos ou bebidas (inclusive suco de frutas) pois seu efeito pode ser diminuído.\n\nPara evitar isso, na BULA recomenda:\n\nAdministrar e esperar por 1 hora antes de ingerir alimentos ou suco de frutas.\n\nSe ja tiver ingerido alimentos ou suco de frutas, aguardar por 2 horas antes de administrar o comprimido.\n\n- Allegra: NÃO deve ser ministrado com sucos de frutas e alimentos gordurosos\n\n🔴 Tenha um médico de confiança para avaliar e realizar a programação terapêutica individualizada \n\n#maternidade #alergia #rinite #asma #dermatiteatopica",
+      "timestamp": "2026-06-18T22:17:09.000Z",
+      "content_format": "reel",
+      "likes": 715,
+      "comments": 16,
+      "video_view_count": 14451,
+      "video_play_count": 40001,
+      "latest_comments": [
+        "Dra @carolcastrorodrigues.dra minha filha tem 3 anos e pesa 15kg hj o@pediatra passou o alektos pra ela 4ml ,ela pode tomar ? Eu li@na bula que é partir de 6 anos .",
+        "Dra minha filha tem 3 anos e pesa 22 kg. Pode tomar o Zyxam?",
+        "Doltora me passe uma vitamina pra minha beber de 3anos ela ficar muita resfriada",
+        "Estou usando o zyxem por sua indicação, pra mim o melhor até agora",
+        "@deiasaraujo Zyxem (dicloridrato de levocetirizina) em gotas pode ser administrado a partir dos 2 anos de idade"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZLkOgJv78w",
+      "caption": "🚨NARIZ DO SEU FILHO SANGRA NESSE TEMPO SECO?\n\n 📝 As principais causas incluem:\n\nAr seco ou frio: Climas com baixa umidade ressecam a mucosa nasal, tornando os vasos mais frágeis e propensos a romper.\n\nPequenos traumas: Cutucar o o nariz, assoar com muita força ou impactos diretos na região.\n\nAlergias e infecções: Quadros de rinite, gripes ou resfriados inflamam a mucosa nasal e facilitam o sangramento.\n\n#rinite #resfriado #mae #maternidade #maebh",
+      "timestamp": "2026-06-04T22:29:22.000Z",
+      "content_format": "reel",
+      "likes": 447,
+      "comments": 11,
+      "video_view_count": 11641,
+      "video_play_count": 30757,
+      "latest_comments": [
+        "Dr meu filho de 6 anos esta com os cornetos nasais inchados qual seria o spray ideal ele esta usando o budesonida 50 mcg o otorrino q passou mas n esta resolvendo",
+        "Aqui em casa uso maxidrate nas meninas!",
+        "E o maxidrate??",
+        "@carolcastrorodrigues.dra e o penetro?"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZYaaDCPUJ5",
+      "caption": "RESFRIADO INFANTIL \n\n⚠️ No contexto de intecção de repetição é importante a avaliação do sono, carências de micronutrientes e diagnósticos diferenciais (principalmente quando a criança respira frequentemente pela boca, está sempre secretiva ou com complicações em decorrência dos resfriados).\n\nTenha um médico de confiança para te orientar.\n\n#maedemenina #maedemenino #resfriado #rinite #inverno",
+      "timestamp": "2026-06-09T22:15:28.000Z",
+      "content_format": "reel",
+      "likes": 1395,
+      "comments": 48,
+      "video_view_count": 26341,
+      "video_play_count": 60760,
+      "latest_comments": [
+        "@carolcastrorodrigues.dra criança irá entrar no CMEI 2 anos e 4 meses pode usar becan lf e leucogem juntos longo do dia ?",
+        "Imuglucan e leucogen são a mesma coisa?",
+        "Top❤️🙌",
+        "Por qto tempo posso usar o imunoglocan? Direto",
+        "Boa tarde tudo bem? Gostaria de saber qual posso dar para ajudar a aumentar a imunidade do meu filho ele tem 3 anos e tem anemia falciforme",
+        "Durante e prevenção o melhor é Imunoglucan PRO. Gosto bom e fácil administração.",
+        "@carolcastrorodrigues.dra posso dar os dois?"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbGHe5EnMK-",
+      "caption": "💡VOCÊ JÁ SABIA?\n\n🛑Ou achava que era “papo furado” de avó? 👵 \n\n➡️Me siga, juntas vamos cuidar da saúde respiratória do seu filho!\n\n#imunidade #saúdeinfantil #alergia #maedemenina #maternidadereal",
+      "timestamp": "2026-07-22T12:43:10.000Z",
+      "content_format": "carousel",
+      "likes": 4610,
+      "comments": 58,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏👏👏👏",
+        "Eu sempre ouvi meus pais, eles estavam certos como sempre🙌❤️",
+        "Meu filho não gosta de chinelo em casa kkkkk, oq fazer amadas?",
+        "Arrasou",
+        "Sensacional!",
+        "@martinhah_maya",
+        "Sim? Qual o xarope recomendado?",
+        "Existe tratamento para essa rinite vasomotora?",
+        "Sou conhecida como a \"mãe chata do chinelo \" 😂 e amo esse título! Mas, se for andar em terra, grama...aí sim pode! ❤️",
+        "Aqui em casa é banho quentinho e pé no chão kkkk os meninos nem gostam de ficar de chinelo em casa"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZ-EmZAjjhS",
+      "caption": "🔴 RINITE VASOMOTORA‼️\n\nVOCÊ SE IDENTIFICOU?\n\n#rinite #asma #maedegemeas #maedeprimeiraviagem #maternidade",
+      "timestamp": "2026-06-24T13:12:39.000Z",
+      "content_format": "carousel",
+      "likes": 1136,
+      "comments": 51,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "@carolcastrorodrigues.dra poderia fazer um post falando sobre o tratamento da imunoterapia? Minha filha tem 9 anos e toda vez que há mudança de tempo ela sente. Ela tem alergia a ácaros.",
+        "Obrigada DR meus filhos não , mais você descreveu meus sintomas",
+        "Minha filha tem, nos primeiros sintomas uso zyxen, mas quase sempre evolui para infecção e nos exames de sangue confirma para tratar com antibiótico 😭 tem como prevenir ?",
+        "Olho vermelho na parte inferior da pálpebra. Pode ser um sintoma? Junto com o nariz entupido",
+        "Como diferenciar uma da outra? O médico disse w tenho rinite ale fica mas nesse frio eu saio lá fora e meu nariz já escorre",
+        "@jainarareis80  tudo bem? A imunoterapia é um tratamento de longo prazo, então a melhora não acontece de imediato. Geralmente, os resultados começam a aparecer por volta de quatro meses, e vão se tornando mais evidentes com o tempo.\nNo caso da minha filha, a alergista explicou que a alergia dela é muito intensa e que o tratamento convencional não estava trazendo o resultado esperado. Por isso, foi indicada a imunoterapia.\nOptamos pela vacina em gotas, porque ela tem muito medo de agulhas. Todo mês retiramos as gotinhas para dar o tratamento, que deve durar cerca de três anos.\nComo moramos em um sítio, há muita poeira, e ela tem alergia justamente a ácaros e poeira. É muito difícil controlar completamente essa exposição, então acreditamos que essa foi a melhor decisão para ajudar a reduzir as crises e melhorar a qualidade de vida dela."
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZdmekCD2LR",
+      "caption": "Prejuízos da Rinite:\n1) Complicações na via aérea superior:\nA rinite pode evoluir para sinusite, otite secretora e até otite média.\n\n2) Problemas no sono:\nA congestão nasal e a respiração bucal podem interferir no sono, levando a fadiga diurna, comprometimento da aprendizagem e diminuição da função cognitiva.\n\n3) Diminuição da qualidade de vida:\nOs sintomas da rinite quando frequentes podem interferir nas atividades diárias.\n\n4) Problemas de desenvolvimento nas crianças:\nA obstrução nasal crônica em crianças pode levar a respiração bucal, que pode afetar o crescimento craniofacial e o desenvolvimento adequado do maxilar.\n\n5) Outros problemas:\nA rinite pode estar associada a outros problemas, como apneia obstrutiva do sono, ronco, mau hálito e até sangramento nasal.\n\nTenha um MÉDICO de confiança para avaliar o seu filho, o diagnóstico correto é essencial para uma programação terapêutica assertiva.\n\n⚠️Lembrando que o higiene ambiental e a lavagem nasal são fundamentais!\n\n#rinite #sinusite #alergias #ronco #mae",
+      "timestamp": "2026-06-11T22:33:45.000Z",
+      "content_format": "carousel",
+      "likes": 719,
+      "comments": 28,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Aonde encontro essa solução acariciada?",
+        "Mas ácaro morto também causa alergia. Para que usar. Solução?",
+        "Onde acha essa solução acaricida ???",
+        "Capa pra cama pode ser as de tecido ou só as de plástico?",
+        "Qual marca de capa antiacaro?",
+        "Eu Carol! Tudo bem? Qual a dosagem da vitamina D em uma marca excelente?",
+        "Aqui em BH descobri recentemente a @viplav.ofc que faz limpeza com DESACARIZAÇÃO."
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da50lIYCVCc",
+      "caption": "🛑 QUAIS DESSAS INFORMAÇÕES MAIS TE SURPREENDEU?\n\n#mãe #maedemenino #maedemenina #rinite #maternidade",
+      "timestamp": "2026-07-17T18:07:06.000Z",
+      "content_format": "carousel",
+      "likes": 7269,
+      "comments": 140,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Como usar o pré biótico",
+        "Ketchup pode dar isso",
+        "Meu filho de 2 anos usa budesonida porque tem dificuldade para respirar, tem dias que não consegue dormir 😢",
+        "Todas"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DayePbovZW5",
+      "caption": "Prejuízos da Rinite:\n\n1) Complicações na via aérea superior:\nA rinite pode evoluir para sinusite, otite secretora e até otite média.\n\n2) Problemas no sono:\nA congestão nasal e a respiração bucal podem interferir no sono, levando a fadiga diurna, comprometimento da aprendizagem e diminuição da função cognitiva.\n\n3) Diminuição da qualidade de vida:\nOs sintomas da rinite quando frequentes podem interferir nas atividades diárias.\n\n4) Problemas de desenvolvimento nas crianças:\nA obstrução nasal crônica em crianças pode levar a respiração bucal, que pode afetar o crescimento craniofacial e o desenvolvimento adequado do maxilar.\n\n5) Outros problemas:\nA rinite pode estar associada a outros problemas, como apneia obstrutiva do sono, ronco, mau hálito e até sangramento nasal.\n\n✋ Tenha um MÉDICO de confiança para avaliar o seu filho, o diagnóstico correto é essencial para uma programação terapêutica assertiva !!\n\nLembrando que o higiene ambiental e a lavagem nasal são imprescindíveis e em alguns casos a imunoterapia específica está bem indicada.\n\n#asma #rinitealergica #alergia #imunidade #maternidade",
+      "timestamp": "2026-07-14T21:41:05.000Z",
+      "content_format": "reel",
+      "likes": 2187,
+      "comments": 73,
+      "video_view_count": 4705,
+      "video_play_count": 125493,
+      "latest_comments": [
+        "Quando é rinite vasomotora? O que fazer?",
+        "O que você acha do Allegra como antialérgico?",
+        "Meu filho tem diagnóstico d adenóide, disvio diceptico, alergia crônica, foi passado um spray nasal amone. É bom????",
+        "Sofria até começar o tratamento",
+        "👏👏👏",
+        "Gente pergunte pelo Busonid, é o que me salva quando o tempo muda (moro em SP) e ainda para ajudar moro com 5 gatos, mesmo não tendo contado direto com eles. Depois da minha cirurgia de desvio de septo, o médico me recomendou o tratamento com ele, durmo super bem, se a crise não tiver extremamente forte não tenho coceira no olho, nem crise de espirro, coriza, nada",
+        "Bem isso",
+        "😭 faço tudo isso e não resolve . Nunca teve uma noite de sono sem nariz entupido 😢",
+        "Engraçado que vcs não falam da alimentação. Esse sim é o grande causador da rinite alérgica. Nada de gelado, nada de leite, nada de trigo.... São fatores causadores da rinite .... Urso de pelúcia, cortina, poeira, não são nada perto do que se come.",
+        "O melhor para meu filho foram as vacinas.Nen tenho mais nenhum antialérgico em casa .",
+        "Minha filha tem 9 anos espira muito e o nariz sempre entupido e secreção na cabeça o que usar",
+        "Dra @carolcastrorodrigues.dra o desista pode ser usado aos 4 anoss?",
+        "Meu filho de 5 anos tem sinusite e renite, sempre de nariz trancado,o que posso dar?",
+        "Uso Avamys 👏👏",
+        "Qual diferença do alektos para zyxem?"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZQsp_uD9cm",
+      "caption": "⚠️ TOSSE É UM SINTOMA - PARA EFICÁCIA DO TRATAMENTO É ESSENCIAL SABER A CAUSA DA TOSSE!\n\n📍Tenha o médico de confiança para estabelecer o diagnóstico.\n\n#mae #inverno #maedemenina #maedemenino #mães",
+      "timestamp": "2026-06-06T22:17:36.000Z",
+      "content_format": "carousel",
+      "likes": 1647,
+      "comments": 28,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Como usar o xilotol?",
+        "Onde encontro o primeiro? Pra tosse seca! \nProcurei e não encontrei!",
+        "Esse xarope para tosse com catarro criança de 2 anos pode tomar?",
+        "O que e bom pra garganta",
+        "Esse primeiro para tose seca , aqui nas farmácia  da minha cidade nao tem , poderia compartilhar o link  a onde eu posso comprar?",
+        "Precisa de receita médica para comprar",
+        "Doutora criança com tosse e catarro na garganta 8 anos pode da esse hedera?"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZz0UXjDmuv",
+      "caption": "⚠️ Alerta AUMENTO de INFLUENZA no BRASIL 🇧🇷\n\nPrincipais Sintomas:\n\nFebre de início súbito: Costuma ser alta e durar em média de 2 a 3 dias\n\nQuadro respiratório: Tosse seca, dor de garganta e coriza (nariz entupido ou escorrendo).\n\nDores: Dor de cabeça, dor muscular (mialgia) e sensação de corpo “molinho”.\n\nSintomas gastrointestinais: Vômitos e diarreia são mais frequentes no público infantil.\n\n📍 Salvando a MÃE no inverno, encaminhe esse POST para orientar corretamente as pessoas! \n\n#gripe #influenza #mãe #maedemenina #maedegemeos",
+      "timestamp": "2026-06-20T13:37:59.000Z",
+      "content_format": "carousel",
+      "likes": 1212,
+      "comments": 32,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Qtas gotas de própolis verde pra criança de 3 anos ?\nE qual a diferença do própolis verde pelo outro ?",
+        "Pq não ibuprofeno??",
+        "Qual a quantidade de própolis para crianças de 3 e 7 anos, por gentileza?",
+        "Quem tem asma não pode tomar Tamiflu ?",
+        "Acabei de ver um um apresentador q esta muito mal no hospital por conta da lavagem nasal mals mal feita .",
+        "Aqui os 2 positivos pra Influenza, 3 anos e 12 anos.. já iniciei o tamiflu",
+        "Minha filha 6 anos iniciou quinta febre, mas só segunda a médica plantonista pediu o teste rápido de influenza e positivo pra B. Ela está tão amoadinha, e febre que não passa. Se tivesse o teste antes ainda daria tempo de dar o tamiflu, hoje não serve mais né?",
+        "Dor de barriga tambem pode dar?",
+        "E o kalloba serve?"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaBt7EBiX9e",
+      "caption": "🚨 Seu filho TRANSPIRA MUITO à noite?\n\nIsso pode ser um sinal silencioso de algo sério:\n\n✋APNÉIA DO SONO\n\n📍 Crianças com dificuldade respiratória fazem MUITO esforço para respirar enquanto dormem.\n\n💡Você precisa saber que criança que NÃO dorme bem pode ter:\n\nDéficit de atenção e memória \nIrritabilidade e alterações de comportamento\nAtraso no crescimento\nBaixo rendimento escolar\nImunidade fraca\n\nO cérebro da criança se desenvolve DURANTE o sono\nSe o sono é ruim, o desenvolvimento também pode ser ruim.\n\n🛑 E a apneia?\n\nInterrompe o sono várias vezes durante a noite\nDiminui a oxigenação do corpo\nMantém o organismo em estado de alerta constante\n\n➡️ Agora me diz com sinceridade, você observa como o SEU FILHO dorme?\n\n#maededois #maedemenina #maedegemeos #maedeprimeiraviagem #maternidadecomamor",
+      "timestamp": "2026-06-25T23:11:28.000Z",
+      "content_format": "carousel",
+      "likes": 4095,
+      "comments": 122,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Vc está descrevendo como a minha filha dorme. Como faço para melhorar o sono da minha filha?",
+        "Minha filha tem 6 anos transpira muito a cabeça dormindo . Tem sono agitado e ronca , devo levar no otorrino ?",
+        "Oque deve ser feito?",
+        "Por que",
+        "Sim, observo! e ele não tem uma noite tranquila",
+        "Oq será esse suor",
+        "Minha neta só vive assim suda chega a escorrer",
+        "@felype.silvarodrigues aconselho uma avaliação com um otorrinolaringologista"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZ7kXm3OTu8",
+      "caption": "⚠️ Ad-Til: contém conservantes parabenos (metilparabeno e propilparabeno).\n\n📍É essencial manter a vitamina D em níveis ideais para o controle de doenças respiratórias como asma e rinite. Além de ser fundamental para uma boa resposta do sistema imunológico.\n\n #suplementacao #imunidade #maedemenina #maedemenino #mãededois",
+      "timestamp": "2026-06-23T13:52:54.000Z",
+      "content_format": "reel",
+      "likes": 757,
+      "comments": 71,
+      "video_view_count": 27276,
+      "video_play_count": 75896,
+      "latest_comments": [
+        "O que acha da vitamina simpli D?",
+        "Vitamina D é fundamental",
+        "Dra., @carolcastrorodrigues.dra o quê acha dá D-Nova?",
+        "Qual a melhor opção pra rn? Seriam as mesmas?",
+        "Mas a True Soure não tem a K2 junto né?",
+        "Porque adtil não é bom?",
+        "D prev 400 iu é bom ?",
+        "Criança 8 anos quantas gotas da?? Exame recente vitamina D22",
+        "Então o Adtil os médicos do posto tudo passam, e outra dúvida a composição do Adtil perto do Adera por ex é maior, seria pelos parabenos?",
+        "Dra o ideal não é tomar vitamina d com k2 mk7?",
+        "Triovit da human doctores?",
+        "Eu dou sandy D é ruim ?",
+        "Adtil é vitamina A+D( recomendada a suplementaçao  em bebês pela OMS)...devo ser subistituir so pela D?  Ou teria q comprar a A separada tbm?",
+        "O que acha do Adera 600 ui? Minha filha é alérgica e faz tratamento pro ácaro, crises de asma e sinusite. Fez exame e a pediatra falou que está com vitamina D baixa. Passou 1 gota de Adera 600 ui por dia. Ela tem 5 anos. Será que 1 gota não é pouco? Si eu mudasse pra essa que vc falou do frasco amarelo, poderia ser 1 gota tbm? Pq Adera não estou vendo diferença",
+        "Da True ,não tem dosagem de 600 recomendado pela idade 5 anos"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 222475,
+  "following_count": 474,
+  "posts_count": 516,
+  "follower_tier": "mega",
+  "engagement": {
+    "sample_size": 27,
+    "median_er": 0.0064996066973817285,
+    "mean_er": 0.011423838716792981,
+    "er_per_post": [
+      {
+        "short_code": "DbjdB_zPAby",
+        "er": 0.0038206540060680976,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DatNP24vPU3",
+        "er": 0.002508146982807057,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbRaxRrPOzq",
+        "er": 0.017934599393190247,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaqCSjAOlMK",
+        "er": 0.0024946623216091698,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Da8BbBHuldP",
+        "er": 0.003699292055287111,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbZMGKUDxVx",
+        "er": 0.013799303292504776,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DajHZukPBsX",
+        "er": 0.007083942015956849,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZ3RPcNvjlT",
+        "er": 0.0064996066973817285,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZlKN7QPfPX",
+        "er": 0.0361074278008765,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DY-mhwJv0ab",
+        "er": 0.006189459489830318,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaX8qKKOqp6",
+        "er": 0.0049039217889650525,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZqczt-vDzm",
+        "er": 0.04582537363748736,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZBNL1WyL6A",
+        "er": 0.009223508259354984,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaJUjI-P865",
+        "er": 0.010859647151365321,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZTJuXuPDrK",
+        "er": 0.016729969659512303,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZvmBCjP6Ji",
+        "er": 0.003285762445218564,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZLkOgJv78w",
+        "er": 0.0020586582762108104,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZYaaDCPUJ5",
+        "er": 0.006486122036183841,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbGHe5EnMK-",
+        "er": 0.0209821328239128,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DZ-EmZAjjhS",
+        "er": 0.005335430947297449,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DZdmekCD2LR",
+        "er": 0.0033576806382739632,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "Da50lIYCVCc",
+        "er": 0.03330261827171592,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DayePbovZW5",
+        "er": 0.010158444769075178,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZQsp_uD9cm",
+        "er": 0.007528935835487133,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DZz0UXjDmuv",
+        "er": 0.00559163951005731,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DaBt7EBiX9e",
+        "er": 0.018954938757163725,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DZ7kXm3OTu8",
+        "er": 0.0037217664906169234,
+        "content_format": "reel"
+      }
+    ]
+  },
+  "external_url": "https://wa.me/message/MJ7F467J2ASYF1",
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "4_servico_consultoria",
+    "secondary": null,
+    "matches": [
+      {
+        "category": "4_servico_consultoria",
+        "score": 3,
+        "evidence": [
+          "link ativo de agendamento (wa.me) + legenda com CTA de agendamento"
+        ]
+      }
+    ],
+    "manual_review_recommended": false,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "4_servico_consultoria",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "implementado",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T01:46:35.004Z",
+    "versao_framework": "v3.1"
+  }
+}

@@ -1,0 +1,756 @@
+{
+  "handle": "romananovais",
+  "nicho": "4_servico_consultoria",
+  "url": "https://www.instagram.com/romananovais/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-01T16:39:41.819Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DZbEmXDssKC",
+      "caption": "Dos ativos que estão sendo estudados para os cabelos brancos às novas abordagens de prevenção que vêm ganhando força na Coreia do Sul, algumas das conversas mais relevantes da tricologia aconteceram recentemente em Seul. Durante o World Congress for Hair Research (WCHR), maior evento mundial dedicado à área, pesquisadores e especialistas compartilharam os avanços que podem influenciar o futuro dos cuidados capilares.\n\nA médica Romana Novais acompanhou o congresso de perto e preparou para a BAZAAR um guia com as principais inovações apresentadas no evento, além dos produtos que trouxe na mala. Dê o play para descobrir as novidades. (Vídeo: @lazarin.mkt) #Beleza",
+      "timestamp": "2026-06-10T23:00:38.000Z",
+      "content_format": "reel",
+      "likes": 11810,
+      "comments": 188,
+      "video_view_count": 104571,
+      "video_play_count": 343310,
+      "latest_comments": [
+        "👏👏👏",
+        "👏👏👏",
+        "Amei ❤️👏",
+        "👏",
+        "👏👏👏👏👏👏👏",
+        "👏🙌❤️🇰🇷",
+        "Sou fã dessa Mãe Empreendedora. Que dá a volta ao mundo trazendo sempre mais valor para o nosso 🇧🇷",
+        "esse perfect serum é fantastico"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DYHwuW_ONyV",
+      "caption": "Que amorrr\nO final é ótimo 🥹\nFeliz dia das mães pra todas as mamães que me acompanham aqui! Tenho certeza que compartilhamos de um mesmo sentimento: um amor que transborda e que não conseguimos traduzir em palavras.",
+      "timestamp": "2026-05-09T14:30:36.000Z",
+      "content_format": "reel",
+      "likes": 70357,
+      "comments": 1471,
+      "video_view_count": 468477,
+      "video_play_count": 1503796,
+      "latest_comments": [
+        "😍😍😍",
+        "Lindos 😍",
+        "Queria ter toda essa postura e controle ! Grito o dia!",
+        "filhos lindos e abençoados.",
+        "eu acho linda desde sua formatura Colega ! ❤️🙌",
+        "😍❤️",
+        "❤️",
+        "Que amor vcs é lindos  demais❤️🙌",
+        "🙌❤️🙌",
+        "Lindos ❤️❤️❤️"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DZLVLtssSFq",
+      "caption": "• Looks do congresso • \nQual o seu favorito ?",
+      "timestamp": "2026-06-04T20:35:38.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 422,
+      "video_view_count": 62909,
+      "video_play_count": 282373,
+      "latest_comments": [
+        "Can you share the links?",
+        "Apaixonada pelo look castanho e ovpreto😍❤️",
+        "Perfeita em todos",
+        "Impecável",
+        "Marrom!",
+        "Quanta elegância.❤️🥰",
+        "“Congresso não é desfile”\nRo: fale por você 💅\nKkkkkk gataaaaaaaaa",
+        "Lindíssima",
+        "Todos lindíssimos !",
+        "Lindaaaaa"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZNo--nujky",
+      "caption": "Muito feliz em iniciar essa parceria com HarmonyCa ®️\n\nAcredito em tratamentos que respeitam a individualidade, estimulam a regeneração e valorizam resultados naturais. É justamente essa visão que nos conecta.\n\nAnimada para tudo o que construiremos juntos✨\n\n#AllVersionsOfMe\n#publi\n\nBR-HAR-260049. 06/2026",
+      "timestamp": "2026-06-05T17:54:35.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 431,
+      "video_view_count": 1034858,
+      "video_play_count": 7143649,
+      "latest_comments": [
+        "❤️❤️❤️",
+        "Mudou muito.",
+        "A sua filha parece muito com vc pequena",
+        "Fala inteligente",
+        "Eu fico passada como a voz dela é ideeeeentica da Mari Gonzales ex bbb!",
+        "♥️♥️♥️♥️🥹🥹🥹🥹🥹🥹",
+        "Ficou ainda mais linda",
+        "Linda",
+        "Perdeu a mão nos procedimentos tá ficando irreconhecível 😩",
+        "Vc era tão perfeita, continua claro, mas não precisava mesmo, uma beleza única, Deusa ❤️"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZv1fvBDLRI",
+      "caption": "Paris is always a good idea ✨\n\nObg pela hospitalidade @canopypariseiffeltower @parismeusonho",
+      "timestamp": "2026-06-19T00:31:18.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 193,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "💫✨",
+        "😍😍😍",
+        "Nos ajudem doando bíblias!!!\nPrecisamos muitooooooo\n\nUma Bíblia pode mudar uma vida, restaurar uma família e apresentar Jesus a quem mais precisa.\n\nAjude-nos a levar esperança por meio da Palavra de Deus. \n\nJuiz de Fora MG precisa de nós!\nSua doação pode ser o começo de uma história transformada.\n\nA tua palavra é lâmpada para os meus pés e luz para o meu caminho.\n— Bíblia, Salmo 119:105. 🤍\n📲Contato 3298719-7056",
+        "😍😍😍😍",
+        "😍😍😍😍",
+        "Hola como andas todo bien ❤️",
+        "Linda por demais❤️❤️❤️",
+        "Belíssima!",
+        "Super estilosa! As camisas do @alok ficaram muito bem em vc!😍😍",
+        "Uauuu 😮😍 Amei demais o look!!!! Vc ficou mais linda ainda! 😍❤️"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DYvAzw_E58l",
+      "caption": "✈️✈️✈️ chapter: Korea 🇰🇷 \nIndo pela primeira vez pra Seoul p/ um congresso mundial de cabelo.",
+      "timestamp": "2026-05-24T20:19:32.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 310,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😍😍😍",
+        "Diva❤️",
+        "😍🫠",
+        "😍😍",
+        "🔥🔥🔥",
+        "Lindaa!!!!!!",
+        "Viagem incrível!",
+        "Me ganhou na música.",
+        "Perfeita 😍"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZqodQOjmzM",
+      "caption": "A noivinha toda se querendo❤️‍🔥 pq nem só de eletrônico essa família vive hahahah eu amo uma festa junina! Quem mais?",
+      "timestamp": "2026-06-17T00:01:10.000Z",
+      "content_format": "carousel",
+      "likes": 213758,
+      "comments": 861,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Where she work?",
+        "Família linda",
+        "Lindos",
+        "Casal lindo 👏👏👏👏👏👏👏👏👏",
+        "Que lindos 🔥🔥🔥❤️🇵🇹👌🌹",
+        "Família linda!!! Noiva belíssima!👏👏👏👏",
+        "😍🙌 melhor post dessa família maravilhosa",
+        "Como é linda",
+        "Lindos , Deus  abençoe!",
+        "Nos ajudem doando bíblias!!!\nPrecisamos muitooooooo\n\nUma Bíblia pode mudar uma vida, restaurar uma família e apresentar Jesus a quem mais precisa.\n\nAjude-nos a levar esperança por meio da Palavra de Deus. \n\nJuiz de Fora MG precisa de nós!\nSua doação pode ser o começo de uma história transformada.\n\nA tua palavra é lâmpada para os meus pés e luz para o meu caminho.\n— Bíblia, Salmo 119:105. 🤍\n📲Contato 3298719-7056"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "Da3khsVkWnP",
+      "caption": "New hair 👩🏻\nJust a little refresh ✂️",
+      "timestamp": "2026-07-16T21:08:21.000Z",
+      "content_format": "carousel",
+      "likes": 115872,
+      "comments": 2434,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Gente achava ela tão linda e sensata😮 a distorção de imagem tá deixando todo mundo louco. Perdeu a identidade.",
+        "Realmente é possível mudar de rosto!! Basta ter dinheiro!! Continua linda, mas irreconhecível",
+        "Essa mulher tem fase ruim não, só eu",
+        "Romana se tornou outra pessoa, totalmente diferente do início…",
+        "Lindíssima❤️❤️❤️",
+        "Perfeita 😍 👏👏👏✨✨✨",
+        "Que nervoso 😳era tão linda , não que esteja feia , mas é uma troca de identidade do corpo , alma e espírito , alterou a própria criação divina!!!",
+        "Mas colocaram outro rosto nela gente. Ela sempre foi belíssima. 🤦🏻‍♀️",
+        "Perfeita como sempre"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "Da1GROTkX0d",
+      "caption": "Recap last euro summer ❤️‍🔥\nCountdown 🔜",
+      "timestamp": "2026-07-15T22:05:28.000Z",
+      "content_format": "carousel",
+      "likes": 88022,
+      "comments": 534,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Tá parecida com a Sasha, filha da Xuxa 😮",
+        "Lindaaaaa❤️❤️",
+        "Perfeita 😍",
+        "😍😍😍",
+        "Um sonho de corpo 😍🔥",
+        "Deus não brincou em serviço com a Romana! Parece um anjo ❤️❤️",
+        "Rooo, de onde os biquínis ? 🥹🥹",
+        "😍😍😍😍😍",
+        "A cara da shasha",
+        "Linda 😍"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "Dagy-zbDOC_",
+      "caption": "Um final de tarde desses 😮‍💨",
+      "timestamp": "2026-07-08T00:52:07.000Z",
+      "content_format": "carousel",
+      "likes": 43285,
+      "comments": 254,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "💯",
+        "on fire 👌",
+        "Deusa",
+        "De onde é essa saia 😍?",
+        "Simplesmente maravilhosa",
+        "🔥😍",
+        "Absurda 🔥",
+        "Uau que foto",
+        "👏👏👏👏😍😍"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DY0jfoek_Qc",
+      "caption": "Seoul 🇰🇷",
+      "timestamp": "2026-05-26T23:58:49.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 219,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "❤️🇰🇷🙌",
+        "Vivendo um dorama 😁",
+        "❤️❤️❤️",
+        "Uma viagem incrível 😻",
+        "😍😍😍",
+        "Linda 😍",
+        "Linda ❤️",
+        "Que vidinha mais ou menos!"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DYieLOrDsLy",
+      "caption": "Vida acontecendo ✨",
+      "timestamp": "2026-05-19T23:26:01.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 314,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Top diva.👏",
+        "😮 Linda!",
+        "Love❤️❤️",
+        "Hi❤️",
+        "Perfeita ❤️",
+        "Linda elegante 🤩",
+        "Gtaaaa",
+        "😮uhh",
+        "Lindaaaaa😮😍",
+        "@deyse_biolchi qual site linda?"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbZZK8RDCxA",
+      "caption": "Recap Tomorrowland ❤️‍🔥\nSão muitos anos te acompanhando nesse festival, e cada ano mais especial @alok",
+      "timestamp": "2026-07-30T00:23:18.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 271,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Família linda!!! ❤️❤️",
+        "A mulher tá um Luxoooo 🔥",
+        "Arrasou divs ❤️",
+        "Absurdo 🔥",
+        "😍😍😍😍😍😍",
+        "👏❤️",
+        "😍😍😍",
+        "Casal 1000 ❤️❤️"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZJKt5ZDnu6",
+      "caption": "Seoul for a moment 🫰🏻🫰🏻🫰🏻",
+      "timestamp": "2026-06-04T00:06:22.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 185,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Lindaaaa ! Demais !😍",
+        "Nos ajudem doando bíblias!!!\nPrecisamos muitooooooo\n\nUma Bíblia pode mudar uma vida, restaurar uma família e apresentar Jesus a quem mais precisa.\n\nAjude-nos a levar esperança por meio da Palavra de Deus. \n\nJuiz de Fora MG precisa de nós!\nSua doação pode ser o começo de uma história transformada.\n\nA tua palavra é lâmpada para os meus pés e luz para o meu caminho.\n— Bíblia, Salmo 119:105. 🤍\n📲Contato 3298719-7056",
+        "Você é impecável nos conteúdos que entrega, e a elegância como se veste e entrega! Parabéns 👏👏",
+        "Musaaaaaa",
+        "PERFEIÇÃO em forma de mulher",
+        "Linda e estilosa 🤏🏻😍",
+        "Doramiga 🫶🫰🫶🫰",
+        "Deusa ❤️❤️",
+        "Gostou da gastronomia deles? É boa?",
+        "❤️❤️❤️❤️❤️❤️❤️"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DaBzbNfDn-T",
+      "caption": "Falta pouco Brasil boraaaaaa 🇧🇷\nQue emoção que foi esse jogo!!!! Compartilhar esse momento com o Ravi foi inesquecível!!!! \nBrasil 3 x 0 Scotland",
+      "timestamp": "2026-06-25T23:59:33.000Z",
+      "content_format": "carousel",
+      "likes": 163938,
+      "comments": 626,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Alokizinho e sua linda mamãe!😍😍",
+        "Quero o link desta blusa ❤️",
+        "Ravi = Mini Alok ❤️",
+        "@gabriellearaujo17 ❤️❤️❤️ obg pelo carinho Gabi . Helena é muito lindaaaa!!!",
+        "@betacaroli 😍😍😍😍"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DajUW29jkKs",
+      "caption": "Life lately…\nCultivando bons hábitos, cuidando da minha saúde, da minha família, escolhendo estar perto de pessoas que somam e permanecendo fiel àquilo em que acredito.",
+      "timestamp": "2026-07-09T00:22:15.000Z",
+      "content_format": "carousel",
+      "likes": 45904,
+      "comments": 132,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Maravilhosa!!😍",
+        "❤️👏😍😍",
+        "A vibe dela sempre incrível ✨✨✨essa música 😍",
+        "Tão bonita😍😍 eu sou apaixonada nessa mulher ❤️",
+        "Gratidão por nos acompanhar",
+        "🤣Eu Sou humorista quem quizer podem mim Seguir em🍼🍼🤪",
+        "❤️👏",
+        "❤️❤️❤️❤️ Família linda",
+        "😍"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DYdMuaPjh6L",
+      "caption": "Moodboard: HAIR \nA 4ª foto 💁🏻‍♀️",
+      "timestamp": "2026-05-17T22:17:19.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 232,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Nos ajudem doando bíblias!!!\nPrecisamos muitooooooo\n\nUma Bíblia pode mudar uma vida, restaurar uma família e apresentar Jesus a quem mais precisa.\n\nAjude-nos a levar esperança por meio da Palavra de Deus. \n\nJuiz de Fora MG precisa de nós!\nSua doação pode ser o começo de uma história transformada.\n\nA tua palavra é lâmpada para os meus pés e luz para o meu caminho.\n— Bíblia, Salmo 119:105. 🤍\n📲Contato 3298719-7056",
+        "😍😍",
+        "Perfeita 💖💖",
+        "😍😍😍",
+        "Perfeição",
+        "Apaixonada na foto 4 ❤️",
+        "Belíssimaaa",
+        "O alok é muito sortudo né, OMG💖🤌🏼",
+        "😍",
+        "@romananovais você vai na @casacor_oficial ????????"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZWOLYtjCHZ",
+      "caption": "Grand slam at @rolandgarros \n Zverev x Flavio Cobolli 🎾\n@thombrowne",
+      "timestamp": "2026-06-09T01:46:44.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 166,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😍Maravilhosaaa!!!",
+        "🔥🔥🔥🔥",
+        "Arrasou no look!👏👏👏",
+        "Belíssima",
+        "Eu sou apaixonada na elegância dessa mulher 🤍💙 maravilhosa",
+        "Achei que a Romana fosse você nesta foto @dratatianavital 😍",
+        "😍😍😍😍",
+        "😍😍😍😍",
+        "❤️❤️❤️❤️❤️"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZEGm8TGgZ8",
+      "caption": "Quatro dias na Coreia focada no congresso mundial de pesquisa em cabelos! \n\n✨INSIGHTS ✨ \n\nCabelos brancos, medicina regenerativa(exossomos, PDRN, steam cells) e novos medicamentos pra calvície. \n\nMedicamentos/moleculas  como clascoterona, pyrilutamida (KX-826) de uso tópico e o VDPHL01 que está  em estudo fase 3 (teste em humanos) mostram resultados promissores para calvície com menos efeitos colaterais  e podem ampliar as opções terapêuticas nos próximos anos pra quem não tolera muito bem as medicações atuais. \n\nVou preparar as dicas de produtos coreanos pra vcs!\n\n🇰🇷 Seoul, Correia do Sul • WCHR 2026",
+      "timestamp": "2026-06-02T00:54:15.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 437,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Show 👏👏👏 linda",
+        "Se você gostou da experiência com head spa na Coreia, talvez goste de conhecer o @takasu.spaintegrativo em São Paulo✨",
+        "Que delícia na Coreia!❤️🇰🇷",
+        "Dra @romananovais pra quem quer ficar ruiva sem agradir tanto os fios, a henna natural (pura) é uma boa opção? 😘😘",
+        "De onde é o primeiro look marrom? 😍😍",
+        "❤️👏🇰🇷",
+        "Bruni facão sai mesmo!",
+        "👏👏👏👏👏👏👏👏👏",
+        "Mulher Linda, Estilosa, Elegante 👏👏👏👏👏"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DaL0A9REfK8",
+      "caption": "Êêê pezinhooooo quenteeee 🇧🇷 x 🇯🇵\nAcho que vamos ter que estender mais a viagem né???? Tá dando bommmm com Ravizinho na torcida\nBrasil 2 x 1 Japão",
+      "timestamp": "2026-06-29T21:17:06.000Z",
+      "content_format": "carousel",
+      "likes": 114662,
+      "comments": 394,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "❤️❤️❤️",
+        "😍😍😍",
+        "❤️❤️❤️❤️🇧🇷🇧🇷🇧🇷🇧🇷",
+        "❤️😍💚",
+        "👏👏👏👏👏👏💛💛💛💛💛💙💙💙💙💙💚💚",
+        "😍🇳🇴❤️‍🔥🇧🇷💀\nno sushi today ? 😂",
+        "Vcs são perfeitos ❤️❤️❤️",
+        "Neymar é um jogador do passado.🇳🇴🇳🇴🇳🇴🇳🇴"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DY93_4wE1Ey",
+      "caption": "Around Seoul 🪽🪽🪽",
+      "timestamp": "2026-05-30T14:51:09.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 251,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Linda amg",
+        "Muito chic",
+        "Look incrível 😍",
+        "Perfeitaaaa❤️❤️❤️❤️❤️❤️",
+        "😍",
+        "Belíssima! ❤️",
+        "Lindíssima!!!!!",
+        "Mega fashionista👏🤳😘💃🏻"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "Dad4pEGEaF-",
+      "caption": "Não foi dessa vez. Mas aceitar que nem tudo acontece como queremos tb é uma forma de vencer. E as memórias que construímos juntos permanecem. E elas sao a maior vitória que essa copa nos deixou. 🇧🇷\n\nObg família e amigos por essa despedida da copa juntos em casa. Em especial a sis @karina.chancey por ter registrado esse momento inesquecível.",
+      "timestamp": "2026-07-06T21:43:52.000Z",
+      "content_format": "carousel",
+      "likes": 68147,
+      "comments": 159,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Eu acho tão estranho a pessoa ter quase todo dia, inclusive em momentos íntimos familiares, indo trabalhar, um fotografo profissional tirando foto de tudo o tempo todo. Tão artificial e superficial",
+        "😍😍😍😍😍",
+        "Quem é este menino da foto.. a cadeira de rodas? Familiar?",
+        "🤣Eu Sou humorista quem quizer podem mim Seguir em🍼🍼🤪",
+        "A Raikinha tá muito grandona",
+        "Que chique 😍",
+        "Fica pra 2030☹️",
+        "👏👏👏👏 E isso 🇧🇷🇧🇷🇧🇷🇧🇷🇧🇷😍",
+        "Elegância demais 😍",
+        "💚💛💚💛😍👏👏👏👏👏",
+        "😍😍😍😍",
+        "👏😍",
+        "👏😍",
+        "Mas é linda!😍",
+        "💙💙💙👏 CHIC"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DZSjqTrjsFK",
+      "caption": "Roland Garros 2026 🎾",
+      "timestamp": "2026-06-07T15:37:29.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 223,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Nos ajudem doando bíblias!!!\nPrecisamos muitooooooo\n\nUma Bíblia pode mudar uma vida, restaurar uma família e apresentar Jesus a quem mais precisa.\n\nAjude-nos a levar esperança por meio da Palavra de Deus. \n\nJuiz de Fora MG precisa de nós!\nSua doação pode ser o começo de uma história transformada.\n\nA tua palavra é lâmpada para os meus pés e luz para o meu caminho.\n— Bíblia, Salmo 119:105. 🤍\n📲Contato 3298719-7056",
+        "Perfeição ❤️❤️❤️❤️👏👏👏👏👏",
+        "Linda ❤️",
+        "Perfeitaaa 😍😍😍",
+        "Maravilhosa ❤️",
+        "Nuuuuuuh🔥🔥🔥",
+        "Mulher linda👏❤️",
+        "😍😍😍",
+        "Perfeita demais ❤️ Romana você é um ser de luz .",
+        "Meuuuuuuuu  Deus que LOOK, que espetáculo",
+        "😍",
+        "💋💜💜",
+        "😍😍",
+        "lindaaaa",
+        "🤎🤎✨"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DWkLqOvjq9C",
+      "caption": "Montblanc & Clínica Romana 💌",
+      "timestamp": "2026-03-31T22:19:55.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 60,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😍😍😍",
+        "😍😍😍😍",
+        "😍",
+        "👏👏👏👏",
+        "GATA!😍",
+        "💖💖💖💖💖💖",
+        "Linda!",
+        "😍😍😍",
+        "😍😍😍",
+        "👏❤️"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DW7iuhnDKOv",
+      "caption": "Hoje estive no Simpósio Internacional de Cirurgia Endovascular trazendo um tema que vem ganhando cada vez mais espaço na prática clínica: o transplante capilar aliado à recuperação em câmara hiperbárica. @endovascular.science",
+      "timestamp": "2026-04-10T00:04:00.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 158,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "MARAVILHOSA , e esse óculos então 😍",
+        "👏👏👏",
+        "Oiii, tudo bem? ✨\n\nVi seu perfil e senti que faria sentido me conectar com você.\n\nQuero te fazer um convite especial para conhecer minha página, onde compartilho oportunidades exclusivas no mercado imobiliário da Flórida 🇺🇸, lifestyle de alto padrão e insights para quem valoriza patrimônio e bons investimentos.\n\nM I A M I • L U X U R Y • E S T A T E S\nCuradoria estratégica para clientes exigentes e investidores visionários.\n\nMIAMI • BOCA RATON • PALM BEACH • ORLANDO\n\nSe esse universo também conecta com você, será um prazer ter você por lá e acompanhar seu perfil também. 🤍\n\n📱 +1 (561) 235-1981\nIG PT: @taysedantas_realtor\nIG EN: @taysedantasrealtor\nYouTube: Tayse Dantas – Luxury Real Estate\n\nTayse Dantas\nLuxury Real Estate Advisor | Douglas Elliman",
+        "💐",
+        "Amiga tem uma entrevista exclusiva com Alok no meu perfil fixado no Piauí vem ver ❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️@romananovais",
+        "Piercing no umbigo não é nada elegante.🤷🏻‍♀️"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DWm8rs6jKaR",
+      "caption": "Recebendo a @montblanc na @clinica.romana \nQue noite linda! Encerrando o mês de março celebrando a força da identidade feminina 🤍",
+      "timestamp": "2026-04-02T00:06:46.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 116,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Nos ajudem doando bíblias!!!\nPrecisamos muitooooooo\n\nUma Bíblia pode mudar uma vida, restaurar uma família e apresentar Jesus a quem mais precisa.\n\nAjude-nos a levar esperança por meio da Palavra de Deus. \n\nJuiz de Fora MG precisa de nós!\nSua doação pode ser o começo de uma história transformada.\n\nA tua palavra é lâmpada para os meus pés e luz para o meu caminho.\n— Bíblia, Salmo 119:105. 🤍\n📲Contato 3298719-7056",
+        "Nossa 👏👏👏",
+        "uauuuuuuuu",
+        "Amiga tem uma entrevista exclusiva com Alok no meu perfil fixado no Piauí vem ver ❤️ @romananovais",
+        "😍😍😍😍😍",
+        "Wow 🔥",
+        "Linda! 😍",
+        "Oi, pessoal 💖\nEstou em tratamento contra a leucemia e ainda sigo na quimioterapia de manutenção. No momento, não consigo trabalhar e meu benefício do INSS está travado, o que tem dificultado muito minha situação.\nGanhei um curso na área da beleza, que pode ser minha chance de recomeçar e ter uma renda. Para isso, preciso comprar os materiais e montar meu studio.\nPor isso, estou fazendo uma rifa solidária 🙏\nO prêmio é um iPhone 14 novinho, lacrado, que minha irmã e alguns amigos doaram para me ajudar.\nQualquer ajuda faz toda a diferença!\nSe não puder participar, me ajude compartilhando 💛\nMuito obrigada de coração!\nCada número são 10,00\nhttps://rifando.vip/rifa-iphone-14-3130153",
+        "Beauty Beyond Wonderful....🖋😍🤎✨️🤎🔥🪭🎖👑🎖🎇💯🌹🕊🪽",
+        "@romananovais de onde é esse vestido? Sempre elegante 😍"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DXNWsE3DmqF",
+      "caption": "O problema nunca foi o ácido hialurônico.\nSempre foi o excesso dele. \n\nDo final de 2023 até hoje, realizei cerca de 15 seringas de ácido hialurônico com @drluizgustavo . O numero pode parecer alto, mas na prática o que importa nunca foi a quantidade, e sim a forma como ele é utilizado.\n\nGrande parte desse volume foi direcionada para correções sutis, pontos de sustentação e tratamento das diferentes camadas da pele. Quando existe critério, técnica e visão… o resultado não pesa, não marca, ele simplesmente se integra.\nO efeito “hiperharmonizado” não vem do ácido em si, mas do uso limitado à volumização, sem estratégia. \n\nO vídeo final mostra exatamente isso: beleza não precisa ser aumentada. Precisa ser bem conduzida. Na estética, técnica sem critério vira exagero. E exagero não rejuvenesce, não valoriza… só descaracteriza. Você concorda?",
+      "timestamp": "2026-04-16T22:05:09.000Z",
+      "content_format": "carousel",
+      "likes": 123791,
+      "comments": 1836,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Nem reconheci!",
+        "Era mais mulherão antes.",
+        "ESSE P9VO NAO ENTRA MAIS NO SITE DO GOVERNO  NAO É POSSIVEL!",
+        "Vc é mil vezes mais bonita sem ácido hialurônico!",
+        "Que sustoooo 😮‍💨😮‍💨😮‍💨",
+        "Nossa pensei que fosse verdade,tem que ser com critério  e responsabilidade mesmo.",
+        "Que susto kkkkk",
+        "Natural perfeita 💝 ✨💫👏🏻"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DXkqK94jgXB",
+      "caption": "Duas gerações que merecem ser celebradas…\nE nada faria mais sentido do que viver esse momento cercadas de amor e família!💛 Viva mãe, viva Jaya! Amamos vcs!",
+      "timestamp": "2026-04-25T23:17:55.000Z",
+      "content_format": "carousel",
+      "likes": 101909,
+      "comments": 295,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "💚💚💚💚💚💚",
+        "Lindosss de viver.💌",
+        "@romananovais te peço do fundo do meu coração que veja a história que eu tenho p te falar.",
+        "👌👍🏻",
+        "Oiii, tudo bem? ✨\n\nVi seu perfil e senti que faria sentido me conectar com você.\n\nQuero te fazer um convite especial para conhecer minha página, onde compartilho oportunidades exclusivas no mercado imobiliário da Flórida 🇺🇸, lifestyle de alto padrão e insights para quem valoriza patrimônio e bons investimentos.\n\nM I A M I • L U X U R Y • E S T A T E S\nCuradoria estratégica para clientes exigentes e investidores visionários.\n\nMIAMI • BOCA RATON • PALM BEACH • ORLANDO\n\nSe esse universo também conecta com você, será um prazer ter você por lá e acompanhar seu perfil também. 🤍\n\n📱 +1 (561) 235-1981\nIG PT: @taysedantas_realtor\nIG EN: @taysedantasrealtor\nYouTube: Tayse Dantas – Luxury Real Estate\n\nTayse Dantas\nLuxury Real Estate Advisor | Douglas Elliman",
+        "👏👏👏👏",
+        "Lindas😍😍",
+        "❤️❤️❤️",
+        "Tanto alok,quanto romana...souberam escolher um alguém pra vida toda...alguém que dive dos mesmos pensamentos, das mesmas ideias,dos mesmos ideais...alguém com mente de gente grande,mas com um coração humilde e uma alma iluminada...ambos dividem o mesmo neurônio,pois buscam a paz e fazer o bem sem olhar a quem...que Deus proteja vocês e toda família, que nenhum mal ouve querer se aproximar de vocês...pois Deus está no centro de tudo,observando, guiando e iluminando cada passo e cada decisão que tomarem...Deus é com vocês nos piores e nos melhores momentos...viva a família romana e alok,viva a paz,a vida e viva principalmente a Deus nas alturas..🙌🙌😍❤️",
+        "Maravilhosas ❤️❤️❤️",
+        "❤️👏🙌👏❤️😍",
+        "de onde esse vestido perfeito?? @romananovais",
+        "👏👏😍👏👏😂❤️",
+        "😍",
+        "👏❤️👏❤️👏❤️👏❤️👏"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DX-isj6DGvY",
+      "caption": "Rave the world x @greenvalleybr 🔈",
+      "timestamp": "2026-05-06T00:32:51.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 690,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "gente como ele mudou .ela tbm , vão dizer que não tomam uma balinha,fazem umas bruxarias,nessa vibe ,ta bom",
+        "Lindos",
+        "Deus os abençoe!",
+        "🔥🔥🔥🔥",
+        "Eles sempre em família, é tão lindo",
+        "😍 linda Maravilhosa 💕😍",
+        "Belíssima 👏👏✨❤️❤️❤️",
+        "Maravilhosa ✨💫🌟😍❤️‍🔥👏👏👏👏🔥❤️❤️‍🔥",
+        "DIVA",
+        "Tudo lindoooo, mas que corpo mais lindo o da Romana … muito lindaaa",
+        "❤️",
+        "Romana sempre Linda, ja a cunhada e o Alok os procedimentos e o tempo contribuiram muito pra beleza 👀",
+        "Inveja boa! Que mulher perfeita!",
+        "É a família mais perfeita desse mundo",
+        "😍😍😍😍"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "Dav5Kp5kTS0",
+      "caption": "Entre cuidar e ser cuidada…. \nNo meu oásis @clinica.romana 🫶🏻",
+      "timestamp": "2026-07-13T21:34:47.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 228,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "@romananovais ajuda uma mãe aqui sem emprego no momento ,com alimentos e água potável por favor e ajudem romana",
+        "😍😍😍 perfeitas",
+        "Linda, elegante e leve! 🤍",
+        "Essa clínica é um sonho de projeto",
+        "😍",
+        "Linda e chique ❤️",
+        "A mulher mais linda que eu já vi em todo esse planeta ❤️",
+        "🤣😁",
+        "Os looks dela são perfeitos ❤️❤️ que mulher elegante.",
+        "😂😂😂😂 Piada né",
+        "Bélissssssssssssima❤️",
+        "😍😍😍",
+        "Que linda!",
+        "Deslumbrante!!❤️",
+        "😍😍😍"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    }
+  ],
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "4_servico_consultoria",
+    "matches": [
+      {
+        "category": "4_servico_consultoria",
+        "evidence": [
+          "bio contém registro/título profissional: \"CRM 2\""
+        ]
+      },
+      {
+        "category": "5_patrocinio_publicidade",
+        "evidence": [
+          "legenda com marcação de publicidade paga: \"#publi\""
+        ]
+      }
+    ],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  }
+}

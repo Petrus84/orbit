@@ -1,0 +1,714 @@
+{
+  "handle": "enaldinho",
+  "nicho": "7_monetizacao_nativa",
+  "url": "https://www.instagram.com/enaldinho/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-01T16:51:57.390Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DbgRaPxxxFl",
+      "caption": "Eu não esperava por isso 😂",
+      "timestamp": "2026-08-01T16:30:50.000Z",
+      "content_format": "reel",
+      "likes": 764,
+      "comments": 24,
+      "video_view_count": 8569,
+      "video_play_count": 42597,
+      "latest_comments": [
+        "❤️",
+        "😂",
+        "😂😂😂😂😂😂😂😂😂😂",
+        "Jesus amado",
+        "Me segue enaldinho",
+        "😂😂😂",
+        "😂",
+        "Ele que começou 😂😂😂😂😂",
+        "Mimi álbum 😂😂😂😂",
+        "Fui no teu show no dia 30/11 no RJ"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbEjH1wATaB",
+      "caption": "Qual figurinha vcs tmn estão precisando? 😂",
+      "timestamp": "2026-07-21T22:08:34.000Z",
+      "content_format": "reel",
+      "likes": 20494,
+      "comments": 455,
+      "video_view_count": 11655,
+      "video_play_count": 727932,
+      "latest_comments": [
+        "Tropa de quem achou 👉🏻👉🏻👉🏻",
+        "😂😂😂",
+        "Tem mais 30 álbum",
+        "@aaron_serruya",
+        "❤️❤️❤️",
+        "Enaldinho sou muito seu fã me nota por favor",
+        "#Enaldinho tua mãe brigou",
+        "me dá só um álbum completo enaldinho kkkk",
+        "😮",
+        "Oi enaldinho"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DAeDWd8PKgg",
+      "caption": "Trollei o @mrbeast com a guilhotina falsa 😂",
+      "timestamp": "2024-09-28T17:44:32.000Z",
+      "content_format": "reel",
+      "likes": 482725,
+      "comments": 3319,
+      "video_view_count": 5684235,
+      "video_play_count": 12669885,
+      "latest_comments": [
+        "por favor",
+        "Will",
+        "Oiii, não sei se vai ver essa mensagem é aniversário do meu filho Cristiano amanhã \nEle adora você 🫵🏻 \nAssiste seus vídeos e o tema da festa é seu kkkk\nVocê consegue mandar um oi pra ele amanhã ((( pessoal me ajuda a chegar até o Enaldinho))))",
+        "Show de criança atrasar, inadmissível.. quase 2h de atraso e sem sinal de iniciar.. absurdo.. em Sorocaba",
+        "Oi, pessoal! 💙\nO Davi vai ao show de Sorocaba neste sábado, mas ele ainda não faz ideia. 🥹 Essa é uma surpresa que estamos preparando com muito carinho!\nSe vocês puderem ajudar a tornar esse dia ainda mais especial, chamando o Davi para o palco ou até para um rápido encontro no camarim, tenho certeza de que seria uma lembrança que ele levaria para a vida inteira.\nQuem puder marcar o @enaldinho e a equipe para aumentar as chances de eles verem esse comentário, eu agradeço de coração! ❤️",
+        "Oi Naldinho sou seu fã eu fui no show da origem do hppy",
+        "Oiii",
+        "A cara do outro cara ali atras olhando tudo. Eu ri foi é dele. 😂😂😂😂😂",
+        "Oiiii"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbT-GpsgV_c",
+      "caption": "Esse Neymar tá meio diferente kkkk",
+      "timestamp": "2026-07-27T21:51:37.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 412,
+      "video_view_count": 174133,
+      "video_play_count": 724244,
+      "latest_comments": [
+        "Enardin me matou 😂😂",
+        "Larga o crack ney",
+        "Kkkkkk",
+        "Kkkkkkkkkk",
+        "Oi Enaldo",
+        "Neymar com Aids?",
+        "Kkkkkk",
+        "@davizin28_ 😂😂😂😂",
+        "Neymar afundado nas drogas kkkk",
+        "Neymar dps de perder a fama por fazer briga. (Não tô zuando sou muito fã dele)"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbVjo2qFV2c",
+      "caption": "Sorocaba, muito obrigado por tudo! ❤️\n\nFoi emocionante ver tantas crianças vivendo essa experiência ao lado dos pais, se divertindo, cantando, rindo e embarcando na história de Happy e Angry.\n\nEspero que cada família tenha levado para casa não só boas lembranças, mas também a mensagem que esse show foi criado para transmitir. \n\nAgora a nossa turnê continua, e o próximo encontro já tem data marcada: 2 de agosto, em Belo Horizonte, a nossa casa! ❤️\n\nQuem eu vejo por lá? 🥹",
+      "timestamp": "2026-07-28T12:37:48.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 172,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "A data de dezembro de SP sumiu do site... não vai ter mais?",
+        "Oloco bom demais",
+        "Vem para São Paulo",
+        "Me nota por favor",
+        "Vem em ibitinga sao paulo meu sonho ti ver por favor e faz o ingresso barato pois eu nao tenho muito dinheiro😢 sempre quis ir eu te conhecer",
+        "Enaldinho faz um show em salinopolis por favor 🙌",
+        "😍😍😍😍",
+        "De 2022",
+        "Dourado"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DaycHwwxTgH",
+      "caption": "Mano… eu achei que o desafio era só cozinhar. \n\nMas aí eu descobri que tinha que cozinhar COM o @henrique_fogaca74… aí a pressão bateu 👀😂\n\nMas ainda bem que no final tinha @drpeanutbrasil pra salvar com um docinho saudável. E vou falar… ficou BOM HEIN? 🤤🥜\n\nAgora eu quero saber: quem aí teria coragem de encarar esse desafio? 👀\n\n#publi #drpeanut #bomhein",
+      "timestamp": "2026-07-14T21:20:06.000Z",
+      "content_format": "reel",
+      "likes": 8405,
+      "comments": 133,
+      "video_view_count": 30517,
+      "video_play_count": 498023,
+      "latest_comments": [
+        "Prazer insanos",
+        "@henrique_fogaca74  o nosso chefe 😍",
+        "Olá, Enaldinho!\nMeu nome é Keylla Samara e escrevo esta carta como mãe, com muito carinho e esperança.\nSou mãe solo de duas crianças incríveis: Rykelme Salomão, de 11 anos, e Safira Kimberly, de 6 anos.\nEles são seus fãs de verdade. Assistem aos seus vídeos, dão risada juntos e acompanham tudo o que você faz. O Rykelme, principalmente, tem um carinho enorme por você. Sempre diz que sonha em conhecer você pessoalmente, usar uma camisa da sua marca e ter algum produto seu. É um sonho que ele guarda no coração.\nMuitas pessoas até comentam que o Rykelme lembra você em alguns traços e no jeito de sorrir. Quando eu enviar a foto dele, acredito que você também possa perceber essa semelhança.\nInfelizmente, por ser mãe solo e enfrentar dificuldades financeiras, não consigo proporcionar esse encontro por conta própria. Faço tudo o que posso pelos meus filhos, mas esse sonho ainda está além das minhas condições.\nNão estou escrevendo para pedir dinheiro ou presentes. Meu pedido é apenas que, se um dia houver uma oportunidade de conhecer você, participar de um evento ou até mesmo receber um vídeo ou uma mensagem de carinho para o Rykelme e a Safira, isso ficará marcado para sempre na vida deles.\nObrigada por levar tanta alegria para tantas famílias através do seu trabalho. Que Deus continue abençoando sua vida e sua equipe.\nCom carinho e esperança,\nKeylla Samara\nMãe do Rykelme Salomão (11 anos) e da Safira Kimberly (6 anos).\n@enaldinho",
+        "Que top, somos muito seus fas e temos um canal que esta na Bio do nosso instagram!! Acabamos de postar as ftos que tiramos com vc no sabado em seu show que estava perfeiro❤️🙏🏼",
+        "❤️❤️",
+        "Oiii, não sei se vai ver essa mensagem é aniversário do meu filho Cristiano amanhã \nEle adora você 🫵🏻 \nAssiste seus vídeos e o tema da festa é seu kkkk\nVocê consegue mandar um oi pra ele amanhã ((( pessoal me ajuda a chegar até o Enaldinho))))",
+        "Na época do meu irmão ele mandava todo mundo se lascar, na minha ele fazia desafio de comida, e agr na do meu irmãozinho ele FAZ a comida😭🤟",
+        "❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️",
+        "Isso é muito gostoso o brigadeiro eu amo 😋😋❤️"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "Dad809oAFqn",
+      "caption": "Atualizações da obra da minha casa nova 🏠\n\nQuerem mais atualizações por aqui?? 👀",
+      "timestamp": "2026-07-06T22:22:54.000Z",
+      "content_format": "reel",
+      "likes": 7499,
+      "comments": 299,
+      "video_view_count": 31627,
+      "video_play_count": 189231,
+      "latest_comments": [
+        "Tá cobiano a Emilly kkkkk tô brincando",
+        "Enaldinho reinaldinho é o rei",
+        "Eu vi o o vídeo de Naldinho comprando essa casa ele gastando R$ 10.000",
+        "❤️",
+        "6777",
+        "Vocês moram aonde",
+        "Amos seus vídeos YouTube Instagram tic toc e varias",
+        "Olá, Enaldinho!\nMeu nome é Keylla Samara e escrevo esta carta como mãe, com muito carinho e esperança.\nSou mãe solo de duas crianças incríveis: Rykelme Salomão, de 11 anos, e Safira Kimberly, de 6 anos.\nEles são seus fãs de verdade. Assistem aos seus vídeos, dão risada juntos e acompanham tudo o que você faz. O Rykelme, principalmente, tem um carinho enorme por você. Sempre diz que sonha em conhecer você pessoalmente, usar uma camisa da sua marca e ter algum produto seu. É um sonho que ele guarda no coração.\nMuitas pessoas até comentam que o Rykelme lembra você em alguns traços e no jeito de sorrir. Quando eu enviar a foto dele, acredito que você também possa perceber essa semelhança.\nInfelizmente, por ser mãe solo e enfrentar dificuldades financeiras, não consigo proporcionar esse encontro por conta própria. Faço tudo o que posso pelos meus filhos, mas esse sonho ainda está além das minhas condições.\nNão estou escrevendo para pedir dinheiro ou presentes. Meu pedido é apenas que, se um dia houver uma oportunidade de conhecer você, participar de um evento ou até mesmo receber um vídeo ou uma mensagem de carinho para o Rykelme e a Safira, isso ficará marcado para sempre na vida deles.\nObrigada por levar tanta alegria para tantas famílias através do seu trabalho. Que Deus continue abençoando sua vida e sua equipe.\nCom carinho e esperança,\nKeylla Samara\nMãe do Rykelme Salomão (11 anos) e da Safira Kimberly (6 anos).\n@Enaldinho"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DaWGvnzlHpS",
+      "caption": "Ainda de Miami Beach 🌊⛱️🕶️",
+      "timestamp": "2026-07-03T21:13:10.000Z",
+      "content_format": "carousel",
+      "likes": 26179,
+      "comments": 327,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Olá, Enaldinho!\nMeu nome é Keylla Samara e escrevo esta carta como mãe, com muito carinho e esperança.\nSou mãe solo de duas crianças incríveis: Rykelme Salomão, de 11 anos, e Safira Kimberly, de 6 anos.\nEles são seus fãs de verdade. Assistem aos seus vídeos, dão risada juntos e acompanham tudo o que você faz. O Rykelme, principalmente, tem um carinho enorme por você. Sempre diz que sonha em conhecer você pessoalmente, usar uma camisa da sua marca e ter algum produto seu. É um sonho que ele guarda no coração.\nMuitas pessoas até comentam que o Rykelme lembra você em alguns traços e no jeito de sorrir. Quando eu enviar a foto dele, acredito que você também possa perceber essa semelhança.\nInfelizmente, por ser mãe solo e enfrentar dificuldades financeiras, não consigo proporcionar esse encontro por conta própria. Faço tudo o que posso pelos meus filhos, mas esse sonho ainda está além das minhas condições.\nNão estou escrevendo para pedir dinheiro ou presentes. Meu pedido é apenas que, se um dia houver uma oportunidade de conhecer você, participar de um evento ou até mesmo receber um vídeo ou uma mensagem de carinho para o Rykelme e a Safira, isso ficará marcado para sempre na vida deles.\nObrigada por levar tanta alegria para tantas famílias através do seu trabalho. Que Deus continue abençoando sua vida e sua equipe.\nCom carinho e esperança,\nKeylla Samara\nMãe do Rykelme Salomão (11 anos) e da Safira Kimberly (6 anos).\n@Enaldinho",
+        "L",
+        "Oiii, não sei se vai ver essa mensagem é aniversário do meu filho Cristiano amanhã \nEle adora você 🫵🏻 \nAssiste seus vídeos e o tema da festa é seu kkkk\nVocê consegue mandar um oi pra ele amanhã ((( pessoal me ajuda a chegar até o Enaldinho))))",
+        "Esse é o cara que todo mundo ama meu Deus essa geração tá acabada",
+        "Aaaaaaa!",
+        "Faz quanto tempo que eu n assisto o enaldinho😮",
+        "Duvido virar esse iate no bafo se virar vc é o melhor",
+        "Enaldo você virou noia?",
+        "Um dia desses tava em Belém"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DS53GXhEjqV",
+      "caption": "Desde que comecei meu canal, chamaram de loucura.\nChamaram de exagero.\nEu chamei de meta.\n\nNunca dei um passo maior que as minhas pernas.\nCada conquista foi construída com trabalho, foco e constância.\n\nHoje realizo mais um sonho.\nPra fechar o ano do jeito certo: Ferrari ZERO KM na garagem. 🏎️🔥\n\nObrigado a quem acreditou desde o início.\n\nAos que duvidaram… seguimos avançando.\nTamo junto. 🚀👊🏻",
+      "timestamp": "2025-12-30T22:17:58.000Z",
+      "content_format": "carousel",
+      "likes": 156248,
+      "comments": 6581,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Enaldinho sou muito seu fã cara 👏👏👏👏❤️❤️",
+        "❤️❤️❤️❤️❤️",
+        "E enaldinho vc e fã da Melody",
+        "O enaldinho meu maior sonho senpre foi te conhecer pfv me responde me segue de volta queria te conhecer pessoalmente e tambem sou muito seu fã asisti seus videos eu gosto de todos vcs o Nicolas a jecie todos vc pfv enaldinho realiza esse meu sonho gosto muito de vc desde pequeno asisto seus videos pfv mn queria completar meu álbum com vc gravar com vc e tambem te conhecer pes eu senpre te acompanhei e queria te ver na vida real pfv realiza meu sonho mn boa sorte e bons videos e que vc ganhe mais sucesso do que vc já tem mn ❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️",
+        "Oi Naldinho por que você nunca beijou Morgana?",
+        "❤️🥰😢😍",
+        "Oi eu só fâ❤️❤️",
+        "Naldinho eu sou seu fã",
+        "@vini o vini eu te amo cara❤️"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DZ_WI9luBwq",
+      "caption": "Amo 🩷 GANHAMOSSS 🥳",
+      "timestamp": "2026-06-25T01:08:29.000Z",
+      "content_format": "reel",
+      "likes": 185929,
+      "comments": 2587,
+      "video_view_count": 2420768,
+      "video_play_count": 7688212,
+      "latest_comments": [
+        "😍😍😍😍😍😍😍😍",
+        "Emily e Leo",
+        "Não estou acreditando que o Enaldinho tá namorando com a Antonela",
+        "Me segue por favor 😢",
+        "😨😧😦😮😯😲😳😰",
+        "Pior que o enaldinho encontrou a namorada",
+        "Eu quero ver um filme dos rosa",
+        "❤️💛🇧🇷hdhrhrhr😢brndndn😍bfndnfnfn😮nndn😂n",
+        "🥹",
+        "Sou muito mais aninha"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DaOFS_Fg9mz",
+      "caption": "Andei em um carro que dirige sozinho 😮 Teriam coragem??",
+      "timestamp": "2026-06-30T18:29:25.000Z",
+      "content_format": "reel",
+      "likes": 20243,
+      "comments": 135,
+      "video_view_count": 245477,
+      "video_play_count": 579056,
+      "latest_comments": [
+        "Não consegui baixar o app ... frustrada.  Pode deixar alguma dica ?",
+        "Olá, Enaldinho!\nMeu nome é Keylla Samara e escrevo esta carta como mãe, com muito carinho e esperança.\nSou mãe solo de duas crianças incríveis: Rykelme Salomão, de 11 anos, e Safira Kimberly, de 6 anos.\nEles são seus fãs de verdade. Assistem aos seus vídeos, dão risada juntos e acompanham tudo o que você faz. O Rykelme, principalmente, tem um carinho enorme por você. Sempre diz que sonha em conhecer você pessoalmente, usar uma camisa da sua marca e ter algum produto seu. É um sonho que ele guarda no coração.\nMuitas pessoas até comentam que o Rykelme lembra você em alguns traços e no jeito de sorrir. Quando eu enviar a foto dele, acredito que você também possa perceber essa semelhança.\nInfelizmente, por ser mãe solo e enfrentar dificuldades financeiras, não consigo proporcionar esse encontro por conta própria. Faço tudo o que posso pelos meus filhos, mas esse sonho ainda está além das minhas condições.\nNão estou escrevendo para pedir dinheiro ou presentes. Meu pedido é apenas que, se um dia houver uma oportunidade de conhecer você, participar de um evento ou até mesmo receber um vídeo ou uma mensagem de carinho para o Rykelme e a Safira, isso ficará marcado para sempre na vida deles.\nObrigada por levar tanta alegria para tantas famílias através do seu trabalho. Que Deus continue abençoando sua vida e sua equipe.\nCom carinho e esperança,\nKeylla Samara\nMãe do Rykelme Salomão (11 anos) e da Safira Kimberly (6 anos).\n@enaldinho",
+        "Oiii, não sei se vai ver essa mensagem é aniversário do meu filho Cristiano amanhã \nEle adora você 🫵🏻 \nAssiste seus vídeos e o tema da festa é seu kkkk\nVocê consegue mandar um oi pra ele amanhã ((( pessoal me ajuda a chegar até o Enaldinho))))",
+        "Oi, Enaldinho ! 💙\nO Davi vai ao show de Sorocaba neste sábado, mas ele ainda não faz ideia. 🥹 Essa é uma surpresa que estamos preparando com muito carinho!\nSe você puder ajudar a tornar esse dia ainda mais especial, chamando o Davi para o palco ou até para um rápido encontro no camarim, tenho certeza de que seria uma lembrança que ele levaria para a vida inteira.\nQuem puder marcar o @enaldinho e a equipe para aumentar as chances de eles verem esse comentário, eu agradeço de coração! ❤️ assinado: Luana (mamãe) @davihenriqueplays",
+        "a tecnologia realmente vai mudar o mundo",
+        "Eles não tem medo de alguém roubar",
+        "@vini  ncx def4 DF FG GB hj DF FG hhh BB bcc BB gesvnfvnruruthghhfrfjcncjvgghjffjfjfjfjjfifdieueeê🙌"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DZdhrRKAd0T",
+      "caption": "+100000 aura 😮😮😮😮😮",
+      "timestamp": "2026-06-11T21:52:30.000Z",
+      "content_format": "reel",
+      "likes": 95785,
+      "comments": 1304,
+      "video_view_count": 973271,
+      "video_play_count": 2456854,
+      "latest_comments": [
+        "@ferrari oq vocês acharam😍",
+        "Mais ficou daora",
+        "Cópiou o Breno e o budernik ou nada ver ???!?",
+        "-9876543210",
+        "tô esperando a Ferrari ver kkk",
+        "Só que a Ferrari não pode ver😂😂😂",
+        "😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮",
+        "Que isso 😮🔥",
+        "@ferrari",
+        "@bielvaladarees cala a boca menos do Maranhão e o convite de ir no meu amigo que eu a patroa e o convite da para do vão ele o convite curso festa Samsung João meu Paulo e Samsung Silva meu sábado que e fazer trabalhar festa 🥳 do as o são primeiras bonitas claras mais e né ➕️ e que da ela é ele patroa ver loja ela o ficar fazer mais com melhor arrepender ela ele sido algo na só a você vida cara verdade da sua vida e da sua família e da família de vocês também pra mim também e te dou um abraço forte pra você vai me dar o prazer e de tu tá bom amor e de coração e as coisas que você vai fazer com essas coisas e que não vai dar tudo errado não gosto de trazida e não gosto de ficar com essas palavras que eu gosto e de tu não 👎 👎 👎 👎 👎 eu a p com o convite do 44 e de tu tá bom pra você que eu te mando mensagem"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DZXtE87xXw9",
+      "caption": "Alguém conseguiu encontrar alguma figurinha lendária? Kkkkk",
+      "timestamp": "2026-06-09T15:38:09.000Z",
+      "content_format": "reel",
+      "likes": 27842,
+      "comments": 1007,
+      "video_view_count": 356844,
+      "video_play_count": 1001879,
+      "latest_comments": [
+        "Enaldinho mm",
+        "É você",
+        "Olá, Enaldinho!\nMeu nome é Keylla Samara e escrevo esta carta como mãe, com muito carinho e esperança.\nSou mãe solo de duas crianças incríveis: Rykelme Salomão, de 11 anos, e Safira Kimberly, de 6 anos.\nEles são seus fãs de verdade. Assistem aos seus vídeos, dão risada juntos e acompanham tudo o que você faz. O Rykelme, principalmente, tem um carinho enorme por você. Sempre diz que sonha em conhecer você pessoalmente, usar uma camisa da sua marca e ter algum produto seu. É um sonho que ele guarda no coração.\nMuitas pessoas até comentam que o Rykelme lembra você em alguns traços e no jeito de sorrir. Quando eu enviar a foto dele, acredito que você também possa perceber essa semelhança.\nInfelizmente, por ser mãe solo e enfrentar dificuldades financeiras, não consigo proporcionar esse encontro por conta própria. Faço tudo o que posso pelos meus filhos, mas esse sonho ainda está além das minhas condições.\nNão estou escrevendo para pedir dinheiro ou presentes. Meu pedido é apenas que, se um dia houver uma oportunidade de conhecer você, participar de um evento ou até mesmo receber um vídeo ou uma mensagem de carinho para o Rykelme e a Safira, isso ficará marcado para sempre na vida deles.\nObrigada por levar tanta alegria para tantas famílias através do seu trabalho. Que Deus continue abençoando sua vida e sua equipe.\nCom carinho e esperança,\nKeylla Samara\nMãe do Rykelme Salomão (11 anos) e da Safira Kimberly (6 anos).\n@enaldinho",
+        "😂😂😂😂😂😂",
+        "Oiii, não sei se vai ver essa mensagem é aniversário do meu filho Cristiano amanhã \nEle adora você 🫵🏻 \nAssiste seus vídeos e o tema da festa é seu kkkk\nVocê consegue mandar um oi pra ele amanhã ((( pessoal me ajuda a chegar até o Enaldinho))))",
+        "Esse aí tá álbum um pouquinho mais caro não tá não?",
+        "@rafaellabaltar  oi",
+        "@vini oi"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DZVEPubxlgD",
+      "caption": "Será que ainda sou o rei do bafo?? 👀",
+      "timestamp": "2026-06-08T15:00:10.000Z",
+      "content_format": "reel",
+      "likes": 44940,
+      "comments": 887,
+      "video_view_count": 556442,
+      "video_play_count": 1324092,
+      "latest_comments": [
+        "Eu uso a tua técnica",
+        "Enaldo você nunca foi o rei do bafo figuritalo ele que e o rei",
+        "400🔥",
+        "Aubu completo de figurinha",
+        "Eu sou a minha consigo virar 40 cartas facinho @enaldinho",
+        "Bora consciência desafio do Batman eu moro em São Paulo",
+        "😍😍😍😍😍😍😍😍😍😍",
+        "Oiii, não sei se vai ver essa mensagem é aniversário do meu filho Cristiano amanhã \nEle adora você 🫵🏻 \nAssiste seus vídeos e o tema da festa é seu kkkk\nVocê consegue mandar um oi pra ele amanhã ((( pessoal me ajuda a chegar até o Enaldinho))))",
+        "Oi",
+        "@jpmorais2016 eu"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "Da6gApijWLn",
+      "caption": "Oi Salinas ✌🏼🌴",
+      "timestamp": "2026-07-18T00:26:36.000Z",
+      "content_format": "carousel",
+      "likes": 62800,
+      "comments": 1194,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Parece aqueles cantor",
+        "Enaldo eu tava aí esses dia",
+        "Eu tava lá e não vi ele 😢",
+        "👏",
+        "Man, que babado",
+        "Vem pra juruti hj tem festa",
+        "Oi enadinho sou muito seu fã",
+        "No Brasil, na rua ao progresso, você pode trair uma carta lendária do Cristiano Ronaldo",
+        "😍"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DZXpEY7x4zX",
+      "caption": "Quem perder no bafão vai ter que colocar o braço na guilhotina 😂",
+      "timestamp": "2026-06-09T15:00:02.000Z",
+      "content_format": "reel",
+      "likes": 29534,
+      "comments": 122,
+      "video_view_count": 769088,
+      "video_play_count": 1626454,
+      "latest_comments": [
+        "Oiii, não sei se vai ver essa mensagem é aniversário do meu filho Cristiano amanhã \nEle adora você 🫵🏻 \nAssiste seus vídeos e o tema da festa é seu kkkk\nVocê consegue mandar um oi pra ele amanhã ((( pessoal me ajuda a chegar até o Enaldinho))))",
+        "Ola",
+        "Oi Enaldo",
+        "😂😂😂😂😂😂😂😂😂😂😂",
+        "@enaldinho eu ganho de você no bafo eu sou o rei do bafo",
+        "Tenho CR7 bronze da copa de 22vc se interessa",
+        "🙌",
+        "É muito  fasil",
+        "Enaldinho eu sou seu fã você não poderia me ensinar a bater bafo❤️",
+        "Cristiano Ronaldo de ouro! Meu filho tirou, ele quer te mostrar!"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DY9-EuKx-te",
+      "caption": "Recriando figurinhas virais 😂",
+      "timestamp": "2026-05-30T15:45:54.000Z",
+      "content_format": "reel",
+      "likes": 13220,
+      "comments": 133,
+      "video_view_count": 280057,
+      "video_play_count": 1005910,
+      "latest_comments": [
+        "😂😂😂😂",
+        "😂😂😂😂😂😂😂😂",
+        "😂😂😂😂😂😂",
+        "Kkkkkkkkkkkkkkk😂😂😂",
+        "😂😂😂❤️❤️❤️❤️",
+        "Enaldinho vc tá namorando",
+        "😂😂😂😂",
+        "O enaldinho foi o melhor",
+        "Kkkkkk",
+        "EMGRASADO A 2"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DZjLhkHDW_i",
+      "caption": "Mais uma copa do mundo com meu irmão!! Será que esse ano o Brasil leva??? 🇧🇷❤️",
+      "timestamp": "2026-06-14T02:33:40.000Z",
+      "content_format": "carousel",
+      "likes": 63620,
+      "comments": 674,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Olá, Enaldinho!\nMeu nome é Keylla Samara e escrevo esta carta como mãe, com muito carinho e esperança.\nSou mãe solo de duas crianças incríveis: Rykelme Salomão, de 11 anos, e Safira Kimberly, de 6 anos.\nEles são seus fãs de verdade. Assistem aos seus vídeos, dão risada juntos e acompanham tudo o que você faz. O Rykelme, principalmente, tem um carinho enorme por você. Sempre diz que sonha em conhecer você pessoalmente, usar uma camisa da sua marca e ter algum produto seu. É um sonho que ele guarda no coração.\nMuitas pessoas até comentam que o Rykelme lembra você em alguns traços e no jeito de sorrir. Quando eu enviar a foto dele, acredito que você também possa perceber essa semelhança.\nInfelizmente, por ser mãe solo e enfrentar dificuldades financeiras, não consigo proporcionar esse encontro por conta própria. Faço tudo o que posso pelos meus filhos, mas esse sonho ainda está além das minhas condições.\nNão estou escrevendo para pedir dinheiro ou presentes. Meu pedido é apenas que, se um dia houver uma oportunidade de conhecer você, participar de um evento ou até mesmo receber um vídeo ou uma mensagem de carinho para o Rykelme e a Safira, isso ficará marcado para sempre na vida deles.\nObrigada por levar tanta alegria para tantas famílias através do seu trabalho. Que Deus continue abençoando sua vida e sua equipe.\nCom carinho e esperança,\nKeylla Samara\nMãe do Rykelme Salomão (11 anos) e da Safira Kimberly (6 anos).\n@enaldinho",
+        "Oiii, não sei se vai ver essa mensagem é aniversário do meu filho Cristiano amanhã \nEle adora você 🫵🏻 \nAssiste seus vídeos e o tema da festa é seu kkkk\nVocê consegue mandar um oi pra ele amanhã ((( pessoal me ajuda a chegar até o Enaldinho))))",
+        "🔥🔥🔥🔥🔥👏😍😮😂",
+        "Oi",
+        "👏👏",
+        "❤️❤️❤️❤️❤️❤️",
+        "Faz",
+        "Eu te sigo"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbVzvPWRSDt",
+      "caption": "Mano... era pra ser só mais uma viagem entre amigos, até que a gente ficou preso no meio da floresta. 😳\n\nAinda bem que eu tava com o meu realme P4 Power. Enquanto a gente esperava ajuda, a bateria de 10.001mAh aguentou firme o tempo todo: deu pra ligar, iluminar o caminho, jogar Free Fire em 120 FPS e, mesmo depois de tudo isso, o celular não me deixou na mão.  Confira o video inteiro no Youtube! \n\n@realmebr.official\n\n#publi #realmeP4Series #realmeP4Power #10001mAhANovaEradoPoder #realmeP4PowerAMaiorBateriadoBrasil",
+      "timestamp": "2026-07-28T15:00:34.000Z",
+      "content_format": "reel",
+      "likes": 53353,
+      "comments": 142,
+      "video_view_count": 3122009,
+      "video_play_count": 6354197,
+      "latest_comments": [
+        "Meu sonho e ter um",
+        "Tira esse efeitos sonoros tá chato",
+        "O cara n tem estepe kkkkkkk",
+        "E o estepe tá podre e?",
+        "Bestão",
+        "Homi q n sabe trocar pneu?🤨",
+        "Tudo isso, por conta de um pneu furado",
+        "🫶🏼🌺🌟🫶🏼🌻🖕🏼🖕🏼🖕🏼🖕🏼🖕🏼🖕🏼🖕🏼🖕🏼",
+        "E não tem Step? Oque adianta ter carro caro é da nisso",
+        "So eu que vi o lobb do ff",
+        "Acabei de ver esse vídeo",
+        "..",
+        "Iagora",
+        "Enaldinho lá nos mato 👇🏻"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DY7riCXAV4-",
+      "caption": "Somos parecidos?? 😂👀",
+      "timestamp": "2026-05-29T18:25:06.000Z",
+      "content_format": "reel",
+      "likes": 84337,
+      "comments": 1285,
+      "video_view_count": 1296119,
+      "video_play_count": 3890747,
+      "latest_comments": [
+        "Mdsss enaldinho sou sua fã número 1  me segue pfv assisto todos seus vídeos  e amo quando vc faz vídeos com a Morgana  me segue pfv",
+        "São muito",
+        "MN MDS",
+        "❤️❤️❤️❤️❤️❤️❤️",
+        "Salve peixe",
+        "Oi enaldinho Boa Tarde",
+        "Muinto",
+        "Eu nem sei quem e quem",
+        "Sim",
+        "Me segue enaldinho😢"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DZyitd5DbVV",
+      "caption": "BORA BRASILLLL 🇧🇷🇧🇷🇧🇷🇧🇷\nQual o palpite de vcs pro jogo??",
+      "timestamp": "2026-06-20T01:44:53.000Z",
+      "content_format": "carousel",
+      "likes": 27596,
+      "comments": 391,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🔥🔥",
+        "😍😍😍😍❤️❤️❤️🔥🔥🔥🔥🔥🔥🔥🔥🔥❤️❤️❤️❤️❤️❤️😍😍😍😍😍",
+        "Olá, Enaldinho!\nMeu nome é Keylla Samara e escrevo esta carta como mãe, com muito carinho e esperança.\nSou mãe solo de duas crianças incríveis: Rykelme Salomão, de 11 anos, e Safira Kimberly, de 6 anos.\nEles são seus fãs de verdade. Assistem aos seus vídeos, dão risada juntos e acompanham tudo o que você faz. O Rykelme, principalmente, tem um carinho enorme por você. Sempre diz que sonha em conhecer você pessoalmente, usar uma camisa da sua marca e ter algum produto seu. É um sonho que ele guarda no coração.\nMuitas pessoas até comentam que o Rykelme lembra você em alguns traços e no jeito de sorrir. Quando eu enviar a foto dele, acredito que você também possa perceber essa semelhança.\nInfelizmente, por ser mãe solo e enfrentar dificuldades financeiras, não consigo proporcionar esse encontro por conta própria. Faço tudo o que posso pelos meus filhos, mas esse sonho ainda está além das minhas condições.\nNão estou escrevendo para pedir dinheiro ou presentes. Meu pedido é apenas que, se um dia houver uma oportunidade de conhecer você, participar de um evento ou até mesmo receber um vídeo ou uma mensagem de carinho para o Rykelme e a Safira, isso ficará marcado para sempre na vida deles.\nObrigada por levar tanta alegria para tantas famílias através do seu trabalho. Que Deus continue abençoando sua vida e sua equipe.\nCom carinho e esperança,\nKeylla Samara\nMãe do Rykelme Salomão (11 anos) e da Safira Kimberly (6 anos).\n@enaldinho",
+        "Oiii, não sei se vai ver essa mensagem é aniversário do meu filho Cristiano amanhã \nEle adora você 🫵🏻 \nAssiste seus vídeos e o tema da festa é seu kkkk\nVocê consegue mandar um oi pra ele amanhã ((( pessoal me ajuda a chegar até o Enaldinho))))",
+        "2030  vai.  O.  Hexa",
+        "❤️",
+        "❤️",
+        "Oi eu sol  sua fã",
+        "❤️❤️❤️❤️❤️❤️❤️",
+        "😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍❤️❤️❤️❤️❤️❤️❤️❤️❤️😍😍😍😍😍😍😍😍"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DZ8AAuxFExi",
+      "caption": "Miami Beach 🌞🌊🏖️",
+      "timestamp": "2026-06-23T17:54:05.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 278,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🔥🔥🔥",
+        "Olá, Enaldinho!\nMeu nome é Keylla Samara e escrevo esta carta como mãe, com muito carinho e esperança.\nSou mãe solo de duas crianças incríveis: Rykelme Salomão, de 11 anos, e Safira Kimberly, de 6 anos.\nEles são seus fãs de verdade. Assistem aos seus vídeos, dão risada juntos e acompanham tudo o que você faz. O Rykelme, principalmente, tem um carinho enorme por você. Sempre diz que sonha em conhecer você pessoalmente, usar uma camisa da sua marca e ter algum produto seu. É um sonho que ele guarda no coração.\nMuitas pessoas até comentam que o Rykelme lembra você em alguns traços e no jeito de sorrir. Quando eu enviar a foto dele, acredito que você também possa perceber essa semelhança.\nInfelizmente, por ser mãe solo e enfrentar dificuldades financeiras, não consigo proporcionar esse encontro por conta própria. Faço tudo o que posso pelos meus filhos, mas esse sonho ainda está além das minhas condições.\nNão estou escrevendo para pedir dinheiro ou presentes. Meu pedido é apenas que, se um dia houver uma oportunidade de conhecer você, participar de um evento ou até mesmo receber um vídeo ou uma mensagem de carinho para o Rykelme e a Safira, isso ficará marcado para sempre na vida deles.\nObrigada por levar tanta alegria para tantas famílias através do seu trabalho. Que Deus continue abençoando sua vida e sua equipe.\nCom carinho e esperança,\nKeylla Samara\nMãe do Rykelme Salomão (11 anos) e da Safira Kimberly (6 anos).\n@enaldinho",
+        "Oiii, não sei se vai ver essa mensagem é aniversário do meu filho Cristiano amanhã \nEle adora você 🫵🏻 \nAssiste seus vídeos e o tema da festa é seu kkkk\nVocê consegue mandar um oi pra ele amanhã ((( pessoal me ajuda a chegar até o Enaldinho))))",
+        "😍",
+        "👏",
+        "Mano só muito seu fã",
+        "Mano só muito seu fã",
+        "Tem que respeitar né 👏",
+        "Enaldinho  farmer -aura-9999999999999999"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DaDXDbIRLa6",
+      "caption": "Simplesmente a BOLA DE OURO de melhor jogador do mundo do @ronaldo de 2002 😮🏆",
+      "timestamp": "2026-06-26T14:30:09.000Z",
+      "content_format": "reel",
+      "likes": 8685,
+      "comments": 138,
+      "video_view_count": 125316,
+      "video_play_count": 391859,
+      "latest_comments": [
+        "Oi Enaldo"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DZOJCmAgMxf",
+      "caption": "Como bater bafo em 1 minuto 📝",
+      "timestamp": "2026-06-05T22:28:38.000Z",
+      "content_format": "reel",
+      "likes": 12661,
+      "comments": 251,
+      "video_view_count": 292992,
+      "video_play_count": 818619,
+      "latest_comments": [
+        "Mentira 😂😂😂😂😂😂😂",
+        "Oiii, não sei se vai ver essa mensagem é aniversário do meu filho Cristiano amanhã \nEle adora você 🫵🏻 \nAssiste seus vídeos e o tema da festa é seu kkkk\nVocê consegue mandar um oi pra ele amanhã ((( pessoal me ajuda a chegar até o Enaldinho))))",
+        "Já seu",
+        "Isso aí não é bater figurinha...",
+        "obrigado pelo me ajudar agora consigo virar cartinha",
+        "Ggfhfhh",
+        "Aprendi obg",
+        "Obrigado por te ensinado a prendi",
+        "Ajudo muito",
+        "@marialuizacavalieri ebjjrwjj yjfjw7u"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DY-KCaYugyB",
+      "caption": "Espero ter ajudado @enaldinho",
+      "timestamp": "2026-05-30T17:30:16.000Z",
+      "content_format": "reel",
+      "likes": 33035,
+      "comments": 247,
+      "video_view_count": 231973,
+      "video_play_count": 630012,
+      "latest_comments": [
+        "Ele gravando com a blusa de quem ganhou a copa",
+        ":cr7 me nota pfvr",
+        "KKKKKKKK😂",
+        "😂😂😂😂",
+        "O enaldinho escrevendo kkkk",
+        "Assistir 3x e ainda tô rindo . alguém me explica por que esse cara é tão bom  nisso enaldinho salvou meu dia ruim . Obrigado por existir kkkk",
+        "👏😢😮😍",
+        "Pooooo aí vai ajudar. A ELE CHEGAR EM 50 MILHÕES",
+        "😂😂😂😂😂",
+        "❤️❤️",
+        "ENALDO???",
+        "Oqueeeeeeeee CHOCADA VEYY",
+        "⚽",
+        ", ⚽⚽⚽"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "C1M3MszLl1b",
+      "caption": "Pra fechar o ano com chave de ouro, além de ser pelo segundo ano consecutivo o Youtuber Brasileiro mais assistido, eu sai na lista da Forbes Under 30 por tudo que venho construindo como empresário! Luto todos os dias pra tentar inovar e crescer os negócios dentro e fora da internet e ter esse reconhecimento é muito gratificante! Obrigado a todos que me acompanham! 🙏🏻",
+      "timestamp": "2023-12-23T15:42:35.000Z",
+      "content_format": "carousel",
+      "likes": 73460,
+      "comments": 6826,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Oiii, não sei se vai ver essa mensagem é aniversário do meu filho Cristiano amanhã \nEle adora você 🫵🏻 \nAssiste seus vídeos e o tema da festa é seu kkkk\nVocê consegue mandar um oi pra ele amanhã ((( pessoal me ajuda a chegar até o Enaldinho))))",
+        "Show de criança atrasar, inadmissível.. quase 2h de atraso e sem sinal de iniciar.. absurdo.. em Sorocaba",
+        "Oi, pessoal! 💙\nO Davi vai ao show de Sorocaba neste sábado, mas ele ainda não faz ideia. 🥹 Essa é uma surpresa que estamos preparando com muito carinho!\nSe vocês puderem ajudar a tornar esse dia ainda mais especial, chamando o Davi para o palco ou até para um rápido encontro no camarim, tenho certeza de que seria uma lembrança que ele levaria para a vida inteira.\nQuem puder marcar o @enaldinho e a equipe para aumentar as chances de eles verem esse comentário, eu agradeço de coração! ❤️",
+        "Origem",
+        "Fui no teu o show heyyp",
+        "Enaldinho  sou seu fã",
+        "Oi",
+        "@enaldinho realiza sonhos dos meus filhos tirar foto com vc em Sorocaba",
+        "😍❤️😍❤️",
+        "❤️❤️❤️❤️❤️❤️❤️👏👏😍",
+        "Oi enaldinho de boa 😁",
+        "Ronaldinho na sua foto parece que tem um Zap ou senão o rap",
+        "Oi enaldinho adoro seus vídeos sou seu fã ❤️❤️",
+        "Zzjdjs",
+        "👏🙌😢😮😍🔥😂😂"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DZD0Pd7Albf",
+      "caption": "Parabéns pelos seus 80 anos, vó Nena! São oito décadas de histórias, ensinamentos, amor, força e uma família inteira construída com carinho e dedicação.\n\nSou muito grato por ter o privilégio de compartilhar a vida ao seu lado e aprender com a sua sabedoria todos os dias. Que Deus continue abençoando sua saúde, sua alegria e esse coração enorme que acolhe todos ao seu redor.\n\nQue venham muitos outros momentos, risadas e memórias juntos. Te amo muito! Feliz 80 anos! 🎂❤️",
+      "timestamp": "2026-06-01T22:13:55.000Z",
+      "content_format": "static_post",
+      "likes": 11307,
+      "comments": 236,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Oi",
+        "que lindo 💗💗💗💗💗💗💗💗😍😍😍",
+        "👏👏👏❤️❤️❤️",
+        "❤️",
+        "❤️❤️❤️👏👏👏",
+        "❤️❤️❤️❤️❤️",
+        "🤙",
+        "Que lindo enaldo",
+        "❤️❤️❤️",
+        "❤️"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DZvvCIvjfil",
+      "caption": "NYC 😎🗽🇺🇸🚁",
+      "timestamp": "2026-06-18T23:34:50.000Z",
+      "content_format": "carousel",
+      "likes": 12120,
+      "comments": 209,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Olá, Enaldinho!\nMeu nome é Keylla Samara e escrevo esta carta como mãe, com muito carinho e esperança.\nSou mãe solo de duas crianças incríveis: Rykelme Salomão, de 11 anos, e Safira Kimberly, de 6 anos.\nEles são seus fãs de verdade. Assistem aos seus vídeos, dão risada juntos e acompanham tudo o que você faz. O Rykelme, principalmente, tem um carinho enorme por você. Sempre diz que sonha em conhecer você pessoalmente, usar uma camisa da sua marca e ter algum produto seu. É um sonho que ele guarda no coração.\nMuitas pessoas até comentam que o Rykelme lembra você em alguns traços e no jeito de sorrir. Quando eu enviar a foto dele, acredito que você também possa perceber essa semelhança.\nInfelizmente, por ser mãe solo e enfrentar dificuldades financeiras, não consigo proporcionar esse encontro por conta própria. Faço tudo o que posso pelos meus filhos, mas esse sonho ainda está além das minhas condições.\nNão estou escrevendo para pedir dinheiro ou presentes. Meu pedido é apenas que, se um dia houver uma oportunidade de conhecer você, participar de um evento ou até mesmo receber um vídeo ou uma mensagem de carinho para o Rykelme e a Safira, isso ficará marcado para sempre na vida deles.\nObrigada por levar tanta alegria para tantas famílias através do seu trabalho. Que Deus continue abençoando sua vida e sua equipe.\nCom carinho e esperança,\nKeylla Samara\nMãe do Rykelme Salomão (11 anos) e da Safira Kimberly (6 anos).\n@enaldinho",
+        "Oiii, não sei se vai ver essa mensagem é aniversário do meu filho Cristiano amanhã \nEle adora você 🫵🏻 \nAssiste seus vídeos e o tema da festa é seu kkkk\nVocê consegue mandar um oi pra ele amanhã ((( pessoal me ajuda a chegar até o Enaldinho))))",
+        "67",
+        "😮😮😮😮😮😮😮😮😮😮😮😮😮❤️",
+        "👏👏👏🔥😮",
+        "Essa imagem está mesmo fixe",
+        "B",
+        "❤️😍",
+        "8c"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DZ_Y-T2Da8S",
+      "caption": "Vamos supor que tô pé quente 🤷🏻‍♂️😂 BORAAAAAAA 🇧🇷🇧🇷🇧🇷",
+      "timestamp": "2026-06-25T01:29:55.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 398,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🇧🇷🇧🇷🇧🇷🇧🇷🇧🇷🇧🇷🇧🇷🇧🇷😍😍😍😍😍",
+        "Olá, Enaldinho!\nMeu nome é Keylla Samara e escrevo esta carta como mãe, com muito carinho e esperança.\nSou mãe solo de duas crianças incríveis: Rykelme Salomão, de 11 anos, e Safira Kimberly, de 6 anos.\nEles são seus fãs de verdade. Assistem aos seus vídeos, dão risada juntos e acompanham tudo o que você faz. O Rykelme, principalmente, tem um carinho enorme por você. Sempre diz que sonha em conhecer você pessoalmente, usar uma camisa da sua marca e ter algum produto seu. É um sonho que ele guarda no coração.\nMuitas pessoas até comentam que o Rykelme lembra você em alguns traços e no jeito de sorrir. Quando eu enviar a foto dele, acredito que você também possa perceber essa semelhança.\nInfelizmente, por ser mãe solo e enfrentar dificuldades financeiras, não consigo proporcionar esse encontro por conta própria. Faço tudo o que posso pelos meus filhos, mas esse sonho ainda está além das minhas condições.\nNão estou escrevendo para pedir dinheiro ou presentes. Meu pedido é apenas que, se um dia houver uma oportunidade de conhecer você, participar de um evento ou até mesmo receber um vídeo ou uma mensagem de carinho para o Rykelme e a Safira, isso ficará marcado para sempre na vida deles.\nObrigada por levar tanta alegria para tantas famílias através do seu trabalho. Que Deus continue abençoando sua vida e sua equipe.\nCom carinho e esperança,\nKeylla Samara\nMãe do Rykelme Salomão (11 anos) e da Safira Kimberly (6 anos).\n@enaldinho",
+        "Oiii, não sei se vai ver essa mensagem é aniversário do meu filho Cristiano amanhã \nEle adora você 🫵🏻 \nAssiste seus vídeos e o tema da festa é seu kkkk\nVocê consegue mandar um oi pra ele amanhã ((( pessoal me ajuda a chegar até o Enaldinho))))",
+        "Tudo  bem  enaldinho  como.  Você",
+        "Vai🇧🇷",
+        "Oi",
+        "Ui",
+        "Oi, Enaldinho ! 💙\nO Davi vai ao show de Sorocaba neste sábado, mas ele ainda não faz ideia. 🥹 Essa é uma surpresa que estamos preparando com muito carinho!\nSe você puder ajudar a tornar esse dia ainda mais especial, chamando o Davi para o palco ou até para um rápido encontro no camarim, tenho certeza de que seria uma lembrança que ele levaria para a vida inteira.\nQuem puder marcar o @enaldinho e a equipe para aumentar as chances de eles verem esse comentário, eu agradeço de coração! ❤️ assinado: Luana (mamãe) @davihenriqueplays"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DY-HXwCljCF",
+      "caption": "Fim das gravações para a super copa do Enaldinho, vou sentir sdds dessa galera 🥹💖",
+      "timestamp": "2026-05-30T17:05:29.000Z",
+      "content_format": "carousel",
+      "likes": 10787,
+      "comments": 112,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "❤️",
+        "Inaldo por favor venha para Porto Alegre faça o seu show aqui até você me conheceu eu sou a Júlia Oliveira e você tem que vim aqui no meu condomínio eu Rossi Viva o número do meu apartamento é",
+        "Ba é nada se ficou bom sou a Júlia sou uma seguidora tua gosto muito de você quero que tu faça um show aqui em Porto Alegre beijo",
+        "❤️❤️❤️",
+        "Encaminho eu sou seu far",
+        "Só eu que acho que o Peixe parece o João Marcelo?",
+        "Oi enaldo sou sua fã",
+        "Olá Rafaella Baltar, sou sua fã, eu amo os shows RafaeLuiz estou estudando para ser uma cantora profissional, quero muito poder assistir isso num futuro presencial, tirar foto com vocês dois, numa oportunidade eu conseguindo assistir o show de vocês, vocês também podem assistir um show meu presencial, será incrível, tirar foto com vocês, marcar vocês.",
+        "Que. Lindo né 👏😍😍👏😍👏😍😍😍😍😍"
+      ],
+      "anomalies": []
+    }
+  ],
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "2_comissionamento_afiliados",
+    "matches": [
+      {
+        "category": "2_comissionamento_afiliados",
+        "evidence": [
+          "external_url é agregador de links (linktr.ee)"
+        ]
+      },
+      {
+        "category": "5_patrocinio_publicidade",
+        "evidence": [
+          "legenda com marcação de publicidade paga: \"#publi\""
+        ]
+      }
+    ],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  }
+}

@@ -1,0 +1,50 @@
+/* Semaphore.module.css — paleta neon única (cyan/gold/red/none) */
+
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.md { width: 20px; height: 20px; font-size: 10px; }
+.sm { width: 14px; height: 14px; font-size: var(--font-size-xs); }
+
+.cyan {
+  background: rgba(0, 255, 255, 0.15);
+  border: var(--border-width) solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  box-shadow: 0 0 6px rgba(0, 255, 255, 0.35);
+}
+.gold {
+  background: rgba(255, 195, 0, 0.15);
+  border: var(--border-width) solid var(--neon-gold);
+  color: var(--neon-gold);
+  box-shadow: 0 0 6px rgba(255, 195, 0, 0.35);
+}
+.red {
+  background: rgba(255, 68, 68, 0.15);
+  border: var(--border-width) solid var(--neon-red);
+  color: var(--neon-red);
+  box-shadow: 0 0 6px rgba(255, 68, 68, 0.35);
+}
+.none {
+  background: rgba(112, 110, 106, 0.12);
+  border: var(--border-width) solid var(--line);
+  color: var(--t1);
+}
+
+.label {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+}

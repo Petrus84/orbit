@@ -1,0 +1,712 @@
+{
+  "handle": "agedigital__",
+  "setor_benchmark_key": "3_infoprodutor",
+  "url": "https://www.instagram.com/agedigital__/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T01:45:29.223Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DPeoJhKkZzP",
+      "caption": "📚 Tudo o que o professor de Educação Física precisa, em um só lugar!\n\nNa AGE Digital, você encontra o maior acervo de materiais digitais para Educação Física da internet — do Infantil ao Ensino Médio.\n\n💡 Nosso site é atualizado constantemente com novos conteúdos, elaborados por professores e alinhados à BNCC.\n\n🛒 As compras são 100% seguras, e o acesso é imediato após a confirmação do pagamento.\n\n👉 Acesse agora: www.agedigital.com.br\ne descubra porque milhares de professores já escolheram a AGE Digital como sua parceira na escola.",
+      "timestamp": "2025-10-06T18:53:39.000Z",
+      "content_format": "static_post",
+      "likes": null,
+      "comments": 4,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Quero",
+        "Quero",
+        "@susimucha Boa noite prof! Enviamos no direct"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbIqzHtRI4L",
+      "caption": "📢 E aí, professor(a)! De qual estado você é? 🇧🇷\n\n🚨 Boa notícia para a Educação Física Escolar!\nO governador do Rio Grande do Sul, Eduardo Leite, sancionou a Lei nº 16.556/2026, de autoria do deputado estadual Delegado Zucco (Republicanos), fortalecendo a Educação Física na rede escolar gaúcha.\n\nA nova legislação determina:\n\n✅ No mínimo 3 aulas semanais de Educação Física em todas as etapas do Ensino Fundamental e do Ensino Médio;\n\n✅ As aulas deverão ser ministradas exclusivamente por profissionais com formação específica em Educação Física;\n\n✅ A medida vale para todas as escolas públicas e privadas do Rio Grande do Sul;\n\n✅ Projetos esportivos e treinamentos escolares também deverão ser conduzidos por professores habilitados;\n\n✅ A proposta surgiu após alertas da categoria sobre escolas que utilizavam pessoas sem a formação adequada, comprometendo a segurança dos alunos e a qualidade do aprendizado.\n\n🏆 Com a nova norma, o Rio Grande do Sul torna-se pioneiro no Brasil ao estabelecer, por lei, a carga mínima de 3 aulas semanais de Educação Física, superando estados como Mato Grosso, que exige duas aulas semanais, e antecipando uma discussão que ainda tramita no Congresso Nacional.\n\n💬 Agora quero saber:\n\n🇧🇷 Você gostaria que uma lei como essa fosse aprovada também no seu estado?",
+      "timestamp": "2026-07-23T12:33:50.000Z",
+      "content_format": "static_post",
+      "likes": 562,
+      "comments": 29,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Sim",
+        "@cref14oficial",
+        "Com certeza, muitos lugares não respeitam nossa profissão, vários professores de Educação Física sem trabalho, formados, enquanto outros assumem sem formação.",
+        "Show de bola. Aqui em Manaus o Ensino Médio tem apenas uma aula semanal, um verdadeiro absurdo.",
+        "Até que enfim",
+        "Que venha essa lei nacional!",
+        "Aqui em Limeira/SP, tiraram a terceira aula em 2026 justificando q Linguagens e Tecnologias precisam entrar na grade pra poder receber mais verbas e nos colocaram para dar essas aulas 🫣",
+        "Em Limeira eram 3 e reduziram para 2 por semana 😢",
+        "Um sonho🙌"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbVqkBIEf9Z",
+      "caption": "🏰 BATALHA HULA HUT\n\n📚 A Batalha Hula Hut é uma atividade versátil, podendo ser utilizada tanto na unidade temática Brincadeiras e Jogos quanto na unidade temática Esportes, como uma excelente atividade pré-desportiva, desenvolvendo habilidades fundamentais que serão utilizadas em diferentes modalidades esportivas.\n\n🤾🏻‍♂️A atividade desenvolve:\n🎯 Lançamento e precisão\n⚡ Agilidade\n🧠 Estratégia\n🤝 Cooperação\n💡 Tomada de decisão\n🏆 Trabalho em equipe\n\n👉 Salve este post para aplicar na sua próxima aula!\n\n📤 Compartilhe com outros professores de Educação Física.\n\n📚 Essa atividade faz parte do nosso material Atividades Práticas para a Quadra, disponível na BIO do perfil.\n\n#educacaofisicaescolar #edfisica #professordeeducaçaofisica #bncc #predesportivo",
+      "timestamp": "2026-07-28T13:38:18.000Z",
+      "content_format": "carousel",
+      "likes": 189,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Eu quero"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbLfmMAEcET",
+      "caption": "🌿🪶 BRINCADEIRAS INDÍGENAS E AFRICANAS\n\nA BNCC orienta o trabalho com brincadeiras tradicionais e de diferentes matrizes culturais na Unidade Temática Brincadeiras e Jogos, valorizando o movimento, a diversidade cultural e as vivências corporais dos estudantes.\n\n📚 Neste carrossel você encontra atividades como:\n🌿 Terra Mar\n🐍 Da Ga Jiboia\n🇿🇦Amarelinha Africana\n🔸Flongodo com Garrafas\n🍌 Banana Verde\n🫘 Saltando Feijões\n\n🏃‍♀️ ENCONTRE MAIS SUGESTÕES NO MATERIAL COMPLETO NA BIO DO PERFIL 🎉\n\n📕Todas essas atividades fazem parte do material Atividades para a Quadra.\n\n#educaçãofisica #educacaofisicaescolar #educaçãofísicaescolar #brincadeirasindigenas #brincadeirasafricanas",
+      "timestamp": "2026-07-24T14:50:05.000Z",
+      "content_format": "carousel",
+      "likes": 604,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXv-4uVONhu",
+      "caption": "Uma ideia de jogo super divertida para fazer com seus alunos 🎲✨ \n\n📸Créditos: @lise_mariana.em.atividade",
+      "timestamp": "2026-04-30T08:54:23.000Z",
+      "content_format": "reel",
+      "likes": 160,
+      "comments": 2,
+      "video_view_count": 2203,
+      "video_play_count": 6696,
+      "latest_comments": [
+        "👏👏👏",
+        "Como chama?"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZvCyoMR0ig",
+      "caption": "Nenhuma experiência é individual mesmo né professores?! \n📸Créditos: @kadunasmar",
+      "timestamp": "2026-06-18T17:09:13.000Z",
+      "content_format": "reel",
+      "likes": 788,
+      "comments": 38,
+      "video_view_count": 8053,
+      "video_play_count": 23280,
+      "latest_comments": [
+        "😂😂😂😂😂😂😂😂😂",
+        "A gente só  muda de endereço  mesmo !!! 😂😂😂😂😂",
+        "😂😂",
+        "@rafa.roma6891  corre aqui 😂😂",
+        "Eu sou professora de educação física, dança, teatro e muito mais kkkk",
+        "@guiilherme_santos5 nosso dilema kkkkkkk",
+        "Eu não sei porque só os coitados ensaiam a quadrilha, eu tenho 27 anos na área, nunca ensaiei se eu não quiser, a dança exige muito e coreografar uma ou outra tudo bem, mas temos também professores de artes e que podem fazer esses ensaios, eu amo ensino médio porque eles pedem e a gente vai mediando os passos para eles mesmos ensaiarem e arrasarem",
+        "Verdade! Alguém conta conta para ele , que quem dá vida na quadrilha somos nós professores de Ed. Física."
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYptJfRx00k",
+      "caption": "Vai uma variação de queimada aí professor?! 😅🤣🤣🤣🤣🤣\n\n📸 Créditos: @hivictorr",
+      "timestamp": "2026-05-22T18:52:50.000Z",
+      "content_format": "reel",
+      "likes": 430,
+      "comments": 50,
+      "video_view_count": 5716,
+      "video_play_count": 15533,
+      "latest_comments": [
+        "Os alunos reclamam demais e depois querem infinitamente 😂😂😂",
+        "😂😂",
+        "😂😂😂😂😂😂",
+        "🔥🔥🔥🔥🔥🔥🔥🔥🔥",
+        "A cria achando que eles nao gostar, ai eles gostam que fazer em todas as aulas.😂😂😂",
+        "😂😂😂😂😂😂",
+        "Até a metade da explicação tava de boa, da metade pra frente fui só pra trás kkkk e quem nunca reinventou a queimada? 😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWC1DvokVWP",
+      "caption": "👀E aí professores qual a opinião de vcs?\n\n📸Créditos: @prof.gisellydias",
+      "timestamp": "2026-03-18T23:28:55.000Z",
+      "content_format": "reel",
+      "likes": 2066,
+      "comments": 470,
+      "video_view_count": 16586,
+      "video_play_count": 43210,
+      "latest_comments": [
+        "A Educação Física e seus professores devem ser amparadas por leis federais do magistério. Essa ingerência do sistema CREF/CONFEF é uma aberração.",
+        "Cadê o cref pra fiscalizar condições de trabalho nas escolas? Se trabalhamos em local que tem quadra ou terra batida debaixo do sol? Se temos uma bola velha e mais nada pra dar aulas? Não faz droga nenhuma, só serve pra arrecadar isso é fato. Vergonha é quem defende isso ou até mesmo acha que tem que ter um órgão cobrando a gente e nada fazendo por nós pra compensar esse gasto inútil.",
+        "É uma vergonha todos os os outros professores das outras disciplinas a eles basta se formar em licenciatura para poder ministrar aulas, só o professor de Educação Física que tem a graduação, na maioria das vezes tem cursos, pós graduações em Educação Física escolar como é o meu caso e mesmo assim, não posso trabalhar por causa de um conselho que nunca fez nada por mim, não faz nada por mim. Não discuto a questão do bacharelado, mas licenciatura, pra ser professor em escola, aprovado em concurso muitas vezes, isso é inadmissível, é tomar o nosso dinheiro suado a troco de nada.",
+        "👏👏👏👏👏👏👏",
+        "Cref não me representa!",
+        "@evertonsantos902 nossa",
+        "Na minha opinião não era pra existe esse tal de Cref .. e nem pagar anuidade uma vez formado já era .... Porque o Cref não oferece nem Benefício para o profissional .. nem um seguro nada mesmo ..... Pra mim não serve pra nada"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYj6I2qRR9i",
+      "caption": "Complicado né profs …. 🤣🤣🤣",
+      "timestamp": "2026-05-20T12:49:58.000Z",
+      "content_format": "reel",
+      "likes": 414,
+      "comments": 23,
+      "video_view_count": 5765,
+      "video_play_count": 16526,
+      "latest_comments": [
+        "😂",
+        "😂",
+        "😂😂😂😂",
+        "😂😂😂😂😂😂",
+        "Isso isso isso",
+        "😂😂😂😂",
+        "😂😂😂😂😂😂😂😂😂",
+        "@vitoriafernandes.25 😂😂",
+        "🫤😂😂",
+        "😂😂😂😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DPeoOm1keD8",
+      "caption": "💻 O site da AGE Digital está no ar!\n\nSe você é professor(a) de Educação Física, vai adorar esse espaço feito especialmente pra você! 🙌\n\n📚 Lá você encontra materiais digitais prontos, do Infantil ao Ensino Médio — todos alinhados à BNCC e pensados para deixar suas aulas muito mais práticas e inspiradoras.\n\n💻 Entra lá e dá uma olhadinha 👉 www.agedigital.com.br\n\nVocê vai se surpreender com a quantidade de recursos disponíveis!",
+      "timestamp": "2025-10-06T18:54:21.000Z",
+      "content_format": "static_post",
+      "likes": null,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Valor",
+        "@neidinhavasques Bom dia prof! Enviamos no direct"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbdbYH6EZX2",
+      "caption": "📢 Volta às aulas = hora de reforçar os combinados!\n\nPequenas atitudes fazem toda a diferença para que as aulas de Educação Física sejam mais seguras, organizadas e divertidas. 🏃‍♀️⚽\n\n🚨A VERSÃO COMPLETA está disponível na bio do nosso perfil! 🏃🏻‍♀️✨\n\n#educacaofisicaescolar #edfisica #educaçãofísicaescolar #educação",
+      "timestamp": "2026-07-31T13:59:32.000Z",
+      "content_format": "carousel",
+      "likes": 103,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbndAWvEcZg",
+      "caption": "Professor(a) de Educação Física dos anos finais? Este post é para você! 🏃‍♂️\n\nReunimos sugestões de conteúdos e atividades teóricas alinhadas à BNCC, com códigos de habilidades, gabaritos e materiais prontos para aplicar em sala de aula.\n\n👉 MATERIAL COMPLETO PARA OS ANOS FINAIS NA BIO DO PERFIL.\n\n#educaçãofisica #educacaofisicaescolar #edfisicaescolar #anosfinais #bncc",
+      "timestamp": "2026-08-04T11:26:10.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DUnhBV9kbSD",
+      "caption": "O tradicional Jogo Dos Pontinhos, quem lembra?! Antigamente brincávamos até em folha de caderno, e marcávamos a letra do nome ao fechar os quadradinhos. 🥳 Olhem essa versão com pecinhas, ficou demais né?! Ótima ideia para esses dias de chuva na escola🥳🥳\n📸Créditos: @losrycos",
+      "timestamp": "2026-02-11T12:25:52.000Z",
+      "content_format": "reel",
+      "likes": 127,
+      "comments": 1,
+      "video_view_count": 3298,
+      "video_play_count": 9099,
+      "latest_comments": [
+        "Excelente 👏👏 brinquei mto disso na minha adolescência, vou ensinar minha turma"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbk8113x6lI",
+      "caption": "📍Bom retorno, professores!🏃‍♂️🏃‍♀️\n\nQue este 2º semestre seja repleto de boas aulas, aprendizados e desafios superados! \n\nE lembre-se: se precisar, conte com a gente! 💙\n\n📚 Materiais completos para professores de Educação Física:\n\n🌐 www.agedigital.com.br\n\n#EducaçãoFísica #ProfessorDeEducaçãoFísica #VoltaÀsAulas #2ºSemestre #BNCC EducaçãoFísicaEscolar AGEDigital",
+      "timestamp": "2026-08-03T12:06:46.000Z",
+      "content_format": "static_post",
+      "likes": 43,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DTDGeD-EcPP",
+      "caption": "🟦 Jogos de sorte 🍀",
+      "timestamp": "2026-01-03T12:25:47.000Z",
+      "content_format": "reel",
+      "likes": 220,
+      "comments": 1,
+      "video_view_count": 5447,
+      "video_play_count": 15666,
+      "latest_comments": [
+        "Como é as regras dessa brincadeira?"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYVy8ktx0IV",
+      "caption": "E aí professores, por aí é assim também? 🤣🤣🤣\n📸Créditos: @rodrigogcarvache_",
+      "timestamp": "2026-05-15T01:18:26.000Z",
+      "content_format": "reel",
+      "likes": 757,
+      "comments": 48,
+      "video_view_count": 12604,
+      "video_play_count": 34030,
+      "latest_comments": [
+        "🔥🔥🔥🔥🔥🔥🔥🔥🔥",
+        "Fui sentar hj e quatro alunos fugiram da escola",
+        "Kkkkk exatamente",
+        "Putz😂",
+        "😂😂😂😂 bem assim",
+        "Mais olha kkk não sou prevalecida mas as vezes eu sento tbm",
+        "Kkkkkkkkkkkkk bem assim mesmo",
+        "😂😂😂😂😂",
+        "Oxe. Até parece que eu vou ficar 8 aulas em pé. Reclamar do professor ficar em pé só por ser professor de Educação Física deve ser no mínimo tratado como assédio moral. Com certeza isso fere as leis trabalhistas. Nenhum ser humano pode ser impedido de sentar durante o expediente, é escravidão agora?"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dah7u4LkfZy",
+      "caption": "🏃 ATIVIDADES PARA QUADRA\n\nChega de perder tempo procurando atividades para aplicar com seus alunos.\n\n✅ Jogos de estafetas\n✅ Brincadeiras reinventadas\n✅ Mini atletismo\n✅ Atividades de precisão\n✅ Desafios motores\n✅ Jogos, lutas, ginástica e muito mais!\n\n📚 Tudo organizado, prático e pronto para usar na quadra.\n\n🚨 O material completo está na BIO!",
+      "timestamp": "2026-07-08T11:27:50.000Z",
+      "content_format": "carousel",
+      "likes": 916,
+      "comments": 31,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "quero",
+        "Eu quero",
+        "Quero",
+        "Eu quero",
+        "Excelente material, quero.",
+        "@celiabeatrizalmeida Boa noite, te enviei no direct Prof😊 Fico à disposição!"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaBYIfLgRUy",
+      "caption": "SAIUU🔥 Caderno do Professor \n2º Semestre | Educação Física 2026!\n\n🏖️ Aproveite as férias para descansar e volte com o segundo semestre todinho pronto.\n\n✅ Planejamento de agosto a dezembro (1º ao 5º ano)\n✅ Atividades práticas e teóricas\n✅ Avaliações com gabaritos\n✅ Relatórios individuais\n✅ Certificados\n✅ Lista de presença\n✅ Instrumentos de acompanhamento pedagógico\n✅ Anexos prontos para imprimir\n\n🎯 100% alinhado à BNCC e pronto para imprimir e aplicar.",
+      "timestamp": "2026-06-25T20:01:03.000Z",
+      "content_format": "carousel",
+      "likes": 217,
+      "comments": 36,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Valor?",
+        "Quero como faço pegar",
+        "Vocês teriam um caderno desse focado na educação infantil? 4 e 5 anos.",
+        "Boa tarde, tdos bem....queria somente esse???",
+        "@agedigital__ ainda não recebi.",
+        "@fabricio.f19 Já enviamos professor, olhe em solicitações de mensagem. Caso não encontre, entre em contato conosco😊"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbD1zTnkQwp",
+      "caption": "🚨 Professor(a) de Educação Física, chega de procurar brincadeiras na internet!\n\nConheça nosso portal de materiais, e encontre um repertório completo de atividades prontas para aplicar.\n\n✅ Brincadeiras reinventadas\n✅ Jogos de estafetas\n✅ Jogos cooperativos\n✅ Mini atletismo\n✅ Desafios motores\n✅ Atividades para diferentes faixas etárias\n✅ Conteúdos organizados e prontos para usar\n\n📚 Confira as amostras na bio e conheça a empresa que já auxilia milhares de professores de Educação Física em todo o Brasil. ⚽🏃",
+      "timestamp": "2026-07-21T15:30:11.000Z",
+      "content_format": "carousel",
+      "likes": 84,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbghL-OlBMQ",
+      "caption": "💙 E aí, professor(a), se identificou com alguma dessas situações?\n\n📚 Quer materiais prontos para facilitar suas aulas?\n\nAcesse www.agedigital.com.br e conheça o maior portal de conteúdos para professores de Educação Física! 🚀\n\n#EducaçãoFísica #ProfessorDeEducaçãoFísica #EducaçãoFísicaEscolar #BNCC #professores",
+      "timestamp": "2026-08-01T18:48:02.000Z",
+      "content_format": "carousel",
+      "likes": 169,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da26odFkezD",
+      "caption": "📘 Atividades Teóricas | 6º e 7º Ano – Educação Física\n\n🗂️ O material completo está disponível na bio.\n\n✨ Você encontra:\n✔ Textos explicativos e contextualizados\n✔ Questões variadas (múltipla escolha, V/F, interpretação e reflexão)\n✔ Ilustrações e linguagem adequada à faixa etária\n✔ Gabarito completo para agilizar as correções \n\n🏃 Conteúdos alinhados à BNCC:\n\n🟢 Brincadeiras e Jogos\n🔵 Esportes\n🟠 Ginásticas\n🟣 Danças\n🔴 Lutas\n🟤 Práticas Corporais de Aventura\n\n📚 Material organizado, pronto para imprimir e aplicar.\n\n🔗 O material completo está disponível na bio.",
+      "timestamp": "2026-07-16T15:02:16.000Z",
+      "content_format": "carousel",
+      "likes": 48,
+      "comments": 5,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏👏",
+        "Conteúdos para 8° e 9° ano?",
+        "Eu quero",
+        "@anasesousa Boa Tarde Prof, temos para o 8º e 9º também, porém é outro material. Vou te mandar o acesso dele no seu direct😊",
+        "@profhelenasantos.989_ Boa tarde Prof, te enviei o acesso no direct! Fico à disposição"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DPen_S2Eaf8",
+      "caption": "💙 A parceria oficial do professor na escola!\n\nA AGE Digital é líder em materiais e atividades digitais para Educação Física há mais de 6 anos, com milhares de professores utilizando nossos conteúdos todos os dias em suas aulas.\n\n📘 Materiais práticos, ilustrados e alinhados à BNCC — prontos para facilitar sua rotina e inspirar seus alunos!\n\n💬 Quer conhecer nossas atividades?\nMande uma mensagem no WhatsApp (11) 94818-1702 — será um prazer te atender e enviar uma amostra gratuita!",
+      "timestamp": "2025-10-06T18:52:15.000Z",
+      "content_format": "static_post",
+      "likes": null,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbeemcNEWvg",
+      "caption": "🌧️ Dia de chuva ou frio? Tenha o Plano B!\n\n👉 Arraste para o lado e confira algumas sugestões.\n\n📌 O material completo está na bio do perfil (NO MATERIAL ATIVIDADES DE IMPRIMIR FÁCEIS) \n\n🚨Caso prefira, deixe EU QUERO que te envio o acesso no direct 😊\n\n#educacaofisicaescolar #jogosebrincadeiras #professordeedfisica #educaçãofisica #bncc",
+      "timestamp": "2026-07-31T23:46:57.000Z",
+      "content_format": "carousel",
+      "likes": 221,
+      "comments": 39,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Eu quero",
+        "Eu quero",
+        "Eu quero",
+        "Eu quero",
+        "Eu quero",
+        "@quirino244 Boa noite, enviado no direct professora. Fico a disposição 😊"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbGBBLfEdTQ",
+      "caption": "🥋 Jogos de Oposição\n\n🧑🏻‍🫯‍🧑🏽 Os Jogos de Oposição são trabalhados Unidade Temática Lutas, conforme a BNCC, desenvolvendo habilidades motoras, cognitivas e socioemocionais de forma lúdica e segura.\n\n📚 Neste material você encontra diversas propostas prontas, como:\n• Disputa de Bola\n• Pega Colete\n• Duelo do Pregador\n• Estoura Balão\n• Briga de Galo\n• Braço de Ferro\n• E muitas outras atividades.\n\n📖 Este conteúdo faz parte do “Atividades para a Quadra”, disponível no site da AGE Digital.\n\n👉 ENCONTRE AMOSTRAS DESSE E OUTROS MATERIAIS EM NOSSA BIO NO PERFIL.\n\n#educaçãofisicaescolar⚾🎾⚽🎽🏀🏃🏄🏊🏉 #educaçãofísicaescolar #educaçãofísica #jogosdeoposição #professordeeducaçãofísica",
+      "timestamp": "2026-07-22T11:46:41.000Z",
+      "content_format": "carousel",
+      "likes": 1260,
+      "comments": 9,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Derruba toco tbm é legal",
+        "🙌❤️",
+        "@_ramonpalmeira eu uso com meus alunos do 3º ao 6º ano e eles gostam bastante 👏",
+        "Gosto muito de trabalhar lutas pedagógicas, tem muitas opções para explorar👏🏻👏🏻",
+        "@agedigital__ é uma luta indígena, quase um judô da vida só que mais leve ideal para escola da uma pesquisada",
+        "@gabriel_fernandesl Interessante Professor, vamos pesquisar para tentar adicionar ao novo material que estamos fazendo. Obrigada😊🏅"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DavJF-mkbe-",
+      "caption": "🗂️ Atividades de Educação Física – 3º ao 5º Ano\n\n📖 Atividades teóricas (3º ao 5º ano)\n🏅Fundamental 1 / Anos Iniciais \n🎯 Códigos de habilidades (BNCC)\n🎨 Ilustrações para colorir em todas as páginas\n🖨️ Pronto para imprimir e aplicar\n\nUnidades Temáticas: ESPORTES - BRINCADEIRAS E JOGOS - GINÁSTICA - LUTAS - DANÇAS\n\n📌 O material completo está disponível na bio.",
+      "timestamp": "2026-07-13T14:34:42.000Z",
+      "content_format": "carousel",
+      "likes": 148,
+      "comments": 8,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Quero",
+        "Quero ❤️",
+        "Quero",
+        "Eu quero",
+        "@oficialjuninhopimenta Boa Tarde Professor, te enviamos no direct! Fico a disposição😊"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DanQ9wCkVU6",
+      "caption": "🗂️ Atividades de Educação Física – 1º e 2º Ano\n\n📖 Atividades teóricas (1º e 2º ano)\n🏅Fundamental 1 / Anos Iniciais \n🎯 Códigos de habilidades (BNCC)\n🎨 Ilustrações para colorir em todas as páginas\n🖨️ Pronto para imprimir e aplicar\n\n📌 O material completo está disponível na bio.",
+      "timestamp": "2026-07-10T13:09:34.000Z",
+      "content_format": "carousel",
+      "likes": 129,
+      "comments": 12,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Gostaria como faço",
+        "Esse é do segundo semestre,?",
+        "@lfatimacardozo Bom dia Prof, te mandei o acesso no direct! Fico à disposição"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZGyZt3kRBO",
+      "caption": "🌽 BRINCADEIRAS JUNINAS - 2026\n\n🎉 Mais de 50 páginas de atividades prontas para aplicar!\n\n✔ Brincadeiras temáticas juninas\n✔ Trava-línguas caipiras\n✔ Adivinhas juninas\n✔ Bingo junino\n✔ Jogo da memória\n✔ E muito mais!!!\n\n🖨️ Material digital e imprimível\n\n🔹Educação Infantil, Anos Iniciais e Anos Finais",
+      "timestamp": "2026-06-03T01:55:25.000Z",
+      "content_format": "carousel",
+      "likes": 2583,
+      "comments": 51,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🔥🔥🔥🔥🔥🔥",
+        "Eu quero",
+        "Gostaria de saber sobre esse kit de brincadeiras juninas.",
+        "Eu quero",
+        "Eu quero",
+        "Eu quero o Bingo",
+        "Eu quero",
+        "Excelente 👏👏👏👏 Obrigada por colocar no seu plano, o EF. II 👏👏👏👏👏",
+        "Quero",
+        "Quero",
+        "Como faco pra adquirir  os materiais!",
+        "👏",
+        "eu quero",
+        "Eu quero",
+        "Quero"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZK649nkXfC",
+      "caption": "⚽🌎 ATIVIDADES DA COPA DO MUNDO 2026\n\n🏆 Seja o professor que ensinou a Copa do Mundo aos seus alunos e eles nunca mais esqueceram!\n\n✔ História da Copa do Mundo\n✔ Países-sede da Copa 2026\n✔ Seleções participantes\n✔ Mascotes oficiais da Copa\n✔ Bola oficial 2026\n✔ Atividades de leitura, interpretação e escrita\n✔ E muito mais!!!\n\n🖨️ Material digital e imprimível\n🔹 Educação Infantil, Anos Iniciais e Anos Finais",
+      "timestamp": "2026-06-04T16:26:33.000Z",
+      "content_format": "carousel",
+      "likes": 376,
+      "comments": 85,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "eu quero",
+        "quero",
+        "Eu quero",
+        "Quero",
+        "Eu quero",
+        "@renzjanini Bom dia Prof, esse material completo está disponível no link da nossa BIO! Ficamos à sua disposição 😊🏅"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZXTwmmRJ1j",
+      "caption": "Olá professores, mais uma sugestão de atividades na sala para esse tempinho de frio 🥶 Gol a Gol, super fácil e acessível de fazer!\n\n📸Créditos: @gamebyta",
+      "timestamp": "2026-06-09T11:56:04.000Z",
+      "content_format": "reel",
+      "likes": 569,
+      "comments": 2,
+      "video_view_count": 7738,
+      "video_play_count": 20844,
+      "latest_comments": [
+        "🔥🔥🔥🔥",
+        "Genios!!"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbnf4l6xJNp",
+      "caption": "🧘‍♀️ Yoga na Educação Física Escolar! \n\nAs posições de yoga ajudam a desenvolver equilíbrio, concentração, coordenação, flexibilidade e consciência corporal de forma lúdica.\n\n📥 Salve este post para usar nas suas aulas!\n\n🚨 Posições de Yoga (MATERIAL COMPLETO NA BIO) \n\n🌐 www.agedigital.com.br\n\n#EducaçãoFísica #YogaNaEscola #EducaçãoFísicaEscolar #BNCC professordeeducacaofisic",
+      "timestamp": "2026-08-04T11:52:34.000Z",
+      "content_format": "static_post",
+      "likes": 117,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 91467,
+  "following_count": 8713,
+  "posts_count": 313,
+  "follower_tier": "macro",
+  "engagement": {
+    "sample_size": 26,
+    "median_er": 0.002804290071829184,
+    "mean_er": 0.005988288336020304,
+    "er_per_post": [
+      {
+        "short_code": "DbIqzHtRI4L",
+        "er": 0.0064613467152087635,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbVqkBIEf9Z",
+        "er": 0.002077251905058655,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbLfmMAEcET",
+        "er": 0.00660347447713383,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DXv-4uVONhu",
+        "er": 0.0017711305716815902,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZvCyoMR0ig",
+        "er": 0.009030579334623416,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYptJfRx00k",
+        "er": 0.005247794286463971,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DWC1DvokVWP",
+        "er": 0.027725846480151313,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYj6I2qRR9i",
+        "er": 0.004777679381634907,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbdbYH6EZX2",
+        "er": 0.0011260891906370604,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DUnhBV9kbSD",
+        "er": 0.0013994118097237255,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dbk8113x6lI",
+        "er": 0.00047011490482906404,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DTDGeD-EcPP",
+        "er": 0.0024161719527261197,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYVy8ktx0IV",
+        "er": 0.008800988334590617,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dah7u4LkfZy",
+        "er": 0.010353460811002876,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DaBYIfLgRUy",
+        "er": 0.002766024905157051,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbD1zTnkQwp",
+        "er": 0.0009183640001311948,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbghL-OlBMQ",
+        "er": 0.0018476609050258562,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "Da26odFkezD",
+        "er": 0.0005794439524637301,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbeemcNEWvg",
+        "er": 0.0028425552385013173,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbGBBLfEdTQ",
+        "er": 0.013873856144839122,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DavJF-mkbe-",
+        "er": 0.0017055331431007905,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DanQ9wCkVU6",
+        "er": 0.0015415395716487914,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DZGyZt3kRBO",
+        "er": 0.02879727114697104,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DZK649nkXfC",
+        "er": 0.0050400690959581055,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DZXTwmmRJ1j",
+        "er": 0.006242688619939432,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dbnf4l6xJNp",
+        "er": 0.001279149857325593,
+        "content_format": "static_post"
+      }
+    ]
+  },
+  "external_url": "https://agedigital.com.br/",
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "a_validar_pre_monetizacao",
+    "secondary": null,
+    "matches": [],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "a_validar_pre_monetizacao",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "parcial",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T01:45:29.223Z",
+    "versao_framework": "v3.1"
+  }
+}

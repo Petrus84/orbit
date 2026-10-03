@@ -1,0 +1,633 @@
+{
+  "handle": "closetdamelcarvalho_",
+  "setor_benchmark_key": "1_ecommerce_direto",
+  "url": "https://www.instagram.com/closetdamelcarvalho_/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T01:40:09.026Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DQugEWjEd4R",
+      "caption": "TEMOS UMA LOJA COM UMA VARIEDADE EM VESTIDOS , AGUARDAMOS SUA VISITA PARA CONFERIR TUDO DE PERTINHO 🤩🤩 ESTAMOS DEIXANDO TUDO NO DESTAQUE 💛💛\n\nCOLEÇÃO FIM DE ANO 💛",
+      "timestamp": "2025-11-06T19:28:40.000Z",
+      "content_format": "reel",
+      "likes": 119,
+      "comments": 7,
+      "video_view_count": 6262,
+      "video_play_count": 42028,
+      "latest_comments": [
+        "Eu querooooo o seu 😍",
+        "Obrigada 😊😍",
+        "Onde é essa loja?",
+        "Uauu😍 só peças belíssimas!",
+        "🔥🔥🔥",
+        "Tô apaixonada em cada peça 😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DQxCUHGERlI",
+      "caption": "UMA LOJA SÓ DE VESTIDOS 👗 PARA VOCÊS 🤩 \nAGUARDAMOS A SUA VISITA…",
+      "timestamp": "2025-11-07T19:02:04.000Z",
+      "content_format": "reel",
+      "likes": 78,
+      "comments": 10,
+      "video_view_count": 6042,
+      "video_play_count": 47894,
+      "latest_comments": [
+        "Ola",
+        "Tem vestido pra gravidinha",
+        "Onde fica essa loja?",
+        "Onde fica??",
+        "Uuuuaaaauuu 😍😍",
+        "😍😍😍",
+        "😍😍❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DQ41W33Ee7W",
+      "caption": "SEJA BEM-VINDA AO CLOSTE DA MEL 🐝\n\nAguardamos a sua visita…",
+      "timestamp": "2025-11-10T19:42:06.000Z",
+      "content_format": "reel",
+      "likes": 59,
+      "comments": 25,
+      "video_view_count": 4201,
+      "video_play_count": 35672,
+      "latest_comments": [
+        "Essa fica em Floriano?",
+        "❤️❤️❤️❤️❤️",
+        "😍😍😍😍😍😍",
+        "😍😍😍😍😍😍",
+        "🔥🔥🔥🔥🔥",
+        "🙌🙌🙌🙌🙌🙌",
+        "👏👏👏👏",
+        "@mel_assessoria_no_bras me passa o endereço",
+        "@patriciamachadoadvpi rua do calçadão"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DblIy-xkYrj",
+      "caption": "CONJUNTOS FITNESS\n\nR$ 35,00 À VISTA\nTAMANHO: ÚNICO\n\n 📲CHAMA NO WHATSAPP E FAÇA SEU PEDIDO (89) 99436-8042",
+      "timestamp": "2026-08-03T13:51:06.000Z",
+      "content_format": "carousel",
+      "likes": 6,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbIxo8OxqPo",
+      "caption": "CHEGOU NOVIDADES ! 🔥🤩",
+      "timestamp": "2026-07-23T13:30:26.000Z",
+      "content_format": "reel",
+      "likes": 16,
+      "comments": 0,
+      "video_view_count": 118,
+      "video_play_count": 3240,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DblJrLqkWIA",
+      "caption": "CONJUNTOS FITNESS\n\nR$ 35,00 À VISTA\nTAMANHO: ÚNICO\n\n 📲CHAMA NO WHATSAPP E FAÇA SEU PEDIDO (89) 99436-8042",
+      "timestamp": "2026-08-03T13:58:46.000Z",
+      "content_format": "carousel",
+      "likes": 4,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbbPTYqxHLp",
+      "caption": "VESTIDO LOGO DISPONÍVEL 🤎\n\nR$ 139,00 À VISTA \n\n• SEM BOJO\n• TAMANHO: G\n\n📲 CHAMA NO WHATSAPP E FAÇA SEU PEDIDO (89) 99436-8042",
+      "timestamp": "2026-07-30T17:37:56.000Z",
+      "content_format": "static_post",
+      "likes": 6,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DblIHnrEfAE",
+      "caption": "CONJUNTOS FITNESS\n\nR$ 35,00 À VISTA\nTAMANHO: ÚNICO\n\n 📲CHAMA NO WHATSAPP E FAÇA SEU PEDIDO (89) 99436-8042",
+      "timestamp": "2026-08-03T13:45:11.000Z",
+      "content_format": "carousel",
+      "likes": 5,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbbOtliRzs6",
+      "caption": "VESTIDO LESE 💙 PEÇA ÚNICA \n\nE#R$ 169,00 À VISTA \n\n• TAMANHO ÚNICO \n\n📲 CHAMA NO WHATSAPP E FAÇA SEU PEDIDO (89) 99436-8042",
+      "timestamp": "2026-07-30T17:33:53.000Z",
+      "content_format": "static_post",
+      "likes": 8,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DblJGvSEX2M",
+      "caption": "CONJUNTOS FITNESS\n\nR$ 35,00 À VISTA\nTAMANHO: ÚNICO\n\n 📲CHAMA NO WHATSAPP E FAÇA SEU PEDIDO (89) 99436-8042",
+      "timestamp": "2026-08-03T13:53:48.000Z",
+      "content_format": "carousel",
+      "likes": 10,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbN2eVyxyL2",
+      "caption": "ÚLTIMA COR DESSE VESTIDO PERFEITO 😍",
+      "timestamp": "2026-07-25T12:48:58.000Z",
+      "content_format": "static_post",
+      "likes": 55,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Perfeito 😍",
+        "@dennysenoleto 😍😍😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbnicBfx2ZJ",
+      "caption": "NOVIDADES DA SEMANA 😍🔥",
+      "timestamp": "2026-08-04T12:14:14.000Z",
+      "content_format": "reel",
+      "likes": 17,
+      "comments": 0,
+      "video_view_count": 631,
+      "video_play_count": 2969,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbavvOWRP4V",
+      "caption": "ÚLTIMA ESTAMPA DISPONÍVEL 😍\n\nR$ 89,00 À VISTA \n\n• FORRADO\n• COM BOJO\n• TAMANHO ÚNICO \n\n📲 CHAMA NO WHATSAPP E FAÇA SEU PEDIDO (89) 99436-8042",
+      "timestamp": "2026-07-30T13:01:33.000Z",
+      "content_format": "static_post",
+      "likes": 12,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbRHX9Pv1gC",
+      "caption": "VESTIDO PERFEITO PARA QUEM AMA CONFORTO E ELEGÂNCIA 🤎🌿 \n\n• FORRADO\n• COM BOJO\n• TAMANHO ÚNICO \n\nR$ 139,00 À VISTA\n\n📲 CHAMA NO WHATSAPP E FAÇA SEU PEDIDO (89) 99436-8042",
+      "timestamp": "2026-07-26T19:19:21.000Z",
+      "content_format": "static_post",
+      "likes": 8,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏😍😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DblH5DPR9fR",
+      "caption": "CONJUNTOS FITNESS\n\nR$ 40,00 À VISTA\nTAMANHO: G\n\n 📲CHAMA NO WHATSAPP E FAÇA SEU PEDIDO (89) 99436-8042",
+      "timestamp": "2026-08-03T13:43:34.000Z",
+      "content_format": "static_post",
+      "likes": 5,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbRAHfmx_-x",
+      "caption": "VESTIDO SENSORIAL MARRANT ✨\nCOM BOJO - R$ 159,00 Á VISTA\n\nÚLTIMA COR DISPONÍVEL 😍",
+      "timestamp": "2026-07-26T18:11:56.000Z",
+      "content_format": "static_post",
+      "likes": 15,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbbOHHLRgr1",
+      "caption": "VESTIDO LEVE E ESTILOSO, DISPONÍVEL 😍\n\nR$ 119,00 À VISTA \n\n• SEM BOJO\n• TAMANHO: G\n\n📲 CHAMA NO WHATSAPP E FAÇA SEU PEDIDO (89) 99436-8042",
+      "timestamp": "2026-07-30T17:29:22.000Z",
+      "content_format": "static_post",
+      "likes": 5,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbQ8fYWxLei",
+      "caption": "ÚLTIMAS PEÇAS 😍 \nPARA MULHERES INCRÍVEIS ✨\n\nGARATA JÁ O SEU ☺️",
+      "timestamp": "2026-07-26T17:41:29.000Z",
+      "content_format": "static_post",
+      "likes": 8,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbOHcVmRy47",
+      "caption": "BLUSAS TRICÔ,  ÚLTIMAS CORES DISPONÍVEIS 😍",
+      "timestamp": "2026-07-25T15:19:13.000Z",
+      "content_format": "static_post",
+      "likes": 12,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbRIb4Ovj3R",
+      "caption": "LEVEZA E ELEGÂNCIA 🌺\n\nVESTIDO PERFEITO PARA QUEM AMA ESTAR BEM VESTIDA 😍\n\n• FORRADO\n• COM BOJO\n• TAMANHO ÚNICO \n\nR$ 139,00 À VISTA\n\n📲 CHAMA NO WHATSAPP E FAÇA SEU PEDIDO (89) 99436-8042",
+      "timestamp": "2026-07-26T19:26:17.000Z",
+      "content_format": "static_post",
+      "likes": 17,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😍😍😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbOPrClxjN8",
+      "caption": "BLUSA TRICÔ, ESTILO QUE VALORIZA VOCÊ 😍\n\nÚLTIMAS CORES DISPONÍVEIS ✨",
+      "timestamp": "2026-07-25T16:30:26.000Z",
+      "content_format": "static_post",
+      "likes": 13,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DalCfFSl-1V",
+      "caption": "REFERÊNCIA EM VESTIDOS 🤩🔥",
+      "timestamp": "2026-07-09T16:25:11.000Z",
+      "content_format": "reel",
+      "likes": 19,
+      "comments": 0,
+      "video_view_count": 5,
+      "video_play_count": 2500,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dau6pQuRw8W",
+      "caption": "CHEGOU CALÇAS JEANS 🔥🤩🤩",
+      "timestamp": "2026-07-13T12:29:31.000Z",
+      "content_format": "reel",
+      "likes": 34,
+      "comments": 4,
+      "video_view_count": 17,
+      "video_play_count": 3751,
+      "latest_comments": [
+        "Onde é a loja?",
+        "🔥🔥🔥🔥",
+        "@mararubia0166 bom dia meu bem.",
+        "@closetdamelcarvalho_ *Closet da Mel* 🍯🐝 \n📍LOCALIZAÇÃO \n*RUA SÃO PEDRO*  n° *269-A*\n*CENTRO* \n*FLORIANO- PI*\nNO CALÇADÃO\nPRÓXIMO À IGREJA MATRIZ"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DalCF_8Ee9_",
+      "caption": "VESTIDO __$139,00 Á VISTA, COM BOJO , FORRADO ( TM ÚNICO).",
+      "timestamp": "2026-07-09T16:21:08.000Z",
+      "content_format": "carousel",
+      "likes": 12,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😍😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbgPc5Lxfc2",
+      "caption": "SEGUNDA-FEIRA REPOSIÇÃO DA NOSSA SESSÃO FITNESS 🏋🏽‍♀️\n\nMODA QUE INSPIRA SEU TREINO 💪🏾",
+      "timestamp": "2026-08-01T16:16:58.000Z",
+      "content_format": "static_post",
+      "likes": 8,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DalCxhykVgc",
+      "caption": "VESTIDO __$139,00 Á VISTA , COM BOJO, FORRADO ( TM ÚNICO)",
+      "timestamp": "2026-07-09T16:27:05.000Z",
+      "content_format": "carousel",
+      "likes": 6,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Que estampas lindas 😮😍👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaxibRJEefc",
+      "caption": "MACAQUINHO CHIFFON __$ 139,00 Á VISTA, SEM BOJO , FORRADO ( TM ÚNICO).",
+      "timestamp": "2026-07-14T12:54:33.000Z",
+      "content_format": "carousel",
+      "likes": 12,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaxiL_ZR9fP",
+      "caption": "REFERÊNCIA EM MACAQUINHO 😍🔥",
+      "timestamp": "2026-07-14T12:53:02.000Z",
+      "content_format": "reel",
+      "likes": 15,
+      "comments": 0,
+      "video_view_count": 42,
+      "video_play_count": 2820,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dau8b_fkTxK",
+      "caption": "CALÇAS JEANS _$80,00 Á VISTA, COM LYCRA, DISPONÍVEL NO TM 36 38 40 42 44",
+      "timestamp": "2026-07-13T12:44:07.000Z",
+      "content_format": "carousel",
+      "likes": 12,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbauqvBxiDd",
+      "caption": "3 MODELOS LINDOS DE CONJUNTOS PARA VOCÊS 😍\n\nGARANTA JÁ O SEU ✨",
+      "timestamp": "2026-07-30T12:51:27.000Z",
+      "content_format": "static_post",
+      "likes": 7,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😍😍😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 33815,
+  "following_count": 60,
+  "posts_count": 7986,
+  "follower_tier": "mid",
+  "engagement": {
+    "sample_size": 30,
+    "median_er": 0.0003548720981812805,
+    "mean_er": 0.0006466558233525555,
+    "er_per_post": [
+      {
+        "short_code": "DQugEWjEd4R",
+        "er": 0.003726157030903445,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DQxCUHGERlI",
+        "er": 0.0026023953866627235,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DQ41W33Ee7W",
+        "er": 0.0024841046872689635,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DblIy-xkYrj",
+        "er": 0.00017743604909064024,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbIxo8OxqPo",
+        "er": 0.0004731627975750407,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DblJrLqkWIA",
+        "er": 0.00011829069939376017,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbbPTYqxHLp",
+        "er": 0.00017743604909064024,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DblIHnrEfAE",
+        "er": 0.0001478633742422002,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbbOtliRzs6",
+        "er": 0.00023658139878752034,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DblJGvSEX2M",
+        "er": 0.0002957267484844004,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbN2eVyxyL2",
+        "er": 0.0016856424663610823,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbnicBfx2ZJ",
+        "er": 0.0005027354724234807,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbavvOWRP4V",
+        "er": 0.0003548720981812805,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbRHX9Pv1gC",
+        "er": 0.0002661540736359604,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DblH5DPR9fR",
+        "er": 0.0001478633742422002,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbRAHfmx_-x",
+        "er": 0.00044359012272660064,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbbOHHLRgr1",
+        "er": 0.0001478633742422002,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbQ8fYWxLei",
+        "er": 0.00023658139878752034,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbOHcVmRy47",
+        "er": 0.0003548720981812805,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbRIb4Ovj3R",
+        "er": 0.0005323081472719208,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbOPrClxjN8",
+        "er": 0.00038444477302972054,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DalCfFSl-1V",
+        "er": 0.0005618808221203608,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dau6pQuRw8W",
+        "er": 0.0011237616442407216,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DalCF_8Ee9_",
+        "er": 0.00038444477302972054,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbgPc5Lxfc2",
+        "er": 0.00023658139878752034,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DalCxhykVgc",
+        "er": 0.0002070087239390803,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DaxibRJEefc",
+        "er": 0.0003548720981812805,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DaxiL_ZR9fP",
+        "er": 0.00044359012272660064,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dau8b_fkTxK",
+        "er": 0.0003548720981812805,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbauqvBxiDd",
+        "er": 0.00023658139878752034,
+        "content_format": "static_post"
+      }
+    ]
+  },
+  "external_url": "https://linkbio.co/8010122hpT1Xk?utm_source=instabio&utm_medium=share",
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "1_ecommerce_direto",
+    "secondary": null,
+    "matches": [
+      {
+        "category": "1_ecommerce_direto",
+        "score": 3,
+        "evidence": [
+          "external_url próprio (não agregador/infoproduto/membership) + legenda com CTA de venda: \"R$ 3\""
+        ]
+      }
+    ],
+    "manual_review_recommended": false,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "1_ecommerce_direto",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "implementado",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T01:40:09.024Z",
+    "versao_framework": "v3.1"
+  }
+}

@@ -1,0 +1,651 @@
+{
+  "handle": "comedyslums",
+  "setor_benchmark_key": "7_monetizacao_nativa",
+  "url": "https://www.instagram.com/comedyslums/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T02:17:08.781Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "Danof5sTJcS",
+      "caption": "😂\n\nTonight, @thv took a turn in the audience as he watched @gracieabrams and @dojacat perform at #VogueWorld: Hollywood. No stranger to a fashion show either, the @bts.bighitofficial star dressed in a look that could have easily appeared on the runway.",
+      "timestamp": "2026-07-10T17:14:35.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 0,
+      "video_view_count": 8,
+      "video_play_count": 19491,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DaTXk8fzYWy",
+      "caption": "🤣\n\nTonight, @thv took a turn in the audience as he watched @gracieabrams and @dojacat perform at #VogueWorld: Hollywood. No stranger to a fashion show either, the @bts.bighitofficial star dressed in a look that could have easily appeared on the runway.",
+      "timestamp": "2026-07-02T19:43:05.000Z",
+      "content_format": "reel",
+      "likes": 459,
+      "comments": 6,
+      "video_view_count": 12783,
+      "video_play_count": 25744,
+      "latest_comments": [
+        "😂😂😂😂😂😂😂",
+        "😂😂",
+        "😂😂😂😂😂😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaTUgz8TUgg",
+      "caption": "🍿\n\nThe “Rat Boy” reference comes from the season 6 episode of The Simpsons titled “Homer vs. Patty and Selma,” which first aired in 1995. In the scene that spawned the meme, Homer is hiding a financial crisis from Marge and tries to butter her up by calling her his “loyal wife” and Lisa his “little princess”. When he gets to Bart, however, he absentmindedly refers to him as “dear Rat Boy,” causing Bart to indignantly exclaim, “Rat boy? I resent that!”. Homer immediately follows this by telling Bart to “stop gnawing on the drywall,” further leaning into the rodent-like comparison. The image you provided shows Lisa standing in the hallway during this exchange, a still that is often used in memes to represent a sibling watching another sibling get “roasted” or mistreated by a parent.",
+      "timestamp": "2026-07-02T19:16:30.000Z",
+      "content_format": "reel",
+      "likes": 66499,
+      "comments": 129,
+      "video_view_count": 583590,
+      "video_play_count": 1541991,
+      "latest_comments": [
+        "Bart, I told you before, stop gnawing on the drywall.",
+        "In hispanic countries we use the term \"rat boy\" to refer to those kids that normally play online shooters (like CoD or Fortnite) and only know to insult, scream and get pissed on the microphone",
+        "“golden child” im never forgetting him calling her that😭",
+        "I wonder if this is the inspiration behind Rat Boy Genius",
+        "Dear rat boy",
+        "bart! stop gnawing on the drywall!",
+        "@sue_odonoghue @abbyodonoghue",
+        "👸🐀",
+        "@prettygirlslovejay lol !! liked already",
+        "@drhumaakazim😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaVPVLJT0xg",
+      "caption": "🎬\n\nThis is one of the most powerful lines in *The Town* (2010), as it lays bare the film’s central conflict: the tension between loyalty to a lifelong way of life and the possibility of building something better. Directed by and starring Ben Affleck, the story follows Doug MacRay, a bank robber from Charlestown, Boston, who attempts to escape the fate that defined the lives of his family and friends. Yet, the closer he gets to starting a new life, the harder it becomes to leave behind the people who represent home to him. The film is about more than just spectacular heists; it explores how parental choices impact their children, the cycles that repeat generation after generation, and the price one must pay to break them. That is why this line hits so hard: sometimes we believe being a hero means making a sacrifice for everyone, when in reality, the hardest thing to do is simply be there for those who need us most.",
+      "timestamp": "2026-07-03T13:09:39.000Z",
+      "content_format": "reel",
+      "likes": 1261,
+      "comments": 4,
+      "video_view_count": 53773,
+      "video_play_count": 134044,
+      "latest_comments": [
+        "Which moveie",
+        "Dad nai daikh liya madk k piche sai",
+        "😢",
+        "You can see it in the second nun eyes shown"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaSmP8ezpeP",
+      "caption": "🤣\n\nFamily Guy is a popular American adult animated sitcom created by Seth MacFarlane for the Fox Broadcasting Company. Premiering in 1999, it follows the chaotic and highly dysfunctional Griffin family in the fictional city of Quahog, Rhode Island.The show is famous for its rapid-fire pop-culture references, heavy satire, and “cutaway gags”—brief, often unrelated skits that interrupt the main story for quick comedic effect.",
+      "timestamp": "2026-07-02T12:32:21.000Z",
+      "content_format": "reel",
+      "likes": 944,
+      "comments": 1,
+      "video_view_count": 33628,
+      "video_play_count": 72510,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZyHnG2zv2n",
+      "caption": "😣\n\nTonight, @thv took a turn in the audience as he watched @gracieabrams and @dojacat perform at #VogueWorld: Hollywood. No stranger to a fashion show either, the @bts.bighitofficial star dressed in a look that could have easily appeared on the runway.",
+      "timestamp": "2026-06-19T21:48:30.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 0,
+      "video_view_count": 19477,
+      "video_play_count": 30283,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZtsGu8R60B",
+      "caption": "🎬\n\nTonight, @thv took a turn in the audience as he watched @gracieabrams and @dojacat perform at #VogueWorld: Hollywood. No stranger to a fashion show either, the @bts.bighitofficial star dressed in a look that could have easily appeared on the runway.",
+      "timestamp": "2026-06-18T04:32:02.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 4,
+      "video_view_count": 17969,
+      "video_play_count": 33181,
+      "latest_comments": [
+        "When I hear an angle grinder noise near my motorbike bike  I'll be like this sensational 🙌😂😂",
+        "Homie was built",
+        "I always forget finn is absolutely YOLKED",
+        "No like bc its not about an airfrier"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZyKOGCzIAQ",
+      "caption": "😭😭\n\nTonight, @thv took a turn in the audience as he watched @gracieabrams and @dojacat perform at #VogueWorld: Hollywood. No stranger to a fashion show either, the @bts.bighitofficial star dressed in a look that could have easily appeared on the runway.",
+      "timestamp": "2026-06-19T22:11:08.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 3,
+      "video_view_count": 9986,
+      "video_play_count": 23414,
+      "latest_comments": [
+        "Can someone show me where this is on radio garden",
+        "IMPOSSIBLE 👹"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "Da03brPz_5t",
+      "caption": "😂\n\nTonight, @thv took a turn in the audience as he watched @gracieabrams and @dojacat perform at #VogueWorld: Hollywood. No stranger to a fashion show either, the @bts.bighitofficial star dressed in a look that could have easily appeared on the runway.",
+      "timestamp": "2026-07-15T19:56:30.000Z",
+      "content_format": "reel",
+      "likes": 393,
+      "comments": 4,
+      "video_view_count": 362,
+      "video_play_count": 47829,
+      "latest_comments": [
+        "😂😂😂😂",
+        "😂movie name",
+        "Foreign object 😂😂😂",
+        "Movie name please"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZ0tLHAz3ol",
+      "caption": "🎬\n\nThe same actress, by the way.\n\nEmma Thompson’s acting range is absolutely insane. Some of her characters feel like they come from completely different worlds—some are magical and eccentric, while others are cold, elegant, intimidating, or almost unrecognizable.\n\nWhat’s impressive isn’t just the costumes or makeup. She completely changes her energy, voice, posture, and even the way she commands a scene. That’s why it’s so hard to believe that all of these characters were played by the same actress.",
+      "timestamp": "2026-06-20T21:55:20.000Z",
+      "content_format": "reel",
+      "likes": 1350,
+      "comments": 7,
+      "video_view_count": 23262,
+      "video_play_count": 42918,
+      "latest_comments": [
+        "Really!?"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaREr5OTZsc",
+      "caption": "Gacha life is diabolical \n\nTonight, @thv took a turn in the audience as he watched @gracieabrams and @dojacat perform at #VogueWorld: Hollywood. No stranger to a fashion show either, the @bts.bighitofficial star dressed in a look that could have easily appeared on the runway.",
+      "timestamp": "2026-07-01T22:19:37.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 0,
+      "video_view_count": 3417,
+      "video_play_count": 7772,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DaT1HsGT36G",
+      "caption": "🎬\n\nIn the 1998 fantasy drama Meet Joe Black, Brad Pitt (who plays the personification of Death) visits a hospital where a terminally ill Jamaican woman (played by Lois Kelly-Miller) recognizes his true otherworldly nature. To comfort her, he suddenly drops his stiff, formal cadence and speaks to her in a thick, surprising Jamaican Patois accent, reassuring her that everything will be “irie” (alright).For a look at the actual hospital conversation that has become a widely discussed and referenced pop culture moment over the years",
+      "timestamp": "2026-07-03T00:02:26.000Z",
+      "content_format": "reel",
+      "likes": 783,
+      "comments": 3,
+      "video_view_count": 27095,
+      "video_play_count": 50568,
+      "latest_comments": [
+        "\"Next place\" is the best definition for after death. No heaven, no hell. Next place..",
+        "Evryting gonna be iry 🔥🔥🔥🔥",
+        "🔥🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZ0cjWEzRYq",
+      "caption": "🎬 \n\nSirens (2014) is a comedy series that follows three Chicago paramedics who are incredibly skilled at saving lives but completely hopeless when it comes to managing their own. The show centers on Johnny, a veteran paramedic with commitment issues; his level-headed partner Hank; and Brian, their naive and overly enthusiastic new recruit. Together, they navigate bizarre emergency calls, workplace politics, and chaotic personal relationships, balancing the intense pressure of their jobs with plenty of workplace banter and offbeat humor.",
+      "timestamp": "2026-06-20T19:30:08.000Z",
+      "content_format": "reel",
+      "likes": 8764,
+      "comments": 118,
+      "video_view_count": 180168,
+      "video_play_count": 357973,
+      "latest_comments": [
+        "😂😂😂😂😂😂😂",
+        "Traumatized🤦‍♀️",
+        "What trauma looks like",
+        "😂",
+        "Athletic 😹 please 🙏🏼😹",
+        "😂😂😂😂🙈🙈🙈😍",
+        "😂😂😂",
+        "😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZ8rWdKTYyS",
+      "caption": "🎬\n\nI have no idea how to explain this movie to anyone: Swiss Army Man (2016)\n\n*Swiss Army Man* is one of those movies that sounds impossible to sell until you understand what it’s actually trying to do.\n\nDaniel Radcliffe plays Manny, a corpse stiffened by rigor mortis for most of the film, yet he somehow makes the character feel weird, lovable, and emotionally human.\n\nThe Daniels made their directorial debut with this movie after coming from the world of music videos—including *Turn Down for What*—and it shows. They blend absurd humor, awkwardness, and genuine sadness in a way that never loses the film’s heart.",
+      "timestamp": "2026-06-24T00:13:25.000Z",
+      "content_format": "reel",
+      "likes": 1284,
+      "comments": 15,
+      "video_view_count": 48548,
+      "video_play_count": 97824,
+      "latest_comments": [
+        "Ź I⅘þ",
+        "Awesome movie",
+        "And he has mentioned he has never enjoyed a role he ever acted in more than this one",
+        "I love this movie",
+        "@dardar21 Daniel Radcliffe's favorite movie"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaQ_kCdztEA",
+      "caption": "🎬 2000s animation studios really had a specific agenda when it came to designing female characters…\n\nIt wasn’t just the art style.\nIt was the expressions, the attitude, the outfits, the way they moved, even the personality they were given.\n\nA lot of studios were out here creating characters with bold femininity, confidence, heavy screen presence, and a visual style that basically imprinted itself on an entire generation.\n\nAnd yeah—looking at it through today’s lens, a lot of those scenes would probably be handled differently.\n\nThe industry changed.\nThe humor changed.\nThe way characters are written and portrayed changed too.\n\nBut one thing is hard to argue with:\n\nThose designs had *serious identity*.\nThey didn’t feel generic at all.\n\nThey had style, charisma, and that kind of energy people still randomly remember years later.\n\nA pretty obvious truth:\n\n2000s animation studios knew exactly what they were doing.",
+      "timestamp": "2026-07-01T21:35:33.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 2,
+      "video_view_count": 2587,
+      "video_play_count": 5309,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DaLv_NhTIkC",
+      "caption": "💀😭\n\nTonight, @thv took a turn in the audience as he watched @gracieabrams and @dojacat perform at #VogueWorld: Hollywood. No stranger to a fashion show either, the @bts.bighitofficial star dressed in a look that could have easily appeared on the runway.",
+      "timestamp": "2026-06-29T20:42:17.000Z",
+      "content_format": "reel",
+      "likes": 239,
+      "comments": 20,
+      "video_view_count": 4383,
+      "video_play_count": 10657,
+      "latest_comments": [
+        "Has anyone really tried?",
+        "They patched this a long time ago gng🥀🥀🥀"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZwKUzrxXrm",
+      "caption": "😭\n\nTonight, @thv took a turn in the audience as he watched @gracieabrams and @dojacat perform at #VogueWorld: Hollywood. No stranger to a fashion show either, the @bts.bighitofficial star dressed in a look that could have easily appeared on the runway.",
+      "timestamp": "2026-06-19T03:33:36.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 12,
+      "video_view_count": 27605,
+      "video_play_count": 53566,
+      "latest_comments": [
+        "😂😂😂😂😂😂",
+        "😂😂😂",
+        "😂😂😂😂😂😂😂😂",
+        "SUNWALK",
+        "@ll__m4hdi_sarwari__ll, @rahmat_sharifi7, @yonuis_alikhil, @arbab_5567, @arba.b2071, @ahmad459319",
+        "@freddy_484z @potato_salad.77",
+        "There's no way you criticized him on doing it.Wrong and proceed to do it like a crippled child"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DashYYZTyxq",
+      "caption": "Embolo with a yellow card 😂",
+      "timestamp": "2026-07-12T14:09:40.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 0,
+      "video_view_count": 18,
+      "video_play_count": 7857,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DagY6VaT1uX",
+      "caption": "😂\n\n🎬 In this scene from the Smiling Friends Season 3 episode “Charlie’s Uncle Dies and Doesn’t Come Back,” Allan Red is on a fancy dinner date with a beautiful woman named Natasha. During their awkward interaction, Allan attempts to be suave, famously stating he only drinks red wine because it is “the sexiest color”. However, the date is later revealed to be an elaborate ruse; Natasha is actually Allan’s Landlord in disguise, who tricked him into the meeting just to spend time with him again. The encounter ends dramatically after a dance-off, where “Natasha” has her face mask ripped off by a dog, exposing the Landlord’s deception\n\n#meme #humor #tinder #reels",
+      "timestamp": "2026-07-07T21:05:35.000Z",
+      "content_format": "reel",
+      "likes": 2142,
+      "comments": 7,
+      "video_view_count": 9113,
+      "video_play_count": 30784,
+      "latest_comments": [
+        "Serien Name ?",
+        "It’s a dude 😂",
+        "1:20 for a reel is very bad but it was a smiling friends clip so I’ll allow it"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaOc3jFzpbo",
+      "caption": "😭\n\nTonight, @thv took a turn in the audience as he watched @gracieabrams and @dojacat perform at #VogueWorld: Hollywood. No stranger to a fashion show either, the @bts.bighitofficial star dressed in a look that could have easily appeared on the runway.",
+      "timestamp": "2026-06-30T21:53:04.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 1,
+      "video_view_count": 2685,
+      "video_play_count": 6513,
+      "latest_comments": [
+        "😂😂😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZ3Uz-szV_8",
+      "caption": "😭😭\n\nTonight, @thv took a turn in the audience as he watched @gracieabrams and @dojacat perform at #VogueWorld: Hollywood. No stranger to a fashion show either, the @bts.bighitofficial star dressed in a look that could have easily appeared on the runway.",
+      "timestamp": "2026-06-21T22:20:08.000Z",
+      "content_format": "reel",
+      "likes": 315,
+      "comments": 0,
+      "video_view_count": 11963,
+      "video_play_count": 27002,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaTZ6-6TQ7n",
+      "caption": "😂\n\nTonight, @thv took a turn in the audience as he watched @gracieabrams and @dojacat perform at #VogueWorld: Hollywood. No stranger to a fashion show either, the @bts.bighitofficial star dressed in a look that could have easily appeared on the runway.",
+      "timestamp": "2026-07-02T20:03:46.000Z",
+      "content_format": "reel",
+      "likes": 156,
+      "comments": 0,
+      "video_view_count": 3661,
+      "video_play_count": 8121,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaTyQ3LT0ht",
+      "caption": "😭\n\nTonight, @thv took a turn in the audience as he watched @gracieabrams and @dojacat perform at #VogueWorld: Hollywood. No stranger to a fashion show either, the @bts.bighitofficial star dressed in a look that could have easily appeared on the runway.",
+      "timestamp": "2026-07-02T23:36:37.000Z",
+      "content_format": "reel",
+      "likes": 597,
+      "comments": 14,
+      "video_view_count": 32296,
+      "video_play_count": 66103,
+      "latest_comments": [
+        "Well that thing is a dude, so.....",
+        "Because the bag is so big",
+        "Gorlock can take a punch. He's a healthy grown man",
+        "@imperial_bureau_of_propaganda that thing 😂",
+        "@dannytaylor_0709 Low IQ response."
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZq1vc7Tt3v",
+      "caption": "🎬\n\nTonight, @thv took a turn in the audience as he watched @gracieabrams and @dojacat perform at #VogueWorld: Hollywood. No stranger to a fashion show either, the @bts.bighitofficial star dressed in a look that could have easily appeared on the runway.",
+      "timestamp": "2026-06-17T01:57:38.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 1,
+      "video_view_count": 7965,
+      "video_play_count": 16608,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZsQCd6TIws",
+      "caption": "😭\n\nTonight, @thv took a turn in the audience as he watched @gracieabrams and @dojacat perform at #VogueWorld: Hollywood. No stranger to a fashion show either, the @bts.bighitofficial star dressed in a look that could have easily appeared on the runway.",
+      "timestamp": "2026-06-17T15:06:45.000Z",
+      "content_format": "reel",
+      "likes": 1028,
+      "comments": 24,
+      "video_view_count": 18713,
+      "video_play_count": 36879,
+      "latest_comments": [
+        "“Ahead of the sexuals” 😂",
+        "😂",
+        "There is an issue with what he is hearing and what he is saying😂😂",
+        "@shawtey_dambuza  you behind of the sexuals😭😭😭😭😭😭😭😭😭😭😭😭😭",
+        "Bro is the head of the sexuals 😂😂",
+        "Bros still ahead of the sexuals",
+        "🥇Him\n🥈The sexuals"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZs__rfzRln",
+      "caption": "😭\n\nTonight, @thv took a turn in the audience as he watched @gracieabrams and @dojacat perform at #VogueWorld: Hollywood. No stranger to a fashion show either, the @bts.bighitofficial star dressed in a look that could have easily appeared on the runway.",
+      "timestamp": "2026-06-17T22:05:48.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 4,
+      "video_view_count": 3680,
+      "video_play_count": 7893,
+      "latest_comments": [
+        "😂😂😂😂😂😂😂",
+        "He looks just like the \"Apparently kid\"😲",
+        "Mom was getting railed 💀"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZtL0v3TgBo",
+      "caption": "😭\n\nTonight, @thv took a turn in the audience as he watched @gracieabrams and @dojacat perform at #VogueWorld: Hollywood. No stranger to a fashion show either, the @bts.bighitofficial star dressed in a look that could have easily appeared on the runway.",
+      "timestamp": "2026-06-17T23:48:56.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 4,
+      "video_view_count": 21854,
+      "video_play_count": 65234,
+      "latest_comments": [
+        "Mnky",
+        "😂😂😂😂😂",
+        "Overreaction for the views at its finest 😢",
+        "@kane_wq nt rsct.. just look at tht sht.. if the same was done by white or other race,you'd ignore or think 'nothg more then circus joker..' he hv no real world skill, all he does know is sympathy and get money...I think he shld realise money doesn't grow on trees... And already look for job."
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DaLysCHTlOn",
+      "caption": "🎬 Life of Pi is a 2012 adventure drama film directed and produced by Ang Lee and written by David Magee. Based on Yann Martel’s 2001 novel, the film stars Suraj Sharma in his feature film debut, alongside Irrfan Khan, Tabu, Rafe Spall, Gérard Depardieu, and Adil Hussain. The story follows Pi Patel, a 16-year-old Indian boy, and a Bengal tiger named Richard Parker, who are stranded together on a lifeboat for 227 days after a shipwreck.\n\nDevelopment on the film began shortly after the novel was published. Before Ang Lee was hired, directors M. Night Shyamalan, Alfonso Cuarón, and Jean-Pierre Jeunet were attached to the project at different stages.\n\nFilming took place across India, Taiwan, and Montreal in 2011, with Rhythm & Hues Studios (R&H) handling the visual effects.\n\n*Life of Pi* had its world premiere as the opening film of the 50th New York Film Festival at the Walter Reade Theater and Alice Tully Hall in New York City on September 28, 2012. It was released in U.S. theaters on November 21, 2012, by 20th Century Fox.\n\nThe film was a commercial success, grossing over $609 million worldwide, making it Ang Lee’s highest-grossing film. It received widespread critical acclaim and earned numerous accolades, including three Golden Globe nominations for Best Motion Picture – Drama, Best Director, and Best Original Score, winning the latter.\n\nAt the 85th Academy Awards, *Life of Pi* received eleven nominations, including Best Picture and Best Adapted Screenplay, and won four Oscars, including Best Director for Ang Lee.",
+      "timestamp": "2026-06-29T21:06:13.000Z",
+      "content_format": "reel",
+      "likes": 353,
+      "comments": 1,
+      "video_view_count": 14725,
+      "video_play_count": 31117,
+      "latest_comments": [
+        "It's my favourite one"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZqwNi9zBGW",
+      "caption": "🎬\n\nTonight, @thv took a turn in the audience as he watched @gracieabrams and @dojacat perform at #VogueWorld: Hollywood. No stranger to a fashion show either, the @bts.bighitofficial star dressed in a look that could have easily appeared on the runway.",
+      "timestamp": "2026-06-17T01:09:44.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 4,
+      "video_view_count": 19236,
+      "video_play_count": 44031,
+      "latest_comments": [
+        "The descent continues.",
+        "Fps test:"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZr_yVszexc",
+      "caption": "🎬\n\nTonight, @thv took a turn in the audience as he watched @gracieabrams and @dojacat perform at #VogueWorld: Hollywood. No stranger to a fashion show either, the @bts.bighitofficial star dressed in a look that could have easily appeared on the runway.",
+      "timestamp": "2026-06-17T12:45:17.000Z",
+      "content_format": "reel",
+      "likes": 4156,
+      "comments": 24,
+      "video_view_count": 68213,
+      "video_play_count": 116998,
+      "latest_comments": [
+        "How do u know how much money she has?",
+        "JAJAJAJA PINCHE AFERRADA WEEE",
+        "Not a care in the world",
+        "She boutta pull up in a chopper like Shepard to get the card and say “good. That’s one loose end”",
+        "😂😂😂😂😂",
+        "You’re breathing and talking just give me your car details",
+        "Now that’s what we call commitment 😂",
+        "Those ppl are something else😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 193104,
+  "following_count": 0,
+  "posts_count": 236,
+  "follower_tier": "mega",
+  "engagement": {
+    "sample_size": 17,
+    "median_er": 0.004893736017897092,
+    "mean_er": 0.02775097113167912,
+    "er_per_post": [
+      {
+        "short_code": "DaTXk8fzYWy",
+        "er": 0.002408028834203331,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaTUgz8TUgg",
+        "er": 0.3450368713232248,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaVPVLJT0xg",
+        "er": 0.006550874140359599,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaSmP8ezpeP",
+        "er": 0.004893736017897092,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Da03brPz_5t",
+        "er": 0.002055886983180048,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZ0tLHAz3ol",
+        "er": 0.0070273013505675695,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaT1HsGT36G",
+        "er": 0.004070345513298533,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZ0cjWEzRYq",
+        "er": 0.04599594001159997,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZ8rWdKTYyS",
+        "er": 0.0067269450658712406,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaLv_NhTIkC",
+        "er": 0.0013412461678680918,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DagY6VaT1uX",
+        "er": 0.011128718203662276,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZ3Uz-szV_8",
+        "er": 0.0016312453392990306,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaTZ6-6TQ7n",
+        "er": 0.0008078548347004723,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaTyQ3LT0ht",
+        "er": 0.00316409810257685,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZsQCd6TIws",
+        "er": 0.005447841577595492,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaLysCHTlOn",
+        "er": 0.0018332090479741487,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZr_yVszexc",
+        "er": 0.0216463667246665,
+        "content_format": "reel"
+      }
+    ]
+  },
+  "external_url": null,
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "a_validar_pre_monetizacao",
+    "secondary": null,
+    "matches": [],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "a_validar_pre_monetizacao",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "nao_implementado",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T02:17:08.781Z",
+    "versao_framework": "v3.1"
+  }
+}

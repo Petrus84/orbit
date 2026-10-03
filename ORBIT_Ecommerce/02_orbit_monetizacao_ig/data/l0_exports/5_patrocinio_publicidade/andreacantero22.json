@@ -1,0 +1,385 @@
+{
+  "handle": "andreacantero22",
+  "setor_benchmark_key": "5_patrocinio_publicidade",
+  "url": "https://www.instagram.com/andreacantero22/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T02:04:18.345Z",
+  "total_posts": 12,
+  "valid_posts": 12,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DZ2b5jINYo1",
+      "caption": "This was my first time walking down the runway, I was really nervous but I enjoyed every moment🫶🏼 thx 💙",
+      "timestamp": "2026-06-21T14:02:43.000Z",
+      "content_format": "reel",
+      "likes": 9444,
+      "comments": 170,
+      "video_view_count": 129931,
+      "video_play_count": 339858,
+      "latest_comments": [
+        "😍😍",
+        "Que Bonita ❤️‍🔥❤️‍🔥❤️‍🔥",
+        "Nice 💋wow 💋 looking 💋beautiful ☺️🫡😘🎻🎻🎸🎸🌹𝙨𝙪𝙥𝙚𝙧 🌹🍃🌹 𝙨𝙪𝙥𝙚𝙧 🌹🍃🌹𝙨𝙪𝙥𝙚𝙧🌹🍃🌹𝙨𝙪𝙥𝙚𝙧🌹🍃🌹𝙨𝙪𝙥𝙚𝙧 🌹🍃🌹𝙨𝙪𝙥𝙚𝙧 🍃🌹𝙨𝙪𝙥𝙚𝙧🌹🍃🌹𝙨𝙪𝙥𝙚𝙧🌹🍃🌹🌹🍃🌹𝙨𝙪𝙥𝙚𝙧 🌹🍃🌹 𝙨𝙪𝙥𝙚𝙧 🌹🍃🌹𝙨𝙪𝙥𝙚𝙧📸😊👌🏻",
+        "😍🔥🙌",
+        "🔥🔥🔥",
+        "💙Rare Beauty🔥My type of Rare Queen💐",
+        "🔥🔥",
+        "BRAVISIMO!🔥🔥🥵",
+        "Beautiful walk ❤️❤️❤️❤️",
+        "Hermosaaaa 🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "C-GjFq0uAKY",
+      "caption": "💐🌊",
+      "timestamp": "2024-07-31T21:43:30.000Z",
+      "content_format": "reel",
+      "likes": 1486,
+      "comments": 27,
+      "video_view_count": 41868,
+      "video_play_count": 209715,
+      "latest_comments": [
+        "🌞",
+        "Hola 🌹🌹🌹🌹🌹🌹🌹🌹🌹",
+        "Grécia?? Amooooo😍",
+        "This Greece 🇬🇷?",
+        "Sidi bousaid",
+        "Ese color te queda perfec",
+        "👏👏👏👏",
+        "😍😍😍😍😍",
+        "Contact me",
+        "❤️❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da-d1NftWRR",
+      "caption": "Dressing simply and elegantly is for beautiful people 🤍🖤",
+      "timestamp": "2026-07-19T14:31:11.000Z",
+      "content_format": "reel",
+      "likes": 1534,
+      "comments": 58,
+      "video_view_count": 4697,
+      "video_play_count": 71945,
+      "latest_comments": [
+        "You know what I found the most interesting thing in your profile",
+        "❤️❤️❤️",
+        "❤️",
+        "🔥🔥🔥🔥",
+        "🔥🔥🔥🔥🔥🔥🔥🔥🔥",
+        "😍",
+        "❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️",
+        "🔥",
+        "🔥🔥🔥",
+        "الأبيض والأسود بيجنننو عليك"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZqP91JNYzY",
+      "caption": "The products don’t have to be expensive.\nThey just have to work.\nDark circles are my biggest enemy\nThis is how I look more awake in 3 minutes. ✨",
+      "timestamp": "2026-06-16T20:40:16.000Z",
+      "content_format": "reel",
+      "likes": 944,
+      "comments": 53,
+      "video_view_count": 23164,
+      "video_play_count": 101706,
+      "latest_comments": [
+        "Eres real , 🌹🌹🌹🌹🌹🌹🌹🌹🌹🌹🌹🌹",
+        "So beautiful mis 😍",
+        "Simplemente hermosa",
+        "❤️❤️❤️❤️❤️",
+        "Señorita, su belleza es perfecta no necesita de  productos.",
+        "I love you",
+        "Beautiful😍",
+        "🔥🔥🔥",
+        "Such beautiful 😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "C0zt4W6MKDb",
+      "caption": "♥️🏛️",
+      "timestamp": "2023-12-13T21:24:29.000Z",
+      "content_format": "reel",
+      "likes": 1069,
+      "comments": 29,
+      "video_view_count": 45298,
+      "video_play_count": 151303,
+      "latest_comments": [
+        "Cute hair",
+        "Strong is beautiful ❤️",
+        "😍",
+        "💪🏻",
+        "Vamos al gym 💪💪💪💪",
+        "🔥🔥🔥🔥🙌🔥🔥🔥🔥",
+        "👏👏👏",
+        "😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DagZ_-jNTIZ",
+      "caption": "Subtle, elegant, and discreet makeup for a formal office setting 💼✨\n\n✨corrector: color salmón @sephora \n✨rimmel : @maccosmetics \n✨labial: @maybelline \n✨blush: @rarebeauty",
+      "timestamp": "2026-07-07T21:22:59.000Z",
+      "content_format": "reel",
+      "likes": 637,
+      "comments": 38,
+      "video_view_count": 5511,
+      "video_play_count": 51051,
+      "latest_comments": [
+        "You have a nice voice",
+        "Butta face",
+        "@temisanpopo",
+        "🔥",
+        "stunning.",
+        "Will you marry me ❤️",
+        "Your face is like baby",
+        "Pretty 🫠"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbcA3DjPtxh",
+      "caption": "Behind the scenes @skims\n\n📍 Miami \n\nBts w/ @seventalent\n\nAgent #7Talent @seventalent\n\nModel available for:\n\nE-commerce\n\nClothing /Swimwear/ Fitness shoots\n\nBrand Ambassador\n\nCommercial & Print\n\nUGC \n\nSocial media endorsements\n\n#AndreaCantero\n\n#BookedByKelvin",
+      "timestamp": "2026-07-31T00:50:46.000Z",
+      "content_format": "reel",
+      "likes": 1379,
+      "comments": 35,
+      "video_view_count": 14544,
+      "video_play_count": 37278,
+      "latest_comments": [
+        "🔥🔥🔥",
+        "🔥🔥🔥🔥🔥🔥🔥🔥🔥",
+        "Eres preciosa miamor..🔥",
+        "🙌🙌🙌",
+        "Wow.❤️",
+        "uffff sexy",
+        "Que mujerón!!! Que hembra más linda!!! 😍😍😍",
+        "Love you",
+        "¡Mira la potencia de salida! 😍🔥👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaQ8NvitW0R",
+      "caption": "🤎 Brown or 🩷 Pink?\n\nIf you’d like my measurements and sizing, let me know in the comments! 🤍\n\nWould you like to see Part 2?\n\n#gymsharkwomen \n#activewear",
+      "timestamp": "2026-07-01T21:16:52.000Z",
+      "content_format": "reel",
+      "likes": 1162,
+      "comments": 59,
+      "video_view_count": 12796,
+      "video_play_count": 62466,
+      "latest_comments": [
+        "El rosa te sienta de maravilla.",
+        "Todo te queda bien,preciosura.",
+        "Wow every piece looks sooo good!!!",
+        "Todo te queda espectacular",
+        "Estás bellísima 🤩",
+        "Yes, everything looks good on you 🙌. Also, let me brush up on my Spanish again… porque da gusto escucharte hablar español 😝",
+        "What's her age?",
+        "Reinaaa❤️",
+        "U have such a sexy body n face & love that hairstyle my god 🔥👏👏😍😍😍 suits u so much"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DatAklpNPed",
+      "caption": "Support ✔️ Style ✔️ Comfort ✔️ \nWhat else could you ask for? ✨\nWhich one is your favorite?",
+      "timestamp": "2026-07-12T18:57:13.000Z",
+      "content_format": "reel",
+      "likes": 943,
+      "comments": 38,
+      "video_view_count": 4425,
+      "video_play_count": 60758,
+      "latest_comments": [
+        "🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥",
+        "Sexy back 😮",
+        "Wonderfully pretty",
+        "gourgeous 😛",
+        "Ig me ha hecho darme cuenta de la cantidad de belleza que hay en España 😍🥵🤌🏼",
+        "Eres de verdad ???😢😢😮",
+        "Not robust enuf tbh... #whenyouknowyouknow❤️",
+        "Best natural figure 🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbQUzH4DcC1",
+      "caption": "Collecting moments, not things 🫶🏼",
+      "timestamp": "2026-07-26T11:51:56.000Z",
+      "content_format": "carousel",
+      "likes": 455,
+      "comments": 11,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😍😍😍",
+        "😍😍😍",
+        "❤️❤️❤️",
+        "🔥🙌",
+        "True",
+        "🙌",
+        "Looks like an amazing July!!😍",
+        "Bellísima,  guapa..❤️❤️❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZanYNuDX_5",
+      "caption": "✨ close-up",
+      "timestamp": "2026-06-10T18:43:54.000Z",
+      "content_format": "carousel",
+      "likes": 1759,
+      "comments": 96,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Ohh bella ❤️‍🔥❤️‍🔥",
+        "You look better with longer hair",
+        "❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️",
+        "😍😍",
+        "Your face😍",
+        "I don't get how this woman only has 39,000 followers",
+        "Damn! Those eyes have me more addicted than doomscrolling😍😍😍. My newest and latest addiction",
+        "Mine"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZk7zQctHTR",
+      "caption": "Navy + Cream 💙🤍\nSave this timeless outfit formula",
+      "timestamp": "2026-06-14T18:56:31.000Z",
+      "content_format": "reel",
+      "likes": 33519,
+      "comments": 674,
+      "video_view_count": 782515,
+      "video_play_count": 1852032,
+      "latest_comments": [
+        "I love 💙 blue",
+        "Фигура просто бомба классная",
+        "😍😍",
+        "❤💕😍😘💝🌹💝😘😍💕❤",
+        "😍",
+        "Donde compras ropa?",
+        "Sense of dressing 🫡",
+        "جورجینااااا",
+        "@raniacandale",
+        "She's 😮✨🌹❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 43377,
+  "following_count": 1052,
+  "posts_count": 23,
+  "follower_tier": "mid",
+  "engagement": {
+    "sample_size": 12,
+    "median_er": 0.030373239274269777,
+    "mean_er": 0.1068519415050987,
+    "er_per_post": [
+      {
+        "short_code": "DZ2b5jINYo1",
+        "er": 0.22163819535698642,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "C-GjFq0uAKY",
+        "er": 0.03488023606980658,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Da-d1NftWRR",
+        "er": 0.03670147774166033,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZqP91JNYzY",
+        "er": 0.022984530972635267,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "C0zt4W6MKDb",
+        "er": 0.02531295386956221,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DagZ_-jNTIZ",
+        "er": 0.015561242132927589,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbcA3DjPtxh",
+        "er": 0.0325979205569772,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaQ8NvitW0R",
+        "er": 0.028148557991562347,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DatAklpNPed",
+        "er": 0.02261567189985476,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbQUzH4DcC1",
+        "er": 0.010743020494732232,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DZanYNuDX_5",
+        "er": 0.04276459875048989,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DZk7zQctHTR",
+        "er": 0.7882748922239897,
+        "content_format": "reel"
+      }
+    ]
+  },
+  "external_url": "https://amzn.eu/d/0czhFonw",
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "2_comissionamento_afiliados",
+    "secondary": null,
+    "matches": [
+      {
+        "category": "2_comissionamento_afiliados",
+        "score": 3,
+        "evidence": [
+          "external_url é vitrine/link de afiliado BR (amzn.eu)"
+        ]
+      }
+    ],
+    "manual_review_recommended": false,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "2_comissionamento_afiliados",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "parcial",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T02:04:18.345Z",
+    "versao_framework": "v3.1"
+  }
+}

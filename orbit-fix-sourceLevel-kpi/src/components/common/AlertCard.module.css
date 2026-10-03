@@ -1,0 +1,295 @@
+/* ============================================================================
+   AlertCard.module.css
+   Reconstruído 14/08/2026 no padrão real do projeto (CSS Modules por
+   componente), confirmado contra CriticalAlert.module.css — substitui a
+   entrega anterior (alerts.css global, classes .alert/.alert-crit, tokens
+   extraídos do protótipo HTML). Esse padrão anterior não é o que o projeto
+   usa de verdade; REGRA-07/convenção real pede CSS Module por componente.
+
+   TOKENS CONFIRMADOS (vistos literalmente em CriticalAlert.module.css):
+     --space-1, --space-3, --space-4, --space-5
+     --border-width, --border-default, --border-radius-lg
+     --border-glow-red, --border-glow-gold, --border-glow-cyan
+     --text-primary, --text-muted
+     --font-size-lg, --font-size-sm, --font-size-xs
+     --font-weight-bold
+
+   TOKENS NÃO CONFIRMADOS (usados abaixo por necessidade — AlertCard tem
+   mais elementos que CriticalAlert: métrica comparativa, botões, status).
+   Marcados inline com ⚠️. Não vi nenhum arquivo que confirme o nome real
+   destes — se o token real tiver outro nome, é achar-e-substituir, não
+   reescrever a estrutura.
+   FIX 09/09/2026 — rgba(255, 65, 54, ...) corrigido pra rgba(255, 68, 68, ...)
+   em 4 ocorrências (.critical, .severityBadge.critical, .critical .btn).
+   O valor antigo era um vermelho ligeiramente diferente do --red/--neon-red
+   oficial (#FF4444 = rgb(255,68,68)) — drift confirmado contra o protótipo
+   SSOT, provavelmente cópia manual desatualizada. Demais cores (gold, cyan,
+   green) já batiam exatamente com os tokens, não precisaram de correção.
+   ============================================================================ */
+
+.card {
+  position: relative;
+  display: flex;
+  gap: var(--space-4);
+  border: var(--border-width) solid var(--border-default);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-4) var(--space-5);
+  width: 100%;
+}
+
+.critical {
+  background: linear-gradient(135deg, rgba(255, 68, 68, 0.08), rgba(255, 68, 68, 0.03));
+  border-color: var(--border-glow-red);
+  box-shadow: 0 0 24px rgba(255, 68, 68, 0.1);
+}
+
+.warning {
+  background: linear-gradient(135deg, rgba(255, 195, 0, 0.08), rgba(255, 195, 0, 0.03));
+  border-color: var(--border-glow-gold);
+  box-shadow: 0 0 24px rgba(255, 195, 0, 0.1);
+}
+
+.info {
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.06), rgba(0, 255, 255, 0.02));
+  border-color: var(--border-glow-cyan);
+  box-shadow: 0 0 24px rgba(0, 255, 255, 0.08);
+}
+
+/* ✅ ADICIONADO 07/09 — AlertSeverity inclui 'success' (orbit.ts), mas o
+   módulo só cobria critical/warning/info. Usa --green (SSOT), não uma
+   nova cor fora da paleta. */
+.success {
+  background: linear-gradient(135deg, rgba(46, 204, 113, 0.08), rgba(46, 204, 113, 0.03));
+  border-color: var(--green);
+  box-shadow: 0 0 24px rgba(46, 204, 113, 0.1);
+}
+.success .btn {
+  background: rgba(46, 204, 113, 0.12);
+  border-color: var(--green);
+  color: var(--text-primary);
+}
+
+.icon {
+  font-size: var(--font-size-lg);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* ✅ ADICIONADO 07/09 — linha título + timestamp (padrão .row-between do
+   protótipo, aplicado como CSS Module em vez de classe global). */
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+/* ✅ ADICIONADO 08/09 — agrupa título + badge de severidade no cabeçalho,
+   paridade com `row-between mb8` (alert-title + badge-red/amber) do
+   protótipo. */
+.titleGroup {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+/* Badge pequeno — cores próprias, não reaproveita o gradiente/glow de
+   .critical/.warning/.info/.success (feitos para o card inteiro; um glow
+   de 24px numa pill de texto pequena borra o contorno). */
+.severityBadge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  padding: 1px var(--space-3);
+  border-radius: var(--radius-lg);
+  border: var(--border-width) solid;
+  background: none;
+  box-shadow: none;
+}
+
+.severityBadge.critical {
+  color: var(--red-text); /* FIX (19/09/2026): hex cru #ff8080 voltou numa edição posterior — reaplicado o token */
+  border-color: var(--border-glow-red);
+  background: rgba(255, 68, 68, 0.15);
+}
+.severityBadge.warning {
+  color: var(--amber);
+  border-color: var(--border-glow-gold);
+  background: rgba(255, 195, 0, 0.12);
+}
+.severityBadge.info {
+  color: var(--blue-text); /* FIX (19/09/2026): hex cru #7eb3ff voltou numa edição posterior — reaplicado o token */
+  border-color: var(--border-glow-cyan);
+  background: rgba(0, 255, 255, 0.1);
+}
+.severityBadge.success {
+  color: var(--green);
+  border-color: var(--green);
+  background: rgba(46, 204, 113, 0.12);
+}
+
+.timestamp {
+  flex-shrink: 0;
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.text {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ✅ ADICIONADO (P0 — v8.2): fileira de chips de contexto (métrica,
+   natureza, confiança). Mesma lógica visual do .severityBadge (pill
+   pequena, sem o glow de 24px do card inteiro), mas neutra — não é um
+   indicador de severidade, é metadado de proveniência do alerta. */
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-top: var(--space-1);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  padding: 1px var(--space-3);
+  border-radius: var(--border-radius-lg);
+  border: var(--border-width) solid var(--border-default);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* natureza: 'tecnica' | 'comunicacao' — mesma paleta cyan do .info, mas
+   sem glow (é rótulo de metadado, não status de alerta). */
+.chipNatureza {
+  border-color: var(--border-glow-cyan);
+  color: var(--blue-text); /* FIX (19/09/2026): novo desde a última rodada — nasceu com hex cru #7eb3ff em vez do token, mesmo drift dos outros dois badges */
+  background: rgba(0, 255, 255, 0.06);
+}
+
+/* confidence_level: L0/L1/L2 — FIX (19/09/2026): as cores estavam na
+   direção errada (L2 verde/melhor, L0 neutro/pior). Confirmado contra
+   contentContractEngine.ts (15+ usos: L0 = dado real/direto, L2 = fallback
+   sem breakdown ou amostra insuficiente) e contra KPICard.tsx (L0 sempre
+   foi verde ali). L0 = Medido (melhor) → verde. L1 = Estimado → âmbar.
+   L2 = Hipótese (pior) → neutro, sem alarmar como se fosse erro. */
+.chipConfidenceL0 {
+  border-color: var(--green);
+  color: var(--green);
+  background: rgba(46, 204, 113, 0.1);
+}
+.chipConfidenceL1 {
+  border-color: var(--border-glow-gold);
+  color: var(--amber);
+  background: rgba(255, 195, 0, 0.1);
+}
+.chipConfidenceL2 {
+  border-color: var(--border-default);
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* ⚠️ --space-2 não confirmado — usei --space-1 (confirmado) como aproximação
+   conservadora até alguém confirmar se --space-2 existe de verdade. */
+.meta {
+  margin-top: var(--space-3);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--border-radius-lg);
+  background: rgba(0, 0, 0, 0.25);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+}
+
+.action {
+  margin-top: var(--space-3);
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* ⚠️ --font-weight-medium e --border-radius-md/full não confirmados.
+   Usei --font-weight-bold (confirmado) e --border-radius-lg (confirmado)
+   até ter o arquivo real de botão pra conferir. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  padding: var(--space-1) var(--space-4);
+  border-radius: var(--border-radius-lg);
+  cursor: pointer;
+  border: var(--border-width) solid;
+  background: none;
+  text-decoration: none;
+  transition: opacity 120ms ease;
+}
+.btn:hover { opacity: 0.85; }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.critical .btn {
+  background: rgba(255, 68, 68, 0.15);
+  border-color: var(--border-glow-red);
+  color: var(--text-primary);
+}
+.warning .btn {
+  background: rgba(255, 195, 0, 0.12);
+  border-color: var(--border-glow-gold);
+  color: var(--text-primary);
+}
+.info .btn {
+  background: rgba(0, 255, 255, 0.12);
+  border-color: var(--border-glow-cyan);
+  color: var(--text-primary);
+}
+
+.btnGhost {
+  background: none !important;
+  border-color: var(--border-default) !important;
+  color: var(--text-muted) !important;
+}
+
+.status {
+  margin-top: var(--space-3);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
+.dismiss {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: var(--space-1);
+}
+.dismiss:hover { color: var(--text-primary); }

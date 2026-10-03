@@ -1,0 +1,43 @@
+{
+  "handle": "gabilopescom",
+  "nicho": "5_patrocinio_publicidade",
+  "url": "https://www.instagram.com/gabilopescom/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-01T16:44:41.464Z",
+  "total_posts": 1,
+  "valid_posts": 0,
+  "diagnosis_tier": "insuficiente",
+  "posts": [
+    {
+      "short_code": "UNKNOWN",
+      "caption": null,
+      "timestamp": "",
+      "content_format": "unknown",
+      "likes": null,
+      "comments": null,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "anomalies": [
+        "timestamp ausente — cadência não pode ser calculada para este post",
+        "shortCode ausente"
+      ]
+    }
+  ],
+  "account_level_anomalies": [
+    "Apenas 0 posts válidos — abaixo do mínimo (5). Amostra insuficiente, não entra no cálculo de correlação/benchmark."
+  ],
+  "monetization": {
+    "primary": "7_monetizacao_nativa",
+    "matches": [
+      {
+        "category": "7_monetizacao_nativa",
+        "evidence": [
+          "sem external_url e sem padrão comercial em nenhuma legenda — confirmado por exclusão, não por sinal positivo"
+        ]
+      }
+    ],
+    "manual_review_recommended": false,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  }
+}

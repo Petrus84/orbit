@@ -1,0 +1,681 @@
+{
+  "handle": "barberia.online_",
+  "setor_benchmark_key": "3_infoprodutor",
+  "url": "https://www.instagram.com/barberia.online_/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T01:41:25.306Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DbbmjsOBNL5",
+      "caption": "PASO A PASO LOW TAPER ✅\n\n#barberia #barberiaprofesional #desvanecido💈",
+      "timestamp": "2026-07-30T20:59:09.000Z",
+      "content_format": "reel",
+      "likes": 331,
+      "comments": 1,
+      "video_view_count": 4977,
+      "video_play_count": 15527,
+      "latest_comments": [
+        "Gracias 🙏🏼"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbDsBpxBUFD",
+      "caption": "Degradado paso a paso ✅\n\n#barberia #barberiaprofesional #desvanecido💈",
+      "timestamp": "2026-07-21T14:05:12.000Z",
+      "content_format": "reel",
+      "likes": 625,
+      "comments": 53,
+      "video_view_count": 1827,
+      "video_play_count": 26571,
+      "latest_comments": [
+        "Yo",
+        "Yo",
+        "Yo",
+        "Yo",
+        "Yo",
+        "Yo",
+        "Yo",
+        "Yo",
+        "Yo",
+        "Yoii😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbo0fHNAytT",
+      "caption": "",
+      "timestamp": "2026-08-05T00:10:49.000Z",
+      "content_format": "reel",
+      "likes": 99,
+      "comments": 0,
+      "video_view_count": 1778,
+      "video_play_count": 8110,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbg1Z8ShGEQ",
+      "caption": "MID FADE PASO A PASO ✅\n\n#barberia #barberiaprofesional #desvanecido💈",
+      "timestamp": "2026-08-01T21:45:03.000Z",
+      "content_format": "reel",
+      "likes": 331,
+      "comments": 5,
+      "video_view_count": 6638,
+      "video_play_count": 20540,
+      "latest_comments": [
+        "El texto y las imágenes que copie se mostrarán aquí automáticamente",
+        "!",
+        "!!////",
+        "9999999",
+        "❤️@"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbTey-1hyBV",
+      "caption": "Diferencias ✅\n\n#barberia #barberiaprofesional #desvanecido💈",
+      "timestamp": "2026-07-27T17:17:19.000Z",
+      "content_format": "reel",
+      "likes": 530,
+      "comments": 3,
+      "video_view_count": 5519,
+      "video_play_count": 47813,
+      "latest_comments": [
+        "L",
+        "😮",
+        "Muy buen curso,lo recomiendo al 100%"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbd7sShhwbj",
+      "caption": "TIP ✅\n\n#barberia #barberiaprofesional #desvanecido💈",
+      "timestamp": "2026-07-31T18:42:09.000Z",
+      "content_format": "reel",
+      "likes": 41,
+      "comments": 0,
+      "video_view_count": 1864,
+      "video_play_count": 9800,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbB8Dh7hnOD",
+      "caption": "Fade limpio ✅\n\n#barberia #barberiaprofesional #desvanecido💈",
+      "timestamp": "2026-07-20T21:46:35.000Z",
+      "content_format": "reel",
+      "likes": 187,
+      "comments": 1,
+      "video_view_count": 494,
+      "video_play_count": 15276,
+      "latest_comments": [
+        "holaa me podés responder en ms"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dad8RfohfKf",
+      "caption": "TAPER FADE ✅\n\n#barberia #barberiaprofesional #desvanecido💈",
+      "timestamp": "2026-07-06T22:15:59.000Z",
+      "content_format": "reel",
+      "likes": 433,
+      "comments": 1,
+      "video_view_count": 6625,
+      "video_play_count": 28183,
+      "latest_comments": [
+        "Respondeme dmmm"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbRUYYyhcgI",
+      "caption": "Mullet moderno ✅\n\n#barberia #barberiaprofesional #desvanecido💈",
+      "timestamp": "2026-07-26T21:10:00.000Z",
+      "content_format": "reel",
+      "likes": 245,
+      "comments": 0,
+      "video_view_count": 1296,
+      "video_play_count": 18755,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbI8EcNg6He",
+      "caption": "Degradado paso a paso ✅\n\n#barberia #barberiaprofesional #desvanecido💈",
+      "timestamp": "2026-07-23T15:02:05.000Z",
+      "content_format": "reel",
+      "likes": 1044,
+      "comments": 9,
+      "video_view_count": 2656,
+      "video_play_count": 38253,
+      "latest_comments": [
+        "❤️❤️❤️❤️",
+        "Hola Más Información por favor les mandé Mjs",
+        "5 ceros , 1/2, 2,1/2 , 0 abierta , cero cerrada ? Sigo aprendiendo",
+        "@julio_the_champion 👏👏👏",
+        "❤️",
+        "Bro podes responder md",
+        "Hola 🙌Cómo se llama la primera maquina que utilizaste?"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da6NjfGBGdZ",
+      "caption": "Si en 2026 los cortes no te quedan así... estás perdiendo dinero!!! ❌\n\n#barberia #barberiaprofesional #barberiaprofesional #haircutmen",
+      "timestamp": "2026-07-17T21:45:57.000Z",
+      "content_format": "reel",
+      "likes": 160,
+      "comments": 4,
+      "video_view_count": 372,
+      "video_play_count": 27712,
+      "latest_comments": [
+        "Bro respóndeme en mdddddd",
+        "Sin pintura",
+        "Con pintura",
+        "@ema___okkk si y no, hay que saber hacer bien la pase del degrade para realizar una pigmentación \nFuera de eso también los cortes a nivel, la verdad algo increíble y que márca la diferencia 😯☺️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DavVkYbBHIA",
+      "caption": "Manera correcta ✅\n\n#barberia #barberiaprofesional #desvanecido💈",
+      "timestamp": "2026-07-13T16:24:06.000Z",
+      "content_format": "reel",
+      "likes": 140,
+      "comments": 6,
+      "video_view_count": 150,
+      "video_play_count": 17159,
+      "latest_comments": [
+        "Respóndeme dmmm",
+        "muy buen curso y muy facil de acceder, es excelente!!",
+        "Buena antencion tambien muy buenos los cursos y sobre todo muy confiable",
+        "Muy buenos cursos !",
+        "@thiago_cordoba.03 😮ⁿ"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DankBk5BaK1",
+      "caption": "Degradado Muy Fácil ✅\n\n#barberia #barberiaprofesional #desvanecido💈",
+      "timestamp": "2026-07-10T15:57:13.000Z",
+      "content_format": "reel",
+      "likes": 977,
+      "comments": 83,
+      "video_view_count": 374,
+      "video_play_count": 35792,
+      "latest_comments": [
+        "Yoo",
+        "🙌",
+        "YOOOOO QUIERO QUE ME RESPONDAS DM",
+        "Respóndeme dmmmmmmm",
+        "Yoquiero",
+        "Yo",
+        "Yooo",
+        "Yoooooo",
+        "Yo",
+        "Yo"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DatZBvsBuSh",
+      "caption": "Cuál prefieres? 👇🏻\n\n#barberia #barberiaprofesional #desvanecido💈",
+      "timestamp": "2026-07-12T22:15:42.000Z",
+      "content_format": "reel",
+      "likes": 331,
+      "comments": 11,
+      "video_view_count": 165,
+      "video_play_count": 24639,
+      "latest_comments": [
+        "Respondeme dmmmm",
+        "Vgr una tremenda máquina le cambie la cuchilla por una  S/C",
+        "VGR Siempre🔥",
+        "La vgr es bastante buena y da buen rendimiento pero al no mucho tiempo de uso empieza a sonar bastante fuerte ya q sufre bastante rápido el desgaste en la parte dnd calza el riel que sujeta la cuchilla y tiende a abrise la cuchilla ... en este caso nunk eh tenido ni usado la jrl pero obviamente en cuestión calidad es mucho mejor y pues rinde mas y da mejores resultados a la hora de hacer un corte",
+        "Que modelo es la vgr",
+        "Al parecer por el sonido tiene más rpm la vgr",
+        "JRL",
+        "@victor_1994ramirez la vgr es normal el desgaste, en todas la que tienen más de 10,000 rpm les pasa"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da_j7n9AK4f",
+      "caption": "Las particiones son muy importantes para cortes prolijos ✅\n\n#barberia #barberiaprofesional #desvanecido💈",
+      "timestamp": "2026-07-19T23:37:18.000Z",
+      "content_format": "reel",
+      "likes": 119,
+      "comments": 2,
+      "video_view_count": 637,
+      "video_play_count": 15044,
+      "latest_comments": [
+        "Bro mira el mensaje que te envie",
+        "Me podén responder en md"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaiK7wkgF6J",
+      "caption": "Degradado paso a paso ✅\n\n#barberia #barberiaprofesional #desvanecido💈",
+      "timestamp": "2026-07-08T13:41:14.000Z",
+      "content_format": "reel",
+      "likes": 400,
+      "comments": 1,
+      "video_view_count": 2329,
+      "video_play_count": 19886,
+      "latest_comments": [
+        "Respóndeme dmmm"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaynQNzgxQf",
+      "caption": "DROP FADE ✅\n\n#barberia #barberiaprofesional #desvanecido💈 #haircutmen",
+      "timestamp": "2026-07-14T22:56:16.000Z",
+      "content_format": "reel",
+      "likes": 289,
+      "comments": 1,
+      "video_view_count": 317,
+      "video_play_count": 24691,
+      "latest_comments": [
+        "Respondemeeeee"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaLSbeigp4O",
+      "caption": "Tonos ✅\n\n#barberia #barberiaprofesional #desvanecido💈",
+      "timestamp": "2026-06-29T16:23:56.000Z",
+      "content_format": "reel",
+      "likes": 291,
+      "comments": 0,
+      "video_view_count": 4572,
+      "video_play_count": 18676,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaVgjpFh2-G",
+      "caption": "DEGRADADO PASO A PASO ✅\n\n#barberia #barberiaprofesional #desvanecido💈 #haircutmen",
+      "timestamp": "2026-07-03T15:40:05.000Z",
+      "content_format": "reel",
+      "likes": 807,
+      "comments": 1,
+      "video_view_count": 9534,
+      "video_play_count": 32688,
+      "latest_comments": [
+        "@benja_.rodri"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbWCA6qBQbY",
+      "caption": "La manera correcta ✅\n\n#barberia #barberiaprofesional Y#desvanecido💈",
+      "timestamp": "2026-07-28T17:03:28.000Z",
+      "content_format": "reel",
+      "likes": 149,
+      "comments": 0,
+      "video_view_count": 10533,
+      "video_play_count": 32735,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da9EAr5g5TI",
+      "caption": "Taper Fade ✅\n\n#barberia #barberiaprofesional #desvanecido💈 #haircutmen",
+      "timestamp": "2026-07-19T00:20:01.000Z",
+      "content_format": "reel",
+      "likes": 318,
+      "comments": 1,
+      "video_view_count": 611,
+      "video_play_count": 26207,
+      "latest_comments": [
+        "Bro daleee responde dm"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da3s-fNBhcf",
+      "caption": "Particiones ✅\n\n#barberia #barberiaprofesional #desvanecido💈",
+      "timestamp": "2026-07-16T22:22:26.000Z",
+      "content_format": "reel",
+      "likes": 123,
+      "comments": 1,
+      "video_view_count": 311,
+      "video_play_count": 18768,
+      "latest_comments": [
+        "Respóndeme dmm bro"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaaXQhxhKyj",
+      "caption": "NO LO HAGAS ASÍ ❌\n\n#barberia #barberiaprofesional #desvanecido💈 #haircutmen",
+      "timestamp": "2026-07-05T12:54:45.000Z",
+      "content_format": "reel",
+      "likes": 205,
+      "comments": 4,
+      "video_view_count": 7328,
+      "video_play_count": 28792,
+      "latest_comments": [
+        "Respóndeme dm broo",
+        "Pero explica el por qué. Ami me enseñaron al revés (solo quiero saber)",
+        "🔥🔥",
+        "@ramirezzsamu1 ❤❤🙌"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DalgjR1hmFn",
+      "caption": "🚀🚀🚀\n\n#barberia #barberiaprofesional #desvanecido💈",
+      "timestamp": "2026-07-09T20:47:36.000Z",
+      "content_format": "reel",
+      "likes": 350,
+      "comments": 3,
+      "video_view_count": 157,
+      "video_play_count": 30367,
+      "latest_comments": [
+        "Respóndeme dm",
+        "🔥🔥🔥🔥🔥",
+        "@abrahamguevaraf 🔥❤️❤️❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaG00-6hht4",
+      "caption": "También trabajas por tonos? 👇🏻\n\n#barberia #puntillismo #barberiaprofesional #desvanecido💈",
+      "timestamp": "2026-06-27T22:48:20.000Z",
+      "content_format": "reel",
+      "likes": 252,
+      "comments": 1,
+      "video_view_count": 5790,
+      "video_play_count": 22601,
+      "latest_comments": [
+        "Yy u46b77n45i8i5y5u un yy uyy bb 548 yyy uyy"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaJPdhuhz9N",
+      "caption": "LOW FADE PROCESO ✅\n\n#barberia #barberiaprofesional #desvanecido💈",
+      "timestamp": "2026-06-28T21:19:49.000Z",
+      "content_format": "reel",
+      "likes": 384,
+      "comments": 0,
+      "video_view_count": 4364,
+      "video_play_count": 17804,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaqHHRKhV6j",
+      "caption": "Skin Taper paso a paso ✅\n\n#barberia #barberiaprofesional #desvanecido💈",
+      "timestamp": "2026-07-11T15:41:29.000Z",
+      "content_format": "reel",
+      "likes": 303,
+      "comments": 1,
+      "video_view_count": 175,
+      "video_play_count": 14858,
+      "latest_comments": [
+        "RESPONDEME DMMM POR FAVOR BROUU"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaTUaKDhsVn",
+      "caption": "Degradado paso a paso ✅\n\n#barberia #barberiaprofesional #desvanecido💈 #haircutmen",
+      "timestamp": "2026-07-02T19:15:45.000Z",
+      "content_format": "reel",
+      "likes": 268,
+      "comments": 2,
+      "video_view_count": 3889,
+      "video_play_count": 15225,
+      "latest_comments": [
+        "Gracias ❤️",
+        "Clara la explicación"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbLRHmYBSxu",
+      "caption": "Que puntuación le das a este cambio? 😮‍💨\n\n#barberia #barberiaprofesional #desvanecido💈",
+      "timestamp": "2026-07-24T12:44:04.000Z",
+      "content_format": "reel",
+      "likes": 198,
+      "comments": 1,
+      "video_view_count": 852,
+      "video_play_count": 17312,
+      "latest_comments": [
+        "responde dmm"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbYzySLBmQJ",
+      "caption": "Transformación al 100% 🔥\n\n#barberia #barberiaprofesional #desvanecido💈",
+      "timestamp": "2026-07-29T18:56:55.000Z",
+      "content_format": "reel",
+      "likes": 152,
+      "comments": 1,
+      "video_view_count": 2603,
+      "video_play_count": 11644,
+      "latest_comments": [
+        "No tenía fe 🙌"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 177774,
+  "following_count": 20,
+  "posts_count": 1176,
+  "follower_tier": "mega",
+  "engagement": {
+    "sample_size": 30,
+    "median_er": 0.0016340972245660222,
+    "mean_er": 0.0019273534562609458,
+    "er_per_post": [
+      {
+        "short_code": "DbbmjsOBNL5",
+        "er": 0.0018675396852183108,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbDsBpxBUFD",
+        "er": 0.003813831043909683,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dbo0fHNAytT",
+        "er": 0.0005568868338452193,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dbg1Z8ShGEQ",
+        "er": 0.0018900401633534713,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbTey-1hyBV",
+        "er": 0.0029981887115101196,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dbd7sShhwbj",
+        "er": 0.0002306299008853938,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbB8Dh7hnOD",
+        "er": 0.0010575224723525375,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dad8RfohfKf",
+        "er": 0.0024413018776649003,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbRUYYyhcgI",
+        "er": 0.0013781542857785728,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbI8EcNg6He",
+        "er": 0.005923250869080968,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Da6NjfGBGdZ",
+        "er": 0.0009225196035415752,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DavVkYbBHIA",
+        "er": 0.0008212674519333536,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DankBk5BaK1",
+        "er": 0.005962626705817499,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DatZBvsBuSh",
+        "er": 0.0019237908805562118,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Da_j7n9AK4f",
+        "er": 0.0006806394635886012,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaiK7wkgF6J",
+        "er": 0.0022556729330498273,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaynQNzgxQf",
+        "er": 0.001631284664799127,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaLSbeigp4O",
+        "er": 0.0016369097843329172,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaVgjpFh2-G",
+        "er": 0.004545096583302395,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbWCA6qBQbY",
+        "er": 0.0008381428105347238,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Da9EAr5g5TI",
+        "er": 0.0017944131312790396,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Da3s-fNBhcf",
+        "er": 0.0006975148221899716,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaaXQhxhKyj",
+        "er": 0.0011756499825621295,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DalgjR1hmFn",
+        "er": 0.001985667195427903,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaG00-6hht4",
+        "er": 0.0014231552420488935,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaJPdhuhz9N",
+        "er": 0.0021600459009753956,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaqHHRKhV6j",
+        "er": 0.0017100363382721883,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaTUaKDhsVn",
+        "er": 0.0015187822741233252,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbLRHmYBSxu",
+        "er": 0.0011193987872242285,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbYzySLBmQJ",
+        "er": 0.0008606432886698842,
+        "content_format": "reel"
+      }
+    ]
+  },
+  "external_url": "https://creandograndeza.com/products/megapackbarber",
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "a_validar_pre_monetizacao",
+    "secondary": null,
+    "matches": [],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "a_validar_pre_monetizacao",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "parcial",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T01:41:25.306Z",
+    "versao_framework": "v3.1"
+  }
+}

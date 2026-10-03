@@ -1,0 +1,166 @@
+{
+  "handle": "tatibarbieri",
+  "nicho": "2_comissionamento_afiliados",
+  "url": "https://www.instagram.com/tatibarbieri/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-01T16:28:50.366Z",
+  "total_posts": 8,
+  "valid_posts": 8,
+  "diagnosis_tier": "leve",
+  "posts": [
+    {
+      "short_code": "DFAgIbcupbMlyWbU84S4TI5TS-kkPxG_pYGEEc0",
+      "caption": "Quando a mãe assistiu muito Toy Story! #makeover",
+      "timestamp": "2025-01-19T12:54:19.000Z",
+      "content_format": "reel",
+      "likes": 144,
+      "comments": 55,
+      "video_view_count": 562,
+      "video_play_count": 1500,
+      "latest_comments": [
+        "Que lindoooo 😍😍😍",
+        "que lindooo",
+        "Parabéns pelo talento, minha vida!! ❤️❤️",
+        "Eeee garota bombril. Ficou lindooooo mimor❤️👏👏👏",
+        "Difícil ser mãe na mesma geração que você viu… hahaha",
+        "@gihdoretto ❤️"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "C_YIl9YuWrcluKVqrjX6B8R3SWz5BgxK4CpFaM0",
+      "caption": "Meu momento...",
+      "timestamp": "2024-09-01T14:00:48.000Z",
+      "content_format": "reel",
+      "likes": 60,
+      "comments": 18,
+      "video_view_count": 264,
+      "video_play_count": 811,
+      "latest_comments": [
+        "Ficou lindo Tati! 😍😍",
+        "Vc eh foda!!!",
+        "Maravilhosa!!👏👏👏😍",
+        "😍😍",
+        "Demais 🫶🏻❤️❤️❤️",
+        "Ficou show Tati! Amei! ❤️"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DAgcJbtOOIm",
+      "caption": "Arthur contou 4 Anos em nosso buffet em uma tarde de muita alegria e diversão, o Tema escolhido para esse dia Especial foi Heróis, evidenciando o seu favorito o Homem Aranha e por falar nele veio o personagem da LC personagens, contagiando a todos com sua alegria e empolgação!",
+      "timestamp": "2024-09-29T15:56:47.000Z",
+      "content_format": "reel",
+      "likes": 58,
+      "comments": 2,
+      "video_view_count": 612,
+      "video_play_count": 2446,
+      "latest_comments": [
+        "Parabéns Tutu! Que Deus abençoe grandemente a sua vida! 👏👏❤️❤️",
+        "Eeeeeee viva o Arthur! Deus abençoe sua vida e seus passinhos! ❤️"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DUBsiofEgg3",
+      "caption": "Viver uma experiência divertida com os amigos muda tudo💛\nO Arthur se jogou na gincana, brincou, riu e aproveitou de verdade.\n\nA Liloca na escola registra exatamente isso, a infância acontecendo.\nQuer registros do seu filho na escola? \nMe chama no direct📸",
+      "timestamp": "2026-01-27T19:51:01.000Z",
+      "content_format": "carousel",
+      "likes": 33,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Lindo!!",
+        "@juliafherrera 👏❤"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "C-XhYJQOfYA",
+      "caption": "Arthur é um gatão ✂️. Pensa em garoto que é só tranquilidade desde o primeiro corte que fiz.\nCuidando da 3º geração família Parisi e Barbieri",
+      "timestamp": "2024-08-07T11:54:52.000Z",
+      "content_format": "reel",
+      "likes": 118,
+      "comments": 6,
+      "video_view_count": 1025,
+      "video_play_count": 3235,
+      "latest_comments": [
+        "Lindo demaaaais",
+        "Fofuraaa😍😍😍",
+        "❤️",
+        "Amor da vida ❤️❤️❤️",
+        "😍👏👏👏",
+        "Príncipe!!!!!❤️❤️❤️❤️❤️❤️"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DN4CHnOEuUF",
+      "caption": "Para o Arthur, é só mais uma corrida feliz no parquinho.\n\nMomentos simples do cotidiano, que parecem comuns agora… mas que no futuro terão um valor imenso.\n\nÉ por isso que registrar é tão importante: o tempo passa, mas a memória fica.",
+      "timestamp": "2025-08-27T22:38:48.000Z",
+      "content_format": "static_post",
+      "likes": 47,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "anomalies": []
+    },
+    {
+      "short_code": "C_YUmVzONnDLXxucbHjBdTbeX52ApzP4ca89OY0",
+      "caption": "🤗",
+      "timestamp": "2024-09-01T15:46:42.000Z",
+      "content_format": "reel",
+      "likes": 40,
+      "comments": 5,
+      "video_view_count": 165,
+      "video_play_count": 454,
+      "latest_comments": [
+        "Talento?? Temos!!! Arrasou muito amiga ❤️",
+        "Sensacional! Eu amei ❤️❤️❤️",
+        "Parabéns,  ficou maravilhosa a kombi do coisinho👏👏👏❤️",
+        "Uhull.",
+        "Alguém contrate essa senhora, precisamos ganhar dinheiro com esse dom 🔥🔥"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "C1z901rOXtKchAEVVl3fLvORM1Mh6XBpyRlNdk0",
+      "caption": "Modo férias ativado",
+      "timestamp": "2024-01-07T20:12:08.000Z",
+      "content_format": "reel",
+      "likes": 79,
+      "comments": 11,
+      "video_view_count": 382,
+      "video_play_count": 931,
+      "latest_comments": [
+        "A marcineira❤️🔧🧰",
+        "Arrasa demais 👏",
+        "Animal Manolo. Mandei benzasso",
+        "Adorei",
+        "Sensacional !! 😍",
+        "Construindo memória! ❤️",
+        "Amei!!!",
+        "Adorei",
+        "Que ideia legal😍",
+        "mandou****"
+      ],
+      "anomalies": []
+    }
+  ],
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "7_monetizacao_nativa",
+    "matches": [
+      {
+        "category": "7_monetizacao_nativa",
+        "evidence": [
+          "sem external_url e sem padrão comercial em nenhuma legenda — confirmado por exclusão, não por sinal positivo"
+        ]
+      }
+    ],
+    "manual_review_recommended": false,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  }
+}

@@ -1,0 +1,647 @@
+{
+  "handle": "alfredosoares",
+  "nicho": "8_autoridade_b2b",
+  "url": "https://www.instagram.com/alfredosoares/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-01T16:55:55.603Z",
+  "total_posts": 28,
+  "valid_posts": 28,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DbgA20hPcJZ",
+      "caption": "Por que eu entrei no youtube? Qual foi o maior desafio? Qual meu objetivo? \n\nAgradecimento aos 100 mil inscritos 🙏 Obrigado pela audiência , pelos comentários e pelo carinho em cada mensagem.\n\nVejo vocês no canal 🫡🇧🇷",
+      "timestamp": "2026-08-01T14:17:54.000Z",
+      "content_format": "reel",
+      "likes": 1507,
+      "comments": 162,
+      "video_view_count": 10956,
+      "video_play_count": 46453,
+      "latest_comments": [
+        "Minhas corridas nunca mais foram as mesmas.. as músicas foram embora e só passou a ter lives, entrevistas e mentorias… tem ajudado muito 👏👏👏 obrigado",
+        "Tu usa alguém neurotropico pra te ajudar",
+        "🔥🔥",
+        "Banzai 🙌",
+        "Qualidade ponta a ponta. Parabéns todos os envolvidos @emersonandrade.si",
+        "👏👏👏",
+        "Sensacional! 👏",
+        "Seu canal é Transformador Parabéns pelo trabalho ❤️🙌🔥",
+        "Eu só tenho a dizer, obrigado Alfredo👏👏",
+        "É incrível o quanto seus vídeos batem com cada momento meu e com tudo que tô construindo. Cada vídeo é uma aula! 💪🏼"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbeqgO-NWUm",
+      "caption": "Time bom se prova assim. Na pressão. Na hora que o mês tá fechando e o número ainda não bateu.\n\nE o meu time tá pronto pra te atender agora. Se você quer aprender a vender do jeito que a gente vende aqui dentro, comenta G4 que eu te mando direto na sua DM o link de aplicação.",
+      "timestamp": "2026-08-01T01:44:11.000Z",
+      "content_format": "reel",
+      "likes": 2360,
+      "comments": 46,
+      "video_view_count": 33560,
+      "video_play_count": 108477,
+      "latest_comments": [
+        "Desarmou no elogio, brabo🔥",
+        "G4",
+        "G4",
+        "Passada de bastão é uma das melhores partes da negociação, mas tem que ser no momento certo, esse recurso é muito forte.",
+        "O mais brabo!"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbf6qNtvd25",
+      "caption": "Sem uma estratégia clara de distribuição e retenção, boas ideias permanecem ocultas. \n\nDesenvolver um ecossistema eficiente de conteúdo é fundamental para quem busca construir autoridade e gerar valor contínuo no mercado.\n\nClique no link da bio agora mesmo e faça sua aplicação para os programas presenciais do G4.",
+      "timestamp": "2026-08-01T13:12:39.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 1,
+      "video_view_count": 3752,
+      "video_play_count": 20776,
+      "latest_comments": [
+        "🔥🔥🔥"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "Dbe7tZ_tBRz",
+      "caption": "100 mil no YouTube. Absurdo!\n\nEu lembro quando gravava sozinho achando que ninguém ia assistir. Hoje, 100 mil pessoas decidem parar o dia pra ouvir o que eu tenho pra falar. Isso não é sorte, isso é intencionalidade.\n\nEsse time constrói tudo isso comigo todo santo dia e o crédito é de vocês, não só meu.\n\nBora por mais, 200k é logo ali.\n\nComenta CANAL aqui embaixo que eu te mando o link na DM.",
+      "timestamp": "2026-08-01T04:06:17.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 29,
+      "video_view_count": 8675,
+      "video_play_count": 38631,
+      "latest_comments": [
+        "Parabéns, seu canal está o máximo!",
+        "👏👏👏💪😎🚀🚀🚀🏁🎯",
+        "Melhor canal do YouTube hoje.",
+        "O melhor está por vir…",
+        "👏👏👏👏",
+        "🔥🔥🔥❤️❤️❤️",
+        "Irado! 🔥🔥🔥",
+        "Parabéns, muito bom os conteúdos, até final do ano 1 milhão 🚀",
+        "ESPETACULAR MONSTRO!🏆\nParabéns Gigantesco e que DEUS TE ABENÇOE cada vez mais!❤️🏀👊🏾💪🏾🛫🚀",
+        "Pelo nível de conteúdo 100k é muito pouco perto do que ainda vai vir 🙌🔥"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbezDirts8k",
+      "caption": "Meu time tá pronto pra te atender agora. \n\nSe você quer virar a chave do seu negócio, comente G4 que eu te mando direto na sua DM o link de aplicação.",
+      "timestamp": "2026-08-01T02:46:52.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 4,
+      "video_view_count": 8416,
+      "video_play_count": 40743,
+      "latest_comments": [
+        "Eu estou aprendendo assim. Você só precisa saber o SPIN, contexto e BANTA DE RESTO é VENENO! WhatsApp é Internet e bora vender!",
+        "👏👏👏",
+        "Boraaaa!! 🔥👏 milagres acontecem nessas reuniões.",
+        "👏👏👏"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbgQhYoP9y1",
+      "caption": "🤯 Por que estão me marcando nesse vídeo? 🧐 Comenta “KIT” que tem um presente para quem é empreendedor!",
+      "timestamp": "2026-08-01T16:23:26.000Z",
+      "content_format": "reel",
+      "likes": 550,
+      "comments": 67,
+      "video_view_count": 13160,
+      "video_play_count": 50453,
+      "latest_comments": [
+        "😂 kit",
+        "Hahahahhaja literalmente lembrei de você quando vi o vídeo essa semana",
+        "KIT",
+        "😂😂😂",
+        "😂😂😂😂",
+        "KIT",
+        "KIT",
+        "te mandei na dm!"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbfH8BJvJlZ",
+      "caption": "O verdadeiro empreendedorismo foca em construir autoridade e resolver problemas, quando sua entrega é impecável, você deixa de perseguir oportunidades para se tornar o ponto de convergência delas.\n\nO networking eficiente é o resultado natural de um posicionamento forte e de uma execução de excelência.\n\nSeja a referência que o mercado procura e transforme sua trajetória no varejo com quem entende de resultados.\n\nSe tu ainda acha que vai crescer empresa no improviso em 2026, abre o olho. No Gestão & Estratégia do G4, a gente destrincha o método por trás dessa execução.\n\nSem teoria, só o que funciona na prática. Quer aprender isso diretamente comigo? Comenta “G4” que eu te envio o link de aplicação direto na sua DM.",
+      "timestamp": "2026-08-01T10:00:07.000Z",
+      "content_format": "static_post",
+      "likes": null,
+      "comments": 7,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏👏",
+        "excelente irmão",
+        "👏👏👏👏👏",
+        "🔥🔥🔥",
+        "👏👏👏",
+        "👏👏👏",
+        "Fato!"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbJ2I5GERsV",
+      "caption": "No episódio de hoje, vamos passar 24 horas com Alfredo Soares.\n\nAlfredo nasceu na Tijuca, no Rio de Janeiro. Cresceu vendo o pai abrir mão da estabilidade para empreender e escolheu, desde cedo, o mesmo caminho.\n\nAos 17 anos, fundou sua primeira empresa, que criava cartões de visita para pequenos negócios. Foi ali que descobriu duas habilidades que mudariam sua vida: vender e construir relacionamentos.\n\nEssa experiência abriu as portas para novos projetos, até que, alguns anos mais tarde, fundou a Xtech.\n\nO que começou como uma solução para ajudar negócios a vender pela internet cresceu até chamar a atenção da VTEX, que adquiriu a Xtech. Alfredo se tornou sócio da companhia e participou da expansão que levou a VTEX até a Bolsa de Nova York.\n\nDepois disso, decidiu compartilhar tudo o que aprendeu com outros empreendedores.\n\nEntão, em 2019, ao lado de Tallis Gomes e Bruno Nardon, fundou o G4, um dos maiores ecossistemas de educação para empresários do Brasil.\n\nHoje, o G4 atende mais de 87 mil empresas, já contribuiu para a criação de mais de 1 milhão de empregos por meio dos seus alunos e faturou mais de R$ 500 milhões em 2025.\n\nHoje você vai acompanhar de perto a rotina de um empresário que fez das vendas, do networking e das conexões o seu maior diferencial.\n\nIsso é: 24 horas com Alfredo Soares.\n\nA ROTINA DO MAIOR VENDEDOR DO BRASIL | 24 HORAS COM ALFREDO SOARES\n\nHosts: Kaique @kaique.editor e Lucão @lucaszafraa\n\nConvidado: Alfredo Soares @alfredosoares\n\nSua marca no PrimoCast: publicidade@timeprimo.com",
+      "timestamp": "2026-07-23T23:28:34.000Z",
+      "content_format": "carousel",
+      "likes": 1446,
+      "comments": 209,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Foi muitooo bom!!! 👏👏👏",
+        "Alfredo",
+        "Alfredo",
+        "🔥Alfredo o melhor ..",
+        "Alfredo",
+        "Alfredo",
+        "Alfredo",
+        "Alfredo",
+        "Alfredo",
+        "Alfredo"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbfyk0kh_Ac",
+      "caption": "COMENTE “523” PARA RECEBER O EPISÓDIO COMPLETO!\n\n#vendas #marketing #network #empresario #empreendedorismo",
+      "timestamp": "2026-08-01T12:00:07.000Z",
+      "content_format": "reel",
+      "likes": 2319,
+      "comments": 39,
+      "video_view_count": 21644,
+      "video_play_count": 62060,
+      "latest_comments": [
+        "O ativo mais importante da vida de um homem é a família.",
+        "👏👏👏👏👏",
+        "Deus abençoe semrpe sua família, com certeza sua filha vai se orgulhar muito🙏 amém",
+        "👏👏👏❤️",
+        "👏👏👏👏",
+        "👏👏👏👏😍😍",
+        "523",
+        "O podcast se transformou em ENTREVISTAS NAS RUAS , ENTREVISTA COM MÃES SOLOS (que são pais tbm ) e PALESTRAS NAS ESCOLAS .\n\nSeria RICO DEMAIS ESSE PAPO COM VOCÊ @alfredosoares",
+        "Eu tenho um PODCAST QUE FALA SOBRE NOS MELHORARMOS COMO PAI (FIGURA PATERNA)\nSerá UMA ALEGRIA TERMOS A POSSIBILIDADE DE TER ESSE RICO TEMPO DE TROCA.\nme daria essa ALEGRIA ?\nSeria de GRANDE IMPORTÂNCIA 🫀🙋🏾‍♂️🙌🏾💕",
+        "👏👏👏👏",
+        "👏👏👏👏",
+        "Sou fã 👏",
+        "👏👏👏",
+        "Brabo demais! Trata todos com carinho e humildade. Parabéns pelo seu caráter e pelo trabalho de excelência.",
+        "Te amo Antônia ❤️"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbePAuWPd_q",
+      "caption": "Trabalhar duro é o único caminho para fazer um negócio crescer de verdade. \n\nSe você quer acelerar a sua empresa e escalar seus resultados, o nosso time está 100% pronto para te atender agora mesmo! \n\nQuer ver como podemos pegar pesado para transformar a sua gestão? Comente “G4” aqui embaixo que eu vou te mandar o link direto de aplicação no seu privado!",
+      "timestamp": "2026-07-31T21:31:35.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 4,
+      "video_view_count": 7590,
+      "video_play_count": 29712,
+      "latest_comments": [
+        "Venham para o Agroleite em agosto aqui em Castro",
+        "🔥🔥",
+        "Fora da curva demais irmão ! 🚀",
+        "As ações americanas subiram na sexta-feira, impulsionadas pelos ganhos das principais empresas de tecnologia em uma sessão volátil. O S&P 500 subiu 0,7%, o Nasdaq 100 ganhou 0,6% e o Dow Jones adicionou 277 pontos. Operações nós STORIES 🔥. Siga @twbstradingglobal"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbehK1bNn5y",
+      "caption": "Sexta-feira por aqui não é dia de desacelerar, é dia de mostrar que a nossa operação tá pronta pro próximo nível.\n\nSe o teu objetivo é escalar o teu negócio com quem entende de gestão, vendas e execução, o momento é agora. \n\nNosso time tá de prontidão pra atender você e entender o momento da tua empresa.\n\nQuer o caminho direto? Comente G4 aqui embaixo que eu te envio o link de aplicação direto na tua DM!",
+      "timestamp": "2026-08-01T00:10:45.000Z",
+      "content_format": "reel",
+      "likes": 3251,
+      "comments": 85,
+      "video_view_count": 42812,
+      "video_play_count": 132810,
+      "latest_comments": [
+        "@jorgegravae e o seu?",
+        "Empresa só tem gente branca",
+        "@thaisavaldez",
+        "Meu time era líder nas primeiras rodadas do Brasileiro e agora ta no meio da tabela",
+        "Tem uns que nem comemoram, já estão na outra meta! Marcha!",
+        "@guilhermosid sempre!!!!!!"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DOG5bNJDTFW",
+      "caption": "Minha vida é repleta de lutas e vitórias, apanhei muito pra chegar a onde cheguei, mas no final, a Tijuca sempre vence.",
+      "timestamp": "2025-09-02T17:18:31.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 289,
+      "video_view_count": 461083,
+      "video_play_count": 1267182,
+      "latest_comments": [
+        "Parabéns por todas as vitórias — sua perseverança na Tijuca continua brilhando!",
+        "Oi, Alfredo! Prazer, sou o Jacinto Tarso, fundador da Duc Chocolates. \n\nVenho do campo de batalha: saí do Maranhão, vendi chocolate de praia em praia até chegar em Santa Catarina e hoje construo uma marca para estar ao lado de gigantes como Dengo e Kopenhagen. O trabalho duro dá frutos e minha execução já chamou a atenção até do Pablo Marçal.\n\nVi o Fórum E-Commerce Brasil e decidi que preciso estar aí. Amanhã cedo embarco para São Paulo de carona. Não tenho ingresso nem recursos no momento, mas tenho coragem e visão.\n\nVou estar na porta do evento com um fruto de cacau na mão. Como você é uma grande referência que estará no palco, quis me conectar. Se passar por mim lá fora, será uma honra te apresentar meu sonho. Um abraço! 🙏  @alfredosoares",
+        "Alfredo, estou construindo o Conecta Eventos para conectar os melhores fornecedores do mercado. Tenho certeza de que um dia vou te apresentar esse projeto pessoalmente.",
+        "O empresário mais gente boa ❤️",
+        "Sensacional irmão, você é monstro, uma máquina de insigts 😉🔥🚀💸",
+        "Alfredo enrolão lkkkk",
+        "Nó, mas o povo é bão pra seguir ordem. PIREI!!!",
+        "Aprendendo conteudo organico com @gutogalamba … story + flg",
+        "ALFREDO ENROLÃO/ STORY / FLG @gutogalamba",
+        "Vim pelo guto mas o Alfredo é gigante. Aprendo demais, valeu.",
+        "🤣🤣🤣rindo pra caraiooo \nAlfredo enrolão",
+        "Alfredo enrolão",
+        "Story / flg",
+        "ALFREDO ENRROLÃO",
+        "Alfredo enrolão 😂😂😂😂"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "Dbd8GnutD_B",
+      "caption": "Hoje, os vendedores do arena receberam uma mentoria exclusiva com @alfredosoares para a pré-venda do livro @todosomosvendedores \n\nE uma das reflexões que mais ficou foi essa: É organizar a sua própria história, renovar o repertório e transformar conhecimento em um ativo.\n\nE foi muito além de técnica de venda, ele falou sobre o potencial de cada vendedor usar esse projeto e transformar em canal de posicionamento, conteúdo e a valor para eles mesmos! \n\nTamo junto, irmão @alfredosoares. Obrigado por estar nesse projeto e por entregar tanto para essa turma.\n\nVamos pra cima! 🚀🚀",
+      "timestamp": "2026-07-31T18:51:18.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 19,
+      "video_view_count": 7614,
+      "video_play_count": 30238,
+      "latest_comments": [
+        "@alfredosoares se você quiser, a Editora Corcovado pode publicar os livros dos seus 10 melhores colaboradores e transformar o conhecimento deles em um ativo. Topa o desafio?",
+        "👏👏👏",
+        "aulinha logo pela manhã",
+        "👏👏👏",
+        "👏👏👏",
+        "Boa! 👊 Acabei de te enviar o acesso no direct"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbdmwiJu3bF",
+      "caption": "DESAFIO ACEITO! 🫵\n\n@alfredosoares desafiou a gente e a @stone a criar o encontro que quem empreende não pode perder!  \n\nAnota na agenda:  06/08, em São Paulo.\n\nComenta DESAFIO que a gente te manda o link na DM.",
+      "timestamp": "2026-07-31T15:40:13.000Z",
+      "content_format": "reel",
+      "likes": 129,
+      "comments": 45,
+      "video_view_count": 3079,
+      "video_play_count": 16519,
+      "latest_comments": [
+        "MUITO CUIDADO! ⚠️ A Stone bloqueia o seu dinheiro sem razão, estou com 60mil bloqueados há meses ! Quem quiser mover uma ação conjunta me chama no WhatsApp já tenho advogado! WhatsApp +8619112937720",
+        "MUITO CUIDADO! ⚠️ A Stone bloqueia o seu dinheiro sem razão, estou com 60mil bloqueados há meses !",
+        "A stone bloqueia o dinheiro sem razão. Estou com 60mil bloqueado",
+        "Desafio",
+        "Desafio",
+        "PARABƐNS A STONE, EU ESTOU LIGADA  NA MAIS VERDINHA..."
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbeKimTPLgj",
+      "caption": "Não tome decisões permanentes pra aliviar desconfortos temporários.\n\nMuitas escolhas ruins não nascem da falta de repertório de negócios, mas da urgência em parar de sentir o que você está vivendo.\n\nDepois de anos empreendendo, é muito comum ver pessoas que não sabem lidar com dívidas. A parada que pouca gente entende é que pagar uma dívida à vista só é inteligente quando o custo de mantê-la é maior do que o valor de preservar o caixa.\n\nÉ comum o cara receber R$200 mil e não enxergar isso como liquidez, mas como um fornecedor pressionando, débitos atrasados, uma folha próxima, um cartão estourado e uma chance de zerar tudo. Eu até entendo, porque quitar dívidas traz um alívio psicológico bizarro. Mas, muitas vezes, essa decisão deixa a empresa sem oxigênio para continuar operando.\n\nTu paga o passado e compromete seu futuro. Quita o fornecedor antigo, mas não consegue comprar o próximo estoque. Zera o cartão, mas fica sem caixa para a folha. Paga tudo o que está atrasado e, depois, precisa se endividar de novo para manter a operação viva. O erro tá em organizar o caixa de acordo com o que faz mais barulho: quem liga mais, quem pressiona mais, quem gera mais vergonha, é quem recebe primeiro. Enquanto isso, a dívida mais cara, o imposto mais perigoso ou a despesa que mantém a empresa produzindo ficam para depois.\n\nUm ajuste simples que fizemos aqui no G4, e que ensino na minha aula, é contratar um vendedor pro setor de compras e financeiro da sua empresa. Isso porque melhor do que saber comprar é saber negociar. E, nesse caso, o cara não tem que saber só negociar orçamentos, mas também formas de pagamento, prazos, parcelamentos, permutas, acordos e redução de juros. Já perdi até as contas de quantos milhões conseguimos poupar com esse ajuste besta.\n\nMuitos gente não quebra só porque deve. Quebra porque, tentando se livrar da sensação de dever, entrega todo o dinheiro que poderia te salvar. Na minha aula te ensino mais sobre gestão e estratégias não só pra expandir teu negócio, mas também pra reorganizar a casa de maneira mais eficiente e lucrativa. o link tá na bio. Não tome decisões pra dormir melhor hoje se elas fizerem sua empresa acordar sem futuro amanhã.",
+      "timestamp": "2026-07-31T20:51:58.000Z",
+      "content_format": "static_post",
+      "likes": null,
+      "comments": 4,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏👏",
+        "👏👏👏👏👏",
+        "🩵🩵",
+        "Referência chefe 🫡"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbeSGIJltgh",
+      "caption": "Dia produtivo falando de negócios e conhecendo o fechamento do G4. Novidades em breve!",
+      "timestamp": "2026-07-31T21:57:40.000Z",
+      "content_format": "carousel",
+      "likes": 5880,
+      "comments": 53,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Fodaaaaaaaa",
+        "14 Renan santos presidente missão",
+        "Sou mais o Ninja!!!! kkk",
+        "Nunca mecha 🔥🥷🏾",
+        "🙌🙌🔥🔥",
+        "😍😍😍😍",
+        "🔥🔥🔥🔥",
+        "👏👏👏",
+        "👏👏",
+        "👏👏"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbet3m6jc_y",
+      "caption": "Sala dos milagres tá on! \n\nNosso time tá de prontidão pra atender você e entender o momento da tua empresa.\n\nComente “G4” e receba o link de aplicação direto na sua DM.",
+      "timestamp": "2026-08-01T02:00:22.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 8,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🔥🔥🔥",
+        "É Anti desprovido da  realidade  viu sem visão",
+        "@alfredosoares  visionário🙌",
+        "Se aumentar a dose de Testosterona então já era ! Kkkkkkk",
+        "🤟🏽🔥🚀",
+        "👏",
+        "G4",
+        "Pra cimaaaaa"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "Dbe-BbTjS-4",
+      "caption": "Eu comecei vendendo, pô. Antes de qualquer coisa que o G4 virou, eu era o cara que não sabia o que era loja virtual e falou “faço” mesmo assim.\n\nNegociar é a parte de mim que nunca mudou e minha maior zona de potência. \n\nBater a meta com o time inteiro é bom. E, cara, eu fico ainda mais feliz de saber que ainda sou útil para o negócio do jeito que sempre fui. \n\nBORA VENDER! TODOS SOMOS VENDEDORES 🔥\n\nComenta G4 aqui embaixo que eu te mando o link na DM.",
+      "timestamp": "2026-08-01T04:21:31.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 8,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Vamooooo 🔥🔥🔥🔥",
+        "BORA🔥👏 Agosto vai ser ainda mais absurdo!!!!!!",
+        "G4",
+        "Fechamento!!!!!!!!😍😍🙌🙌🙌🙌 eu ainda vou trabalhar com Alfredo Soares",
+        "Tenho uma ideia em Alfredo",
+        "Boraaaa 🔥🔥🔥",
+        "👏👏👏",
+        "Cultura foda demais , muitos julgam mas isso é foda demais !!!!! Venda porra"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbeUwRMFuFN",
+      "caption": "DANE-SE !!! Hoje é dia de tomar enérgico de noite por que é FECHAMENTO do mês 🤯",
+      "timestamp": "2026-07-31T22:20:54.000Z",
+      "content_format": "carousel",
+      "likes": 2652,
+      "comments": 40,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Voaaa dane-se",
+        "Dale agora vai @alfredosoares 👏🔥",
+        "🧬🧬🧬🧬🧬🧬🧬",
+        "Que sucesso dane-se!!",
+        "🔥🔥⚡️",
+        "“Tem chance de acertar a testa de alguém ou a latinha explodir e molhar tudo?” “Ah tem sim!” “Bora fazer então” kkkkkkk",
+        "Próximo me convida que levo pizza junto @g4.business @alfredosoares",
+        "E eu mando msg pra tentar comprar e ninguém responde… DANE-SE",
+        "🔥🔥👏👏👏",
+        "🔥🔥🔥🔥🔥🔥"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbd-2e8lvVT",
+      "caption": "Quer dominar o método de Founder-Led Growth que usamos pra acelerar negócios? Conheça o livro “Todos Somos Vendedores”.\n\nA pré-venda já está aberta. Comente VENDEDOR para receber o link da pré-venda direto na sua DM.",
+      "timestamp": "2026-07-31T19:09:31.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 19,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Vendedor",
+        "fodaaa",
+        "E a RajaDrogasil que em geral o mercado não conheçe e não sabe quem é o ceo? Usando apenas essa como exemplo ... tem várias ... vale a reflexão: não há um modelo único.",
+        "🔥🔥",
+        "VENDEDOR",
+        "Vendedor",
+        "Vendedora 👏👏👏👏",
+        "E todas vendem menos que a google, quem é o rosto do maior mecanismo de pesquisa do mundo?",
+        "@eu.jeansantos enganar empresários em troca de um contrato que fode o empresário"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbebdOtloWK",
+      "caption": "Comercial já tá de amarelo, falta você. Comente VENDEDOR para receber o link de pré-venda livro direto na sua DM!",
+      "timestamp": "2026-07-31T23:19:28.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 56,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Vendedor",
+        "👏👏👏👏👏🙏",
+        "todos somos vendedores",
+        "Vendedor",
+        "Vendedor",
+        "Vendedor",
+        "👏👏👏",
+        "Vendedor",
+        "Lendas 🔥👏",
+        "VENDEDOR"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "Dbe1zfrthA5",
+      "caption": "Agosto tem mais, time. Bora vender!",
+      "timestamp": "2026-08-01T03:11:08.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 38,
+      "video_view_count": 16132,
+      "video_play_count": 52998,
+      "latest_comments": [
+        "🔥🔥🔥🔥",
+        "🔥🔥🔥🔥🔥",
+        "Boooooooraaaaa 🔥🔥🔥🔥",
+        "👏👏👏👏",
+        "👏👏",
+        "Laks 🔥",
+        "Boraaaaaaa!!!🔥🔥",
+        "Boraaaaaaaa 🔥",
+        "🔥🔥🔥🔥🔥",
+        "Wooooowww!!!!!! Vaaaaamooooo 🔥🔥🔥🔥🔥❤️❤️❤️",
+        "Aceleração máxima!! Boraaa 🚀🚀🚀🚀",
+        "VAMOOOOOOOOOOOOO🔥🔥",
+        "O q vcs vendem?",
+        "FECHAMOS TIMEEE 🔥🔥🔥🔥",
+        "🔥"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbdrM8-liWp",
+      "caption": "O desafio foi aceito! \n\nVai rolar o debate entre @tallisgomes x @marcelobrigadeiro em breve!!! \n\nEm breve maiores informações com datas e local. \n\nQuero ouvir vocês: \nQual deveria ser o tema do debate? \ncomenta aí 👇🏻",
+      "timestamp": "2026-07-31T16:17:49.000Z",
+      "content_format": "carousel",
+      "likes": 7578,
+      "comments": 479,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Terá plateia ? Reserva minha cadeira 🔥",
+        "Coitado do Brigadeiro",
+        "A verdadeira final da copa!",
+        "Tema do debate: Gloss. Passar ou não?",
+        "@edupitombo Eu não estou entrando no mérito de se um governo deles seria melhor ou pior. Meu ponto é apenas essa cobrança por eles terem defendido o voto nulo. A posição deles foi coerente do início ao fim: foram fundamentais para o impeachment da Dilma e, depois, passaram a ser perseguidos pelo bolsonarismo. Diante desse histórico, o voto nulo era exatamente a postura mais consistente. Cobrar que escolhessem um dos dois lados é ignorar tudo o que aconteceu.",
+        "@joaogpacheco88 Werdum não vai. Igual ele não aceitou lutar com brigadeiro sendo 20Kg mais pesado,\"tenho medo de me machucar\""
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbd9yiShPeR",
+      "caption": "COMENTE “523” PARA RECEBER O EPISÓDIO COMPLETO!\n\n#vendas #marketing #network #empresario #empreendedorismo",
+      "timestamp": "2026-07-31T19:00:05.000Z",
+      "content_format": "reel",
+      "likes": 3580,
+      "comments": 94,
+      "video_view_count": 39044,
+      "video_play_count": 113183,
+      "latest_comments": [
+        "523",
+        "523",
+        "523",
+        "523",
+        "523",
+        "Muito bom 👏",
+        "523",
+        "523",
+        "523",
+        "523"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbeGhmivi-u",
+      "caption": "Nosso time tá pronto pra te atender.\n\nComenta “G4” aqui embaixo que eu te mando o link na DM e bora levar tua empresa pro próximo nível.",
+      "timestamp": "2026-07-31T20:18:49.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 1,
+      "video_view_count": 6191,
+      "video_play_count": 24068,
+      "latest_comments": [
+        "🔥🔥🔥"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbeZc2_P3ri",
+      "caption": "Comente VENDEDOR que te mando o link na DM.",
+      "timestamp": "2026-07-31T23:03:33.000Z",
+      "content_format": "reel",
+      "likes": 2217,
+      "comments": 111,
+      "video_view_count": 50013,
+      "video_play_count": 139453,
+      "latest_comments": [
+        "Vendedor",
+        "Quero o livro onde tá ?",
+        "😍",
+        "Vendedor",
+        "Vendedor",
+        "Vendedor",
+        "top",
+        "Mais um curso sendo vendido com sucesso! E ainda tem gente que cai nesse embalo! Pqp",
+        "Onde comprar o livro ?"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbeC_JNv_bC",
+      "caption": "Quer transformar reuniões improdutivas em decisões rápidas e estratégicas que geram resultado pro teu negócio? Nosso time tá pronto pra te atender.\n\nComenta “G4” aqui embaixo que eu te mando o link na DM e bora levar tua empresa pro próximo nível.",
+      "timestamp": "2026-07-31T19:47:18.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 4,
+      "video_view_count": 4710,
+      "video_play_count": 23044,
+      "latest_comments": [
+        "Eu admiro o Alfredo, sou da área de Tecnologia, e sei que algum propósito me faz acompanhar o Alfredo, sempre acompanho suas estratégias e ensinamentos.",
+        "Trindade, em Vossas Mãos, em Vós, entrego, e peço, operem. Em todos os jejuns e em todas as orações, em nome de Jesus ao meu favor, amém.\nPonho nos jejuns amém. \nOrações 2026 - 365.\nTodas as horas. \nAmém.",
+        "W",
+        "👏👏👏👏"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbekVDNDRBQ",
+      "caption": "O segredo do sucesso do G4? A gente não contrata gente frouxa.\n\nParece duro? É duro. Mas empresa não é colônia de férias e precisamos de gente que aguenta pressão, que não amolece na primeira dificuldade, que não fica inventando desculpa quando o resultado não vem.\n\nSabe qual perfil eu mais gosto de contratar? Militar e/ou esportista. Gente que passou por quartel e que teve disciplina forjada no desconforto. Porque esse cara já acordou 5h da manhã sem ninguém mandar, obedeceu ordem que não concordava e executou mesmo assim. Já passou frio, passou fome, passou perrengue. E não ficou chorando no Linkedln por causa disso.\n\nEsse perfil chega na empresa e executa. Não questiona a meta, busca a meta. Não reclama do processo, melhora o processo.\n\nNão pede feedback a cada 15 minutos pra se sentir validado.\n\nFaz o trabalho e entrega. Simples assim.\n\nE no comercial isso é ainda mais bizarro. Vendedor frouxo se afoga sozinho muito rápido. Não tem como, o cara que não aguenta ouvir não, que não tem disciplina pra fazer 50 ligações por dia, que fica esperando o lead cair no colo dele, esse cara não sobrevive numa operação de verdade.\n\nNo G4 o nosso comercial é uma máquina composta por inúmeras pessoas absolutamente boas no que fazem. Peça ruim a gente troca sem dó. Não é maldade, é responsabilidade com o resultado e com o time que tá ali dando o sangue todo dia.\n\nEu prefiro contratar alguém com menos currículo e mais estômago do que um cara cheio de diploma que desmorona quando aperta. Porque quando aperta (e vai apertar) eu preciso de gente que fica de pé.\n\nSe tu é empresário e quer fazer parte de um time de gente que assume responsabilidade pela própria vida e pelos resultados da empresa, comenta G4 que eu te mando direto na sua DM o link de aplicação. Aqui a gente não trabalha com desculpa, trabalha com resultado.",
+      "timestamp": "2026-08-01T00:37:00.000Z",
+      "content_format": "carousel",
+      "likes": 3890,
+      "comments": 41,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "O texto que espanta os petistas kkkk  muito bom",
+        "🔥🔥🔥",
+        "É de arrepiar uma cultura consolidada! Só entende quem já viveu ou tem fit com ela. 👏🔥",
+        "@clebercorrea4",
+        "A mentalidade do líder impõe o ritmo, bate o bumbo, a equipe se inspira e vem junto! 👏🔥🚀",
+        "G4",
+        "Esse texto aí tem peso! Só quem é das correrias entende",
+        "Pra cima",
+        "E quando o perfil é Hunter e a empresa de vocês sabe reconhecer? Pq ser \"cuiudo\" e fora da caixinha, até da pra encontrar perfis assim. Mas vocês conseguem reconhecer que aquele perfil ali faz o que 10 juntos não fazem? Ou tratam \"enzos\" do mesmo jeito que tratam esse perfil f*da?",
+        "🔥🙌"
+      ],
+      "anomalies": []
+    }
+  ],
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "3_infoprodutor",
+    "matches": [
+      {
+        "category": "3_infoprodutor",
+        "evidence": [
+          "legenda com padrão de lançamento: \"mentoria\""
+        ]
+      },
+      {
+        "category": "1_ecommerce_direto",
+        "evidence": [
+          "external_url próprio (não agregador/infoproduto/membership) + legenda com CTA de venda direta"
+        ]
+      }
+    ],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  }
+}

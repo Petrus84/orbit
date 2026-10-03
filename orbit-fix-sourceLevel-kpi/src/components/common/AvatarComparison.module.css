@@ -1,0 +1,64 @@
+/* ==========================================================================
+   ORBIT · Component — AvatarComparison
+   Layout lado a lado (Avatar Esperado × Audiência Real) com divisor "VS".
+   Resolve seu próprio glow a partir de `status` — não recebe cor pronta.
+   Versão: 2.1.0
+   ========================================================================== */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+/* Eyebrow — --t3 removido: sobre --bg2 caía perto de 2:1, ilegível */
+.sectionLabel {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--t1);
+}
+
+.row {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-3);
+}
+
+.cardSlot {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Divisor "VS" — largura fixa de 24px (var(--space-6)) */
+.divider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  width: var(--space-6);
+  flex-shrink: 0;
+}
+
+.dividerLine {
+  width: 1px;
+  flex: 1;
+  background: linear-gradient(to bottom, transparent, var(--line2), transparent);
+}
+
+.vsLabel {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 2px;
+  color: var(--t1);
+}

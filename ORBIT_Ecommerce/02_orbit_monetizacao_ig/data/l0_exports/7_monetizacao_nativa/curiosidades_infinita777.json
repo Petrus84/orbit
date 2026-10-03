@@ -1,0 +1,641 @@
+{
+  "handle": "curiosidades_infinita777",
+  "setor_benchmark_key": "7_monetizacao_nativa",
+  "url": "https://www.instagram.com/curiosidades_infinita777/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T02:25:33.800Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DYvtlMnglu3",
+      "caption": "Las multas no funcionaron. Las señales tampoco. Así que el Reino Unido creó una solución extrema. ⚠️🚗\n\nPara evitar que los conductores estacionaran sobre las aceras y bloquearan el paso de peatones, instalaron la llamada “Garra de Gato”: púas metálicas ocultas al ras del pavimento que perforaban automáticamente los neumáticos de cualquier vehículo que invadiera la zona. 😳\n\nY sí… funcionó. El estacionamiento ilegal disminuyó drásticamente. Pero el sistema tenía un problema: no podía distinguir entre un conductor irresponsable y un vehículo de emergencia. 🚑\n\nCuando una ambulancia sufrió un pinchazo, quedó claro el verdadero dilema de muchas soluciones extremas: a veces funcionan demasiado bien.\n\nSigue a Curiosidades Infinitas 🧠💡\n\n#curiosidades #ingeniería #tecnologia #mundoinfinito #curiosidadesnerds",
+      "timestamp": "2026-05-25T02:51:41.000Z",
+      "content_format": "reel",
+      "likes": 211,
+      "comments": 1,
+      "video_view_count": 20680,
+      "video_play_count": 49651,
+      "latest_comments": [
+        "."
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYqHqfLJPer",
+      "caption": "El concreto parece simple… hasta que descubres que una pequeña burbuja de aire puede arruinar toda una estructura. 🏗️⚠️\n\nCuando el cemento no llena bien las juntas, no siempre es un error humano. Detrás hay física, presión, flujo y una mezcla que debe tener el equilibrio perfecto entre resistencia y movilidad. Demasiada agua debilita la estructura; muy poca impide que el material llegue a cada rincón. 😳\n\nPor eso en las grandes construcciones se utilizan vibraciones, compactación y aditivos especiales que permiten que el concreto se distribuya correctamente sin perder resistencia. ⚙️\n\nLo que parece solo “cemento” en realidad es ingeniería trabajando al límite de la precisión.\n\nSigue a Curiosidades Infinitas 🧠💡\n\n#ingeniería #construcción #curiosidadesnerds #curiosidades #arquitectura",
+      "timestamp": "2026-05-22T22:43:44.000Z",
+      "content_format": "reel",
+      "likes": 151,
+      "comments": 2,
+      "video_view_count": 13159,
+      "video_play_count": 25701,
+      "latest_comments": [
+        "😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYvtcmvggz8",
+      "caption": "Parece un simple tronco… pero en realidad es pura física aplicada. 🚛🌲\n\nCuando un camión queda atrapado en lodo o arena, las ruedas pierden fricción y comienzan a girar sin avanzar. Para solucionarlo, algunos conductores colocan un leño atravesando las ruedas, creando un punto de apoyo rígido que transforma la rotación en tracción real. ⚙️\n\nAl acelerar, el tronco actúa como una enorme palanca mecánica: se clava en el terreno firme y ayuda a levantar el vehículo, permitiéndole salir del agujero paso a paso. 😳\n\nLo más impresionante es que esta técnica funciona gracias a principios básicos de física y fuerza mecánica… sin necesidad de tecnología avanzada.\n\nSigue a Curiosidades Infinitas 🧠💡\n\n#fisica #ingeniería #curiosidades #mundoinfinito #tecnología",
+      "timestamp": "2026-05-25T02:50:15.000Z",
+      "content_format": "reel",
+      "likes": 377,
+      "comments": 0,
+      "video_view_count": 11846,
+      "video_play_count": 25330,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYycIkuAOKa",
+      "caption": "Antes de que empiece la carrera, ya está ocurriendo una batalla silenciosa. 🏃‍♂️⚡\n\nEstos atletas no solo están calentando para los 110 metros con vallas; están preparando cada músculo, reflejo y movimiento para competir al más alto nivel del atletismo mundial. Un error de milisegundos puede decidir toda la carrera. ⏱️\n\nLa Liga de Diamante reúne a algunos de los corredores más rápidos y técnicos del planeta, donde velocidad, coordinación y precisión deben trabajar en perfecta sincronía para superar cada valla sin perder impulso. 🔥\n\nDetrás de unos pocos segundos de competición, hay años de entrenamiento extremo.\n\nSigue a Curiosidades Infinitas 🧠💡\n\n#atletismo #mundoinfinito #velocidade #curiosidades",
+      "timestamp": "2026-05-26T04:17:10.000Z",
+      "content_format": "reel",
+      "likes": 191,
+      "comments": 0,
+      "video_view_count": 8151,
+      "video_play_count": 19839,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZn1YXLvRA8",
+      "caption": "🍽️ Cómo los lavavajillas realmente limpian tus platos. No funcionan como una lavadora, sino que rocían agua caliente a alta presión a través de brazos giratorios que giran en el interior, mezclando el agua con detergente para eliminar la comida y la grasa de los platos desde todos los ángulos. En el interior hay un filtro que atrapa los restos de comida mientras el agua se reutiliza a lo largo del ciclo. La máquina también calienta el agua a una temperatura muy alta, lo que ayuda a descomponer la grasa y a matar bacterias de forma mucho más efectiva que el agua templada que usarías a mano. Cerca del final del ciclo cambia a una fase de enjuague y luego seca todo mediante calor o condensación. Es un sistema controlado de precisión donde el agua no se desperdicia sino que se recicla continuamente, la presión hace el trabajo en lugar de la fricción manual y la temperatura mata lo que la química del detergente no puede alcanzar.  #quimica #ciencia #tecnologia #limpieza",
+      "timestamp": "2026-06-15T22:34:36.000Z",
+      "content_format": "reel",
+      "likes": 391,
+      "comments": 1,
+      "video_view_count": 17939,
+      "video_play_count": 38088,
+      "latest_comments": [
+        "Y la mujer atrapada dentro?"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYtLR5QgACr",
+      "caption": "No tienes que participar en la negatividad para que termine afectándote. A veces, solo estar rodeada de ella es suficiente. ⚠️\n\nTu mente y tu sistema nervioso absorben constantemente el entorno en el que permaneces. Por eso hay personas, lugares y ambientes que te drenan sin que entiendas por qué. 🌫️\n\nEl crecimiento personal también consiste en preguntarte: “¿qué estoy permitiendo a mi alrededor?” Porque alejarte de lo que te apaga no es egoísmo, es respeto propio. ✨\n\nSigue a Curiosidades Infinitas 🧠💡\n\n#viralreels #science #naturaleza #curiosidades #mundo",
+      "timestamp": "2026-05-24T03:13:53.000Z",
+      "content_format": "reel",
+      "likes": 254,
+      "comments": 1,
+      "video_view_count": 4855,
+      "video_play_count": 11032,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYyb6xygCci",
+      "caption": "La verdadera fuerza no siempre se ve… muchas veces se entrena en silencio todos los días. 💪🧠\n\nLevantar peso no depende solo del tamaño de los músculos, sino de cómo el cerebro aprende a coordinarlos. Con el trabajo físico constante, el cuerpo mejora el equilibrio, el agarre, la estabilidad y la capacidad de usar más fibras musculares al mismo tiempo. ⚙️\n\nPor eso algunas personas pueden mover cargas enormes sin verse “gigantes”. La fuerza funcional nace de la repetición, la resistencia y la adaptación del cuerpo al esfuerzo real. 🔥\n\nLa ciencia detrás del cuerpo humano es mucho más impresionante de lo que parece.\n\nSigue a Curiosidades Infinitas 🧠💡\n\n#ciencia #fisica #cuerpo #curiosidades #mundoinfinito",
+      "timestamp": "2026-05-26T04:14:49.000Z",
+      "content_format": "reel",
+      "likes": 448,
+      "comments": 1,
+      "video_view_count": 11207,
+      "video_play_count": 22509,
+      "latest_comments": [
+        "CT"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYycacdgOh8",
+      "caption": "Parece solo agua corriendo… pero detrás hay ingeniería de precisión. 🚿⚙️\n\nEn los sistemas modernos de drenaje, unos pocos milímetros pueden marcar la diferencia entre un flujo perfecto o charcos constantes. Por eso cada ángulo, nivel y salida de agua debe colocarse con exactitud casi milimétrica. 😳\n\nCuando el piso tiene la inclinación correcta, el agua se mueve de forma rápida y uniforme, evitando obstrucciones, acumulaciones y problemas a largo plazo. Lo más impresionante es que algo tan cotidiano depende de cálculos y diseño mucho más complejos de lo que imaginamos. 🏗️\n\nLa construcción inteligente no siempre se nota… hasta que ves cómo todo funciona perfectamente.\n\nSigue a Curiosidades Infinitas 🧠💡\n\n#ingeniería #mundoinfinito #tecnologia #curiosidades #arquitectura",
+      "timestamp": "2026-05-26T04:18:57.000Z",
+      "content_format": "reel",
+      "likes": 377,
+      "comments": 0,
+      "video_view_count": 12097,
+      "video_play_count": 42720,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYqIAZKpPOy",
+      "caption": "LA HERRAMIENTA SECRETA QUE LEVANTÓ EL IMPERIO ROMANO 🏛️⚙️\n\nMucho antes de las grúas modernas, los romanos ya movían bloques de piedra gigantes con una precisión increíble. Su secreto era el “Lewis”, un ingenioso mecanismo metálico que se insertaba en una abertura tallada en la piedra. 🪨\n\nAl aplicar tensión con cuerdas y poleas, las piezas metálicas se expandían y quedaban firmemente sujetas, permitiendo levantar enormes bloques para construir templos, acueductos y monumentos que aún siguen en pie siglos después. ⚡🏗️\n\nUna prueba más de que la ingeniería antigua estaba muy adelantada a su tiempo.\n\nSigue a Curiosidades Infinitas 🧠💡\n\n#curiosidadesnerds #mundoinfinito #historia #curiosidades #ingenieria",
+      "timestamp": "2026-05-22T22:46:47.000Z",
+      "content_format": "reel",
+      "likes": 921,
+      "comments": 1,
+      "video_view_count": 75002,
+      "video_play_count": 132741,
+      "latest_comments": [
+        "."
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYyc0Qhgdw7",
+      "caption": "¿Y si un auto eléctrico expulsara su propia batería antes de incendiarse? ⚡🚗\n\nAunque parezca ciencia ficción, este concepto ya está siendo probado como una posible solución extrema para evitar incendios causados por fugas térmicas en baterías de litio. En lugar de contener el fuego dentro del vehículo, el sistema propone algo radical: eyectar la batería automáticamente cuando detecte una falla crítica. 😳\n\nLa idea podría dar segundos vitales para salvar a los pasajeros, pero también abre enormes preguntas de ingeniería y seguridad. Porque una batería expulsada no desaparece… termina cayendo en algún lugar. ⚠️.\n\nLa tecnología avanza rápido… pero cada solución trae nuevos desafíos. 🧠\n\nSigue a Curiosidades Infinitas 🧠💡\n\n#tecnologia #mundoinfinito #ingenieria #curiosidades #innovación",
+      "timestamp": "2026-05-26T04:22:47.000Z",
+      "content_format": "reel",
+      "likes": 154,
+      "comments": 2,
+      "video_view_count": 8770,
+      "video_play_count": 20578,
+      "latest_comments": [
+        "Pero la tecnología es buena , para reemplazar la batería rápido, se podrían hacer estaciones de recambio, entras cambias la batería y sigues tú camino, ahorrando tiempo, sin esperas a que la batería se cargue dentro del vehículo",
+        "Pobre peatón que esté cambiando al lado del vehículo"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYqH3lIpll5",
+      "caption": "Hay videos que parecen normales… hasta que entiendes lo que realmente está pasando. 😳⚠️\n\nLo más impresionante no siempre es lo que ves a simple vista, sino los pequeños detalles que casi nadie nota. Y una vez que lo descubres, es imposible volver a mirar igual. 👀\n\nLa naturaleza, la tecnología y el mundo están llenos de cosas que parecen imposibles… pero son completamente reales. 🌍✨\n\nSigue a Curiosidades Infinitas 🧠💡\n\n#curiosidadesnerds #mundo #increible #viralreels #curiosidades",
+      "timestamp": "2026-05-22T22:45:39.000Z",
+      "content_format": "reel",
+      "likes": 71,
+      "comments": 1,
+      "video_view_count": 3025,
+      "video_play_count": 9590,
+      "latest_comments": [
+        "Q😍😍q"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYqHybbJVLw",
+      "caption": "Hay momentos de la naturaleza que parecen imposibles… hasta que los ves en cámara. 🌍😳\n\nLo que ocurre en este video demuestra cómo algunos animales desarrollaron habilidades tan extremas que desafían por completo nuestra lógica. Precisión, equilibrio y reflejos perfectos en cuestión de segundos. ⚡\n\nCada movimiento parece calculado al milímetro, recordándonos que la supervivencia en la naturaleza depende de capacidades que los humanos apenas podemos imaginar. 👀🌿\n\nSigue a Curiosidades Infinitas 🧠💡\n\n#naturaleza #animales #curiosidades #mundo #increíble",
+      "timestamp": "2026-05-22T22:45:08.000Z",
+      "content_format": "reel",
+      "likes": 140,
+      "comments": 1,
+      "video_view_count": 3570,
+      "video_play_count": 9233,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYTeiUVAsMw",
+      "caption": "¿Sabías que algunos alimentos pueden evitar los famosos picos de azúcar en la sangre? 📉🍽️\nPequeños cambios en tu alimentación pueden ayudarte a mantener más energía, menos ansiedad por comer y un mejor control de la glucosa durante el día.\n\nEn este video descubrirás recetas simples, saludables y basadas en hechos reales que pueden marcar una gran diferencia en tu cuerpo. Porque comer rico también puede ser inteligente.\n\nSigue a Curiosidades Infinitas 🧠💡\n\n#curiosidades #salud #alimentacion #recetas #datoscuriosos",
+      "timestamp": "2026-05-14T03:41:26.000Z",
+      "content_format": "reel",
+      "likes": 18,
+      "comments": 0,
+      "video_view_count": 700,
+      "video_play_count": 3034,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYTfF5dO6Ux",
+      "caption": "“Ya no le voy a dar más vueltas… ya pasó.” Y cinco minutos después tu mente está haciendo un maratón de pensamientos que ni tú misma entiendes. Te prometes soltar, pero por dentro sigues repasando la conversación, la cara, el tono, lo que dijiste, lo que no dijiste. Y mientras más intentas no pensar… más piensas. Pero quiero decirte algo importante: no es falta de fuerza de voluntad. Es tu sistema nervioso activado. Cuando algo nos duele, nos preocupa o nos mueve emocionalmente, el cerebro intenta “resolverlo” repitiéndolo. Cree que así te protege. El problema no es pensar. El problema es quedarte atrapada en el bucle. Soltar no es obligarte a dejar de pensar. Es aprender a regularte. Respirar. Mover tu cuerpo. Escribir lo que sientes. Aceptar que pasó y que no todo necesita una explicación perfecta para poder seguir. No siempre controlas lo que ocurre. Pero sí puedes entrenar cómo respondes. Si tú también has estado en esa batalla silenciosa entre “ya pasó” y “no puedo dejar de pensar”, guarda este post para recordarte que regularte es más poderoso que reprimirte 🤍 #SaludMental #RegulaciónEmocional #Ansiedad #AmorPropio #InteligenciaEmocional",
+      "timestamp": "2026-05-14T03:45:53.000Z",
+      "content_format": "reel",
+      "likes": 206,
+      "comments": 1,
+      "video_view_count": 4151,
+      "video_play_count": 11749,
+      "latest_comments": [
+        "Ojalá en las motos de Jerez fuese todo tan fluido 😮‍💨"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYqHdzBpM7T",
+      "caption": "ASÍ SE PROCESAN MILES DE MANGOS EN SEGUNDOS 🥭⚙️\n\nLo que parece hipnótico en realidad es ingeniería alimentaria de alta precisión. Este sistema automatizado pela y corta mangos en cubos perfectos con una velocidad y exactitud impresionantes. 😳\n\nMientras algunos quedan fascinados con lo “extrañamente satisfactorio” del proceso, otros se preguntan cuánto ha cambiado la industria alimentaria con la automatización moderna. Lo cierto es que estas máquinas permiten procesar enormes cantidades de fruta manteniendo higiene, uniformidad y eficiencia a gran escala. 🏭✨\n\nUna mirada poco común al increíble nivel de tecnología detrás de los alimentos que consumimos cada día.\n\nSigue a Curiosidades Infinitas 🧠💡\n\n#tecnologia #alimentacion #maquina #curiosidades #innovación",
+      "timestamp": "2026-05-22T22:42:25.000Z",
+      "content_format": "reel",
+      "likes": 66,
+      "comments": 1,
+      "video_view_count": 2999,
+      "video_play_count": 8943,
+      "latest_comments": [
+        "IA? Dónde esta la semilla?"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYV5G1FszGy",
+      "caption": "En los bosques más fríos del planeta habita un depredador tan silencioso como impresionante… 🦉❄️\nEl búho lapón es considerado uno de los búhos más grandes del mundo, alcanzando hasta 84 centímetros de altura y una enorme envergadura. Pero lo más sorprendente no es su tamaño, sino su increíble capacidad para cazar: puede detectar el más mínimo movimiento de sus presas incluso debajo de capas de nieve gracias a su oído extremadamente preciso. 🎯🌨️\n\nSu mirada intensa, su vuelo casi silencioso y su habilidad para sobrevivir en ambientes extremos lo convierten en una de las aves más fascinantes de la naturaleza. Un verdadero fantasma de los bosques del norte. 🌲🌙\n\nSigue a Curiosidades Infinitas 🧠💡\n\n#búholapón #Naturaleza #curiosidadesnerds #curiosidades #mundo",
+      "timestamp": "2026-05-15T02:12:53.000Z",
+      "content_format": "reel",
+      "likes": 181,
+      "comments": 1,
+      "video_view_count": 2672,
+      "video_play_count": 10661,
+      "latest_comments": [
+        "En los bosques más fríos del planeta habita un depredador tan silencioso como impresionante… 🦉❄️\nEl búho lapón es considerado uno de los búhos más grandes del mundo, alcanzando hasta 84 centímetros de altura y una enorme envergadura. Pero lo más sorprendente no es su tamaño, sino su increíble capacidad para cazar: puede detectar el más mínimo movimiento de sus presas incluso debajo de capas de nieve gracias a su oído extremadamente preciso. 🎯🌨️\n\nSu mirada intensa, su vuelo casi silencioso y su habilidad para sobrevivir en ambientes extremos lo convierten en una de las aves más fascinantes de la naturaleza. Un verdadero fantasma de los bosques del norte. 🌲🌙\n\nSigue a Curiosidades Infinitas 🧠💡\n\n#búholapón #Naturaleza #curiosidadesnerds #curiosidades #mundo"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYiSnLGJWmX",
+      "caption": "UN SALTO QUE PARECE IMPOSIBLE 🐐⛰️\n\nEn lo alto de un desfiladero mortal, un íbice se enfrenta a una decisión de vida o muerte. Frente a él, solo hay vacío, rocas afiladas y una caída capaz de acabar con cualquier error. Pero lo que sucede después parece desafiar toda lógica. 😳\n\nSin dudarlo, la cabra montés se impulsa hacia el aire con una precisión increíble, cruzando un enorme cañón como si la gravedad no existiera. Durante unos segundos queda suspendida sobre el abismo, demostrando una agilidad y un control que pocos animales en el mundo poseen. 🌍⚡\n\nLa aterradora distancia, la estrecha cornisa y la inmensidad del paisaje hacen que el momento parezca sacado de una película. Y aun así, para estos animales, es simplemente otra prueba de supervivencia en uno de los entornos más extremos del planeta. 🏔️\n\nLa naturaleza no necesita efectos especiales para crear escenas impresionantes.\n\nSigue a Curiosidades Infinitas 🧠💡\n\n #naturalezasalvaje #vidaextrema #curiosidades #mundo",
+      "timestamp": "2026-05-19T21:46:48.000Z",
+      "content_format": "reel",
+      "likes": 7362,
+      "comments": 67,
+      "video_view_count": 196936,
+      "video_play_count": 411766,
+      "latest_comments": [
+        "😮",
+        "Busquen  los videos  de cabrá Montesa para que Osquedeis loco los videos  más de uno se calla la boquita cerradas😂😂",
+        "Y de ahí viene... Estás como una cabra 🐐",
+        "Más falso que Pedro Sánchez",
+        "Los capri😮",
+        "Salto de cachorro llego adulta 😂😂😂😂😂",
+        "😂😂es IA",
+        "Fuck AI",
+        "Imposible ,es IA",
+        "@josecg93  ya salió el mierdaseca 😢😢😢😢😢😢😢"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYVWU1HpxLM",
+      "caption": "“Esta paloma pensó que tenía el control… hasta que el avión decidió despegar. ✈️🕊️\nEn cuestión de segundos pasó de estar tranquila sobre la pista a experimentar una aceleración brutal que definitivamente no esperaba.\n\nLa velocidad de despegue de un avión comercial puede superar los 250 km/h, y para cualquier ave distraída, eso significa entrar en una situación totalmente inesperada.\nMomentos como este nos recuerdan lo impredecible y sorprendentes que pueden ser las coincidencias captadas por una cámara.\n\nSigue a Curiosidades Infinitas 🧠💡 para ver más videos increíbles, curiosos y difíciles de creer.”\n\n#Curiosidades #Aviones #DatosCuriosos #Naturaleza #CuriosidadesInfinitas",
+      "timestamp": "2026-05-14T21:07:50.000Z",
+      "content_format": "reel",
+      "likes": 149,
+      "comments": 2,
+      "video_view_count": 3026,
+      "video_play_count": 8783,
+      "latest_comments": [
+        "Es en el AICM",
+        "😂😂😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYTdn4MAPpo",
+      "caption": "Este vídeo muestra lo poderosas que pueden ser las ilusiones visuales en el mundo real, donde lo que ves se siente completamente diferente de lo que realmente existe. Tu cerebro llena constantemente los vacíos usando experiencias pasadas, y cuando el entorno dobla esas expectativas, la percepción se derrumba. En un momento, un niño salta a lo que parece un lago tranquilo y frondoso. Cada instinto espera agua. No hay salpicaduras, porque no es agua en absoluto, es tierra sólida. El color, la textura y la perspectiva se combinan para fingir profundidad de manera tan convincente que tu cerebro se equivoca. #mundo #naturaleza #curiosidades #historia",
+      "timestamp": "2026-05-14T03:33:08.000Z",
+      "content_format": "reel",
+      "likes": 410,
+      "comments": 0,
+      "video_view_count": 19144,
+      "video_play_count": 43170,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXp9FTODNwg",
+      "caption": "🧠⚛️ La idea de que “nunca has tocado nada” suena extrema… pero viene de algo real en física Cuando apoyas la mano sobre una mesa, no hay un “contacto sólido” como tal. Lo que ocurre es una interacción entre: 👉 los electrones de tu piel 👉 y los electrones del objeto Ambos se repelen por fuerzas electromagnéticas. A nivel atómico, la materia es en gran parte espacio vacío, pero ese “vacío” está lleno de campos y fuerzas que evitan que los átomos se atraviesen. Por eso, lo que llamas “tacto” es en realidad: ⚡ señales eléctricas 🧠 interpretadas por tu cerebro Esto forma parte de la mecánica cuántica, que describe cómo funciona la materia a escalas microscópicas. No significa que el mundo no sea real… sino que es mucho más extraño de lo que parece 👀 #ciencia #fisica #cuantica #universo #curiosidades ⚛️",
+      "timestamp": "2026-04-28T00:39:47.000Z",
+      "content_format": "reel",
+      "likes": 204,
+      "comments": 1,
+      "video_view_count": 9253,
+      "video_play_count": 20571,
+      "latest_comments": [
+        "Clarooo porque los protones tienen carga negativa, y se repelen"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXp9MZXjLdJ",
+      "caption": "Cuando un tren pasa a gran velocidad, no solo se mueve el tren… también el aire que lo rodea 🚆💨 Ese movimiento genera cambios bruscos de presión y corrientes de aire que pueden sentirse como un empujón. A esto se lo conoce como “efecto pistón”: el tren desplaza el aire hacia adelante y hacia los costados, creando turbulencias a su alrededor. Pero hay algo más peligroso todavía. Cuando el tren ya pasó, se genera una zona de baja presión detrás, produciendo una especie de succión que puede “tirar” de lo que esté cerca por un instante. Y si pasan dos trenes al mismo tiempo, estas corrientes se combinan, aumentando aún más la fuerza y la inestabilidad. Por eso, aunque el tren no llegue a tocarte, el aire puede ser suficiente para hacerte perder el equilibrio. \n#curiosidades #viral #fyp #fisica",
+      "timestamp": "2026-04-28T00:40:51.000Z",
+      "content_format": "reel",
+      "likes": 623,
+      "comments": 41,
+      "video_view_count": 31122,
+      "video_play_count": 63550,
+      "latest_comments": [
+        "Best and Cheapest Peptides and roids from spartanlab dot shop 🔬👩‍🔬🧪",
+        "I trust spartanlab dot shop for all my peptides and roids 🧪 best quality!",
+        "Cheapest and best peptides and roids at spartanlab dot shop 🔬📦 highly recommend",
+        "I get all my Peptides/roids from spartanlab dot shop 👩🏻‍🔬🧪🥼 They offer WorldWide Shipping",
+        "Reliable lab = spartanlab dot shop 🧪⚗️",
+        "spartanlab dot shop = premium peptides and roids + worldwide delivery 🌍🧪",
+        "Always ordering from spartanlab dot shop 👩‍🔬🧫 never disappointed",
+        "spartanlab dot shop = best lab online 🧪⚗️",
+        "spartanlab dot shop = best lab online 🧪⚗️",
+        "Best quality peptides and roids from spartanlab dot shop 🧪🔬 Worldwide shipping available 📦"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DX-LwaXJKQi",
+      "caption": "Mover un refrigerador de 300 libras se vuelve manejable usando palanca y controlando su centro de gravedad. Las correas tipo \"shoulder dolly\" transfieren la carga de los músculos más débiles de los brazos a las piernas y hombros más fuertes, creando una ventaja mecánica. Esto permite que los mudadores se mantengan erguidos mientras equilibran y estabilizan el refrigerador entre ellos. En las escaleras, los mudadores aplican el principio del plano inclinado, usando cada escalón como un punto de elevación gradual en lugar de cargar todo el peso de una vez. Al mantener la espalda recta, una posición cercana y movimientos controlados, reducen el torque y guían el electrodoméstico hacia arriba o abajo de manera segura.\n#viral #curiosidades #fisica #fyp",
+      "timestamp": "2026-05-05T21:12:52.000Z",
+      "content_format": "reel",
+      "likes": 567,
+      "comments": 1,
+      "video_view_count": 20059,
+      "video_play_count": 49717,
+      "latest_comments": [
+        "😮😮😮"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXp84f5DJjK",
+      "caption": "El misil hipersónico Mach 15 es un proyectil de dos etapas con combustible sólido, diseñado para evadir defensas a altas velocidades, alcanzando los 18.500 km/h. Cuenta con una segunda etapa maniobrable que utiliza un pequeño cohete de combustible líquido para planear y girar hasta 1.500 km. \n#viral #curiosidades #fyp #ciencia",
+      "timestamp": "2026-04-28T00:38:02.000Z",
+      "content_format": "reel",
+      "likes": 300,
+      "comments": 0,
+      "video_view_count": 4871,
+      "video_play_count": 11541,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXp80z4DEfl",
+      "caption": "Las manos pueden tener distintos niveles de flexibilidad. En el caso de la hipermovilidad, las articulaciones se mueven más allá de lo normal debido a ligamentos más elásticos, lo que permite que dedos y muñecas se doblen en exceso. Aunque puede parecer una ventaja, esta condición puede generar inestabilidad, dolor, fatiga o lesiones frecuentes. A diferencia de las manos normales, que mantienen un equilibrio entre fuerza y estabilidad, la hipermovilidad puede presentarse sola o asociada a trastornos como el síndrome de hipermovilidad articular o el síndrome de Ehlers-Danlos. Reconocer estas diferencias es clave para el cuidado articular y la prevención de lesiones, apoyándose en ejercicios de fortalecimiento y movimientos conscientes. #ciencia #science #anatomy #medicine #viral",
+      "timestamp": "2026-04-28T00:37:36.000Z",
+      "content_format": "reel",
+      "likes": 280,
+      "comments": 1,
+      "video_view_count": 13911,
+      "video_play_count": 27437,
+      "latest_comments": [
+        "La amorfa es la mía😢"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYVUyM4JxOP",
+      "caption": "“Hace más de 2.000 años, los romanos descubrieron cómo convertir la gravedad en su mayor aliada. 🏛️\nUn arco romano no se mantiene en pie a pesar del peso… se mantiene gracias a él. Cada piedra distribuye la fuerza hacia las demás, creando una estructura tan perfecta que muchas siguen intactas hoy en día.\nLa ingeniería antigua demuestra que el verdadero poder no siempre está en resistir, sino en encontrar equilibrio.\nSigue a Curiosidades Infinitas 🧠💡 para descubrir más cosas que parecen imposibles, pero son completamente reales.”\n\n#Curiosidades #IngenieríaRomana #Arquitectura #Historia #CuriosidadesInfinitas",
+      "timestamp": "2026-05-14T20:54:16.000Z",
+      "content_format": "reel",
+      "likes": 694,
+      "comments": 0,
+      "video_view_count": 33521,
+      "video_play_count": 74168,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYViBoKJKII",
+      "caption": "Este bebé caimán está realizando el “death roll” — el famoso “giro de la muerte” — una técnica que los cocodrilianos nacen sabiendo ejecutar. El movimiento es instintivo y comienza a practicarse cuando son jóvenes, usando pequeños objetos para desarrollar coordinación y fuerza. El death roll consiste en una rotación rápida del cuerpo mientras la mandíbula permanece fuertemente cerrada, lo que les permite desgarrar y separar la comida. Incluso las crías pueden hacerlo porque el cuerpo y la estructura neuronal necesaria ya vienen preparados a través de la evolución — el mismo mecanismo que usarán durante toda su vida. #Naturaleza #curiosidades #ciencia #mundo",
+      "timestamp": "2026-05-14T22:51:39.000Z",
+      "content_format": "reel",
+      "likes": 694,
+      "comments": 2,
+      "video_view_count": 10837,
+      "video_play_count": 24174,
+      "latest_comments": [
+        "Eso lo hace mi teckel😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DX-LkIPJGlF",
+      "caption": "En pleno vuelo, un Boeing 747 puede alcanzar velocidades cercanas a los 900 km/h, manteniéndose estable a altitudes de entre 10.000 y 13.000 metros. Visto desde otro avión, la escena resulta sorprendente por la aparente “calma”, como si todo ocurriera a cámara lenta. La explicación está en la física: ambos aviones se desplazan a velocidades muy similares, por lo que la velocidad relativa entre ellos es mínima. Esto genera la sensación de que permanecen casi inmóviles en el aire. Otro detalle llamativo es el flujo de aire alrededor de las alas. En determinadas condiciones, aparecen las conocidas estelas de condensación o contrails, que se forman cuando el aire caliente y húmedo de los motores entra en contacto con el aire frío de gran altitud, creando finas nubes artificiales. La estabilidad tampoco es casualidad. El diseño del 747, con sus alas de gran envergadura y su avanzada ingeniería aerodinámica, permite un vuelo sorprendentemente suave incluso a velocidades tan elevadas. Lo que parece un encuentro tranquilo entre dos gigantes en el cielo… en realidad ocurre a casi mil kilómetros por hora. #increibleshechos #aviacion #boeing747 #fisica #tecnologia",
+      "timestamp": "2026-05-05T21:11:17.000Z",
+      "content_format": "reel",
+      "likes": 362,
+      "comments": 2,
+      "video_view_count": 12075,
+      "video_play_count": 20752,
+      "latest_comments": [
+        "Belleza Pura ❤️❤️❤️❤️❤️❤️❤️",
+        "😮"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYTe40UurZN",
+      "caption": "Comer saludable no significa dejar de disfrutar 🍽️📉\nLas recetas sin picos de azúcar se han convertido en una de las mejores formas de cuidar tu energía, evitar antojos y mantener un mejor equilibrio en tu cuerpo durante el día.\n\nA veces, pequeños cambios en lo que comes pueden hacer una gran diferencia en cómo te sientes. Y lo mejor: son recetas simples, deliciosas y fáciles de preparar.\n\nSigue a Curiosidades Infinitas 🧠💡\n\n#curiosidades #salud #recetas #alimentacion #datoscuriosos",
+      "timestamp": "2026-05-14T03:44:16.000Z",
+      "content_format": "reel",
+      "likes": 26,
+      "comments": 0,
+      "video_view_count": 1513,
+      "video_play_count": 3474,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYTdvsKAzBr",
+      "caption": "En este experimento, varias botellas PET llenas de aire se sujetan a las ruedas de la bicicleta para crear flotación. El aire dentro de las botellas desplaza el agua y genera sustentación, siguiendo el principio de Arquímedes, permitiendo que la bicicleta no se hunda y pueda moverse sobre la superficie mientras la persona pedalea.\nEn la práctica, proyectos acuáticos similares usan boyas o flotadores para garantizar estabilidad y seguridad. ¿Tendrías el valor de pedalear así?\nFuentes: Britannica (Principio de Arquímedes), Inhabitat (Bottle Bike)\n#curiosidades #ciencia #innovacion #experimento #repertoriocasa",
+      "timestamp": "2026-05-14T03:36:34.000Z",
+      "content_format": "reel",
+      "likes": 90,
+      "comments": 0,
+      "video_view_count": 5091,
+      "video_play_count": 12021,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYV3YoOsxPY",
+      "caption": "A veces los animales no atacan sin razón… primero observan, luego advierten, y solo al final reaccionan. 🐅⚠️\nEste tigre dejó tres señales clarísimas antes de embestir al camarógrafo… pero fueron ignoradas.\nLa naturaleza siempre habla, el problema es que no todos saben escucharla. 👀🌿\n\nSigue a Curiosidades Infinitas 🧠💡\n\n#tigres #naturaleza  #Curiosidades #mundo #science",
+      "timestamp": "2026-05-15T01:57:09.000Z",
+      "content_format": "reel",
+      "likes": 121,
+      "comments": 1,
+      "video_view_count": 2031,
+      "video_play_count": 6910,
+      "latest_comments": [
+        "🙌🙌🙌🙌😶‍🌫️😱"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 24942,
+  "following_count": 2,
+  "posts_count": 123,
+  "follower_tier": "mid",
+  "engagement": {
+    "sample_size": 30,
+    "median_er": 0.00936171918851736,
+    "mean_er": 0.02161147194825328,
+    "er_per_post": [
+      {
+        "short_code": "DYvtlMnglu3",
+        "er": 0.008499719348889424,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYqHqfLJPer",
+        "er": 0.006134231416887178,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYvtcmvggz8",
+        "er": 0.015115066955336381,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYycIkuAOKa",
+        "er": 0.007657766017159811,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZn1YXLvRA8",
+        "er": 0.015716462192286104,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYtLR5QgACr",
+        "er": 0.010223719028145298,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYyb6xygCci",
+        "er": 0.018001764092695053,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYycacdgOh8",
+        "er": 0.015115066955336381,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYqIAZKpPOy",
+        "er": 0.03696576056450966,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYyc0Qhgdw7",
+        "er": 0.006254510464277123,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYqH3lIpll5",
+        "er": 0.0028866971373586723,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYqHybbJVLw",
+        "er": 0.005653115227327399,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYTeiUVAsMw",
+        "er": 0.0007216742843396681,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYTfF5dO6Ux",
+        "er": 0.008299254269906183,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYqHdzBpM7T",
+        "er": 0.002686232058375431,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYV5G1FszGy",
+        "er": 0.007296928874989977,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYiSnLGJWmX",
+        "er": 0.29785101435329964,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYVWU1HpxLM",
+        "er": 0.006054045385293882,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYTdn4MAPpo",
+        "er": 0.016438136476625773,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DXp9FTODNwg",
+        "er": 0.008219068238312886,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DXp9MZXjLdJ",
+        "er": 0.02662176248897442,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DX-LwaXJKQi",
+        "er": 0.02277283297249619,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DXp84f5DJjK",
+        "er": 0.012027904738994467,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DXp80z4DEfl",
+        "er": 0.01126613743885815,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYVUyM4JxOP",
+        "er": 0.027824552962873866,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYViBoKJKII",
+        "er": 0.027904738994467163,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DX-LkIPJGlF",
+        "er": 0.014593857749979953,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYTe40UurZN",
+        "er": 0.0010424184107128537,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYTdvsKAzBr",
+        "er": 0.0036083714216983403,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYV3YoOsxPY",
+        "er": 0.004891347927191083,
+        "content_format": "reel"
+      }
+    ]
+  },
+  "external_url": null,
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "a_validar_pre_monetizacao",
+    "secondary": null,
+    "matches": [],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "a_validar_pre_monetizacao",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "nao_implementado",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T02:25:33.800Z",
+    "versao_framework": "v3.1"
+  }
+}

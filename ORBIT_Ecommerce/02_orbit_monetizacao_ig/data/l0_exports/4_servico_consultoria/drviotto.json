@@ -1,0 +1,646 @@
+{
+  "handle": "drviotto",
+  "nicho": "4_servico_consultoria",
+  "url": "https://www.instagram.com/drviotto/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-01T16:41:10.048Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DbVhj9Yoc1u",
+      "caption": "Realizei o meu segundo transplante capilar, um transplante secundário, com o @drmarcelo.nogueira . Essa foi uma escolha muito consciente.\n\nAlém de ser um grande amigo, o Marcelo é meu paciente desde 2019, e ao longo desses anos acompanhei de perto inúmeros casos e resultados. A consistência, a naturalidade e a qualidade do trabalho dele me deram total segurança para confiar a ele esse procedimento.\n\nDesde o primeiro contato, fui tratado com extrema atenção e profissionalismo. O cuidado em cada detalhe, o suporte antes, durante e após a cirurgia, e o comprometimento de toda a equipe fizeram toda a diferença.\n\nQuando indicamos um profissional, é porque realmente acreditamos no trabalho dele. E, depois de viver essa experiência como paciente, posso dizer que fiz a escolha certa.\n\nAgora é acompanhar a evolução e esperar o resultado final. Tenho certeza de que será excelente.\n\nObrigado, Dr. Marcelo Nogueira, e a toda a sua equipe, pelo carinho, dedicação e excelência.\n\nE para finalizar quero agradecer especialmente ao meu amor por me apoiar e acompanhar em tudo! Te amo ♥️",
+      "timestamp": "2026-07-28T12:30:20.000Z",
+      "content_format": "reel",
+      "likes": 979,
+      "comments": 96,
+      "video_view_count": 25230,
+      "video_play_count": 66076,
+      "latest_comments": [
+        "Obrigada pelo novo sorriso do Pedro, vizinho do @carlinhos nós agradecemos e apoiamos🙏🏼❤️",
+        "😍😍😍",
+        "👏👏👏",
+        "🙌🙌🙌",
+        "Um dia vc vai ser um anjo na minha vida. Eu creio🙌🙌🙌🙌🙌🙌🙌🙌🙌🙌❤️❤️❤️❤️❤️❤️❤️❤️",
+        "👏😍",
+        "Escolheu o melhor!",
+        "@drmarcelo.nogueira @lucasguimaraes agora só falta vc❤️❤️❤️❤️❤️❤️❤️❤️❤️ @drviotto"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbGD81SCVJ9",
+      "caption": "Hoje celebro mais um ano de vida.\n🎉🙏 49 anos 🙌🏼 que venha os cinquentão hahahah",
+      "timestamp": "2026-07-22T12:12:18.000Z",
+      "content_format": "carousel",
+      "likes": 2042,
+      "comments": 192,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Comecei te seguir pelo @carlinhos !!\nDeus é bom colocando profissionais bons na vida de pessoas que precisam",
+        "😍😍😍",
+        "👏👏👏",
+        "🙌🙌🙌",
+        "Seguindo em 321 e 123 @carlinhos não pede, manda. 🫶🩵💎🤌🌻🌻🌻",
+        "🎂🎂",
+        "🎂",
+        "Parabéns 🎈🎉🍾🎊 🎂🎂",
+        "Ta melhor que eu com 37 😂 felicidades Viotão… 🎉",
+        "Parabéns Dr Viotto!"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DaBmchcPy6N",
+      "caption": "Existem pacientes que chegam até nós por indicação. E existem aquelas que nos indicam antes mesmo de viver a própria experiência.\n\nA Ana confiou no nosso trabalho antes mesmo de sentar na cadeira da clínica. Quando chegou, trouxe apenas uma certeza: a de que sairia com o sorriso que sempre sonhou.\n\nAna, obrigado pela confiança e pela preferência. Foi um prazer fazer parte dessa transformação.\n\nAproveite seu novo sorriso! ✨",
+      "timestamp": "2026-06-25T22:07:41.000Z",
+      "content_format": "reel",
+      "likes": 209,
+      "comments": 29,
+      "video_view_count": 7246,
+      "video_play_count": 22840,
+      "latest_comments": [
+        "Linda maravilhosa ❤️",
+        "❤️❤️❤️❤️",
+        "Linda e maravilhosa sempre ,te amo 🥰❤️",
+        "Minha blogueira preferida maravilhosa😍😍 ficou mais linda ainda"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DZvWKjQv1Tj",
+      "caption": "Honra em transformar mais um sorriso de um craque. ⚽✨\n\n@gabigol , agradeço pela confiança e pela preferência. É sempre um privilégio cuidar do sorriso de quem busca excelência em cada detalhe.",
+      "timestamp": "2026-06-18T20:00:12.000Z",
+      "content_format": "static_post",
+      "likes": 2233,
+      "comments": 109,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Seu sorriso Gaby gol é contagiante e ilumina a clínica inteira é ótimo ser recebido por um profissional com um sorriso tão lindo e sincero ver o seu sorriso me dá mais vontade ainda de cuidar do meu  parabéns 👏👏👏",
+        "Parabéns Doc.. Sucesso sempre.. 🙏🚀🚀",
+        "👏👏👏👏👏",
+        "🙌",
+        "Dois craques!!\nSou fã!!!",
+        "❤️❤️",
+        "Estou lutando por uma vaga no BBB 27.\nSe torce por mim, reposte meu vídeo e me siga. Obrigado pelo apoio!",
+        "Mestre 👏👏👏"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DaArJwzDie4",
+      "caption": "Hj é o dia dela! 34 years old rs\nParabéns meu amor .. que Deus abençoe grandemente sua vida , uma mulher linda, forte , guerreira, parceira que resignificou meus dias me trazendo paz e alegria! \nTe amo ❤️ @drajessicampos",
+      "timestamp": "2026-06-25T13:28:01.000Z",
+      "content_format": "carousel",
+      "likes": 2163,
+      "comments": 119,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "❤️❤️",
+        "🍾🎂🎂🍾🎂",
+        "🔥👏😍",
+        "Happy birthday to your beautiful wife 🎂🎂🎂❤️❤️❤️",
+        "A boca dela parece duas línguiças",
+        "Chocada que vc não está mais com a isa Viegas… eu to desatualizada 😮",
+        "👏👏👏👏👏👏👏👏👏👏👏👏",
+        "🙏🏻🎉🎊🎀🎼🎶🙏🏻💝🌍🎊🎉🎊🎉🎂🎂🎂🙏🏻🙏🏻🙏🏻"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DaENqrLPWdS",
+      "caption": "COMUNICADO OFICIAL\n\nPrimando pela excelência  dos tratamentos e pela qualidade dos materiais utilizados, informamos que a Clínica Viotto Alphaville não integra mais a rede oficial do Grupo Viotto.\n\nApós auditorias internas e verificações realizadas pelo nosso Departamento de Controle de Qualidade, foram constatadas não conformidades em relação aos padrões ESTÉTICOS exigidos para manutenção da condição de unidade oficial da rede, incluindo a não utilização das Lentes Dentárias Viotto, confeccionadas exclusivamente pelo LABORATÓRIO VIOTTO , requisito essencial para a padronização dos tratamentos e para a garantia nacional oferecida pela marca.\n\nAlém disso, foi encerrada a relação de licenciamento da marca, razão pela qual a referida unidade não está mais autorizada a representar o Grupo Viotto, utilizar sua identidade institucional ou se apresentar como integrante da rede oficial.\n\nEssa decisão reafirma o compromisso permanente do Grupo Viotto com a transparência, a segurança, a qualidade, a autenticidade e a previsibilidade dos resultados oferecidos aos seus pacientes.\n\nAgradecemos a confiança de todos e permanecemos à disposição para quaisquer esclarecimentos.\n\nEM BREVE ANUNCIAREMOS O NOVO ENDEREÇO .",
+      "timestamp": "2026-06-26T22:27:31.000Z",
+      "content_format": "static_post",
+      "likes": 1220,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "anomalies": []
+    },
+    {
+      "short_code": "DZfiYunoJnZ",
+      "caption": "Alguns encontros simplesmente acontecem. Outros parecem ter sido cuidadosamente preparados pela vida.\n\nNeste Dia dos Namorados, celebramos muito mais do que a transformação de sorrisos. Celebramos conexões, histórias que se cruzam, encontros inesperados e o amor que nasce quando menos se espera.\n\nPorque um sorriso tem o poder de mudar uma vida. E, às vezes, de unir duas.\n\nFeliz Dia dos Namorados a todos que acreditam que os melhores encontros acontecem quando o coração sorri. ❤️",
+      "timestamp": "2026-06-12T16:43:17.000Z",
+      "content_format": "reel",
+      "likes": 317,
+      "comments": 29,
+      "video_view_count": 11211,
+      "video_play_count": 33626,
+      "latest_comments": [
+        "Sucesso sempre @drviotto !!!",
+        "👏",
+        "👏👏👏",
+        "Nem é o viotto que te atende, para isso ias ao montoya na colombia...",
+        "Esse lugar tem boa energia. 🙌",
+        "Que Deus abençoe a vida de vcs ❤️🙌",
+        "👏👏👏"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DYVYflMPTGT",
+      "caption": "Primeiro dia do Encontro do Grupo Viotto.\n\nHoje tivemos a presença de @joaoadibemarques apresentando o Milimetric, uma parceria que chega para agregar ainda mais ao nosso ecossistema, conectando inovação, posicionamento e experiência.\n\nAlém disso, tivemos uma verdadeira aula sobre gestão, marketing, marca e crescimento empresarial, entendendo como grandes empresas constroem autoridade e expansão no mercado.\n\nO dia também contou com conteúdos sobre fotografia, marketing, gestão empresarial, área jurídica e financeira, reforçando que a odontologia de alto nível vai muito além da técnica.\n\nFoi apenas o primeiro dia, mas já com muito aprendizado e visão de futuro.",
+      "timestamp": "2026-05-14T21:28:09.000Z",
+      "content_format": "reel",
+      "likes": 405,
+      "comments": 71,
+      "video_view_count": 7766,
+      "video_play_count": 28688,
+      "latest_comments": [
+        "👏👏👏👏👏",
+        "Aquela chegada 🔥",
+        "Top",
+        "👏👏",
+        "😍😍😍😍😍"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DY2tMR0v0gs",
+      "caption": "O Grupo Viotto entrou oficialmente na Harmonização Facial.\n\nE para esse novo momento, escolhemos caminhar ao lado da Milimetric, uma marca que transmite segurança, tecnologia e produtos de altíssima qualidade.\n\nO Grupo Viotto precisava de algo que estivesse no mesmo nível de exigência, precisão e excelência que carregamos dentro da nossa marca. E foi exatamente essa conexão que encontramos na Milimetric.\n\nAgora, o nosso grupo passa a contar com ainda mais segurança, respaldo e qualidade para entregar resultados de alto padrão.\n\nQuando duas marcas que valorizam excelência se conectam, o resultado é um novo nível de experiência. 🚀",
+      "timestamp": "2026-05-27T20:05:00.000Z",
+      "content_format": "reel",
+      "likes": 2068,
+      "comments": 122,
+      "video_view_count": 36395,
+      "video_play_count": 90678,
+      "latest_comments": [
+        "👏👏👏👏👏👏👏👏",
+        "👏👏👏👏👏👏👏",
+        "Pra cima🚀",
+        "O estado do Espírito Santo segue sendo esquecido…. 😂😂😂😂",
+        "Olá! Gostei do seu perfil, posso te ajudar a crescer no Instagram de forma rápida e segura. Vem conhecer nosso perfil, se fizer sentido para você, fala comigo no direct ou WhatsApp da bio que vou te ajudar! ☺️",
+        "Parceria de milhões 🙌",
+        "Boraa irmão tmj 🚀👊🏻",
+        "Rapaz, que dupla! 🔥🔥🔥",
+        "👏👏👏👏👏👏👏",
+        "🙌👏👏👏👏 duas grandes forças da estética unidas!!!"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DZGI5k9v30y",
+      "caption": "O que a sua imagem conta sobre você hoje?\n\n@marcovisagismo escolheu a Clínica Viotto Uberlândia para transformar seu sorriso com um planejamento mais alinhado à sua personalidade.\n\nVeja o depoimento e entenda por que cada sorriso precisa ser único.\n\nObrigado pela confiança em nosso trabalho. ✨",
+      "timestamp": "2026-06-02T19:55:54.000Z",
+      "content_format": "reel",
+      "likes": 382,
+      "comments": 10,
+      "video_view_count": 13542,
+      "video_play_count": 41270,
+      "latest_comments": [
+        "Boa noite Doutor... Obrigado por cuidar do Escolhido da profecia",
+        "👏👏👏👏",
+        "👏👏👏",
+        "👏👏👏",
+        "Eu sempre faço muitas perguntas ao cliente o que assimilar o perfil dele e o que ele está buscando! Minha sugestão dou sempre no que vejo diante do espelho e vendo no que melhor se encaixa para ele desde corte barba e sobrancelhas 😍",
+        "🙌🙌"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DYhVOvEO1lX",
+      "caption": "Somos o Grupo Vioto — uma rede com mais de 27 clínicas espalhadas pelo Brasil, unidas por um único propósito: entregar excelência real em cada sorriso.\n\nO nosso diferencial vai além do atendimento. Todas as nossas clínicas trabalham com o mesmo padrão, a mesma tecnologia e, principalmente, com o nosso próprio laboratório: o Laboratório Vioto — responsável pela produção das lentes de contato dental com alto nível de precisão, qualidade e estética.\n\nIsso significa mais controle, mais segurança e resultados muito mais previsíveis para cada paciente.\n\nMais do que uma rede, somos uma grande família, formada por profissionais apaixonados pelo que fazem e comprometidos em oferecer o que há de mais avançado no mercado.\n\nTecnologia, padronização e excelência em cada detalhe.\n\nEsse é o padrão Vioto. ✨",
+      "timestamp": "2026-05-19T12:50:02.000Z",
+      "content_format": "reel",
+      "likes": 311,
+      "comments": 46,
+      "video_view_count": 6469,
+      "video_play_count": 23355,
+      "latest_comments": [
+        "👏👏👏",
+        "👏👏👏👏",
+        "😍😍😍",
+        "🔝",
+        "#vemcutio ❤️❤️❤️❤️❤️❤️"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DaDw0v3pR8b",
+      "caption": "Todo grande sorriso começa com um grande planejamento.\n\nAqui na Viotto, o projeto do seu novo sorriso começa antes mesmo do tratamento. Cada etapa é pensada para entregar um resultado natural, harmônico e único.\n\nBem-vindo ao passo a passo do Sorriso Viotto.",
+      "timestamp": "2026-06-26T18:18:00.000Z",
+      "content_format": "reel",
+      "likes": 222,
+      "comments": 14,
+      "video_view_count": 5916,
+      "video_play_count": 32353,
+      "latest_comments": [
+        "Perfeito, um sonho.\nSe existe algo maravilhoso e ter o sorriso lindo, queriaaa",
+        "meu sonho ter meu sorriso perfeito @drviotto",
+        "Meu sonho 😢",
+        "Meu sonho 👏🏻👏🏻👏🏻",
+        "Sonhoooo😮",
+        "Eu queria muito e meu sonho de ter um novo sorriso",
+        "Lindo este finalmente",
+        "Amei perfeito gostei muito onde fica",
+        "Verdadeiramente uma arte, dentes bonitos modificam demais o rosto",
+        "Meu sonho 👏👏👏👏👏"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DY-doghvOrH",
+      "caption": "Alguns sonhos merecem ser realizados com quem entrega precisão, confiança e excelência.\n\nFoi por isso que o Cowboy escolheu a Clínica Viotto Campinas para transformar o seu sorriso em um caso incrível, marcado por naturalidade e alta estética.\n\nMais do que um tratamento, a realização de um sonho e agradeço pela preferência!",
+      "timestamp": "2026-05-30T20:21:59.000Z",
+      "content_format": "reel",
+      "likes": 22799,
+      "comments": 1583,
+      "video_view_count": 120151,
+      "video_play_count": 324850,
+      "latest_comments": [
+        "👏👏",
+        "❤️",
+        "Arrasou @albertocowboy perfeitas!! 👏👏👏",
+        "Perfeito e bem natural calboy é daqueles homens que não pode mudar demais,já e homem lindo raiz se mexer demais vai estragar aquilo que Deus já te deu beleza natural calboy lindo",
+        "👏🏼",
+        "Profissional competente 👏👏👏👏 ficou lindo.",
+        "👏👏👏😍",
+        "A fazendaaaaaaa corri aqui @anapaularenault",
+        "Maravilhoso sorriso de Piano 🤠"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DZsL4P0IHe5",
+      "caption": "RELEMBRAR É VIVER !\n \nNÃO TENHA VERGONHA DE PENSAR GRANDE E COMEÇAR PEQUENO, errando, pedindo ajuda, engatinhando , mas acima de tudo sempre dando um passo a mais para TORNAR REAL  o que só você ,  inicialmente consegue  enxergar!!!!!! ✔️✔️✔️✔️✔️✔️✔️✔️✔️✔️✔️✔️✔️✔️✔️✔️. Meu primeiro consultório em 2006 até atualmente ... comecei em uma sala pequena , apertada , em cima de uma oficina mecânica,sem parentes dentistas,mas eu estava muito feliz e satisfeito com ela , enquanto não chegava minha vez! Não reclamei, não me revoltei quando minha agenda era um ou dois pacientes por dia, NÃO FALEI MAL DE NENHUM COLEGA! Apenas trabalhei e muito , tratei todos como eu gostaria de ser tratado, honestidade sempre! Investi em mim e na minha profissão, me endividei, e ACREDITEI, fiz boas amizades,corri atrás! Na verdade nunca imaginei que chegaria tão longe, desejei o melhor p mim, mas alcancei algo que nem imaginava! Acho que quando vc é feliz com oq tem , e trabalhar ao invés de reclamar, as coisas boas acontecem... essa é minha dica para vc que está começando ou que quer melhorar!! FÉ EM DEUS!!!!! #deusnocomando",
+      "timestamp": "2026-06-17T14:31:31.000Z",
+      "content_format": "static_post",
+      "likes": 7713,
+      "comments": 233,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🙌❤️",
+        "E na época já era bem sucedido olha o civicão 😍👌🏾",
+        "🙌🙌🙌",
+        "Parabens voce merece muito batalhador",
+        "Superação!!!",
+        "❤️",
+        "Nunca se esqueça do dia 1! 👏👏👏",
+        "🙏🙏",
+        "Conheci pelo @matue  kkkk",
+        "👏👏👏👏"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DY0dEPJR7we",
+      "caption": "Como vocês já devem ter percebido… sim, estou de sorriso novo! E eu simplesmente estou apaixonada pelo resultado!😍\n\nVem acompanhar um pouquinho de como foi a minha experiência na @clinicaviottorj com o @dr.marcosfernandes_ que transformou o meu sorriso de forma super natural e me deixou ainda mais feliz e confiante. 🤍✨",
+      "timestamp": "2026-05-26T23:08:02.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 58,
+      "video_view_count": 53162,
+      "video_play_count": 163654,
+      "latest_comments": [
+        "Caramba sorriso dos sonhos, quem sabe um dia neh  isso não seja possível para mim 🙌❤️",
+        "👏👏👏meu sonho se tivesse meus dentes de volta😔",
+        "sou Evaldocatadoaprediz  meu sonho e arrumar os meus dentes @drviotto",
+        "Ficou perfeito, amei! 👏👏",
+        "@suzannafreitas maravilhosa eos vídeos com os clips da sua mãe voce não vai grava mais senti falta 😍❤️",
+        "Vcs atendem pessoas comuns com preços comuns ? 😬",
+        "Ficou lindo e com naturalidade 😍",
+        "Ficou ainda mais linda! 😍😍",
+        "❤️❤️❤️",
+        "@clinicaviottorj"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DYAFTQdOzmr",
+      "caption": "Iniciei meu tratamento na @clinicaviottouberlandia que inclusive fica no mesmo prédio da nossa unidade no Complexo Vinhedos.\n\nComecei todo o planejamento com o @dr.gabriellmachado e a @isabellameloooo profissionais incríveis que já entenderam exatamente o resultado que eu buscava.\n\nE agora, pelo fato de eu estar morando em São Paulo, demos continuidade ao planejamento do meu novo sorriso aqui na unidade de São Paulo da Clínica VIOTTO! \n\nAtualmente tenho lentes em resina e agora vamos remover tudo para iniciar um projeto com 24 dentes em porcelana. \n\nEstou muito animado e feliz com esse momento… e ainda tive a oportunidade de encontrar o @drviotto na clínica hoje.\n\nEm breve teremos novidades e benefícios para todos os nossos clientes @marcobarbearia em Uberlândia e São Paulo.",
+      "timestamp": "2026-05-06T14:59:01.000Z",
+      "content_format": "reel",
+      "likes": 378,
+      "comments": 25,
+      "video_view_count": 19178,
+      "video_play_count": 55401,
+      "latest_comments": [],
+      "anomalies": []
+    },
+    {
+      "short_code": "DZvknzxj9fN",
+      "caption": "Mais um sorriso renovado com a assinatura da Clínica Viotto.\n\nAgradecemos ao Gabigol pela confiança em nosso trabalho. É uma honra fazer parte desse momento e entregar o que temos de melhor: excelência, naturalidade e tecnologia.\n\nCom nosso fluxo 100% digital, realizamos todo o tratamento em apenas 2 dias, devolvendo um sorriso ainda mais harmônico e marcante.\n\nForam confeccionadas 20 lentes de contato dental na cor BL3 MT, cuidadosamente planejadas para valorizar a estética facial e preservar a naturalidade do resultado.",
+      "timestamp": "2026-06-18T22:03:52.000Z",
+      "content_format": "carousel",
+      "likes": 4649,
+      "comments": 228,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😍😍😍",
+        "Para sempre Forever Gabigol meu craque favorito .Te amamos Gabi eternamente herói de uma Nação inteira sua história é o nada de mais Deus é contigo sempre.♥️🖤❤️🖤💯🇧🇷🤍🖤🤍🖤💯💚💛💙🤍💚💛💙🤍🇧🇷🇧🇷🇧🇷🇧🇷🙏🏻💪🏻👐🏻👏🏻👏🏻👏🏻❤️",
+        "ficou demaisss ☝️✨ @gabigol @drviotto",
+        "Natural, top!",
+        "Ficou mais lindo ainda.❤️",
+        "Lindo ❤️",
+        "Perfeito o melhor 😍",
+        "Amor da minha vida te amo"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DaqLKTPt8L2",
+      "caption": "A confiança se constrói com o tempo.\n\nA Undercut faz parte da minha história há mais de 10 anos. Acompanhei a evolução deles desde o início e, quando chegou a hora de proteger a minha McLaren Artura, não tive dúvidas sobre a escolha.\n\nO carro recebeu o PPF XPEL Stealth®️, referência mundial em proteção de pintura com acabamento fosco.\n\nE, para entregar um resultado à altura da Artura, a equipe trouxe diretamente dos Estados Unidos um filme XPEL de 1,80 m de largura, permitindo cobrir grandes áreas sem emendas e proporcionando um acabamento ainda mais limpo e sofisticado.\n\nAlém da estética, a proteção oferece tecnologia de autorregeneração contra microrriscos, resistência contra manchas e amarelamento, proteção contra impactos do dia a dia e garantia de 10 anos.\n\nMais uma vez, a Undercut mostrou por que continua sendo minha escolha depois de todos esses anos.\n\nParabéns a toda a equipe pelo cuidado, pela excelência e pelo compromisso em entregar sempre o melhor.\n\n@undercutoficial 🤝 @xpel_brasil\n\n#McLarenArtura #McLaren #XPEL #XPELStealth #PPF UndercutSignature PaintProtectionFilm Supercar LuxuryCars CarProtection",
+      "timestamp": "2026-07-11T16:20:02.000Z",
+      "content_format": "reel",
+      "likes": 248,
+      "comments": 13,
+      "video_view_count": 1591,
+      "video_play_count": 19176,
+      "latest_comments": [
+        "Meu maior sonho é ter um sorriso de verdade, isso não é de agora, há muitos anos, me sinto uma criança com dentes pequenos e pontudos. Essa vai ser minha melhor conquista um dia, porque tenho vergonha do meu sorriso quando abro a boca.",
+        "🔥🔥🔥",
+        "Essa é louça",
+        "👏🔥",
+        "Gratidão a todos envolvidos @xpel_brasil @drviotto @undercutoficial @laercio.flausino",
+        "🔥👏👏👏👏",
+        "🔥🔥🔥🔥",
+        "🔥🔥🔥",
+        "Tremendo! Excelente trabajo ❤️🔥",
+        "@xpel_brasil em parceria com @undercutoficial atendendo a nova máquina do  @drviotto .\nExcelência e padrão internacional disponível no Brasil!!"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DYcnI2tukyo",
+      "caption": "💎 24h na Champions League .",
+      "timestamp": "2026-05-17T16:52:21.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 30,
+      "video_view_count": 3998,
+      "video_play_count": 19959,
+      "latest_comments": [
+        "❤️❤️❤️",
+        "Sou testemunha da capacidade do Doutor Viotto. O cara pegou o meu projeto dentário, que era comum, ninguém conseguia chegar onde eu queria, e de primeira trabalhou em cima e deixou extraordinário.\nÉ o que eu digo: designers de carro existem vários, porém Enzo Ferrari é um só. Com o Doutor Viotto é a mesma coisa.\nFoi a melhor decisão da minha vida ter buscado ele. Transformou algo comum em extraordinário.\nInclusive, fiz também o tratamento com a esposa dele, a Doutora Jéssica. Uma visão estética fora da curva.\nAgradeço demais aos dois. Ninguém chega onde eles chegaram à toa.\nQualidade, excelência e, principalmente, uma visão que separa o profissional bom do extraordinário.\nSe você procura um sorriso e uma estética natural, com uma harmonia que só se encontra em astros de Hollywood, pode confiar.\nFoi o melhor investimento da minha vida! Faço questão de dar o meu depoimento porque estou muito feliz! Obrigado Dr Viotto e Dr Jéssica ❤️🔥🔥",
+        "👏👏👏",
+        "Quem joga na champions. É certo que está na lista da copa né dr.",
+        "🔥🔥🔥🏆🥇",
+        "👏👏👏tmj",
+        "Diga-me com quem tu andas que direi quem tu és 🔥🔥",
+        "@codinome.arcanjo muito bom ler isso Stephan!!! Fico muito muito feliz! A gente que agradece pela sua confiança. Seja sempre bem vindo a família!!! Volte logo!!! 😊🙌🏻🚀"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DYNovQrD6Bi",
+      "caption": "Hoje, o que mais vemos no mercado é retrabalho.\nPacientes que perderam a confiança no tratamento anterior.\n\nExcelência exige preparo, técnica e qualidade.\n\nDia 30 vou te mostrar muito mais. \n\nEscreva IMERSÃO e saiba mais!",
+      "timestamp": "2026-05-11T21:14:15.000Z",
+      "content_format": "carousel",
+      "likes": 320,
+      "comments": 33,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Imersão",
+        "#vemcutio ❤️❤️❤️❤️❤️",
+        "👏🏾👏🏾👏🏾👏🏾👏🏾",
+        "Imersão",
+        "Vai ser bom ter você lá! Te mandei mensagem na DM."
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DX2ibzsRIsY",
+      "caption": "Fala, cowboyzada! 🤠\n\nHoje foi dia de dar o primeiro passo em um sonho antigo.\n\nPassei lá na clínica do @drviotto com o @drjanderson.viotto para começar a transformação do meu sorriso.\nTudo bem natural, do meu jeito.\n\nE quero que vocês acompanhem tudo de perto.\n\nBora? 🦷",
+      "timestamp": "2026-05-02T21:58:12.000Z",
+      "content_format": "reel",
+      "likes": 35821,
+      "comments": 2871,
+      "video_view_count": 158481,
+      "video_play_count": 445533,
+      "latest_comments": [
+        "Sorrisão cowboy 😍🏆🤠👏",
+        "👏👏👏",
+        "👏👏👏",
+        "❤️",
+        "Cowboy o melhor!!! Adorei👏🏼🤠",
+        "❤️❤️❤️❤️",
+        "Ficou otimo",
+        "E  você aprenda a cuidar da sua vida 😂😂"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DY4ufwHDotg",
+      "caption": "Dentista que improvisa, compete por preço.\nDentista que domina técnica, posicionamento e experiência… cria valor.\n\nO paciente de alto padrão não busca apenas dentes bonitos.\nEle busca segurança, autoridade e exclusividade.\n\nA diferença entre ser comparado e ser desejado está no nível da sua entrega.\n\nA Imersão Viotto foi criada para profissionais que querem romper a odontologia comum e construir uma marca forte, estética e altamente valorizada.\n\nSua odontologia transmite valor… ou apenas tenta vender mais barato?\n\nComente “IMERSÃO” e receba todas informações!",
+      "timestamp": "2026-05-28T14:51:55.000Z",
+      "content_format": "carousel",
+      "likes": 192,
+      "comments": 15,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Que sonho poder tratar meus dente te nessa clínica com um profissional tão competente ..",
+        "👏👏👏",
+        "O melhor de todos, CR7 das lentes 😍",
+        "👏👏❤️",
+        "O brabo 😍",
+        "#vemcutio ❤️❤️❤️❤️❤️",
+        "Olá! Gostei do seu perfil, posso te ajudar a crescer no Instagram de forma rápida e segura. Vem conhecer nosso perfil, se fizer sentido para você, fala comigo no direct ou WhatsApp da bio que vou te ajudar! ☺️",
+        "Um dia chego nesse patamar, o sr é referência",
+        "👏",
+        "@drviotto 😍"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DX2F6_0iSFK",
+      "caption": "Recebemos o Cowboy para o início de uma nova transformação. Em breve, um sorriso que traduz sua personalidade com naturalidade e precisão. Cada etapa deste caso está sendo conduzida com excelência, respeitando os princípios que definem a essência Viotto.\n\nProcedimento realizado pelo Dr. Janderson, na Clínica Viotto Campinas.",
+      "timestamp": "2026-05-02T17:47:30.000Z",
+      "content_format": "carousel",
+      "likes": 25747,
+      "comments": 1136,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏👏👏👏👏",
+        "👏👏👏",
+        "❤️❤️❤️❤️",
+        "👏👏👏👏",
+        "Tinha que usas aparelho. Não colocar lentes!",
+        "Ele bem sincero ❤️tempo e achava caro tbm !!!",
+        "@lowcarbdani e não faz uma publi😂😂😂😂😂"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DYUN-WADtdN",
+      "caption": "Em meio a tantos caminhos, Deus fez o nosso se cruzar. E desde então, tudo passou a fazer mais sentido juntos. 💍❤️",
+      "timestamp": "2026-05-14T10:35:04.000Z",
+      "content_format": "carousel",
+      "likes": 8585,
+      "comments": 327,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Lindos 😍👏",
+        "😍🔥👏",
+        "Gostaria muito de ter uma oportunidade de te conhecer te dar um aperto de mão pois o neto fala muito bem de você",
+        "Fala Viotto tive a honra e o prazer de conhecer seu amigo Neto rossaft ele fala muito bem de você e ter você como inspiração profunda meus parabéns sucesso",
+        "Que casal lindo 👏👏👏❤️❤️",
+        "Parabéns 🍾👏👏👏🙏🏻🙏🏻",
+        "Lindos😍",
+        "@catyusa_cabral 😍"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DXxMRZmD7YT",
+      "caption": "É por isso que a Evotech se tornou referência no que faz: tecnologia de alto padrão aliada a um treinamento de equipe rigoroso, garantindo precisão, segurança e excelência em cada atendimento.\n\nPor trás de cada resultado, existe método, atualização constante e compromisso com a evolução da odontologia estética.\n\nE você, dentista, está esperando o que para elevar o nível da sua clínica?",
+      "timestamp": "2026-04-30T20:06:47.000Z",
+      "content_format": "carousel",
+      "likes": 106,
+      "comments": 12,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🚀🚀🚀",
+        "Show Parabéns",
+        "👏👏👏👏",
+        "👏👏👏",
+        "Clínica Viotto é Evotech ✅🚀"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DalpZkPq8OY",
+      "caption": "Na Clínica Viotto, cada detalhe é pensado para oferecer segurança, previsibilidade e conforto ao paciente durante todo o processo de reabilitação com protocolo de carga imediata.\n\nA cirurgia foi realizada sob sedação endovenosa, com acompanhamento integral do médico anestesista durante todo o procedimento dentro da sala cirúrgica, proporcionando mais tranquilidade e segurança ao paciente.\n\nEnquanto isso, o laboratório, localizado ao lado do centro cirúrgico, trabalhava simultaneamente em cada etapa protética, tornando possível aquilo que para muitos parece impossível: entrar na clínica pela manhã e sair no final do dia com um novo sorriso.\n\nCirurgia, prótese e laboratório conectados em um único propósito: devolver função, estética e qualidade de vida em apenas um dia.\n\nPorque no final, não entregamos apenas dentes.\nEntregamos confiança para voltar a sorrir, liberdade para voltar a viver e a oportunidade de recomeçar uma nova história.\n\nUm novo sorriso.\nUma nova fase.\nUma nova vida. 🙏🏽",
+      "timestamp": "2026-07-09T22:07:02.000Z",
+      "content_format": "reel",
+      "likes": 196,
+      "comments": 6,
+      "video_view_count": 1424,
+      "video_play_count": null,
+      "latest_comments": [
+        "Eu creio que um dia vou mudar meu sorriso em nome de Jesus Cristo 🥺🥺🥺",
+        "Meu sonho  um  dia deixar de usar  protese .tive um acidente perdi os dentes superior.",
+        "Sempre um prazer poder trabalhar com os melhores , parabéns @drguilherme_surgery  @clinicaviottomatriz",
+        "Com toda certeza o melhor 🙌❤️",
+        "Parabéns pelo belo trabalho meu irmão ❤️🙏🏻😁",
+        "Melhor do 🇧🇷🇧🇷🇧🇷"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DaL7LQAPhEO",
+      "caption": "Existe um peso enorme em escolher a transparência.\n\nNinguém sonha em expor dificuldades, ainda mais quando elas acontecem dentro do próprio ecossistema que você construiu. Existe o medo dos julgamentos, das interpretações e das críticas. E quanto maior a visibilidade, maior também é a responsabilidade.\n\nMas eu acredito que uma reputação sólida não é construída escondendo problemas. Ela é construída enfrentando-os com coragem, honestidade e respeito por quem confia no nosso trabalho.\n\nAs Clínicas Viotto nunca foram uma franquia. Somos um grupo seleto de profissionais que compartilham os mesmos valores, protocolos e um compromisso inegociável com a excelência. Nossa identidade não está apenas em um nome, mas na qualidade, na ética e no padrão que escolhemos manter todos os dias.\n\nSer transparente pode ser desconfortável. Mas é exatamente essa transparência que preserva aquilo que levamos anos para construir: a confiança.\n\nE é por respeito a cada paciente que escolhemos sempre o caminho mais difícil, porém o mais correto.\n\nPorque, no fim, oque importa é a satisfação de nossos clientes",
+      "timestamp": "2026-06-29T22:21:46.000Z",
+      "content_format": "reel",
+      "likes": 3798,
+      "comments": 386,
+      "video_view_count": 98687,
+      "video_play_count": 275614,
+      "latest_comments": [
+        "👏👏",
+        "👏👏",
+        "Meu melhor 👏🔥",
+        "👏👏👏👏",
+        "Dr,me ajuda eu tenho um sonho mais ele custa muito ,e sei q o senhor pode me ajudar 🙌😍",
+        "👏👏👏👏👏👏👏👏👏👏",
+        "Vc fez outro cara nascer",
+        "Confiança não nasce da perfeição, mas da transparência. Excelente reflexão.",
+        "👏👏👏👏👏",
+        "Vcs são os melhores,meu sonho é fazer o procedimento com as lentes na sua clínica e em outro lugar eu não faço 🙏"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DXj0kj-DdvQ",
+      "caption": "Receber histórias que se conectam com a gente é sempre especial , e dessa vez não foi diferente.\n\nFoi um prazer enorme receber @lawinits  Danielle Winits  e seu filho, Guy, aqui na Clínica Viotto Rio de Janeiro. A confiança deles no nosso trabalho torna tudo ainda mais significativo.\n\nO Guy iniciou seu tratamento ortodôntico com Invisalign, uma tecnologia moderna que alia conforto, estética e eficiência. Mais do que alinhar dentes, buscamos proporcionar uma experiência leve, discreta e com resultados previsíveis.\n\nCuidar de sorrisos é também cuidar de pessoas e cada paciente que passa por aqui faz parte dessa história.\n\nSeja muito bem-vindo. Estamos juntos nessa jornada! 🦷✨",
+      "timestamp": "2026-04-25T15:41:06.000Z",
+      "content_format": "reel",
+      "likes": 2080,
+      "comments": 38,
+      "video_view_count": 111203,
+      "video_play_count": 266452,
+      "latest_comments": [
+        "👏👏👏 com o melhor",
+        "👏👏👏😍😍",
+        "👏👏👏👏GEEENTE 😍❤️😍❤️ EU AMO ESSA ATRIZ 😍❤️😍❤️😍",
+        "@flaviamachado604 pra que um comentário tão desnecessário? Larga de ser amargurada.",
+        "@drviotto meu sonho e para o Dentista desse abençoado por Deus 🙌🙌🙌"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DZVKKwlsUPT",
+      "caption": "Um sonho sonhado com dedicação, fé e muito trabalho se torna realidade.\n\nA Clínica Viotto chega a Uberlândia para escrever um novo capítulo, levando o que há de mais moderno em estética dental e lentes de porcelana.\n@clinicaviottouberlandia \n\nMinha gratidão a Deus e a todos que contribuíram para que este momento acontecesse. Cada pessoa que esteve ao nosso lado faz parte desta conquista.\n\nSeguimos com o propósito de transformar sorrisos, elevar autoestima e realizar sonhos. 🙏✨",
+      "timestamp": "2026-06-08T15:55:17.000Z",
+      "content_format": "reel",
+      "likes": 476,
+      "comments": 28,
+      "video_view_count": 14233,
+      "video_play_count": 47556,
+      "latest_comments": [
+        "Muito chique  SUCESSO HJ E SEMPRE🍀",
+        "Quase colega né",
+        "Aguardando chegar em Recife!",
+        "Parabéns sucesso, Deus abençoe sempre 🔥🔥❤️",
+        "👏👏👏",
+        "Deus abençoe vocês 👏👏👏👏",
+        "👏👏👏👏👏",
+        "Sucesso sempre 👏",
+        "👏👏👏",
+        "👏👏👏👏🔥🙌",
+        "👏🏼👏🏼👏🏼👏🏼👏🏼",
+        "Sucesso ❤️❤️❤️❤️",
+        "👏👏",
+        "👏👏👏",
+        "Parabéns e mto sussesso!!🙌👏👏👏👏👏👏"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DYkHckXjchU",
+      "caption": "Os procedimentos de maior ticket da odontologia não dependem apenas de técnica.\nDependem de posicionamento, protocolo e previsibilidade.\n\nEnquanto muitos ainda focam apenas em executar, os profissionais que crescem aprenderam a construir experiência, autoridade e entrega em alto padrão.\n\nÉ isso que separa quem atende por valor de quem compete por preço.\n\nComente “IMERSÃO” para entender o que a maioria dos dentistas ainda não domina.",
+      "timestamp": "2026-05-20T14:45:53.000Z",
+      "content_format": "carousel",
+      "likes": 280,
+      "comments": 50,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Imersão ? Aonde vai ser ?",
+        "Conteúdo muito bem feito 👏\nTemos uma estratégia que aumenta alcance, engajamento e seguidores. Fala comigo no direct ou WhatsApp na nossa bio📩",
+        "🚀🚀🚀",
+        "Imersão",
+        "imersão",
+        "Imersão",
+        "👏👏"
+      ],
+      "anomalies": []
+    }
+  ],
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "4_servico_consultoria",
+    "matches": [
+      {
+        "category": "4_servico_consultoria",
+        "evidence": [
+          "bio contém registro/título profissional: \"CRO 9\""
+        ]
+      },
+      {
+        "category": "3_infoprodutor",
+        "evidence": [
+          "legenda com padrão de lançamento: \"IMERSÃO\""
+        ]
+      }
+    ],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  }
+}

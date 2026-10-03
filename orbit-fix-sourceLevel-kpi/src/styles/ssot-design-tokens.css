@@ -1,0 +1,201 @@
+/* ==========================================================================
+   ORBIT · Design Tokens (SSOT Prototype — 100% Aligned)
+   Versão: 2.1.0  |  Data: 2026-09-09
+
+   CORRIGIDO para bater com os valores reais do protótipo
+   (orbit-prototipo-consolidado-neon.html :root), verificado token a token.
+   Mudanças vs. 2.0.0: spacing, font-size, radius, transitions, font-weight,
+   line-height. Nomes/aliases existentes mantidos para não quebrar os
+   ~25 arquivos .module.css que já consomem estes tokens.
+   ========================================================================== */
+
+:root {
+  /* ═══════════════════════════════════════════════════════════════
+     BACKGROUNDS (SSOT — 5 camadas neomorphic) — sem alteração
+     ═══════════════════════════════════════════════════════════════ */
+
+  --bg: #0C0C0F;
+  --bg1: #111116;
+  --bg2: #18181F;
+  --bg3: #1F1F28;
+  --bg4: #26262F;
+
+  --bg-base: var(--bg);
+  --bg-primary: var(--bg1);
+  --bg-card: var(--bg2);
+  --bg-hover: var(--bg3);
+  --bg-active: var(--bg4);
+
+  /* ═══════════════════════════════════════════════════════════════
+     BORDERS (SSOT) — sem alteração
+     ═══════════════════════════════════════════════════════════════ */
+
+  --line: #2A2A35;
+  --line2: #33333F;
+
+  --border-default: var(--line);
+  --border-glow-cyan: #00FFFF;
+  --border-glow-red: #FF4444;
+  --border-glow-gold: #FFC300;
+  --border-glow-green: #2ECC71;
+  --border-width: 1px;
+
+  /* ═══════════════════════════════════════════════════════════════
+     TEXT (SSOT — Hierarchy com warmth) — sem alteração
+     ═══════════════════════════════════════════════════════════════ */
+
+  --t0: #F0EFE8;
+  --t1: #B8B6B0;
+  --t2: #706E6A;
+  --t3: #454340;
+
+  --text-primary: var(--t0);
+  --text-secondary: var(--t1);
+  /* FIX WCAG 1.4.3 mantido: --t2/--t3 falham AA, redirecionado pra --t1 */
+  --text-muted: var(--t1);
+  --text-dim: var(--t1);
+
+  /* ═══════════════════════════════════════════════════════════════
+     ACCENTS & NEONS (SSOT — Unique identity) — sem alteração
+     ═══════════════════════════════════════════════════════════════ */
+
+  --acc: #C8FF57;
+  --acc2: #8B5CF6;
+  --acc3: #FF6B35;
+
+  /* FIX WCAG 1.4.3 (15/09/2026): --acc2 usado como cor de TEXTO falha AA
+     (4.17:1 sobre --bg2, 3.86:1 sobre --bg3). --acc2 continua válido para
+     bordas/fundos/ícones, que só precisam de 3:1. Para texto, usar
+     --acc2-text (mesmo roxo, 20% mais claro — 5.7:1+ em qualquer fundo). */
+  --acc2-text: #a27df8;
+
+  --red: #FF4444;
+  --amber: #FFB020;
+  --green: #2ECC71;
+  --blue: #4A90FF;
+
+  /* Variantes claras p/ texto sobre badge já tingido (ex.: rgba(--red, 0.15)
+     de fundo) — mantém legibilidade sem introduzir tom fora do sistema.
+     Consolida os hex que existiam soltos (#ff8080, #7eb3ff) em tokens nomeados. */
+  --red-text: #ff8080;
+  --blue-text: #7eb3ff;
+
+  --neon-cyan: #00FFFF;
+  --neon-red: #FF4444;
+  --neon-gold: #FFC300;
+  --neon-green: var(--green); /* alias legado — #00FF00 não existe no protótipo (nota da v2.0.0); mapeado pro verde oficial em 09/09/2026 */
+
+  /* ═══════════════════════════════════════════════════════════════
+     TYPOGRAPHY (SSOT — DM Sans + DM Mono)
+     CORRIGIDO: escala inteira estava maior que o protótipo
+     ═══════════════════════════════════════════════════════════════ */
+
+  --font: 'DM Sans', sans-serif;
+  --mono: 'DM Mono', monospace;
+
+  --font-family: var(--font);
+  --font-mono: var(--mono);
+
+  /* pesos — adicionados light/medium que faltavam */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: var(--font-weight-semibold); /* alias mantido p/ compatibilidade */
+
+  /* line-heights — adicionados tight/relaxed que faltavam */
+  --line-height-tight: 1.2;
+  --line-height-base: 1.5;
+  --line-height-relaxed: 1.6;
+
+  /* Font sizes — corrigido pra bater exatamente com o protótipo */
+  --font-size-xs: 10px;
+  --font-size-sm: 11px;
+  --font-size-base: 12px;
+  --font-size-md: 13px;
+  --font-size-lg: 15px;
+  --font-size-xl: 15px;
+  --font-size-2xl: 16px;
+  --font-size-3xl: 22px;
+  --font-size-4xl: 26px;
+
+  /* ═══════════════════════════════════════════════════════════════
+     BORDER RADIUS (SSOT)
+     CORRIGIDO: md/lg estavam deslocados em relação ao protótipo
+     ═══════════════════════════════════════════════════════════════ */
+
+  --r3: 3px;
+  --r4: 4px;
+  --r6: 6px;
+  --r8: 8px;
+  --r12: 12px;
+  --r16: 16px;
+  --r24: 24px;
+
+  --border-radius-sm: var(--r4);
+  --border-radius-md: var(--r6);
+  --border-radius-lg: var(--r8);
+  --radius-xs: var(--r3);
+  --radius-sm: var(--r4);
+  --radius-md: var(--r6);
+  --radius-lg: var(--r8);
+  --radius-xl: var(--r12);
+  --radius-2xl: var(--r16);
+  --radius-3xl: var(--r24);
+  --radius-pill: 9999px;
+
+  /* ═══════════════════════════════════════════════════════════════
+     SHADOWS — sem alteração
+     ═══════════════════════════════════════════════════════════════ */
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+
+  --shadow-glow-cyan: 0 0 20px rgba(0, 255, 255, 0.3);
+  --shadow-glow-red: 0 0 20px rgba(255, 68, 68, 0.3);
+  --shadow-glow-gold: 0 0 20px rgba(255, 195, 0, 0.3);
+  --shadow-glow-green: 0 0 20px rgba(46, 204, 113, 0.3);
+
+  --shadow-outer-sm: var(--shadow-sm);
+  --shadow-outer-md: var(--shadow-md);
+  --shadow-outer-lg: var(--shadow-lg);
+  --shadow-inner-cyan: var(--shadow-glow-cyan);
+  --shadow-inner-red: var(--shadow-glow-red);
+  --shadow-inner-gold: var(--shadow-glow-gold);
+  --shadow-inner-green: var(--shadow-glow-green);
+
+  /* ═══════════════════════════════════════════════════════════════
+     TRANSITIONS
+     CORRIGIDO: durações e easing estavam diferentes do protótipo
+     ═══════════════════════════════════════════════════════════════ */
+
+  --transition-fast: 120ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
+
+  /* ═══════════════════════════════════════════════════════════════
+     SPACING (SSOT)
+     CORRIGIDO: escala inteira estava maior que o protótipo,
+     e faltavam space-7 e space-9
+     ═══════════════════════════════════════════════════════════════ */
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 8px;
+  --space-4: 12px;
+  --space-5: 16px;
+  --space-6: 16px;
+  --space-7: 20px;
+  --space-8: 24px;
+  --space-9: 32px;
+  --space-10: 48px;
+  --space-12: var(--space-10); /* alias mantido p/ compatibilidade com código existente */
+
+  /* ═══════════════════════════════════════════════════════════════
+     LAYOUT (SSOT — dimensões fixas) — sem alteração
+     ═══════════════════════════════════════════════════════════════ */
+
+  --sidebar-width: 220px;
+  --header-height: 52px;
+}

@@ -1,0 +1,59 @@
+/* GlassCard.module.css */
+
+.card {
+  background:    var(--bg-card);
+  border:        var(--border-width) solid var(--border-default);
+  border-radius: var(--border-radius-lg);
+  padding:       var(--space-6);
+  box-shadow:    var(--shadow-outer-md);
+  transition:    background var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+  position:      relative;
+  overflow:      hidden;
+}
+
+.card:hover {
+  background: var(--bg-hover);
+}
+
+/* Variantes de glow */
+
+.glowCyan {
+  border-color: var(--border-glow-cyan);
+  box-shadow:   var(--shadow-outer-md), var(--shadow-inner-cyan);
+}
+
+.glowCyan:hover {
+  box-shadow: var(--shadow-outer-lg), var(--shadow-inner-cyan);
+}
+
+.glowRed {
+  border-color: var(--border-glow-red);
+  box-shadow:   var(--shadow-outer-md), var(--shadow-inner-red);
+}
+
+.glowRed:hover {
+  box-shadow: var(--shadow-outer-lg), var(--shadow-inner-red);
+}
+
+.glowGold {
+  border-color: var(--border-glow-gold);
+  box-shadow:   var(--shadow-outer-md), var(--shadow-inner-gold);
+}
+
+.glowGold:hover {
+  box-shadow: var(--shadow-outer-lg), var(--shadow-inner-gold);
+}
+
+.glowGreen {
+  border-color: var(--border-glow-green);
+  box-shadow:   var(--shadow-outer-md), var(--shadow-inner-green);
+}
+
+.glowGreen:hover {
+  box-shadow: var(--shadow-outer-lg), var(--shadow-inner-green);
+}
+
+.glowNone {
+  border-color: var(--border-default);
+  box-shadow:   var(--shadow-outer-sm);
+}

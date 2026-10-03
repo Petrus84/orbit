@@ -1,0 +1,114 @@
+/* Header.module.css */
+
+.header {
+  height:          var(--header-height);
+  background:      var(--bg-card);
+  border-bottom:   var(--border-width) solid var(--border-default);
+  display:         flex;
+  align-items:     center;
+  padding:         0 var(--space-6);
+  gap:             var(--space-4);
+  position:        sticky;
+  top:             0;
+  z-index:         10;
+}
+
+/* Título */
+
+.titleBlock {
+  display:        flex;
+  flex-direction: column;
+  gap:            2px;
+  min-width:      0;
+}
+
+.title {
+  font-size:      var(--font-size-lg);
+  font-weight:    var(--font-weight-bold);
+  color:          var(--text-primary);
+  letter-spacing: 0.3px;
+  white-space:    nowrap;
+  overflow:       hidden;
+  text-overflow:  ellipsis;
+}
+
+.subtitle {
+  font-size:   var(--font-size-xs);
+  color:       var(--text-dim);
+  display:     flex;
+  align-items: center;
+  gap:         var(--space-1);
+}
+
+.dot {
+  color: var(--border-default);
+}
+
+/* Spacer */
+
+.spacer {
+  flex: 1;
+}
+
+/* Date pill */
+
+.datePill {
+  display:       flex;
+  align-items:   center;
+  gap:           var(--space-2);
+  background:    var(--bg-hover);
+  border:        var(--border-width) solid var(--border-default);
+  border-radius: var(--border-radius-sm);
+  padding:       var(--space-2) var(--space-3);
+  white-space:   nowrap;
+  flex-shrink:   0;
+}
+
+.datePillIcon {
+  font-size: var(--font-size-sm);
+  line-height: 1;
+}
+
+.datePillText {
+  font-size: var(--font-size-xs);
+  color:     var(--text-muted);
+}
+
+/* Tabs */
+
+.tabGroup {
+  display:   flex;
+  gap:       var(--space-1);
+  flex-shrink: 0;
+}
+
+.tab {
+  padding:       var(--space-2) var(--space-4);
+  border-radius: var(--border-radius-sm);
+  font-size:     var(--font-size-xs);
+  font-family:   var(--font-family);
+  font-weight:   var(--font-weight-bold);
+  cursor:        pointer;
+  border:        var(--border-width) solid transparent;
+  color:         var(--text-muted);
+  background:    transparent;
+  transition:    all var(--transition-fast);
+  white-space:   nowrap;
+}
+
+.tab:hover {
+  color:      var(--text-primary);
+  background: var(--bg-hover);
+}
+
+.tabActive {
+  background:  var(--neon-cyan);
+  color:       var(--bg-base);
+  border-color: var(--neon-cyan);
+  box-shadow:  0 0 12px rgba(0, 255, 255, 0.4);
+}
+
+.tabActive:hover {
+  background: var(--neon-cyan-dark);
+  color:      var(--bg-base);
+}

@@ -1,0 +1,768 @@
+{
+  "handle": "marciogleisonn",
+  "setor_benchmark_key": "8_autoridade_b2b",
+  "url": "https://www.instagram.com/marciogleisonn/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T02:29:33.009Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "Dbl9oANxQg2",
+      "caption": "",
+      "timestamp": "2026-08-03T21:37:24.000Z",
+      "content_format": "reel",
+      "likes": 491,
+      "comments": 35,
+      "video_view_count": 14395,
+      "video_play_count": 40121,
+      "latest_comments": [
+        "Que pergunta idiota, quem quer saber 🤦🏻‍♂️",
+        "Se fosse aqui na minha cidade para ser top 10 precisa ter mais de 1bilhao 😂",
+        "Tô é longe 😂😂",
+        "Pelo menos essa cabeça de cacha d’água elabora essa perguntas besta"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbo5pjqx8Lv",
+      "caption": "No início a prioridade tem que ser a empresa, depois tem que ser os momentos que a empresa pode te proporcionar com a família",
+      "timestamp": "2026-08-05T00:58:10.000Z",
+      "content_format": "reel",
+      "likes": 173,
+      "comments": 3,
+      "video_view_count": 3474,
+      "video_play_count": 9516,
+      "latest_comments": [
+        "Cara vc quer vender vídeo na internet como ficar Rico,besta quem cai",
+        "Um dia desse estava fazendo o contrário, olha ai entrando em contradição",
+        "@darlysonribeiro94 🤦🏻‍♂️🤦🏻‍♂️🤦🏻‍♂️🤦🏻‍♂️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DboiHnQR8zi",
+      "caption": "Link na bio \n\n@expocelltecnologia segunda edição",
+      "timestamp": "2026-08-04T21:31:07.000Z",
+      "content_format": "reel",
+      "likes": 29,
+      "comments": 1,
+      "video_view_count": 494,
+      "video_play_count": 2343,
+      "latest_comments": [
+        "🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DboAWNMRR3A",
+      "caption": "",
+      "timestamp": "2026-08-04T16:35:27.000Z",
+      "content_format": "reel",
+      "likes": 842,
+      "comments": 119,
+      "video_view_count": 26595,
+      "video_play_count": 75177,
+      "latest_comments": [
+        "👏👏👏👏👏👏",
+        "Concordo que apresentação é importante ao ponto de valorizar o produto, mas dobrar o valor por canta da embalagem aí você pegou pesado!! Kkkk",
+        "Entendo bem o q isso. Apresentação é tudo.",
+        "Faz sentido. Embalagem Brasileira e case da China 😂",
+        "Uma loja aqui da minha cidade fez isso e eu comprei 😂😂😂😂",
+        "To fazendo nada vou ali mostra como quebrar minha loja 😂😂😂",
+        "Essa capa aqui é 15$"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbooIG0x5ue",
+      "caption": "",
+      "timestamp": "2026-08-04T22:23:32.000Z",
+      "content_format": "reel",
+      "likes": 41,
+      "comments": 2,
+      "video_view_count": 1421,
+      "video_play_count": 4249,
+      "latest_comments": [
+        "Vendor de curso na internet",
+        "Essas frases copiou do Lázaro 😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbmEkL-RjB5",
+      "caption": "So existe duas formas de fazer “network”\nOu sendo uma pessoa interessante, ou pagando .",
+      "timestamp": "2026-08-03T22:36:09.000Z",
+      "content_format": "reel",
+      "likes": 33,
+      "comments": 0,
+      "video_view_count": 1262,
+      "video_play_count": 3738,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DboaZhtxnlV",
+      "caption": "Ingresso premium @expocelltecnologia \n\n✅encontro com fornecedores e palestrantes dia 10 em um rooftop na aldeota . \n✅acesso privilegiado nas palestras \n✅entrada privilegiada no evento \n✅mentoria dia 12 com o Márcio , das 09:00 às 12:00",
+      "timestamp": "2026-08-04T20:51:38.000Z",
+      "content_format": "reel",
+      "likes": 53,
+      "comments": 3,
+      "video_view_count": 1283,
+      "video_play_count": 4610,
+      "latest_comments": [
+        "👏👏👏👏👏👏",
+        "🔥🔥🔥🔥",
+        "🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbcM205tsYf",
+      "caption": "",
+      "timestamp": "2026-07-31T02:34:09.000Z",
+      "content_format": "reel",
+      "likes": 122,
+      "comments": 2,
+      "video_view_count": 4074,
+      "video_play_count": 12189,
+      "latest_comments": [
+        "No final de agosto nos encontramos no evento que acontecerá no RJ",
+        "Isso mesmo meu amigo, ser reconhecido pelo valor 👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbl0kVMRRX9",
+      "caption": "",
+      "timestamp": "2026-08-03T20:14:25.000Z",
+      "content_format": "reel",
+      "likes": 458,
+      "comments": 5,
+      "video_view_count": 9551,
+      "video_play_count": 24907,
+      "latest_comments": [
+        "@geraldomagelaveiculos",
+        "Referência Dr. Taffarel e Dra. Lorena",
+        "Tem o neto Cell, Ricardo celular, você, Sebastião evangelista, madeira matos do Zé Rebouças, tafarel canudo e a Lorena e aí vai",
+        "@juliomarcioba daí você citou os concorrentes dele 😂 aí não patrão"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbgzWUBRlbg",
+      "caption": "",
+      "timestamp": "2026-08-01T21:28:19.000Z",
+      "content_format": "reel",
+      "likes": 733,
+      "comments": 61,
+      "video_view_count": 20634,
+      "video_play_count": 56435,
+      "latest_comments": [
+        "Loja faturando 30 mil por mês e muito baixo pra uma loja , delivery até vai mais loja que o custo e alto não é muito viável no meu ponto de vista pois tenho acaiteria",
+        "Já pensei e penso muito em entrar no açaí, já vi pesquisas que do setor alimentício está em 3o lugar de melhor negócio por conta da margem, só perde pra Pizza e Culinária oriental (chinês e japonês).",
+        "Uma rede de loja por 180 mil ?? É uma barraquinha né ? 😂😂😂",
+        "Falo com propriedade, muita mão de obra, faturamento de 30k seu cf fica na media de 35% cmv de 40 se vc nao tiver a fábrica própria e no seu caso teria o royalties. Cuidado. 180k vc montar a loja e sua fábrica. E consegue faturar bem mais que 30k mês"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbdmP1WxwsI",
+      "caption": "Quem me critica, quem me julga. Não define quem eu sou.\nTodas essas pessoas, são vazias em algo, eu não conheço ninguém que bem resolvido que fica criticando outras",
+      "timestamp": "2026-07-31T15:36:11.000Z",
+      "content_format": "reel",
+      "likes": 121,
+      "comments": 11,
+      "video_view_count": 3947,
+      "video_play_count": 10314,
+      "latest_comments": [
+        "Imagina se fosse bonito 😂",
+        "👏👏👏👏",
+        "👏👏👏",
+        "Piada kkkkkk qualquer entra na mente desse ai",
+        "👏",
+        "Todo dia o mesmo papo😂, quem é não precisa se reafirmar e se exaltar todos os dias",
+        "Te acompanho a um bom tempo, sempre notei vc vem centrado, parabéns.",
+        "@paulosergionene 😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbdnhghxyxH",
+      "caption": "",
+      "timestamp": "2026-07-31T15:46:26.000Z",
+      "content_format": "reel",
+      "likes": 618,
+      "comments": 33,
+      "video_view_count": 16177,
+      "video_play_count": 41875,
+      "latest_comments": [
+        "Esse alô já é pra quando vc já está bem estabilizado.\nE pra marcar presença na festa. \nComo um empresário importante da região. \n\nbrand……",
+        "Se for 3 mil pelo alô do ws \nÉ ele ficar meu amigo que nem é do tirulipa aí vale a pena kkkk",
+        "Paga os 3 mil no alô, faz um vídeo e joga no tráfego pago kkkkkkk",
+        "Márcio tem visão. Eu acho que esse alô a maioria nem escuta tá Ali pra curti",
+        "Como é que a pessoa faz uma pergunta dessa? Essa criatura pensa que todo mundo faz aurea e six sevem kkkk",
+        "👏👏👏👏👏",
+        "Rapaz é cada pergunta besta",
+        "É umas pergunta mais besta do que outras, macho nem responde isso não.",
+        "@danylo.alves10 Chegou o baba ovo 😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbluRXBRdsQ",
+      "caption": "",
+      "timestamp": "2026-08-03T20:01:08.000Z",
+      "content_format": "reel",
+      "likes": 179,
+      "comments": 3,
+      "video_view_count": 3924,
+      "video_play_count": 9805,
+      "latest_comments": [
+        "👏👏👏👏👏",
+        "Eu acho q fui da sua época eu era total andaimes 2015",
+        "@gecell_russas entrei fevereiro 2015 sair maio 2016"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbinjDQx1Jw",
+      "caption": "",
+      "timestamp": "2026-08-02T14:23:43.000Z",
+      "content_format": "reel",
+      "likes": 330,
+      "comments": 10,
+      "video_view_count": 7191,
+      "video_play_count": 19869,
+      "latest_comments": [
+        "O dono não vende nada imagina os vendedores 😂😂 o cara não Vander uma garantia 😂😂",
+        "Lidar*",
+        "Acho que seria mais eficiente se no preço normal oferecesse a garantia normal por lei e garantia estendida oferecesse dois anos já que está oferecendo 1 ano com preço normal não teria problema mas mudaria a abordagem com o cliente",
+        "O principal argumento ele não usou, que era o aumento de só 20 na parcela.",
+        "Lidar*",
+        "E se você oferecesse a garantia de 1 no próximo iPhone que ela pegasse de você? \n\nExemplo depois de 1 ano a garantia do 11 expira aí ela vai e pega o 13 aciona a garantia que você já tinha oferecido e vendido pra ela?",
+        "@edudurigon foi kkkk"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbgTH9lxoQL",
+      "caption": "",
+      "timestamp": "2026-08-01T16:47:16.000Z",
+      "content_format": "reel",
+      "likes": 299,
+      "comments": 4,
+      "video_view_count": 6626,
+      "video_play_count": 17469,
+      "latest_comments": [
+        "Como faco p vender em boleto?",
+        "Incrível o seu operacional Márcio, trabalho muito para que um dia minha empresa chegue numa operação organizada e que gere tanto resultando como a sua, parabéns",
+        "Acredito que não seja necessário tantos funcionários, mas se vc tem e dá certo , tem demanda no seu . Mas acho que supriria muito divisão de trabalho."
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbirnl7xUjs",
+      "caption": "Você quer colocar sua marca na segunda edição da @expocelltecnologia .\nJá temos 300 ingressos vendidos.\n\nSe você quer mostrar sua marca , fale comigo no privado. 88997242602",
+      "timestamp": "2026-08-02T14:58:59.000Z",
+      "content_format": "reel",
+      "likes": 140,
+      "comments": 3,
+      "video_view_count": 4579,
+      "video_play_count": 12764,
+      "latest_comments": [
+        "Tá correndo bem rs\nBrincadeira a parte Deus te abençoe, sou teu fã",
+        "Qual valor?",
+        "@bernardojrr contato está na descrição"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbZtNBJRZqh",
+      "caption": "",
+      "timestamp": "2026-07-30T03:19:15.000Z",
+      "content_format": "reel",
+      "likes": 480,
+      "comments": 63,
+      "video_view_count": 13964,
+      "video_play_count": 35996,
+      "latest_comments": [
+        "Parabéns pelo seu trabalho",
+        "👏👏👏👏",
+        "Quem tem lavanderia sou eu 😂😂😂😂😂😂",
+        "😂😂😂😂né isso",
+        "Rapaz é cada uma! Só é ir lavar tbm simples… tá preocupado com o que o cara faz, e acha uma coisa, vai e faz tbm simples… melhor que ficar apontando",
+        "Putz mano achei isso ridículo o cara gravar um vídeo comendo ou tomando algo apenas minha opinião"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbZm6qptB_1",
+      "caption": "",
+      "timestamp": "2026-07-30T02:24:19.000Z",
+      "content_format": "reel",
+      "likes": 1104,
+      "comments": 94,
+      "video_view_count": 29529,
+      "video_play_count": 75088,
+      "latest_comments": [
+        "@jonathanlleal__  ensina ai para nois",
+        "Ele tem todas as respostas e sempre tem razão … grande empresária de sucesso 😂",
+        "Todo último dia do mês supermercado faz o queima e lota tudo .",
+        "😂",
+        "A cabeça da a tela do telefone todinho kkkk",
+        "@helklen_borges kkkkkkkkkkkkkkkkk"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbgniTDxZ-5",
+      "caption": "Eu trabalho pra usufruir, mas enquanto usufruo, a loja não tem que continuar vendendo",
+      "timestamp": "2026-08-01T19:44:47.000Z",
+      "content_format": "reel",
+      "likes": 324,
+      "comments": 10,
+      "video_view_count": 8461,
+      "video_play_count": 25701,
+      "latest_comments": [
+        "Vendendo pra lucrar 40,00 ?🤔",
+        "Deus abençoe",
+        "Pipa é muito linda mesmo,só tomar cuidado com assaltantes ontem o Fabiano do @centraldeobras_ foi assaltado aí no RN, aproveite bastante as férias,vc merece",
+        "👏👏👏👏",
+        "Bem vindo a terrinha",
+        "Pipa é sensacional",
+        "😂😂😂😂",
+        "👏",
+        "@uiltonmarcal sim , estamos lucrando 40 reais em cada celular",
+        "@marciogleisonn foi pelo engajamento.. vc e fera.. #admiração."
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DLI5tKvxOu9",
+      "caption": "Qual foi o seu maior insight até agora? Deixa aqui nos comentários 👇🔥\n\nMÉTODO PCM | DAY 1",
+      "timestamp": "2025-06-20T22:18:12.000Z",
+      "content_format": "static_post",
+      "likes": 170,
+      "comments": 141,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Vim pelo @tecnicogabrielbruno",
+        "Fazer um Marketing limpo, claro e objetivo! Claramente uma virada de chave incrivel!",
+        "o básico bem feito",
+        "O conhecimento liberta 🔥🔥",
+        "O método PCM fez dar a virada de chave que o meu negócio precisava. Vendas, Gestão, financeiro e marketing. Conteúdo Toop 🚀🔥✨",
+        "O método pcm abriu minha mentalidade, eu vou aplicar tudo na minha empresa e vou dar um depoimento de como foi. Até o momento só maravilhas mais de 12 horas de ensinamentos",
+        "o basico bem feito top dms",
+        "Você é o dono que constrói os processos, ou você é o escravo da sua própria bancada. Esse foi o melhor insight do método PCM 👏",
+        "Cultura forte , loja grande 🚀🚀",
+        "Estamos sempre buscando crescer e evoluir a nossa loja, e foi assim que conhecemos o método PCM. Desde o início, está sendo uma experiência incrível, abrindo nossa mente para novas estratégias, organização e formas de alcançar mais resultados.🚀"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DboQ2ZGx-t4",
+      "caption": "",
+      "timestamp": "2026-08-04T19:01:19.000Z",
+      "content_format": "reel",
+      "likes": 224,
+      "comments": 8,
+      "video_view_count": 3771,
+      "video_play_count": 12398,
+      "latest_comments": [
+        "👏🏼👏🏼👏🏼",
+        "Se for amarrado no contrato.\nTiver um app forte de block.\nTá só filé 🥩 \nPegou a senha né @marciogleisonn",
+        "Acredita kkkk mais combinado doque as pegadinhas do João Cleber",
+        "Todo dia sai de casa um tonto e um esperto, e hoje eles se encontraram…",
+        "Tudo pela vaidade.",
+        "Rapaz invista seu dinheiro em outra coisa,celular não é investimento!!!",
+        "Um técnico querendo celular de 800/mês\n\nUm iPhone 11 por 600 \n\nTudo fora do eixo 😂",
+        "Coitada da mulher que tenta construir um família com um burro desse. Apesar de ser combinado, tem gente muito burra nesse mundo"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Cwdb3dMu4Yp",
+      "caption": "É fácil está com alguém que soma, e sonha junto.\nNossos sonhos é um só, e com certeza com nossa união vamos conseguir nossos objetivos.\nTe amo @laeniaoliveira",
+      "timestamp": "2023-08-27T19:33:52.000Z",
+      "content_format": "carousel",
+      "likes": 1287,
+      "comments": 38,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "O que vc faria se tivesse um funcionário insatisfeito na sua loja mas  nao quer pedir demissão. Quer que vc demita nao ele nao perder direitos trabalhistas",
+        "Chefe vc parece ser bem mais emocionado q ela né?! Cuidado com duas de 500!",
+        "Veste calça não é homem, homem é provedor e cuida de sua Família. Sucessos!!!",
+        "Oi anjo! Sou Vivi benicio da Jv agencia e deixei uma oportunidade na sua DM, corre lá 🤗\nParabéns pelo seu trabalho♥",
+        "Top 🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbmAL8vRSls",
+      "caption": "",
+      "timestamp": "2026-08-03T21:56:17.000Z",
+      "content_format": "reel",
+      "likes": 108,
+      "comments": 0,
+      "video_view_count": 2426,
+      "video_play_count": 6638,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "C_vfelpOjIk",
+      "caption": "Hoje estive em um grupo exclusivo para empresários, momento único na minha vida , esta do lado das minhas maiores referências profissionais.",
+      "timestamp": "2024-09-10T15:42:40.000Z",
+      "content_format": "carousel",
+      "likes": 2775,
+      "comments": 115,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👏👏👏",
+        "👏👏👏👏👏",
+        "Uauuuuuuu quanto poder em algumas fotos! A importância da VISUALIZAÇÃO, por muito que esse momento tenha acontecido nessa data, seguramente foi visualizado e desejado muito antes! Ao que cré, TUDO é possível!",
+        "Aí sim hein!!!",
+        "A chave e comprar acesso 🔥",
+        "Ao lado do caras  maiores do Brasil 👏👏👏👏",
+        "Márcio está focado em 🌞🌞",
+        "Ir na palestra dos cara e depois ficar tietando pra ter vídeo e fotos... Nem digo nada."
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbYMZXyxjlJ",
+      "caption": "",
+      "timestamp": "2026-07-29T13:14:35.000Z",
+      "content_format": "reel",
+      "likes": 318,
+      "comments": 63,
+      "video_view_count": 6854,
+      "video_play_count": 17169,
+      "latest_comments": [
+        "Dependemos de Deus",
+        "Queira ver um vídeo dele em 2019 até 2022 kk",
+        "\"Quando um governo é corrupto, parte do dinheiro dos impostos que deveria ser usada em estradas, segurança, saúde e educação é desviada ou mal utilizada. Isso faz o país crescer menos e aumenta os custos para as empresas.\"",
+        "Fora lula",
+        "Concordo. Essa polarização está tomando conta do Brasil e o maior prejudicado é o Povo.",
+        "Quando eu vejo que meus pais viveram ditadura, Era Collor,Sarney, Itamar quem somos nós pra viver reclamando de lula e Bolsonaro. as pessoas não se ligam que a nossa vida só depende de nós e não de governos"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbYfNBnRPSh",
+      "caption": "",
+      "timestamp": "2026-07-29T15:57:58.000Z",
+      "content_format": "reel",
+      "likes": 442,
+      "comments": 18,
+      "video_view_count": 11110,
+      "video_play_count": 30666,
+      "latest_comments": [
+        "Como q tem gente que critica esse homem,ele ajuda demais gratuito...",
+        "O certo do varejo é dar 10% de lucro mesmo , mas pra der tem estar tudo bem alinhado se não o lucro some.",
+        "Quem tem margem líquida menor que isso, geralmente a empresa está com índice de insolvência negativo.",
+        "Isso mesmo",
+        "Acertou! É isso mesmo!",
+        "Se garante"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbYlAfvxh-3",
+      "caption": "",
+      "timestamp": "2026-07-29T16:49:05.000Z",
+      "content_format": "reel",
+      "likes": 285,
+      "comments": 29,
+      "video_view_count": 8155,
+      "video_play_count": 20760,
+      "latest_comments": [
+        "Justamente... aqui vendo celulares usados,  quando anuncio não dura mais do q uma semana pra vender (prefiro vender celulares usados, a rotatividade e muito boa)",
+        "Não sei por que, mas o Marcio me parece ser aquela pessoa que ou é 8 ou é 80 não existe o meio termo 😮",
+        "Alguma financeira boa pra indicar?",
+        "Só vejos gente sem noção que não sabe que tem financeira que arca 100% com calotes kkkkk, Em pleno 2026 lojista de celular não se atualiza",
+        "@marciogleisonn 🙌🙌🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbYEIP_RBpt",
+      "caption": "",
+      "timestamp": "2026-07-29T12:03:58.000Z",
+      "content_format": "reel",
+      "likes": 88,
+      "comments": 3,
+      "video_view_count": 2827,
+      "video_play_count": 7619,
+      "latest_comments": [
+        "100%100 verdade",
+        "E verdade os é os herdeiro não sabe de nada não sabe o que que a empresa deve que que a empresa tem a receber não tem enfim não sabe nada é poucos tá certinho aí é poucos que sabe e a maioria quebra",
+        "Verdade"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbYEKf0RwXs",
+      "caption": "",
+      "timestamp": "2026-07-29T12:03:45.000Z",
+      "content_format": "reel",
+      "likes": 247,
+      "comments": 15,
+      "video_view_count": 4587,
+      "video_play_count": 11910,
+      "latest_comments": [
+        "👏👏👏👏",
+        "Monte uma empresa, e se sirva totalmente a essa empresa, como se não fosse sua.",
+        "👏👏👏top",
+        "Excelente pergunta e excelente resposta... Vídeo perfeito!!🔥🔥",
+        "É isso que eu falo, a riqueza é relativa. 👏👏👏👏",
+        "👏",
+        "👏👏👏",
+        "Todos nasceram para servir. O patrão serve  o funcionário o funcionário o patrão."
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbZEZnSxUlv",
+      "caption": "",
+      "timestamp": "2026-07-29T21:22:51.000Z",
+      "content_format": "reel",
+      "likes": 58,
+      "comments": 0,
+      "video_view_count": 2250,
+      "video_play_count": 6679,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 247210,
+  "following_count": 51,
+  "posts_count": 2238,
+  "follower_tier": "mega",
+  "engagement": {
+    "sample_size": 30,
+    "median_er": 0.0012418591480927146,
+    "mean_er": 0.0018154605396221838,
+    "er_per_post": [
+      {
+        "short_code": "Dbl9oANxQg2",
+        "er": 0.0021277456413575503,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dbo5pjqx8Lv",
+        "er": 0.0007119453096557582,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DboiHnQR8zi",
+        "er": 0.00012135431414586789,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DboAWNMRR3A",
+        "er": 0.0038873831964726345,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbooIG0x5ue",
+        "er": 0.0001739411836090773,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbmEkL-RjB5",
+        "er": 0.00013348974556045466,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DboaZhtxnlV",
+        "er": 0.00022652805307228673,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbcM205tsYf",
+        "er": 0.0005015978318029206,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dbl0kVMRRX9",
+        "er": 0.0018729015816512278,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbgzWUBRlbg",
+        "er": 0.0032118441810606367,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbdmP1WxwsI",
+        "er": 0.0005339589822418187,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbdnhghxyxH",
+        "er": 0.002633388616965333,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbluRXBRdsQ",
+        "er": 0.0007362161724849319,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbinjDQx1Jw",
+        "er": 0.0013753488936531695,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbgTH9lxoQL",
+        "er": 0.0012256785728732655,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dbirnl7xUjs",
+        "er": 0.0005784555640953036,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbZtNBJRZqh",
+        "er": 0.0021965130860402086,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbZm6qptB_1",
+        "er": 0.004846082278224991,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbgniTDxZ-5",
+        "er": 0.0013510780308239958,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DLI5tKvxOu9",
+        "er": 0.0012580397233121637,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DboQ2ZGx-t4",
+        "er": 0.000938473362728045,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Cwdb3dMu4Yp",
+        "er": 0.005359815541442498,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbmAL8vRSls",
+        "er": 0.0004368755309251244,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "C_vfelpOjIk",
+        "er": 0.01169046559605194,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbYMZXyxjlJ",
+        "er": 0.0015411997896525222,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbYfNBnRPSh",
+        "er": 0.0018607661502366409,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbYlAfvxh-3",
+        "er": 0.0012701751547267506,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbYEIP_RBpt",
+        "er": 0.00036810808624246593,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbYEKf0RwXs",
+        "er": 0.0010598276768739128,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbZEZnSxUlv",
+        "er": 0.00023461834068201124,
+        "content_format": "reel"
+      }
+    ]
+  },
+  "external_url": "https://www.sympla.com.br/evento/expocell-tecnologia-edicao-ii/3463076",
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "1_ecommerce_direto",
+    "secondary": "3_infoprodutor",
+    "matches": [
+      {
+        "category": "1_ecommerce_direto",
+        "score": 3,
+        "evidence": [
+          "external_url próprio (não agregador/infoproduto/membership) + legenda com CTA de venda: \"Link na bio\""
+        ]
+      },
+      {
+        "category": "3_infoprodutor",
+        "score": 2,
+        "evidence": [
+          "legenda com padrão de lançamento: \"mentoria\""
+        ]
+      }
+    ],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "1_ecommerce_direto",
+    "setor_benchmark_secundario": "3_infoprodutor",
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "implementado",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T02:29:33.009Z",
+    "versao_framework": "v3.1"
+  }
+}

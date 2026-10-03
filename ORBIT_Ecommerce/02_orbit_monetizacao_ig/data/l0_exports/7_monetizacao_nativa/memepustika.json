@@ -1,0 +1,708 @@
+{
+  "handle": "memepustika",
+  "setor_benchmark_key": "7_monetizacao_nativa",
+  "url": "https://www.instagram.com/memepustika/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T02:22:58.651Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DEb2I3Kyz51",
+      "caption": "This is a remix/recreation \n.\n.\n#reelitfeelit #memes #fypシ #foreyoupage #funnymemes #explorepage",
+      "timestamp": "2025-01-05T07:14:39.000Z",
+      "content_format": "reel",
+      "likes": 2183550,
+      "comments": 12231,
+      "video_view_count": 19776036,
+      "video_play_count": 41485501,
+      "latest_comments": [
+        "Amazing😂👏😂...",
+        "😂",
+        "😂",
+        "😂",
+        "My volume button📈📉📈📉📈📉📈📉📈📉📈📉"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbYaWWxSXbG",
+      "caption": "Multiverse of Sallu bhai \n.\n.\n#reelitfeelit #trending #fyp #reels #explore",
+      "timestamp": "2026-07-29T15:14:46.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 2,
+      "video_view_count": 1416,
+      "video_play_count": 4194,
+      "latest_comments": [
+        "Camel toes are sworn enemies of humans 😬",
+        "😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "Dba0s0pygOm",
+      "caption": "Yash just killed it 🔥🔥\n.\n.\n#ramayana #ramayanatrailer #yash #indiancinema #bollywood",
+      "timestamp": "2026-07-30T13:43:36.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 2,
+      "video_view_count": 1292,
+      "video_play_count": 3594,
+      "latest_comments": [
+        "dhurandhar vibe 🔥🔥",
+        "❤️🙌🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "Dbk9_ijSI8n",
+      "caption": "Bihar ke Avengers 🥶🥀\n\n🎬Dhamaal 4 (2026)\n\nDhamaal 4 marks the return of one of Bollywood's most iconic comedy franchises, bringing back the signature madness, hilarious misunderstandings, and nonstop entertainment that made the previous films fan favorites. While the makers have kept the storyline under wraps, the film promises another laughter-filled adventure packed with crazy twists, over-the-top situations, and unforgettable comic moments.\n\nThe film has already generated massive excitement among audiences, with fans eagerly waiting to see the franchise return to the big screen after years. Known for its family-friendly humor and memorable characters, Dhamaal 4 is expected to be one of the biggest comedy releases of 2026, continuing the legacy of one of Bollywood's most successful comedy franchises.\n\nFeaturing Ajay Devgn, Riteish Deshmukh, Arshad Warsi, Jaaved Jaaferi, Sanjay Mishra, Ravi Kishan, Sanjeeda Shaikh, Anjali Anand, Upendra Limaye, and Vijay Patkar, Dhamaal 4 promises another entertaining ride filled with comedy, chaos, and laughter.\n\n🎭Cast: Ajay Devgn, Riteish Deshmukh, Arshad Warsi, Jaaved Jaaferi, Sanjay Mishra, Ravi Kishan, Sanjeeda Shaikh, Anjali Anand, Upendra Limaye, Vijay Patkar\n\n📺Releasing in Cinemas: Eid 2026\n\n#memes #funny #ravikishan",
+      "timestamp": "2026-08-03T12:19:14.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 50,
+      "video_view_count": 31014,
+      "video_play_count": 68956,
+      "latest_comments": [
+        "😂😂",
+        "Love zyada chahiye thi ya jhagda.. lavda my brothaaaa",
+        "Ab to Garena bhi maze le rhi h",
+        "😂",
+        "😂😂😂",
+        "😂",
+        "😂😂",
+        "Abeyy ye kisne bana diyaa 😂😂😂🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbQcoPxSFHl",
+      "caption": "Breaking🚨🚨🚨🚨🚨🚨🚨\n.\n.\n.\n#reelitfeelit #memes #fyp #humor #funnymemes",
+      "timestamp": "2026-07-26T13:00:50.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 8,
+      "video_view_count": 451,
+      "video_play_count": 5014,
+      "latest_comments": [
+        "No one was har........ Nvm",
+        "Tera bhi career khtre me hain bhai .....😂...",
+        "Lagta h tum log bhai ki fielding set karke hi manoge vo Lawrence aise hi Bhai ke piche hath dho ke pda h 😂😂😂",
+        "On sum hard shit",
+        "@him_14__"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbOGrNeS0b_",
+      "caption": "Real",
+      "timestamp": "2026-07-25T15:10:22.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 1,
+      "video_view_count": 393,
+      "video_play_count": 6390,
+      "latest_comments": [
+        "\"Doctor\" Doom se ladega 😍☝️"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbPrkKfIpsu",
+      "caption": "今夜、③thvはハリウッドで行われた @gracieabrams と@dojacat のパフォーマンスを観客席から鑑賞しました。\n\nファッションショーにも慣れている @bts.bighitofficial のスターは、ランウェイに登場してもおかしくないような装いで登場しました。",
+      "timestamp": "2026-07-26T05:51:59.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 5,
+      "video_view_count": 48,
+      "video_play_count": 3080,
+      "latest_comments": [
+        "YAD RAKHNA ME HANI HU 🌚",
+        "@bhargav_hangal 😂",
+        "Baka (馬鹿)",
+        "@bhargav_hangal 💀💀"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbbExTASXHP",
+      "caption": "Just imagine😈\n.\n.\n#explorepage #explore #meme #fyp",
+      "timestamp": "2026-07-30T16:03:34.000Z",
+      "content_format": "static_post",
+      "likes": null,
+      "comments": 5,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "@nein.nihga.hilter karenge 😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbK3aU3SP4S",
+      "caption": "Friends...\n.\n.\n#fyp#viral#explorepage#reels#trending",
+      "timestamp": "2026-07-24T09:01:00.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 4,
+      "video_view_count": 289,
+      "video_play_count": 3884,
+      "latest_comments": [
+        "😂😂😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbfUWBVSgqm",
+      "caption": "What you think 🤔 \n.\n.\n#meme #memes #fyp #humor #explore",
+      "timestamp": "2026-08-01T07:37:24.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 3,
+      "video_view_count": 2080,
+      "video_play_count": 5972,
+      "latest_comments": [
+        "OG",
+        "Kapda tere baap ka",
+        "Om raut 🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbPbmOhktAP",
+      "caption": "True Vimal lover 🌚\n.\n.\n#explorepage #explore #meme #fyp",
+      "timestamp": "2026-07-26T03:32:06.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 10,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂😂",
+        "Tweri mew ka bhowsda 😍",
+        "विमल थोडी कमी खायची 😂",
+        "Kuch log bolnege ai hae",
+        "Dude ia pushing 80.cut him some plaque",
+        "Ai😂😂",
+        "😂😂😂",
+        "😂😂😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbhkZeskgga",
+      "caption": "Ravi kishanand🙂‍↕️🙏\n.\n.\n#explorepage #explore #meme #fyp #memes",
+      "timestamp": "2026-08-02T04:35:20.000Z",
+      "content_format": "carousel",
+      "likes": 28728,
+      "comments": 173,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂😂",
+        "Ravi Einstein 😎",
+        "@____sapna_38 baby please take notes😎",
+        "😂😂",
+        "@ravikishann",
+        "Yeah toh kuch bhi nhi hai aap Manoj Tiwari se mileye tab pata lagaga",
+        "@budhirajatushar211217😂",
+        "Neet the newspaper 📰",
+        "😂😂",
+        "Shakespeare reborn 🙌"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbTK59Nkuss",
+      "caption": "Real dhurandhar ♥️\n.\n.\n#explorepage #explore #meme #fyp",
+      "timestamp": "2026-07-27T14:23:12.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 3,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Lvden bhojyam 🙌"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbfwU0Gks0p",
+      "caption": "Caption this(spider man)\n.\n.\n#explorepage #explore #meme #fyp #memes",
+      "timestamp": "2026-08-01T11:41:04.000Z",
+      "content_format": "carousel",
+      "likes": 107414,
+      "comments": 708,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "MJ bhabhi support button ---------✅",
+        "😂😂😂😂😂😂",
+        "😂",
+        "😮😂",
+        "😂",
+        "Gee khtm hai 🥀😭",
+        "Na kar janab Na kar Karen khuda ka khauf Kar",
+        "Tom Kumar aur Zendaya Devi 😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbdfDb9kqoe",
+      "caption": "मकड़ी मरद 🔥\n.\n.\n#explorepage #explore #meme #fyp #memes",
+      "timestamp": "2026-07-31T14:31:40.000Z",
+      "content_format": "carousel",
+      "likes": 105976,
+      "comments": 355,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂",
+        "Rémote",
+        "Spiderman : jaldi the late",
+        "😂😂😂",
+        "Spiderman: jaldi the late😂",
+        "Paisaan😍",
+        "Money follows",
+        "\"Money follows may brother\""
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbawZaQyI_Y",
+      "caption": "Podcast aa gya\n.\n.\n#explorepage #explore #meme #fyp #memes",
+      "timestamp": "2026-07-30T13:05:33.000Z",
+      "content_format": "static_post",
+      "likes": null,
+      "comments": 4,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂😂😂😂",
+        "😂😂😂😂",
+        "Youtube par kab tak aa jayega?",
+        "A must watch"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DblRy-RJU16",
+      "caption": "😼🔥\n.\n.\n#explorepage #explore #meme #fyp #memes",
+      "timestamp": "2026-08-03T15:09:48.000Z",
+      "content_format": "static_post",
+      "likes": null,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂😂😂",
+        "Thanos Kiya lagata hai😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbnVCsCCa23",
+      "caption": "😼🔥🥀\n.\n.\n#explorepage #explore #meme #fyp #memes",
+      "timestamp": "2026-08-04T10:16:35.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 3,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "♥️♥️♥️♥️♥️♥️♥️♥️BISS",
+        "Big boss",
+        "Support 100% ethanol 😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbNe5jKSKpd",
+      "caption": "Dharmendra Pradhan finally pressed the “istifa” button.\n.\n.\n#explorepage #explore #meme #fyp",
+      "timestamp": "2026-07-25T09:22:32.000Z",
+      "content_format": "static_post",
+      "likes": 1423,
+      "comments": 15,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂😂😂😂",
+        "@ Rip 😂😂😂",
+        "Tumhe kya lagta h ye aise peecha chod dega??? Is paddd se istifaa diya h kisi aur pe to aa sakta h ye modi h bhai jab tak modi nhi deta resign tab tak Kuch nhi hone ka😂😂",
+        "Real germ 💔🥀",
+        "😂😂😂😂😂😂",
+        "Arey bhai bechare ne istifa de diya hai mat tapkao ab😂😂",
+        "😂😂",
+        "We did it bro 🤧😭",
+        "#cjpwon"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbLoUyayV1a",
+      "caption": "That one video call 🤙 \n.\n.\n#fyp#viral#explorepage#reels#trending",
+      "timestamp": "2026-07-24T16:07:13.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 2,
+      "video_view_count": 565,
+      "video_play_count": 6427,
+      "latest_comments": [
+        "The monkey and modi looks like same 😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbN6v6eyO7N",
+      "caption": "Nitin Gadkari’s ethanol dream is now national policy.\nMileage down, blending up, and 100% ethanol next on the list.\n.\n.\n#explorepage #explore #meme #fyp",
+      "timestamp": "2026-07-25T13:25:52.000Z",
+      "content_format": "static_post",
+      "likes": null,
+      "comments": 4,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Waiting for round 2 👀 (🪳 vs ⛽)",
+        "Sure 😄"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DV3be-VEltu",
+      "caption": "?\n.\n.\n#explorepage #explore #meme #fyp",
+      "timestamp": "2026-03-14T13:12:24.000Z",
+      "content_format": "static_post",
+      "likes": 285337,
+      "comments": 1885,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "@notnarayanisingh 🔥",
+        "@shohan_087",
+        "@__a_a_r_o_n__x77 🔥🔥",
+        "Flying Jatt ❌ cylinder Jatt ✅",
+        "🤤",
+        "@af._.n._.an don't tag me tag modi ji. Woh isi technology se chai banate the",
+        "@notnarayanisingh 😂😂😂😂😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DLkSEAjyInZ",
+      "caption": "🥰\n.\n.\n#explorepage #explore #meme #fyp",
+      "timestamp": "2025-07-01T13:30:31.000Z",
+      "content_format": "static_post",
+      "likes": 745790,
+      "comments": 5884,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "@imtyaj__gouri777",
+        "Heera Bete 😍😍😍",
+        "🔥🔥",
+        "Gc link in bio",
+        "@yuvraj_singghh__ 😢",
+        "@rashid__backer",
+        "@kana_rabari757"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbX9ZIqElxh",
+      "caption": "अंतरतारकीय वा 🚀\n.\n.\n#explorepage #explore #meme #fyp",
+      "timestamp": "2026-07-29T11:01:20.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 14,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Miller's planet ❌ Manoj's planet✅",
+        "Jaldi the late",
+        "😂",
+        "Bro it's \"jaldi the late \" 👺",
+        "Jaldi the Late ka Poster hai kya bhai",
+        "Kheshari ke jagah nirahua thik tha bhai",
+        "⚠- 𝘛𝘩𝘪𝘴 𝘤𝘰𝘮𝘮𝘦𝘯𝘵 𝘪𝘴 𝘋𝘦𝘭𝘦𝘵𝘦𝘥 𝘣𝘺 𝘙𝘢𝘷𝘪 𝘬𝘪𝘴𝘩𝘢𝘯... 😂😂😂",
+        "Ravi Nolan 🔥",
+        "Interstellarvaaa 😢"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbLkRSRkgXT",
+      "caption": "Filters🥰\n.\n.\n#explorepage #explore #meme #fyp #memes",
+      "timestamp": "2026-07-24T15:30:55.000Z",
+      "content_format": "carousel",
+      "likes": 2490,
+      "comments": 60,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂",
+        "Last wali AI ha 😮😮😮",
+        "😂😂😂😂",
+        "😂😂",
+        "@luckysoray 😍",
+        "Please be little respectful",
+        "Bass karo yrr insta band kr dega ye kuchupuchu 😂😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DVDiUE0EiTs",
+      "caption": "🔥🔥\n.\n.\n.\n#explorepage #explore #meme #fyp",
+      "timestamp": "2026-02-22T09:31:32.000Z",
+      "content_format": "carousel",
+      "likes": 136211,
+      "comments": 763,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Prompt please.",
+        "Prompt dede bhai...",
+        "😂😂😂😂",
+        "💎"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DMP9cYHynHJ",
+      "caption": "Kokila aka Kim Jong un♥️\n.\n.\n#explorepage #explore #meme #fyp",
+      "timestamp": "2025-07-18T12:36:56.000Z",
+      "content_format": "carousel",
+      "likes": 289375,
+      "comments": 708,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂😂😂😂😂😂",
+        "😂😂😂",
+        "😂😂😂",
+        "Ek tera ek mera@luna_melo__",
+        "WE WANT JETHA JONG😂",
+        "Ye bsdka north korea se apni fielding set karva raha hai 😢😢😂",
+        "Jethalal also😂😂",
+        "@zxzufc.sahithhhh",
+        "Delete krde post khel khtm kr dega tera ni to 😌"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbnloXBpxUD",
+      "caption": "My feeds nowadays😭🥀\n\n🎬Maa Behen (2026)\n\nMaa Behen is an upcoming dark comedy that follows a dysfunctional family whose ordinary lives spiral into complete chaos after an unexpected crime turns their home into the center of a bizarre mystery. As secrets begin to unravel, every attempt to fix the situation only creates more hilarious misunderstandings, leading to a rollercoaster of suspense, comedy, and family drama.\n\nDirected by Suresh Triveni, the film blends crime, humor, and emotional relationships into a fresh entertainer unlike typical Bollywood comedies. With an ensemble cast and an intriguing storyline, Maa Behen has already generated significant buzz among audiences and is one of the most anticipated Netflix originals of the year.\n\nFeaturing Madhuri Dixit, Triptii Dimri, Ravi Kishan, Arunoday Singh, Dharna Durga, Geetanjali Kulkarni, and Paresh Rawal, Maa Behen promises a unique mix of mystery, laughter, and unexpected twists.\n\n🎭Cast: Madhuri Dixit, Triptii Dimri, Ravi Kishan, Arunoday Singh, Dharna Durga, Geetanjali Kulkarni, Paresh Rawal\n\n📺Streaming Platform: Netflix\n\n#ravikishan #memes",
+      "timestamp": "2026-08-04T12:42:01.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 62,
+      "video_view_count": 31451,
+      "video_play_count": 60077,
+      "latest_comments": [
+        "Money is following 🙂🥀",
+        "@arkabrata_konar_",
+        "Mileage😂",
+        "Mahadev company ka gadi 🤡",
+        "Jaldi the Late🥀",
+        "But but... Money phhoolos my brother🥀",
+        "😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbNyaidy-21",
+      "caption": "Just imagine 💎\n.\n.\n#explorepage #explore #meme #fyp #memes",
+      "timestamp": "2026-07-25T12:13:03.000Z",
+      "content_format": "static_post",
+      "likes": null,
+      "comments": 7,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Wht the fk?",
+        "Best education minister 😘",
+        "Sonam wangchuk ❤️",
+        "Imagine modi ji as world leader 🥰😘",
+        "😂😂",
+        "Real germ💎",
+        "Mat kar lala"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DTsTrP8En1w",
+      "caption": ".\n.\n.\n#explorepage #explore #meme #fyp",
+      "timestamp": "2026-01-19T12:29:42.000Z",
+      "content_format": "static_post",
+      "likes": 1215180,
+      "comments": 3587,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Bahot kaminey log hain😂😂",
+        "Gc link in bio",
+        "Hahaha 😂 biscuit also had one smile impression",
+        "🤣🤣🤣🤣",
+        "Sharad pawar !?🥀",
+        "😂",
+        "🥀🥀🥀",
+        "😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 43472,
+  "following_count": 32,
+  "posts_count": 645,
+  "follower_tier": "mid",
+  "engagement": {
+    "sample_size": 11,
+    "median_er": 3.150855723224144,
+    "mean_er": 10.723397714725465,
+    "er_per_post": [
+      {
+        "short_code": "DEb2I3Kyz51",
+        "er": 50.51023647405226,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbhkZeskgga",
+        "er": 0.6648187338976813,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbfwU0Gks0p",
+        "er": 2.487164151637836,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbdfDb9kqoe",
+        "er": 2.445965218991535,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbNe5jKSKpd",
+        "er": 0.03307876334192124,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DV3be-VEltu",
+        "er": 6.607057416267943,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DLkSEAjyInZ",
+        "er": 17.29099190283401,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbLkRSRkgXT",
+        "er": 0.05865844681634155,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DVDiUE0EiTs",
+        "er": 3.150855723224144,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DMP9cYHynHJ",
+        "er": 6.67286989326463,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DTsTrP8En1w",
+        "er": 28.03567813765182,
+        "content_format": "static_post"
+      }
+    ]
+  },
+  "external_url": null,
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "a_validar_pre_monetizacao",
+    "secondary": null,
+    "matches": [],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "a_validar_pre_monetizacao",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "nao_implementado",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T02:22:58.651Z",
+    "versao_framework": "v3.1"
+  }
+}

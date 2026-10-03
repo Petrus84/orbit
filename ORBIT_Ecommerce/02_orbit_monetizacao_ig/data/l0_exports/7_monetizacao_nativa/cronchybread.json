@@ -1,0 +1,771 @@
+{
+  "handle": "cronchybread",
+  "setor_benchmark_key": "7_monetizacao_nativa",
+  "url": "https://www.instagram.com/cronchybread/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T02:22:03.206Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "C1mfoaGotGK",
+      "caption": "yum",
+      "timestamp": "2024-01-02T14:36:54.000Z",
+      "content_format": "static_post",
+      "likes": 568,
+      "comments": 8,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "rip",
+        "come back",
+        "LETS GOOO MEME PAGE IS BACK HELLO MEME PAGE!!!!",
+        "This is awesome",
+        "Gross"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CpqpZIEIjjX",
+      "caption": "me rn bc i am so behind on work❤️",
+      "timestamp": "2023-03-11T23:02:26.000Z",
+      "content_format": "static_post",
+      "likes": 577,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "I literally scrolled to this exact pic/post on my feed as soon as the mom in The Lost World: Jurassic Park screamed at the beginning of the movie 😂😂😂😂👏👏👏",
+        "me at college"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CrzGGeCoi6g",
+      "caption": "donkey",
+      "timestamp": "2023-05-03T22:50:00.000Z",
+      "content_format": "static_post",
+      "likes": 326,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Cz6eDEHIfQm",
+      "caption": "real ones know☝️",
+      "timestamp": "2023-11-21T15:45:05.000Z",
+      "content_format": "static_post",
+      "likes": 746,
+      "comments": 4,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "dale",
+        "I just don't understand this side of you"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CV6LLLkog-x",
+      "caption": "yuh",
+      "timestamp": "2021-11-05T21:18:21.000Z",
+      "content_format": "static_post",
+      "likes": 1570,
+      "comments": 5,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "@alexhoust0n this is u",
+        "The fall of the king 🍞",
+        "Goodbye amazing meme account.",
+        "Pack it up losers. cronchybread is back 😎"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CpbJWw6IQSo",
+      "caption": "jeus",
+      "timestamp": "2023-03-05T22:33:52.000Z",
+      "content_format": "static_post",
+      "likes": 700,
+      "comments": 3,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Game",
+        "@catherinec1822 Game",
+        "@sami.20.03 gg"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CTRvHRXodwY",
+      "caption": "its everywhere",
+      "timestamp": "2021-09-01T11:20:44.000Z",
+      "content_format": "static_post",
+      "likes": 1928,
+      "comments": 11,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "FUCK",
+        "They’ve already won 😔",
+        "open your uys",
+        "#boycott5guys it gives us covid",
+        "Billgates",
+        "Where is goku 😠😠😠",
+        "What is fiveg",
+        "Spitting bars",
+        "5g network"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CpYjkb7IJov",
+      "caption": "😝😝",
+      "timestamp": "2023-03-04T22:25:13.000Z",
+      "content_format": "static_post",
+      "likes": 1434,
+      "comments": 3,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "@pauldoubleyou",
+        "The return 🙌🙌",
+        "Nooooooooooooo"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Cpu54UMoeqf",
+      "caption": "actually",
+      "timestamp": "2023-03-13T14:43:27.000Z",
+      "content_format": "static_post",
+      "likes": 572,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Do your essay",
+        "@lucy_snowy.1 shut up"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CSMbU36ISp4",
+      "caption": "i want coffee",
+      "timestamp": "2021-08-05T13:20:14.000Z",
+      "content_format": "static_post",
+      "likes": 1713,
+      "comments": 10,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Not Noddy 😭",
+        "not this mfing show omg 💀",
+        "i scrolled to this as my gf was tickling me. perfect",
+        "Naughty?!",
+        "I’m drinking coffee fool",
+        "god bless this account 🙏",
+        "fuck, what cartoon is this omggggg i used to watch it what is it??? 😭"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CpqppOPoZQQ",
+      "caption": "to poland",
+      "timestamp": "2023-03-11T23:04:37.000Z",
+      "content_format": "static_post",
+      "likes": 632,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Cow land",
+        "Yes poland"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CSSOlrloLgZ",
+      "caption": "well?",
+      "timestamp": "2021-08-07T19:24:22.000Z",
+      "content_format": "static_post",
+      "likes": 1588,
+      "comments": 20,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Apologies spongebob",
+        "Cum in us.",
+        "He just mad cuz he found Patrick with sandy",
+        "Sory cuz",
+        "No",
+        "IM SO SORRY😫😫😭😭😭",
+        "fuck you dumb bob",
+        "🥺 …sponge…?",
+        "i’m sorry",
+        "Sorry"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CSFZK3_IgIS",
+      "caption": "might start shitposting here since the account is dying anyway",
+      "timestamp": "2021-08-02T19:46:42.000Z",
+      "content_format": "static_post",
+      "likes": 2203,
+      "comments": 19,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "“the account is dying” *has 76k followers*",
+        "We missed you😢 @cronchybread",
+        "CRONCHYBREAD GANG WYA 😢",
+        "I miss clean bread memes… the good old days",
+        "I miss this account",
+        "yes yes shitposts > memes",
+        "@nxrjhxr_ think again",
+        "@cameron.foshee it’s not a sad day yet"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CpYnwS1IQEI",
+      "caption": "third eye opened and that",
+      "timestamp": "2023-03-04T23:01:47.000Z",
+      "content_format": "static_post",
+      "likes": 1949,
+      "comments": 4,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "@palshah81 ahaha dis so u also this for game hehe",
+        "THE RETURN OF CLEAN BREAD MEMES",
+        "This is not helping my psychosis🥹",
+        "@vossy_bossy oh dear"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CPg3PgUrDEf",
+      "caption": "ungrateful really",
+      "timestamp": "2021-05-30T22:14:48.000Z",
+      "content_format": "static_post",
+      "likes": 2795,
+      "comments": 10,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Coz my little bitch teeth can't handle it ☹",
+        "@mason_faubion",
+        "Im broke",
+        "They’re nice and crunchy 👌",
+        "Too hard 😔",
+        "You guys should actually try it, it was so good it made all my teeth fall out",
+        "Abigail from Stardew Valley",
+        "my teeth",
+        "@emem.18 YUP"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CpV7LoiIVb2",
+      "caption": "my change of humour changed slightly",
+      "timestamp": "2023-03-03T21:53:49.000Z",
+      "content_format": "static_post",
+      "likes": 877,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "You're back! I missed you so!",
+        "@cameron.foshee 🥺"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CRCYWvtruUQ",
+      "caption": "😢",
+      "timestamp": "2021-07-07T19:10:28.000Z",
+      "content_format": "carousel",
+      "likes": 5841,
+      "comments": 131,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "malcom mcdowell as alex delarge",
+        "anya taylor joy as beth harmon",
+        "the only right answer is Ryan Reynolds as Deadpool🙌",
+        "this is so niche but Mary Stuart Masterson as watts in some kind of wonderful",
+        "Omg I miss the shaggy memes 😭",
+        "Johnny depp in all his roles",
+        "Sekai for Ryan from infinity train",
+        "He also does the voice of shaggy in the majority of the cartoons after the movie came out"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CtCbyQBocu4",
+      "caption": "😟",
+      "timestamp": "2023-06-03T18:19:29.000Z",
+      "content_format": "static_post",
+      "likes": 589,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Fogor my will to live 💀",
+        "It's ok girl, I forgo all the time. Youre not alone"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CREzLcDLvXQ",
+      "caption": "jummy",
+      "timestamp": "2021-07-08T17:43:20.000Z",
+      "content_format": "static_post",
+      "likes": 4360,
+      "comments": 15,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "@jeffrose15",
+        "Jie",
+        "Saw this and instantly thought of the Nasty Patty from SpongeBob",
+        "@starsbyday_",
+        "Jimmy johns",
+        "Funny jeme",
+        "@sutract717",
+        "what the fuck",
+        "Does it come with jettuce and jickles?"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CZg51Aaoe5I",
+      "caption": "you thought i was dead",
+      "timestamp": "2022-02-03T11:51:20.000Z",
+      "content_format": "static_post",
+      "likes": 2158,
+      "comments": 6,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "well you are now",
+        "come back 😢",
+        "Missing this account",
+        "Well.. are you? 👁👁",
+        "i mis you",
+        "Me when I go to school and i see teachers there"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CrrenVQI34q",
+      "caption": "yeah",
+      "timestamp": "2023-04-30T23:50:16.000Z",
+      "content_format": "static_post",
+      "likes": 603,
+      "comments": 4,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Based",
+        "Thriving, flourishing even",
+        "Is that poison ivy...",
+        "live as fuck"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CpYxuLBouYr",
+      "caption": "words to live by",
+      "timestamp": "2023-03-05T00:28:52.000Z",
+      "content_format": "static_post",
+      "likes": 1991,
+      "comments": 7,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "stab",
+        "ok",
+        "Commas exist",
+        "Resent and remember",
+        "please forgive guys",
+        "i forget and hate tbh",
+        "Remember and revenge"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CQZYwpfr9HT",
+      "caption": "yes",
+      "timestamp": "2021-06-21T21:05:09.000Z",
+      "content_format": "static_post",
+      "likes": 1962,
+      "comments": 8,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "@weirdgasm",
+        "Im stealing this",
+        "i send this to my mom lmao",
+        "I TOLD YOU THIS WAS A TWO STOP RACE",
+        "@irkooul ha",
+        "AN F1 MEME ON CRONCHYBREAD?! MY LIFE HAS NEVER BEEN BETTER",
+        "This is way too stupid to be funny but I'm also way too stupid to not find it funny"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CSfR45hoLL8",
+      "caption": "period",
+      "timestamp": "2021-08-12T21:03:20.000Z",
+      "content_format": "static_post",
+      "likes": 2343,
+      "comments": 9,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Dm to join a discord server",
+        "It's better to cum in the sink , than sink in the cum",
+        "Hahahahha",
+        "THIS",
+        "My grandpa once said...",
+        "someone said this to me once",
+        "Who says",
+        "Cheers to that 🥂",
+        "facts 💯💯"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CpalDSZIJLX",
+      "caption": "🙏🙏🙏",
+      "timestamp": "2023-03-05T17:16:39.000Z",
+      "content_format": "static_post",
+      "likes": 2458,
+      "comments": 4,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Umm… no",
+        "And the number on the back.",
+        "@mandymoneystacks @c.j._hickman92 @eltongjermo"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CSOk2WSIfVQ",
+      "caption": "gangs all here",
+      "timestamp": "2021-08-06T09:21:55.000Z",
+      "content_format": "carousel",
+      "likes": 1900,
+      "comments": 8,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "po a vibe tbh😌",
+        "@shanniecrowe",
+        "which one was it that did lezbean p0rm",
+        "Jefffrrreyy, Jeffrey Bezosss",
+        "You forgot lupsi",
+        "@carla_crowee ahahahhahaha"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CSKCRaPIKxP",
+      "caption": "🦞🦂➡️⭐️",
+      "timestamp": "2021-08-04T15:02:49.000Z",
+      "content_format": "static_post",
+      "likes": 3467,
+      "comments": 26,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "@_jonikristian_ @sampotopias",
+        "My brain didn't say \"this is abt evolution\" at first. Instead it decided on \"this meme was placed here by the doctors that have been there for you since you went into a coma and now that you're so far in the future they have the ability to alter your dreams to get you to wake up so FUCKING DO IT ALREADY\" and it's been a strange few minutes.",
+        "Kosher memes are the best memes",
+        "Wet scorpion",
+        "Me: Start eating scorpions?",
+        "i mean yea they’re both arthropods,,, basically like you guys and chimpanzees",
+        "@million_amp roach = dark type"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CpV6QAOoCIa",
+      "caption": "guys this account is 7 years old….how crazy is that\n\nanyone here from the beginning? comment when you started following (real ones know my og username💪💪)\n\nshould i try revive this account???\n\n#comeback #nevergiveup #youarentdefinedbyyourmistakes",
+      "timestamp": "2023-03-03T21:45:41.000Z",
+      "content_format": "static_post",
+      "likes": 2942,
+      "comments": 27,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Never got to see Mac Miller live",
+        "broo I remember I participated in your clean bread memes pfp contest. I’m glad you’re back! hope ur doing well💞💞💞",
+        "I followed you when you were clean bread memes and I was a good Christian high school student who didn’t want to follow anything “unclean”\nWhen you changed your username to cronchybread I remember dm-ing you making sure the memes would still be clean\nAnd now I’m an agnostic transgender whore who follows cronchybread for the absurdity",
+        "Barbie life in the dream house is goated",
+        "I followed clean bread memes back in 2018-ish bc I wanted to keep my instagram family friendly 😭😭",
+        "@rooch_88",
+        "CLEAN BREAD MEMESSSSSS",
+        "Clean bread memes was your name when I followed in?? 2018??",
+        "@asocialjellyfish character development"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CRuMgdHIEBW",
+      "caption": "thats all",
+      "timestamp": "2021-07-24T19:33:47.000Z",
+      "content_format": "reel",
+      "likes": 727,
+      "comments": 4,
+      "video_view_count": 2746,
+      "video_play_count": null,
+      "latest_comments": [
+        "Ptsd",
+        "I thought the quality was lessening and that was the joke so I sat there for like 30 seconds waiting for the audio to change",
+        "Thank you",
+        "thank you"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "CQ56GlILnO1",
+      "caption": "dalle",
+      "timestamp": "2021-07-04T12:12:12.000Z",
+      "content_format": "static_post",
+      "likes": 1643,
+      "comments": 9,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "@paper.cos @bunny.senpai.cosplays",
+        "Dale",
+        "@eliseecklund I felt that you should see this",
+        "I reposted ❤️",
+        "I’d rather kill myself",
+        "ese culo bota caca",
+        "@paulitics123 @ashley4200528"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 51217,
+  "following_count": 85,
+  "posts_count": 10115,
+  "follower_tier": "mid",
+  "engagement": {
+    "sample_size": 30,
+    "median_er": 0.03294804459456821,
+    "mean_er": 0.03483674040520401,
+    "er_per_post": [
+      {
+        "short_code": "C1mfoaGotGK",
+        "er": 0.011246265888279282,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "CpqpZIEIjjX",
+        "er": 0.011304840189780736,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "CrzGGeCoi6g",
+        "er": 0.006365074096491399,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "Cz6eDEHIfQm",
+        "er": 0.014643575375363649,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "CV6LLLkog-x",
+        "er": 0.030751508288263663,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "CpbJWw6IQSo",
+        "er": 0.013725911318507526,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "CTRvHRXodwY",
+        "er": 0.03785852353710682,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "CpYjkb7IJov",
+        "er": 0.02805709041919675,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "Cpu54UMoeqf",
+        "er": 0.01120721635394498,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "CSMbU36ISp4",
+        "er": 0.03364117382900209,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "CpqppOPoZQQ",
+        "er": 0.012378702383974071,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "CSSOlrloLgZ",
+        "er": 0.031395825604779666,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "CSFZK3_IgIS",
+        "er": 0.0433840326454107,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "CpYnwS1IQEI",
+        "er": 0.03813187027744694,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "CPg3PgUrDEf",
+        "er": 0.05476697190386005,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "CpV7LoiIVb2",
+        "er": 0.017162270339926195,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "CRCYWvtruUQ",
+        "er": 0.11660190952222894,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "CtCbyQBocu4",
+        "er": 0.011539137395786556,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "CREzLcDLvXQ",
+        "er": 0.08542085635628795,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "CZg51Aaoe5I",
+        "er": 0.042251596149715916,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "CrrenVQI34q",
+        "er": 0.01185153367046098,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "CpYxuLBouYr",
+        "er": 0.03901048479996876,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "CQZYwpfr9HT",
+        "er": 0.038463791319288516,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "CSfR45hoLL8",
+        "er": 0.045922252377140406,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "CpalDSZIJLX",
+        "er": 0.04806997676552707,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "CSOk2WSIfVQ",
+        "er": 0.03725325575492512,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "CSKCRaPIKxP",
+        "er": 0.0682000117148603,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "CpV6QAOoCIa",
+        "er": 0.057969033719272894,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "CRuMgdHIEBW",
+        "er": 0.01427260479918777,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "CQ56GlILnO1",
+        "er": 0.03225491536013433,
+        "content_format": "static_post"
+      }
+    ]
+  },
+  "external_url": null,
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "a_validar_pre_monetizacao",
+    "secondary": null,
+    "matches": [],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "a_validar_pre_monetizacao",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "nao_implementado",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T02:22:03.206Z",
+    "versao_framework": "v3.1"
+  }
+}

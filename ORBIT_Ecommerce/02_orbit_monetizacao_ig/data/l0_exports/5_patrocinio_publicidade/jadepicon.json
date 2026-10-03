@@ -1,0 +1,720 @@
+{
+  "handle": "jadepicon",
+  "nicho": "5_patrocinio_publicidade",
+  "url": "https://www.instagram.com/jadepicon/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-01T16:42:41.035Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DbOIYfFtNhB",
+      "caption": "🌃🌃🌃",
+      "timestamp": "2026-07-25T15:27:50.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 1116,
+      "video_view_count": 27511,
+      "video_play_count": 1365767,
+      "latest_comments": [
+        "Que belezaaaa",
+        "Linda demais ❤️❤️",
+        "Deusaaaa😍",
+        "Essa mulher é um Espetáculo, Um evento🔥❤️✨",
+        "❤️‍🔥",
+        "😍😍😍❤️",
+        "✨✨❤️‍🔥",
+        "😍😍😍😍",
+        "Meu Deus que top maravilhoso é esse"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "Da_pGPmxCaN",
+      "caption": "vamooooo 🇪🇸🇪🇸🇪🇸\naqui é picon ❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥❤️‍🔥 fim de copa!!",
+      "timestamp": "2026-07-20T00:25:01.000Z",
+      "content_format": "reel",
+      "likes": 415723,
+      "comments": 2111,
+      "video_view_count": 10280,
+      "video_play_count": 5748247,
+      "latest_comments": [
+        "🇪🇸🇪🇸😍",
+        "é a finalll porraaaaaa 🙃😘😘😘",
+        "A aura é golpe?",
+        "Show 🇪🇸🇪🇸",
+        "Hahahahahha 🇪🇸",
+        "22222222222222222",
+        "😂😂",
+        "@micaelafernandez1331 Brasil sonha com o HEXA e você sonhando com o tetra … tá vendo o abismo de diferença? Nem roubando, fazendo gol com a mão e etc conseguem. Só o Pelé já ultrapassa tua seleção toda. Acorda!"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbJk8Ock5ln",
+      "caption": "Em Nova York, para o lançamento global da nova coleção adidas Originals Sport. \n\nEstilo e performance, agora juntos 🤍\n@adidastraining @adidasbrasil #originalssport\n\n#publicidade",
+      "timestamp": "2026-07-23T20:58:18.000Z",
+      "content_format": "carousel",
+      "likes": 166352,
+      "comments": 1890,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Perfeita",
+        "Linda",
+        "😮‍💨",
+        "😍😍😍😍",
+        "😍",
+        "Amei a coleção nova",
+        "Linda demais 💙",
+        "❤️",
+        "Adidas minha coleção favorita😍",
+        "A melhor 💙💙💙🤍🤍🤍🤍🤍🤍"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbHLbCmESiR",
+      "caption": "rain on fifth ☁️🍎\n@alexanderwangny",
+      "timestamp": "2026-07-22T22:36:50.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 1509,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😍😍😍😍😍",
+        "Achei que era a Megan fox",
+        "Charme.",
+        "Linda",
+        "Megan Fox",
+        "Linda demais 😍👌👌👍",
+        "👌",
+        "😍❤️",
+        "❤️❤️❤️❤️❤️",
+        "A aura é golpe?"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbWWuE1kZ20",
+      "caption": "ciao, milano 🇮🇹\n@tivolipresidentmilano @quattrocanti.roteiros",
+      "timestamp": "2026-07-28T20:04:09.000Z",
+      "content_format": "carousel",
+      "likes": 254082,
+      "comments": 1611,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😍",
+        "Como pode essa mulher existir, sério 😍",
+        "🔥🌟",
+        "Lindaa 🌟",
+        "Preciosa!🥰🥰🥰",
+        "💗💗",
+        "Surreal! ✨",
+        "Uma linda mulher",
+        "Parece IA de tão linda 😍",
+        "😍"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbPDd8bCjNM",
+      "caption": "🏹🏹🏹\n\n+1 com @adidas ❤️‍🔥\n\n🥤\n\na vista do meu quarto 🌃🌃🌃\n\n🇺🇸🇺🇸🇺🇸\n\ncafezinho de todo dia 😌\n\nconhecendo novos restaurante pela cidade\n\n🍦🍦🍦\n\nusss💓\n\n🕯️\n\na m o r 💞\n\n🎥🎥🎥\n\nsimplesmente uma das apresentações mais legais que já vi 🔥🔥🔥\n\nmakeup o’clock\n\n👣👣👣\n\nulalaaaa🇪🇸\n\nvistas e mais vistas\n\no truque de apertar a câmera para fazer a luz vermelha e tirar a foto do celular hehe\n\n@skylrk 💚\n\naté logo, ny 🖤",
+      "timestamp": "2026-07-26T00:01:15.000Z",
+      "content_format": "carousel",
+      "likes": 162350,
+      "comments": 1436,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Absurda!!",
+        "Linda demais",
+        "Linda demais ❤️❤️❤️",
+        "Preciosa, sobre todo en la primera foto! Hottie 😍🤌🏽🫶🏽",
+        "Esse sofá parece um chocolate gigante",
+        "Prazer contraste perfeito",
+        "Do tanto que é linda 😍",
+        "😍😍",
+        "😍😍😍"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbTfRsOgrFG",
+      "caption": "This is what we call wearing it and owning it. Originals Sport edition 💪✨💅\n\nÉ sobre se vestir com estilo e dominar os treinos com a coleção de Originals Sport 💪✨💅",
+      "timestamp": "2026-07-27T17:21:12.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 552,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🔥",
+        "🔥❤️😍",
+        "😍😍",
+        "Dancing above NYC with the best!!",
+        "Perfeita demais! 😍",
+        "@adidas e boa só na propaganda, na entrega de produtos e a coisa mais difícil",
+        "❤️❤️❤️❤️❤️❤️❤️❤️❤️😮😮😮😍😍😍😍😍",
+        "Além de linda sou fã da tua humildade tb então vem aqui notar ela aqui de Santa Catarina @raissafernandes_official 😍👏",
+        "Que issoooo… \nNão sei o que está melhor, o look ou a diva com o look"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbbowicRewy",
+      "caption": "🪷 @cultgaia",
+      "timestamp": "2026-07-30T21:21:47.000Z",
+      "content_format": "reel",
+      "likes": 314159,
+      "comments": 1771,
+      "video_view_count": 2091754,
+      "video_play_count": 5147097,
+      "latest_comments": [
+        "@dr.chadineuro",
+        "😍😍😍😍🔥🔥🔥🔥",
+        "Deusa",
+        "Lindaaaaa 👏👏",
+        "Surreal",
+        "😍😍",
+        "😍😍😍😍",
+        "😍😍😍😍",
+        "Saudade de vc com a Jade 😍",
+        "Eu queria ter so 1% da beleza dessa mulher meu deussss que monumento 😍😍😍😍😍"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "Da-56qLkQ8D",
+      "caption": "daqueles momentos que a gente nunca esquece! que experiência incrível! 💚",
+      "timestamp": "2026-07-19T17:29:56.000Z",
+      "content_format": "carousel",
+      "likes": 863933,
+      "comments": 3570,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "A mais gataaaaa ❤️❤️❤️❤️❤️",
+        "Forjado na rotina 🔨🔥",
+        "Onde o Brasil chegou mais longe na copa foi aí",
+        "Qual é o tênis q ela  @jadepicon usou alguém sabe ???? 💚💚@adidasbrasil @adidasbrasil @adidas",
+        "Nss vey, eu amava ver a novela que ela participou ksksks",
+        "A aura é golpe?",
+        "Gente, fiz o pedido na aura beauty a 7 dias. Até hoje consta que o produto está sendo preparado. Demora mesmo? Vi várias mensagens de pessoas q não receberam. To ansiosa p conhecer os produtos. E preocupada se vou receber. Código de rastreio: AURBE033771",
+        "💚😍✨🤍",
+        "diva!!",
+        "❤️👏💚🤍✨",
+        "https://s.shopee.com.br/9pd0H9HDBW\nhttps://s.shopee.com.br/9fJa4qHqWV\nhttps://s.shopee.com.br/8pkT5JL1DM"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "Da88tyKDKxW",
+      "caption": "Delivering the match ball in style.\n\n@jadepicon and @tobjizzle bring out the Trionda Final Ball for France vs England FIFA World Cup Bronze final.",
+      "timestamp": "2026-07-18T23:15:55.000Z",
+      "content_format": "carousel",
+      "likes": 507907,
+      "comments": 3162,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🔥",
+        "Minha inspiração de todos os dias 😍",
+        "😍😍",
+        "Comprei da empresa dela e nunca recebi o produto! @aurabeauty",
+        "A aura é golpe?",
+        "✨✨✨✨💚💛",
+        "😍😍😍",
+        "😍😍😍😍",
+        "Lindaaa",
+        "Uauu arrasou 😍",
+        "🔥🔥🔥🔥",
+        "🔥😍",
+        "Vinicius después del retoc"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DbB21MxkdEf",
+      "caption": "me gusta 💃🏻🇪🇸❤️‍🔥",
+      "timestamp": "2026-07-20T21:00:42.000Z",
+      "content_format": "carousel",
+      "likes": 317470,
+      "comments": 1991,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Linda",
+        "Linda e Linda ❤️",
+        "Perfeita",
+        "Sou Espanhol agora 😁",
+        "Linda ❤️❤️❤️❤️",
+        "🔥🔥🔥",
+        "A aura é golpe?",
+        "Europe is the one that kicked Brazil out of the World Cup. And Argentina is fighting alone. 😭😭",
+        "🇪🇸🏆🇪🇸🇪🇸🇪🇸🇪🇸🇪🇸🏆🥰🥰🥰🥰"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "Da8yvW2x4tH",
+      "caption": "next level with @adidas ⚽️",
+      "timestamp": "2026-07-18T21:53:21.000Z",
+      "content_format": "reel",
+      "likes": 479887,
+      "comments": 6661,
+      "video_view_count": 18457,
+      "video_play_count": 8585529,
+      "latest_comments": [
+        "😍",
+        "❤️❤️❤️",
+        "A aura é golpe?",
+        "JADOCA ❤️",
+        "😍😍😍",
+        "Tão engajada que o vídeo apareceu no meu feed de novo"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DaTo8ofxc1o",
+      "caption": "🌅🩵",
+      "timestamp": "2026-07-02T22:14:58.000Z",
+      "content_format": "reel",
+      "likes": 467045,
+      "comments": 3670,
+      "video_view_count": 1854794,
+      "video_play_count": 7366387,
+      "latest_comments": [
+        "É isso…",
+        "Olho muito azul, não gostei 😪 🤣🤣🤣🤣🤣🤣🤣",
+        "Que mulher,que Mulheeeeeer 😍🩵",
+        "Que humilhação!",
+        "Pegou toda beleza só pra ela 🩵",
+        "Radiante. Bloqueada.",
+        "Eu só não faço pq não tenho o olho dessa cor kkkkkk",
+        "Deus tem seus preferidos 😂",
+        "Ela não paraaaa",
+        "Vai te fuder! Que lindeza véi kkkk"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DaatsjRRXs9",
+      "caption": "💚🐱 @miumiu",
+      "timestamp": "2026-07-05T16:11:44.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 1246,
+      "video_view_count": 338344,
+      "video_play_count": 1710272,
+      "latest_comments": [
+        "Linda demais! 😍🩵",
+        "Ala Jehova Jesús Dad Son Spiritud Santy Got to your long life your know the continet of africa teach the ofering your know in the bible said all the peuple later of outside from there got give problema for dont give the ofering in the bible seid too all the peuple said am good in africa your know got dont want the peuple Reed got dont go help you for sold the peuple for money when the peuple said meats is how he said got want he but dont is fruits or steek in fire he want so Dad Son Spiritud Santy Jesus Jehova Ala Got to your long life",
+        "🔥🔥💚❤️❤️😍",
+        "Maravilhosa 🫰👑⚘️",
+        "😍😍",
+        "PRESSÃO @charlaodoagro",
+        "A leveza de quem não Deve nada pra ninguém 🤍",
+        "❤️❤️❤️",
+        "Que Deus perdoe as outras mulheres pq putaquepariu, bizarra 🔥"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbRZiNHDcFg",
+      "caption": "AHTD 🖤🪐🇮🇹",
+      "timestamp": "2026-07-26T21:52:33.000Z",
+      "content_format": "carousel",
+      "likes": 193247,
+      "comments": 1339,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😍😍😍",
+        "❤️❤️",
+        "🔥",
+        "Linda demais. Tem que voltar a fazer novela no horário nobre da globo. Fazer par romântico com nicolas Prates",
+        "😍😍",
+        "DEUSAAA❤️",
+        "🖤",
+        "❤️",
+        "❤️❤️❤️❤️❤️❤️😍😍",
+        "🖤",
+        "😍😍😍😍😍",
+        "Ser rico deve ser muito bom msm",
+        "😎😎😎",
+        "Não dá, juurooo 😍😍😍😍😍🔥",
+        "amo quando ela ressuscita a skin 2017"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DaYr4EmEeDx",
+      "caption": "#MiuArcadie on film 🎞️🍀\n#MiuMiu @miumiu",
+      "timestamp": "2026-07-04T21:16:07.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 1359,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😍",
+        "É muita beleza. 😍🤍",
+        "😍😍",
+        "linda",
+        "ta a cara da billie na primeira foto",
+        "🔥🔥🔥👏",
+        "Linda",
+        "A bolsa combinando com os olhos, perfeita! 💚",
+        "💚💚💚💚",
+        "Miu miu ou miau miau?❤️❤️❤️"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DaG62uzkfZ_",
+      "caption": "miamiiii 🍒\nem boa cia <3",
+      "timestamp": "2026-06-27T23:40:40.000Z",
+      "content_format": "carousel",
+      "likes": 312804,
+      "comments": 1203,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Vcs são os imaos mais top",
+        "Lindos!!! 🥰🥰",
+        "Acho essa mulher a mais bonita do Brasil, só podia ser um pouco mais simpática.",
+        "😍😍😍😮",
+        "🔥🙌❤️",
+        "😍😍",
+        "😍 lindos",
+        "Você é tão linda! A mais linda do planeta ❤️",
+        "Linda",
+        "Follow @brasilstreetrules 👈🏻"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DaOW9MRRvQh",
+      "caption": "nova coleção light @hope.oficial 💓\n#publicidade",
+      "timestamp": "2026-06-30T21:10:49.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 1319,
+      "video_view_count": 379712,
+      "video_play_count": 1640295,
+      "latest_comments": [
+        "Nasceu perfeita",
+        "Absurda 😮‍💨💖",
+        "👀💘🐾",
+        "Judia de mim🔥🔥🔥🔥🔥🔥",
+        "Eita mulherão 😍😍😍👏👏👏👏👏",
+        "😍",
+        "Imagina ela desfilando pra Victoria Secret ❤️"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DatW8hgkSzS",
+      "caption": "domingo é dia de dump 🧚🏻🧚🏻\n\nde carona 🚲\n\nliga de futevôlei ⚽️\n\nhummm\n\ngame night\n\n💅🏻\n\nbaby jade\n\n💃🏻💃🏻💃🏻\n\n🪽\n\nde todo dia :)\n\n🦇\n\ntestes e mais testes @aurabeauty\n\n@miumiu\n\n💘mylove\n\ndia de campanha\n\ntudo azul 🩵\n\nse eu contar o que aconteceu com a bota…😅\n\nanalógicas que eu amo 🙇🏻‍♀️",
+      "timestamp": "2026-07-12T21:57:16.000Z",
+      "content_format": "carousel",
+      "likes": 204827,
+      "comments": 1375,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Misss",
+        "Gostosa do talaio",
+        "Bom gosto! 😍",
+        "😍😍",
+        "Só pela música 🔥",
+        "Perfeição de dump. 😍❤️",
+        "Tão, mas tão linda 🩷🔥",
+        "😮😮❤️",
+        "😃😃",
+        "Maravilhosa 🤍🔥"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DaxyJYgEa1P",
+      "caption": "nova embaixadora da minha marca de skincare favorita 🙋🏻‍♀️\n\nconheci a @creamyskincare em 2019, com o lançamento dos icônicos mandélico (gel clareador antiacne) & glicólico (redutor de poros e melhora na textura da pele). hoje, estou muito feliz em ser a embaixadora da marca e o rosto da campanha de relançamento dos dois 💘\n\ncupom JADE já disponível no site!\n\n#publicidade",
+      "timestamp": "2026-07-14T15:11:55.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 1400,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Gente, fiz um pedido dia 23/06 e até hoje nunca recebi! Já fiz reclamação no Reclame aqui, já mandei email, direct e nada! Ou manda os pedidos ou devolvam meu dinheiro!\nNúmero da remessa: 12317700288485",
+        "O que adianta pagar a Jade Picon para fazer propaganda se não tem competência para cumprir com prazos e repostas aos seus clientes, pois se a @creamyskincare entregasse os produtos, eu conseguiria ver se realmente são bons",
+        "Não sei se o produto é bom, comprei mas não recebi. Entrei em contato através de todos os canais disponíveis e não tive resposta. Empresa não respeita o consumidor",
+        "Seria bom se entregasse os produtos que compramos 🫩🫠",
+        "EU QUEROOOOOO🩵🩵",
+        "Entendemos a sua frustração, e sentimos muito por isso. Estamos cuidando de cada caso para que você receba seu pedido e possa nos contara o que achou! 💙️"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DaBi2kcxx5e",
+      "caption": "Ser convocada pelo @mercadolivre para acompanhar o Brasil na Copa foi uma experiência incrível! 💛\n\nO Mercado Livre entregou tudo para eu me entregar na torcida: estádio lotado, torcida vibrando e vitória do Brasil. Que venha a próxima fase! 🇧🇷 #Publicidade #MercadoLivre",
+      "timestamp": "2026-06-25T21:43:22.000Z",
+      "content_format": "reel",
+      "likes": 1232696,
+      "comments": 1356,
+      "video_view_count": 9841878,
+      "video_play_count": 21947085,
+      "latest_comments": [
+        "Gente, fiz o pedido na aura beauty a 7 dias. Até hoje consta que o produto está sendo preparado. Demora mesmo? Vi várias mensagens de pessoas q não receberam. To ansiosa p conhecer os produtos. E preocupada se vou receber. Código de rastreio: AURBE033771",
+        "Não comprem no Mercado Livre manda uma peça errada e não aceitam a devolução!! Inadmissível empresa pequena empresa ferra@da  não comprem nessa empresa não recomendo ! não recomendo essa empresa q n tem uma noção de nada !",
+        "Lindíssima 😍💛💚",
+        "Esqi",
+        "❤️",
+        "Chique !",
+        "Não adianta só vender os produtos mercado livre, o mais importante é fazer a entrega do produto, comprei uma tv pra assistir a copa e até hoje depois de 1 mês e 3 dias ainda chegou aqui. A tv ficou presa em Cajamar e agora em Chapecó SC, já reagendaram minha entrega 3 vezes e nunca chegou até hoje e não há meio de comunicação pra saber o que houve. Só falta depois de mais de um esperando cancelarem minha entrega e ficar por isso msm. Mas vou entrar com uma ação contra a loja oficial do mercado livre. Fazem tanta propaganda mas não se preocupam que o produto chegue até o cliente",
+        "Parabéns bem vc hexa eliminada 2006 2010 2014 2018 2022 2026",
+        "🚨 ALERTA DE DESCASO COM O CONSUMIDOR 🚨Comprei potes de vidro no @mercadolivre e a entrega chegou quebrada. Reclamei no MESMO DIA da entrega, o sistema deles encerrou AUTOMATICAMENTE a reclamação várias vezes, e hoje o suporte humano me diz que \"o sistema não dá opção e não tem o que fazer\".\nQuer dizer que o cliente é obrigado a pagar por um produto que já chegou destruído? Cadê o respeito ao Código de Defesa do Consumidor, @mercadolivre? Quero meu reembolso!\n#MercadoLivre #DireitoDoConsumidor #Absurdo\nO",
+        "Só q n"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "Da33zp0EZHb",
+      "caption": "young love 🪽🪽🪽",
+      "timestamp": "2026-07-16T23:56:49.000Z",
+      "content_format": "carousel",
+      "likes": 109529,
+      "comments": 1415,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "✨🤍",
+        "😍😍😍",
+        "🇦🇴🇦🇴🔥😎",
+        "Musa",
+        "Linda😍",
+        "Um colírio para os olhos 😍",
+        "🤍🤍🤍🤍",
+        "😍😍😍😍",
+        "😍😍😍",
+        "❤️🔥👏👏👏belle Princess !!!"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DZ8WwraRTdv",
+      "caption": "recap de um dia desses por aqui 💘🫂",
+      "timestamp": "2026-06-23T21:14:28.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 1148,
+      "video_view_count": 182000,
+      "video_play_count": 977479,
+      "latest_comments": [
+        "Lindaaa 😍😍😍",
+        "😍😍😍😍😍",
+        "Criei esse perfil para postar as minhas promoções favoritas da shein, Shopee e muito mais ❤️\nAcompanhe os stories! \nBeleza, casa e decoração. Tudo em um só lugar 💖",
+        "❤️",
+        "🔥 🔥 🔥",
+        "😍😍😍oiê pois você é e sempre será a mulher mais linda mais gata e mais bela do Brasil fique tranquila que esse título nenhuma tira de você dos olhos mais lindos seu cabelo é lindo demais pois até dormindo você ficar gata e ficar linda um anjo dormindo",
+        "Video satisfatório 🤏🏻",
+        "👏👏👏",
+        "👏👏👏👏👏👏"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DajMKmGxOZk",
+      "caption": "novo lançamento @eudora Siàge Nutri Diamond: nutrição, brilho e blindagem em apenas uma linha! 🩶 #EudoraSiage #SiageNutriDiamond #publicidade",
+      "timestamp": "2026-07-08T23:13:31.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 608,
+      "video_view_count": 6362,
+      "video_play_count": 1985471,
+      "latest_comments": [
+        "Esse restaurante parece um que ela ia smpre quando fazia snap…",
+        "Amo @jadepicon com @eudora. 😍💎🌟💜",
+        "@eudora realmente tem a linha incrível eu era revendedora e sempre comprava eu amo 😍",
+        "iii🌀🌪️💧💧♾️⛲⛲🥰",
+        "😍😍😍😍😍",
+        "😍❤️❤️❤️@eudora é tudooo",
+        "SI.AGE com a inicial do meu nome?👀🧐🤨🤔",
+        "E essa bolsa???",
+        "A++",
+        "PRESSÃO @charlaodoagro",
+        "❤️🤍🤍🤍🤍",
+        "✨✨",
+        "❤️",
+        "Linda 🤍✨",
+        "A embaixadora que pedimoss 🩶 @eudora"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZ3aY9SkZJ9",
+      "caption": "glow de deusa, alma tropical 🌼✨🥥 \nDiana @aurabeauty",
+      "timestamp": "2026-06-21T23:08:23.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 836,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "De onde o look?",
+        "@jaymarquesbs use cupom de desconto AURAMIMO www.aurabeautyclub.com.br 💫"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZgTaqDEQT5",
+      "caption": "💘🐒💫🌎",
+      "timestamp": "2026-06-12T23:44:55.000Z",
+      "content_format": "carousel",
+      "likes": 817622,
+      "comments": 2107,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Que casal mais lindo!",
+        "😍😍😍😍",
+        "😍😍😍😍😍",
+        "nem parece que é o dono do jogo",
+        "❤️❤️❤️",
+        "❤️",
+        "Casem",
+        "Lindosss 🥰",
+        "Faltava só você profeta ! 😂"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DZlKBtCERHl",
+      "caption": "me encontre assim até o fim da copa 💛💚\n@aurabeauty @jadejade",
+      "timestamp": "2026-06-14T20:59:04.000Z",
+      "content_format": "carousel",
+      "likes": 411817,
+      "comments": 1640,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🌹",
+        "🔥😍",
+        "Queria ser é o fotógrafo no momento da quarta foto 🔥😍",
+        "Linda demais",
+        "@tedteixeiraoficial @joaquinteixeira.oficial vô seu perfil kkkkkk",
+        "Collaboration",
+        "Que mulher",
+        "Musa",
+        "gostosa ❤️🔥🔥"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DZ_b9lvkRz5",
+      "caption": "3x0 🇧🇷🇧🇷🇧🇷🇧🇷\neeee pezinhoooooo 🤝",
+      "timestamp": "2026-06-25T01:56:02.000Z",
+      "content_format": "carousel",
+      "likes": 453431,
+      "comments": 1373,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Musa 💛💚💙",
+        "😍🔥✨♾️💎",
+        "👏",
+        "Legal",
+        "Spiritud santy Son Dad Jesus Ala life long for your know the continet of africa egipto teach the ofering your know in the bible said all the peuple later of outside from there  gat give problema for dont give the ofering in the bible seid too all the peuple said am good am fine in egipto your know gat dont want the peuple Reed gat dont go help you for sold the peuple for money when the peuple said meats is how he said gat want he but dont is fruits or steek in fire he want so Ala Jesus Dad Son Spiritud Santy long life for your",
+        "👏👏👏👏👏",
+        "😍😍",
+        "❤️"
+      ],
+      "anomalies": []
+    },
+    {
+      "short_code": "DZqZ_c-RGNK",
+      "caption": "flores, café e @calzedoniabrasil 🤎\n#publicidade",
+      "timestamp": "2026-06-16T21:58:09.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 3044,
+      "video_view_count": 318316,
+      "video_play_count": 1338176,
+      "latest_comments": [
+        "❤️❤️❤️❤️❤️❤️",
+        "Zero defeitos 🔥🔥🔥🔥🔥❤️❤️❤️😍😍😍",
+        "😍😍😍",
+        "Perfeitaaaa",
+        "😍😍😍😍😍😍😍😍😍😍😍😍",
+        "😍😍😍😍😍😍😍😍😍😍😍",
+        "É uma boneca",
+        "Belíssima",
+        "😍",
+        "😍😍"
+      ],
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZ6EFCVkdUx",
+      "caption": "dumppp 🤸‍♀️✨🫧\ne um tanto de coisas boas <3",
+      "timestamp": "2026-06-22T23:51:08.000Z",
+      "content_format": "carousel",
+      "likes": 128117,
+      "comments": 1211,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Jade could u Take my painting \nfor 100 000$",
+        "😍😍😍 pois eu digo e torna a repetir como você se sente sem da mulher mais gata mais linda mais bela e mais perfeita do Brasil dos olhos lindos pois você pode ficar tranquila é um título que ninguém tira de você muito linda muito gata você é perfeita seu cabelo é lindo é um mulherão muito gato",
+        "❤️ legal",
+        "Jade ❤️",
+        "A Cara da Kelly Piquet!!! @jadepicon",
+        "🥭🥭🥭",
+        "Perfeita",
+        "Oi, Jade! Meu nome é Michele e sou a criadora da Essenza Atelier, em Joinville/SC. Fiz uma bolsa de crochê artesanal do Brasil. Seria uma alegria enorme ver essa peça chegando até você.",
+        "A última ft ❤️"
+      ],
+      "anomalies": []
+    }
+  ],
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "2_comissionamento_afiliados",
+    "matches": [
+      {
+        "category": "2_comissionamento_afiliados",
+        "evidence": [
+          "legenda com padrão de afiliado: \"cupom\""
+        ]
+      }
+    ],
+    "manual_review_recommended": false,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  }
+}

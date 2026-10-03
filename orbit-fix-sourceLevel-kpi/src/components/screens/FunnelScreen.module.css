@@ -1,0 +1,188 @@
+.main {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-6);
+  width:          100%;
+  max-width:      1120px;
+  margin:         0 auto;
+  padding:        var(--space-8) var(--space-6);
+  /* ✅ FIX (mesma causa do CarteiraScreen): .grid/.gridAsymmetric abaixo
+     decidiam colunas com @media, medindo a JANELA inteira do navegador
+     em vez do espaço que sobra depois da sidebar de 220px do layout.tsx
+     compartilhado. container-type aqui faz os @container abaixo reagirem
+     à largura real disponível para o conteúdo. */
+  container-type: inline-size;
+  container-name: funil;
+}
+
+.errorBox {
+  max-width:      680px;
+  width:          100%;
+  margin:         0 auto;
+  padding:        var(--space-8);
+  text-align:     center;
+  border:         var(--border-width) solid color-mix(in srgb, var(--red) 25%, transparent);
+  border-radius:  var(--radius-lg);
+  background:     color-mix(in srgb, var(--red) 8%, transparent);
+}
+
+.errorText {
+  font-family:   var(--font-family);
+  font-size:     var(--font-size-sm);
+  color:         var(--red);
+  margin-bottom: var(--space-4);
+}
+
+.retryBtn {
+  font-family:    var(--font-family);
+  font-size:      var(--font-size-xs);
+  font-weight:    500;
+  padding:        var(--space-1) var(--space-4);
+  border-radius:  var(--radius-pill);
+  border:         var(--border-width) solid color-mix(in srgb, var(--red) 40%, transparent);
+  background:     color-mix(in srgb, var(--red) 20%, transparent);
+  color:          var(--red);
+  cursor:         pointer;
+  transition:     background var(--transition-fast);
+}
+
+.retryBtn:hover {
+  background: color-mix(in srgb, var(--red) 30%, transparent);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  width: 100%;
+  align-items: stretch;
+}
+
+@container funil (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.gridAsymmetric {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  width: 100%;
+  align-items: stretch;
+}
+
+@container funil (max-width: 900px) {
+  .gridAsymmetric {
+    grid-template-columns: 1fr;
+  }
+}
+
+.colStretch {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 100%;
+  padding: var(--space-3);
+  border: var(--border-width) solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--bg2);
+  box-shadow: var(--shadow-soft);
+}
+
+.panelTitle {
+  font-family:    var(--font-family);
+  font-size:      11px;
+  font-weight:    500;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color:          var(--text-muted);
+}
+
+.panelBody {
+  flex:            1;
+  width:           100%;
+  min-height:      0;
+  display:         flex;
+  flex-direction:  column;
+  justify-content: flex-start;
+  /* ✅ CORREÇÃO: align-items:center encolhia FunnelSimulator (.wrap não
+     declara width:100%) para a largura do conteúdo em vez de preencher
+     o painel — um dos motivos do simulador aparecer desproporcional/
+     descentralizado dentro do grid. stretch é o comportamento correto
+     para um painel de largura total. */
+  align-items:     stretch;
+}
+
+.chartWrap {
+  width:      100%;
+  height:     auto;
+  min-height: 0;
+  flex:       1;
+  display:    flex;
+  justify-content: stretch;
+  align-items: stretch;
+}
+
+/* ── Skeletons ── */
+.skeletonPulse {
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.45; }
+}
+
+.skeletonRows {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-4);
+  width:          100%;
+}
+
+.skeletonRow {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-1);
+}
+
+.skeletonLineRow {
+  display:         flex;
+  justify-content: space-between;
+}
+
+.skeletonLine {
+  height:        10px;
+  border-radius: var(--radius-pill);
+  background:    var(--bg-active);
+}
+
+.skeletonBar {
+  height:        8px;
+  width:         100%;
+  border-radius: var(--radius-pill);
+  background:    var(--bg-active);
+  overflow:      hidden;
+}
+
+.skeletonBarFill {
+  height:        100%;
+  border-radius: var(--radius-pill);
+  background:    var(--line2);
+}
+
+.skeletonBlock {
+  height:        128px;
+  width:         100%;
+  border-radius: var(--radius-lg);
+  background:    var(--bg-active);
+}

@@ -1,0 +1,689 @@
+{
+  "handle": "instazzin",
+  "setor_benchmark_key": "7_monetizacao_nativa",
+  "url": "https://www.instagram.com/instazzin/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T02:21:23.078Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DbmEox3OaZU",
+      "caption": "Sigam @instazzin \n.\n.\n.\n.\n.\n.\n.\n.\n.\n#omusoverao #migasualouca #migasualoka #migasualoca #eunavida #surtada #humorbrasil #soueusincera #humordodia #risos #zoeira #oemputecido #tipicodejovem #nazareamarga #memesbrasil #memesbr #memesbrasileiros #soueunavida #trouxa #ciumes #ranço #indiretas #vamosrir #rindoalto #brasilmemes",
+      "timestamp": "2026-08-03T22:34:08.000Z",
+      "content_format": "static_post",
+      "likes": null,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbZM2LTO1ru",
+      "caption": "Sigam @instazzin \n.\n.\n.\n.\n.\n.\n.\n.\n.\n#omusoverao #migasualouca #migasualoka #migasualoca #eunavida #surtada #humorbrasil #soueusincera #humordodia #risos #zoeira #oemputecido #tipicodejovem #nazareamarga #memesbrasil #memesbr #memesbrasileiros #soueunavida #trouxa #ciumes #ranço #indiretas #vamosrir #rindoalto #brasilmemes",
+      "timestamp": "2026-07-29T22:35:46.000Z",
+      "content_format": "static_post",
+      "likes": 5701,
+      "comments": 3,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Nunca erro",
+        "É verdade",
+        "Jurooo"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbMDuRMGcp0",
+      "caption": "Sigam @instazzin \n.\n.\n.\n.\n.\n.\n.\n.\n.\n#omusoverao #migasualouca #migasualoka #migasualoca #eunavida #surtada #humorbrasil #soueusincera #humordodia #risos #zoeira #oemputecido #tipicodejovem #nazareamarga #memesbrasil #memesbr #memesbrasileiros #soueunavida #trouxa #ciumes #ranço #indiretas #vamosrir #rindoalto #brasilmemes",
+      "timestamp": "2026-07-24T20:05:01.000Z",
+      "content_format": "carousel",
+      "likes": 8903,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DVoE8brjlek",
+      "caption": "Sigam @instazzin \n.\n.\n.\n.\n.\n.\n.\n.\n.\n#omusoverao #migasualouca #migasualoka #migasualoca #eunavida #surtada #humorbrasil #soueusincera #humordodia #risos #zoeira #oemputecido #tipicodejovem #nazareamarga #memesbrasil #memesbr #memesbrasileiros #soueunavida #trouxa #ciumes #ranço #indiretas #vamosrir #rindoalto #brasilmemes",
+      "timestamp": "2026-03-08T14:06:48.000Z",
+      "content_format": "carousel",
+      "likes": 39446,
+      "comments": 11,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Esse tô querendo é real 😂😂😂",
+        "🤣",
+        "Isso é real",
+        "😂😂😂",
+        "😢",
+        "Não tive medo do início (mas já deu errado de novo) 😂😂😂😂😂🤡",
+        "😐",
+        "😂",
+        "Sobre isso"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dbilf16OPU4",
+      "caption": "Sigam @instazzin \n.\n.\n.\n.\n.\n.\n.\n.\n.\n#omusoverao #migasualouca #migasualoka #migasualoca #eunavida #surtada #humorbrasil #soueusincera #humordodia #risos #zoeira #oemputecido #tipicodejovem #nazareamarga #memesbrasil #memesbr #memesbrasileiros #soueunavida #trouxa #ciumes #ranço #indiretas #vamosrir #rindoalto #brasilmemes",
+      "timestamp": "2026-08-02T14:04:18.000Z",
+      "content_format": "static_post",
+      "likes": null,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Amém"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbUCwW_jlo4",
+      "caption": "Sigam @instazzin \n.\n.\n.\n.\n.\n.\n.\n.\n.\n#omusoverao #migasualouca #migasualoka #migasualoca #eunavida #surtada #humorbrasil #soueusincera #humordodia #risos #zoeira #oemputecido #tipicodejovem #nazareamarga #memesbrasil #memesbr #memesbrasileiros #soueunavida #trouxa #ciumes #ranço #indiretas #vamosrir #rindoalto #brasilmemes",
+      "timestamp": "2026-07-27T22:31:14.000Z",
+      "content_format": "carousel",
+      "likes": 6869,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DVuBVTqDqG_",
+      "caption": "Sigam @instazzin \n.\n.\n.\n.\n.\n.\n.\n.\n.\n#omusoverao #migasualouca #migasualoka #migasualoca #eunavida #surtada #humorbrasil #soueusincera #humordodia #risos #zoeira #oemputecido #tipicodejovem #nazareamarga #memesbrasil #memesbr #memesbrasileiros #soueunavida #trouxa #ciumes #ranço #indiretas #vamosrir #rindoalto #brasilmemes",
+      "timestamp": "2026-03-10T21:30:41.000Z",
+      "content_format": "carousel",
+      "likes": 49333,
+      "comments": 21,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂😂😂😂😂😂",
+        "A máscara sempre cai em 😂😂😂",
+        "O primeiro... Errei.",
+        "O primeiro é eu purinha 😃",
+        "Preciso parar de humilhar a pessoa que eu quero tanto na minha vida🫠🤌🏻🤡kakakakakakak",
+        "Kakakakakakka o bullying é real",
+        "O bullying 😂😂😂",
+        ":( DSCP",
+        "Eu sempre Kakakakkaka"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbeEKQhjuLH",
+      "caption": "Sigam @instazzin \n.\n.\n.\n.\n.\n.\n.\n.\n.\n#omusoverao #migasualouca #migasualoka #migasualoca #eunavida #surtada #humorbrasil #soueusincera #humordodia #risos #zoeira #oemputecido #tipicodejovem #nazareamarga #memesbrasil #memesbr #memesbrasileiros #soueunavida #trouxa #ciumes #ranço #indiretas #vamosrir #rindoalto #brasilmemes",
+      "timestamp": "2026-07-31T19:55:02.000Z",
+      "content_format": "carousel",
+      "likes": 11510,
+      "comments": 5,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Qualquer proposta tbm já é demais, só quero se for irrecusável",
+        "@so_jey_camara_ rapaz",
+        "🔥",
+        "🤷🏻‍♀️😅😅😅😅",
+        "🤣🤡"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DX-F46cmSVg",
+      "caption": "Sigam @instazzin \n.\n.\n.\n.\n.\n.\n.\n.\n.\n#omusoverao #migasualouca #migasualoka #migasualoca #eunavida #surtada #humorbrasil #soueusincera #humordodia #risos #zoeira #oemputecido #tipicodejovem #nazareamarga #memesbrasil #memesbr #memesbrasileiros #soueunavida #trouxa #ciumes #ranço #indiretas #vamosrir #rindoalto #brasilmemes",
+      "timestamp": "2026-05-05T20:21:08.000Z",
+      "content_format": "static_post",
+      "likes": 5081,
+      "comments": 4,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Se eu piorar eu estrago",
+        "🙂‍↔️",
+        "Sim !",
+        "@aniiinha_luz também minha amiga. Não está dando certo ser uma pessoa boa."
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbJfpWLmYSq",
+      "caption": "Sigam @instazzin \n.\n.\n.\n.\n.\n.\n.\n.\n.\n#omusoverao #migasualouca #migasualoka #migasualoca #eunavida #surtada #humorbrasil #soueusincera #humordodia #risos #zoeira #oemputecido #tipicodejovem #nazareamarga #memesbrasil #memesbr #memesbrasileiros #soueunavida #trouxa #ciumes #ranço #indiretas #vamosrir #rindoalto #brasilmemes",
+      "timestamp": "2026-07-23T20:12:02.000Z",
+      "content_format": "carousel",
+      "likes": 10909,
+      "comments": 6,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "👍🏻👍🏻👍🏻👍🏻👍🏻👍🏻",
+        "👏",
+        "😂😂",
+        "😉😊"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dadv900mbgq",
+      "caption": "Sigam @instazzin \n.\n.\n.\n.\n.\n.\n.\n.\n.\n#omusoverao #migasualouca #migasualoka #migasualoca #eunavida #surtada #humorbrasil #soueusincera #humordodia #risos #zoeira #oemputecido #tipicodejovem #nazareamarga #memesbrasil #memesbr #memesbrasileiros #soueunavida #trouxa #ciumes #ranço #indiretas #vamosrir #rindoalto #brasilmemes",
+      "timestamp": "2026-07-06T20:28:03.000Z",
+      "content_format": "carousel",
+      "likes": 10281,
+      "comments": 4,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂",
+        "😂",
+        "😂😂😂",
+        "Eu desligo a internet e ligo quando acho a figurinha 😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbPGJoeuWYi",
+      "caption": "Sigam @instazzin \n.\n.\n.\n.\n.\n.\n.\n.\n.\n#omusoverao #migasualouca #migasualoka #migasualoca #eunavida #surtada #humorbrasil #soueusincera #humordodia #risos #zoeira #oemputecido #tipicodejovem #nazareamarga #memesbrasil #memesbr #memesbrasileiros #soueunavida #trouxa #ciumes #ranço #indiretas #vamosrir #rindoalto #brasilmemes",
+      "timestamp": "2026-07-26T00:24:47.000Z",
+      "content_format": "static_post",
+      "likes": 8043,
+      "comments": 55,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Incoveniente😂",
+        "😂😂😂",
+        "Af kkkk",
+        "😂😂😂",
+        "😂",
+        "😂😂😂",
+        "😂😂😂😂",
+        "Só eu e Deus sabe🤯🤯"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dan_8cQGSnK",
+      "caption": "Sigam @instazzin \n.\n.\n.\n.\n.\n.\n.\n.\n.\n#omusoverao #migasualouca #migasualoka #migasualoca #eunavida #surtada #humorbrasil #soueusincera #humordodia #risos #zoeira #oemputecido #tipicodejovem #nazareamarga #memesbrasil #memesbr #memesbrasileiros #soueunavida #trouxa #ciumes #ranço #indiretas #vamosrir #rindoalto #brasilmemes",
+      "timestamp": "2026-07-10T20:00:03.000Z",
+      "content_format": "carousel",
+      "likes": 10751,
+      "comments": 3,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "@pietracampos_s2",
+        "Aff",
+        "Af"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da1DfrGGUUm",
+      "caption": "Sigam @instazzin \n.\n.\n.\n.\n.\n.\n.\n.\n.\n#omusoverao #migasualouca #migasualoka #migasualoca #eunavida #surtada #humorbrasil #soueusincera #humordodia #risos #zoeira #oemputecido #tipicodejovem #nazareamarga #memesbrasil #memesbr #memesbrasileiros #soueunavida #trouxa #ciumes #ranço #indiretas #vamosrir #rindoalto #brasilmemes",
+      "timestamp": "2026-07-15T21:41:14.000Z",
+      "content_format": "carousel",
+      "likes": 17957,
+      "comments": 13,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "rachei hahahaha",
+        "😂😂😂",
+        "@ariane_morao",
+        "🗣️",
+        "😂😂😂😂😂😂😂😂",
+        "Arrasou em todas 👏",
+        "Yeeees babyyy😂",
+        "😂😂😂😂😂😂😂",
+        "👏🏼👏🏼👏🏼👏🏼"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbByiGLNL8B",
+      "caption": "Sigam @instazzin \n.\n.\n.\n.\n.\n.\n.\n.\n.\n#omusoverao #migasualouca #migasualoka #migasualoca #eunavida #surtada #humorbrasil #soueusincera #humordodia #risos #zoeira #oemputecido #tipicodejovem #nazareamarga #memesbrasil #memesbr #memesbrasileiros #soueunavida #trouxa #ciumes #ranço #indiretas #vamosrir #rindoalto #brasilmemes",
+      "timestamp": "2026-07-20T20:23:23.000Z",
+      "content_format": "static_post",
+      "likes": 3575,
+      "comments": 3,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Pior se me vesse com um Velho 😂😂😂😂😂😂",
+        "🥲😹😹 naoo mesmo 🤡😹",
+        "@biaa_duarte555"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da6CUHPmRgi",
+      "caption": "Sigam @instazzin \n.\n.\n.\n.\n.\n.\n.\n.\n.\n#omusoverao #migasualouca #migasualoka #migasualoca #eunavida #surtada #humorbrasil #soueusincera #humordodia #risos #zoeira #oemputecido #tipicodejovem #nazareamarga #memesbrasil #memesbr #memesbrasileiros #soueunavida #trouxa #ciumes #ranço #indiretas #vamosrir #rindoalto #brasilmemes",
+      "timestamp": "2026-07-17T20:07:07.000Z",
+      "content_format": "carousel",
+      "likes": 18762,
+      "comments": 14,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🔥😂",
+        "🤌🏻",
+        "Exatamente Tudo Isso Mesmo 😂😂😂😂",
+        "FaZ Dias 😂",
+        "Nunca parei de procurar sarna kkkkk",
+        "Todo dia essa força me leva a cantar, por isso uma força estranha no ar😂",
+        "😂😂😂😂",
+        "😂😂😂",
+        "Procurei, achei e agora tô aqui sofrendo 🤡😭 30 anos de terapia pra se curar..."
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbN-VFwjr-S",
+      "caption": "Sigam @instazzin \n.\n.\n.\n.\n.\n.\n.\n.\n.\n#omusoverao #migasualouca #migasualoka #migasualoca #eunavida #surtada #humorbrasil #soueusincera #humordodia #risos #zoeira #oemputecido #tipicodejovem #nazareamarga #memesbrasil #memesbr #memesbrasileiros #soueunavida #trouxa #ciumes #ranço #indiretas #vamosrir #rindoalto #brasilmemes",
+      "timestamp": "2026-07-25T13:57:06.000Z",
+      "content_format": "carousel",
+      "likes": 10898,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaYQfiejjIE",
+      "caption": "Sigam @instazzin \n.\n.\n.\n.\n.\n.\n.\n.\n.\n#omusoverao #migasualouca #migasualoka #migasualoca #eunavida #surtada #humorbrasil #soueusincera #humordodia #risos #zoeira #oemputecido #tipicodejovem #nazareamarga #memesbrasil #memesbr #memesbrasileiros #soueunavida #trouxa #ciumes #ranço #indiretas #vamosrir #rindoalto #brasilmemes",
+      "timestamp": "2026-07-04T17:16:50.000Z",
+      "content_format": "carousel",
+      "likes": 3864,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da-XFNiDmyU",
+      "caption": "Sigam @instazzin \n.\n.\n.\n.\n.\n.\n.\n.\n.\n#omusoverao #migasualouca #migasualoka #migasualoca #eunavida #surtada #humorbrasil #soueusincera #humordodia #risos #zoeira #oemputecido #tipicodejovem #nazareamarga #memesbrasil #memesbr #memesbrasileiros #soueunavida #trouxa #ciumes #ranço #indiretas #vamosrir #rindoalto #brasilmemes",
+      "timestamp": "2026-07-19T12:25:33.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DacrRWrOcaB",
+      "caption": "Siga: @instazzin\n👥• marque os amigos\n•\n•\n•\n•\n•\n•\n•\n•\n•\n\n#compartilhas #ciumes #comedia #comedian #engracado #engraçados #ciumes  #otariano #memesbrasileiros #indiretas #humor #soueunavida #deboche #zueirasemlimites #zueira #piadas #engraçados #southamericamemes #chapolinsincero #tipicodejovem #legendary #legendas #pqp #quemnunca #curiosidades #trouxa #umidiotasso #zueirasdanet",
+      "timestamp": "2026-07-06T10:27:55.000Z",
+      "content_format": "static_post",
+      "likes": null,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbocxJnGToU",
+      "caption": "Sigam @instazzin \n.\n.\n.\n.\n.\n.\n.\n.\n.\n#omusoverao #migasualouca #migasualoka #migasualoca #eunavida #surtada #humorbrasil #soueusincera #humordodia #risos #zoeira #oemputecido #tipicodejovem #nazareamarga #memesbrasil #memesbr #memesbrasileiros #soueunavida #trouxa #ciumes #ranço #indiretas #vamosrir #rindoalto #brasilmemes",
+      "timestamp": "2026-08-04T20:43:20.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "Dav3a4ltPnf",
+      "caption": "Sigam @instazzin \n.\n.\n.\n.\n.\n.\n.\n.\n.\n#omusoverao #migasualouca #migasualoka #migasualoca #eunavida #surtada #humorbrasil #soueusincera #humordodia #risos #zoeira #oemputecido #tipicodejovem #nazareamarga #memesbrasil #memesbr #memesbrasileiros #soueunavida #trouxa #ciumes #ranço #indiretas #vamosrir #rindoalto #brasilmemes",
+      "timestamp": "2026-07-13T21:19:37.000Z",
+      "content_format": "static_post",
+      "likes": 3713,
+      "comments": 1,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DallAZGGaFD",
+      "caption": "Sigam @instazzin \n.\n.\n.\n.\n.\n.\n.\n.\n.\n#omusoverao #migasualouca #migasualoka #migasualoca #eunavida #surtada #humorbrasil #soueusincera #humordodia #risos #zoeira #oemputecido #tipicodejovem #nazareamarga #memesbrasil #memesbr #memesbrasileiros #soueunavida #trouxa #ciumes #ranço #indiretas #vamosrir #rindoalto #brasilmemes",
+      "timestamp": "2026-07-09T21:26:12.000Z",
+      "content_format": "carousel",
+      "likes": 4681,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaIoOARjkKQ",
+      "caption": "Siga: @instazzin\n👥• marque os amigos\n•\n•\n•\n•\n•\n•\n•\n•\n•\n\n#compartilhas #ciumes #comedia #comedian #engracado #engraçados #ciumes  #otariano #memesbrasileiros #indiretas #humor #soueunavida #deboche #zueirasemlimites #zueira #piadas #engraçados #southamericamemes #chapolinsincero #tipicodejovem #legendary #legendas #pqp #quemnunca #curiosidades #trouxa #umidiotasso #zueirasdanet",
+      "timestamp": "2026-06-28T15:36:18.000Z",
+      "content_format": "carousel",
+      "likes": 4025,
+      "comments": 11,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂😂😂",
+        "Mds a primeira foi tão específica que foi como um tiro 😂",
+        "😂😂😂",
+        "O penúltimo mano 😂😂😂😂😂 exatamente nisso",
+        "@motaadson eu sou muito otaria, só vc pode rir 😂😂😂",
+        "😂😂😂😂😂",
+        "😂😂😂😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaWCCwrGR-4",
+      "caption": "Sigam @instazzin e @bemiludido para mais conteúdos \n.\n.\n.\n.\n.\n.\n.\n.\n.\n#omusoverao #migasualouca #migasualoka #migasualoca #eunavida #surtada #humorbrasil #soueusincera #humordodia #risos #zoeira #oemputecido #tipicodejovem #nazareamarga #memesbrasil #memesbr #memesbrasileiros #soueunavida #trouxa #ciumes #ranço #indiretas #vamosrir #rindoalto #brasilmemes",
+      "timestamp": "2026-07-03T20:32:05.000Z",
+      "content_format": "carousel",
+      "likes": 2697,
+      "comments": 6,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "como faz pra saciar mds",
+        "sem vingança",
+        "👀",
+        "@universe_v_v 😂",
+        "@bemiludido climinha propício 👀"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaGD5buDpcS",
+      "caption": "Siga: @instazzin\n👥• marque os amigos\n•\n•\n•\n•\n•\n•\n•\n•\n•\n\n#compartilhas #ciumes #comedia #comedian #engracado #engraçados #ciumes  #otariano #memesbrasileiros #indiretas #humor #soueunavida #deboche #zueirasemlimites #zueira #piadas #engraçados #southamericamemes #chapolinsincero #tipicodejovem #legendary #legendas #pqp #quemnunca #curiosidades #trouxa #umidiotasso #zueirasdanet",
+      "timestamp": "2026-06-27T15:40:26.000Z",
+      "content_format": "carousel",
+      "likes": 4517,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaD8yXjGQ90",
+      "caption": "Siga: @instazzin\n👥• marque os amigos\n•\n•\n•\n•\n•\n•\n•\n•\n•\n\n#compartilhas #ciumes #comedia #comedian #engracado #engraçados #ciumes  #otariano #memesbrasileiros #indiretas #humor #soueunavida #deboche #zueirasemlimites #zueira #piadas #engraçados #southamericamemes #chapolinsincero #tipicodejovem #legendary #legendas #pqp #quemnunca #curiosidades #trouxa #umidiotasso #zueirasdanet",
+      "timestamp": "2026-06-26T19:59:50.000Z",
+      "content_format": "carousel",
+      "likes": 6233,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🔥🔥",
+        "Bora na 22"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaTwqhnkZ2V",
+      "caption": "Sigam @bemiludido e @instazzin ✨",
+      "timestamp": "2026-07-02T23:21:45.000Z",
+      "content_format": "carousel",
+      "likes": 3022,
+      "comments": 12,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Frases reflexivas, mas nao associem a essa musica kkkkkkk👏",
+        "Deus é um piadista... ja dizia Voltaire",
+        "😂😂",
+        "😂😂😂😂",
+        "@biel_.tk 👏👏👏",
+        "@biel_.tk 😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaQ1XU1mWxH",
+      "caption": "Siga: @instazzin\n👥• marque os amigos\n•\n•\n•\n•\n•\n•\n•\n•\n•\n\n#compartilhas #ciumes #comedia #comedian #engracado #engraçados #ciumes  #otariano #memesbrasileiros #indiretas #humor #soueunavida #deboche #zueirasemlimites #zueira #piadas #engraçados #southamericamemes #chapolinsincero #tipicodejovem #legendary #legendas #pqp #quemnunca #curiosidades #trouxa #umidiotasso #zueirasdanet",
+      "timestamp": "2026-07-01T20:05:02.000Z",
+      "content_format": "carousel",
+      "likes": 3464,
+      "comments": 3,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da8GpQFDr1C",
+      "caption": "Sigam @instazzin \n.\n.\n.\n.\n.\n.\n.\n.\n.\n#omusoverao #migasualouca #migasualoka #migasualoca #eunavida #surtada #humorbrasil #soueusincera #humordodia #risos #zoeira #oemputecido #tipicodejovem #nazareamarga #memesbrasil #memesbr #memesbrasileiros #soueunavida #trouxa #ciumes #ranço #indiretas #vamosrir #rindoalto #brasilmemes",
+      "timestamp": "2026-07-18T15:23:26.000Z",
+      "content_format": "carousel",
+      "likes": 16093,
+      "comments": 44,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "( (  0. (  L. L",
+        "H. ^ ((((((( ( L.  0.  0. , ( ((( H,",
+        "0. & 👏❤️. L.",
+        "Lll. (",
+        "9.  3.  H",
+        "(",
+        "H",
+        "0. ^",
+        "@  9 8 H.  0.  L. ("
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 54041,
+  "following_count": 3074,
+  "posts_count": 393,
+  "follower_tier": "mid",
+  "engagement": {
+    "sample_size": 25,
+    "median_er": 0.1271071963879277,
+    "mean_er": 0.2002546214910901,
+    "er_per_post": [
+      {
+        "short_code": "DbZM2LTO1ru",
+        "er": 0.10554949020188376,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbMDuRMGcp0",
+        "er": 0.16474528598656576,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DVoE8brjlek",
+        "er": 0.7301308265946226,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbUCwW_jlo4",
+        "er": 0.1271071963879277,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DVuBVTqDqG_",
+        "er": 0.9132695545974353,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbeEKQhjuLH",
+        "er": 0.2130789585684943,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DX-F46cmSVg",
+        "er": 0.09409522399659517,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DbJfpWLmYSq",
+        "er": 0.20197627727096093,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "Dadv900mbgq",
+        "er": 0.19031846190855092,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbPGJoeuWYi",
+        "er": 0.14984918857904184,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "Dan_8cQGSnK",
+        "er": 0.19899705778945614,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "Da1DfrGGUUm",
+        "er": 0.33252530486112397,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbByiGLNL8B",
+        "er": 0.06620898947095724,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "Da6CUHPmRgi",
+        "er": 0.3474399067374771,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DbN-VFwjr-S",
+        "er": 0.20166170130086417,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DaYQfiejjIE",
+        "er": 0.0715012675561148,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "Dav3a4ltPnf",
+        "er": 0.06872559723173147,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DallAZGGaFD",
+        "er": 0.08661941858958938,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DaIoOARjkKQ",
+        "er": 0.07468403619474102,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DaWCCwrGR-4",
+        "er": 0.05001757924538776,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DaGD5buDpcS",
+        "er": 0.08358468570159694,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DaD8yXjGQ90",
+        "er": 0.11537536315020078,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DaTwqhnkZ2V",
+        "er": 0.056142558427860326,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "DaQ1XU1mWxH",
+        "er": 0.06415499343091356,
+        "content_format": "carousel"
+      },
+      {
+        "short_code": "Da8GpQFDr1C",
+        "er": 0.29860661349715956,
+        "content_format": "carousel"
+      }
+    ]
+  },
+  "external_url": null,
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "a_validar_pre_monetizacao",
+    "secondary": null,
+    "matches": [],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "a_validar_pre_monetizacao",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "nao_implementado",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T02:21:23.078Z",
+    "versao_framework": "v3.1"
+  }
+}

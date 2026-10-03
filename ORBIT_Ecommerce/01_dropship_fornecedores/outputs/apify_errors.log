@@ -1,0 +1,5 @@
+{"timestamp": "2026-07-31T04:35:06.751347", "ator": "jy-labs/meta-ad-library-multi-search-scraper", "erro": "Input is not valid: Field input.keywords must NOT have more than 5 items", "run_input": {"country": "BR", "debugMode": false, "includeUnverifiedMetaSearchResults": false, "keywords": ["organizador", "magnético", "portátil", "automotivo", "suporte", "ferramenta", "led", "sem fio"], "maxResults": 15, "proxy": {"useApifyProxy": true, "apifyProxyGroups": ["RESIDENTIAL"]}}}
+{"timestamp": "2026-08-05T11:37:10.545367", "ator": "apify/google-search-scraper", "erro": "Input is not valid: Field input.queries must be string"}
+{"timestamp": "2026-08-05T11:37:10.746494", "ator": "apify/youtube-scraper", "erro": "Actor with this name was not found"}
+{"timestamp": "2026-08-06T06:08:22.459170", "ator": "apify/google-search-scraper", "erro": "Input is not valid: Field input.queries must be string"}
+{"timestamp": "2026-08-06T06:08:22.624788", "ator": "apify/youtube-scraper", "erro": "Actor with this name was not found"}

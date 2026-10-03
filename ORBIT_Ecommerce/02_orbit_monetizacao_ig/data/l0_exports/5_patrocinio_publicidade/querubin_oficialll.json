@@ -1,0 +1,773 @@
+{
+  "handle": "querubin_oficialll",
+  "setor_benchmark_key": "5_patrocinio_publicidade",
+  "url": "https://www.instagram.com/querubin_oficialll/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T01:57:58.370Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "DbJ-xvoANXo",
+      "caption": "Papai e mamãe já ama 🩷💙",
+      "timestamp": "2026-07-24T00:45:37.000Z",
+      "content_format": "reel",
+      "likes": 2881,
+      "comments": 1,
+      "video_view_count": 4344,
+      "video_play_count": 110232,
+      "latest_comments": [
+        "Amém qui Deus abençoe e venha com muita saude🙌❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Da64LA1AgBT",
+      "caption": "Ela vai conta pra mulher dele que tá grávida dele #telenovela #video #pertinhadafavela",
+      "timestamp": "2026-07-18T03:59:21.000Z",
+      "content_format": "reel",
+      "likes": 9977,
+      "comments": 37,
+      "video_view_count": 2382,
+      "video_play_count": 172569,
+      "latest_comments": [
+        "Top👏🔥",
+        "👏",
+        "👏👏",
+        "👏👏👏👏",
+        "👏👏👏👏👏👏👏",
+        "Toooop 🔥🔥🔥🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbTwVzTBIfE",
+      "caption": "♾️❤️‍🩹🧑‍🧑‍🧒",
+      "timestamp": "2026-07-27T19:50:46.000Z",
+      "content_format": "reel",
+      "likes": 6689,
+      "comments": 21,
+      "video_view_count": 10227,
+      "video_play_count": 160939,
+      "latest_comments": [
+        "😍",
+        "Que lindos ❤️Deus abençoe sempre vocês amém 🙏🏼",
+        "❤️😍🔥🥰🙏🏼👏",
+        "Teamo ❤️",
+        "🔥",
+        "👏👏👏",
+        "🙌🙌🔥🔥",
+        "🔥🔥",
+        "❤️❤️❤️",
+        "❤️❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbUj4Rls274",
+      "caption": "Tava querendo fica com home casado #telenovela #video #pertinhadafavela #vídeo",
+      "timestamp": "2026-07-28T03:24:14.000Z",
+      "content_format": "reel",
+      "likes": 7378,
+      "comments": 26,
+      "video_view_count": 40978,
+      "video_play_count": 142723,
+      "latest_comments": [
+        "👏👏",
+        "Deve tá uma delícia gabiru mal passado 😂",
+        "😂😂😂😂",
+        "👏👏👏👏",
+        "😂",
+        "São doido msm viu comer rato k",
+        "😍😍😍😍👏",
+        "😂"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbmNUM0Mj_r",
+      "caption": "Obrigado pela oportunidade de grava com vcs #explore #viralizar #viralizarreels❤️ #instagood #fypage",
+      "timestamp": "2026-08-03T23:53:08.000Z",
+      "content_format": "reel",
+      "likes": 902,
+      "comments": 14,
+      "video_view_count": 17959,
+      "video_play_count": 85203,
+      "latest_comments": [
+        "👏👏👏👏👏👏",
+        "Passada q o Querubim tava na zaria da malvina 😂😂",
+        "🙌🙌🙌🙌🙌",
+        "😍😍😍😍",
+        "@derlene28 👏",
+        "Top 🎥🤌🏼",
+        "😍😍😍😍😍",
+        "😍",
+        "@amanda_amoriim2 ah tiraram foi 🌊"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DT-nni4gBDU",
+      "caption": "Deus é pai e não padastro 🙌🏻🔓",
+      "timestamp": "2026-01-26T15:10:36.000Z",
+      "content_format": "reel",
+      "likes": 4946,
+      "comments": 5,
+      "video_view_count": 124086,
+      "video_play_count": 293291,
+      "latest_comments": [
+        "Ele voltou 🙌🏼🙌🏼🙌🏼😍",
+        "🙌🙌🙌",
+        "🙌",
+        "🙌🙌🙌"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbN-hetgtRO",
+      "caption": "",
+      "timestamp": "2026-07-25T13:59:27.000Z",
+      "content_format": "reel",
+      "likes": 491,
+      "comments": 1,
+      "video_view_count": 1289,
+      "video_play_count": 31681,
+      "latest_comments": [
+        "🤍✨"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbHKG2Rpyms",
+      "caption": "Saiu mais uma novelinha 🎥#telenovela #video #pertinhadafavela",
+      "timestamp": "2026-07-22T22:29:57.000Z",
+      "content_format": "reel",
+      "likes": 13047,
+      "comments": 22,
+      "video_view_count": 7489,
+      "video_play_count": 253945,
+      "latest_comments": [
+        "👏👏",
+        "👏👏",
+        "👏👏",
+        "Cuidaaa",
+        "Parte 2",
+        "❤️❤️❤️",
+        "@cielzin_of 👏👏👏❤️",
+        "@luansilvsou6 tmj Mn ❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DawwiNQgT94",
+      "caption": "Teamo ❤️‍🔥",
+      "timestamp": "2026-07-14T05:39:07.000Z",
+      "content_format": "reel",
+      "likes": 7753,
+      "comments": 0,
+      "video_view_count": 1925,
+      "video_play_count": 148890,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DawweilgeGV",
+      "caption": "⛑️",
+      "timestamp": "2026-07-14T05:38:43.000Z",
+      "content_format": "reel",
+      "likes": 1487,
+      "comments": 0,
+      "video_view_count": 1198,
+      "video_play_count": 40059,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DY7-w8Up8Kd",
+      "caption": "Mais um vídeo pra vcs 🎥🎬",
+      "timestamp": "2026-05-29T21:13:00.000Z",
+      "content_format": "reel",
+      "likes": 21249,
+      "comments": 12,
+      "video_view_count": 249921,
+      "video_play_count": 598977,
+      "latest_comments": [
+        "Queria só ver o resto",
+        "🔥🔥🔥👏👏👏",
+        "😍",
+        "😍",
+        "👏",
+        "👏",
+        "Boaaaa🔥🔥🔥",
+        "🔥🔥🔥👏",
+        "Sou fã desse @querubin_oficialll",
+        "👏🏻👏🏻"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "Dae7mh-hJEj",
+      "caption": "Liberdade Moscou 🔓#video",
+      "timestamp": "2026-07-07T07:29:32.000Z",
+      "content_format": "reel",
+      "likes": 2798,
+      "comments": 2,
+      "video_view_count": 29867,
+      "video_play_count": 136248,
+      "latest_comments": [
+        "nn vejo a hora da liberdade dele🙌❤️ espero que seja logo",
+        "😢😢😢😢"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DY2dFu7RGoS",
+      "caption": "Saiu mais uma novelinha pra vcs 🎥🎬#telenovela #video #pertinhadafavela",
+      "timestamp": "2026-05-27T17:42:54.000Z",
+      "content_format": "reel",
+      "likes": 15500,
+      "comments": 12,
+      "video_view_count": 160603,
+      "video_play_count": 397363,
+      "latest_comments": [
+        "Moh paia nunca tem o próximo",
+        "👏",
+        "cruel mano👏",
+        "👏👏👏👏🔥",
+        "Toop dms, visão!🧏🏽‍♀️",
+        "Os melhores fihh ❤️👏",
+        "Top demais !!! 👏👏",
+        "Oq acharo desse vídeo ❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZodN7FgUPd",
+      "caption": "O kz foi atrás do querubin #telenovela #video #pertinhadafavela",
+      "timestamp": "2026-06-16T03:45:56.000Z",
+      "content_format": "reel",
+      "likes": 8110,
+      "comments": 7,
+      "video_view_count": 78252,
+      "video_play_count": 240368,
+      "latest_comments": [
+        "😍😍😍",
+        "😍",
+        "😍",
+        "👏",
+        "Os melhor de fortal😍❤️",
+        "Ficou top 🔝🔥",
+        "Os acharo desse vídeo"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXww2JDACD1",
+      "caption": "🧱⛑️⛑️#video",
+      "timestamp": "2026-04-30T17:00:57.000Z",
+      "content_format": "reel",
+      "likes": 2427,
+      "comments": 8,
+      "video_view_count": 37041,
+      "video_play_count": 242993,
+      "latest_comments": [
+        "Esse tem meu respeito 👏👏👏👏",
+        "👏❤️",
+        "🔥🔥🙌🙌🙌🙌"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYN-S5PAkJv",
+      "caption": "👼",
+      "timestamp": "2026-05-12T00:23:03.000Z",
+      "content_format": "reel",
+      "likes": 1487,
+      "comments": 6,
+      "video_view_count": 16544,
+      "video_play_count": 116353,
+      "latest_comments": [
+        "🔥🔥",
+        "😍😍😍😍😍",
+        "Patrão meu mano 😎",
+        "@celta_black0852 tmj Mn. ❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbmSPpJgIzL",
+      "caption": "Ela mentiu pra mãe dela #telenovela #video #pertinhadafavela #",
+      "timestamp": "2026-08-04T00:37:15.000Z",
+      "content_format": "reel",
+      "likes": 2160,
+      "comments": 20,
+      "video_view_count": 11240,
+      "video_play_count": 36158,
+      "latest_comments": [
+        "🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥",
+        "👏👏👏👏",
+        "👏👏👏",
+        "Cruel viu com os melhores 👏👏👏👏",
+        "🔥👏",
+        "😍",
+        "😍",
+        "😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYqv8dFAAOl",
+      "caption": "Saiu mais um vídeo 🎥🎬#telenovela #video #pertinhadafavela",
+      "timestamp": "2026-05-23T04:36:24.000Z",
+      "content_format": "reel",
+      "likes": 13689,
+      "comments": 6,
+      "video_view_count": 103474,
+      "video_play_count": 315099,
+      "latest_comments": [
+        "👏",
+        "😍😍",
+        "👏👏👏",
+        "👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DWhtOjTgHCy",
+      "caption": "De rolê na favela 🙌",
+      "timestamp": "2026-03-30T23:16:29.000Z",
+      "content_format": "reel",
+      "likes": 1008,
+      "comments": 0,
+      "video_view_count": 31876,
+      "video_play_count": 182029,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXSZ7EjiRbd",
+      "caption": "Menor do chapa🚀 #video",
+      "timestamp": "2026-04-18T21:10:16.000Z",
+      "content_format": "reel",
+      "likes": 7520,
+      "comments": 8,
+      "video_view_count": 60955,
+      "video_play_count": 225770,
+      "latest_comments": [
+        "Menor do Chapa 😍👏",
+        "❤️❤️🔥",
+        "❤️🔥",
+        "❤️🔥",
+        "🙌🔥❤️🙌🔥",
+        "Bota para gerar meu cria🌴✌️🦾🫂🩵",
+        "👏👏👏👏",
+        "👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DawvjlPgFvL",
+      "caption": "Essa é pedra 🧱",
+      "timestamp": "2026-07-14T05:30:42.000Z",
+      "content_format": "reel",
+      "likes": 1838,
+      "comments": 2,
+      "video_view_count": 1196,
+      "video_play_count": 60432,
+      "latest_comments": [
+        "😍",
+        "❤️❤️"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZ0e5o1J_El",
+      "caption": "Amo o carinho de vcs #vídeo",
+      "timestamp": "2026-06-20T19:58:09.000Z",
+      "content_format": "reel",
+      "likes": 3874,
+      "comments": 9,
+      "video_view_count": 51463,
+      "video_play_count": 164504,
+      "latest_comments": [
+        "😍",
+        "👏👏👏👏",
+        "🚀",
+        "🔥👏",
+        "Nataaaannnn ❤️",
+        "Bonito de ver a humildade de vocês👏👏👏👏👏",
+        "😍",
+        "😍",
+        "😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DVcI3NcgIWA",
+      "caption": "Estamos organizando já 🤩",
+      "timestamp": "2026-03-03T22:50:33.000Z",
+      "content_format": "reel",
+      "likes": 1303,
+      "comments": 24,
+      "video_view_count": 21548,
+      "video_play_count": 143221,
+      "latest_comments": [
+        "#EuFuiiii😍🔥",
+        "🔥🔥",
+        "👏👏",
+        "🔥🔥",
+        "👏👏👏",
+        "🔥🔥🔥🔥",
+        "😍",
+        "🔥🔥🔥🔥",
+        "🔥🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DVZ4-u_gJ75",
+      "caption": "⛑️⛑️⛑️#video",
+      "timestamp": "2026-03-03T01:53:32.000Z",
+      "content_format": "reel",
+      "likes": 4187,
+      "comments": 16,
+      "video_view_count": 42245,
+      "video_play_count": 200134,
+      "latest_comments": [
+        "😍😍🔥🔥",
+        "🔥🔥🔥🔥",
+        "🔥🔥🔥🔥🔥",
+        "❤️🤗❤️",
+        "😍😍❤️❤️",
+        "😬🪨⛑️",
+        "essa eu choro😢😂😍",
+        "❤️",
+        "🔥🔥🔥",
+        "😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbVtOftgR-Q",
+      "caption": "Ele não aceitou a fim #telenovela #video #pertinhadafavela #vídeo",
+      "timestamp": "2026-07-28T14:02:54.000Z",
+      "content_format": "reel",
+      "likes": 4307,
+      "comments": 11,
+      "video_view_count": 29508,
+      "video_play_count": 87873,
+      "latest_comments": [
+        "🔥🔥🔥🔥",
+        "😍😍😍😍😍 quero mais",
+        "👏👏🔥",
+        "me serguii😂",
+        "😂😂😂😂",
+        "E fri o menino 😢",
+        "😂😂😂😂😂",
+        "🔥",
+        "🔥",
+        "🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXSOczSkY3d",
+      "caption": "🚨 ANOTA AÍ! 🚨\nDia 30 de Maio tem RODA DE FUNK ORIGINAL no Baladinha Club 🔥💥\nSó os brabos no comando e aquela vibe que não deixa ninguém parado. 🎶\nChama a tropa e vem viver essa noite que promete ser inesquecível!",
+      "timestamp": "2026-04-18T19:41:57.000Z",
+      "content_format": "static_post",
+      "likes": 4565,
+      "comments": 49,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "🎶😎",
+        "🙅🚩",
+        "😍😍😍",
+        "😍😍😍😍😍😍",
+        "Vamos parar tudo 😍",
+        "Robinho🤩",
+        "Tô amando assistir o reality do @realitydoquerubin",
+        "❤️🙌👏",
+        "@luciara.alves.921 boa tarde onde ficar quanto é o ingresso"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DV_xrhQiepj",
+      "caption": "🚀🤩#",
+      "timestamp": "2026-03-17T19:00:52.000Z",
+      "content_format": "reel",
+      "likes": 1547,
+      "comments": 5,
+      "video_view_count": 23437,
+      "video_play_count": 132793,
+      "latest_comments": [
+        "🔥",
+        "🔥🔥",
+        "❤️🔥",
+        "😍😍🚀",
+        "❤️🔥"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaW2A4ls5U8",
+      "caption": "Mais um rells #video",
+      "timestamp": "2026-07-04T04:06:42.000Z",
+      "content_format": "reel",
+      "likes": 570,
+      "comments": 3,
+      "video_view_count": 3737,
+      "video_play_count": 67121,
+      "latest_comments": [
+        "🤍",
+        "👏👏👏👏 tmj",
+        "@roberto_cesaar tmj Mn 👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DXczG13AAjH",
+      "caption": "Vem no brabo 🚀 melhor de Fortaleza 💉",
+      "timestamp": "2026-04-22T22:02:51.000Z",
+      "content_format": "reel",
+      "likes": 1068,
+      "comments": 6,
+      "video_view_count": 23452,
+      "video_play_count": 129576,
+      "latest_comments": [
+        "Tá top mano"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYqACN4JTxt",
+      "caption": "Saiu mais um 🎥🎬#telenovela #video",
+      "timestamp": "2026-05-22T21:38:14.000Z",
+      "content_format": "reel",
+      "likes": 45745,
+      "comments": 18,
+      "video_view_count": 346525,
+      "video_play_count": 803423,
+      "latest_comments": [
+        "👏👏👏❤️",
+        "Top arrasou 😍❤️",
+        "👏👏❤️❤️❤️❤️❤️",
+        "Top 🔥🔥🔥",
+        "😍👏👏👏"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    }
+  ],
+  "followers_count": 222765,
+  "following_count": 1869,
+  "posts_count": 132,
+  "follower_tier": "mega",
+  "engagement": {
+    "sample_size": 30,
+    "median_er": 0.0181491706506857,
+    "mean_er": 0.030054691416215893,
+    "er_per_post": [
+      {
+        "short_code": "DbJ-xvoANXo",
+        "er": 0.012937400399524162,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Da64LA1AgBT",
+        "er": 0.04495320180459229,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbTwVzTBIfE",
+        "er": 0.030121428411105874,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbUj4Rls274",
+        "er": 0.03323681906942293,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbmNUM0Mj_r",
+        "er": 0.0041119565461360625,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DT-nni4gBDU",
+        "er": 0.022225214912576032,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbN-hetgtRO",
+        "er": 0.002208605481112383,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbHKG2Rpyms",
+        "er": 0.058667205350930354,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DawwiNQgT94",
+        "er": 0.0348034924696429,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DawweilgeGV",
+        "er": 0.006675195834175028,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DY7-w8Up8Kd",
+        "er": 0.09544138441855768,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "Dae7mh-hJEj",
+        "er": 0.012569299486005431,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DY2dFu7RGoS",
+        "er": 0.0696339191524701,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZodN7FgUPd",
+        "er": 0.036437501402823605,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DXww2JDACD1",
+        "er": 0.01093080151729401,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYN-S5PAkJv",
+        "er": 0.0067021300473593245,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbmSPpJgIzL",
+        "er": 0.009786097456961372,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYqv8dFAAOl",
+        "er": 0.06147734159315871,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DWhtOjTgHCy",
+        "er": 0.004524947814961955,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DXSZ7EjiRbd",
+        "er": 0.03379345947523175,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DawvjlPgFvL",
+        "er": 0.008259825376517855,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZ0e5o1J_El",
+        "er": 0.017430924965771102,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DVcI3NcgIWA",
+        "er": 0.005956950149260431,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DVZ4-u_gJ75",
+        "er": 0.018867416335600296,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DbVtOftgR-Q",
+        "er": 0.019383655421632662,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DXSOczSkY3d",
+        "er": 0.020712409938724665,
+        "content_format": "static_post"
+      },
+      {
+        "short_code": "DV_xrhQiepj",
+        "er": 0.006966983143671582,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaW2A4ls5U8",
+        "er": 0.0025722173591003973,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DXczG13AAjH",
+        "er": 0.0048212241599892266,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYqACN4JTxt",
+        "er": 0.20543173299216663,
+        "content_format": "reel"
+      }
+    ]
+  },
+  "external_url": "https://cyberqqpg.com/?id=440880303&currency=BRL&type=2",
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "a_validar_pre_monetizacao",
+    "secondary": null,
+    "matches": [],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "a_validar_pre_monetizacao",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "parcial",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T01:57:58.370Z",
+    "versao_framework": "v3.1"
+  }
+}

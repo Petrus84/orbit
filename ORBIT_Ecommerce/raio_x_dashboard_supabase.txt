@@ -1,0 +1,64 @@
+=== RAIO-X RESTRITO (GIT BASH): REACT + SUPABASE ===
+
+[1. MAPEAMENTO DAS DIRETRIZES DO SUPABASE]
+
+[2. OPERAÇÕES DE BANCO DE DADOS (QUERIES)]
+
+--- Queries no Arquivo: ./02_orbit_monetizacao_ig/src/compute.ts ---
+./02_orbit_monetizacao_ig/src/compute.ts:65:    return Buffer.from(s, 'latin1').toString('utf-8')
+./02_orbit_monetizacao_ig/src/compute.ts:230:  return Array.from(set)
+
+--- Queries no Arquivo: ./02_orbit_monetizacao_ig/src/ingest-benchmark-pilot_v2.ts ---
+./02_orbit_monetizacao_ig/src/ingest-benchmark-pilot_v2.ts:497:  const ranked: CategoryMatch[] = Array.from(scores.entries())
+
+--- Queries no Arquivo: ./02_orbit_monetizacao_ig/src/ingest.ts ---
+./02_orbit_monetizacao_ig/src/ingest.ts:429:  const ranked: CategoryMatch[] = Array.from(scores.entries())
+
+[3. CONTRATOS DE INTERFACE (FORMAS DOS DADOS)]
+
+--- Tipagens no Arquivo: ./02_orbit_monetizacao_ig/legado/ingest-benchmark-pilot_conhecidos.ts ---
+./02_orbit_monetizacao_ig/legado/ingest-benchmark-pilot_conhecidos.ts:157:interface CleanPost {
+./02_orbit_monetizacao_ig/legado/ingest-benchmark-pilot_conhecidos.ts:170:interface AccountResult {
+./02_orbit_monetizacao_ig/legado/ingest-benchmark-pilot_conhecidos.ts:195:interface ProfileSnapshot {
+./02_orbit_monetizacao_ig/legado/ingest-benchmark-pilot_conhecidos.ts:295:interface CategoryMatch {
+./02_orbit_monetizacao_ig/legado/ingest-benchmark-pilot_conhecidos.ts:300:interface MonetizationResult {
+
+--- Tipagens no Arquivo: ./02_orbit_monetizacao_ig/src/compute-real-correlations.ts ---
+./02_orbit_monetizacao_ig/src/compute-real-correlations.ts:22:interface CleanPost {
+./02_orbit_monetizacao_ig/src/compute-real-correlations.ts:30:interface AccountResult {
+
+--- Tipagens no Arquivo: ./02_orbit_monetizacao_ig/src/compute.ts ---
+./02_orbit_monetizacao_ig/src/compute.ts:101:interface L0AccountSnapshot {
+./02_orbit_monetizacao_ig/src/compute.ts:211:interface CalibrationRatio {
+./02_orbit_monetizacao_ig/src/compute.ts:322:interface CalibrationSet {
+./02_orbit_monetizacao_ig/src/compute.ts:351:interface HiddenMetricEstimate {
+./02_orbit_monetizacao_ig/src/compute.ts:492:interface L1PostMinimal { likes: number | null; comments: number | null }
+./02_orbit_monetizacao_ig/src/compute.ts:493:interface L1AccountMinimal {
+
+--- Tipagens no Arquivo: ./02_orbit_monetizacao_ig/src/ingest-benchmark-pilot.ts ---
+./02_orbit_monetizacao_ig/src/ingest-benchmark-pilot.ts:152:interface CleanPost {
+./02_orbit_monetizacao_ig/src/ingest-benchmark-pilot.ts:165:interface AccountResult {
+./02_orbit_monetizacao_ig/src/ingest-benchmark-pilot.ts:190:interface ProfileSnapshot {
+./02_orbit_monetizacao_ig/src/ingest-benchmark-pilot.ts:290:interface CategoryMatch {
+./02_orbit_monetizacao_ig/src/ingest-benchmark-pilot.ts:295:interface MonetizationResult {
+
+--- Tipagens no Arquivo: ./02_orbit_monetizacao_ig/src/ingest-benchmark-pilot_v2.ts ---
+./02_orbit_monetizacao_ig/src/ingest-benchmark-pilot_v2.ts:204:interface CleanPost {
+./02_orbit_monetizacao_ig/src/ingest-benchmark-pilot_v2.ts:217:interface AccountResult {
+./02_orbit_monetizacao_ig/src/ingest-benchmark-pilot_v2.ts:243:interface ProfileSnapshot {
+./02_orbit_monetizacao_ig/src/ingest-benchmark-pilot_v2.ts:345:interface CategoryMatch {
+./02_orbit_monetizacao_ig/src/ingest-benchmark-pilot_v2.ts:351:interface MonetizationResult {
+./02_orbit_monetizacao_ig/src/ingest-benchmark-pilot_v2.ts:363:interface ClassificationMatrixEntry {
+
+--- Tipagens no Arquivo: ./02_orbit_monetizacao_ig/src/ingest.ts ---
+./02_orbit_monetizacao_ig/src/ingest.ts:176:interface CleanPost {
+./02_orbit_monetizacao_ig/src/ingest.ts:267:interface ProfileSnapshot {
+./02_orbit_monetizacao_ig/src/ingest.ts:315:interface CategoryMatch {
+./02_orbit_monetizacao_ig/src/ingest.ts:321:interface MonetizationResult {
+./02_orbit_monetizacao_ig/src/ingest.ts:329:interface ClassificationMatrixEntry {
+./02_orbit_monetizacao_ig/src/ingest.ts:473:interface AccountEngagementStats {
+./02_orbit_monetizacao_ig/src/ingest.ts:505:interface AccountResult {
+./02_orbit_monetizacao_ig/src/ingest.ts:605:interface FollowerSnapshotLine {
+
+--- Tipagens no Arquivo: ./02_orbit_monetizacao_ig/src/tiers.ts ---
+./02_orbit_monetizacao_ig/src/tiers.ts:15:export interface FollowerTierDef {

@@ -1,0 +1,691 @@
+{
+  "handle": "evermembersclub",
+  "setor_benchmark_key": "6_membership_comunidade",
+  "url": "https://www.instagram.com/evermembersclub/",
+  "actor_used": "apify/instagram-scraper",
+  "scraped_at": "2026-08-05T02:13:26.498Z",
+  "total_posts": 30,
+  "valid_posts": 30,
+  "diagnosis_tier": "completo",
+  "posts": [
+    {
+      "short_code": "Da23OEthv2y",
+      "caption": "Community starts here\n📍Tustin, CA\n\nFrom brand launches and corporate celebrations to Pilates, wellness, golf, mixers, and more, Ever Club is where people come together to connect, celebrate, and experience something different.\n\nWhether you’re looking for your next event to attend or want to learn more about becoming a member, we’d love to welcome you.\n\nComment “EVENTS” and we’ll send you the option to explore upcoming events or membership.",
+      "timestamp": "2026-07-16T14:33:36.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 4,
+      "video_view_count": 107,
+      "video_play_count": 3087,
+      "latest_comments": [
+        "Best community ever😍",
+        "Best part - you get to hang w Jack on a weekday 🔥",
+        "❤️",
+        "@foxyjshon ❤"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DaqYuJfB885",
+      "caption": "Meet you at the club.\n\nWhere work gets done, deals get closed, and client meetings don’t feel like meetings.\n\nPrivate TrackMan golf bays. Organic café. Luxury coworking. Wellness. Events. A community worth showing up for.\n\nOrange County’s best place to work isn’t an office-it’s EverClub.\n\nComment TOUR and we’ll send the details.\n\n🎥 @thearkprod",
+      "timestamp": "2026-07-10T22:11:09.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 6,
+      "video_view_count": 23,
+      "video_play_count": 2288,
+      "latest_comments": [
+        "😍👏",
+        "😍😍😍😍😍😍😍",
+        "Obsessed ✨🤍",
+        "🔥🙌",
+        "🔥🔥",
+        "Need that teeeee 🤩"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DYxEPtPBMWw",
+      "caption": "A modern members club for the way you actually want to spend your day. \n\nStart with coffee. Take a meeting. Hit the bays. Practice your putt. Stay for the people.\n\nEver Club brings golf, work, wellness, and community together in one place so your routine finally has somewhere to go.\n\nComment MEMBER to get a 3 DAY GUEST PASS.",
+      "timestamp": "2026-05-25T15:29:40.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 136,
+      "video_view_count": 92089,
+      "video_play_count": 308197,
+      "latest_comments": [
+        "Member",
+        "That @truelovecoffeeco I see!",
+        "👏👏👏",
+        "Member",
+        "Looks awesome! We’ll have to come check it out!",
+        "Member",
+        "Member",
+        "let’s be bougie @nickybgolfacademy",
+        "Nice! Check your DMs!"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbKbNL7Bc3i",
+      "caption": "Coworking never looked so good.\n\n14,000 square feet designed to feel like your own private club. Whether you’re taking calls, meeting clients, or knocking out deep work, you’ll always find a space that feels like it’s yours.\n\nReady to experience it for yourself? Take a complimentary swing on us.\n\nComment TOUR and we’ll send you everything you need to claim your free day pass and schedule your visit. 📩\n\n🎥 @theloveinmotion @inmotioncollections \n\n#coworking  #ocbusiness #privateclub",
+      "timestamp": "2026-07-24T04:53:05.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 0,
+      "video_view_count": 120,
+      "video_play_count": 1989,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "Da8MecqTb_S",
+      "caption": "⛳️ cheers to our CURATE Summer Social at @evermembersclub \n\nIt was such a fun evening of community, golfing, new connections and drinks!\n\nBig thank you to our sponsor team!\n\nHOST @curatecalifornia_ \nVENUE @evermembersclub \nPHOTOGRAPHY @mariadavisphoto \nCONTENT CREATOR @theloveinmotion \nDJ @extremedjservice \nWINE @bianchi_lagunabeach",
+      "timestamp": "2026-07-18T16:14:53.000Z",
+      "content_format": "reel",
+      "likes": 101,
+      "comments": 2,
+      "video_view_count": 253,
+      "video_play_count": 4050,
+      "latest_comments": [
+        "Such a great night ❤️🙌",
+        "love!!🤍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbT3IWJyymm",
+      "caption": "Orange County’s best-kept secret… until now. \n\nPlanning an event? Stop scrolling. From milestone celebrations and corporate gatherings to brand activations, watch parties, and everything in between, Ever Club gives you the space and the energy-to create something unforgettable.\n\n14,000 sq. ft. of versatile event space\nDJ-ready with a top-tier audio system\nFull bar + café\nState-of-the-art golf bays\nOversized screens throughout\nEndless possibilities to make the space your own\n\nBig enough to make an impact. Versatile enough to bring any vision to life.\n\nComment “PARTY” and we’ll send you everything you need to start planning your event.",
+      "timestamp": "2026-07-27T20:53:02.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 16,
+      "video_view_count": 1388,
+      "video_play_count": 6632,
+      "latest_comments": [
+        "😍😍😍😍 event loading 🙌",
+        "Party",
+        "I love it ! Can we talk about collaboration?🔥",
+        "love love love you @evermembersclub ❤️",
+        "🫶🏼🫶🏼",
+        "Party",
+        "🙌🙌🙌🙌",
+        "Just sent you a DM"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DaqN5reyn4P",
+      "caption": "Summer’s freshest pour. 🍵🍋\n\nOur Matcha Lemonade blends bright, refreshing citrus with a smooth matcha finish-the perfect pick-me-up before a round, between meetings, or whenever your afternoon needs a reset.\n\nAvailable for a limited time at EverTable. Swing by and try our summer café special.\n\n#ocfoodie #orangecountyfood #thingstodoinoc #ocfood",
+      "timestamp": "2026-07-11T16:40:07.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 5,
+      "video_view_count": 80,
+      "video_play_count": 3858,
+      "latest_comments": [
+        "😍 yum so good",
+        "Hello, I have a proposal for your Instagram to grow, I would love to talk to someone who is in charge",
+        "I miss this matcha 😍",
+        "😍",
+        "Yum"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DbeRPXlyKRR",
+      "caption": "Calling all coffee lovers ☕️\n\nYour new favorite mid-day pick-me-up is waiting at Ever. Stop by for a handcrafted coffee, take a breather, catch up on work, or stay awhile and enjoy the space.\n\nCome for the coffee. Stay for the vibe.\n\n📍Ever Members Club",
+      "timestamp": "2026-07-31T21:50:48.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 1,
+      "video_view_count": 408,
+      "video_play_count": 1794,
+      "latest_comments": [
+        "New coffee shop in OC?! 👀"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DarF-nuBzVQ",
+      "caption": "This is your sign to stop looking for the perfect third place. Ever Club brings together coworking, golf, hospitality, workspace, wellness, food, drinks, and community- all under one roof.\n\nMembership is now open.\nComment GOLF and we’ll send over the details.\n\n🎥@iitsjawz",
+      "timestamp": "2026-07-08T13:41:48.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 1,
+      "video_view_count": 172,
+      "video_play_count": 2190,
+      "latest_comments": [
+        "We love it over here!"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "Daaxqbnh6QT",
+      "caption": "World Cup watch parties are free at Ever Club. ⚽️\n\nCatch the match on the big screen, grab a summer cocktail or beer special, order smash burgers, and settle in with plenty of space for the whole crew.\n\nWant to make it even better? Ask the front desk for our drop-in rates and take a swing on our TrackMan simulators while the game is on. ⛳️\n\nWalk in, grab a seat, and watch with us.",
+      "timestamp": "2026-07-05T16:45:10.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 4,
+      "video_view_count": 1138,
+      "video_play_count": 5500,
+      "latest_comments": [
+        "👏👏",
+        "The head on that pint under the tap is disgraceful...someone train that lad 👏👏👏👏",
+        "An address would be awesome!"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DaNjsB1B_qS",
+      "caption": "World Cup week at Ever Club ⚽️\n\nThe knockout stage is heating up and we’re showing the biggest matches all week, including France vs. Sweden, USA vs. Bosnia, Mexico vs. Ecuador, USA vs. Bosnia, Spain vs. Austria, Portugal vs. Croatia, and Argentina vs. Cape Verde.\n\nFree to watch on the big screens. Grab a bay, play while you watch, order smash burgers, summer cocktails, beer specials, and make a day of it.\n\nNow that’s the summer lineup. \nNot a member? DM US TO BOOK A BAY ⛳️",
+      "timestamp": "2026-06-30T13:34:17.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 0,
+      "video_view_count": 498,
+      "video_play_count": 2263,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DaN-mCsJnNz",
+      "caption": "Skratch’s Best Golf Shops In America\n\n📍 Tustin, California — @evermembersclub \n\nA different kind of golf space. Part private club, part everyday escape built around how you actually live. Work, wellness, food, and your game all under one roof. The Ever Table café alone is worth the stop, but it’s the balance of energy and ease that makes this place hit. You can get real reps in, or just slow it down for a bit.\n\nView the full list now on skratch.golf.",
+      "timestamp": "2026-06-30T17:31:13.000Z",
+      "content_format": "reel",
+      "likes": 392,
+      "comments": 33,
+      "video_view_count": 4922,
+      "video_play_count": 20601,
+      "latest_comments": [
+        "✨",
+        "Such an amazing space",
+        "Need golf shop recs in Detroit!",
+        "you want to go? :)",
+        "Oh yes. Best food too!!",
+        "👏👏",
+        "Big jelly",
+        "🙌 Best place",
+        "Thanks for swinging by 🏌️",
+        "@vennuszand 🫶🏼"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DbXFz47Gnf0",
+      "caption": "A 39th birthday built for the cameras and an event guests won’t stop talking about. 🎥\n\nEver Club was transformed for @kylerstevenfisher western-inspired 39th birthday celebration, with styling by @michellerogers_styling , food by @mrcharlies , and filming underway for @hulu’s The Secret Lives of Mormon Wives: Orange County.\n\nAcross 14,000 square feet, guests experienced live music, premium sound, custom screens, golf bays, lounge spaces, photo moments, and a live tattoo activation-all under one roof.\n\nWhether you’re planning a milestone celebration, brand activation, corporate event, or production, Ever Club is built to bring your vision to life.\n\nComment EVENT and we’ll send you everything you need to host yours.\n\n📸 @brian.chong11",
+      "timestamp": "2026-07-29T02:55:02.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 4,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "这又是个啥活动",
+        "Sent a voice note via DM - feel free to listen to it and respond. 🙌",
+        "So much fun! Take me back 💃",
+        "🙌"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DaLLtllhlQa",
+      "caption": "When two mamas come together and execute the cutest @ralphlauren 3rd Invitational ⛳️ for our sweet boys! We did it!! @laurenmirani 🥇\n\n#eventsyling #birthdayparty #3rdbirthday #ralphlauren #momsofinstagram",
+      "timestamp": "2026-06-29T15:26:46.000Z",
+      "content_format": "reel",
+      "likes": 282,
+      "comments": 30,
+      "video_view_count": 4082,
+      "video_play_count": 28009,
+      "latest_comments": [
+        "😮‍💨😮‍💨😮‍💨",
+        "SO CUTE",
+        "We loved having you at EVERCLUB 😍",
+        "Loveeee 😍😍",
+        "Sooo cute I love it 😍😍 I can’t believe our boys are 3!!",
+        "Love that place!",
+        "Cutest"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaYVf_Dhyiw",
+      "caption": "Your pre-round coffee deserves to be as dialed as your swing. ⛳️ \n\n@evertablecafe , our coffee is locally sourced, organic, and poured with intention. Swing by before your next round.\n\n#coffeeculture #coffeeshop #occoffeeculture #occoffee",
+      "timestamp": "2026-07-04T18:02:50.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 0,
+      "video_view_count": 313,
+      "video_play_count": 1913,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DaeTHPJBclW",
+      "caption": "This kind of day at the club.\nWork a little. Play a little. Stay longer than you planned.\n\nSo let’s get you happy- join the club.\n\n#golfclub #IndoorGolf #GolfLife #WorkAndPlay #coworkingcommunity",
+      "timestamp": "2026-07-06T22:06:49.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 3,
+      "video_view_count": 278,
+      "video_play_count": 1971,
+      "latest_comments": [
+        "Love this! 🤍",
+        "🙌🙌🙌",
+        "😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DaCN-pWhZ_z",
+      "caption": "Your next membership should feel like an upgrade. Golf, hospitality, and a club experience designed for the modern day.\n\nYour new club is waiting. Comment MEMBER to join.",
+      "timestamp": "2026-06-26T03:52:37.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 4,
+      "video_view_count": 2267,
+      "video_play_count": 12425,
+      "latest_comments": [
+        "🔥",
+        "Best place to be! Good eats, good swings. What more do you need?",
+        "The best! 🤝🏽⛳️",
+        "@glendandridgejr 🙌"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DboELZ_FFR7",
+      "caption": "Something new is brewing at @evertablecafe 🍊",
+      "timestamp": "2026-08-04T17:08:28.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 6,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Can’t wait to try it",
+        "excited excited excited",
+        "😍😍😍😍",
+        "👀",
+        "oooooo",
+        "Yum!"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DaEooH_KZ59",
+      "caption": "Golf girl outfit inspo ⛳️💕",
+      "timestamp": "2026-06-27T02:25:04.000Z",
+      "content_format": "reel",
+      "likes": 188,
+      "comments": 30,
+      "video_view_count": 3177,
+      "video_play_count": 10092,
+      "latest_comments": [
+        "Cuteeee",
+        "😍😍😍",
+        "Our EverClub girls 😍",
+        "so cute! cute golf outfits are the recipe for a good day of golf 🤭",
+        "Oooh where is that skirt from? I love the front!",
+        "the vibe 😮‍💨😮‍💨😮‍💨"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DYoE4-JBiYs",
+      "caption": "your new golf routine just got an upgrade.\n\ntrackman sims, short-game practice, breakfast, lunch, work space, and a reason to stay a little longer.\n\nSIGN UP & BECOME A MEMBER.",
+      "timestamp": "2026-05-22T03:40:56.000Z",
+      "content_format": "reel",
+      "likes": 2783,
+      "comments": 15,
+      "video_view_count": 30898,
+      "video_play_count": 87172,
+      "latest_comments": [
+        "Would love to do a walkthrough of the space. I spend a lot of time improving and adding value to membership spaces. Seems like you have the space dialed in already.",
+        "Please come to miami 😭",
+        "Are toddlers allowed?",
+        "Why don’t they have stuff like this near me fr",
+        "I need a membership at this place",
+        "Vamooooos",
+        "👏👏👏👏👏👏",
+        "There is a similar place in Bangkok, Thailand called PLP City Range.",
+        "🔥🔥",
+        "@charmzeey hopefully soon 🙌"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaftgZEhH4z",
+      "caption": "pre-round fuel, Ever style. ☕️⛳️\nLattes first. Golf after. Always.\n\n@evertablecafe is open to the public- Want to make it even better? Ask the front desk for our drop-in rates and take a swing on our TrackMan simulators ⛳️\n\n#occoffeeculture #occoffee #indoorgolfsimulator #golfclub",
+      "timestamp": "2026-07-07T14:45:11.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 9,
+      "video_view_count": 593,
+      "video_play_count": 3953,
+      "latest_comments": [
+        "Will have to come visit soon! Looks like a stunning place! 🔥",
+        "The absolute best combo 😍",
+        "Yes please 🙌",
+        "!!!",
+        "Obsessed",
+        "so cute!",
+        "Yesss😍",
+        "😍👏 ⛳️🏌️",
+        "@zoravarsingh we’d love to have you 🙌"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DaA4m1nv2Sr",
+      "caption": "Still caught in this moment! So much love for this day and for everyone who helped me make so special! Thank you🩷\n\n#kocopopups #everclub #girlswhogolf #pinktee #⛳️",
+      "timestamp": "2026-06-25T15:33:33.000Z",
+      "content_format": "reel",
+      "likes": 85,
+      "comments": 9,
+      "video_view_count": 1287,
+      "video_play_count": 4966,
+      "latest_comments": [
+        "😍",
+        "😍 super cute 🌷🌷",
+        "Still in the feels🩷",
+        "So cute!",
+        "Im still not over this day🎀",
+        "@movewith.mar 🩷"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZ-SzOGBLHN",
+      "caption": "summer is here, and ever club is ready for it.\n\npatio seating, golf bays, and new seasonal cocktails now pouring-including our stone fruit sangria and sake margarita.\n\ncome try our new summer cocktails this week.",
+      "timestamp": "2026-06-24T15:19:13.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 2,
+      "video_view_count": 506,
+      "video_play_count": 2480,
+      "latest_comments": [
+        "we love this!",
+        "Looks yummy"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZdsPlFPY2f",
+      "caption": "Planning @kylerstevenfisher B-day party at @evermembersclub and I could not have chosen a better venue right here in the heart of OC. It’s time to Giddy Down!! Ahhhh I’m so excited?!",
+      "timestamp": "2026-06-11T23:26:52.000Z",
+      "content_format": "reel",
+      "likes": 1916,
+      "comments": 40,
+      "video_view_count": 43878,
+      "video_play_count": 128891,
+      "latest_comments": [
+        "👏👏",
+        "Looks beautiful! Most people can't do this.",
+        "How do you keep your figure?  You are in great shape!  Any helpful hints?",
+        "I thought Mormon people weren’t allowed to have Caffeine? Matcha has Caffeine in it?",
+        "Y’all have the beautifully kids I have ever seen ❤️",
+        "Is this shirt linked anywhere? 😍",
+        "❤️",
+        "So fun. 🔥have a great bday @kylerstevenfisher 😍",
+        "❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️",
+        "😍😍😍😍😍"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaMAp5Gv1MA",
+      "caption": "Building something takes space.\n\nSpace to think, take the call, send the proposal, step away from the screen, clear your head, and come back sharper.\n\nEver Club was designed for the full day, not just after hours. Bring the laptop, work on the business, take a few swings, grab a bite, and stay awhile.\n\nWork here. Play here. Build here.\n\nComment MEMBER and we’ll send you the details.",
+      "timestamp": "2026-06-29T23:08:34.000Z",
+      "content_format": "reel",
+      "likes": 513,
+      "comments": 14,
+      "video_view_count": 11619,
+      "video_play_count": 33108,
+      "latest_comments": [
+        "😍😍",
+        "Me encanta, so beautiful and interesting! 😍😍😍",
+        "Wow! En ese tiro en el golf que\npoderosa escena, cabello porte belleza femenina divina!!!!! Me encantaaa",
+        "La reina 💕",
+        "👏👏",
+        "Member",
+        "Member",
+        "Member",
+        "Member",
+        "Member"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DZV8hPrDx-P",
+      "caption": "The Fullest is now available at Ever Club ✨",
+      "timestamp": "2026-06-08T23:12:26.000Z",
+      "content_format": "carousel",
+      "likes": 209,
+      "comments": 15,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Wow what an awesome collab yumm😋💛",
+        "Love this for you guys!!! 😍",
+        "🙌🙌",
+        "Yurmmy 😋",
+        "Yum 💛",
+        "congrats!",
+        "Neeed 🔥🤤",
+        "Ooo!!",
+        "😍😍😍😍😍",
+        "Love it"
+      ],
+      "paid_partnership": false,
+      "anomalies": []
+    },
+    {
+      "short_code": "DaiqY_HAR5q",
+      "caption": "Golf + good eats? IYKYK.\n\nOur Korean-inspired short rib bowl is a club favorite for a reason - sous vide short rib that falls right off the bone, packed with flavor, and served Ever style.\n\n@evertablecafe is open to the public, so you don’t need to be a member to stop by. Grab a bowl, hang in the cafe, or drop into a bay with one of our day passes.\n\nSwing by for lunch today. Comment DAY PASS and we’ll send you the details. ⛳️\n\n📸 @gdbgolfing @glendandridgejr",
+      "timestamp": "2026-07-09T19:15:01.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 0,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DaV32GRvXyE",
+      "caption": "When the group chat needs a plan, make it Ever Club. Grab a bay, order a round, get a few swings in, and make it a match.\n\nWe’re opening up a limited number of memberships. Comment CLUB to get the details.\n#indoorgolf #golfclub #golfseason",
+      "timestamp": "2026-07-03T19:08:01.000Z",
+      "content_format": "reel",
+      "likes": null,
+      "comments": 4,
+      "video_view_count": 4219,
+      "video_play_count": 15789,
+      "latest_comments": [
+        "Just messaged you!",
+        "I don’t think I’ve ever seen anyone carry their clubs with them pointing downwards.",
+        "Club"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "DZaGmjDm4Wa",
+      "caption": "An Everism worth keeping:\nchoose the places that make your everyday feel less ordinary.\n\nReady to be a member? Make the club part of your routine\n\n#golf #golfinglife #golfing",
+      "timestamp": "2026-06-10T13:57:30.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 2,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "Song choice 👌",
+        "🫡"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    },
+    {
+      "short_code": "Dayq6bID6MU",
+      "caption": "Meet your new office. ⛳️ A workspace should offer more than Wi-Fi and a place to take calls.\n\nAt EverClub, your workday comes with private coworking spaces built for focus, meeting areas designed to impress clients, TrackMan golf bays for breaks between calls, and coffee, breakfast, and lunch from EverTable- all within a private club community of entrepreneurs, executives, and creatives.\n\nTake the Zoom call. Close the deal. Host the client. Stay for a round. Comment CLUB below and we’ll send membership details directly to your inbox. 📩\n\n#cowork #businessowners #realestateteam #wellnessclub #countryclub",
+      "timestamp": "2026-07-14T23:27:57.000Z",
+      "content_format": "carousel",
+      "likes": null,
+      "comments": 6,
+      "video_view_count": null,
+      "video_play_count": null,
+      "latest_comments": [
+        "the best place to work 🔥",
+        "🔥🔥🔥",
+        "🔥😍",
+        "CLUB",
+        "Club"
+      ],
+      "paid_partnership": false,
+      "anomalies": [
+        "likesCount negativo (-1) — provável post removido/oculto, zerado para null"
+      ]
+    }
+  ],
+  "followers_count": 21233,
+  "following_count": 1,
+  "posts_count": 148,
+  "follower_tier": "mid",
+  "engagement": {
+    "sample_size": 9,
+    "median_er": 0.014694108227758677,
+    "mean_er": 0.034835711706620205,
+    "er_per_post": [
+      {
+        "short_code": "Da8MecqTb_S",
+        "er": 0.004850939575189564,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaN-mCsJnNz",
+        "er": 0.020016012810248198,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaLLtllhlQa",
+        "er": 0.014694108227758677,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaEooH_KZ59",
+        "er": 0.010267037159139077,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DYoE4-JBiYs",
+        "er": 0.13177600904252815,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaA4m1nv2Sr",
+        "er": 0.004427071068619602,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZdsPlFPY2f",
+        "er": 0.09212075542787171,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DaMAp5Gv1MA",
+        "er": 0.024819855884707767,
+        "content_format": "reel"
+      },
+      {
+        "short_code": "DZV8hPrDx-P",
+        "er": 0.01054961616351905,
+        "content_format": "carousel"
+      }
+    ]
+  },
+  "external_url": "http://everclub.app",
+  "account_level_anomalies": [],
+  "monetization": {
+    "primary": "a_validar_pre_monetizacao",
+    "secondary": null,
+    "matches": [],
+    "manual_review_recommended": true,
+    "category_8_note": "Cat.8 nesta versão só usa bio própria; verificação do perfil dos comentaristas mais frequentes (spec completa) não está implementada."
+  },
+  "classification_matrix": {
+    "setor_benchmark_primario": "a_validar_pre_monetizacao",
+    "setor_benchmark_secundario": null,
+    "nicho": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "proof_mechanism": "não classificado nesta versão — dimensão separada do setor de benchmark",
+    "maturidade_funil": "parcial",
+    "rede": "instagram",
+    "data_classificacao": "2026-08-05T02:13:26.498Z",
+    "versao_framework": "v3.1"
+  }
+}
