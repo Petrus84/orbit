@@ -1,0 +1,6 @@
+#!/bin/sh
+echo "Gate KCR..."
+python contracts/ops/gate_kcr.py contracts/kpi/registry.json contracts/kpi/decisions.md || {
+  echo "Gate KCR falhou. Push cancelado."
+  exit 1
+}
