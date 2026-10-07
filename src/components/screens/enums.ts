@@ -1,24 +1,14 @@
 // src/lib/onboarding/enums.ts
-//
-// ✅ FIX (integração 12/09/2026): o rascunho original importava `AffectSource`
-// e `Priority` de '@/types/orbit' — nenhum dos dois existe lá. O nome real
-// do primeiro é `ValuesAffectSource` (ClientOnboarding.values_affect_source).
-// `Priority` nunca existiu como tipo nomeado — é só o literal inline de
-// `SchwatzValue.priority`; derivado aqui via indexed access em vez de
-// inventar um tipo novo em orbit.ts sem confirmação.
+// Values accepted by orbit.client_onboarding.
 import type {
   CTAType,
   FunnelMaturity,
   TotalFollowersSource,
   SetorBenchmark,
   ProofMechanism,
-  PankseppSystem,
   ValuesAffectSource,
   ConfidenceLevel,
-  SchwatzValue,
 } from '@/types/orbit'
-
-export type Priority = SchwatzValue['priority']
 
 export const ENUM_TOTAL_FOLLOWERS_SOURCE: Array<[TotalFollowersSource, string]> = [
   ['manual_print_confirmado', 'Manual (print confirmado)'],
@@ -65,16 +55,6 @@ export const ENUM_PROOF: Array<[ProofMechanism, string]> = [
   ['nenhum_observavel', 'Nenhum observável'],
 ]
 
-export const ENUM_PANKSEPP: Array<[PankseppSystem, string]> = [
-  ['SEEKING', 'SEEKING'],
-  ['CARE', 'CARE'],
-  ['PLAY', 'PLAY'],
-  ['LUST', 'LUST'],
-  ['FEAR', 'FEAR'],
-  ['RAGE', 'RAGE'],
-  ['PANIC_GRIEF', 'PANIC_GRIEF'],
-]
-
 export const ENUM_AFFECT_SOURCE: Array<[ValuesAffectSource, string]> = [
   ['onboarding', 'Onboarding'],
   ['client_feedback', 'Feedback do cliente'],
@@ -83,35 +63,7 @@ export const ENUM_AFFECT_SOURCE: Array<[ValuesAffectSource, string]> = [
 ]
 
 export const ENUM_CONFIDENCE: Array<[ConfidenceLevel, string]> = [
-  ['L0', 'L0 — Medido (direto da fonte)'],
-  ['L1', 'L1 — Estimado (calculado a partir de dado parcial)'],
-  ['L2', 'L2 — Hipótese (ainda sem confirmação)'],
+  ['L0', 'L0 — Dado direto confirmado'],
+  ['L1', 'L1 — Raciocínio fundamentado'],
+  ['L2', 'L2 — Depende de dado ausente'],
 ]
-
-export const ENUM_PRIORITY: Array<[Priority, string]> = [
-  ['high', 'Alta'],
-  ['medium', 'Média'],
-  ['low', 'Baixa'],
-]
-
-export const SCHWARTZ_SUGESTOES = [
-  'Poder',
-  'Realização',
-  'Hedonismo',
-  'Estimulação',
-  'Autodireção',
-  'Universalismo',
-  'Benevolência',
-  'Tradição',
-  'Conformidade',
-  'Segurança',
-]
-
-export function labelFor<T extends string>(
-  list: Array<[T, string]>,
-  val: T | null | undefined
-): string | null {
-  if (!val) return null
-  const hit = list.find(([v]) => v === val)
-  return hit ? hit[1] : val
-}

@@ -1,13 +1,12 @@
 /* ==========================================================================
    ORBIT · Component — QualityScoresPanel.module.css
    Grade 2×2: Score Utilidade · Score Polêmica · VFE · ER Real
-   Versão: 1.0.2  |  Data: 2026-08-31
-   
-   MUDANÇA v1.0.2:
-   - Adicionado .panel (estava ausente — GlassCard renderiza mas styles.panel era undefined)
-   - Alinhado 100% com TOKENS SSOT (src/lib/tokens.ts)
-   - Adicionado .grid (v1.0.1 — estava ausente)
-   - Adicionado .boxGold (v1.0.1 — TAXA DE SALVAMENTO usa glowColor:'gold')
+   Versão: 1.0.3  |  Data: 2026-10-05
+
+   MUDANÇA v1.0.3 (SSOT Compliance):
+   - Removidos TODOS os valores hardcoded rgba/gradientes
+   - Substituídos por tokens: --opacity-*, --color-*-rgb, --gradient-*, --shadow-*
+   - Resultado: 100% SSOT compliance, zero hardcoding
    ========================================================================== */
 
 /* ═══════════════════════════════════════════════════════════════
@@ -28,7 +27,7 @@
 
 .panel:hover {
   border-color: var(--border-glow-cyan);
-  box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+  box-shadow: var(--shadow-glow-cyan-30);  /* ✅ Token em vez de hardcoded */
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -48,7 +47,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   GRID 2×2 (NOVO v1.0.1)
+   GRID 2×2
    ═══════════════════════════════════════════════════════════════ */
 
 .grid {
@@ -69,15 +68,22 @@
 
 .scoreBox {
   padding: var(--space-3) var(--space-4);
-  background: linear-gradient(135deg, rgba(0, 255, 255, 0.05) 0%, rgba(0, 255, 255, 0.02) 100%);
+  background: var(--gradient-cyan-subtle);  /* ✅ Token em vez de hardcoded */
   border: 1px solid var(--line);
   border-radius: var(--r8);
-  transition: all var(--transition-fast);
+  transition: 
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    border-color var(--transition-fast),
+    background var(--transition-fast);
   cursor: default;
+}
+.grid > .scoreBox:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
 }
 
 .scoreBox:hover {
-  background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(0, 255, 255, 0.05) 100%);
+  background: var(--gradient-cyan-hover);  /* ✅ Token em vez de hardcoded */
   transform: translateY(-2px);
 }
 
@@ -86,34 +92,33 @@
    ═══════════════════════════════════════════════════════════════ */
 
 .boxCyan {
-  border-color: rgba(0, 255, 255, 0.3);
-  box-shadow: inset 0 0 15px rgba(0, 255, 255, 0.1);
+  border-color: rgba(var(--color-cyan-rgb), var(--opacity-30));  /* ✅ RGB + opacity tokens */
+  box-shadow: var(--shadow-glow-cyan-inset);  /* ✅ Token */
 }
 
 .boxCyan:hover {
-  border-color: rgba(0, 255, 255, 0.5);
-  box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.15), 0 0 20px rgba(0, 255, 255, 0.2);
+  border-color: rgba(var(--color-cyan-rgb), var(--opacity-50));  /* ✅ RGB + opacity tokens */
+  box-shadow: var(--shadow-glow-cyan-inset-hover);  /* ✅ Token */
 }
 
 .boxRed {
-  border-color: rgba(255, 68, 68, 0.3);
-  box-shadow: inset 0 0 15px rgba(255, 68, 68, 0.1);
+  border-color: rgba(var(--color-red-rgb), var(--opacity-30));  /* ✅ RGB + opacity tokens */
+  box-shadow: var(--shadow-glow-red-inset);  /* ✅ Token */
 }
 
 .boxRed:hover {
-  border-color: rgba(255, 68, 68, 0.5);
-  box-shadow: inset 0 0 20px rgba(255, 68, 68, 0.15), 0 0 20px rgba(255, 68, 68, 0.2);
+  border-color: rgba(var(--color-red-rgb), var(--opacity-50));  /* ✅ RGB + opacity tokens */
+  box-shadow: var(--shadow-glow-red-inset-hover);  /* ✅ Token */
 }
 
-/* NOVO v1.0.1 — usado por TAXA DE SALVAMENTO (glowColor: 'gold') */
 .boxGold {
-  border-color: rgba(255, 195, 0, 0.3);
-  box-shadow: inset 0 0 15px rgba(255, 195, 0, 0.1);
+  border-color: rgba(var(--color-gold-rgb), var(--opacity-30));  /* ✅ RGB + opacity tokens */
+  box-shadow: var(--shadow-glow-gold-inset);  /* ✅ Token */
 }
 
 .boxGold:hover {
-  border-color: rgba(255, 195, 0, 0.5);
-  box-shadow: inset 0 0 20px rgba(255, 195, 0, 0.15), 0 0 20px rgba(255, 195, 0, 0.2);
+  border-color: rgba(var(--color-gold-rgb), var(--opacity-50));  /* ✅ RGB + opacity tokens */
+  box-shadow: var(--shadow-glow-gold-inset-hover);  /* ✅ Token */
 }
 
 .boxNeutral {
@@ -123,7 +128,21 @@
 
 .boxNeutral:hover {
   border-color: var(--line2);
-  background: linear-gradient(135deg, rgba(100, 100, 100, 0.05) 0%, rgba(100, 100, 100, 0.02) 100%);
+  background: var(--gradient-gray-hover);  /* ✅ Token em vez de hardcoded */
+}
+
+.boxGreen {
+  border-color: rgba(var(--color-green-rgb), var(--opacity-30));
+  box-shadow: var(--shadow-glow-green-inset);
+}
+
+.boxGreen:hover {
+  border-color: rgba(var(--color-green-rgb), var(--opacity-50));
+  box-shadow: var(--shadow-glow-green-inset-hover);
+}
+
+.statusSuccess {
+  color: var(--green);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -133,9 +152,9 @@
 .scoreLabel {
   font-family: var(--font);
   font-size: var(--font-size-xs);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);  /* ✅ Token em vez de hardcoded 500 */
   letter-spacing: 0.03em;
-  color: var(--text-muted); /* FIX WCAG: era var(--t2), 3.21:1 sobre hover — falha AA. --text-muted já resolve para --t1 (8:1+) */
+  color: var(--text-muted);
   text-transform: uppercase;
   margin: 0 0 var(--space-2) 0;
 }
@@ -151,24 +170,24 @@
 .naValue {
   font-family: var(--mono);
   font-size: var(--font-size-2xl);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);  /* ✅ Token em vez de hardcoded 700 */
   color: var(--t1);
   line-height: 1;
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   STATUS TEXT (Indicador de Status)
+   STATUS TEXT
    ═══════════════════════════════════════════════════════════════ */
 
 .statusText {
   font-family: var(--font);
   font-size: var(--font-size-xs);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);  /* ✅ Token */
   display: flex;
   align-items: center;
   gap: var(--space-1);
   margin: 0;
-  line-height: 1.4;
+  line-height: var(--line-height-base);  /* ✅ Token em vez de hardcoded 1.4 */
 }
 
 .statusOk {
@@ -184,7 +203,7 @@
 }
 
 .statusNeutral {
-  color: var(--text-muted); /* FIX WCAG: era var(--t2), 3.21:1 sobre hover — falha AA. --text-muted já resolve para --t1 (8:1+) */
+  color: var(--text-muted);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -202,7 +221,6 @@
   }
 }
 
-/* Focus visible para acessibilidade */
 .panel:focus-visible {
   outline: 2px solid var(--neon-cyan);
   outline-offset: 2px;
@@ -214,16 +232,16 @@
 }
 
 .actionText {
-  margin: var(--space-1, 0.25rem) 0 0;
+  margin-top: var(--space-1);  /* ✅ Removido fallback manual */
   font-size: var(--font-size-xs);
-  line-height: 1.4;
+  line-height: var(--line-height-base);  /* ✅ Token */
   color: var(--text-primary);
 }
 
 .referenceNote {
-  margin: var(--space-1, 0.25rem) 0 0;
+  margin-top: var(--space-1);  /* ✅ Removido fallback manual */
   font-size: var(--font-size-xs);
-  line-height: 1.4;
+  line-height: var(--line-height-base);  /* ✅ Token */
   font-style: italic;
   color: var(--text-muted);
 }

@@ -1,0 +1,304 @@
+/* ==========================================================================
+   ORBIT · Component — PostingProfilePanel.module.css (RWP-3)
+   Versão: 1.2.0  |  Data: 2026-10-06
+
+   v1.2.0: o TSX passou a usar 5 classes que não existiam aqui (reference,
+   referenceHead, referenceLine, referenceMeta, referenceMuted — bloco de
+   referência do segmento). Sem elas, CSS Modules devolve `undefined` e o
+   bloco renderizava sem estilo nenhum. Adicionadas abaixo, mesmo glasscard
+   do QualityScoresPanel (gradiente cyan sutil + borda cyan translúcida +
+   glow inset), aninhado dentro de .block com raio menor (--r6) e SEM
+   hover/lift próprio, para não competir com o .block pai.
+
+   Mesmo vocabulário do QualityScoresPanel.module.css:
+   painel = .panel; bloco interno = .scoreBox + .boxCyan; sem estado de
+   alerta (cadência e mix são contagem, nunca semáforo). 100% tokens SSOT.
+   A cor da posição (gold/cyan) vem do StatusPill — o container da
+   referência fica sempre cyan, neutro.
+   ========================================================================== */
+
+/* ═══════════════════════════════════════════════════════════════
+   PAINEL PRINCIPAL
+   ═══════════════════════════════════════════════════════════════ */
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background-color: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: var(--r12);
+  box-shadow: var(--shadow-glow-cyan);
+  transition: all var(--transition-base);
+}
+
+.panel:hover {
+  border-color: var(--border-glow-cyan);
+  box-shadow: var(--shadow-glow-cyan-30);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TÍTULO + BADGE DE NÍVEL
+   ═══════════════════════════════════════════════════════════════ */
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--line);
+}
+
+.title {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--neon-cyan);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.levelBadge {
+  display: inline-block;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--r4);
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--t1);
+  background-color: var(--bg3);
+  border: 1px solid var(--line2);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GRID DOS 2 BLOCOS (Cadência | Mix)
+   ═══════════════════════════════════════════════════════════════ */
+
+.blocks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+@media (max-width: 768px) {
+  .blocks {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BLOCO — mesma receita de .scoreBox + .boxCyan
+   ═══════════════════════════════════════════════════════════════ */
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: var(--gradient-cyan-subtle);
+  border: 1px solid rgba(var(--color-cyan-rgb), var(--opacity-30));
+  border-radius: var(--r8);
+  box-shadow: var(--shadow-glow-cyan-inset);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    border-color var(--transition-fast),
+    background var(--transition-fast);
+  cursor: default;
+}
+
+.block:hover {
+  background: var(--gradient-cyan-hover);
+  border-color: rgba(var(--color-cyan-rgb), var(--opacity-50));
+  box-shadow: var(--shadow-glow-cyan-inset-hover);
+  transform: translateY(-2px);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CONTEÚDO DO BLOCO
+   ═══════════════════════════════════════════════════════════════ */
+
+.label {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.headline {
+  font-family: var(--mono);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--neon-cyan);
+  /* "1 post a cada 12,3 semanas" é longo p/ meia coluna em 22px mono */
+  overflow-wrap: anywhere;
+}
+
+/* sem base: neutro, nunca vermelho/âmbar (ausência de dado não é alerta) */
+.headlineMuted {
+  composes: headline;
+  font-size: var(--font-size-2xl);
+  color: var(--t1);
+}
+
+.detail {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-base);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   REFERÊNCIA DO SEGMENTO (dentro do bloco Cadência)
+   Glasscard aninhado: mesmo gradiente/borda/glow cyan do .block, um
+   degrau mais quieto (raio menor, borda mais fraca, sem hover/lift).
+   A cor de posição (gold/cyan) NÃO vem daqui — vem do StatusPill.
+   ═══════════════════════════════════════════════════════════════ */
+
+.reference {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+  padding: var(--space-3);
+  background: var(--gradient-cyan-subtle);
+  border: 1px solid rgba(var(--color-cyan-rgb), 0.2);
+  border-radius: var(--r6);
+  box-shadow: var(--shadow-glow-cyan-inset);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.referenceHead {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-1);
+  border-bottom: 1px solid var(--line);
+}
+
+/* linha principal: média · mediana (o dado que o leitor compara) */
+.referenceLine {
+  font-family: var(--font);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-base);
+  color: var(--text-primary);
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* faixa P25–P75, contas, período fixo (contexto, não destaque) */
+.referenceMeta {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-relaxed);
+  color: var(--text-muted);
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* sem referência: neutro, sem borda/glow — ausência não é alerta */
+.referenceMuted {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-style: italic;
+  line-height: var(--line-height-base);
+  color: var(--text-muted);
+  margin: var(--space-2) 0 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MIX DE FORMATOS
+   ═══════════════════════════════════════════════════════════════ */
+
+.mixList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.mixRow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: var(--space-3);
+  row-gap: var(--space-1);
+  align-items: baseline;
+  font-family: var(--font);
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+}
+
+.mixCount {
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  color: var(--t1);
+}
+
+/* largura da barra vem de --pct, definida inline no TSX */
+.barTrack {
+  grid-column: 1 / -1;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--line);
+  overflow: hidden;
+}
+
+.barFill {
+  display: block;
+  height: 100%;
+  width: var(--pct, 0%);
+  background: var(--neon-cyan);
+  border-radius: inherit;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   NOTA DE RODAPÉ
+   ═══════════════════════════════════════════════════════════════ */
+
+.note {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-style: italic;
+  line-height: var(--line-height-relaxed);
+  color: var(--text-muted);
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border-left: 3px solid var(--neon-cyan);
+  background-color: rgba(var(--color-cyan-rgb), 0.05);
+  border-radius: var(--r8);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVIDADE E ACESSIBILIDADE
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .block {
+    transition: none;
+  }
+
+  .block:hover {
+    transform: none;
+  }
+}
+
+.panel:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 2px;
+}

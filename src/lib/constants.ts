@@ -70,6 +70,12 @@ dogativo: {
     label: 'Dog Ativo',
   },
 
+  ac_enxovais: {
+    id: 'a131cba6-bd51-4d86-b7be-a9e7ee481e98', 
+    name: 'A.C. Enxovais',
+    label: 'A.C. Enxovais',
+  },
+
 
 } as const
 

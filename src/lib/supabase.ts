@@ -34,13 +34,3 @@ export const supabase = createClient<Database, 'orbit'>(supabaseUrl || '', supab
   },
 })
 
-// ✅ UMA ÚNICA DECLARAÇÃO (schema: public — fallback)
-export const supabaseLegacy = createClient<Database, 'public'>(supabaseUrl || '', supabaseKey || '', {
-  db: { schema: 'public' as const },
-  auth: {
-    autoRefreshToken: false,
-    persistSession: false,
-    storageKey: 'orbit-legacy',
-    detectSessionInUrl: false,
-  },
-})

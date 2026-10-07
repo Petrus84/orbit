@@ -5,80 +5,104 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { fetchClientOnboarding, upsertClientOnboarding } from '@/lib/repositories/onboardingRepository'
-import type { ClientOnboarding, FetchStatus } from '@/types/orbit'
+import type { ClientOnboarding, ClientOnboardingWrite, FetchStatus } from '@/types/orbit'
+
+type OnboardingStatus = FetchStatus | 'not_found'
 
 export interface UseOnboardingReturn {
   data: ClientOnboarding | null
-  status: FetchStatus
+  status: OnboardingStatus
   error: string | null
-  save: (data: ClientOnboarding) => Promise<boolean>
+  save: (data: ClientOnboardingWrite) => Promise<boolean>
   refetch: () => void
 }
 
 export function useOnboarding(clientId: string): UseOnboardingReturn {
-  const [data, setData] = useState<ClientOnboarding | null>(null)
-  const [status, setStatus] = useState<FetchStatus>('idle')
-  const [error, setError] = useState<string | null>(null)
+  const [state, setState] = useState<{
+    clientId: string
+    data: ClientOnboarding | null
+    status: OnboardingStatus
+    error: string | null
+  } | null>(null)
 
-  const isMountedRef = useRef(true)
+  const isMountedRef = useRef(false)
   const fetchIdRef = useRef(0)
+  const clientIdRef = useRef(clientId)
 
   const load = useCallback(async () => {
-    if (!clientId) return
+    if (!clientId) return null
+    return fetchClientOnboarding(clientId)
+  }, [clientId])
 
-    fetchIdRef.current += 1
-    const thisFetchId = fetchIdRef.current
+  const applyResult = useCallback((result: Awaited<ReturnType<typeof fetchClientOnboarding>>, requestId: number) => {
+    if (!isMountedRef.current || requestId !== fetchIdRef.current) return
+    setState({
+      clientId,
+      data: result.status === 'found' ? result.data : null,
+      status: result.status === 'found' ? 'success' : 'not_found',
+      error: null,
+    })
+  }, [clientId])
 
-    if (isMountedRef.current) {
-      setStatus('loading')
-      setError(null)
-    }
-
-    try {
-      const result = await fetchClientOnboarding(clientId)
-
-      if (!isMountedRef.current || thisFetchId !== fetchIdRef.current) return
-
-      if (result) {
-        setData(result)
-        setStatus('success')
-      } else {
-        setData(null)
-        setStatus('success')
-      }
-    } catch (err) {
-      if (isMountedRef.current && thisFetchId === fetchIdRef.current) {
-        setStatus('error')
-        setError(err instanceof Error ? err.message : 'Erro desconhecido')
-      }
-    }
+  const applyError = useCallback((err: unknown, requestId: number) => {
+    if (!isMountedRef.current || requestId !== fetchIdRef.current) return
+    setState({
+      clientId,
+      data: null,
+      status: 'error',
+      error: err instanceof Error ? err.message : 'Erro desconhecido',
+    })
   }, [clientId])
 
   useEffect(() => {
     isMountedRef.current = true
-    setTimeout(() => {
-      void load()
-    }, 0)
+    clientIdRef.current = clientId
+    if (clientId) {
+      const requestId = ++fetchIdRef.current
+      void load().then((result) => {
+        if (result) applyResult(result, requestId)
+      }).catch((err: unknown) => applyError(err, requestId))
+    }
 
     return () => {
       isMountedRef.current = false
+      fetchIdRef.current += 1
     }
-  }, [load])
+  }, [clientId, load, applyError, applyResult])
 
   const save = useCallback(
-    async (onboarding: ClientOnboarding): Promise<boolean> => {
+    async (onboarding: ClientOnboardingWrite): Promise<boolean> => {
+      if (onboarding.client_id !== clientId || clientIdRef.current !== clientId) {
+        return false
+      }
+
       const success = await upsertClientOnboarding(onboarding)
-      if (success && isMountedRef.current) {
-        setData(onboarding)
+      if (success && isMountedRef.current && clientIdRef.current === clientId) {
+        const requestId = ++fetchIdRef.current
+        try {
+          const result = await load()
+          if (result) applyResult(result, requestId)
+        } catch (err) {
+          applyError(err, requestId)
+        }
       }
       return success
     },
-    []
+    [clientId, load, applyError, applyResult]
   )
 
   const refetch = useCallback(() => {
-    void load()
-  }, [load])
+    if (!clientId) return
+    const requestId = ++fetchIdRef.current
+    void load().then((result) => {
+      if (result) applyResult(result, requestId)
+    }).catch((err: unknown) => applyError(err, requestId))
+  }, [clientId, load, applyError, applyResult])
+
+  const activeState = state?.clientId === clientId ? state : null
+  const data = activeState?.data ?? null
+  const status = clientId ? activeState?.status ?? 'loading' : 'not_found'
+  const error = activeState?.error ?? null
 
   return { data, status, error, save, refetch }
 }

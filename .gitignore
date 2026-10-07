@@ -58,3 +58,33 @@ REMOVIDOS.txt
 # cópias no lugar errado
 src/..orbit-dashboard-clean.tar.gz
 ..orbit-dashboard-clean.tar.gz
+
+# ============================================================================
+# Temporary & Generated Files
+# ============================================================================
+*.txt
+*.sql
+*.pdf
+*.xlsx
+*.zip
+dump*.sql
+schema*.sql
+audit-report.json
+diagnose-data-flow.ps1
+
+# ============================================================================
+# Project-Specific Directories
+# ============================================================================
+ORBIT_Ecommerce/
+reports/
+apify-split/
+misericordia/
+contracts/ops/
+
+# ============================================================================
+# OS & IDE
+# ============================================================================
+.DS_Store
+.vscode/settings.json
+*.swp
+*.swo

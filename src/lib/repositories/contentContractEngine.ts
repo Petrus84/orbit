@@ -35,7 +35,10 @@ import type {
   ThresholdGranularity,
   CalibrationMethod,
   SetorBenchmark,
+  PostingCadence,
+  FormatMix,
 } from '@/types/orbit'
+
 import { supabase } from '@/lib/supabase'
 
 export interface AlertContractFields {
@@ -244,7 +247,37 @@ export function mapFollowersToTier(followers: number | null | undefined): string
   if (followers < 1_000_000) return 'macro'
   return 'mega'
 }
+const MIN_POSTS_CADENCE = 3
+const MS_PER_DAY = 86_400_000
 
+export function computePostingCadence(
+  publishedAt: string[],
+  windowStart: string,
+  windowEnd: string,
+): PostingCadence {
+  const days = (Date.parse(windowEnd) - Date.parse(windowStart)) / MS_PER_DAY
+  const nPosts = publishedAt.length
+  const validDays = Number.isFinite(days) && days > 0
+  if (!validDays || nPosts < MIN_POSTS_CADENCE) {
+    return { postsPerWeek: null, nPosts, windowDays: validDays ? days : 0, reason: 'sem_base', weeksPerPost: null }
+  }
+  const perWeek = nPosts / (days / 7)
+  return { postsPerWeek: perWeek, nPosts, windowDays: days, reason: 'ok', weeksPerPost: 1 / perWeek }
+}
+
+export function computeFormatMix(formats: (string | null)[]): FormatMix | null {
+  const total = formats.length
+  if (total === 0) return null
+  const counts = new Map<string, number>()
+  for (const f of formats) {
+    const key = f ?? 'sem_formato'
+    counts.set(key, (counts.get(key) ?? 0) + 1)
+  }
+  const items = [...counts.entries()]
+    .map(([format, count]) => ({ format, count, pct: (count / total) * 100 }))
+    .sort((a, b) => b.count - a.count)
+  return { total, items }
+}
 /* -------------------------------------------------------------------------- */
 /*  algo_risk_score — família Ln (self-reference, não é benchmark de mercado) */
 /* -------------------------------------------------------------------------- */

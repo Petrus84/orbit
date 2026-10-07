@@ -602,9 +602,37 @@ export interface IGOverviewData {
   insights: InsightData[]
   criticalAlerts: CriticalAlertData[]
   audienceSummary: AudienceSummary
-  clients: Client[]  // ⚠️ OBSERVAÇÃO (15): shape de cliente com `positioning` (nova feature)
-  positioning: SectorPositioning  // ✅ mudou aqui
+  clients: Client[]
+  positioning: SectorPositioning
+  cadence?: PostingCadence | null | undefined
+  mix?: FormatMix | null | undefined
+  benchmarkCadence?: BenchmarkCadence | null | undefined
 }
+
+export interface BenchmarkCadence {
+  segmentCategory: string
+  periodStart: string
+  periodEnd: string
+  windowDays: number
+  benchmarkAccountsTotal: number
+  accountsWithPosts: number
+  postsTotal: number
+  meanPostsPerDay: number
+  medianPostsPerDay: number
+  p25PostsPerDay: number
+  p75PostsPerDay: number
+}
+
+export interface PostingCadence {
+  postsPerWeek: number | null
+  nPosts: number
+  windowDays: number
+  reason: 'ok' | 'sem_base'
+  weeksPerPost: number | null
+}
+export interface FormatMixItem { format: string; count: number; pct: number }
+export interface FormatMix { total: number; items: FormatMixItem[] }
+
 
 export interface AudienceCity {
   name: string
@@ -1556,16 +1584,10 @@ export type ProofMechanism =
   | 'nenhum_observavel'
   | 'clientes_ativos_gestao'
 
+export type GenderCategory = 'male' | 'female' | 'non_binary' | 'mixed'
+
 /** ⚠️ CORRIGIDO: schema real usa 'PANIC_GRIEF', não 'PANIC'; 'mixed' não
  * existe na CHECK constraint do banco — removido. */
-export type PankseppSystem =
-  | 'SEEKING' | 'RAGE' | 'FEAR' | 'LUST' | 'CARE' | 'PANIC_GRIEF' | 'PLAY'
-
-export interface SchwatzValue {
-  value: string
-  priority: 'high' | 'medium' | 'low'
-}
-
 /**
  * ✅ PATCH (verificação ao vivo pg_constraint, 11/09/2026):
  * `client_onboarding_values_affect_source_check` no Postgres tem 4 valores —
@@ -1611,15 +1633,25 @@ export interface ClientOnboarding {
   setor_benchmark: SetorBenchmark | null
   nicho: string | null
   proof_mechanism: ProofMechanism | null
-  expected_panksepp_system: PankseppSystem | null
-  real_panksepp_system: PankseppSystem | null
-  expected_schwartz: Record<string, SchwatzValue> | null
-  real_schwartz: Record<string, SchwatzValue> | null
-  values_affect_source: ValuesAffectSource
-  values_affect_confidence: 'L0' | 'L1' | 'L2'
-  updated_by: string
-  updated_at: string
+  values_affect_source: ValuesAffectSource | null
+  values_affect_confidence: ConfidenceLevel | null
+  confidence_seguidores: ConfidenceLevel | null
+  confidence_bio_funil: ConfidenceLevel | null
+  confidence_diagnostico: ConfidenceLevel | null
+  confidence_audiencia: ConfidenceLevel | null
+  confidence_negocio: ConfidenceLevel | null
+  avatar_expected_age_min: number | null
+  avatar_expected_age_max: number | null
+  avatar_expected_gender: GenderCategory | null
+  avatar_expected_gender_pct: number | null
+  updated_by: string | null
+  updated_at: string | null
 }
+
+export type ClientOnboardingWrite = Pick<
+  ClientOnboarding,
+  'client_id' | 'total_followers' | 'total_followers_source'
+> & Partial<Omit<ClientOnboarding, 'client_id' | 'total_followers' | 'total_followers_source' | 'updated_by' | 'updated_at'>>
 
 export interface OnboardingStep {
   id: number
