@@ -14,6 +14,45 @@ export type Database = {
   }
   orbit: {
     Tables: {
+      _bak_clients_unconscious_desire_20260920: {
+        Row: {
+          avatar_unconscious_desire: string | null
+          handle: string | null
+          id: string | null
+        }
+        Insert: {
+          avatar_unconscious_desire?: string | null
+          handle?: string | null
+          id?: string | null
+        }
+        Update: {
+          avatar_unconscious_desire?: string | null
+          handle?: string | null
+          id?: string | null
+        }
+        Relationships: []
+      }
+      _bak_ig_audience_avatar_scores_20260920: {
+        Row: {
+          avatar_age_alignment_score: number | null
+          avatar_gender_alignment_score: number | null
+          avatar_geo_alignment_score: number | null
+          id: string | null
+        }
+        Insert: {
+          avatar_age_alignment_score?: number | null
+          avatar_gender_alignment_score?: number | null
+          avatar_geo_alignment_score?: number | null
+          id?: string | null
+        }
+        Update: {
+          avatar_age_alignment_score?: number | null
+          avatar_gender_alignment_score?: number | null
+          avatar_geo_alignment_score?: number | null
+          id?: string | null
+        }
+        Relationships: []
+      }
       _migration_audit_log: {
         Row: {
           applied_at: string
@@ -1306,9 +1345,12 @@ export type Database = {
           avatar_expected_gender_pct: number | null
           bio_links: Json
           client_id: string
+          confidence_audiencia: string | null
+          confidence_bio_funil: string | null
+          confidence_diagnostico: string | null
+          confidence_negocio: string | null
+          confidence_seguidores: string | null
           cta_type: string | null
-          expected_panksepp_system: string | null
-          expected_schwartz: Json | null
           funnel_maturity: string | null
           nicho: string | null
           observed_content_clusters: string | null
@@ -1316,8 +1358,6 @@ export type Database = {
           q1_engagement_period_notes: string | null
           q2_content_proxy_notes: string | null
           q3_misalignment_notes: string | null
-          real_panksepp_system: string | null
-          real_schwartz: Json | null
           setor_benchmark: string | null
           total_followers: number
           total_followers_source: string
@@ -1339,9 +1379,12 @@ export type Database = {
           avatar_expected_gender_pct?: number | null
           bio_links?: Json
           client_id: string
+          confidence_audiencia?: string | null
+          confidence_bio_funil?: string | null
+          confidence_diagnostico?: string | null
+          confidence_negocio?: string | null
+          confidence_seguidores?: string | null
           cta_type?: string | null
-          expected_panksepp_system?: string | null
-          expected_schwartz?: Json | null
           funnel_maturity?: string | null
           nicho?: string | null
           observed_content_clusters?: string | null
@@ -1349,8 +1392,6 @@ export type Database = {
           q1_engagement_period_notes?: string | null
           q2_content_proxy_notes?: string | null
           q3_misalignment_notes?: string | null
-          real_panksepp_system?: string | null
-          real_schwartz?: Json | null
           setor_benchmark?: string | null
           total_followers: number
           total_followers_source: string
@@ -1372,9 +1413,12 @@ export type Database = {
           avatar_expected_gender_pct?: number | null
           bio_links?: Json
           client_id?: string
+          confidence_audiencia?: string | null
+          confidence_bio_funil?: string | null
+          confidence_diagnostico?: string | null
+          confidence_negocio?: string | null
+          confidence_seguidores?: string | null
           cta_type?: string | null
-          expected_panksepp_system?: string | null
-          expected_schwartz?: Json | null
           funnel_maturity?: string | null
           nicho?: string | null
           observed_content_clusters?: string | null
@@ -1382,8 +1426,6 @@ export type Database = {
           q1_engagement_period_notes?: string | null
           q2_content_proxy_notes?: string | null
           q3_misalignment_notes?: string | null
-          real_panksepp_system?: string | null
-          real_schwartz?: Json | null
           setor_benchmark?: string | null
           total_followers?: number
           total_followers_source?: string
@@ -2266,7 +2308,9 @@ export type Database = {
           import_session: string | null
           impressions: number | null
           is_boost_candidate: boolean
+          is_estimated: boolean
           likes: number | null
+          play_to_view_ratio: number | null
           polemic_score_pct: number | null
           profile_visits_from: number | null
           published_at: string
@@ -2274,6 +2318,7 @@ export type Database = {
           reel_avg_watch_sec: number | null
           reel_duration_sec: number | null
           reel_plays: number | null
+          reel_views: number | null
           saves: number | null
           shares: number | null
           utility_score_pct: number | null
@@ -2294,7 +2339,9 @@ export type Database = {
           import_session?: string | null
           impressions?: number | null
           is_boost_candidate?: boolean
+          is_estimated?: boolean
           likes?: number | null
+          play_to_view_ratio?: number | null
           polemic_score_pct?: number | null
           profile_visits_from?: number | null
           published_at: string
@@ -2302,6 +2349,7 @@ export type Database = {
           reel_avg_watch_sec?: number | null
           reel_duration_sec?: number | null
           reel_plays?: number | null
+          reel_views?: number | null
           saves?: number | null
           shares?: number | null
           utility_score_pct?: number | null
@@ -2322,7 +2370,9 @@ export type Database = {
           import_session?: string | null
           impressions?: number | null
           is_boost_candidate?: boolean
+          is_estimated?: boolean
           likes?: number | null
+          play_to_view_ratio?: number | null
           polemic_score_pct?: number | null
           profile_visits_from?: number | null
           published_at?: string
@@ -2330,6 +2380,7 @@ export type Database = {
           reel_avg_watch_sec?: number | null
           reel_duration_sec?: number | null
           reel_plays?: number | null
+          reel_views?: number | null
           saves?: number | null
           shares?: number | null
           utility_score_pct?: number | null
@@ -2623,6 +2674,30 @@ export type Database = {
         }
         Relationships: []
       }
+      ref_follower_tiers: {
+        Row: {
+          followers_max: number | null
+          followers_min: number
+          notes: string | null
+          scheme: string
+          tier: string
+        }
+        Insert: {
+          followers_max?: number | null
+          followers_min: number
+          notes?: string | null
+          scheme: string
+          tier: string
+        }
+        Update: {
+          followers_max?: number | null
+          followers_min?: number
+          notes?: string | null
+          scheme?: string
+          tier?: string
+        }
+        Relationships: []
+      }
       ref_thresholds: {
         Row: {
           amber_max: number | null
@@ -2710,6 +2785,222 @@ export type Database = {
           green_min?: number | null
           id?: number
           metric_name?: string
+          mrr_ref?: string | null
+          notes?: string | null
+          observation_unit?: string | null
+          percentile_p10?: number | null
+          percentile_p25?: number | null
+          percentile_p50?: number | null
+          percentile_p75?: number | null
+          percentile_p90?: number | null
+          red_max?: number | null
+          red_min?: number | null
+          sample_count?: number | null
+          sample_mean?: number | null
+          sample_std?: number | null
+          threshold_source?: string | null
+          tier_normalized?: string | null
+          unit?: string | null
+          zero_count?: number | null
+          zero_rate?: number | null
+        }
+        Relationships: []
+      }
+      ref_thresholds_backup_20260918: {
+        Row: {
+          amber_max: number | null
+          amber_min: number | null
+          benchmark_note: string | null
+          calibration_method:
+            | Database["orbit"]["Enums"]["calibration_method"]
+            | null
+          category: string | null
+          confidence_score: number | null
+          dataset_id: string | null
+          direction: string | null
+          formula: string | null
+          green_max: number | null
+          green_min: number | null
+          id: number | null
+          metric_name: string | null
+          mrr_ref: string | null
+          notes: string | null
+          observation_unit: string | null
+          percentile_p10: number | null
+          percentile_p25: number | null
+          percentile_p50: number | null
+          percentile_p75: number | null
+          percentile_p90: number | null
+          red_max: number | null
+          red_min: number | null
+          sample_count: number | null
+          sample_mean: number | null
+          sample_std: number | null
+          threshold_source: string | null
+          tier_normalized: string | null
+          unit: string | null
+          zero_count: number | null
+          zero_rate: number | null
+        }
+        Insert: {
+          amber_max?: number | null
+          amber_min?: number | null
+          benchmark_note?: string | null
+          calibration_method?:
+            | Database["orbit"]["Enums"]["calibration_method"]
+            | null
+          category?: string | null
+          confidence_score?: number | null
+          dataset_id?: string | null
+          direction?: string | null
+          formula?: string | null
+          green_max?: number | null
+          green_min?: number | null
+          id?: number | null
+          metric_name?: string | null
+          mrr_ref?: string | null
+          notes?: string | null
+          observation_unit?: string | null
+          percentile_p10?: number | null
+          percentile_p25?: number | null
+          percentile_p50?: number | null
+          percentile_p75?: number | null
+          percentile_p90?: number | null
+          red_max?: number | null
+          red_min?: number | null
+          sample_count?: number | null
+          sample_mean?: number | null
+          sample_std?: number | null
+          threshold_source?: string | null
+          tier_normalized?: string | null
+          unit?: string | null
+          zero_count?: number | null
+          zero_rate?: number | null
+        }
+        Update: {
+          amber_max?: number | null
+          amber_min?: number | null
+          benchmark_note?: string | null
+          calibration_method?:
+            | Database["orbit"]["Enums"]["calibration_method"]
+            | null
+          category?: string | null
+          confidence_score?: number | null
+          dataset_id?: string | null
+          direction?: string | null
+          formula?: string | null
+          green_max?: number | null
+          green_min?: number | null
+          id?: number | null
+          metric_name?: string | null
+          mrr_ref?: string | null
+          notes?: string | null
+          observation_unit?: string | null
+          percentile_p10?: number | null
+          percentile_p25?: number | null
+          percentile_p50?: number | null
+          percentile_p75?: number | null
+          percentile_p90?: number | null
+          red_max?: number | null
+          red_min?: number | null
+          sample_count?: number | null
+          sample_mean?: number | null
+          sample_std?: number | null
+          threshold_source?: string | null
+          tier_normalized?: string | null
+          unit?: string | null
+          zero_count?: number | null
+          zero_rate?: number | null
+        }
+        Relationships: []
+      }
+      ref_thresholds_v1_backup_20260914: {
+        Row: {
+          amber_max: number | null
+          amber_min: number | null
+          benchmark_note: string | null
+          calibration_method:
+            | Database["orbit"]["Enums"]["calibration_method"]
+            | null
+          category: string | null
+          confidence_score: number | null
+          dataset_id: string | null
+          direction: string | null
+          formula: string | null
+          green_max: number | null
+          green_min: number | null
+          id: number | null
+          metric_name: string | null
+          mrr_ref: string | null
+          notes: string | null
+          observation_unit: string | null
+          percentile_p10: number | null
+          percentile_p25: number | null
+          percentile_p50: number | null
+          percentile_p75: number | null
+          percentile_p90: number | null
+          red_max: number | null
+          red_min: number | null
+          sample_count: number | null
+          sample_mean: number | null
+          sample_std: number | null
+          threshold_source: string | null
+          tier_normalized: string | null
+          unit: string | null
+          zero_count: number | null
+          zero_rate: number | null
+        }
+        Insert: {
+          amber_max?: number | null
+          amber_min?: number | null
+          benchmark_note?: string | null
+          calibration_method?:
+            | Database["orbit"]["Enums"]["calibration_method"]
+            | null
+          category?: string | null
+          confidence_score?: number | null
+          dataset_id?: string | null
+          direction?: string | null
+          formula?: string | null
+          green_max?: number | null
+          green_min?: number | null
+          id?: number | null
+          metric_name?: string | null
+          mrr_ref?: string | null
+          notes?: string | null
+          observation_unit?: string | null
+          percentile_p10?: number | null
+          percentile_p25?: number | null
+          percentile_p50?: number | null
+          percentile_p75?: number | null
+          percentile_p90?: number | null
+          red_max?: number | null
+          red_min?: number | null
+          sample_count?: number | null
+          sample_mean?: number | null
+          sample_std?: number | null
+          threshold_source?: string | null
+          tier_normalized?: string | null
+          unit?: string | null
+          zero_count?: number | null
+          zero_rate?: number | null
+        }
+        Update: {
+          amber_max?: number | null
+          amber_min?: number | null
+          benchmark_note?: string | null
+          calibration_method?:
+            | Database["orbit"]["Enums"]["calibration_method"]
+            | null
+          category?: string | null
+          confidence_score?: number | null
+          dataset_id?: string | null
+          direction?: string | null
+          formula?: string | null
+          green_max?: number | null
+          green_min?: number | null
+          id?: number | null
+          metric_name?: string | null
           mrr_ref?: string | null
           notes?: string | null
           observation_unit?: string | null
@@ -2877,6 +3168,70 @@ export type Database = {
           },
         ]
       }
+      v_algo_risk_score: {
+        Row: {
+          algo_risk_score: number | null
+          client_id: string | null
+          confidence: string | null
+          median_b: number | null
+          median_r: number | null
+          n_b: number | null
+          n_r: number | null
+          note: string | null
+          threshold_source: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ig_posts_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ig_posts_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "v_avatar_alignment"
+            referencedColumns: ["client_id"]
+          },
+          {
+            foreignKeyName: "ig_posts_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "v_avatar_alignment"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ig_posts_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "v_avatar_alignment_latest"
+            referencedColumns: ["client_id"]
+          },
+          {
+            foreignKeyName: "ig_posts_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "v_carteira_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ig_posts_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "v_client_health"
+            referencedColumns: ["client_id"]
+          },
+          {
+            foreignKeyName: "ig_posts_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "v_client_metrics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       v_audience_alignment: {
         Row: {
           avatar_alignment_status:
@@ -3014,6 +3369,23 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      v_benchmark_cadence_by_segment: {
+        Row: {
+          accounts_with_posts: number | null
+          benchmark_accounts_total: number | null
+          content_format: string | null
+          mean_posts_per_day: number | null
+          median_posts_per_day: number | null
+          p25_posts_per_day: number | null
+          p75_posts_per_day: number | null
+          period_end: string | null
+          period_start: string | null
+          posts_total: number | null
+          segment_category: string | null
+          window_days: number | null
+        }
+        Relationships: []
       }
       v_benchmark_thresholds: {
         Row: {
@@ -3546,10 +3918,21 @@ export type Database = {
           client_id: string | null
           created_at: string | null
           id: string | null
+          metric_name: string | null
           period_end: string | null
           period_start: string | null
+          ref_category: string | null
+          ref_direction: string | null
+          ref_green_max: number | null
+          ref_green_min: number | null
+          ref_p50: number | null
+          ref_p75: number | null
+          ref_red_max: number | null
+          ref_red_min: number | null
+          ref_source: string | null
           score_key: string | null
           score_value: number | null
+          semaphore_key: string | null
           status_text: string | null
           status_variant: string | null
         }
@@ -3671,6 +4054,7 @@ export type Database = {
       }
     }
     Functions: {
+      calc_utility_score_pct: { Args: { caption: string }; Returns: number }
       compute_avatar_alignment: {
         Args: { p_audience_id: string; p_client_id: string }
         Returns: {
@@ -3778,43 +4162,6 @@ export type Database = {
         | "ga4_api"
         | "manual_input"
       semaphore_color: "verde" | "ambar" | "vermelho"
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
-  }
-  public: {
-    Tables: {
-      [_ in never]: never
-    }
-    Views: {
-      [_ in never]: never
-    }
-    Functions: {
-      show_limit: { Args: never; Returns: number }
-      show_trgm: { Args: { "": string }; Returns: string[] }
-    }
-    Enums: {
-      alert_action_variant: "primary" | "secondary" | "danger"
-      alert_severity: "critical" | "warning" | "info"
-      alignment_color: "green" | "amber" | "red"
-      campaign_objective:
-        | "OUTREACH"
-        | "TRAFFIC"
-        | "ENGAGEMENT"
-        | "LEADS"
-        | "APP_PROMOTION"
-        | "SALES"
-      campaign_status: "ACTIVE" | "PAUSED" | "ARCHIVED"
-      delta_direction: "up" | "down" | "neutral"
-      glow_color: "cyan" | "red" | "gold" | "none"
-      google_ads_kpi_status: "ok" | "warn" | "error"
-      health_status: "critical" | "warning" | "healthy"
-      meta_kpi_status: "green" | "amber" | "red" | "gray"
-      semaphore_color: "verde" | "ambar" | "vermelho"
-      source_level: "L0" | "L1" | "L2"
-      status_variant: "ok" | "warn" | "neutral"
-      trend_color: "cyan" | "red" | "gold"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -4006,31 +4353,6 @@ export const Constants = {
         "manual_input",
       ],
       semaphore_color: ["verde", "ambar", "vermelho"],
-    },
-  },
-  public: {
-    Enums: {
-      alert_action_variant: ["primary", "secondary", "danger"],
-      alert_severity: ["critical", "warning", "info"],
-      alignment_color: ["green", "amber", "red"],
-      campaign_objective: [
-        "OUTREACH",
-        "TRAFFIC",
-        "ENGAGEMENT",
-        "LEADS",
-        "APP_PROMOTION",
-        "SALES",
-      ],
-      campaign_status: ["ACTIVE", "PAUSED", "ARCHIVED"],
-      delta_direction: ["up", "down", "neutral"],
-      glow_color: ["cyan", "red", "gold", "none"],
-      google_ads_kpi_status: ["ok", "warn", "error"],
-      health_status: ["critical", "warning", "healthy"],
-      meta_kpi_status: ["green", "amber", "red", "gray"],
-      semaphore_color: ["verde", "ambar", "vermelho"],
-      source_level: ["L0", "L1", "L2"],
-      status_variant: ["ok", "warn", "neutral"],
-      trend_color: ["cyan", "red", "gold"],
     },
   },
 } as const

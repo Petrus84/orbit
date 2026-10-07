@@ -198,4 +198,28 @@
 
   --sidebar-width: 220px;
   --header-height: 52px;
+
+  /* ── Tokens derivados (usados por QualityScoresPanel.module.css) ── */
+  --color-cyan-rgb: 0, 255, 255;
+  --color-red-rgb: 255, 68, 68;
+  --color-gold-rgb: 255, 195, 0;
+  --color-green-rgb: 46, 204, 113;
+
+  --opacity-30: 0.3;
+  --opacity-50: 0.5;
+
+  --shadow-glow-cyan-30: 0 0 24px rgba(var(--color-cyan-rgb), 0.3);
+
+  --shadow-glow-cyan-inset: inset 0 0 12px rgba(var(--color-cyan-rgb), 0.08);
+  --shadow-glow-cyan-inset-hover: inset 0 0 16px rgba(var(--color-cyan-rgb), 0.16);
+  --shadow-glow-red-inset: inset 0 0 12px rgba(var(--color-red-rgb), 0.08);
+  --shadow-glow-red-inset-hover: inset 0 0 16px rgba(var(--color-red-rgb), 0.16);
+  --shadow-glow-gold-inset: inset 0 0 12px rgba(var(--color-gold-rgb), 0.08);
+  --shadow-glow-gold-inset-hover: inset 0 0 16px rgba(var(--color-gold-rgb), 0.16);
+  --shadow-glow-green-inset: inset 0 0 12px rgba(var(--color-green-rgb), 0.08);
+  --shadow-glow-green-inset-hover: inset 0 0 16px rgba(var(--color-green-rgb), 0.16);
+
+  --gradient-cyan-subtle: linear-gradient(180deg, rgba(var(--color-cyan-rgb), 0.04), transparent);
+  --gradient-cyan-hover: linear-gradient(180deg, rgba(var(--color-cyan-rgb), 0.08), transparent);
+  --gradient-gray-hover: linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent);
 }

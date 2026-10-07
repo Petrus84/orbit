@@ -184,7 +184,16 @@ n_dead_writer_ligados    = 0           (não ligar nesta quinzena)
 | ID | Subtarefa | Controle (SQL) | DoD |
 |---|---|---|---|
 | OGP-R1 | Sincronizar rótulo: `setor_benchmark` → `clients.benchmark_category` via `mapSegmentToCategory` | `SELECT handle, benchmark_category FROM clients WHERE is_benchmark=false` | **5/5 NOT NULL** ou 4 linhas no `decisions.md` “não mapear porque X” |
-| OGP-R2 | Conflito de chave (tipo dicasdesaudeecia: 4_servico vs afiliado) | 1 override manual por handle | sem 3 rótulos no mesmo cliente |
+| OGP-R2 | ## OGP-R2 — fechado, não é conflito
+
+Não é o caso dicasdesaudeecia. Nenhum handle das 5 tem três rótulos ao mesmo tempo.
+
+O que houve em `@djcaiodogao` (2026-09-28, 02:04–02:15): `benchmark_category` foi gravada `comercio_direto_ecommerce_social` por erro de digitação e corrigida no mesmo dia para `infoprodutor_autoridade_personal`. O setor de origem continua `membership_assinatura_comunidade`. Nenhum dado derivado usou o rótulo errado.
+
+DoD cumprido: zero handles com três rótulos. Sem `UPDATE`. Cartão não reabre.
+
+Não herdar: não tratar override manual como regra de `mapSegmentToCategory`. A função segue sem o eixo membership. A correção do pagante é decisão, não código. 
+
 | OGP-P1 | Conferir Pista B nos 3.040: likes/comments/ts/format | `count(*)` vs `count(likes)` | relatório 1 página |
 | OGP-P2 | `reel_plays`: 1540/1783 ok; 243 reels sem play = **falha de coleta**, não skip de métrica | lista de 243 shortcodes | re-run actor só nesses, ou marcar lote |
 | OGP-P3 | saves 231/3040 (7,6%) → confirma `er_real` / `utility_score_pct` / `save_rate` = **não Overview** | bate com fichas skip | — |

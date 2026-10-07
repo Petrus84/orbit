@@ -1,5 +1,6 @@
 // src/lib/onboarding/helpers.ts
 import type { ClientOnboarding } from '@/types/orbit'
+import { validateAudienceSum as validateAudienceSumForRow } from './enums'
 
 export const FIELD_ORDER: (keyof ClientOnboarding)[] = [
   'total_followers',
@@ -18,29 +19,27 @@ export const FIELD_ORDER: (keyof ClientOnboarding)[] = [
   'setor_benchmark',
   'nicho',
   'proof_mechanism',
-  'expected_panksepp_system',
-  'real_panksepp_system',
-  'expected_schwartz',
-  'real_schwartz',
+  'values_affect_source',
+  'values_affect_confidence',
+  'confidence_diagnostico',
+  'avatar_expected_age_min',
+  'avatar_expected_age_max',
+  'avatar_expected_gender',
 ]
 
 export const HELP: Record<string, string> = {
   funnel_maturity:
     "Só marque 'implementado' se existir pelo menos 1 link ativo na bio E cta_type diferente de 'nenhum'.",
-  q1: 'Cadência de publicação na janela analisada: quantas publicações por formato.',
-  q2: 'Qual formato (reels, posts ou stories) funciona como sinal de alcance vs. conversão.',
-  q3: 'Hipótese central de por que a conta não performa como o cliente espera.',
+  q1_engagement_period_notes: 'Cadência de publicação na janela analisada: quantas publicações por formato.',
+  q2_content_proxy_notes: 'Qual formato (reels, posts ou stories) funciona como sinal de alcance vs. conversão.',
+  q3_misalignment_notes: 'Hipótese central de por que a conta não performa como o cliente espera.',
   audience:
     '· Núcleo fiel = engajamento genuíno e recorrente\n· Consumo passivo = curte mas não salva\n· Curiosidade externa = alcance de não seguidores\n· Alta rotatividade = entra uma vez e sai',
-  real_panksepp:
-    'Trate como evidência de suporte: padrão recorrente em comentários, taxa de salvamento.',
 }
 
 export function isFilled(id: keyof ClientOnboarding, record: Partial<ClientOnboarding>): boolean {
   const v = record[id]
   if (id === 'bio_links') return Array.isArray(v) && v.length > 0
-  if (id === 'expected_schwartz' || id === 'real_schwartz')
-    return !!v && Object.keys(v as Record<string, unknown>).length > 0
   if (v === null || v === undefined) return false
   if (typeof v === 'string') return v.trim() !== ''
   return true
@@ -73,18 +72,7 @@ export function validateAudienceSum(record: Partial<ClientOnboarding>): {
   ok: boolean
   sum: number
 } {
-  const ids = [
-    'audience_nucleo_fiel_pct',
-    'audience_consumo_passivo_pct',
-    'audience_curiosidade_externa_pct',
-    'audience_alta_rotatividade_pct',
-  ] as const
-  const vals = ids.map((id) => record[id])
-  const anyFilled = vals.some((v) => v !== null && v !== undefined && (v as unknown) !== '')
-  if (!anyFilled) return { ok: true, sum: 0 }
-  const sum = vals.reduce((a: number, v) => a + (parseFloat(String(v)) || 0), 0)
-  const ok = Math.abs(sum - 100) < 0.15
-  return { ok, sum }
+  return validateAudienceSumForRow(record)
 }
 
 export function summarizeChanges(
@@ -108,11 +96,12 @@ export function summarizeChanges(
     setor_benchmark: 'setor/benchmark',
     nicho: 'nicho',
     proof_mechanism: 'mecanismo de prova',
-    expected_panksepp_system: 'Panksepp esperado',
-    real_panksepp_system: 'Panksepp real',
-    expected_schwartz: 'Schwartz esperado',
-    real_schwartz: 'Schwartz real',
-    values_affect_confidence: 'confiança',
+    values_affect_source: 'origem dos dados de confiança',
+    values_affect_confidence: 'confiança dos dados de valores',
+    confidence_diagnostico: 'confiança do diagnóstico',
+    avatar_expected_age_min: 'idade mínima esperada',
+    avatar_expected_age_max: 'idade máxima esperada',
+    avatar_expected_gender: 'gênero predominante esperado',
   }
   const changed: string[] = []
   Object.keys(labels).forEach((id) => {

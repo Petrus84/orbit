@@ -7,10 +7,3 @@
 //   true  -> comportamento anterior (reversão em uma linha).
 // ============================================================================
 export const SHOW_PSYCHOGRAPHY: boolean = false
-
-export const PSYCHOGRAPHY_FIELDS = [
-  'expected_panksepp_system',
-  'real_panksepp_system',
-  'expected_schwartz',
-  'real_schwartz',
-] as const

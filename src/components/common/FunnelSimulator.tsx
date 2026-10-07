@@ -40,21 +40,19 @@ interface FunnelSimulatorProps {
   setor: SetorBenchmark | null;
 }
 
-// Rótulo de exibição para o enum bruto vindo de client_onboarding.setor_benchmark
-// (10 valores confirmados via pg_constraint em 11/09/2026 — ver types/orbit.ts).
-// Fica aqui, e não em types/orbit.ts, porque é texto de UI, não contrato de dado.
 const SETOR_LABELS: Record<SetorBenchmark, string> = {
   comercio_direto_ecommerce_social: 'lojas que vendem pelas redes sociais',
   infoprodutor_autoridade_personal: 'infoprodutores e cursos',
+  infoprodutor_educador_pago: 'educadores e cursos pagos',
   servico_consultoria_profissional: 'serviços e consultorias',
   patrocinio_publicidade_marca: 'marcas que vivem de publicidade',
   membership_assinatura_comunidade: 'assinaturas e comunidades',
   monetizacao_nativa_plataforma: 'contas que monetizam na própria plataforma',
   autoridade_personal_branding_b2b: 'autoridade e personal branding B2B',
+  comissionamento_afiliados: 'afiliados que vivem de comissão',
+  saas_ferramenta: 'ferramentas e SaaS',
   pre_monetizacao_a_validar: 'contas ainda validando modelo de monetização',
-};
-
-// ✅ MOVIDO (09/09/2026): `result`/`baseVendas`/`baseCliques`/`onSaveGoal`
+};// ✅ MOVIDO (09/09/2026): `result`/`baseVendas`/`baseCliques`/`onSaveGoal`
 // saíram daqui — este componente parou de renderizar <FunnelResult> (era a
 // "continuação" do card do simulador que misturava premissas com
 // resultado/receita). FunnelResult agora é um terceiro card próprio,

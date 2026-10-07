@@ -101,6 +101,8 @@ import {
   mapFollowersToTier,
   classifyMetric,
   computeAlgoRiskScore,
+  computePostingCadence,
+  computeFormatMix,
 } from './contentContractEngine'
 
 type RawRow = Record<string, unknown>
@@ -202,6 +204,26 @@ const GLOW_MAP: Record<SemaphoreColor, GlowColor> = {
   // SemaphoreColor agora. KPICardData.semaphore hoje só vem do banco
   // ('verde'|'ambar'|'vermelho'); este ramo existe só pra satisfazer o tipo.
   neutro:   'none',
+}
+
+async function fetchPostingProfile(clientId: string, start: string, end: string) {
+  const { data, error } = await supabase
+    .schema('orbit')
+    .from('ig_posts')
+    .select('published_at, content_format')
+    .eq('client_id', clientId)
+    .gte('published_at', start)
+    .lte('published_at', end)
+    .in('confidence_level', CONFIDENCE_LEVELS)
+    .returns<{ published_at: string; content_format: string | null }[]>()
+
+  if (error) throw new Error(`[fetchPostingProfile] ${error.message}`)
+
+  const rows = data ?? []
+  return {
+    cadence: computePostingCadence(rows.map((r) => r.published_at), start, end),
+    mix: computeFormatMix(rows.map((r) => r.content_format)),
+  }
 }
 
 // ── Funções de transformação ────────────────────────────────────────────
@@ -315,6 +337,8 @@ export async function fetchInstagramOverview(
     fetchAudienceSummary(clientId, periodStart, periodEnd),
     fetchCriticalAlerts(clientId, periodStart, periodEnd),
     fetchSectorPositioning(clientId, periodStart, periodEnd),
+    fetchPostingProfile(clientId, periodStart, periodEnd),
+
   ])
 
   results.forEach((res, idx) => {
@@ -343,8 +367,11 @@ export async function fetchInstagramOverview(
       }
   const criticalAlerts: CriticalAlertData[] = results[5].status === 'fulfilled' ? results[5].value : []
   const positioning: SectorPositioning | null = results[6].status === 'fulfilled'
+  
     ? results[6].value
     : null
+
+  const postingProfile = results[7].status === 'fulfilled' ? results[7].value : null
 
   // ✅ FIX (tsc TS2339): `import.meta.env.VITE_*` é Vite — sobrou de antes
   // da migração pra Next.js, onde env var de cliente é `process.env.NEXT_PUBLIC_*`
@@ -362,14 +389,16 @@ export async function fetchInstagramOverview(
   })
 
   const normalizedClientId = clientId?.trim()
-
   const { data: clientRow, error: clientError } = await supabase
     .schema('orbit')
     .from('clients')
-    .select('handle')
+    .select('handle, benchmark_category, segment')
     .eq('id', normalizedClientId)
     .maybeSingle()
-    .overrideTypes<{ handle: string | null }, { merge: false }>()
+    .overrideTypes<
+      { handle: string | null; benchmark_category: string | null; segment: string | null },
+      { merge: false }
+    >()
 
   // ✅ LOG DETALHADO DO RESULTADO
   console.log('[fetchInstagramOverview] Resultado da query:', {
@@ -392,6 +421,16 @@ export async function fetchInstagramOverview(
   }
 
   const handle = clientRow?.handle ?? normalizedClientId  // ← ÚNICA DEFINIÇÃO
+  
+  // Mesma precedência da view v_benchmark_cadence_by_segment:
+  // benchmark_category → setor do onboarding → segment.
+  const benchmarkCategory =
+    clientRow?.benchmark_category?.trim() ||
+    positioning?.setorBenchmark?.trim() ||
+    clientRow?.segment?.trim() ||
+    null
+
+  const benchmarkCadence = await fetchBenchmarkCadence(benchmarkCategory)
 
   const meta: DashboardHeaderMeta = {
     clientHandle: `@${handle}`,
@@ -413,6 +452,106 @@ export async function fetchInstagramOverview(
     insights:       generateInsights(formatPerformance),
     criticalAlerts,
     positioning: positioning as SectorPositioning,
+    cadence: postingProfile?.cadence ?? null,
+    mix: postingProfile?.mix ?? null,
+    benchmarkCadence,
+  }
+}
+
+type BenchmarkCadenceRow = {
+  segment_category: string
+  content_format: string
+  period_start: string
+  period_end: string
+  window_days: number | string
+  benchmark_accounts_total: number | string
+  accounts_with_posts: number | string
+  posts_total: number | string
+  mean_posts_per_day: number | string | null
+  median_posts_per_day: number | string | null
+  p25_posts_per_day: number | string | null
+  p75_posts_per_day: number | string | null
+}
+
+type BenchmarkCadence = {
+  segmentCategory: string
+  periodStart: string
+  periodEnd: string
+  windowDays: number
+  benchmarkAccountsTotal: number
+  accountsWithPosts: number
+  postsTotal: number
+  meanPostsPerDay: number
+  medianPostsPerDay: number
+  p25PostsPerDay: number
+  p75PostsPerDay: number
+}
+
+// Referência de cadência do segmento (período fixo da view, não o período
+// selecionado no dashboard). Nunca converte dado ausente em 0: se qualquer
+// estatística vier nula, a referência inteira é descartada.
+async function fetchBenchmarkCadence(
+  category: string | null
+): Promise<BenchmarkCadence | null> {
+  const normalizedCategory = category?.trim().toLowerCase()
+  if (!normalizedCategory) return null
+
+  const { data, error } = await supabase
+    .schema('orbit')
+    .from('v_benchmark_cadence_by_segment')
+    .select('segment_category, content_format, period_start, period_end, window_days, benchmark_accounts_total, accounts_with_posts, posts_total, mean_posts_per_day, median_posts_per_day, p25_posts_per_day, p75_posts_per_day')
+    .eq('segment_category', normalizedCategory)
+    .eq('content_format', 'all')
+    .order('period_end', { ascending: false })
+    .limit(1)
+    .maybeSingle()
+    .overrideTypes<BenchmarkCadenceRow, { merge: false }>()
+
+  if (error || !data) {
+    if (error) console.error('[fetchBenchmarkCadence]', error.message)
+    return null
+  }
+
+  const num = (v: unknown): number | null => {
+    if (v === null || v === undefined || v === '') return null
+    const n = typeof v === 'number' ? v : Number(v)
+    return Number.isFinite(n) ? n : null
+  }
+
+  const windowDays = num(data.window_days)
+  const benchmarkAccountsTotal = num(data.benchmark_accounts_total)
+  const accountsWithPosts = num(data.accounts_with_posts)
+  const postsTotal = num(data.posts_total)
+  const meanPostsPerDay = num(data.mean_posts_per_day)
+  const medianPostsPerDay = num(data.median_posts_per_day)
+  const p25PostsPerDay = num(data.p25_posts_per_day)
+  const p75PostsPerDay = num(data.p75_posts_per_day)
+
+  if (
+    windowDays === null ||
+    benchmarkAccountsTotal === null ||
+    accountsWithPosts === null ||
+    postsTotal === null ||
+    meanPostsPerDay === null ||
+    medianPostsPerDay === null ||
+    p25PostsPerDay === null ||
+    p75PostsPerDay === null
+  ) {
+    return null
+  }
+
+  return {
+    segmentCategory: data.segment_category,
+    periodStart: data.period_start,
+    periodEnd: data.period_end,
+    windowDays,
+    benchmarkAccountsTotal,
+    accountsWithPosts,
+    postsTotal,
+    meanPostsPerDay,
+    medianPostsPerDay,
+    p25PostsPerDay,
+    p75PostsPerDay,
   }
 }
 // ── Funções de busca (queries ao banco) ──────────────────────────────────

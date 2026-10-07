@@ -1,1073 +1,760 @@
 'use client'
 
-/* ==========================================================================
-   ORBIT · Screen — OnboardingScreen (v2.0 — UX view/edit + dossiê)
-   Versão: 2.0.0  |  Data: 2026-09-12
-
-   ✅ INTEGRAÇÃO (12/09/2026) — adaptado do rascunho de UX recebido. Diferenças
-   em relação ao rascunho original, decididas com o time antes de integrar:
-
-   1) syncState/localStorage como FALLBACK DE DADO removido por decisão
-      explícita ("sempre salva direto no Supabase como hoje") — não existe
-      em nenhum outro repositório do Orbit, era uma feature nova não pedida.
-      `save()` do hook real devolve só `boolean`; a tela trata sucesso/erro,
-      sem estado "salvo localmente"/"sincronizado".
-   2) `useSession` de '@supabase/auth-helpers-react' removido — o pacote não
-      está instalado no projeto. Autor do log de mudanças agora vem de
-      `supabase.auth.getUser()` (mesmo padrão já usado em
-      src/lib/auth/admin-guard.ts), buscado no momento do save.
-   3) Hook real (`useOnboarding.ts`) já busca sozinho no mount e expõe
-      `{ data, status, error, save, refetch }` — não `{ record, syncState,
-      loading, fetchRecord, saveRecord }` do rascunho. Esta tela agora chama
-      o hook diretamente (self-contained) em vez de receber
-      initialData/onSave/isSaving como props controladas — ver page.tsx.
-   4) O log de histórico (`orbit_onboarding_log_{clientId}` no localStorage)
-      foi mantido — é só um audit trail de leitura local, não fallback de
-      dado, então não conflita com a decisão do item 1.
-   5) Bug do rascunho corrigido: a linha de edição Schwartz tem 4 campos
-      (chave, valor, prioridade, remover) mas a classe CSS `.repRow.schwartz`
-      (grid de 4 colunas) nunca era aplicada no JSX — só `.repRow` (3
-      colunas) — layout quebrava. Corrigido abaixo.
-   6) `priority` do Schwartz tipado como `SchwatzValue['priority']`
-      ('high'|'medium'|'low'), não `string` solto — evita erro de tsc ao
-      gravar de volta no objeto.
-   ========================================================================== */
-
 import React, { useState, useCallback } from 'react'
-import { supabase } from '@/lib/supabase'
-import styles from './OnboardingScreen.module.css'
+import { ChevronRight, AlertCircle, HelpCircle, Loader, Lightbulb } from 'lucide-react'
 import { useOnboarding } from '@/hooks/useOnboarding'
-import {
-  completeness,
-  validateAudienceSum,
-  summarizeChanges,
-  fmtDate,
-} from '@/lib/onboarding/helpers'
+import { validateAudienceSum, validatePercentage } from '@/lib/onboarding/enums'
 import {
   ENUM_TOTAL_FOLLOWERS_SOURCE,
-  ENUM_CTA,
-  ENUM_FUNNEL,
-  ENUM_SETOR,
-  ENUM_PROOF,
-  ENUM_PANKSEPP,
-  ENUM_AFFECT_SOURCE,
+  ENUM_CTA_TYPE,
+  ENUM_FUNNEL_MATURITY,
+  ENUM_SETOR_BENCHMARK,
+  ENUM_PROOF_MECHANISM,
+  ENUM_VALUES_AFFECT_SOURCE,
   ENUM_CONFIDENCE,
-  ENUM_PRIORITY,
-  SCHWARTZ_SUGESTOES,
-  labelFor,
+  ENUM_GENDER_CATEGORY,
+  CURIOSIDADES_POR_SETOR,
 } from '@/lib/onboarding/enums'
-import type {
-  ClientOnboarding,
-  BioLink,
-  SchwatzValue,
-  CTAType,
-  FunnelMaturity,
-  TotalFollowersSource,
-  SetorBenchmark,
-  ProofMechanism,
-  PankseppSystem,
-  ValuesAffectSource,
-  ConfidenceLevel,
-} from '@/types/orbit'
+import type { ClientOnboarding, SetorBenchmark } from '@/types/orbit'
+import styles from './OnboardingScreen.module.css'
+
+// ============================================================================
+// TIPOS
+// ============================================================================
+
+interface CampoConfig {
+  id: keyof FormAnswers
+  label: string
+  tipo: 'text' | 'number' | 'select' | 'checkbox' | 'textarea' | 'radio' | 'url'
+  placeholder?: string
+  tooltip?: string
+  insight?: string // Dado setorial contextual
+  step?: string
+  opcoes?: { valor: string; label: string }[]
+  validacao?: (valor: unknown) => { ok: boolean; erro?: string }
+  alerta?: boolean
+  obrigatorio?: boolean
+}
+
+interface Fase {
+  id: string
+  titulo: string
+  descricao: string
+  campos: CampoConfig[]
+
+}
+
+
+// ============================================================================
+// FASES DO ONBOARDING COM INSIGHTS
+// ============================================================================
+
+const FASES: Fase[] = [
+  {
+    id: 'info_basica',
+    titulo: 'Informações Básicas',
+    descricao: 'Vamos começar com o essencial sobre sua conta',
+    campos: [
+      {
+        id: 'total_followers',
+        label: 'Total de seguidores',
+        tipo: 'number',
+        placeholder: '15000',
+        obrigatorio: true,
+        insight: 'O Brasil tem 150M usuários ativos em redes (70% da população). Seu tamanho ajuda a calibrar benchmarks.',
+        validacao: (v) => {
+          if (!v) return { ok: false, erro: 'Campo obrigatório' }
+          const num = Number(v)
+          if (!Number.isInteger(num) || num <= 0) {
+            return { ok: false, erro: 'Deve ser um número inteiro maior que 0' }
+          }
+          return { ok: true }
+        },
+      },
+      {
+        id: 'total_followers_source',
+        label: 'Fonte da informação',
+        tipo: 'select',
+        obrigatorio: true,
+        opcoes: ENUM_TOTAL_FOLLOWERS_SOURCE.map(([v, l]) => ({ valor: v, label: l })),
+        insight: 'Dados confirmados (print/scrape) são mais confiáveis que estimativas para benchmarking.',
+        validacao: (v) => ({
+          ok: !!v,
+          erro: v ? undefined : 'Selecione uma fonte',
+        }),
+      },
+    ],
+  },
+  {
+    id: 'negocio',
+    titulo: 'Seu Negócio',
+    descricao: 'Categoria e modelo de monetização',
+    campos: [
+      {
+        id: 'setor_benchmark',
+        label: 'Setor / Benchmark',
+        tipo: 'select',
+        obrigatorio: true,
+        opcoes: ENUM_SETOR_BENCHMARK.map(([v, l]) => ({ valor: v, label: l })),
+        insight: 'Cada setor monetiza diferente. Comércio direto mede conversão; infoproduto mede lançamento; serviços medem lead.',
+        validacao: (v) => ({
+          ok: !!v,
+          erro: v ? undefined : 'Selecione um setor',
+        }),
+      },
+      {
+        id: 'nicho',
+        label: 'Nicho específico',
+        tipo: 'text',
+        placeholder: 'Ex: Marketing digital, gestão de tráfego...',
+        tooltip: 'Nichos específicos convertem melhor que genéricos',
+        insight: 'Nichos específicos (ex: "gestão de tráfego para clínicas") tendem a funcionar melhor que temas genéricos.',
+      },
+      {
+        id: 'cta_type',
+        label: 'Call-to-action principal',
+        tipo: 'select',
+        opcoes: ENUM_CTA_TYPE.map(([v, l]) => ({ valor: v, label: l })),
+        insight: 'Link direto e WhatsApp são os CTAs mais comuns no Brasil para comércio direto.',
+      },
+    ],
+  },
+  {
+    id: 'audiencia',
+    titulo: 'Sua Audiência',
+    descricao: 'Segmentação em % (soma deve ser ~100%)',
+    campos: [
+      {
+        id: 'audience_nucleo_fiel_pct',
+        label: 'Núcleo fiel (compra regularmente) %',
+        tipo: 'number',
+        placeholder: '30',
+        step: '0.1',
+        tooltip: 'Seu core de clientes leais',
+        insight: 'Núcleo fiel é o segmento mais valioso — gera receita recorrente e recomendações.',
+        validacao: validatePercentage,
+      },
+      {
+        id: 'audience_consumo_passivo_pct',
+        label: 'Consumo passivo (vê, não compra) %',
+        tipo: 'number',
+        placeholder: '40',
+        step: '0.1',
+        tooltip: 'Inspiração, curiosidade',
+        insight: 'Consumo passivo é seu funil de topo — alimenta o núcleo fiel com conteúdo educativo.',
+        validacao: validatePercentage,
+      },
+      {
+        id: 'audience_curiosidade_externa_pct',
+        label: 'Curiosidade externa (descobriu recentemente) %',
+        tipo: 'number',
+        placeholder: '20',
+        step: '0.1',
+        tooltip: 'Potencial novo cliente',
+        insight: 'Curiosidade externa é tráfego novo — importante para crescimento, mas com conversão menor.',
+        validacao: validatePercentage,
+      },
+      {
+        id: 'audience_alta_rotatividade_pct',
+        label: 'Alta rotatividade (segue/deixa) %',
+        tipo: 'number',
+        placeholder: '10',
+        step: '0.1',
+        tooltip: 'Viral, sem lealdade',
+        insight: 'Alta rotatividade é comum em conteúdo viral — útil para alcance, mas sem valor de cliente.',
+        validacao: validatePercentage,
+      },
+    ],
+  },
+  {
+    id: 'avatar',
+    titulo: 'Avatar do Cliente',
+    descricao: 'Descreva seu cliente ideal',
+    campos: [
+      {
+        id: 'expected_age_range',
+        label: 'Faixa etária esperada',
+        tipo: 'text',
+        placeholder: '18-45',
+        insight: 'Formato: idade_mínima-idade_máxima (ex: 18-45)',
+        validacao: (v) => {
+          if (!v) return { ok: true }
+          const match = String(v).match(/^(\d+)-(\d+)$/)
+          if (!match) {
+            return { ok: false, erro: 'Formato: 18-45' }
+          }
+          const min = Number(match[1])
+          const max = Number(match[2])
+          if (min < 13 || max > 120 || min >= max) {
+            return { ok: false, erro: 'Idade entre 13-120, mín < máx' }
+          }
+          return { ok: true }
+        },
+      },
+      {
+        id: 'avatar_expected_gender',
+        label: 'Gênero predominante',
+        tipo: 'select',
+        opcoes: ENUM_GENDER_CATEGORY.map(([v, l]) => ({ valor: v, label: l })),
+        insight: 'Gênero é uma dimensão importante para validar alinhamento de audiência.',
+      },
+    ],
+  },
+  {
+    id: 'funil',
+    titulo: 'Seu Funil',
+    descricao: 'Estrutura de conversão',
+    campos: [
+      {
+        id: 'funnel_maturity',
+        label: 'Maturidade do funil',
+        tipo: 'select',
+        opcoes: ENUM_FUNNEL_MATURITY.map(([v, l]) => ({ valor: v, label: l })),
+        insight: 'Funil maduro (automação + sequência) escala sem atendimento manual. Sem funil, limite é ~50 vendas/mês.',
+      },
+      {
+        id: 'bio_links',
+        label: 'Links na bio (separados por vírgula)',
+        tipo: 'textarea',
+        placeholder: 'https://link1.com, https://link2.com',
+        tooltip: 'URLs que você coloca na bio do Instagram',
+        insight: '64% dos consumidores checam preço antes de comprar. Links claros na bio aumentam conversão.',
+        validacao: (v) => {
+          if (!v) return { ok: true }
+          const links = String(v).split(',').map(l => l.trim()).filter(Boolean)
+          const invalid = links.filter((link) => {
+            try {
+              const url = new URL(link)
+              return url.protocol !== 'http:' && url.protocol !== 'https:'
+            } catch {
+              return true
+            }
+          })
+          if (invalid.length > 0) {
+            return { ok: false, erro: `URLs inválidas: ${invalid.join(', ')}` }
+          }
+          return { ok: true }
+        },
+      },
+    ],
+  },
+  {
+    id: 'prova_social',
+    titulo: 'Confiança & Prova Social',
+    descricao: 'Como você prova que funciona',
+    campos: [
+      {
+        id: 'proof_mechanism',
+        label: 'Mecanismo de prova social',
+        tipo: 'select',
+        opcoes: ENUM_PROOF_MECHANISM.map(([v, l]) => ({ valor: v, label: l })),
+        tooltip: 'Selecione todos que se aplicam',
+        insight: '39% dos consumidores leem comentários antes de comprar. Prova social reduz devoluções em 60%.',
+      },
+      {
+        id: 'values_affect_source',
+        label: 'Origem dos dados de confiança',
+        tipo: 'select',
+        opcoes: ENUM_VALUES_AFFECT_SOURCE.map(([v, l]) => ({ valor: v, label: l })),
+        insight: 'Dados confirmados (manual/feedback) são mais confiáveis que inferências para decisões.',
+      },
+      {
+        id: 'confidence_diagnostico',
+        label: 'Confiança do diagnóstico',
+        tipo: 'select',
+        opcoes: ENUM_CONFIDENCE.map(([v, l]) => ({ valor: v, label: l })),
+        insight: 'L0 = confirmado; L1 = fundamentado; L2 = depende de dado ausente. Afeta recomendações.',
+      },
+    ],
+  },
+]
+
+// ============================================================================
+// COMPONENTE DE CAMPO
+// ============================================================================
+
+interface CampoProps {
+  campo: CampoConfig
+  valor: unknown
+  erro?: string
+  onChange: (valor: unknown) => void
+}
+
+const toInputValue = (valor: unknown): string => {
+  if (typeof valor === 'string' || typeof valor === 'number') {
+    return String(valor)
+  }
+
+  return ''
+}
+
+const CampoInput: React.FC<CampoProps> = ({ campo, valor, erro, onChange }) => {
+  switch (campo.tipo) {
+    case 'text':
+    case 'number':
+    case 'url':
+      return (
+        <div>
+          <input
+            type={campo.tipo === 'url' ? 'url' : campo.tipo}
+            placeholder={campo.placeholder}
+            value={toInputValue(valor)}
+            onChange={(e) => onChange(e.target.value)}
+            step={campo.step}
+            className={`${styles.input} ${erro ? styles.inputError : ''}`}
+          />
+          {erro && <p className={styles.errorText}>{erro}</p>}
+        </div>
+      )
+
+    case 'textarea':
+      return (
+        <div>
+          <textarea
+            placeholder={campo.placeholder}
+            value={toInputValue(valor)}
+            onChange={(e) => onChange(e.target.value)}
+            className={`${styles.textarea} ${erro ? styles.inputError : ''}`}
+            rows={3}
+          />
+          {erro && <p className={styles.errorText}>{erro}</p>}
+        </div>
+      )
+
+    case 'select':
+      return (
+        <div>
+          <select
+            value={toInputValue(valor)}
+            onChange={(e) => onChange(e.target.value)}
+            className={`${styles.input} ${erro ? styles.inputError : ''}`}
+          >
+            <option value="">Selecione uma opção</option>
+            {campo.opcoes?.map((opt) => (
+              <option key={opt.valor} value={opt.valor}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+          {erro && <p className={styles.errorText}>{erro}</p>}
+        </div>
+      )
+
+    case 'radio':
+      return (
+        <div className={styles.radioGroup}>
+          {campo.opcoes?.map((opt) => (
+            <label key={opt.valor} className={styles.radioLabel}>
+              <input
+                type="radio"
+                name={String(campo.id)}
+                value={opt.valor}
+                checked={valor === opt.valor}
+                onChange={(e) => onChange(e.target.value)}
+                className={styles.radioInput}
+              />
+              <span>{opt.label}</span>
+            </label>
+          ))}
+          {erro && <p className={styles.errorText}>{erro}</p>}
+        </div>
+      )
+
+    case 'checkbox':
+      return (
+        <div className={styles.checkboxGroup}>
+          {campo.opcoes?.map((opt) => (
+            <label key={opt.valor} className={styles.checkboxLabel}>
+              <input
+                type="checkbox"
+                value={opt.valor}
+                checked={Array.isArray(valor) && valor.includes(opt.valor)}
+                onChange={(e) => {
+                  const arr = Array.isArray(valor) ? valor : []
+                  if (e.target.checked) {
+                    onChange([...arr, opt.valor])
+                  } else {
+                    onChange(arr.filter((v) => v !== opt.valor))
+                  }
+                }}
+                className={styles.checkboxInput}
+              />
+              <span>{opt.label}</span>
+            </label>
+          ))}
+          {erro && <p className={styles.errorText}>{erro}</p>}
+        </div>
+      )
+
+    default:
+      return null
+  }
+}
+
+// ============================================================================
+// COMPONENTE DE INSIGHT SETORIAL
+// ============================================================================
+
+interface InsightCardProps {
+  setor?: SetorBenchmark
+}
+
+const InsightCard: React.FC<InsightCardProps> = ({ setor }) => {
+  if (!setor || typeof setor !== 'string' || !(setor in CURIOSIDADES_POR_SETOR)) return null
+
+  const curiosidade = CURIOSIDADES_POR_SETOR[setor as keyof typeof CURIOSIDADES_POR_SETOR]
+
+  return (
+    <div className={styles.insightCard}>
+      <div className={styles.insightHeader}>
+        <Lightbulb className={styles.insightIcon} />
+        <h3 className={styles.insightTitle}>{curiosidade.titulo}</h3>
+      </div>
+      <p className={styles.insightText}>{curiosidade.texto}</p>
+      <p className={styles.insightSource}>Fonte: {curiosidade.fonte}</p>
+    </div>
+  )
+}
+
+// ============================================================================
+// COMPONENTE PRINCIPAL
+// ============================================================================
 
 interface OnboardingScreenProps {
   clientId: string
   initialData?: ClientOnboarding | null
 }
 
-type Mode = 'view' | 'edit' | 'loading'
+const toFormAnswers = (onboarding: ClientOnboarding | null): FormAnswers => {
+  if (!onboarding) return {}
 
-interface LogEntry {
-  ts: string
-  who: string
-  changes: string[]
+  const { bio_links: bioLinks, avatar_expected_age_min: ageMin, avatar_expected_age_max: ageMax, ...rest } = onboarding
+
+  return {
+    ...rest,
+    bio_links: bioLinks.map((link) => link.url).join(', '),
+    expected_age_range: ageMin !== null && ageMax !== null ? `${ageMin}-${ageMax}` : '',
+  }
 }
 
-const AUD_COLORS = ['var(--neon-cyan)', 'var(--amber)', 'var(--acc2)', 'var(--red)']
+const toNullableNumber = (value: unknown): number | null => {
+  if (value === undefined || value === null || value === '') return null
+  const number = Number(value)
+  if (!Number.isFinite(number)) throw new Error('Há um valor numérico inválido no formulário')
+  return number
+}
 
-export default function OnboardingScreen({
-  clientId,
-  initialData,
-}: OnboardingScreenProps): React.ReactElement {
-  const { data: record, status, error: hookError, save, refetch } = useOnboarding(clientId)
-  const loading = status === 'loading' || status === 'idle'
+export default function OnboardingScreen({ clientId, initialData = null }: OnboardingScreenProps): React.ReactElement {
+  const { data, status, error, save } = useOnboarding(clientId)
+  const [faseAtual, setFaseAtual] = useState(0)
+  const incomingData = data ?? (status === 'idle' || status === 'loading' ? initialData : null)
+  const [formState, setFormState] = useState<OnboardingFormState>(() => ({
+    clientId,
+    source: incomingData,
+    answers: toFormAnswers(incomingData),
+  }))
 
-  const [mode, setMode] = useState<Mode>('loading')
-  const [draft, setDraft] = useState<Partial<ClientOnboarding> | null>(null)
+  if (formState.clientId !== clientId || formState.source !== incomingData) {
+    setFormState({ clientId, source: incomingData, answers: toFormAnswers(incomingData) })
+  }
+
+  const respostas = formState.answers
+  const [erros, setErros] = useState<Record<string, string>>({})
+  const [savingError, setSavingError] = useState<string | null>(null)
   const [isSaving, setIsSaving] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState<string | null>(null)
-  const [log, setLog] = useState<LogEntry[]>(() => {
-    if (typeof window === 'undefined') return []
 
-    try {
-      const stored = localStorage.getItem(`orbit_onboarding_log_${clientId}`)
-      return stored ? (JSON.parse(stored) as LogEntry[]) : []
-    } catch {
-      return []
-    }
-  })
+  const fase = FASES[faseAtual] ?? FASES[0]
+  const totalFases = FASES.length
+  const progresso = totalFases > 0 ? ((faseAtual + 1) / totalFases) * 100 : 0
 
-  const effectiveRecord = record ?? initialData ?? null
+  // Insight setorial contextual
+  const setorSelecionado = respostas.setor_benchmark as SetorBenchmark | undefined
 
-  // ============================================================================
-  // LOG (audit trail local — não é fallback de dado, ver nota 4 no cabeçalho)
-  // ============================================================================
-  const pushLog = useCallback(
-    (entry: LogEntry) => {
-      setLog((current) => {
-        const updated = [entry, ...current].slice(0, 30)
-        try {
-          localStorage.setItem(`orbit_onboarding_log_${clientId}`, JSON.stringify(updated))
-        } catch {
-          // localStorage indisponível (modo privado, quota) — log só some da
-          // sessão atual, não bloqueia o save real (que já foi ao Supabase).
-        }
-        return updated
-      })
-    },
-    [clientId]
-  )
+  const handleResposta = useCallback((campoId: keyof FormAnswers, valor: unknown) => {
+    setFormState((prev) => ({
+      ...prev,
+      answers: { ...prev.answers, [campoId]: valor } as FormAnswers,
+    }))
+    setErros((prev) => {
+      const newErros = { ...prev }
+      delete newErros[String(campoId)]
+      return newErros
+    })
+  }, [])
 
-  const displayMode: Mode = loading
-    ? 'loading'
-    : mode === 'loading'
-      ? effectiveRecord
-        ? 'view'
-        : 'edit'
-      : mode
+  const validarFase = useCallback((): boolean => {
+    if (!fase) return false
 
-  // ============================================================================
-  // EDIT / CANCEL / SAVE
-  // ============================================================================
-  const handleEdit = (): void => {
-    setDraft(effectiveRecord ? JSON.parse(JSON.stringify(effectiveRecord)) : {})
-    setMode('edit')
-  }
+    const novosErros: Record<string, string> = {}
 
-  const handleCancel = (): void => {
-    setMode('view')
-    setDraft(null)
-  }
+    for (const campo of fase.campos) {
+      const campoKey = String(campo.id)
+      const valor = respostas[campo.id as keyof FormAnswers]
 
-  const handleSave = async (): Promise<void> => {
-    if (!draft) return
-
-    const check = validateAudienceSum(draft)
-    if (!check.ok) {
-      setError(
-        `❌ Soma dos quadrantes de audiência deve ser ~100%. Está em ${check.sum.toFixed(1)}%.`
-      )
-      setTimeout(() => setError(null), 5000)
-      return
-    }
-
-    setIsSaving(true)
-    setError(null)
-
-    try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
-
-      const payload: ClientOnboarding = {
-        ...(effectiveRecord ?? undefined),
-        ...draft,
-        client_id: clientId,
-        updated_by: user?.email ?? 'desconhecido',
-        updated_at: new Date().toISOString(),
-      } as ClientOnboarding
-
-      const ok = await save(payload)
-      if (!ok) {
-        throw new Error('Falha ao salvar onboarding (ver console/RLS)')
+      if (campo.obrigatorio && !valor) {
+        novosErros[campoKey] = `${campo.label} é obrigatório`
+        continue
       }
 
-      pushLog({
-        ts: new Date().toISOString(),
-        who: user?.email ?? 'desconhecido',
-        changes: summarizeChanges(effectiveRecord, draft),
-      })
+      if (campo.validacao && valor !== undefined && valor !== null && valor !== '') {
+        const resultado = campo.validacao(valor)
+        if (!resultado.ok && resultado.erro) {
+          novosErros[campoKey] = resultado.erro
+        }
+      }
+    }
 
-      setSuccess('✅ Onboarding salvo com sucesso!')
-      setTimeout(() => setSuccess(null), 3000)
-      setMode('view')
-      setDraft(null)
-      refetch()
+    if (fase.id === 'audiencia') {
+      const audienceValidation = validateAudienceSum(respostas)
+      if (!audienceValidation.ok) {
+        const somaAtual = Number.isFinite(audienceValidation.sum) ? audienceValidation.sum : 0
+        novosErros.audience_sum = `A soma dos percentuais deve ficar próxima de 100% (atual: ${somaAtual.toFixed(1)}%)`
+      }
+    }
+
+    setErros(novosErros)
+    return Object.keys(novosErros).length === 0
+  }, [fase, respostas])
+
+  const handleSalvar = useCallback(async () => {
+    try {
+      setIsSaving(true)
+      setSavingError(null)
+
+      if (!clientId) {
+        throw new Error('ID do cliente não fornecido')
+      }
+
+      const totalFollowers = toNullableNumber(respostas.total_followers)
+      const followersSource = respostas.total_followers_source
+      if (totalFollowers === null || totalFollowers <= 0 || !followersSource) {
+        throw new Error('Preencha total de seguidores e sua fonte antes de salvar')
+      }
+
+      const ageRange = respostas.expected_age_range?.trim()
+      const ageMatch = ageRange ? ageRange.match(/^(\d+)-(\d+)$/) : null
+      if (ageRange && !ageMatch) throw new Error('Faixa etária inválida; use o formato 18-45')
+      const payload = {
+        client_id: clientId,
+        total_followers: totalFollowers,
+        total_followers_source: followersSource,
+        audience_nucleo_fiel_pct: toNullableNumber(respostas.audience_nucleo_fiel_pct),
+        audience_consumo_passivo_pct: toNullableNumber(respostas.audience_consumo_passivo_pct),
+        audience_curiosidade_externa_pct: toNullableNumber(respostas.audience_curiosidade_externa_pct),
+        audience_alta_rotatividade_pct: toNullableNumber(respostas.audience_alta_rotatividade_pct),
+        cta_type: respostas.cta_type,
+        funnel_maturity: respostas.funnel_maturity,
+        q1_engagement_period_notes: respostas.q1_engagement_period_notes,
+        q2_content_proxy_notes: respostas.q2_content_proxy_notes,
+        q3_misalignment_notes: respostas.q3_misalignment_notes,
+        observed_content_clusters: respostas.observed_content_clusters,
+        nicho: respostas.nicho,
+        setor_benchmark: respostas.setor_benchmark,
+        proof_mechanism: respostas.proof_mechanism,
+        values_affect_source: respostas.values_affect_source,
+        values_affect_confidence: respostas.values_affect_confidence,
+        confidence_seguidores: respostas.confidence_seguidores,
+        confidence_bio_funil: respostas.confidence_bio_funil,
+        confidence_diagnostico: respostas.confidence_diagnostico,
+        confidence_audiencia: respostas.confidence_audiencia,
+        avatar_expected_age_min: ageMatch ? Number(ageMatch[1]) : null,
+        avatar_expected_age_max: ageMatch ? Number(ageMatch[2]) : null,
+        avatar_expected_gender: respostas.avatar_expected_gender,
+        avatar_expected_gender_pct: respostas.avatar_expected_gender_pct,
+        bio_links: typeof respostas.bio_links === 'string'
+          ? respostas.bio_links.split(',').map((link) => link.trim()).filter(Boolean).map((url) => ({ url, label: url }))
+          : respostas.bio_links ?? [],
+      }
+
+      if (!(await save(payload))) throw new Error('Falha ao salvar os dados do onboarding')
+
+      setSavingError(null)
+      setTimeout(() => {
+        setFaseAtual(0)
+        setFormState((prev) => ({ ...prev, answers: {} }))
+        setErros({})
+      }, 2000)
     } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Erro ao salvar'
-      setError(`❌ ${msg}`)
-      setTimeout(() => setError(null), 5000)
+      setSavingError(err instanceof Error ? err.message : 'Erro ao salvar')
     } finally {
       setIsSaving(false)
     }
-  }
+  }, [clientId, respostas, save])
 
-  // ============================================================================
-  // BIO LINKS
-  // ============================================================================
-  const addBioLink = (): void => {
-    if (!draft) return
-    const newLink: BioLink = { url: '', label: '' }
-    setDraft({
-      ...draft,
-      bio_links: [...(draft.bio_links || []), newLink],
-    })
-  }
-
-  const updateBioLink = (index: number, field: 'url' | 'label', value: string): void => {
-    if (!draft) return
-    const updated = [...(draft.bio_links || [])]
-    const current = updated[index]
-    if (!current) return
-    updated[index] = { ...current, [field]: value }
-    setDraft({ ...draft, bio_links: updated })
-  }
-
-  const removeBioLink = (index: number): void => {
-    if (!draft) return
-    setDraft({
-      ...draft,
-      bio_links: (draft.bio_links || []).filter((_, i) => i !== index),
-    })
-  }
-
-  // ============================================================================
-  // SCHWARTZ
-  // ============================================================================
-  const addSchwartzRow = (field: 'expected_schwartz' | 'real_schwartz'): void => {
-    if (!draft) return
-    const obj = draft[field] || {}
-    let counter = 1
-    let key = `novo_valor_${counter}`
-    while (obj[key]) {
-      counter += 1
-      key = `novo_valor_${counter}`
+  const handleVoltar = useCallback(() => {
+    if (faseAtual > 0) {
+      setFaseAtual(faseAtual - 1)
     }
-    setDraft({
-      ...draft,
-      [field]: {
-        ...obj,
-        [key]: { value: '', priority: 'medium' } satisfies SchwatzValue,
-      },
-    })
-  }
+  }, [faseAtual])
 
-  const updateSchwartzRow = (
-    field: 'expected_schwartz' | 'real_schwartz',
-    oldKey: string,
-    newKey: string,
-    value: string,
-    priority: SchwatzValue['priority']
-  ): void => {
-    if (!draft) return
-    const obj = draft[field] || {}
-    const updated: Record<string, SchwatzValue> = { ...obj }
-    const effectiveKey = newKey || oldKey
-
-    if (newKey && newKey !== oldKey && !updated[newKey]) {
-      const existing = updated[oldKey]
-      if (existing) updated[newKey] = existing
-      delete updated[oldKey]
-    }
-
-    const entry = updated[effectiveKey]
-    if (entry) {
-      updated[effectiveKey] = { value, priority }
-    } else {
-      updated[effectiveKey] = { value, priority }
-    }
-
-    setDraft({ ...draft, [field]: updated })
-  }
-
-  const removeSchwartzRow = (field: 'expected_schwartz' | 'real_schwartz', key: string): void => {
-    if (!draft) return
-    const obj = draft[field] || {}
-    const updated = { ...obj }
-    delete updated[key]
-    setDraft({ ...draft, [field]: updated })
-  }
-
-  // ============================================================================
-  // RENDER: VIEW MODE
-  // ============================================================================
-  const renderView = (): React.ReactElement => {
-    if (!effectiveRecord) return <div className={styles.empty}>Nenhum registro encontrado</div>
-
-    const audVals = [
-      effectiveRecord.audience_nucleo_fiel_pct,
-      effectiveRecord.audience_consumo_passivo_pct,
-      effectiveRecord.audience_curiosidade_externa_pct,
-      effectiveRecord.audience_alta_rotatividade_pct,
-    ]
-    const audSum = audVals.reduce((a: number, v) => a + (parseFloat(String(v)) || 0), 0)
-    const audAny = audVals.some((v) => v !== null && v !== undefined)
-
-    const schwartzText = (obj: Record<string, SchwatzValue> | null): string => {
-      if (!obj || Object.keys(obj).length === 0) return 'vazio'
-      return Object.entries(obj)
-        .map(([k, v]) => `${k} — ${v.value} (${v.priority})`)
-        .join(', ')
-    }
-
+  if (!fase) {
     return (
-      <div className={styles.sections}>
-        {/* 01. Seguidores */}
-        <section className={styles.card}>
-          <h2 className={styles.sectionTitle}>
-            <span className={styles.idx}>01</span> Seguidores
-          </h2>
-          <div className={styles.grid2}>
-            <div>
-              <dt>Total de seguidores</dt>
-              <dd>{effectiveRecord.total_followers || '—'}</dd>
-            </div>
-            <div>
-              <dt>Fonte</dt>
-              <dd>
-                {labelFor(ENUM_TOTAL_FOLLOWERS_SOURCE, effectiveRecord.total_followers_source) ||
-                  '—'}
-              </dd>
-            </div>
-          </div>
-        </section>
-
-        {/* 02. Bio, CTA e Funil */}
-        <section className={styles.card}>
-          <h2 className={styles.sectionTitle}>
-            <span className={styles.idx}>02</span> Bio, CTA e Funil
-          </h2>
-          <div className={styles.spaceY}>
-            <div>
-              <dt>Links da bio</dt>
-              {effectiveRecord.bio_links && effectiveRecord.bio_links.length > 0 ? (
-                <div className={styles.pillList}>
-                  {effectiveRecord.bio_links.map((link, i) => (
-                    <a
-                      key={i}
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.pill}
-                    >
-                      {link.label || link.url}
-                    </a>
-                  ))}
-                </div>
-              ) : (
-                <dd className={styles.empty}>nenhum link cadastrado</dd>
-              )}
-            </div>
-            <div className={styles.grid2}>
-              <div>
-                <dt>Tipo de CTA</dt>
-                <dd>{labelFor(ENUM_CTA, effectiveRecord.cta_type) || '—'}</dd>
-              </div>
-              <div>
-                <dt>Maturidade do funil</dt>
-                <dd>{labelFor(ENUM_FUNNEL, effectiveRecord.funnel_maturity) || '—'}</dd>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 03. Diagnóstico */}
-        <section className={styles.card}>
-          <h2 className={styles.sectionTitle}>
-            <span className={styles.idx}>03</span> Notas de Diagnóstico
-          </h2>
-          <div className={styles.spaceY}>
-            {(
-              [
-                ['Q1 — Período de engajamento', effectiveRecord.q1_engagement_period_notes],
-                ['Q2 — Proxy de conteúdo', effectiveRecord.q2_content_proxy_notes],
-                ['Q3 — Desalinhamento', effectiveRecord.q3_misalignment_notes],
-              ] as const
-            ).map(([label, value]) => (
-              <div key={label}>
-                <dt>{label}</dt>
-                <dd>{value || '—'}</dd>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* 04. Audiência */}
-        <section className={styles.card}>
-          <h2 className={styles.sectionTitle}>
-            <span className={styles.idx}>04</span> Segmentação de Audiência
-          </h2>
-          <div className={styles.grid2}>
-            {(
-              [
-                ['Núcleo fiel (%)', effectiveRecord.audience_nucleo_fiel_pct],
-                ['Consumo passivo (%)', effectiveRecord.audience_consumo_passivo_pct],
-                ['Curiosidade externa (%)', effectiveRecord.audience_curiosidade_externa_pct],
-                ['Alta rotatividade (%)', effectiveRecord.audience_alta_rotatividade_pct],
-              ] as const
-            ).map(([label, value]) => (
-              <div key={label}>
-                <dt>{label}</dt>
-                <dd>{value ?? '—'}</dd>
-              </div>
-            ))}
-          </div>
-          {audAny && (
-            <div className={styles.audMeterWrap}>
-              <div className={styles.audMeter}>
-                {audVals.map((v, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      width: `${Math.max(0, parseFloat(String(v)) || 0)}%`,
-                      backgroundColor: AUD_COLORS[i],
-                    }}
-                  />
-                ))}
-              </div>
-              <p className={styles.audLabel}>
-                Soma: {audSum.toFixed(1)}% {Math.abs(audSum - 100) < 0.15 ? '✓' : '⚠'}
-              </p>
-            </div>
-          )}
-        </section>
-
-        {/* 05. Contexto de Negócio */}
-        <section className={styles.card}>
-          <h2 className={styles.sectionTitle}>
-            <span className={styles.idx}>05</span> Contexto de Negócio
-          </h2>
-          <div className={styles.spaceY}>
-            {(
-              [
-                ['Clusters de conteúdo', effectiveRecord.observed_content_clusters],
-                ['Setor / benchmark', labelFor(ENUM_SETOR, effectiveRecord.setor_benchmark)],
-                ['Nicho', effectiveRecord.nicho],
-                ['Mecanismo de prova', labelFor(ENUM_PROOF, effectiveRecord.proof_mechanism)],
-              ] as const
-            ).map(([label, value]) => (
-              <div key={label}>
-                <dt>{label}</dt>
-                <dd>{value || '—'}</dd>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* 06. Panksepp */}
-        <section className={styles.card}>
-          <h2 className={styles.sectionTitle}>
-            <span className={styles.idx}>06</span> Psicografia — Panksepp
-          </h2>
-          <div className={styles.grid2}>
-            <div>
-              <dt>Esperado</dt>
-              <dd>{labelFor(ENUM_PANKSEPP, effectiveRecord.expected_panksepp_system) || '—'}</dd>
-            </div>
-            <div>
-              <dt>Real</dt>
-              <dd>{labelFor(ENUM_PANKSEPP, effectiveRecord.real_panksepp_system) || '—'}</dd>
-            </div>
-          </div>
-        </section>
-
-        {/* 07. Schwartz */}
-        <section className={styles.card}>
-          <h2 className={styles.sectionTitle}>
-            <span className={styles.idx}>07</span> Psicografia — Schwartz
-          </h2>
-          <div className={styles.spaceY}>
-            <div>
-              <dt>Esperado</dt>
-              <dd>{schwartzText(effectiveRecord.expected_schwartz)}</dd>
-            </div>
-            <div>
-              <dt>Real</dt>
-              <dd>{schwartzText(effectiveRecord.real_schwartz)}</dd>
-            </div>
-          </div>
-        </section>
-
-        {/* 08. Metadados */}
-        <section className={styles.card}>
-          <h2 className={styles.sectionTitle}>
-            <span className={styles.idx}>08</span> Metadados
-          </h2>
-          <div className={styles.grid2}>
-            {(
-              [
-                [
-                  'Fonte (values/affect)',
-                  labelFor(ENUM_AFFECT_SOURCE, effectiveRecord.values_affect_source),
-                ],
-                ['Confiança', labelFor(ENUM_CONFIDENCE, effectiveRecord.values_affect_confidence)],
-                ['Atualizado por', effectiveRecord.updated_by],
-                ['Atualizado em', fmtDate(effectiveRecord.updated_at)],
-              ] as const
-            ).map(([label, value]) => (
-              <div key={label}>
-                <dt>{label}</dt>
-                <dd>{value || '—'}</dd>
-              </div>
-            ))}
-          </div>
-        </section>
-      </div>
-    )
-  }
-
-  // ============================================================================
-  // RENDER: EDIT MODE
-  // ============================================================================
-  const renderEdit = (): React.ReactElement | null => {
-    if (!draft) return null
-
-    const audVals = [
-      draft.audience_nucleo_fiel_pct,
-      draft.audience_consumo_passivo_pct,
-      draft.audience_curiosidade_externa_pct,
-      draft.audience_alta_rotatividade_pct,
-    ]
-    const audSum = audVals.reduce((a: number, v) => a + (parseFloat(String(v)) || 0), 0)
-    const audAny = audVals.some((v) => v !== null && v !== undefined && (v as unknown) !== '')
-    const audOk = Math.abs(audSum - 100) < 0.15
-
-    const audienceFields = [
-      ['audience_nucleo_fiel_pct', 'Núcleo fiel (%)'],
-      ['audience_consumo_passivo_pct', 'Consumo passivo (%)'],
-      ['audience_curiosidade_externa_pct', 'Curiosidade externa (%)'],
-      ['audience_alta_rotatividade_pct', 'Alta rotatividade (%)'],
-    ] as const
-
-    const renderSchwartzEditor = (field: 'expected_schwartz' | 'real_schwartz', title: string) => (
-      <div>
-        <label className={styles.label}>{title}</label>
-        <div className={styles.repRows}>
-          {Object.entries(draft[field] || {}).map(([key, val]) => (
-            <div key={key} className={`${styles.repRow} ${styles.schwartz}`}>
-              <input
-                type="text"
-                placeholder="chave"
-                list="schwartzSuggestions"
-                defaultValue={key}
-                onBlur={(e) => updateSchwartzRow(field, key, e.target.value, val.value, val.priority)}
-                className={styles.input}
-              />
-              <input
-                type="text"
-                placeholder="valor"
-                value={val.value}
-                onChange={(e) => updateSchwartzRow(field, key, key, e.target.value, val.priority)}
-                className={styles.input}
-              />
-              <select
-                value={val.priority}
-                onChange={(e) =>
-                  updateSchwartzRow(
-                    field,
-                    key,
-                    key,
-                    val.value,
-                    e.target.value as SchwatzValue['priority']
-                  )
-                }
-                className={styles.select}
-              >
-                {ENUM_PRIORITY.map(([v, l]) => (
-                  <option key={v} value={v}>
-                    {l}
-                  </option>
-                ))}
-              </select>
-              <button
-                onClick={() => removeSchwartzRow(field, key)}
-                className={styles.btnRemove}
-                type="button"
-              >
-                ✕
-              </button>
-            </div>
-          ))}
+      <div className={styles.container}>
+        <div className={styles.loadingState}>
+          <p>Carregando onboarding...</p>
         </div>
-        <button onClick={() => addSchwartzRow(field)} className={styles.btnAdd} type="button">
-          + Adicionar valor ({field === 'expected_schwartz' ? 'esperado' : 'real'})
-        </button>
-      </div>
-    )
-
-    return (
-      <div className={styles.sections}>
-        {/* 01. Cliente e Seguidores */}
-        <section className={styles.card}>
-          <h2 className={styles.sectionTitle}>
-            <span className={styles.idx}>01</span> Cliente e Seguidores
-          </h2>
-          <div className={styles.fieldGrid}>
-            <div className={styles.field}>
-              <label>client_id</label>
-              <input type="text" value={clientId} disabled className={styles.disabled} />
-            </div>
-            <div className={styles.field}>
-              <label>Total de seguidores</label>
-              <input
-                type="number"
-                value={draft.total_followers || 0}
-                onChange={(e) =>
-                  setDraft({ ...draft, total_followers: parseInt(e.target.value, 10) || 0 })
-                }
-                className={styles.input}
-              />
-            </div>
-            <div className={styles.field}>
-              <label>Fonte</label>
-              <select
-                value={draft.total_followers_source || ''}
-                onChange={(e) =>
-                  setDraft({
-                    ...draft,
-                    total_followers_source: e.target.value as TotalFollowersSource,
-                  })
-                }
-                className={styles.select}
-              >
-                <option value="">— selecione —</option>
-                {ENUM_TOTAL_FOLLOWERS_SOURCE.map(([v, l]) => (
-                  <option key={v} value={v}>
-                    {l}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </section>
-
-        {/* 02. Bio, CTA e Funil */}
-        <section className={styles.card}>
-          <h2 className={styles.sectionTitle}>
-            <span className={styles.idx}>02</span> Bio, CTA e Funil
-          </h2>
-          <div className={styles.spaceY}>
-            <div>
-              <label>Links da bio</label>
-              <div className={styles.repRows}>
-                {(draft.bio_links || []).map((link, idx) => (
-                  <div key={idx} className={styles.repRow}>
-                    <input
-                      type="text"
-                      placeholder="URL"
-                      value={link.url}
-                      onChange={(e) => updateBioLink(idx, 'url', e.target.value)}
-                      className={styles.input}
-                    />
-                    <input
-                      type="text"
-                      placeholder="Label"
-                      value={link.label}
-                      onChange={(e) => updateBioLink(idx, 'label', e.target.value)}
-                      className={styles.input}
-                    />
-                    <button
-                      onClick={() => removeBioLink(idx)}
-                      className={styles.btnRemove}
-                      type="button"
-                    >
-                      ✕
-                    </button>
-                  </div>
-                ))}
-              </div>
-              <button onClick={addBioLink} className={styles.btnAdd} type="button">
-                + Adicionar link
-              </button>
-            </div>
-            <div className={styles.grid2}>
-              <div className={styles.field}>
-                <label>Tipo de CTA</label>
-                <select
-                  value={draft.cta_type || ''}
-                  onChange={(e) => setDraft({ ...draft, cta_type: e.target.value as CTAType })}
-                  className={styles.select}
-                >
-                  <option value="">— selecione —</option>
-                  {ENUM_CTA.map(([v, l]) => (
-                    <option key={v} value={v}>
-                      {l}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className={styles.field}>
-                <label>Maturidade do funil</label>
-                <select
-                  value={draft.funnel_maturity || ''}
-                  onChange={(e) =>
-                    setDraft({ ...draft, funnel_maturity: e.target.value as FunnelMaturity })
-                  }
-                  className={styles.select}
-                >
-                  <option value="">— selecione —</option>
-                  {ENUM_FUNNEL.map(([v, l]) => (
-                    <option key={v} value={v}>
-                      {l}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 03. Diagnóstico */}
-        <section className={styles.card}>
-          <h2 className={styles.sectionTitle}>
-            <span className={styles.idx}>03</span> Notas de Diagnóstico
-          </h2>
-          <div className={styles.fieldGrid}>
-            <div className={styles.field}>
-              <label>Q1 — Período de engajamento</label>
-              <textarea
-                value={draft.q1_engagement_period_notes || ''}
-                onChange={(e) =>
-                  setDraft({ ...draft, q1_engagement_period_notes: e.target.value || null })
-                }
-                rows={3}
-                className={styles.textarea}
-              />
-            </div>
-            <div className={styles.field}>
-              <label>Q2 — Proxy de conteúdo</label>
-              <textarea
-                value={draft.q2_content_proxy_notes || ''}
-                onChange={(e) =>
-                  setDraft({ ...draft, q2_content_proxy_notes: e.target.value || null })
-                }
-                rows={3}
-                className={styles.textarea}
-              />
-            </div>
-            <div className={styles.field}>
-              <label>Q3 — Desalinhamento</label>
-              <textarea
-                value={draft.q3_misalignment_notes || ''}
-                onChange={(e) =>
-                  setDraft({ ...draft, q3_misalignment_notes: e.target.value || null })
-                }
-                rows={3}
-                className={styles.textarea}
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* 04. Audiência */}
-        <section className={styles.card}>
-          <h2 className={styles.sectionTitle}>
-            <span className={styles.idx}>04</span> Segmentação de Audiência
-          </h2>
-          <div className={styles.grid2}>
-            {audienceFields.map(([id, label]) => (
-              <div key={id} className={styles.field}>
-                <label>{label}</label>
-                <input
-                  type="number"
-                  step="0.1"
-                  value={draft[id] ?? 0}
-                  onChange={(e) =>
-                    setDraft({
-                      ...draft,
-                      [id]: e.target.value === '' ? null : parseFloat(e.target.value),
-                    })
-                  }
-                  className={styles.input}
-                />
-              </div>
-            ))}
-          </div>
-          <div
-            className={`${styles.sumCheck} ${!audAny ? styles.empty : audOk ? styles.ok : styles.bad}`}
-          >
-            {!audAny
-              ? 'sem valores ainda'
-              : audOk
-                ? `soma = ${audSum.toFixed(1)}% — ok ✓`
-                : `soma = ${audSum.toFixed(1)}% — fora do CHECK ⚠`}
-            <div className={styles.audMeter}>
-              {audVals.map((v, i) => (
-                <div
-                  key={i}
-                  style={{
-                    width: `${Math.max(0, parseFloat(String(v)) || 0)}%`,
-                    backgroundColor: AUD_COLORS[i],
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* 05. Contexto de Negócio */}
-        <section className={styles.card}>
-          <h2 className={styles.sectionTitle}>
-            <span className={styles.idx}>05</span> Contexto de Negócio
-          </h2>
-          <div className={styles.fieldGrid}>
-            <div className={styles.field}>
-              <label>Clusters de conteúdo observados</label>
-              <textarea
-                value={draft.observed_content_clusters || ''}
-                onChange={(e) =>
-                  setDraft({ ...draft, observed_content_clusters: e.target.value || null })
-                }
-                rows={2}
-                className={styles.textarea}
-              />
-            </div>
-            <div className={styles.field}>
-              <label>Setor / benchmark</label>
-              <select
-                value={draft.setor_benchmark || ''}
-                onChange={(e) =>
-                  setDraft({ ...draft, setor_benchmark: e.target.value as SetorBenchmark })
-                }
-                className={styles.select}
-              >
-                <option value="">— selecione —</option>
-                {ENUM_SETOR.map(([v, l]) => (
-                  <option key={v} value={v}>
-                    {l}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className={styles.field}>
-              <label>Nicho</label>
-              <input
-                type="text"
-                value={draft.nicho || ''}
-                onChange={(e) => setDraft({ ...draft, nicho: e.target.value || null })}
-                className={styles.input}
-              />
-            </div>
-            <div className={styles.field}>
-              <label>Mecanismo de prova</label>
-              <select
-                value={draft.proof_mechanism || ''}
-                onChange={(e) =>
-                  setDraft({ ...draft, proof_mechanism: e.target.value as ProofMechanism })
-                }
-                className={styles.select}
-              >
-                <option value="">— selecione —</option>
-                {ENUM_PROOF.map(([v, l]) => (
-                  <option key={v} value={v}>
-                    {l}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </section>
-
-        {/* 06. Panksepp */}
-        <section className={styles.card}>
-          <h2 className={styles.sectionTitle}>
-            <span className={styles.idx}>06</span> Psicografia — Panksepp
-          </h2>
-          <div className={styles.grid2}>
-            <div className={styles.field}>
-              <label>Panksepp Esperado</label>
-              <select
-                value={draft.expected_panksepp_system || ''}
-                onChange={(e) =>
-                  setDraft({
-                    ...draft,
-                    expected_panksepp_system: e.target.value as PankseppSystem,
-                  })
-                }
-                className={styles.select}
-              >
-                <option value="">— selecione —</option>
-                {ENUM_PANKSEPP.map(([v, l]) => (
-                  <option key={v} value={v}>
-                    {l}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className={styles.field}>
-              <label>Panksepp Real</label>
-              <select
-                value={draft.real_panksepp_system || ''}
-                onChange={(e) =>
-                  setDraft({ ...draft, real_panksepp_system: e.target.value as PankseppSystem })
-                }
-                className={styles.select}
-              >
-                <option value="">— selecione —</option>
-                {ENUM_PANKSEPP.map(([v, l]) => (
-                  <option key={v} value={v}>
-                    {l}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </section>
-
-        {/* 07. Schwartz */}
-        <section className={styles.card}>
-          <h2 className={styles.sectionTitle}>
-            <span className={styles.idx}>07</span> Psicografia — Schwartz
-          </h2>
-          <div className={styles.spaceY}>
-            {renderSchwartzEditor('expected_schwartz', 'Esperado')}
-            {renderSchwartzEditor('real_schwartz', 'Real')}
-          </div>
-        </section>
-
-        {/* 08. Metadados */}
-        <section className={styles.card}>
-          <h2 className={styles.sectionTitle}>
-            <span className={styles.idx}>08</span> Metadados
-          </h2>
-          <div className={styles.fieldGrid}>
-            <div className={styles.field}>
-              <label>Fonte (values/affect)</label>
-              <select
-                value={draft.values_affect_source || ''}
-                onChange={(e) =>
-                  setDraft({
-                    ...draft,
-                    values_affect_source: e.target.value as ValuesAffectSource,
-                  })
-                }
-                className={styles.select}
-              >
-                <option value="">— selecione —</option>
-                {ENUM_AFFECT_SOURCE.map(([v, l]) => (
-                  <option key={v} value={v}>
-                    {l}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className={styles.field}>
-              <label>Confiança</label>
-              <select
-                value={draft.values_affect_confidence || ''}
-                onChange={(e) =>
-                  setDraft({
-                    ...draft,
-                    values_affect_confidence: e.target.value as ConfidenceLevel,
-                  })
-                }
-                className={styles.select}
-              >
-                <option value="">— selecione —</option>
-                {ENUM_CONFIDENCE.map(([v, l]) => (
-                  <option key={v} value={v}>
-                    {l}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className={styles.field}>
-              <label>Atualizado por</label>
-              <input
-                type="text"
-                value={draft.updated_by || ''}
-                disabled
-                className={styles.disabled}
-              />
-              <p className={styles.help}>Preenchido automaticamente com o usuário logado ao salvar.</p>
-            </div>
-          </div>
-        </section>
-
-        <datalist id="schwartzSuggestions">
-          {SCHWARTZ_SUGESTOES.map((s) => (
-            <option key={s} value={s} />
-          ))}
-        </datalist>
       </div>
     )
   }
 
-  // ============================================================================
-  // MAIN RENDER
-  // ============================================================================
-  const pct = completeness(effectiveRecord || draft)
+  if (status === 'loading') {
+    return (
+      <div className={styles.container}>
+        <div className={styles.loadingState}>
+          <Loader className={styles.loaderIcon} />
+          <p>Carregando dados...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (status === 'error' && error) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.errorState}>
+          <AlertCircle className={styles.errorIcon} />
+          <p>Erro ao carregar: {error}</p>
+        </div>
+      </div>
+    )
+  }
+
+  function handleProximo(event: React.MouseEvent<HTMLButtonElement>): void {
+    event.preventDefault()
+
+    if (isSaving || !validarFase()) return
+
+    if (faseAtual === totalFases - 1) {
+      void handleSalvar()
+      return
+    }
+
+    setFaseAtual((atual) => Math.min(atual + 1, totalFases - 1))
+  }
 
   return (
     <div className={styles.container}>
-      {/* Header */}
-      <div className={styles.header}>
-        <div>
-          <h1 className={styles.title}>Dossiê de Onboarding</h1>
-          <p className={styles.subtitle}>
-            {effectiveRecord ? `Atualizado em ${fmtDate(effectiveRecord.updated_at) || '—'}` : 'Ainda sem registro'}
-          </p>
+      <div className={styles.wrapper}>
+        {status === 'not_found' && (
+          <div className={`${styles.message} ${styles.messageWarning}`}>
+            Nenhum onboarding cadastrado para este cliente.
+          </div>
+        )}
+        {savingError && (
+          <div className={`${styles.message} ${styles.messageError}`}>
+            <AlertCircle className={styles.messageIcon} />
+            {savingError}
+          </div>
+        )}
+
+        <div className={styles.header}>
+          <div>
+            <h1 className={styles.title}>🎯 ORBIT Onboarding</h1>
+            <p className={styles.subtitle}>
+              {faseAtual + 1} de {totalFases}
+            </p>
+          </div>
+          <div className={styles.progress}>
+            <div className={styles.progressValue}>{Math.round(progresso)}%</div>
+          </div>
         </div>
-        <div className={styles.completeness}>
-          <div className={styles.pct}>{pct}%</div>
-          <p className={styles.pctLabel}>preenchido</p>
+
+        <div className={styles.progressBar}>
+          <div
+            className={styles.progressFill}
+            style={{ width: `${progresso}%` }}
+          />
+        </div>
+
+        {/* Insight setorial contextual */}
+        {setorSelecionado && faseAtual === 1 && (
+          <InsightCard setor={setorSelecionado} />
+        )}
+
+        <div className={styles.card}>
+          <h2 className={styles.cardTitle}>{fase.titulo}</h2>
+          <p className={styles.cardDescription}>{fase.descricao}</p>
+
+          {erros.audience_sum && (
+            <div className={`${styles.message} ${styles.messageWarning}`}>
+              {erros.audience_sum}
+            </div>
+          )}
+
+          <div className={styles.fieldsContainer}>
+            {fase.campos.map((campo) => (
+              <div key={String(campo.id)} className={styles.fieldWrapper}>
+                <div className={styles.labelContainer}>
+                  <label className={styles.label}>
+                    {campo.label}
+                    {campo.obrigatorio && <span className={styles.required}>*</span>}
+                  </label>
+                  {campo.alerta && <AlertCircle className={styles.alertIcon} />}
+                  {campo.tooltip && (
+                    <div className={styles.tooltipWrapper}>
+                      <HelpCircle className={styles.helpIcon} />
+                      <div className={styles.tooltip}>{campo.tooltip}</div>
+                    </div>
+                  )}
+                </div>
+
+                <CampoInput
+                  campo={campo}
+                  valor={respostas[campo.id as keyof FormAnswers]}
+                  erro={erros[String(campo.id)]}
+                  onChange={(valor) => handleResposta(campo.id as keyof FormAnswers, valor)}
+                />
+
+                {/* Insight contextual do campo */}
+                {campo.insight && (
+                  <div className={styles.fieldInsight}>
+                    <Lightbulb className={styles.fieldInsightIcon} />
+                    <span>{campo.insight}</span>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className={styles.buttonGroup}>
+          <button
+            onClick={handleVoltar}
+            disabled={isSaving || faseAtual === 0}
+            className={styles.buttonSecondary}
+          >
+            ← Voltar
+          </button>
+          <button
+            onClick={handleProximo}
+            disabled={isSaving}
+            className={styles.buttonPrimary}
+          >
+            {isSaving ? (
+              <>
+                <Loader className={styles.loaderIcon} />
+                Salvando...
+              </>
+            ) : (
+              <>
+                {faseAtual === totalFases - 1 ? 'Finalizar' : 'Próximo'}
+                {faseAtual < totalFases - 1 && <ChevronRight className={styles.chevronIcon} />}
+              </>
+            )}
+          </button>
         </div>
       </div>
-
-      {/* Banners */}
-      {hookError && <div className={styles.bannerError}>❌ {hookError}</div>}
-      {error && <div className={styles.bannerError}>{error}</div>}
-      {success && <div className={styles.bannerSuccess}>{success}</div>}
-
-      {/* Content */}
-      {loading ? (
-        <div className={styles.loading}>Carregando registro…</div>
-      ) : displayMode === 'view' ? (
-        <>
-          {renderView()}
-          <div className={styles.actions}>
-            <button onClick={handleEdit} className={styles.btnPrimary} type="button">
-              ✏️ Editar dados
-            </button>
-          </div>
-        </>
-      ) : (
-        <>
-          {renderEdit()}
-          <div className={styles.actions}>
-            <button onClick={handleCancel} className={styles.btnGhost} type="button">
-              Cancelar
-            </button>
-            <button
-              onClick={handleSave}
-              disabled={isSaving}
-              className={styles.btnPrimary}
-              type="button"
-            >
-              {isSaving ? '💾 Salvando...' : '💾 Salvar'}
-            </button>
-          </div>
-        </>
-      )}
-
-      {/* Log */}
-      <details className={styles.logPanel}>
-        <summary className={styles.logSummary}>📋 Histórico ({log.length})</summary>
-        <div className={styles.logContent}>
-          {log.length === 0 ? (
-            <p className={styles.logEmpty}>Nenhuma atualização registrada</p>
-          ) : (
-            log.map((entry, i) => (
-              <div key={i} className={styles.logEntry}>
-                <time>{fmtDate(entry.ts)}</time>
-                <span>{entry.who}</span>
-                <div>{entry.changes.join(', ')}</div>
-              </div>
-            ))
-          )}
-        </div>
-      </details>
     </div>
   )
+}
+
+type FormAnswers = Partial<Omit<ClientOnboarding, 'bio_links'>> & {
+  bio_links?: string | ClientOnboarding['bio_links'] | null
+  expected_age_range?: string
+}
+
+interface OnboardingFormState {
+  clientId: string
+  source: ClientOnboarding | null
+  answers: FormAnswers
 }
