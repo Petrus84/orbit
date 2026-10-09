@@ -18,123 +18,161 @@
 // source='gestao_interna' — hoje ER Real e VPS) NUNCA gera Ação. É meta
 // provisória, sem amostra de mercado, e o engine devolve 'neutro' para
 // essas métricas (D8). Decisão centralizada em `actionFor`.
+//
+// ✅ RWP-4 (2026-10-08): "mediana do setor" / "do setor" SÓ quando a régua usada
+// é uma célula REAL de setor (clients.benchmark_category com linha em
+// ref_thresholds). Sem célula (categoria nula, ou sem linha pra essa métrica,
+// ou régua 'all'/'global'), o texto diz "geral", NÃO cita mediana e avisa isso
+// em `note`. Decisão em `hasSectorCell`, ponto único.
 // ============================================================================
 
-export type SemaphoreKey = 'verde' | 'ambar' | 'vermelho'
+export type SemaphoreKey = "verde" | "ambar" | "vermelho";
 
 export interface ScoreReference {
-  value: number | null
-  semaphore: SemaphoreKey | null
-  category: string | null          // 'global' | 'all' | <setor>
-  source: string | null            // 'gestao_interna' | 'category' | 'global' | ...
-  direction: string | null         // 'higher_is_better' | 'lower_is_better' | ...
-  greenMin: number | null
-  greenMax: number | null
-  redMin: number | null
-  redMax: number | null
-  p50: number | null
+  value: number | null;
+  semaphore: SemaphoreKey | null;
+  category: string | null; // 'global' | 'all' | <setor>
+  source: string | null; // 'gestao_interna' | 'category' | 'global' | ...
+  direction: string | null; // 'higher_is_better' | 'lower_is_better' | ...
+  greenMin: number | null;
+  greenMax: number | null;
+  redMin: number | null;
+  redMax: number | null;
+  p50: number | null;
 }
 
 export interface ScoreCopy {
-  text: string
-  action: string | null
-  note: string | null
+  text: string;
+  action: string | null;
+  note: string | null;
 }
 
-const WINDOW_POSTS = 12
+const WINDOW_POSTS = 12;
 
 const ACTION_COPY = {
   vermelho: `Próximo passo: olhe os últimos ${WINDOW_POSTS} posts (formato, tema e frequência) antes de mexer em oferta ou verba.`,
   ambar: (limite: string) =>
     `Próximo passo: acompanhe os próximos ${WINDOW_POSTS} posts. Se passar de ${limite}, o indicador entra no vermelho.`,
-} as const
+} as const;
 
 const NO_DATA_TEXT =
-  'Ainda não há posts suficientes neste período para calcular este indicador.'
+  "Ainda não há posts suficientes neste período para calcular este indicador.";
 
 const NO_REFERENCE_TEXT =
-  'Este é o número da sua conta no período. Ainda não há uma referência confiável para classificá-lo, então preferimos não dar nota.'
+  "Este é o número da sua conta no período. Ainda não há uma referência confiável para classificá-lo, então preferimos não dar nota.";
 
 const GESTAO_NOTE =
-  'Meta provisória de gestão: um guia de trabalho, não um benchmark de mercado.'
+  "Meta provisória de gestão: um guia de trabalho, não um benchmark de mercado.";
+
+// Sem célula de setor: a comparação é com o conjunto geral de contas.
+const NO_SECTOR_NOTE =
+  "Ainda não temos uma referência do seu setor para este indicador, então comparamos com o conjunto geral de contas — sem mediana do setor.";
+
+// Sentinelas de "sem setor" em ref_thresholds.category (D9: 'all' e 'global').
+const NON_SECTOR_CATEGORIES: ReadonlySet<string> = new Set([
+  "all",
+  "global",
+  "unclassified",
+]);
 
 const fmt = (n: number): string =>
-  n.toLocaleString('pt-BR', { maximumFractionDigits: 1 })
+  n.toLocaleString("pt-BR", { maximumFractionDigits: 1 });
 
 /** Régua de gestão provisória (não é benchmark de mercado). */
 export function isGestaoReference(ref: ScoreReference): boolean {
-  return ref.category === 'global' && ref.source === 'gestao_interna'
+  return ref.category === "global" && ref.source === "gestao_interna";
 }
 
 export function buildScoreCopy(ref: ScoreReference): ScoreCopy {
-  const { value, semaphore } = ref
+  const { value, semaphore } = ref;
 
   if (value === null || !Number.isFinite(value)) {
-    return { text: NO_DATA_TEXT, action: null, note: null }
+    return { text: NO_DATA_TEXT, action: null, note: null };
   }
   if (semaphore === null) {
-    return { text: NO_REFERENCE_TEXT, action: null, note: null }
+    return { text: NO_REFERENCE_TEXT, action: null, note: null };
   }
 
-  const isGestao = isGestaoReference(ref)
-  const escopo = isGestao ? 'de gestão' : ref.category === 'all' ? 'geral' : 'do setor'
-  const note = isGestao ? GESTAO_NOTE : null
+  const isGestao = isGestaoReference(ref);
+  // RWP-4: célula real de setor = categoria presente e que não é sentinela.
+  const hasSectorCell =
+    !isGestao &&
+    ref.category !== null &&
+    !NON_SECTOR_CATEGORIES.has(ref.category);
+  const escopo = isGestao ? "de gestão" : hasSectorCell ? "do setor" : "geral";
+  const note = isGestao ? GESTAO_NOTE : hasSectorCell ? null : NO_SECTOR_NOTE;
 
   // RWP-2: ponto único de decisão. Gestão => sem Ação, em qualquer ramo.
   const actionFor = (action: string | null): string | null =>
-    isGestao ? null : action
+    isGestao ? null : action;
 
   // higher_is_better: meta = green_min, piso = red_max
-  if (ref.direction === 'higher_is_better' && ref.greenMin !== null && ref.redMax !== null) {
-    const meta = ref.greenMin
-    const piso = ref.redMax
-    if (semaphore === 'verde') {
-      return { text: `Na meta ${escopo} (≥ ${fmt(meta)}%). Ótimo sinal!`, action: null, note }
+  if (
+    ref.direction === "higher_is_better" &&
+    ref.greenMin !== null &&
+    ref.redMax !== null
+  ) {
+    const meta = ref.greenMin;
+    const piso = ref.redMax;
+    if (semaphore === "verde") {
+      return {
+        text: `Na meta ${escopo} (≥ ${fmt(meta)}%). Ótimo sinal!`,
+        action: null,
+        note,
+      };
     }
-    if (semaphore === 'ambar') {
+    if (semaphore === "ambar") {
       return {
         text: `Quase lá: faltam ${fmt(meta - value)} p.p. para a meta ${escopo} (${fmt(meta)}%), e você já está acima do piso (${fmt(piso)}%).`,
         action: actionFor(ACTION_COPY.ambar(`o piso (${fmt(piso)}%)`)),
         note,
-      }
+      };
     }
     return {
       text: `Abaixo do piso ${escopo} (${fmt(piso)}%). A meta é ${fmt(meta)}%.`,
       action: actionFor(ACTION_COPY.vermelho),
       note,
-    }
+    };
   }
 
   // lower_is_better: limite vermelho = red_min
-  if (ref.direction === 'lower_is_better' && ref.redMin !== null) {
-    const limite = ref.redMin
-    if (semaphore === 'verde') {
-      return { text: `Dentro do padrão ${escopo}. Bom sinal!`, action: null, note }
+  if (ref.direction === "lower_is_better" && ref.redMin !== null) {
+    const limite = ref.redMin;
+    if (semaphore === "verde") {
+      return {
+        text: `Dentro do padrão ${escopo}. Bom sinal!`,
+        action: null,
+        note,
+      };
     }
-    if (semaphore === 'ambar') {
+    if (semaphore === "ambar") {
       const pos =
-        ref.p50 !== null
-          ? `${value > ref.p50 ? 'acima' : 'abaixo'} da mediana ${escopo} (${fmt(ref.p50)}%) e `
-          : ''
+        hasSectorCell && ref.p50 !== null
+          ? `${value > ref.p50 ? "acima" : "abaixo"} da mediana do setor (${fmt(ref.p50)}%) e `
+          : "";
       return {
         text: `Atenção: ${pos}a ${fmt(limite - value)} p.p. do limite (${fmt(limite)}%).`,
         action: actionFor(ACTION_COPY.ambar(`o limite (${fmt(limite)}%)`)),
         note,
-      }
+      };
     }
     return {
       text: `Acima do limite ${escopo} (${fmt(limite)}%).`,
       action: actionFor(ACTION_COPY.vermelho),
       note,
-    }
+    };
   }
 
   // Direção/limites não previstos: só o semáforo, sem inventar frase.
   const label =
-    semaphore === 'verde' ? 'Dentro do esperado' : semaphore === 'ambar' ? 'Atenção' : 'Fora do esperado'
+    semaphore === "verde"
+      ? "Dentro do esperado"
+      : semaphore === "ambar"
+        ? "Atenção"
+        : "Fora do esperado";
   return {
     text: label,
-    action: actionFor(semaphore === 'vermelho' ? ACTION_COPY.vermelho : null),
+    action: actionFor(semaphore === "vermelho" ? ACTION_COPY.vermelho : null),
     note,
-  }
+  };
 }

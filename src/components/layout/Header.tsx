@@ -4,55 +4,60 @@
    Versão: 1.0.0  |  Data: 2026-06-01
    ========================================================================== */
 
-'use client'
+"use client";
 
-import styles                     from './Header.module.css'
-import { useOrbitDashboard }      from '@/context/OrbitDashboardContext'
-import type { TabId }             from '@/types/orbit'
+import styles from "./Header.module.css";
+import { useOrbitDashboard } from "@/context/OrbitDashboardContext";
+import type { TabId } from "@/types/orbit";
 
 // ─── Abas — exatamente 3, na ordem do protótipo ───────────────────────────
 
 interface TabDefinition {
-  id:    TabId
-  label: string
+  id: TabId;
+  label: string;
 }
 
 const TABS: TabDefinition[] = [
-  { id: 'overview',   label: 'Overview'  },
-  { id: 'por-post',   label: 'Por post'  },
-  { id: 'audiencia',  label: 'Audiência' },
-]
+  { id: "overview", label: "Overview" },
+  { id: "por-post", label: "Por post" },
+  { id: "audiencia", label: "Audiência" },
+];
 
 // ─── Helpers ──────────────────────────────────────────────────────────────
 
 function formatDateRange(start: Date, end: Date): string {
-
-  const opts: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'short', year: 'numeric' }
-  const locale = 'pt-BR'
-  const f = new Date(start).toLocaleDateString(locale, opts)
-  const t = new Date(end).toLocaleDateString(locale, opts)
-  return `${f} – ${t}`
+  // RWP-6: datas vêm como YYYY-MM-DD (meia-noite UTC); formatar em UTC evita o recuo de 1 dia em fusos negativos
+  const opts: Intl.DateTimeFormatOptions = {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  };
+  const locale = "pt-BR";
+  const f = new Date(start).toLocaleDateString(locale, opts);
+  const t = new Date(end).toLocaleDateString(locale, opts);
+  return `${f} – ${t}`;
 }
 
 // ─── Componente ───────────────────────────────────────────────────────────
 
 export function Header() {
-  const { data, activeTab, setActiveTab } = useOrbitDashboard()
+  const { data, activeTab, setActiveTab } = useOrbitDashboard();
 
-  const meta = data?.meta
+  const meta = data?.meta;
 
   const dateLabel = meta
     ? formatDateRange(meta.dateRange.start, meta.dateRange.end)
-    : '—'
+    : "—";
 
   return (
     <header className={styles.header} role="banner">
       {/* Título + contexto */}
       <div className={styles.titleBlock}>
-        <h1 className={styles.title}>Instagram — {meta?.clientHandle ?? '—'}</h1>
-        <p className={styles.subtitle}>
-          {meta?.periodLabel ?? '—'}
-        </p>
+        <h1 className={styles.title}>
+          Instagram — {meta?.clientHandle ?? "—"}
+        </h1>
+        <p className={styles.subtitle}>{meta?.periodLabel ?? "—"}</p>
       </div>
 
       {/* Spacer */}
@@ -60,7 +65,9 @@ export function Header() {
 
       {/* Date range pill */}
       <div className={styles.datePill} aria-label="Período selecionado">
-        <span className={styles.datePillIcon} aria-hidden="true">📅</span>
+        <span className={styles.datePillIcon} aria-hidden="true">
+          📅
+        </span>
         <span className={styles.datePillText}>{dateLabel}</span>
       </div>
 
@@ -72,8 +79,8 @@ export function Header() {
             type="button"
             className={[
               styles.tab,
-              activeTab === tab.id ? styles.tabActive : '',
-            ].join(' ')}
+              activeTab === tab.id ? styles.tabActive : "",
+            ].join(" ")}
             onClick={() => setActiveTab(tab.id)}
             aria-selected={activeTab === tab.id}
             role="tab"
@@ -83,5 +90,5 @@ export function Header() {
         ))}
       </nav>
     </header>
-  )
+  );
 }

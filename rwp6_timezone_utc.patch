@@ -1,0 +1,24 @@
+--- a/src/components/layout/Header.tsx	2026-10-08 23:18:24.653471540 +0000
++++ b/src/components/layout/Header.tsx	2026-10-08 23:18:33.364212328 +0000
+@@ -27,7 +27,8 @@
+ 
+ function formatDateRange(start: Date, end: Date): string {
+ 
+-  const opts: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'short', year: 'numeric' }
++  // RWP-6: datas vêm como YYYY-MM-DD (meia-noite UTC); formatar em UTC evita o recuo de 1 dia em fusos negativos
++  const opts: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' }
+   const locale = 'pt-BR'
+   const f = new Date(start).toLocaleDateString(locale, opts)
+   const t = new Date(end).toLocaleDateString(locale, opts)
+--- a/src/components/screens/IGOverviewScreen.tsx	2026-10-08 23:18:24.655584193 +0000
++++ b/src/components/screens/IGOverviewScreen.tsx	2026-10-08 23:18:33.367047887 +0000
+@@ -91,7 +91,8 @@
+   if (!data) return undefined
+   const start = data.meta.dateRange.start
+   const end = data.meta.dateRange.end
+-  const fmt = new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })
++  // RWP-6: formatar em UTC (datas YYYY-MM-DD = meia-noite UTC)
++  const fmt = new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'UTC' })
+   if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) return data.meta.periodLabel
+   return `${fmt.format(start)} – ${fmt.format(end)}`
+ }

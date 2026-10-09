@@ -70,9 +70,9 @@
      (instagram_account_id não existe no orbit).
    ========================================================================== */
 
-import { supabase } from '@/lib/supabase'
-import { repairMojibake } from '@/lib/textRepair'
-import { z } from 'zod'
+import { supabase } from "@/lib/supabase";
+import { repairMojibake } from "@/lib/textRepair";
+import { z } from "zod";
 
 import type {
   IGOverviewData,
@@ -90,9 +90,9 @@ import type {
   ClientOnboarding,
   SectorPositioning,
   AlgoRiskScore,
-} from '@/types/orbit'
+} from "@/types/orbit";
 
-import { buildScoreCopy, type SemaphoreKey } from '@/lib/scoreStatusCopy'
+import { buildScoreCopy, type SemaphoreKey } from "@/lib/scoreStatusCopy";
 import {
   resolveEngagementScoreAlert,
   resolveAlgoRiskScoreAlert,
@@ -103,18 +103,18 @@ import {
   computeAlgoRiskScore,
   computePostingCadence,
   computeFormatMix,
-} from './contentContractEngine'
+} from "./contentContractEngine";
 
-type RawRow = Record<string, unknown>
+type RawRow = Record<string, unknown>;
 
 // ── Constantes de configuração ──────────────────────────────────────────
 
 const KPI_METRIC_KEYS = [
-  'alcance-90d',
-  'seguidores-totais',
-  'saldo-90-dias',
-  'cliques-no-link',
-]
+  "alcance-90d",
+  "seguidores-totais",
+  "saldo-90-dias",
+  "cliques-no-link",
+];
 
 // ✅ 09/09 — REGRESSÃO CORRIGIDA: 'cliques-no-link' tinha sido removido de
 // KPI_METRIC_KEYS (fora do .in() da query, a linha nunca voltava do banco)
@@ -124,132 +124,206 @@ const KPI_METRIC_KEYS = [
 // orbit.v_kpi_snapshots. Ver CHANGELOG_08-09-2026_paridade-protótipo.md,
 // item 4 — este era o comportamento correto documentado lá.
 const KPI_ORDER = [
-  'seguidores-totais',
-  'saldo-90-dias',
-  'alcance-90d',
-  'cliques-no-link',
-]
+  "seguidores-totais",
+  "saldo-90-dias",
+  "alcance-90d",
+  "cliques-no-link",
+];
 
 const FORMAT_LABEL: Record<string, string> = {
-  reel: 'Reels',
-  static_post: 'Estático',
-  carousel: 'Carrossel',
-  story: 'Stories',
-  live: 'Live',
-  igtv: 'IGTV',
-}
+  reel: "Reels",
+  static_post: "Estático",
+  carousel: "Carrossel",
+  story: "Stories",
+  live: "Live",
+  igtv: "IGTV",
+};
 
-const CONFIDENCE_LEVELS = ['L0', 'L1'] as const
+const CONFIDENCE_LEVELS = ["L0", "L1"] as const;
 
 function toFiniteNumber(value: unknown, fallback = 0): number {
-  const numericValue = typeof value === 'number' ? value : Number(value)
-  return Number.isFinite(numericValue) ? numericValue : fallback
+  const numericValue = typeof value === "number" ? value : Number(value);
+  return Number.isFinite(numericValue) ? numericValue : fallback;
 }
 
 // ── Schemas (validação de dados do banco) ───────────────────────────────
 
-const KpiRowSchema = z.object({
-  id:            z.string(),
-  client_id:     z.string(),
-  period_start:  z.string().optional(),
-  period_end:    z.string().optional(),
-  metric_key:    z.string().optional(),
-  metric:        z.string().optional(),
-  metric_value:  z.union([z.number(), z.string()]).nullable().optional(),
-  value:         z.union([z.number(), z.string()]).nullable().optional(),
-  delta_pct:     z.union([z.number(), z.string()]).nullable().optional().default(0),
-  semaphore:     z.enum(['verde', 'ambar', 'vermelho']).nullable().optional().default('ambar'),
-  subtitle:      z.string().nullable().optional().default(null),
-  calculated_at: z.string().optional(),
-  // FIX (19/09/2026): coluna existe em orbit.v_kpi_snapshots desde sempre
-  // (confirmado no banco: seguidores-totais = L0, alcance-90d/cliques-no-link
-  // = L1 pro cpimportstore) mas nunca tinha sido lida — kpiRowToCardData()
-  // não populava `sourceLevel`, e o card caía no fallback (ver KPICard.tsx).
-  confidence_level: z.enum(['L0', 'L1', 'L2']).nullable().optional(),
-}).refine(
-  (data) => data.metric_key || data.metric,
-  { message: "Deve ter 'metric_key' ou 'metric'" }
-)
+const KpiRowSchema = z
+  .object({
+    id: z.string(),
+    client_id: z.string(),
+    period_start: z.string().optional(),
+    period_end: z.string().optional(),
+    metric_key: z.string().optional(),
+    metric: z.string().optional(),
+    metric_value: z.union([z.number(), z.string()]).nullable().optional(),
+    value: z.union([z.number(), z.string()]).nullable().optional(),
+    delta_pct: z
+      .union([z.number(), z.string()])
+      .nullable()
+      .optional()
+      .default(0),
+    semaphore: z
+      .enum(["verde", "ambar", "vermelho"])
+      .nullable()
+      .optional()
+      .default("ambar"),
+    subtitle: z.string().nullable().optional().default(null),
+    calculated_at: z.string().optional(),
+    // FIX (19/09/2026): coluna existe em orbit.v_kpi_snapshots desde sempre
+    // (confirmado no banco: seguidores-totais = L0, alcance-90d/cliques-no-link
+    // = L1 pro cpimportstore) mas nunca tinha sido lida — kpiRowToCardData()
+    // não populava `sourceLevel`, e o card caía no fallback (ver KPICard.tsx).
+    confidence_level: z.enum(["L0", "L1", "L2"]).nullable().optional(),
+  })
+  .refine((data) => data.metric_key || data.metric, {
+    message: "Deve ter 'metric_key' ou 'metric'",
+  });
 
-type KpiRow = z.infer<typeof KpiRowSchema>
+type KpiRow = z.infer<typeof KpiRowSchema>;
 
 const PostRowRawSchema = z.object({
-  id:                  z.string(),
-  content_format:      z.string(),
-  published_at:        z.string(),
-  likes:               z.number().nullable(),
-  comments:            z.number().nullable(),
-  caption:             z.string().nullable(),
-  polemic_score_pct:   z.number().nullable(),
-  is_boost_candidate:  z.boolean().nullable(),
+  id: z.string(),
+  content_format: z.string(),
+  published_at: z.string(),
+  likes: z.number().nullable(),
+  comments: z.number().nullable(),
+  caption: z.string().nullable(),
+  polemic_score_pct: z.number().nullable(),
+  is_boost_candidate: z.boolean().nullable(),
   // ✅ NOVO (2026-09-18): play_to_view_ratio — calculado no banco para Reels.
   // Ausente em posts não-Reel; a coluna pode não existir em rows antigas →
   // optional().nullable() para não rejeitar snapshots sem a coluna.
-  play_to_view_ratio:  z.number().optional().nullable(),
-})
+  play_to_view_ratio: z.number().optional().nullable(),
+});
 
 // ✅ 09/09 — cópia local duplicada removida; usa repairMojibake de
 // @/lib/textRepair (mesma função, um único lugar, cobre caption/
 // top_cities/real_geo). Ver TICKETS DE CORREÇÃO item 3.
 
-
 // ── Mapas de transformação ──────────────────────────────────────────────
 
 const GLOW_MAP: Record<SemaphoreColor, GlowColor> = {
-  verde:    'cyan',
-  ambar:    'gold',
-  vermelho: 'red',
+  verde: "cyan",
+  ambar: "gold",
+  vermelho: "red",
   // ✅ NOVO (PR-A): 'neutro' vem de ClassifiedMetric (contentContractEngine.ts),
   // não da view v_kpi_snapshots — mas o Record exige as 4 chaves de
   // SemaphoreColor agora. KPICardData.semaphore hoje só vem do banco
   // ('verde'|'ambar'|'vermelho'); este ramo existe só pra satisfazer o tipo.
-  neutro:   'none',
+  neutro: "none",
+};
+
+type PostingProfileRow = {
+  published_at: string;
+  content_format: string | null;
+  created_at: string | null;
+  import_session: string | null;
+};
+
+// Data de coleta da conta = a mais recente entre os posts, usando o processed_at
+// da sessão de import concluída (status 'done') e, na falta dela, o created_at
+// do post. É a MESMA âncora da view v_benchmark_cadence_by_segment: a recência
+// ("último post N dias antes da coleta") não pode ser medida até hoje, porque o
+// dado só fala até o momento em que foi coletado.
+async function fetchCollectedAt(
+  clientId: string,
+  rows: PostingProfileRow[],
+): Promise<string | null> {
+  const hasSessions = rows.some((r) => r.import_session);
+  const processedBySession = new Map<string, string>();
+
+  if (hasSessions) {
+    const { data, error } = await supabase
+      .schema("orbit")
+      .from("ig_import_sessions")
+      .select("id, processed_at")
+      .eq("client_id", clientId)
+      .eq("status", "done")
+      .returns<{ id: string; processed_at: string | null }[]>();
+
+    if (error) {
+      // Não derruba o painel: sem sessão, cai no created_at dos posts.
+      console.error("[fetchCollectedAt]", error.message);
+    } else {
+      for (const s of data ?? []) {
+        if (s.processed_at) processedBySession.set(s.id, s.processed_at);
+      }
+    }
+  }
+
+  let latest: string | null = null;
+  let latestMs = Number.NEGATIVE_INFINITY;
+  for (const r of rows) {
+    const fromSession = r.import_session
+      ? processedBySession.get(r.import_session)
+      : undefined;
+    const candidate = fromSession ?? r.created_at;
+    if (!candidate) continue;
+    const ms = Date.parse(candidate);
+    if (Number.isFinite(ms) && ms > latestMs) {
+      latestMs = ms;
+      latest = candidate;
+    }
+  }
+  return latest;
 }
 
-async function fetchPostingProfile(clientId: string, start: string, end: string) {
+async function fetchPostingProfile(
+  clientId: string,
+  start: string,
+  end: string,
+) {
   const { data, error } = await supabase
-    .schema('orbit')
-    .from('ig_posts')
-    .select('published_at, content_format')
-    .eq('client_id', clientId)
-    .gte('published_at', start)
-    .lte('published_at', end)
-    .in('confidence_level', CONFIDENCE_LEVELS)
-    .returns<{ published_at: string; content_format: string | null }[]>()
+    .schema("orbit")
+    .from("ig_posts")
+    .select("published_at, content_format, created_at, import_session")
+    .eq("client_id", clientId)
+    .gte("published_at", start)
+    .lte("published_at", end)
+    .in("confidence_level", CONFIDENCE_LEVELS)
+    .returns<PostingProfileRow[]>();
 
-  if (error) throw new Error(`[fetchPostingProfile] ${error.message}`)
+  if (error) throw new Error(`[fetchPostingProfile] ${error.message}`);
 
-  const rows = data ?? []
+  const rows = data ?? [];
+  const collectedAt = await fetchCollectedAt(clientId, rows);
   return {
-    cadence: computePostingCadence(rows.map((r) => r.published_at), start, end),
+    cadence: computePostingCadence(
+      rows.map((r) => r.published_at),
+      start,
+      end,
+      collectedAt,
+    ),
     mix: computeFormatMix(rows.map((r) => r.content_format)),
-  }
+  };
 }
 
 // ── Funções de transformação ────────────────────────────────────────────
 
 function kpiRowToCardData(row: KpiRow): KPICardData {
-  const key       = row.metric_key ?? row.metric ?? 'unknown'
-  const rawVal    = row.metric_value ?? row.value ?? 0
-  const numVal    = toFiniteNumber(rawVal)
-  const delta     = toFiniteNumber(row.delta_pct)
-  const semaphore: SemaphoreColor = (row.semaphore as SemaphoreColor) ?? 'ambar'
+  const key = row.metric_key ?? row.metric ?? "unknown";
+  const rawVal = row.metric_value ?? row.value ?? 0;
+  const numVal = toFiniteNumber(rawVal);
+  const delta = toFiniteNumber(row.delta_pct);
+  const semaphore: SemaphoreColor =
+    (row.semaphore as SemaphoreColor) ?? "ambar";
 
   return {
-    id:         row.id,
-    label:      key.toUpperCase().replace(/-/g, ' '),
-    value:      numVal,
-    unit:       null,
+    id: row.id,
+    label: key.toUpperCase().replace(/-/g, " "),
+    value: numVal,
+    unit: null,
     delta,
     // PR-B / N11 ("Δ 0% 0%"): `delta` já é renderizado por <DeltaText> como
     // seta + percentual (ex.: "↑ 3.1%"). Este `deltaLabel` é o SUBLABEL ao
     // lado, não um segundo valor — interpolar o mesmo % de novo duplicava o
     // número (e no caso delta=0 duplicava literalmente "0% 0%"). Texto fixo
     // de comparação, sem repetir o dado.
-    deltaLabel: 'vs período anterior',
+    deltaLabel: "vs período anterior",
     semaphore,
-    glowColor:  GLOW_MAP[semaphore],
-    subtitle:   row.subtitle ?? null,
+    glowColor: GLOW_MAP[semaphore],
+    subtitle: row.subtitle ?? null,
     // FIX (19/09/2026): campo existia em KPICardData (orbit.ts:506) e nunca
     // era preenchido aqui — todo card caía no fallback de KPI.tsx/IGOverview,
     // mostrando "Hipótese" (ou antes, "Medido" por acidente) pra dado que o
@@ -258,20 +332,25 @@ function kpiRowToCardData(row: KpiRow): KPICardData {
     // genuinamente diferente de "calculou e é baixa confiança" — não
     // inventar um nível que o dado não afirma.
     sourceLevel: row.confidence_level ?? undefined,
-  }
+  };
 }
 
 function dedupeByMetric(rows: KpiRow[]): KpiRow[] {
-  const latestByMetric = new Map<string, KpiRow>()
+  const latestByMetric = new Map<string, KpiRow>();
   for (const row of rows) {
-    const key      = row.metric_key ?? row.metric ?? 'unknown'
-    const existing = latestByMetric.get(key)
-    if (!existing) { latestByMetric.set(key, row); continue }
-    const existingTs = existing.calculated_at ? Date.parse(existing.calculated_at) : 0
-    const currentTs  = row.calculated_at ? Date.parse(row.calculated_at) : 0
-    if (currentTs > existingTs) latestByMetric.set(key, row)
+    const key = row.metric_key ?? row.metric ?? "unknown";
+    const existing = latestByMetric.get(key);
+    if (!existing) {
+      latestByMetric.set(key, row);
+      continue;
+    }
+    const existingTs = existing.calculated_at
+      ? Date.parse(existing.calculated_at)
+      : 0;
+    const currentTs = row.calculated_at ? Date.parse(row.calculated_at) : 0;
+    if (currentTs > existingTs) latestByMetric.set(key, row);
   }
-  return Array.from(latestByMetric.values())
+  return Array.from(latestByMetric.values());
 }
 
 // Ordena pela ordem canônica do protótipo (KPI_ORDER), não pela ordem de
@@ -279,55 +358,58 @@ function dedupeByMetric(rows: KpiRow[]): KpiRow[] {
 // porque a query vem ordenada por calculated_at desc.
 function sortByCanonicalOrder(rows: KpiRow[]): KpiRow[] {
   return [...rows].sort((a, b) => {
-    const keyA = a.metric_key ?? a.metric ?? 'unknown'
-    const keyB = b.metric_key ?? b.metric ?? 'unknown'
-    const idxA = KPI_ORDER.indexOf(keyA)
-    const idxB = KPI_ORDER.indexOf(keyB)
-    return (idxA === -1 ? KPI_ORDER.length : idxA) - (idxB === -1 ? KPI_ORDER.length : idxB)
-  })
+    const keyA = a.metric_key ?? a.metric ?? "unknown";
+    const keyB = b.metric_key ?? b.metric ?? "unknown";
+    const idxA = KPI_ORDER.indexOf(keyA);
+    const idxB = KPI_ORDER.indexOf(keyB);
+    return (
+      (idxA === -1 ? KPI_ORDER.length : idxA) -
+      (idxB === -1 ? KPI_ORDER.length : idxB)
+    );
+  });
 }
 
 // ── Interfaces públicas ─────────────────────────────────────────────────
 
 export interface FetchOverviewParams {
-  clientId:    string
-  periodStart: string
-  periodEnd:   string
+  clientId: string;
+  periodStart: string;
+  periodEnd: string;
 }
 
 export interface EngagementScoreSnapshot {
-  snapshotId: string
-  erRealPct: number
-  utilityScorePct: number
-  polemicScorePct: number
+  snapshotId: string;
+  erRealPct: number;
+  utilityScorePct: number;
+  polemicScorePct: number;
   // ✅ FIX (15/09/2026): `number | null` — ver comentário em
   // EngagementScoreInput (contentContractEngine.ts). Reach_followers_pct
   // não ingerido (ORB-DEBT-034) é um estado real, não um erro que deva
   // derrubar o snapshot inteiro.
-  vpsPct: number | null
+  vpsPct: number | null;
 }
 
 interface EngagementScoreSnapshotRow {
-  id: string
-  er_real_pct: number | null
-  utility_score_pct: number | null
-  polemic_score_pct: number | null
-  reach_total: number | null
+  id: string;
+  er_real_pct: number | null;
+  utility_score_pct: number | null;
+  polemic_score_pct: number | null;
+  reach_total: number | null;
   // ✅ FIX (v8.2 §1.4 — VPS C-02): faltava essa coluna. Sem ela o cálculo
   // caía pra reach_total/totalFollowers puro (ver comentário no v4.2.0
   // acima) — é literalmente a métrica errada, "reach/followers", que o
   // doc chama de "outra variável" e que dá 111% (1985/1785) em vez do
   // VPS C-02 real (~7,2%).
-  reach_followers_pct: number | null
-  period_end: string
+  reach_followers_pct: number | null;
+  period_end: string;
 }
 
 // ── Função principal (orquestrador) ─────────────────────────────────────
 
 export async function fetchInstagramOverview(
-  params: FetchOverviewParams
+  params: FetchOverviewParams,
 ): Promise<IGOverviewData> {
-  const { clientId, periodStart, periodEnd } = params
+  const { clientId, periodStart, periodEnd } = params;
 
   const results = await Promise.allSettled([
     fetchKPIs(clientId, periodStart, periodEnd),
@@ -338,40 +420,47 @@ export async function fetchInstagramOverview(
     fetchCriticalAlerts(clientId, periodStart, periodEnd),
     fetchSectorPositioning(clientId, periodStart, periodEnd),
     fetchPostingProfile(clientId, periodStart, periodEnd),
-
-  ])
+  ]);
 
   results.forEach((res, idx) => {
-    if (res.status === 'rejected') {
-      console.error(`[Repository] Query[${idx}] rejeitada:`, res.reason)
+    if (res.status === "rejected") {
+      console.error(`[Repository] Query[${idx}] rejeitada:`, res.reason);
     }
-  })
+  });
 
-  const kpis = results[0].status === 'fulfilled' ? results[0].value : []
-  const qualityScores = results[1].status === 'fulfilled' ? results[1].value : []
-  const formatPerformance = results[2].status === 'fulfilled' ? results[2].value : []
-  const sharesSummary: SharesSummary = results[3].status === 'fulfilled'
-    ? results[3].value
-    : { total: null, periodLabel: 'erro ao buscar', source: 'account_aggregate' }
-  const audienceSummary: AudienceSummary = results[4].status === 'fulfilled'
-    ? results[4].value
-    : {
-        genderFemalePct: null,
-        genderMalePct: null,
-        genderOtherPct: null,
-        topCities: [],
-        reachFollowersPct: null,
-        profileVisits: null,
-        linkClicks: null,
-        periodLabel: 'erro ao buscar',
-      }
-  const criticalAlerts: CriticalAlertData[] = results[5].status === 'fulfilled' ? results[5].value : []
-  const positioning: SectorPositioning | null = results[6].status === 'fulfilled'
-  
-    ? results[6].value
-    : null
+  const kpis = results[0].status === "fulfilled" ? results[0].value : [];
+  const qualityScores =
+    results[1].status === "fulfilled" ? results[1].value : [];
+  const formatPerformance =
+    results[2].status === "fulfilled" ? results[2].value : [];
+  const sharesSummary: SharesSummary =
+    results[3].status === "fulfilled"
+      ? results[3].value
+      : {
+          total: null,
+          periodLabel: "erro ao buscar",
+          source: "account_aggregate",
+        };
+  const audienceSummary: AudienceSummary =
+    results[4].status === "fulfilled"
+      ? results[4].value
+      : {
+          genderFemalePct: null,
+          genderMalePct: null,
+          genderOtherPct: null,
+          topCities: [],
+          reachFollowersPct: null,
+          profileVisits: null,
+          linkClicks: null,
+          periodLabel: "erro ao buscar",
+        };
+  const criticalAlerts: CriticalAlertData[] =
+    results[5].status === "fulfilled" ? results[5].value : [];
+  const positioning: SectorPositioning | null =
+    results[6].status === "fulfilled" ? results[6].value : null;
 
-  const postingProfile = results[7].status === 'fulfilled' ? results[7].value : null
+  const postingProfile =
+    results[7].status === "fulfilled" ? results[7].value : null;
 
   // ✅ FIX (tsc TS2339): `import.meta.env.VITE_*` é Vite — sobrou de antes
   // da migração pra Next.js, onde env var de cliente é `process.env.NEXT_PUBLIC_*`
@@ -380,66 +469,70 @@ export async function fetchInstagramOverview(
   // só quebrava o build. Não logar a key nem truncada: é debug de URL, o
   // valor da key não ajuda a diagnosticar client_id e não devia ir pro
   // console de qualquer forma.
-  console.log('[fetchInstagramOverview] Iniciando busca de cliente:', {
+  console.log("[fetchInstagramOverview] Iniciando busca de cliente:", {
     clientId,
     clientIdTrimmed: clientId?.trim(),
     clientIdLength: clientId?.length,
     clientIdType: typeof clientId,
     supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
-  })
+  });
 
-  const normalizedClientId = clientId?.trim()
+  const normalizedClientId = clientId?.trim();
   const { data: clientRow, error: clientError } = await supabase
-    .schema('orbit')
-    .from('clients')
-    .select('handle, benchmark_category, segment')
-    .eq('id', normalizedClientId)
+    .schema("orbit")
+    .from("clients")
+    .select("handle, benchmark_category, segment")
+    .eq("id", normalizedClientId)
     .maybeSingle()
     .overrideTypes<
-      { handle: string | null; benchmark_category: string | null; segment: string | null },
+      {
+        handle: string | null;
+        benchmark_category: string | null;
+        segment: string | null;
+      },
       { merge: false }
-    >()
+    >();
 
   // ✅ LOG DETALHADO DO RESULTADO
-  console.log('[fetchInstagramOverview] Resultado da query:', {
+  console.log("[fetchInstagramOverview] Resultado da query:", {
     clientId: normalizedClientId,
     dataReceived: clientRow,
     errorCode: clientError?.code,
     errorMessage: clientError?.message,
     errorDetails: clientError?.details,
     errorHint: clientError?.hint,
-  })
+  });
 
   if (clientError) {
-    console.error('[Repository] Erro ao buscar cliente:', {
+    console.error("[Repository] Erro ao buscar cliente:", {
       code: clientError.code,
       message: clientError.message,
       details: clientError.details,
       hint: clientError.hint,
       clientId: normalizedClientId,
-    })
+    });
   }
 
-  const handle = clientRow?.handle ?? normalizedClientId  // ← ÚNICA DEFINIÇÃO
-  
+  const handle = clientRow?.handle ?? normalizedClientId; // ← ÚNICA DEFINIÇÃO
+
   // Mesma precedência da view v_benchmark_cadence_by_segment:
   // benchmark_category → setor do onboarding → segment.
   const benchmarkCategory =
     clientRow?.benchmark_category?.trim() ||
     positioning?.setorBenchmark?.trim() ||
     clientRow?.segment?.trim() ||
-    null
+    null;
 
-  const benchmarkCadence = await fetchBenchmarkCadence(benchmarkCategory)
+  const benchmarkCadence = await fetchBenchmarkCadence(benchmarkCategory);
 
   const meta: DashboardHeaderMeta = {
     clientHandle: `@${handle}`,
-    periodLabel:  'Métricas da Extração',
+    periodLabel: "Métricas da Extração",
     dateRange: {
       start: new Date(periodStart),
-      end:   new Date(periodEnd),
+      end: new Date(periodEnd),
     },
-  }
+  };
 
   return {
     meta,
@@ -449,83 +542,120 @@ export async function fetchInstagramOverview(
     formatPerformance,
     sharesSummary,
     audienceSummary,
-    insights:       generateInsights(formatPerformance),
+    insights: generateInsights(formatPerformance),
     criticalAlerts,
     positioning: positioning as SectorPositioning,
     cadence: postingProfile?.cadence ?? null,
     mix: postingProfile?.mix ?? null,
     benchmarkCadence,
-  }
+  };
 }
 
 type BenchmarkCadenceRow = {
-  segment_category: string
-  content_format: string
-  period_start: string
-  period_end: string
-  window_days: number | string
-  benchmark_accounts_total: number | string
-  accounts_with_posts: number | string
-  posts_total: number | string
-  mean_posts_per_day: number | string | null
-  median_posts_per_day: number | string | null
-  p25_posts_per_day: number | string | null
-  p75_posts_per_day: number | string | null
-}
+  segment_category: string;
+  content_format: string;
+  period_start: string;
+  period_end: string;
+  window_days: number | string;
+  benchmark_accounts_total: number | string;
+  accounts_with_posts: number | string;
+  posts_total: number | string;
+  mean_posts_per_day: number | string | null;
+  median_posts_per_day: number | string | null;
+  p25_posts_per_day: number | string | null;
+  p75_posts_per_day: number | string | null;
+  eligible_accounts: number | string | null;
+  recent_accounts: number | string | null;
+  recency_threshold_days: number | string | null;
+  mean_posts_per_week: number | string | null;
+  median_posts_per_week: number | string | null;
+  p25_posts_per_week: number | string | null;
+  p75_posts_per_week: number | string | null;
+  median_posts_per_week_recent: number | string | null;
+  p25_posts_per_week_recent: number | string | null;
+  p75_posts_per_week_recent: number | string | null;
+  median_days_last_post_to_collection: number | string | null;
+};
 
 type BenchmarkCadence = {
-  segmentCategory: string
-  periodStart: string
-  periodEnd: string
-  windowDays: number
-  benchmarkAccountsTotal: number
-  accountsWithPosts: number
-  postsTotal: number
-  meanPostsPerDay: number
-  medianPostsPerDay: number
-  p25PostsPerDay: number
-  p75PostsPerDay: number
-}
+  segmentCategory: string;
+  periodStart: string;
+  periodEnd: string;
+  windowDays: number;
+  benchmarkAccountsTotal: number;
+  accountsWithPosts: number;
+  postsTotal: number;
+  meanPostsPerDay: number;
+  medianPostsPerDay: number;
+  p25PostsPerDay: number;
+  p75PostsPerDay: number;
+  // Cadência no span ativo (posts/semana) — mesma régua da conta. Só contas
+  // elegíveis (>= 5 posts e >= 28 dias entre primeiro e último post).
+  eligibleAccounts: number;
+  recentAccounts: number;
+  recencyThresholdDays: number;
+  meanPostsPerWeek: number;
+  medianPostsPerWeek: number;
+  p25PostsPerWeek: number;
+  p75PostsPerWeek: number;
+  // Coorte recente (último post até recencyThresholdDays da coleta da conta).
+  // null = coorte vazia; nunca vira 0.
+  medianPostsPerWeekRecent: number | null;
+  p25PostsPerWeekRecent: number | null;
+  p75PostsPerWeekRecent: number | null;
+  medianDaysLastPostToCollection: number | null;
+};
 
 // Referência de cadência do segmento (período fixo da view, não o período
 // selecionado no dashboard). Nunca converte dado ausente em 0: se qualquer
 // estatística vier nula, a referência inteira é descartada.
 async function fetchBenchmarkCadence(
-  category: string | null
+  category: string | null,
 ): Promise<BenchmarkCadence | null> {
-  const normalizedCategory = category?.trim().toLowerCase()
-  if (!normalizedCategory) return null
+  const normalizedCategory = category?.trim().toLowerCase();
+  if (!normalizedCategory) return null;
 
   const { data, error } = await supabase
-    .schema('orbit')
-    .from('v_benchmark_cadence_by_segment')
-    .select('segment_category, content_format, period_start, period_end, window_days, benchmark_accounts_total, accounts_with_posts, posts_total, mean_posts_per_day, median_posts_per_day, p25_posts_per_day, p75_posts_per_day')
-    .eq('segment_category', normalizedCategory)
-    .eq('content_format', 'all')
-    .order('period_end', { ascending: false })
+    .schema("orbit")
+    .from("v_benchmark_cadence_by_segment")
+    .select(
+      "segment_category, content_format, period_start, period_end, window_days, benchmark_accounts_total, accounts_with_posts, posts_total, mean_posts_per_day, median_posts_per_day, p25_posts_per_day, p75_posts_per_day, " +
+        "eligible_accounts, recent_accounts, recency_threshold_days, mean_posts_per_week, median_posts_per_week, p25_posts_per_week, p75_posts_per_week, " +
+        "median_posts_per_week_recent, p25_posts_per_week_recent, p75_posts_per_week_recent, median_days_last_post_to_collection",
+    )
+    .eq("segment_category", normalizedCategory)
+    .eq("content_format", "all")
+    .order("period_end", { ascending: false })
     .limit(1)
     .maybeSingle()
-    .overrideTypes<BenchmarkCadenceRow, { merge: false }>()
+    .overrideTypes<BenchmarkCadenceRow, { merge: false }>();
 
   if (error || !data) {
-    if (error) console.error('[fetchBenchmarkCadence]', error.message)
-    return null
+    if (error) console.error("[fetchBenchmarkCadence]", error.message);
+    return null;
   }
 
   const num = (v: unknown): number | null => {
-    if (v === null || v === undefined || v === '') return null
-    const n = typeof v === 'number' ? v : Number(v)
-    return Number.isFinite(n) ? n : null
-  }
+    if (v === null || v === undefined || v === "") return null;
+    const n = typeof v === "number" ? v : Number(v);
+    return Number.isFinite(n) ? n : null;
+  };
 
-  const windowDays = num(data.window_days)
-  const benchmarkAccountsTotal = num(data.benchmark_accounts_total)
-  const accountsWithPosts = num(data.accounts_with_posts)
-  const postsTotal = num(data.posts_total)
-  const meanPostsPerDay = num(data.mean_posts_per_day)
-  const medianPostsPerDay = num(data.median_posts_per_day)
-  const p25PostsPerDay = num(data.p25_posts_per_day)
-  const p75PostsPerDay = num(data.p75_posts_per_day)
+  const windowDays = num(data.window_days);
+  const benchmarkAccountsTotal = num(data.benchmark_accounts_total);
+  const accountsWithPosts = num(data.accounts_with_posts);
+  const postsTotal = num(data.posts_total);
+  const meanPostsPerDay = num(data.mean_posts_per_day);
+  const medianPostsPerDay = num(data.median_posts_per_day);
+  const p25PostsPerDay = num(data.p25_posts_per_day);
+  const p75PostsPerDay = num(data.p75_posts_per_day);
+  const eligibleAccounts = num(data.eligible_accounts);
+  const recentAccounts = num(data.recent_accounts);
+  const recencyThresholdDays = num(data.recency_threshold_days);
+  const meanPostsPerWeek = num(data.mean_posts_per_week);
+  const medianPostsPerWeek = num(data.median_posts_per_week);
+  const p25PostsPerWeek = num(data.p25_posts_per_week);
+  const p75PostsPerWeek = num(data.p75_posts_per_week);
 
   if (
     windowDays === null ||
@@ -535,9 +665,16 @@ async function fetchBenchmarkCadence(
     meanPostsPerDay === null ||
     medianPostsPerDay === null ||
     p25PostsPerDay === null ||
-    p75PostsPerDay === null
+    p75PostsPerDay === null ||
+    eligibleAccounts === null ||
+    recentAccounts === null ||
+    recencyThresholdDays === null ||
+    meanPostsPerWeek === null ||
+    medianPostsPerWeek === null ||
+    p25PostsPerWeek === null ||
+    p75PostsPerWeek === null
   ) {
-    return null
+    return null;
   }
 
   return {
@@ -552,41 +689,56 @@ async function fetchBenchmarkCadence(
     medianPostsPerDay,
     p25PostsPerDay,
     p75PostsPerDay,
-  }
+    eligibleAccounts,
+    recentAccounts,
+    recencyThresholdDays,
+    meanPostsPerWeek,
+    medianPostsPerWeek,
+    p25PostsPerWeek,
+    p75PostsPerWeek,
+    medianPostsPerWeekRecent: num(data.median_posts_per_week_recent),
+    p25PostsPerWeekRecent: num(data.p25_posts_per_week_recent),
+    p75PostsPerWeekRecent: num(data.p75_posts_per_week_recent),
+    medianDaysLastPostToCollection: num(
+      data.median_days_last_post_to_collection,
+    ),
+  };
 }
 // ── Funções de busca (queries ao banco) ──────────────────────────────────
 
 async function fetchKPIs(
   clientId: string,
   start: string,
-  end: string
+  end: string,
 ): Promise<KPICardData[]> {
   const { data: orbitData, error: orbitError } = await supabase
-    .schema('orbit')
-    .from('v_kpi_snapshots')
-    .select('*')
-    .eq('client_id', clientId)
-    .lte('period_start', end)
-    .gte('period_end', start)
-    .in('metric_key', KPI_METRIC_KEYS)
-    .order('calculated_at', { ascending: false })
-    .returns<RawRow[]>()
+    .schema("orbit")
+    .from("v_kpi_snapshots")
+    .select("*")
+    .eq("client_id", clientId)
+    .lte("period_start", end)
+    .gte("period_end", start)
+    .in("metric_key", KPI_METRIC_KEYS)
+    .order("calculated_at", { ascending: false })
+    .returns<RawRow[]>();
 
   if (orbitError) {
-    console.warn(`[fetchKPIs] orbit.v_kpi_snapshots indisponível (${orbitError.message}).`)
-    return []
+    console.warn(
+      `[fetchKPIs] orbit.v_kpi_snapshots indisponível (${orbitError.message}).`,
+    );
+    return [];
   }
 
-  if (!orbitData) return []
+  if (!orbitData) return [];
 
   const parsedRows = orbitData
-    .map(row => {
-      const parsed = KpiRowSchema.safeParse(row)
-      return parsed.success ? parsed.data : null
+    .map((row) => {
+      const parsed = KpiRowSchema.safeParse(row);
+      return parsed.success ? parsed.data : null;
     })
-    .filter((item): item is KpiRow => item !== null)
+    .filter((item): item is KpiRow => item !== null);
 
-  return sortByCanonicalOrder(dedupeByMetric(parsedRows)).map(kpiRowToCardData)
+  return sortByCanonicalOrder(dedupeByMetric(parsedRows)).map(kpiRowToCardData);
 }
 
 // NOTA (19/09/2026): ER Real e VPS têm só régua global de gestão interna
@@ -603,97 +755,108 @@ async function fetchQualityScores(
   // vermelho = vermelho. A cor vem do semáforo real (status_text da view), NÃO
   // de status_variant — ele funde vermelho em "warn" e âmbar em "neutral", o que
   // pintava "vermelho" de dourado e "âmbar" sem cor.
-  const SEMAPHORE_UI: Record<string, { glow: GlowColor; variant: 'ok' | 'warn'; label: string }> = {
-    verde:    { glow: 'cyan', variant: 'ok',   label: 'Verde' },
-    ambar:    { glow: 'gold', variant: 'warn', label: 'Âmbar' },
-    vermelho: { glow: 'red',  variant: 'warn', label: 'Vermelho' },
-  }
+  const SEMAPHORE_UI: Record<
+    string,
+    { glow: GlowColor; variant: "ok" | "warn"; label: string }
+  > = {
+    verde: { glow: "cyan", variant: "ok", label: "Verde" },
+    ambar: { glow: "gold", variant: "warn", label: "Âmbar" },
+    vermelho: { glow: "red", variant: "warn", label: "Vermelho" },
+  };
 
   const { data: orbitRows, error: orbitError } = await supabase
-    .schema('orbit')
-    .from('v_quality_scores')
-    .select('id, score_key, score_value, status_text, status_variant, period_start, period_end, semaphore_key, ref_category, ref_source, ref_direction, ref_green_min, ref_green_max, ref_red_min, ref_red_max, ref_p50')
-    .eq('client_id', clientId)
-    .lte('period_start', end)
-    .gte('period_end', start)
-    .returns<RawRow[]>()
+    .schema("orbit")
+    .from("v_quality_scores")
+    .select(
+      "id, score_key, score_value, status_text, status_variant, period_start, period_end, semaphore_key, ref_category, ref_source, ref_direction, ref_green_min, ref_green_max, ref_red_min, ref_red_max, ref_p50",
+    )
+    .eq("client_id", clientId)
+    .lte("period_start", end)
+    .gte("period_end", start)
+    .returns<RawRow[]>();
 
   if (orbitError) {
-    console.error('[fetchQualityScores]', orbitError.message)
-    return []
+    console.error("[fetchQualityScores]", orbitError.message);
+    return [];
   }
 
   const num = (v: unknown): number | null =>
-    v == null ? null : Number.isFinite(Number(v)) ? Number(v) : null
+    v == null ? null : Number.isFinite(Number(v)) ? Number(v) : null;
 
-  return (orbitRows ?? []).map(row => {
-    const scoreKey = String(row.score_key)
-    const rawStatus = String(row.status_text ?? '')
-    const semaphore = (row.semaphore_key ?? null) as SemaphoreKey | null
-    const sem = semaphore ? SEMAPHORE_UI[semaphore] : undefined
-    const value = row.score_value != null ? toFiniteNumber(row.score_value) : null
+  return (orbitRows ?? []).map((row) => {
+    const scoreKey = String(row.score_key);
+    const rawStatus = String(row.status_text ?? "");
+    const semaphore = (row.semaphore_key ?? null) as SemaphoreKey | null;
+    const sem = semaphore ? SEMAPHORE_UI[semaphore] : undefined;
+    const value =
+      row.score_value != null ? toFiniteNumber(row.score_value) : null;
 
     const copy = buildScoreCopy({
-      value: typeof value === 'number' ? value : null,
+      value: typeof value === "number" ? value : null,
       semaphore,
-      category:  row.ref_category != null ? String(row.ref_category) : null,
-      source:    row.ref_source != null ? String(row.ref_source) : null,
+      category: row.ref_category != null ? String(row.ref_category) : null,
+      source: row.ref_source != null ? String(row.ref_source) : null,
       direction: row.ref_direction != null ? String(row.ref_direction) : null,
       greenMin: num(row.ref_green_min),
       greenMax: num(row.ref_green_max),
-      redMin:   num(row.ref_red_min),
-      redMax:   num(row.ref_red_max),
-      p50:      num(row.ref_p50),
-    })
+      redMin: num(row.ref_red_min),
+      redMax: num(row.ref_red_max),
+      p50: num(row.ref_p50),
+    });
 
     return {
-      id:    String(row.id),
+      id: String(row.id),
       label: scoreKey,
-      value: value ?? 'N/A',
-      unit: '%',
-      statusText: copy.text || rawStatus || 'Sem dados',
-      statusVariant: sem ? sem.variant : 'neutral',
-      glowColor: (sem ? sem.glow : 'none') as GlowColor,
+      value: value ?? "N/A",
+      unit: "%",
+      statusText: copy.text || rawStatus || "Sem dados",
+      statusVariant: sem ? sem.variant : "neutral",
+      glowColor: (sem ? sem.glow : "none") as GlowColor,
       actionText: copy.action,
       referenceNote: copy.note,
-    }
-  })
+    };
+  });
 }
 
 export async function fetchPostsByFormat(
   clientId: string,
   start: string,
-  end: string
+  end: string,
 ): Promise<Map<string, PostSummary[]>> {
-  const byFormat = new Map<string, PostSummary[]>()
+  const byFormat = new Map<string, PostSummary[]>();
 
   const { data, error } = await supabase
-    .schema('orbit')
-    .from('ig_posts')
-    .select('id, content_format, published_at, likes, comments, caption, polemic_score_pct, is_boost_candidate')
-    .eq('client_id', clientId)
-    .gte('published_at', start)
-    .lte('published_at', end)
-    .in('confidence_level', CONFIDENCE_LEVELS)
-    .order('published_at', { ascending: false })
-    .returns<RawRow[]>()
+    .schema("orbit")
+    .from("ig_posts")
+    .select(
+      "id, content_format, published_at, likes, comments, caption, polemic_score_pct, is_boost_candidate",
+    )
+    .eq("client_id", clientId)
+    .gte("published_at", start)
+    .lte("published_at", end)
+    .in("confidence_level", CONFIDENCE_LEVELS)
+    .order("published_at", { ascending: false })
+    .returns<RawRow[]>();
 
   if (error) {
-    console.error('[fetchPostsByFormat]', error.message)
-    return byFormat
+    console.error("[fetchPostsByFormat]", error.message);
+    return byFormat;
   }
 
-  if (!data) return byFormat
+  if (!data) return byFormat;
 
   for (const row of data) {
-    const parsed = PostRowRawSchema.safeParse(row)
+    const parsed = PostRowRawSchema.safeParse(row);
     if (!parsed.success) {
-      console.warn('[fetchPostsByFormat] Linha inválida descartada:', parsed.error.message)
-      continue
+      console.warn(
+        "[fetchPostsByFormat] Linha inválida descartada:",
+        parsed.error.message,
+      );
+      continue;
     }
 
-    const post = parsed.data
-    const label = FORMAT_LABEL[post.content_format] ?? post.content_format
+    const post = parsed.data;
+    const label = FORMAT_LABEL[post.content_format] ?? post.content_format;
 
     const summary: PostSummary = {
       id: post.id,
@@ -707,44 +870,131 @@ export async function fetchPostsByFormat(
       // ainda não ingerida). Zod declara optional().nullable() — nunca
       // substituir por 0: ausência é distinta de ratio zero.
       playToViewRatio: post.play_to_view_ratio ?? null,
-    }
+    };
 
-    const list = byFormat.get(label) ?? []
-    list.push(summary)
-    byFormat.set(label, list)
+    const list = byFormat.get(label) ?? [];
+    list.push(summary);
+    byFormat.set(label, list);
   }
 
-  return byFormat
+  return byFormat;
+}
+
+// ✅ RWP-5 (08/10/2026): "Interações" por formato, calculada dos posts —
+// likes + comments + shares + saves (a definição de interações do Instagram).
+// Regras (label = campo, nunca 0 por falta de dado):
+//   - um post só entra na soma se os QUATRO campos existem; qualquer null =
+//     post sem dado, fora da soma e fora de `knownPosts`;
+//   - formato sem nenhum post completo => interactions = null (a tela mostra "—");
+//   - cobertura parcial (knownPosts < totalPosts) fica explícita no contrato.
+// Mesmo recorte de fetchPostsByFormat: cliente, período selecionado, L0/L1.
+interface FormatInteractions {
+  interactions: number | null;
+  knownPosts: number;
+  totalPosts: number;
+}
+
+type InteractionPostRow = {
+  content_format: string;
+  likes: number | null;
+  comments: number | null;
+  shares: number | null;
+  saves: number | null;
+};
+
+async function fetchInteractionsByFormat(
+  clientId: string,
+  start: string,
+  end: string,
+): Promise<Map<string, FormatInteractions>> {
+  const byFormat = new Map<string, FormatInteractions>();
+
+  const { data, error } = await supabase
+    .schema("orbit")
+    .from("ig_posts")
+    .select("content_format, likes, comments, shares, saves")
+    .eq("client_id", clientId)
+    .gte("published_at", start)
+    .lte("published_at", end)
+    .in("confidence_level", CONFIDENCE_LEVELS)
+    .returns<InteractionPostRow[]>();
+
+  if (error) {
+    console.error("[fetchInteractionsByFormat]", error.message);
+    return byFormat;
+  }
+
+  const isNum = (v: unknown): v is number =>
+    typeof v === "number" && Number.isFinite(v);
+
+  for (const row of data ?? []) {
+    const label = FORMAT_LABEL[row.content_format] ?? row.content_format;
+    const acc = byFormat.get(label) ?? {
+      interactions: null,
+      knownPosts: 0,
+      totalPosts: 0,
+    };
+    acc.totalPosts += 1;
+    if (
+      isNum(row.likes) &&
+      isNum(row.comments) &&
+      isNum(row.shares) &&
+      isNum(row.saves)
+    ) {
+      acc.knownPosts += 1;
+      acc.interactions =
+        (acc.interactions ?? 0) +
+        row.likes +
+        row.comments +
+        row.shares +
+        row.saves;
+    }
+    byFormat.set(label, acc);
+  }
+
+  return byFormat;
 }
 
 async function fetchFormatPerformance(
   clientId: string,
   start: string,
-  end: string
+  end: string,
 ): Promise<FormatPerformanceRow[]> {
   const { data: orbitRows, error: orbitError } = await supabase
-    .schema('orbit')
-    .from('v_format_performance')
-  .select('id, format_name, post_count, share_count, trend_label, trend_color, period_start, period_end')
-    .eq('client_id', clientId)
-  .lte('period_start', end)
-  .gte('period_end', start)
-    .returns<RawRow[]>()
+    .schema("orbit")
+    .from("v_format_performance")
+    .select(
+      "id, format_name, post_count, share_count, trend_label, trend_color, period_start, period_end",
+    )
+    .eq("client_id", clientId)
+    .lte("period_start", end)
+    .gte("period_end", start)
+    .returns<RawRow[]>();
 
   if (orbitError) {
-    console.error('[fetchFormatPerformance]', orbitError.message)
-    return []
+    console.error("[fetchFormatPerformance]", orbitError.message);
+    return [];
   }
 
-  const postsByFormat = await fetchPostsByFormat(clientId, start, end)
+  const [postsByFormat, interactionsByFormat] = await Promise.all([
+    fetchPostsByFormat(clientId, start, end),
+    fetchInteractionsByFormat(clientId, start, end),
+  ]);
 
-  return (orbitRows ?? []).map(row => {
-    const label = String(row.format_name ?? 'Outros')
+  return (orbitRows ?? []).map((row) => {
+    const label = String(row.format_name ?? "Outros");
+    const inter = interactionsByFormat.get(label);
     return {
-      id:          String(row.id),
-      format:      label,
-      posts:       toFiniteNumber(row.post_count),
-      shares:      toFiniteNumber(row.share_count),
+      id: String(row.id),
+      format: label,
+      posts: toFiniteNumber(row.post_count),
+      shares: toFiniteNumber(row.share_count),
+      // RWP-5: o que a tabela mostra. null = sem dado (a tela exibe "—").
+      // `shares` acima segue vindo da view (COALESCE(sum,0): null vira 0) e
+      // por isso NÃO deve ser exibido como contagem — fica só por compatibilidade.
+      interactions: inter?.interactions ?? null,
+      interactionsKnownPosts: inter?.knownPosts ?? 0,
+      interactionsTotalPosts: inter?.totalPosts ?? 0,
       // ✅ FIX (ORB-DEBT-047, 15/09/2026): a view v_format_performance agora
       // calcula tendência real (comparação de duas metades cronológicas do
       // histórico de posts por formato, ver fix_trend_v_format_performance.sql).
@@ -753,11 +1003,11 @@ async function fetchFormatPerformance(
       // pra um dos 4 estados reais. Trocado de 'Estável'/'gold' (mentira por
       // omissão: parecia dado calculado) para um texto que declara a
       // ausência, igual ao resto do app faz em casos de dado faltante.
-      trendLabel:  String(row.trend_label ?? 'Sem tendência calculada'),
-      trendColor:  (row.trend_color as GlowColor) ?? 'none',
+      trendLabel: String(row.trend_label ?? "Sem tendência calculada"),
+      trendColor: (row.trend_color as GlowColor) ?? "none",
       postsDetail: postsByFormat.get(label) ?? [],
-    }
-  })
+    };
+  });
 }
 
 async function fetchSharesSummary(
@@ -766,71 +1016,87 @@ async function fetchSharesSummary(
   end: string,
 ): Promise<SharesSummary> {
   const { data, error } = await supabase
-    .schema('orbit')
-    .from('ig_account_snapshots')
-    .select('interactions_shares, period_start, period_end')
-    .eq('client_id', clientId)
-    .lte('period_start', end)
-    .gte('period_end', start)
-    .not('interactions_shares', 'is', null)
-    .order('period_end', { ascending: false })
+    .schema("orbit")
+    .from("ig_account_snapshots")
+    .select("interactions_shares, period_start, period_end")
+    .eq("client_id", clientId)
+    .lte("period_start", end)
+    .gte("period_end", start)
+    .not("interactions_shares", "is", null)
+    .order("period_end", { ascending: false })
     .limit(1)
-    .returns<{ interactions_shares: number; period_start: string; period_end: string }[]>()
+    .returns<
+      {
+        interactions_shares: number;
+        period_start: string;
+        period_end: string;
+      }[]
+    >();
 
   if (error || !data || data.length === 0) {
-    return { total: null, periodLabel: 'sem dado no período', source: 'account_aggregate' }
+    return {
+      total: null,
+      periodLabel: "sem dado no período",
+      source: "account_aggregate",
+    };
   }
 
-  const row = data[0]
+  const row = data[0];
   if (!row) {
-    return { total: null, periodLabel: 'sem dado no período', source: 'account_aggregate' }
+    return {
+      total: null,
+      periodLabel: "sem dado no período",
+      source: "account_aggregate",
+    };
   }
   return {
     total: row.interactions_shares,
     periodLabel: `${row.period_start} – ${row.period_end}`,
-    source: 'account_aggregate',
-  }
+    source: "account_aggregate",
+  };
 }
 
 interface AudienceRowRaw {
-  gender_female_pct: number | null
-  gender_male_pct: number | null
-  gender_other_pct: number | null
-  top_cities: { name: string; pct: number }[] | null
-  period_start: string
-  period_end: string
+  gender_female_pct: number | null;
+  gender_male_pct: number | null;
+  gender_other_pct: number | null;
+  top_cities: { name: string; pct: number }[] | null;
+  period_start: string;
+  period_end: string;
 }
 
 interface AccountReachRowRaw {
-  reach_followers_pct: number | null
-  profile_visits: number | null
-  link_clicks: number | null
+  reach_followers_pct: number | null;
+  profile_visits: number | null;
+  link_clicks: number | null;
 }
 
 async function fetchAudienceSummary(
   clientId: string,
   start: string,
-  end: string
+  end: string,
 ): Promise<AudienceSummary> {
   const [audienceRes, accountRes] = await Promise.all([
     supabase
-      .schema('orbit')
-      .from('ig_audience_snapshots')
-      .select('gender_female_pct, gender_male_pct, gender_other_pct, top_cities, period_start, period_end')
-      .eq('client_id', clientId)
-      .lte('period_start', end)
-      .gte('period_end', start)
-      .order('period_end', { ascending: false })
+      .schema("orbit")
+      .from("ig_audience_snapshots")
+      .select(
+        "gender_female_pct, gender_male_pct, gender_other_pct, top_cities, period_start, period_end",
+      )
+      .eq("client_id", clientId)
+      .lte("period_start", end)
+      .gte("period_end", start)
+      .order("period_end", { ascending: false })
       .limit(1)
       .maybeSingle()
       .overrideTypes<AudienceRowRaw, { merge: false }>(),
     supabase
-      .schema('orbit')
-      .from('ig_account_snapshots')
-      .select('reach_followers_pct, profile_visits, link_clicks')
-      .eq('client_id', clientId)
-      .lte('period_start', end)
-      .gte('period_end', start)
+      .schema("orbit")
+      .from("ig_account_snapshots")
+      .select("reach_followers_pct, profile_visits, link_clicks")
+      .eq("client_id", clientId)
+      .lte("period_start", end)
+      .gte("period_end", start)
       // ✅ 09/09 — REGRESSÃO CORRIGIDA: o .not('reach_followers_pct', 'is', null)
       // que existia aqui descartava a linha inteira (inclusive profile_visits e
       // link_clicks, que vêm preenchidos de forma independente na ingestão —
@@ -839,14 +1105,14 @@ async function fetchAudienceSummary(
       // REACH_FROM_FOLLOWERS_PCT). Efeito visível: "Cliques no link" some do
       // AudienceSummaryPanel mesmo com dado real no snapshot mais recente.
       // Basta pegar o snapshot mais recente do período, sem exigir esse campo.
-      .order('period_end', { ascending: false })
+      .order("period_end", { ascending: false })
       .limit(1)
       .maybeSingle()
       .overrideTypes<AccountReachRowRaw, { merge: false }>(),
-  ])
+  ]);
 
-  const audience = audienceRes.data
-  const account  = accountRes.data
+  const audience = audienceRes.data;
+  const account = accountRes.data;
 
   return {
     genderFemalePct: toFiniteNumber(audience?.gender_female_pct),
@@ -861,34 +1127,51 @@ async function fetchAudienceSummary(
     linkClicks: toFiniteNumber(account?.link_clicks),
     periodLabel: audience
       ? `${audience.period_start} – ${audience.period_end}`
-      : 'sem dado no período',
-  }
+      : "sem dado no período",
+  };
 }
 
 function generateInsights(formats: FormatPerformanceRow[]): InsightData[] {
+  // RWP-5: o insight cita INTERAÇÕES (likes + comentários + compartilhamentos +
+  // salvamentos) e só existe quando há post com dado completo. Antes citava a
+  // contagem de shares como se fosse "interações" e transformava null em 0.
   return formats
-    .filter(f => f.posts > 0 && f.shares > 0)
-    .map(f => ({
-      id:   `insight-${f.id}`,
-      text: `O formato ${f.format} gerou ${f.shares} interações em ${f.posts} publicação(ões).`,
-    }))
+    .filter(
+      (f) =>
+        f.interactions !== null &&
+        f.interactions > 0 &&
+        f.interactionsKnownPosts > 0,
+    )
+    .map((f) => {
+      const known = f.interactionsKnownPosts;
+      const total = f.interactionsTotalPosts;
+      const postsText = known === 1 ? "1 publicação" : `${known} publicações`;
+      const partial =
+        total > known
+          ? ` (só ${known} de ${total} posts têm todos os números)`
+          : "";
+      return {
+        id: `insight-${f.id}`,
+        text: `O formato ${f.format} somou ${f.interactions} interações em ${postsText}${partial}.`,
+      };
+    });
 }
 
 // ── client_onboarding (SSOT único de setor/nicho/porte/audiência) ────────
 
 export async function fetchClientOnboarding(
-  clientId: string
+  clientId: string,
 ): Promise<ClientOnboarding | null> {
   const { data, error } = await supabase
-    .schema('orbit')
-    .from('client_onboarding')
-    .select('*')
-    .eq('client_id', clientId)
+    .schema("orbit")
+    .from("client_onboarding")
+    .select("*")
+    .eq("client_id", clientId)
     .maybeSingle()
-    .overrideTypes<ClientOnboarding, { merge: false }>()
+    .overrideTypes<ClientOnboarding, { merge: false }>();
 
-  if (error || !data) return null
-  return data
+  if (error || !data) return null;
+  return data;
 }
 
 /* ==========================================================================
@@ -921,25 +1204,29 @@ export async function fetchClientOnboarding(
  * histórico da própria conta (computeAlgoRiskScore em
  * contentContractEngine.ts).
  */
-async function fetchAlgoRiskScore(clientId: string): Promise<AlgoRiskScore | null> {
+async function fetchAlgoRiskScore(
+  clientId: string,
+): Promise<AlgoRiskScore | null> {
   const { data, error } = await supabase
-    .schema('orbit')
-    .from('ig_posts')
-    .select('published_at, likes, comments')
-    .eq('client_id', clientId)
-    .order('published_at', { ascending: false })
+    .schema("orbit")
+    .from("ig_posts")
+    .select("published_at, likes, comments")
+    .eq("client_id", clientId)
+    .order("published_at", { ascending: false })
     .limit(80)
-    .returns<{ published_at: string; likes: number | null; comments: number | null }[]>()
+    .returns<
+      { published_at: string; likes: number | null; comments: number | null }[]
+    >();
 
-  if (error || !data || data.length === 0) return null
+  if (error || !data || data.length === 0) return null;
 
   return computeAlgoRiskScore(
     data.map((row) => ({
       publishedAt: row.published_at,
       likes: row.likes,
       comments: row.comments,
-    }))
-  )
+    })),
+  );
 }
 
 export async function fetchSectorPositioning(
@@ -951,30 +1238,40 @@ export async function fetchSectorPositioning(
     fetchClientOnboarding(clientId),
     fetchLatestEngagementScoreSnapshot(clientId, start, end),
     fetchAlgoRiskScore(clientId),
-  ])
+  ]);
 
-  if (!onboarding) return null
+  if (!onboarding) return null;
 
-  const category = mapSegmentToCategory(onboarding.setor_benchmark)
-  const tier     = mapFollowersToTier(onboarding.total_followers)
+  const category = mapSegmentToCategory(onboarding.setor_benchmark);
+  const tier = mapFollowersToTier(onboarding.total_followers);
 
-  const safeCategory = category ?? 'all'
-  const safeTier = tier ?? 'all'
+  const safeCategory = category ?? "all";
+  const safeTier = tier ?? "all";
 
   const [erReal, vps, polemicScore] = snapshot
     ? await Promise.all([
-        classifyMetric('er_real_pct', snapshot.erRealPct, safeCategory, safeTier),
+        classifyMetric(
+          "er_real_pct",
+          snapshot.erRealPct,
+          safeCategory,
+          safeTier,
+        ),
         // ✅ FIX (15/09/2026): snapshot.vpsPct agora é `number | null`
         // (ver EngagementScoreSnapshot) — classifyMetric() exige number.
         // Sem reach_followers_pct (ORB-DEBT-034) não existe classificação
         // pra fazer, então pula a RPC em vez de mandar `null`/`0` fingindo
         // ser dado real.
         snapshot.vpsPct != null
-          ? classifyMetric('vps_pct', snapshot.vpsPct, safeCategory, safeTier)
+          ? classifyMetric("vps_pct", snapshot.vpsPct, safeCategory, safeTier)
           : Promise.resolve(null),
-        classifyMetric('polemic_score_pct', snapshot.polemicScorePct, safeCategory, safeTier),
+        classifyMetric(
+          "polemic_score_pct",
+          snapshot.polemicScorePct,
+          safeCategory,
+          safeTier,
+        ),
       ])
-    : [null, null, null]
+    : [null, null, null];
 
   return {
     setorBenchmark: onboarding.setor_benchmark,
@@ -998,7 +1295,7 @@ export async function fetchSectorPositioning(
       curiosidadeExternaPct: onboarding.audience_curiosidade_externa_pct,
       altaRotatividadePct: onboarding.audience_alta_rotatividade_pct,
     },
-  }
+  };
 }
 
 // ── CASO G (engagement score) ─────────────────────────────────────────────
@@ -1008,56 +1305,61 @@ async function fetchCriticalAlerts(
   start: string,
   end: string,
 ): Promise<CriticalAlertData[]> {
-  const alerts: CriticalAlertData[] = []
+  const alerts: CriticalAlertData[] = [];
 
   // CASO G — score de engajamento (depende de snapshot)
   try {
     const [snapshot, onboarding] = await Promise.all([
       fetchLatestEngagementScoreSnapshot(clientId, start, end),
       fetchClientOnboarding(clientId),
-    ])
+    ]);
     if (snapshot) {
-      const category = mapSegmentToCategory(onboarding?.setor_benchmark ?? null)
-      const tier     = mapFollowersToTier(onboarding?.total_followers ?? null)
-      const draft = await resolveEngagementScoreAlert(snapshot, category, tier)
-      if (draft.severity !== 'info' && draft.severity !== 'success') {
-        alerts.push(toCriticalAlert(draft))
+      const category = mapSegmentToCategory(
+        onboarding?.setor_benchmark ?? null,
+      );
+      const tier = mapFollowersToTier(onboarding?.total_followers ?? null);
+      const draft = await resolveEngagementScoreAlert(snapshot, category, tier);
+      if (draft.severity !== "info" && draft.severity !== "success") {
+        alerts.push(toCriticalAlert(draft));
       }
     }
   } catch (err) {
-    console.error('[fetchCriticalAlerts] falha ao resolver CASO G:', err)
+    console.error("[fetchCriticalAlerts] falha ao resolver CASO G:", err);
   }
 
   // Risco algorítmico — self-reference, independe de snapshot.
   // Limiares 0,30 (aviso) / 0,50 (crítico) aprovados pelo Lobo em 19/09/2026.
   try {
-    const algo = await fetchAlgoRiskScore(clientId)
+    const algo = await fetchAlgoRiskScore(clientId);
     if (algo) {
       const draft = resolveAlgoRiskScoreAlert({
         snapshotId: `algo_risk:${clientId}:${end}`,
         algoRiskScore: algo.value,
         nRecent: algo.recentWindowSize,
-      })
-      if (draft) alerts.push(toCriticalAlert(draft))
+      });
+      if (draft) alerts.push(toCriticalAlert(draft));
     }
   } catch (err) {
-    console.error('[fetchCriticalAlerts] falha ao resolver algo_risk_score:', err)
+    console.error(
+      "[fetchCriticalAlerts] falha ao resolver algo_risk_score:",
+      err,
+    );
   }
 
-  return alerts
+  return alerts;
 }
 
 async function fetchTotalFollowers(clientId: string): Promise<number | null> {
   const { data, error } = await supabase
-    .schema('orbit')
-    .from('client_onboarding')
-    .select('total_followers')
-    .eq('client_id', clientId)
+    .schema("orbit")
+    .from("client_onboarding")
+    .select("total_followers")
+    .eq("client_id", clientId)
     .maybeSingle()
-    .overrideTypes<{ total_followers: number | null }, { merge: false }>()
+    .overrideTypes<{ total_followers: number | null }, { merge: false }>();
 
-  if (error || !data) return null
-  return data.total_followers ?? null
+  if (error || !data) return null;
+  return data.total_followers ?? null;
 }
 
 export async function fetchLatestEngagementScoreSnapshot(
@@ -1067,28 +1369,37 @@ export async function fetchLatestEngagementScoreSnapshot(
 ): Promise<EngagementScoreSnapshot | null> {
   const [{ data, error }, totalFollowers] = await Promise.all([
     supabase
-      .schema('orbit')
-      .from('ig_account_snapshots')
-      .select('id, er_real_pct, utility_score_pct, polemic_score_pct, reach_total, reach_followers_pct, period_end')
-      .eq('client_id', clientId)
-      .lte('period_start', end)
-      .gte('period_end', start)
-      .order('period_end', { ascending: false })
+      .schema("orbit")
+      .from("ig_account_snapshots")
+      .select(
+        "id, er_real_pct, utility_score_pct, polemic_score_pct, reach_total, reach_followers_pct, period_end",
+      )
+      .eq("client_id", clientId)
+      .lte("period_start", end)
+      .gte("period_end", start)
+      .order("period_end", { ascending: false })
       .limit(1)
       .maybeSingle()
       .overrideTypes<EngagementScoreSnapshotRow, { merge: false }>(),
     fetchTotalFollowers(clientId),
-  ])
+  ]);
 
   if (error) {
     throw new Error(
-      `[instagramOverviewRepository] falha ao buscar snapshot de engagement score para ${clientId}: ${error.message}`
-    )
+      `[instagramOverviewRepository] falha ao buscar snapshot de engagement score para ${clientId}: ${error.message}`,
+    );
   }
 
-  if (!data) return null
+  if (!data) return null;
 
-  const { id, er_real_pct, utility_score_pct, polemic_score_pct, reach_total, reach_followers_pct } = data
+  const {
+    id,
+    er_real_pct,
+    utility_score_pct,
+    polemic_score_pct,
+    reach_total,
+    reach_followers_pct,
+  } = data;
 
   // ✅ FIX (v8.2 §1.4 — VPS C-02, gap #7 do doc): a fórmula anterior era
   // reach_total / totalFollowers * 100 — isso é "alcance / seguidores",
@@ -1107,12 +1418,18 @@ export async function fetchLatestEngagementScoreSnapshot(
     totalFollowers != null &&
     totalFollowers > 0
       ? Math.round(
-          ((reach_total * (reach_followers_pct / 100)) / totalFollowers) * 100 * 10000
+          ((reach_total * (reach_followers_pct / 100)) / totalFollowers) *
+            100 *
+            10000,
         ) / 10000
-      : null
+      : null;
 
-  if (er_real_pct == null || utility_score_pct == null || polemic_score_pct == null) {
-    return null
+  if (
+    er_real_pct == null ||
+    utility_score_pct == null ||
+    polemic_score_pct == null
+  ) {
+    return null;
   }
 
   return {
@@ -1121,5 +1438,5 @@ export async function fetchLatestEngagementScoreSnapshot(
     utilityScorePct: utility_score_pct,
     polemicScorePct: polemic_score_pct,
     vpsPct,
-  }
+  };
 }
