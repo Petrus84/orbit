@@ -23,31 +23,31 @@
 // - 🐛 CORRIGIDO: fromOrbitRow() mapeia 100% dos campos de Alert.
 // ============================================================================
 
-import { supabase } from '@/lib/supabase'
+import { supabase } from "@/lib/supabase";
 import type {
   Alert,
   AlertSeverity,
   AlertType,
   AlertNatureza,
   ConfidenceLevel,
-} from '@/types/orbit'
-import type { AlertDraft } from './contentContractEngine'
+} from "@/types/orbit";
+import type { AlertDraft } from "./contentContractEngine";
 
 // ── Guard de AlertType (validação em tempo de execução) ──────────────────
 const ALERT_TYPES: readonly AlertType[] = [
-  'ctr_below_threshold',
-  'engagement_collapse',
-  'avatar_misalignment',
-  'creative_fatigue',
-  'roas_below_minimum',
-  'follower_churn_high',
-  'polemic_score_high',
-  'boost_opportunity',
-  'budget_pace',
-]
+  "ctr_below_threshold",
+  "engagement_collapse",
+  "avatar_misalignment",
+  "creative_fatigue",
+  "roas_below_minimum",
+  "follower_churn_high",
+  "polemic_score_high",
+  "boost_opportunity",
+  "budget_pace",
+];
 
 export function isAlertType(value: string): value is AlertType {
-  return (ALERT_TYPES as readonly string[]).includes(value)
+  return (ALERT_TYPES as readonly string[]).includes(value);
 }
 
 // ✅ FIX (P0-A — regressão do guard de href): sanitizeActionUrl() já existia
@@ -57,16 +57,20 @@ export function isAlertType(value: string): value is AlertType {
 // embaixo, que montava `action.url` direto de `row.action_url` sem guard.
 // Duplicado aqui como o comentário do mapper já previa ("mesmo guard
 // aplicado em alertsRepository.ts P0.1") — mas nunca tinha sido escrito.
-const PLACEHOLDER_HOSTS: readonly string[] = ['example.com', 'example.org', 'localhost']
+const PLACEHOLDER_HOSTS: readonly string[] = [
+  "example.com",
+  "example.org",
+  "localhost",
+];
 
 function sanitizeActionUrl(url: string | null): string | null {
-  if (!url) return null
-  if (url.startsWith('/')) return url // rota interna: sempre segura
+  if (!url) return null;
+  if (url.startsWith("/")) return url; // rota interna: sempre segura
   try {
-    const host = new URL(url).hostname
-    return PLACEHOLDER_HOSTS.includes(host) ? null : url
+    const host = new URL(url).hostname;
+    return PLACEHOLDER_HOSTS.includes(host) ? null : url;
   } catch {
-    return null // URL malformada: sem link
+    return null; // URL malformada: sem link
   }
 }
 
@@ -78,49 +82,49 @@ const ALERT_SELECT_FIELDS = `
   natureza, probable_cause, confidence_level, data_source,
   snapshot_id, suggested_action, resolved_at, snoozed_until, resolved_by,
   clients ( name, handle )
-`
+`;
 
 // ── Raw shape do banco (orbit.alerts + JOIN orbit.clients) ───────────────
 interface OrbitAlertRow {
-  id: string
-  client_id: string
-  alert_type: AlertType
-  severity: AlertSeverity
-  title: string
-  description: string | null
-  metric_name: string | null
-  metric_value: number | null
-  threshold_value: number | null
-  action_url: string | null
-  is_resolved: boolean
-  created_at: string
-  natureza: AlertNatureza | null
-  probable_cause: string | null
-  confidence_level: ConfidenceLevel | null
+  id: string;
+  client_id: string;
+  alert_type: AlertType;
+  severity: AlertSeverity;
+  title: string;
+  description: string | null;
+  metric_name: string | null;
+  metric_value: number | null;
+  threshold_value: number | null;
+  action_url: string | null;
+  is_resolved: boolean;
+  created_at: string;
+  natureza: AlertNatureza | null;
+  probable_cause: string | null;
+  confidence_level: ConfidenceLevel | null;
   data_source:
-    | 'real_snapshot'
-    | 'fallback_by_client'
-    | 'fallback_by_error'
-    | 'fallback_by_empty'
-    | 'estimate'
-    | null
-  snapshot_id: string | null
-  suggested_action: string | null
-  resolved_at: string | null
-  snoozed_until: string | null
-  resolved_by: string | null
+    | "real_snapshot"
+    | "fallback_by_client"
+    | "fallback_by_error"
+    | "fallback_by_empty"
+    | "estimate"
+    | null;
+  snapshot_id: string | null;
+  suggested_action: string | null;
+  resolved_at: string | null;
+  snoozed_until: string | null;
+  resolved_by: string | null;
   clients: {
-    name: string
-    handle: string
-  } | null
+    name: string;
+    handle: string;
+  } | null;
 }
 
 function fromOrbitRow(row: OrbitAlertRow): Alert {
   return {
     id: row.id,
     clientId: row.client_id,
-    clientName: row.clients?.name ?? '',
-    clientHandle: row.clients?.handle ?? '',
+    clientName: row.clients?.name ?? "",
+    clientHandle: row.clients?.handle ?? "",
     type: row.alert_type,
     severity: row.severity,
     title: row.title,
@@ -131,7 +135,11 @@ function fromOrbitRow(row: OrbitAlertRow): Alert {
     isResolved: row.is_resolved,
     createdAt: row.created_at,
     action: sanitizeActionUrl(row.action_url)
-      ? { type: 'link', label: 'Ver detalhes', url: sanitizeActionUrl(row.action_url) as string }
+      ? {
+          type: "link",
+          label: "Ver detalhes",
+          url: sanitizeActionUrl(row.action_url) as string,
+        }
       : null,
     natureza: row.natureza ?? undefined,
     probableCause: row.probable_cause ?? undefined,
@@ -142,7 +150,7 @@ function fromOrbitRow(row: OrbitAlertRow): Alert {
     resolvedAt: row.resolved_at ?? undefined,
     snoozedUntil: row.snoozed_until ?? undefined,
     resolvedBy: row.resolved_by ?? undefined,
-  }
+  };
 }
 
 // ── Base query — orbit.alerts ─────────────────────────────────────────────
@@ -150,18 +158,24 @@ function fromOrbitRow(row: OrbitAlertRow): Alert {
 // existia, mas um alerta adiado (is_snoozed=true, snoozed_until no futuro)
 // continuava aparecendo na lista igual a um alerta ativo. Guard: nunca
 // mostrar alerta com is_snoozed=true E snoozed_until ainda no futuro.
-// `.not('is_snoozed', 'is', true)` cobre null e false (nunca esconde por
-// engano um alerta que nunca foi adiado); o OR cobre "nunca foi adiado"
-// (snoozed_until null) e "foi adiado mas o prazo já passou".
+//
+// ✅ FIX (alinhamento código/repo): a versão anterior encadeava
+// `.not('is_snoozed','is',true)` (AND) com o `.or(snoozed_until...)`. O AND
+// escondia PARA SEMPRE todo alerta com is_snoozed=true, mesmo com o prazo
+// vencido — nada no banco zera is_snoozed quando snoozed_until passa
+// (check_churn_alert só o zera ao reabrir de resolvido). Regra correta, num
+// único OR: visível se NÃO está adiado, OU se o prazo do adiamento já venceu.
+// is_snoozed é NOT NULL DEFAULT false (confirmado no banco), logo `eq.false`
+// cobre "nunca adiado". Adiado sem prazo (snoozed_until NULL) = indefinido =
+// permanece oculto (comparação com NULL nunca é verdadeira).
 function orbitBaseQuery() {
   return supabase
-    .schema('orbit')
-    .from('alerts')
+    .schema("orbit")
+    .from("alerts")
     .select(ALERT_SELECT_FIELDS)
-    .eq('is_resolved', false)
-    .not('is_snoozed', 'is', true)
-    .or(`snoozed_until.is.null,snoozed_until.lt.${new Date().toISOString()}`)
-    .order('created_at', { ascending: false })
+    .eq("is_resolved", false)
+    .or(`is_snoozed.eq.false,snoozed_until.lt.${new Date().toISOString()}`)
+    .order("created_at", { ascending: false });
 }
 
 // ── fetchAlerts ───────────────────────────────────────────────────────────
@@ -171,18 +185,18 @@ function orbitBaseQuery() {
  * @returns Array de Alert
  */
 export async function fetchAlerts(filter?: AlertSeverity): Promise<Alert[]> {
-  let query = orbitBaseQuery()
-  if (filter !== undefined) query = query.eq('severity', filter)
+  let query = orbitBaseQuery();
+  if (filter !== undefined) query = query.eq("severity", filter);
 
-  const { data, error } = await query.returns<OrbitAlertRow[]>()
+  const { data, error } = await query.returns<OrbitAlertRow[]>();
 
   if (error) {
     throw new Error(
-      `[alertsRepository] falha ao buscar orbit.alerts: ${error.message}`
-    )
+      `[alertsRepository] falha ao buscar orbit.alerts: ${error.message}`,
+    );
   }
 
-  return (data ?? []).map(fromOrbitRow)
+  return (data ?? []).map(fromOrbitRow);
 }
 
 // ── fetchCriticalAlerts ───────────────────────────────────────────────────
@@ -190,7 +204,7 @@ export async function fetchAlerts(filter?: AlertSeverity): Promise<Alert[]> {
  * Busca apenas alertas críticos
  */
 export async function fetchCriticalAlerts(): Promise<Alert[]> {
-  return fetchAlerts('critical')
+  return fetchAlerts("critical");
 }
 
 // ── fetchAlertById ────────────────────────────────────────────────────────
@@ -199,21 +213,21 @@ export async function fetchCriticalAlerts(): Promise<Alert[]> {
  */
 export async function fetchAlertById(alertId: string): Promise<Alert | null> {
   const { data, error } = await supabase
-    .schema('orbit')
-    .from('alerts')
+    .schema("orbit")
+    .from("alerts")
     .select(ALERT_SELECT_FIELDS)
-    .eq('id', alertId)
+    .eq("id", alertId)
     .single()
-    .returns<OrbitAlertRow>()
+    .returns<OrbitAlertRow>();
 
   if (error) {
-    if (error.code === 'PGRST116') return null
+    if (error.code === "PGRST116") return null;
     throw new Error(
-      `[alertsRepository] falha ao buscar alerta ${alertId}: ${error.message}`
-    )
+      `[alertsRepository] falha ao buscar alerta ${alertId}: ${error.message}`,
+    );
   }
 
-  return data ? fromOrbitRow(data) : null
+  return data ? fromOrbitRow(data) : null;
 }
 
 // ── markAlertAsRead / markAlertResolved ───────────────────────────────────
@@ -221,19 +235,29 @@ export async function fetchAlertById(alertId: string): Promise<Alert | null> {
  * Marca um alerta como resolvido
  */
 export async function markAlertAsRead(alertId: string): Promise<void> {
-  const { error } = await supabase
-    .schema('orbit')
-    .from('alerts')
+  // ✅ FIX: com RLS, um UPDATE que não casa nenhuma linha (alerta de outro
+  // tenant, sessão expirada → auth.uid() null) NÃO devolve erro — só 0 linhas.
+  // Sem conferir o retorno, o botão "Resolver" parecia funcionar e nada mudava.
+  // `.select('id')` (RETURNING) permite detectar o no-op e lançar.
+  const { data, error } = await supabase
+    .schema("orbit")
+    .from("alerts")
     .update({
       is_resolved: true,
       resolved_at: new Date().toISOString(),
     })
-    .eq('id', alertId)
+    .eq("id", alertId)
+    .select("id");
 
   if (error) {
     throw new Error(
-      `[alertsRepository] falha ao marcar alerta como resolvido: ${error.message}`
-    )
+      `[alertsRepository] falha ao marcar alerta como resolvido: ${error.message}`,
+    );
+  }
+  if (!data || data.length === 0) {
+    throw new Error(
+      "[alertsRepository] nenhum alerta atualizado — sem permissão, sessão expirada ou alerta inexistente.",
+    );
   }
 }
 
@@ -242,7 +266,7 @@ export async function markAlertAsRead(alertId: string): Promise<void> {
  * Remove um alerta (soft delete via is_resolved)
  */
 export async function deleteAlert(alertId: string): Promise<void> {
-  await markAlertAsRead(alertId)
+  await markAlertAsRead(alertId);
 }
 
 // ============================================================================
@@ -256,8 +280,8 @@ export function draftToAlert(
   draft: AlertDraft,
   clientId: string,
   clientName: string,
-  clientHandle: string
-): Omit<Alert, 'id' | 'createdAt'> {
+  clientHandle: string,
+): Omit<Alert, "id" | "createdAt"> {
   return {
     clientId,
     clientName,
@@ -275,7 +299,7 @@ export function draftToAlert(
     probableCause: draft.probableCause,
     confidenceLevel: draft.confidenceLevel,
     dataSource: draft.dataSource,
-  }
+  };
 }
 
 /**
@@ -287,13 +311,13 @@ export async function createAlert(
 ): Promise<Alert> {
   if (!isAlertType(draft.type)) {
     throw new Error(
-      `[alertsRepository] O tipo de alerta '${draft.type}' é transitório e não pode ser persistido na tabela orbit.alerts.`
-    )
+      `[alertsRepository] O tipo de alerta '${draft.type}' é transitório e não pode ser persistido na tabela orbit.alerts.`,
+    );
   }
 
   const { data, error } = await supabase
-    .schema('orbit')
-    .from('alerts')
+    .schema("orbit")
+    .from("alerts")
     .insert({
       client_id: clientId,
       alert_type: draft.type,
@@ -314,15 +338,15 @@ export async function createAlert(
     })
     .select(ALERT_SELECT_FIELDS)
     .single()
-    .returns<OrbitAlertRow>()
+    .returns<OrbitAlertRow>();
 
   if (error) {
     throw new Error(
-      `[alertsRepository] falha ao criar alerta: ${error.message}`
-    )
+      `[alertsRepository] falha ao criar alerta: ${error.message}`,
+    );
   }
 
-  return fromOrbitRow(data)
+  return fromOrbitRow(data);
 }
 
 /**
@@ -330,20 +354,20 @@ export async function createAlert(
  */
 export async function createAlertsBatch(
   drafts: Array<{
-    draft: AlertDraft
-    clientId: string
-    clientName: string
-    clientHandle: string
-  }>
+    draft: AlertDraft;
+    clientId: string;
+    clientName: string;
+    clientHandle: string;
+  }>,
 ): Promise<Alert[]> {
-  const validDrafts = drafts.filter((d) => isAlertType(d.draft.type))
+  const validDrafts = drafts.filter((d) => isAlertType(d.draft.type));
 
   if (validDrafts.length === 0) {
-    return []
+    return [];
   }
 
   const rows = validDrafts.map((d) => {
-    const alertType = d.draft.type as AlertType
+    const alertType = d.draft.type as AlertType;
 
     return {
       client_id: d.clientId,
@@ -365,21 +389,21 @@ export async function createAlertsBatch(
       threshold_value: d.draft.thresholdValue ?? null,
       snapshot_id: d.draft.snapshotId ?? null,
       suggested_action: d.draft.immediateAction ?? null,
-    }
-  })
+    };
+  });
 
   const { data, error } = await supabase
-    .schema('orbit')
-    .from('alerts')
+    .schema("orbit")
+    .from("alerts")
     .insert(rows)
     .select(ALERT_SELECT_FIELDS)
-    .returns<OrbitAlertRow[]>()
+    .returns<OrbitAlertRow[]>();
 
   if (error) {
     throw new Error(
-      `[alertsRepository] falha ao criar alertas em batch: ${error.message}`
-    )
+      `[alertsRepository] falha ao criar alertas em batch: ${error.message}`,
+    );
   }
 
-  return (data ?? []).map(fromOrbitRow)
+  return (data ?? []).map(fromOrbitRow);
 }

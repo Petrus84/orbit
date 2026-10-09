@@ -40,16 +40,19 @@
  * ============================================================================
  */
 
-import React, { useState } from 'react'
-import Link from 'next/link'
-import type { Alert } from '@/types/alert'
-import { markAlertAsRead, isAlertType } from '@/lib/repositories/alertsRepository'
-import AlertIcon from './AlertIcon'
-import styles from './AlertCard.module.css'
+import React, { useState } from "react";
+import Link from "next/link";
+import type { Alert } from "@/types/alert";
+import {
+  markAlertAsRead,
+  isAlertType,
+} from "@/lib/repositories/alertsRepository";
+import AlertIcon from "./AlertIcon";
+import styles from "./AlertCard.module.css";
 
 interface AlertCardProps {
-  alert: Alert
-  onAcknowledge?: () => Promise<void> | void
+  alert: Alert;
+  onAcknowledge?: () => Promise<void> | void;
 }
 
 // PR-F (parcial) / TS2322: com `noUncheckedIndexedAccess`, o import de
@@ -58,65 +61,78 @@ interface AlertCardProps {
 // — mesmo as 4 classes existindo de fato no CSS (confirmado acima:
 // .critical/.warning/.info/.success). `?? ''` satisfaz o tsc sem mudar
 // comportamento em runtime (a classe real nunca é undefined de verdade).
-const SEVERITY_CLASS: Record<Alert['severity'], string> = {
-  critical: styles.critical ?? '',
-  warning: styles.warning ?? '',
-  info: styles.info ?? '',
-  success: styles.success ?? '',
-}
+const SEVERITY_CLASS: Record<Alert["severity"], string> = {
+  critical: styles.critical ?? "",
+  warning: styles.warning ?? "",
+  info: styles.info ?? "",
+  success: styles.success ?? "",
+};
 
-const SEVERITY_LABEL: Record<Alert['severity'], string> = {
-  critical: 'Crítico',
-  warning: 'Atenção',
-  info: 'Info',
-  success: 'Resolvido',
-}
+const SEVERITY_LABEL: Record<Alert["severity"], string> = {
+  critical: "Crítico",
+  warning: "Atenção",
+  info: "Info",
+  success: "Resolvido",
+};
 
 // ✅ ADICIONADO (P0 — v8.2, item "AlertCard.tsx: Adicionar chips"): rótulos
 // e classes para os chips de contexto. `natureza` espelha orbit.alert_natureza
 // ('tecnica' | 'comunicacao'); confidence_level espelha orbit.confidence_level
 // (L0/L1/L2). Nenhum default inventado — ausência (undefined) simplesmente
 // não renderiza o chip, não vira 'tecnica'/'L0' por engano.
-const NATUREZA_LABEL: Record<NonNullable<Alert['natureza']>, string> = {
-  tecnica: 'Técnica',
-  comunicacao: 'Comunicação',
-}
+const NATUREZA_LABEL: Record<NonNullable<Alert["natureza"]>, string> = {
+  tecnica: "Técnica",
+  comunicacao: "Comunicação",
+};
 
-const CONFIDENCE_LABEL: Record<NonNullable<Alert['confidenceLevel']>, string> = {
-  L0: 'Medido',
-  L1: 'Estimado',
-  L2: 'Hipótese',
-}
+const CONFIDENCE_LABEL: Record<
+  NonNullable<Alert["confidenceLevel"]>,
+  string
+> = {
+  L0: "Medido",
+  L1: "Estimado",
+  L2: "Hipótese",
+};
 
-const CONFIDENCE_CLASS: Record<NonNullable<Alert['confidenceLevel']>, string> = {
-  L0: styles.chipConfidenceL0 ?? '',
-  L1: styles.chipConfidenceL1 ?? '',
-  L2: styles.chipConfidenceL2 ?? '',
-}
+const CONFIDENCE_CLASS: Record<
+  NonNullable<Alert["confidenceLevel"]>,
+  string
+> = {
+  L0: styles.chipConfidenceL0 ?? "",
+  L1: styles.chipConfidenceL1 ?? "",
+  L2: styles.chipConfidenceL2 ?? "",
+};
 
-export default function AlertCard({ alert, onAcknowledge }: AlertCardProps): React.ReactElement {
-  const [isLoading, setIsLoading] = useState(false)
+export default function AlertCard({
+  alert,
+  onAcknowledge,
+}: AlertCardProps): React.ReactElement {
+  const [isLoading, setIsLoading] = useState(false);
+  const [ackError, setAckError] = useState<string | null>(null);
 
   async function handleAcknowledge(): Promise<void> {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
+      setAckError(null);
       // 1. Aguarda a gravação no banco
-      await markAlertAsRead(alert.id)
+      await markAlertAsRead(alert.id);
       // 2. Executa o refetch após o sucesso (evita race condition)
-      await onAcknowledge?.()
+      await onAcknowledge?.();
     } catch (err) {
-      console.error('[AlertCard] Erro ao reconhecer alerta:', err)
+      console.error("[AlertCard] Erro ao reconhecer alerta:", err);
+      // ✅ FIX: o erro era só logado — o botão parecia não fazer nada.
+      setAckError("Não foi possível resolver este alerta. Tente novamente.");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }
 
-  const severityClass = SEVERITY_CLASS[alert.severity] ?? styles.info
-  const severityLabel = SEVERITY_LABEL[alert.severity] ?? 'Info'
+  const severityClass = SEVERITY_CLASS[alert.severity] ?? styles.info;
+  const severityLabel = SEVERITY_LABEL[alert.severity] ?? "Info";
   // `alert.type` é `string` no contrato de domínio (orbit.ts) — mais largo
   // que o enum `AlertType` que `AlertIcon` exige. Narrowing explícito em
   // vez de cast: um valor fora do enum vira fallback genérico, não erro.
-  const iconType = isAlertType(alert.type) ? alert.type : null
+  const iconType = isAlertType(alert.type) ? alert.type : null;
 
   return (
     <div className={`${styles.card} ${severityClass}`} aria-live="polite">
@@ -134,18 +150,21 @@ export default function AlertCard({ alert, onAcknowledge }: AlertCardProps): Rea
         <div className={styles.headerRow}>
           <h3 className={styles.title}>{alert.title}</h3>
           <time className={styles.timestamp}>
-            {new Date(alert.createdAt).toLocaleDateString('pt-BR')}
+            {new Date(alert.createdAt).toLocaleDateString("pt-BR")}
           </time>
         </div>
 
-        {alert.description && <p className={styles.text}>{alert.description}</p>}
+        {alert.description && (
+          <p className={styles.text}>{alert.description}</p>
+        )}
 
         {alert.metricName && alert.metricValue !== null && (
           <p className={styles.text}>
             {alert.metricName}: <strong>{alert.metricValue.toFixed(2)}</strong>
             {alert.thresholdValue !== null && (
               <>
-                {' '}vs <strong>{alert.thresholdValue.toFixed(2)}</strong>
+                {" "}
+                vs <strong>{alert.thresholdValue.toFixed(2)}</strong>
               </>
             )}
           </p>
@@ -167,17 +186,23 @@ export default function AlertCard({ alert, onAcknowledge }: AlertCardProps): Rea
               </span>
             )}
             {alert.confidenceLevel && (
-              <span className={`${styles.chip} ${CONFIDENCE_CLASS[alert.confidenceLevel]}`}>
+              <span
+                className={`${styles.chip} ${CONFIDENCE_CLASS[alert.confidenceLevel]}`}
+              >
                 {CONFIDENCE_LABEL[alert.confidenceLevel]}
               </span>
             )}
           </div>
         )}
 
-        {alert.suggestedAction && <p className={styles.text}>💡 {alert.suggestedAction}</p>}
+        {alert.suggestedAction && (
+          <p className={styles.text}>💡 {alert.suggestedAction}</p>
+        )}
 
         <div className={styles.action}>
-          <span className={`${styles.severityBadge} ${severityClass}`}>{severityLabel}</span>
+          <span className={`${styles.severityBadge} ${severityClass}`}>
+            {severityLabel}
+          </span>
 
           {alert.clientName && (
             <span className={`${styles.btn} ${styles.btnGhost}`}>
@@ -185,7 +210,7 @@ export default function AlertCard({ alert, onAcknowledge }: AlertCardProps): Rea
             </span>
           )}
 
-          {alert.action?.type === 'link' && alert.action.url && (
+          {alert.action?.type === "link" && alert.action.url && (
             <Link href={alert.action.url} className={styles.btn}>
               {alert.action.label}
             </Link>
@@ -198,11 +223,17 @@ export default function AlertCard({ alert, onAcknowledge }: AlertCardProps): Rea
               disabled={isLoading}
               className={`${styles.btn} ${styles.btnGhost}`}
             >
-              {isLoading ? 'Resolvendo...' : 'Resolver'}
+              {isLoading ? "Resolvendo..." : "Resolver"}
             </button>
           )}
         </div>
+
+        {ackError && (
+          <p className={styles.text} role="alert">
+            {ackError}
+          </p>
+        )}
       </div>
     </div>
-  )
+  );
 }

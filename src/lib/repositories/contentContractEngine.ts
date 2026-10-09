@@ -788,6 +788,13 @@ export async function classifyMetric(
   value: number,
   category: string = "all",
   tier: string = "all",
+  // ✅ FIX (alinhamento código/repo): em Server Action o client anon global não
+  // tem sessão e ref_thresholds está sob RLS. Verificado no banco: como `anon`,
+  // fn_classify_metric('polemic_score_pct', 10) devolve "classificação
+  // indisponível" (âmbar, confiança 0); como role com acesso devolve "10 (acima
+  // da mediana)", L0, 0.95. Sem injetar o client da sessão, o sync persistiria
+  // alerta construído em cima de classificação degradada.
+  db: typeof supabase = supabase,
 ): Promise<ClassifiedMetric> {
   const outOfRange = guardOutOfRangePercentMetric(metricName, value);
   if (outOfRange) return outOfRange;
@@ -810,7 +817,7 @@ export async function classifyMetric(
     };
   }
 
-  const { data, error } = await supabase.rpc("fn_classify_metric", {
+  const { data, error } = await db.rpc("fn_classify_metric", {
     p_metric_name: metricName,
     p_value: value,
     p_category: category,
@@ -1540,6 +1547,7 @@ export async function resolveEngagementScoreAlert(
   input: EngagementScoreInput,
   category?: string | null,
   tier?: string | null,
+  db: typeof supabase = supabase,
 ): Promise<AlertDraft> {
   const categoryForClassify = category ?? undefined;
   const tierForClassify = tier ?? undefined;
@@ -1556,6 +1564,7 @@ export async function resolveEngagementScoreAlert(
       input.erRealPct,
       categoryForClassify,
       tierForClassify,
+      db,
     ),
     input.vpsPct != null
       ? classifyMetric(
@@ -1563,6 +1572,7 @@ export async function resolveEngagementScoreAlert(
           input.vpsPct,
           categoryForClassify,
           tierForClassify,
+          db,
         )
       : Promise.resolve<ClassifiedMetric>({
           value: 0,
@@ -1582,6 +1592,7 @@ export async function resolveEngagementScoreAlert(
       input.polemicScorePct,
       categoryForClassify,
       tierForClassify,
+      db,
     ),
   ]);
 

@@ -1159,10 +1159,16 @@ function generateInsights(formats: FormatPerformanceRow[]): InsightData[] {
 
 // ── client_onboarding (SSOT único de setor/nicho/porte/audiência) ────────
 
+// ✅ FIX (alinhamento código/repo): `db` injetável. O default continua sendo o
+// client anon do navegador (telas); Server Actions passam o client com cookies
+// da sessão — sem isso o RLS devolve vazio no servidor (sem sessão).
+export type OrbitDbClient = typeof supabase;
+
 export async function fetchClientOnboarding(
   clientId: string,
+  db: OrbitDbClient = supabase,
 ): Promise<ClientOnboarding | null> {
-  const { data, error } = await supabase
+  const { data, error } = await db
     .schema("orbit")
     .from("client_onboarding")
     .select("*")
@@ -1349,8 +1355,11 @@ async function fetchCriticalAlerts(
   return alerts;
 }
 
-async function fetchTotalFollowers(clientId: string): Promise<number | null> {
-  const { data, error } = await supabase
+async function fetchTotalFollowers(
+  clientId: string,
+  db: OrbitDbClient = supabase,
+): Promise<number | null> {
+  const { data, error } = await db
     .schema("orbit")
     .from("client_onboarding")
     .select("total_followers")
@@ -1366,9 +1375,10 @@ export async function fetchLatestEngagementScoreSnapshot(
   clientId: string,
   start: string,
   end: string,
+  db: OrbitDbClient = supabase,
 ): Promise<EngagementScoreSnapshot | null> {
   const [{ data, error }, totalFollowers] = await Promise.all([
-    supabase
+    db
       .schema("orbit")
       .from("ig_account_snapshots")
       .select(
@@ -1381,7 +1391,7 @@ export async function fetchLatestEngagementScoreSnapshot(
       .limit(1)
       .maybeSingle()
       .overrideTypes<EngagementScoreSnapshotRow, { merge: false }>(),
-    fetchTotalFollowers(clientId),
+    fetchTotalFollowers(clientId, db),
   ]);
 
   if (error) {
