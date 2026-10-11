@@ -47,8 +47,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" data-scroll-behavior="smooth" suppressHydrationWarning>
-      <body 
-        className={`${geistSans.variable} ${geistMono.variable} min-h-full flex flex-col antialiased`}
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} min-h-screen flex flex-col antialiased`}
         suppressHydrationWarning
       >
         {children}

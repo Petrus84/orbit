@@ -745,7 +745,71 @@ export interface SimulatedFunnelResult {
 /** Alias de compat — barrel funnel.ts exporta este nome. */
 export type FunnelScreenData = FunnelMetrics;
 
+/** Tipo de funil do cliente: venda por link externo ou por conversa no direct. */
+export type FunnelKind = "link" | "dm";
+
+/** Quem enxerga o dado da etapa (espelha orbit.funnel_stage_registry.source). */
+export type FunnelStageSource =
+  "instagram_export" | "dm_scan" | "external_reported";
+
+/** Etapa do funil por tipo (espelha orbit.funnel_stage_registry). */
+export interface FunnelStageDef {
+  key: string;
+  order: number;
+  label: string;
+  source: FunnelStageSource;
+  confidence: ConfidenceLevel;
+  parent: string | null;
+}
+
+/** De onde veio o engajamento usado na fricção de escala do simulador. */
+export type EngajamentoFonte = "proprio" | "fallback_fixo";
+
+/** Grau da fonte do benchmark de conversão (estudo setorial 10/10/2026). */
+export type ConversionSourceGrade = "A" | "B" | "C" | "n/a";
+
+/** Espelha orbit.funnel_conversion_benchmark. valuePct null = sem referência de mercado. */
+export interface ConversionBenchmark {
+  valuePct: number | null;
+  eventMeasured: string;
+  sourceGrade: ConversionSourceGrade;
+  confidenceLevel: ConfidenceLevel;
+  isProxy: boolean;
+  sourceName: string | null;
+  sourceUrl: string | null;
+  sourceYear: string | null;
+  caveat: string | null;
+}
+
+/** Espelha orbit.v_funnel_context. */
+export interface FunnelContext {
+  funnelType: FunnelKind;
+  segment: string | null;
+  benchmark: ConversionBenchmark | null;
+}
+
+/** Soma de orbit.v_ig_dm_funnel no período. Contagens são cumulativas por etapa. */
+export interface DmFunnelSummary {
+  conversasComerciais: number;
+  pediuPreco: number;
+  intencaoCompra: number;
+  fechamentoProvavel: number;
+  vendaEvidenciaForte: number;
+  followupsPending: number;
+  periodStart: string;
+  periodEnd: string;
+  confidenceLevel: ConfidenceLevel;
+  sourceNote: string | null;
+  /** true quando algum mês da varredura só entra parcialmente no período pedido. */
+  partialPeriods: boolean;
+}
+
 export interface UseFunnelResult extends AsyncState<FunnelMetrics> {
+  // ✅ NOVO (migration funnel_registry): contexto do funil + resumo de DMs.
+  context?: FunnelContext | null | undefined;
+  dm?: DmFunnelSummary | null | undefined;
+  /** Janela real do snapshot do Instagram usado (pode ser menor que o período pedido). */
+  igWindow?: { start: string; end: string } | null | undefined;
   params: SimulatedFunnelParams;
   setParams: (params: SimulatedFunnelParams) => void;
   lastUpdated: Date | null;

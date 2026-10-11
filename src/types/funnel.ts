@@ -24,6 +24,14 @@ export type {
   UseFunnelResult,
   FunnelData,
   FunnelMetricsRow,
-  InsightData, 
+  InsightData,
   SetorBenchmark,
-} from './orbit'
+  FunnelKind,
+  FunnelStageSource,
+  FunnelStageDef,
+  EngajamentoFonte,
+  ConversionSourceGrade,
+  ConversionBenchmark,
+  FunnelContext,
+  DmFunnelSummary,
+} from "./orbit";

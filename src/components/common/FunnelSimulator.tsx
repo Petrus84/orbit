@@ -1,14 +1,16 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react';
-import Slider from './Slider';
-import type { SetorBenchmark } from '@/types/orbit';
-import styles from './FunnelSimulator.module.css';
+import React, { useState } from "react";
+import Slider from "./Slider";
+import type { SetorBenchmark } from "@/types/orbit";
+import { fonteEngajamentoDetalhada } from "@/lib/ui-labels";
+import styles from "./FunnelSimulator.module.css";
 
 interface SaturationOutput {
   razaoEscala: number;
   isSaturated: boolean;
   engajamentoEfetivo: number;
+  engajamentoFonte: "proprio" | "fallback_fixo";
   ctrEfetivo: number;
   convEfetivo: number;
 }
@@ -38,21 +40,23 @@ interface FunnelSimulatorProps {
   saturation: SaturationOutput;
   erRealNativo: number | null;
   setor: SetorBenchmark | null;
+  /** Texto pronto (ui-labels.textoReferenciaConversao) sobre de onde veio a taxa de conversão inicial. */
+  conversaoNota?: string | null | undefined;
 }
 
 const SETOR_LABELS: Record<SetorBenchmark, string> = {
-  comercio_direto_ecommerce_social: 'lojas que vendem pelas redes sociais',
-  infoprodutor_autoridade_personal: 'infoprodutores e cursos',
-  infoprodutor_educador_pago: 'educadores e cursos pagos',
-  servico_consultoria_profissional: 'serviços e consultorias',
-  patrocinio_publicidade_marca: 'marcas que vivem de publicidade',
-  membership_assinatura_comunidade: 'assinaturas e comunidades',
-  monetizacao_nativa_plataforma: 'contas que monetizam na própria plataforma',
-  autoridade_personal_branding_b2b: 'autoridade e personal branding B2B',
-  comissionamento_afiliados: 'afiliados que vivem de comissão',
-  saas_ferramenta: 'ferramentas e SaaS',
-  pre_monetizacao_a_validar: 'contas ainda validando modelo de monetização',
-};// ✅ MOVIDO (09/09/2026): `result`/`baseVendas`/`baseCliques`/`onSaveGoal`
+  comercio_direto_ecommerce_social: "lojas que vendem pelas redes sociais",
+  infoprodutor_autoridade_personal: "infoprodutores e cursos",
+  infoprodutor_educador_pago: "educadores e cursos pagos",
+  servico_consultoria_profissional: "serviços e consultorias",
+  patrocinio_publicidade_marca: "marcas que vivem de publicidade",
+  membership_assinatura_comunidade: "assinaturas e comunidades",
+  monetizacao_nativa_plataforma: "contas que monetizam na própria plataforma",
+  autoridade_personal_branding_b2b: "autoridade e personal branding B2B",
+  comissionamento_afiliados: "afiliados que vivem de comissão",
+  saas_ferramenta: "ferramentas e SaaS",
+  pre_monetizacao_a_validar: "contas ainda validando modelo de monetização",
+}; // ✅ MOVIDO (09/09/2026): `result`/`baseVendas`/`baseCliques`/`onSaveGoal`
 // saíram daqui — este componente parou de renderizar <FunnelResult> (era a
 // "continuação" do card do simulador que misturava premissas com
 // resultado/receita). FunnelResult agora é um terceiro card próprio,
@@ -61,14 +65,23 @@ export default function FunnelSimulator({
   state,
   onChange,
   saturation,
-  erRealNativo,
   setor,
+  conversaoNota,
 }: FunnelSimulatorProps): React.ReactElement {
-  const { razaoEscala, isSaturated, engajamentoEfetivo, ctrEfetivo, convEfetivo } = saturation;
+  const {
+    razaoEscala,
+    isSaturated,
+    engajamentoEfetivo,
+    engajamentoFonte,
+    ctrEfetivo,
+    convEfetivo,
+  } = saturation;
   const [copied, setCopied] = useState(false);
 
-  const set = <K extends keyof SimulatorState>(key: K, value: SimulatorState[K]) =>
-    onChange({ ...state, [key]: value });
+  const set = <K extends keyof SimulatorState>(
+    key: K,
+    value: SimulatorState[K],
+  ) => onChange({ ...state, [key]: value });
 
   // Antes: botão "Exportar Cenário" sem onClick — puro elemento decorativo.
   // Aqui: exporta as premissas + os valores já degradados pela saturação
@@ -78,24 +91,29 @@ export default function FunnelSimulator({
   // este handler é o lugar certo para trocar de implementação.
   const handleExport = async () => {
     const linhas = [
-      'Orbit — Cenário simulado do funil',
+      "Orbit — Cenário simulado do funil",
       setor ? `Setor: ${SETOR_LABELS[setor]}` : null,
-      `Alcance simulado: ${state.alcance.toLocaleString('pt-BR')}`,
+      `Alcance simulado: ${state.alcance.toLocaleString("pt-BR")}`,
       `CTR alvo da bio: ${state.ctrBio.toFixed(1)}%${
-        razaoEscala > 1 ? ` (aplicado na simulação: ${ctrEfetivo.toFixed(2)}%)` : ''
+        razaoEscala > 1
+          ? ` (aplicado na simulação: ${ctrEfetivo.toFixed(2)}%)`
+          : ""
       }`,
       `Taxa de conversão: ${state.taxaConv.toFixed(1)}%${
-        razaoEscala > 1 ? ` (aplicado na simulação: ${convEfetivo.toFixed(2)}%)` : ''
+        razaoEscala > 1
+          ? ` (aplicado na simulação: ${convEfetivo.toFixed(2)}%)`
+          : ""
       }`,
       `Ticket médio: R$ ${state.ticketMedio.toFixed(0)}`,
-      `Engajamento efetivo usado (${erRealNativo !== null ? 'banco' : 'benchmark'}): ${engajamentoEfetivo}%`,
+      `${fonteEngajamentoDetalhada(engajamentoFonte)}: ${engajamentoEfetivo}%`,
+      conversaoNota ?? null,
       isSaturated
         ? `⚠ Saturação: escala ${razaoEscala.toFixed(1)}x acima da bolha histórica — CTR e conversão acima já vêm degradados.`
         : null,
     ].filter((linha): linha is string => linha !== null);
 
     try {
-      await navigator.clipboard.writeText(linhas.join('\n'));
+      await navigator.clipboard.writeText(linhas.join("\n"));
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
@@ -108,14 +126,20 @@ export default function FunnelSimulator({
   return (
     <div className={styles.wrap}>
       <div className={styles.diagnosticBox}>
-        SSOT · Métrica de engajamento ({erRealNativo !== null ? 'Banco' : 'Benchmark'}):{' '}
-        <strong className={styles.diagnosticStrong}>{engajamentoEfetivo}%</strong>
+        {fonteEngajamentoDetalhada(engajamentoFonte)}:{" "}
+        <strong className={styles.diagnosticStrong}>
+          {engajamentoEfetivo}%
+        </strong>
         {setor && (
           <>
-            {' · '}
-            Setor: <strong className={styles.diagnosticStrong}>{SETOR_LABELS[setor]}</strong>
+            {" · "}
+            Setor:{" "}
+            <strong className={styles.diagnosticStrong}>
+              {SETOR_LABELS[setor]}
+            </strong>
           </>
         )}
+        {conversaoNota && <div>{conversaoNota}</div>}
       </div>
 
       {/* ✅ REORDENADO (09/09/2026): premissas agora seguem a MESMA ordem
@@ -135,7 +159,7 @@ export default function FunnelSimulator({
             max={500000}
             step={1000}
             value={state.alcance}
-            onChange={(v) => set('alcance', v)}
+            onChange={(v) => set("alcance", v)}
             unit=""
           />
         </div>
@@ -159,13 +183,14 @@ export default function FunnelSimulator({
             max={20}
             step={0.1}
             value={state.ctrBio}
-            onChange={(v) => set('ctrBio', v)}
+            onChange={(v) => set("ctrBio", v)}
             unit="%"
           />
           {razaoEscala > 1 && (
             <div className={styles.degradedHint}>
-              ↳ Aplicado na simulação: {ctrEfetivo.toFixed(2)}% — nesta escala, parte do público
-              alcançado é frio (nunca te seguiu), e público frio visita/clica menos.
+              ↳ Aplicado na simulação: {ctrEfetivo.toFixed(2)}% — nesta escala,
+              parte do público alcançado é frio (nunca te seguiu), e público
+              frio visita/clica menos.
             </div>
           )}
         </div>
@@ -178,13 +203,13 @@ export default function FunnelSimulator({
             max={10}
             step={0.1}
             value={state.taxaConv}
-            onChange={(v) => set('taxaConv', v)}
+            onChange={(v) => set("taxaConv", v)}
             unit="%"
           />
           {razaoEscala > 1 && (
             <div className={styles.degradedHint}>
-              ↳ Aplicado na simulação: {convEfetivo.toFixed(2)}% — mesmo motivo: quem chega frio
-              demora mais pra confiar e comprar.
+              ↳ Aplicado na simulação: {convEfetivo.toFixed(2)}% — mesmo motivo:
+              quem chega frio demora mais pra confiar e comprar.
             </div>
           )}
         </div>
@@ -197,7 +222,7 @@ export default function FunnelSimulator({
             max={1000}
             step={5}
             value={state.ticketMedio}
-            onChange={(v) => set('ticketMedio', v)}
+            onChange={(v) => set("ticketMedio", v)}
             formatDisplay={(v) => `R$ ${v.toFixed(0)}`}
           />
         </div>
@@ -205,17 +230,25 @@ export default function FunnelSimulator({
 
       {isSaturated && (
         <div className={styles.saturationAlert}>
-          <strong>Alcance {razaoEscala.toFixed(1)}x acima do que sua conta já entregou.</strong>{' '}
-          Nessa faixa, o público extra é majoritariamente frio — por isso o CTR e a conversão já
-          aparecem reduzidos logo acima, e as vendas estimadas abaixo já refletem essa redução.
-          Não é um limite fixo do simulador: é o comportamento esperado quando se escala tráfego
-          além do que a conta comprovou organicamente.
+          <strong>
+            Alcance {razaoEscala.toFixed(1)}x acima do que sua conta já
+            entregou.
+          </strong>{" "}
+          Nessa faixa, o público extra é majoritariamente frio — por isso o CTR
+          e a conversão já aparecem reduzidos logo acima, e as vendas estimadas
+          abaixo já refletem essa redução. Não é um limite fixo do simulador: é
+          o comportamento esperado quando se escala tráfego além do que a conta
+          comprovou organicamente.
         </div>
       )}
 
       <div className={styles.footerActions}>
-        <button type="button" className={styles.exportBtn} onClick={handleExport}>
-          {copied ? 'Copiado ✓' : 'Exportar Cenário'}
+        <button
+          type="button"
+          className={styles.exportBtn}
+          onClick={handleExport}
+        >
+          {copied ? "Copiado ✓" : "Exportar Cenário"}
         </button>
       </div>
     </div>

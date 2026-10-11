@@ -1,3 +1,9 @@
+import type {
+  ConversionBenchmark,
+  EngajamentoFonte,
+  FunnelKind,
+} from "@/types/orbit";
+
 // src/lib/uiLabels.ts  (RASCUNHO — textos marcados "CONFIRMAR" dependem de você)
 // ============================================================================
 // Camada de apresentação: chave/jargão do banco -> texto que o cliente lê.
@@ -64,6 +70,47 @@ export function fonteEngajamento(temDadoProprio: boolean): string {
   return temDadoProprio
     ? "Engajamento usado: do seu histórico real"
     : "Engajamento usado: média de contas parecidas com a sua";
+}
+
+/** Origem do engajamento usado na fricção de escala do simulador. */
+export function fonteEngajamentoDetalhada(fonte: EngajamentoFonte): string {
+  return fonte === "proprio"
+    ? "Engajamento usado: do seu histórico real"
+    : "Engajamento usado: valor padrão (ainda sem dado seu conectado)";
+}
+
+/** Taxa de conversão sugerida ao simulador quando não há venda informada. */
+export type ReferenciaConversao = Pick<
+  ConversionBenchmark,
+  "valuePct" | "eventMeasured" | "isProxy" | "confidenceLevel"
+>;
+
+export function textoReferenciaConversao(
+  ref: ReferenciaConversao | null | undefined,
+): string {
+  if (!ref || ref.valuePct === null) {
+    return "Taxa de conversão: sem referência de mercado para o seu ramo e sem venda informada no período";
+  }
+  const valor = ref.valuePct.toLocaleString("pt-BR", {
+    maximumFractionDigits: 2,
+  });
+  const tipo = ref.isProxy ? "referência aproximada" : "referência";
+  return `Taxa de conversão inicial: ${valor}% (${tipo} de mercado — ${ref.eventMeasured}). ${CONFIANCA[ref.confidenceLevel]}.`;
+}
+
+/** O que falta na etapa de venda e por quê, por tipo de funil. */
+export function ausenciaVendas(tipo: FunnelKind): Ausencia {
+  return tipo === "dm"
+    ? {
+        oQueFalta: "Vendas do período",
+        porque:
+          "o Instagram só mostra a conversa; Pix, retirada ou combinado por WhatsApp só entram quando você informa",
+      }
+    : {
+        oQueFalta: "Vendas do período",
+        porque:
+          "a venda acontece em página fora do Instagram e só entra quando você ou o cliente informa",
+      };
 }
 
 /**

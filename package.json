@@ -12,6 +12,7 @@
     "ingest:l0": "tsx scripts/ingest-from-zip.ts --client",
     "check:drift": "ts-node src/types/check-schema-drift.ts",
     "check:db": "tsx scripts/check-ingestion.ts",
+    "test": "tsx --test src/lib/funnel/registry.test.ts src/lib/repositories/funnelMath.test.ts",
     "prepare": "husky"
   },
   "dependencies": {

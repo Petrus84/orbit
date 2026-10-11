@@ -15,36 +15,49 @@
 // que por coincidência batia com o mesmo valor mas vivia desconectado
 // do resto do sistema de grid do app.
 
-'use client'
-import React, { useEffect, useMemo, useState } from 'react'
-import SectionHead from '@/components/common/SectionHead'
-import { GlassCard } from '@/components/common/GlassCard'
-import FunnelChart from '@/components/common/FunnelChart'
-import FunnelSimulator from '@/components/common/FunnelSimulator'
-import type { SimulatorState } from '@/components/common/FunnelSimulator'
-import FunnelResult from '@/components/common/FunnelResult'
-import type { UseFunnelResult } from '@/types/funnel'
-import { runFunnelSimulation } from '@/lib/repositories/funnelMath'
-import styles from './FunnelScreen.module.css'
+"use client";
+import React, { useEffect, useMemo, useState } from "react";
+import SectionHead from "@/components/common/SectionHead";
+import { GlassCard } from "@/components/common/GlassCard";
+import FunnelChart from "@/components/common/FunnelChart";
+import FunnelSimulator from "@/components/common/FunnelSimulator";
+import type { SimulatorState } from "@/components/common/FunnelSimulator";
+import FunnelResult from "@/components/common/FunnelResult";
+import DmFunnelPanel from "@/components/common/DmFunnelPanel";
+import { textoReferenciaConversao } from "@/lib/ui-labels";
+import type { UseFunnelResult } from "@/types/funnel";
+import {
+  diasDaJanela,
+  runFunnelSimulation,
+} from "@/lib/repositories/funnelMath";
+import styles from "./FunnelScreen.module.css";
 
 interface FunnelScreenProps {
-  clientId: string
-  periodStart: string
-  periodEnd: string
-  useFunnel: (clientId: string, periodStart: string, periodEnd: string) => UseFunnelResult
+  clientId: string;
+  periodStart: string;
+  periodEnd: string;
+  useFunnel: (
+    clientId: string,
+    periodStart: string,
+    periodEnd: string,
+  ) => UseFunnelResult;
 }
 
 // Ticket médio (R$) ainda não tem fonte real conectada (nenhuma coluna de
 // receita chega via useFunnel/FunnelMetrics) — mesmo caso de
 // erRealNativo/setor logo abaixo. Usamos um valor inicial editável em vez
 // de inventar uma métrica "real" que não existe no banco.
-const DEFAULT_TICKET_MEDIO = 80
+const DEFAULT_TICKET_MEDIO = 80;
 
 // ✅ CORRIGIDO 09/09 (TICKETS item 9) — subtitle estático virou dinâmico
 // com o período que já chega via props (mesmo padrão de formatDate local
 // usado em ClientCard.tsx/FormatPerformanceTable.tsx).
 function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' })
+  return new Date(iso).toLocaleDateString("pt-BR", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
 }
 
 function ChartSkeleton() {
@@ -57,12 +70,15 @@ function ChartSkeleton() {
             <div className={styles.skeletonLine} style={{ width: 64 }} />
           </div>
           <div className={styles.skeletonBar}>
-            <div className={styles.skeletonBarFill} style={{ width: `${w}%` }} />
+            <div
+              className={styles.skeletonBarFill}
+              style={{ width: `${w}%` }}
+            />
           </div>
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 function ResultSkeleton() {
@@ -70,7 +86,7 @@ function ResultSkeleton() {
     <div className={`${styles.skeletonRows} ${styles.skeletonPulse}`}>
       <div className={styles.skeletonBlock} />
     </div>
-  )
+  );
 }
 
 function SimulatorSkeleton() {
@@ -87,61 +103,80 @@ function SimulatorSkeleton() {
       ))}
       <div className={styles.skeletonBlock} />
     </div>
-  )
+  );
 }
 
-function Panel({ title, children }: { title: string; children: React.ReactNode }) {
+function Panel({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
     <GlassCard glowColor="cyan" className={styles.panel}>
       <p className={styles.panelTitle}>{title}</p>
       <div className={styles.panelBody}>{children}</div>
     </GlassCard>
-  )
+  );
 }
 
-export default function FunnelScreen({ clientId, periodStart, periodEnd, useFunnel }: FunnelScreenProps) {
-  const { data, status, error, refetch, setor } = useFunnel(clientId, periodStart, periodEnd)
+export default function FunnelScreen({
+  clientId,
+  periodStart,
+  periodEnd,
+  useFunnel,
+}: FunnelScreenProps) {
+  const { data, status, error, refetch, setor, context, dm, igWindow } =
+    useFunnel(clientId, periodStart, periodEnd);
 
   useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      console.group('[FunnelScreen]')
-      console.log('clientId:', clientId)
-      console.log('periodStart:', periodStart)
-      console.log('periodEnd:', periodEnd)
-      console.log('status:', status)
-      console.log('error:', error)
-      console.log('data:', data)
-      console.groupEnd()
+    if (process.env.NODE_ENV === "development") {
+      console.group("[FunnelScreen]");
+      console.log("clientId:", clientId);
+      console.log("periodStart:", periodStart);
+      console.log("periodEnd:", periodEnd);
+      console.log("status:", status);
+      console.log("error:", error);
+      console.log("data:", data);
+      console.groupEnd();
     }
-  }, [clientId, periodStart, periodEnd, data, status, error])
+  }, [clientId, periodStart, periodEnd, data, status, error]);
 
-  const isLoading = status === 'idle' || status === 'loading'
+  const isLoading = status === "idle" || status === "loading";
 
   const [simState, setSimState] = useState<SimulatorState>({
     ctrBio: 5,
     taxaConv: 2,
     alcance: 10_000,
     ticketMedio: DEFAULT_TICKET_MEDIO,
-  })
+  });
 
-  const [synced, setSynced] = useState(false)
+  const [synced, setSynced] = useState(false);
+
+  // Sem venda informada, taxaConv = 0 é ausência de dado, não medição. Nesse caso o
+  // simulador parte da referência de mercado do segmento (se existir), rotulada na UI.
+  const temVendaInformada =
+    data != null && data.vendas != null && (data.cliques ?? 0) > 0;
+  const conversaoReferencia = context?.benchmark?.valuePct ?? null;
 
   if (data && !synced) {
     setSimState((prev) => ({
       ctrBio: data.profileVisitRate ?? 5,
-      taxaConv: data.taxaConv ?? 2,
+      taxaConv: temVendaInformada ? data.taxaConv : (conversaoReferencia ?? 0),
       alcance: data.alcance ?? 10_000,
       ticketMedio: prev.ticketMedio, // premissa do usuário, não vem do fetch
-    }))
-    setSynced(true)
+    }));
+    setSynced(true);
   }
 
   const ctrLink = useMemo(() => {
-    if (!data || !data.visitas || data.visitas === 0 || data.cliques == null) return 10
-    const rawCtr = (data.cliques / data.visitas) * 100
+    if (!data || !data.visitas || data.visitas === 0 || data.cliques == null)
+      return 10;
+    const rawCtr = (data.cliques / data.visitas) * 100;
     // Trava preventiva: se a taxa calculada for bizarra por ruído do scraper, limita a amostragem
-    return rawCtr > 100 ? 100 : rawCtr
-  }, [data])
+    return rawCtr > 100 ? 100 : rawCtr;
+  }, [data]);
 
   // ✅ CORREÇÃO (dataflow, 2026-09-06): antes, o decaimento por saturação
   // (razaoEscala/friccao) só existia dentro de FunnelSimulator.tsx como um
@@ -149,8 +184,8 @@ export default function FunnelScreen({ clientId, periodStart, periodEnd, useFunn
   // completamente (função linear pura). Agora ambos vêm da mesma fonte
   // (src/lib/funnelMath.ts), então o número que o usuário vê É o número
   // usado no aviso, sempre.
-  const alcanceRealHistorico = data?.alcance ?? 0
-  const erRealNativo: number | null = null // sem fonte real conectada ainda (ver comentário abaixo)
+  const alcanceRealHistorico = data?.alcance ?? 0;
+  const erRealNativo: number | null = null; // sem fonte real conectada ainda (ver comentário abaixo)
 
   const { result: simResult, saturation } = useMemo(
     () =>
@@ -158,11 +193,24 @@ export default function FunnelScreen({ clientId, periodStart, periodEnd, useFunn
         alcanceRealHistorico,
         erRealNativo,
       }),
-    [simState, ctrLink, alcanceRealHistorico, erRealNativo]
-  )
+    [simState, ctrLink, alcanceRealHistorico, erRealNativo],
+  );
 
-  const baseVendas = data?.vendas ?? 0
-  const baseCliques = data?.cliques ?? 0
+  const conversaoNota = temVendaInformada
+    ? "Taxa de conversão inicial: calculada das vendas informadas no período."
+    : textoReferenciaConversao(context?.benchmark);
+
+  const diasJanela = diasDaJanela(
+    igWindow?.start ?? periodStart,
+    igWindow?.end ?? periodEnd,
+  );
+  const tituloFunil =
+    diasJanela == null
+      ? "Funil real"
+      : `Funil real · ${diasJanela} dias${igWindow ? ` (${formatDate(igWindow.start)} – ${formatDate(igWindow.end)})` : ""}`;
+
+  const baseVendas = data?.vendas ?? 0;
+  const baseCliques = data?.cliques ?? 0;
 
   return (
     <main className={styles.main}>
@@ -171,24 +219,31 @@ export default function FunnelScreen({ clientId, periodStart, periodEnd, useFunn
         subtitle={`Dados reais vs. cenário simulado · ${formatDate(periodStart)} – ${formatDate(periodEnd)}`}
       />
 
-      {status === 'error' && error ? (
+      {status === "error" && error ? (
         <div className={styles.errorBox}>
           <p className={styles.errorText}>
-            {typeof error === 'string' ? error : 'Falha na requisição'}
+            {typeof error === "string" ? error : "Falha na requisição"}
           </p>
-          <button type="button" onClick={() => refetch()} className={styles.retryBtn}>
+          <button
+            type="button"
+            onClick={() => refetch()}
+            className={styles.retryBtn}
+          >
             Tentar novamente
           </button>
         </div>
       ) : (
         <div className={styles.grid}>
           <div className={styles.colStretch}>
-            <Panel title="Funil real · 90 dias">
+            <Panel title={tituloFunil}>
               {isLoading || !data ? (
                 <ChartSkeleton />
               ) : (
                 <div className={styles.chartWrap}>
-                  <FunnelChart data={{ ...data, ticketMedio: simState.ticketMedio }} />
+                  <FunnelChart
+                    data={{ ...data, ticketMedio: simState.ticketMedio }}
+                    funnelType={context?.funnelType ?? "link"}
+                  />
                 </div>
               )}
             </Panel>
@@ -215,10 +270,19 @@ export default function FunnelScreen({ clientId, periodStart, periodEnd, useFunn
                   saturation={saturation}
                   erRealNativo={erRealNativo}
                   setor={setor}
+                  conversaoNota={conversaoNota}
                 />
               )}
             </Panel>
           </div>
+        </div>
+      )}
+
+      {status !== "error" && context?.funnelType === "dm" && dm && (
+        <div className={styles.colStretch}>
+          <Panel title="Conversas no direct">
+            <DmFunnelPanel dm={dm} />
+          </Panel>
         </div>
       )}
 
@@ -228,7 +292,7 @@ export default function FunnelScreen({ clientId, periodStart, periodEnd, useFunn
           cenários", como uma continuação dele. Extraído pra cá porque é
           resultado/receita, não premissa — merece seu próprio espaço,
           não o rodapé de outro card. */}
-      {status !== 'error' && (
+      {status !== "error" && (
         <div className={styles.colStretch}>
           <Panel title="Resultado do cenário simulado">
             {isLoading ? (
@@ -239,11 +303,12 @@ export default function FunnelScreen({ clientId, periodStart, periodEnd, useFunn
                 baseVendas={baseVendas}
                 baseCliques={baseCliques}
                 ticketMedio={simState.ticketMedio}
+                vendasInformadas={temVendaInformada}
               />
             )}
           </Panel>
         </div>
       )}
     </main>
-  )
+  );
 }

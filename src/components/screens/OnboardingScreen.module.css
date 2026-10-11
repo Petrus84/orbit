@@ -1,13 +1,10 @@
 /* src/components/screens/OnboardingScreen.module.css */
 
 .container {
-   min-height: 100%;
-   max-width: 1400px;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  background-color: var(--bg);
-  padding: 1.5rem;
+  min-height: 100%;
+  max-width: 1500px;
+  gap: var(--space-6);
+  padding: var(--space-6);
 }
 
 /* ============================================================================
@@ -122,7 +119,7 @@
   border-radius: 50%;
   background-color: rgba(0, 255, 255, 0.2);
   font-size: 0.75rem;
-  font-family: 'Monaco', 'Courier New', monospace;
+  font-family: "Monaco", "Courier New", monospace;
   color: var(--neon-cyan);
 }
 
@@ -436,7 +433,7 @@
 .logEntry time {
   display: block;
   color: var(--text-muted);
-  font-family: 'Monaco', 'Courier New', monospace;
+  font-family: "Monaco", "Courier New", monospace;
   font-size: 0.75rem;
   margin-bottom: 0.25rem;
 }
@@ -476,9 +473,9 @@
     gap: 1rem;
   }
   .repRow,
-.repRowSchwartz {
-  grid-template-columns: 1fr;
-}
+  .repRowSchwartz {
+    grid-template-columns: 1fr;
+  }
 
   .header {
     flex-direction: column;

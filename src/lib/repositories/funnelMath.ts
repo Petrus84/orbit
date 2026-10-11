@@ -26,41 +26,75 @@
    Sem engajamento real conectado ainda, cai num benchmark de 1.5%
    (mesmo fallback que FunnelSimulator já usava). ============================================================================= */
 
+import { FUNNEL_FALLBACKS } from "@/lib/funnel/registry";
+import type { EngajamentoFonte } from "@/types/orbit";
+
+/**
+ * Soma valores vindos de linhas do banco sem transformar "ninguém informou"
+ * em zero. Nenhuma linha, ou todas nulas, devolve null (sem dado); um zero
+ * explícito continua sendo dado.
+ */
+export function somaOuNulo(
+  valores: ReadonlyArray<number | null | undefined>,
+): number | null {
+  let total = 0;
+  let algum = false;
+  for (const v of valores) {
+    if (v == null || !Number.isFinite(v)) continue;
+    total += v;
+    algum = true;
+  }
+  return algum ? total : null;
+}
+
+/**
+ * Dias da janela contando o primeiro e o último (08/07 → 05/10 = 90 dias).
+ * null se alguma data for inválida.
+ */
+export function diasDaJanela(inicio: string, fim: string): number | null {
+  const d =
+    Math.round(
+      (new Date(fim).getTime() - new Date(inicio).getTime()) / 86_400_000,
+    ) + 1;
+  return Number.isFinite(d) ? Math.max(1, d) : null;
+}
+
 export interface FunnelSimInput {
-  alcance: number
-  ctrBio: number
-  taxaConv: number
+  alcance: number;
+  ctrBio: number;
+  taxaConv: number;
 }
 
 export interface FunnelSimResult {
-  alcanceSimulado: number
-  ctrBio: number
-  taxaConv: number
-  visitas: number
-  cliques: number
-  vendas: number
+  alcanceSimulado: number;
+  ctrBio: number;
+  taxaConv: number;
+  visitas: number;
+  cliques: number;
+  vendas: number;
 }
 
 export interface SaturationContext {
   /** Alcance real histórico do cliente (base de comparação da escala). */
-  alcanceRealHistorico: number
+  alcanceRealHistorico: number;
   /** Engajamento nativo real (%), quando disponível. null → usa benchmark. */
-  erRealNativo: number | null
+  erRealNativo: number | null;
 }
 
 export interface SaturationOutput {
-  razaoEscala: number
-  isSaturated: boolean
-  friccao: number
-  engajamentoEfetivo: number
-  ctrEfetivo: number
-  convEfetivo: number
+  razaoEscala: number;
+  isSaturated: boolean;
+  friccao: number;
+  engajamentoEfetivo: number;
+  /** De onde veio engajamentoEfetivo — a UI rotula com isso. */
+  engajamentoFonte: EngajamentoFonte;
+  ctrEfetivo: number;
+  convEfetivo: number;
 }
 
-const BENCHMARK_ENGAJAMENTO = 1.5
-const ALPHA_BASE = 0.25
-const ALPHA_MIN = 0.1
-const SATURATION_THRESHOLD = 1.5
+const ALPHA_BASE = FUNNEL_FALLBACKS.alphaBase;
+const ALPHA_MIN = FUNNEL_FALLBACKS.alphaMin;
+const SATURATION_THRESHOLD = FUNNEL_FALLBACKS.saturationThreshold;
 
 /**
  * Calcula o quanto o CTR-alvo e a taxa de conversão-alvo devem ser
@@ -70,24 +104,33 @@ const SATURATION_THRESHOLD = 1.5
  */
 export function computeSaturation(
   state: FunnelSimInput,
-  ctx: SaturationContext
+  ctx: SaturationContext,
 ): SaturationOutput {
-  const razaoEscala = state.alcance / (ctx.alcanceRealHistorico || 1)
-  const isSaturated = razaoEscala > SATURATION_THRESHOLD
-  const engajamentoEfetivo =
-    ctx.erRealNativo !== null && ctx.erRealNativo > 0 ? ctx.erRealNativo : BENCHMARK_ENGAJAMENTO
+  const razaoEscala = state.alcance / (ctx.alcanceRealHistorico || 1);
+  const isSaturated = razaoEscala > SATURATION_THRESHOLD;
+  const temProprio = ctx.erRealNativo !== null && ctx.erRealNativo > 0;
+  const engajamentoEfetivo = temProprio
+    ? (ctx.erRealNativo as number)
+    : FUNNEL_FALLBACKS.engajamentoPct;
+  const engajamentoFonte: EngajamentoFonte = temProprio
+    ? "proprio"
+    : "fallback_fixo";
 
-  const alphaDinamico = Math.max(ALPHA_MIN, ALPHA_BASE - engajamentoEfetivo * 0.02)
-  const friccao = razaoEscala > 1 ? Math.pow(razaoEscala, alphaDinamico) : 1
+  const alphaDinamico = Math.max(
+    ALPHA_MIN,
+    ALPHA_BASE - engajamentoEfetivo * 0.02,
+  );
+  const friccao = razaoEscala > 1 ? Math.pow(razaoEscala, alphaDinamico) : 1;
 
   return {
     razaoEscala,
     isSaturated,
     friccao,
     engajamentoEfetivo,
+    engajamentoFonte,
     ctrEfetivo: state.ctrBio / friccao,
     convEfetivo: state.taxaConv / friccao,
-  }
+  };
 }
 
 /**
@@ -106,13 +149,13 @@ export function computeSaturation(
 export function runFunnelSimulation(
   state: FunnelSimInput,
   ctrLink: number,
-  ctx: SaturationContext
+  ctx: SaturationContext,
 ): { result: FunnelSimResult; saturation: SaturationOutput } {
-  const saturation = computeSaturation(state, ctx)
+  const saturation = computeSaturation(state, ctx);
 
-  const visitas = state.alcance * (saturation.ctrEfetivo / 100)
-  const cliques = visitas * (ctrLink / 100)
-  const vendas = cliques * (saturation.convEfetivo / 100)
+  const visitas = state.alcance * (saturation.ctrEfetivo / 100);
+  const cliques = visitas * (ctrLink / 100);
+  const vendas = cliques * (saturation.convEfetivo / 100);
 
   // ⚠️ Antes: Math.round() era aplicado aqui, dentro do cálculo. Isso fazia
   // um cenário real de 0,13 vendas esperadas (alcance baixo, funil com 4
@@ -131,5 +174,5 @@ export function runFunnelSimulation(
       vendas,
     },
     saturation,
-  }
+  };
 }

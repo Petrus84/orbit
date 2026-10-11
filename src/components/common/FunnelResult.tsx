@@ -1,22 +1,22 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react'
-import styles from './FunnelResult.module.css'
-import type { BottleneckDiagnosis } from '@/types/orbit'
+import React, { useState } from "react";
+import styles from "./FunnelResult.module.css";
+import type { BottleneckDiagnosis } from "@/types/orbit";
 
 export interface SimulationResult {
-  visitas: number
-  cliques: number
-  vendas: number
-  alcanceSimulado: number
-  ctrBio: number
-  taxaConv: number
+  visitas: number;
+  cliques: number;
+  vendas: number;
+  alcanceSimulado: number;
+  ctrBio: number;
+  taxaConv: number;
 }
 
 interface FunnelResultProps {
-  result: SimulationResult
-  baseVendas: number
-  baseCliques: number
+  result: SimulationResult;
+  baseVendas: number;
+  baseCliques: number;
   /**
    * Ticket médio (R$) é uma premissa única, editada no simulador — ainda não
    * existe fonte de receita real conectada (nenhuma coluna de faturamento
@@ -25,26 +25,32 @@ interface FunnelResultProps {
    * número de vendas, não o ticket. Quando houver receita real no banco,
    * troque este prop único por baseTicketMedio/simTicketMedio distintos.
    */
-  ticketMedio: number
-  onSaveGoal?: (goalName: string) => Promise<void>
+  ticketMedio: number;
+  /**
+   * false = ninguém informou a venda do período. Aí "0 vendas" não é medição:
+   * o gargalo "zero conversões" seria afirmar algo que não sabemos.
+   * Default true preserva o comportamento de quem não passa o prop.
+   */
+  vendasInformadas?: boolean;
+  onSaveGoal?: (goalName: string) => Promise<void>;
 }
 
 function formatValue(v: number): string {
-  if (!Number.isFinite(v)) return '—'
-  if (v == null || isNaN(v)) return '0'
+  if (!Number.isFinite(v)) return "—";
+  if (v == null || isNaN(v)) return "0";
   // Antes: Math.round(0.13) virava "0" — indistinguível de um cenário que
   // de fato não gera nenhuma venda. "< 1" preserva a diferença entre
   // "quase lá" e "zero mesmo" sem inventar uma casa decimal falsa.
-  if (v > 0 && v < 1) return '< 1'
-  if (v < 0 && v > -1) return '> -1'
-  if (v >= 1_000_000) return `${(v / 1_000_000).toFixed(2)}M`
-  if (v >= 1_000) return `${(v / 1_000).toFixed(1)}k`
-  return Math.round(v).toLocaleString('pt-BR')
+  if (v > 0 && v < 1) return "< 1";
+  if (v < 0 && v > -1) return "> -1";
+  if (v >= 1_000_000) return `${(v / 1_000_000).toFixed(2)}M`;
+  if (v >= 1_000) return `${(v / 1_000).toFixed(1)}k`;
+  return Math.round(v).toLocaleString("pt-BR");
 }
 
 function formatCurrency(v: number): string {
-  if (!Number.isFinite(v)) return 'R$ 0'
-  return `R$ ${Math.round(v).toLocaleString('pt-BR')}`
+  if (!Number.isFinite(v)) return "R$ 0";
+  return `R$ ${Math.round(v).toLocaleString("pt-BR")}`;
 }
 
 /**
@@ -53,40 +59,57 @@ function formatCurrency(v: number): string {
  */
 function detectBottleneck(
   current: { cliques: number; vendas: number },
-  simulated: { cliques: number; vendas: number }
+  simulated: { cliques: number; vendas: number },
+  vendasInformadas: boolean,
 ): BottleneckDiagnosis {
-  const clickDiff = Math.abs(simulated.cliques - current.cliques)
-  const salesDiff = Math.abs(simulated.vendas - current.vendas)
+  const clickDiff = Math.abs(simulated.cliques - current.cliques);
+  const salesDiff = Math.abs(simulated.vendas - current.vendas);
 
   if (clickDiff < 1 && salesDiff < 1) {
     if (current.cliques === 0) {
       return {
         detected: true,
-        type: 'zero_clicks',
-        message: 'Gargalo detectado: zero cliques no link da bio',
-        suggestedAction: 'Revise o CTA ou a visibilidade do link',
-        severity: 'critical',
-      }
+        type: "zero_clicks",
+        message: "Gargalo detectado: zero cliques no link da bio",
+        suggestedAction: "Revise o CTA ou a visibilidade do link",
+        severity: "critical",
+      };
+    }
+    if (!vendasInformadas) {
+      return {
+        detected: true,
+        type: "none",
+        message: "Sem vendas informadas no período",
+        suggestedAction:
+          "Informe as vendas do período para a simulação usar a taxa de conversão da conta.",
+        severity: "warning",
+      };
     }
     if (current.vendas === 0) {
       return {
         detected: true,
-        type: 'zero_conversions',
-        message: 'Gargalo detectado: zero conversões',
-        suggestedAction: 'Revise a taxa de conversão ou o funil de vendas',
-        severity: 'critical',
-      }
+        type: "zero_conversions",
+        message: "Gargalo detectado: zero conversões",
+        suggestedAction: "Revise a taxa de conversão ou o funil de vendas",
+        severity: "critical",
+      };
     }
     return {
       detected: true,
-      type: 'none',
-      message: 'Cenário similar ao atual — sem mudanças significativas',
-      suggestedAction: 'Ajuste os parâmetros à direita para ver o impacto',
-      severity: 'warning',
-    }
+      type: "none",
+      message: "Cenário similar ao atual — sem mudanças significativas",
+      suggestedAction: "Ajuste os parâmetros à direita para ver o impacto",
+      severity: "warning",
+    };
   }
 
-  return { detected: false, type: 'none', message: '', suggestedAction: '', severity: 'info' }
+  return {
+    detected: false,
+    type: "none",
+    message: "",
+    suggestedAction: "",
+    severity: "info",
+  };
 }
 
 export default function FunnelResult({
@@ -94,29 +117,37 @@ export default function FunnelResult({
   baseVendas,
   baseCliques,
   ticketMedio,
+  vendasInformadas = true,
   onSaveGoal,
 }: FunnelResultProps): React.ReactElement {
-  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'success' | 'error'>('idle')
-  const [goalName, setGoalName] = useState('')
-  const [showSaveModal, setShowSaveModal] = useState(false)
+  const [saveStatus, setSaveStatus] = useState<
+    "idle" | "saving" | "success" | "error"
+  >("idle");
+  const [goalName, setGoalName] = useState("");
+  const [showSaveModal, setShowSaveModal] = useState(false);
 
-  const safeTicket = Number.isFinite(ticketMedio) ? ticketMedio : 0
-  const safeBaseVendas = Number.isFinite(baseVendas) ? baseVendas : 0
-  const safeBaseCliques = Number.isFinite(baseCliques) ? baseCliques : 0
+  const safeTicket = Number.isFinite(ticketMedio) ? ticketMedio : 0;
+  const safeBaseVendas = Number.isFinite(baseVendas) ? baseVendas : 0;
+  const safeBaseCliques = Number.isFinite(baseCliques) ? baseCliques : 0;
 
-  const delta = result.vendas - safeBaseVendas
-  const deltaSign = delta >= 0 ? '+' : ''
+  const delta = result.vendas - safeBaseVendas;
+  const deltaSign = delta >= 0 ? "+" : "";
   const deltaClass =
-    delta > 0 ? styles.deltaUp : delta < 0 ? styles.deltaDown : styles.deltaNeutral
+    delta > 0
+      ? styles.deltaUp
+      : delta < 0
+        ? styles.deltaDown
+        : styles.deltaNeutral;
 
-  const faturamentoSimulado = result.vendas * safeTicket
-  const faturamentoBase = safeBaseVendas * safeTicket
-  const deltaFaturamento = faturamentoSimulado - faturamentoBase
+  const faturamentoSimulado = result.vendas * safeTicket;
+  const faturamentoBase = safeBaseVendas * safeTicket;
+  const deltaFaturamento = faturamentoSimulado - faturamentoBase;
 
   const bottleneck = detectBottleneck(
     { cliques: safeBaseCliques, vendas: safeBaseVendas },
-    { cliques: result.cliques, vendas: result.vendas }
-  )
+    { cliques: result.cliques, vendas: result.vendas },
+    vendasInformadas,
+  );
 
   // Cenário com venda fracionada (>0 e <1): não é "sem resultado", é um
   // funil que ainda não fecha 1 venda inteira dentro deste alcance. Em vez
@@ -124,48 +155,54 @@ export default function FunnelResult({
   // cliques deste mesmo ritmo seriam necessários para fechar a primeira —
   // dá ao usuário uma alavanca concreta (mais alcance, ou melhorar CTR/
   // conversão) em vez de um número que parece erro.
-  const isVendaFracionada = result.vendas > 0 && result.vendas < 1
+  const isVendaFracionada = result.vendas > 0 && result.vendas < 1;
   const cliquesParaFecharUmaVenda =
-    isVendaFracionada && result.vendas > 0 ? Math.ceil(result.cliques / result.vendas) : null
+    isVendaFracionada && result.vendas > 0
+      ? Math.ceil(result.cliques / result.vendas)
+      : null;
 
   const insight = isVendaFracionada
     ? `Neste ritmo, é preciso algo como ${formatValue(
-        cliquesParaFecharUmaVenda ?? 0
+        cliquesParaFecharUmaVenda ?? 0,
       )} cliques para fechar 1 venda — aumente o alcance simulado ou o CTR/conversão para chegar lá dentro deste cenário.`
     : result.vendas > safeBaseVendas * 1.5
-    ? 'Potencial alto — vale aumentar o investimento em tráfego.'
-    : result.vendas > safeBaseVendas
-    ? 'Cenário positivo — pequenos ajustes geram impacto real.'
-    : result.vendas < safeBaseVendas * 0.8
-    ? 'Cenário desfavorável — revise o CTR da bio ou a taxa de conversão.'
-    : 'Cenário similar ao atual.'
+      ? "Potencial alto — vale aumentar o investimento em tráfego."
+      : result.vendas > safeBaseVendas
+        ? "Cenário positivo — pequenos ajustes geram impacto real."
+        : result.vendas < safeBaseVendas * 0.8
+          ? "Cenário desfavorável — revise o CTR da bio ou a taxa de conversão."
+          : "Cenário similar ao atual.";
 
   const handleSaveGoal = async () => {
-    if (!goalName.trim()) return
+    if (!goalName.trim()) return;
 
-    setSaveStatus('saving')
+    setSaveStatus("saving");
     try {
       if (onSaveGoal) {
-        await onSaveGoal(goalName)
+        await onSaveGoal(goalName);
       }
-      setSaveStatus('success')
+      setSaveStatus("success");
       setTimeout(() => {
-        setShowSaveModal(false)
-        setGoalName('')
-        setSaveStatus('idle')
-      }, 1800)
+        setShowSaveModal(false);
+        setGoalName("");
+        setSaveStatus("idle");
+      }, 1800);
     } catch {
-      setSaveStatus('error')
-      setTimeout(() => setSaveStatus('idle'), 3000)
+      setSaveStatus("error");
+      setTimeout(() => setSaveStatus("idle"), 3000);
     }
-  }
+  };
 
   return (
     <div className={styles.card}>
       {bottleneck.detected && (
-        <div className={`${styles.bottleneckAlert} ${styles[`bottleneck-${bottleneck.severity}`] ?? ''}`}>
+        <div
+          className={`${styles.bottleneckAlert} ${styles[`bottleneck-${bottleneck.severity}`] ?? ""}`}
+        >
           <div className={styles.bottleneckMessage}>{bottleneck.message}</div>
-          <div className={styles.bottleneckAction}>{bottleneck.suggestedAction}</div>
+          <div className={styles.bottleneckAction}>
+            {bottleneck.suggestedAction}
+          </div>
         </div>
       )}
 
@@ -185,14 +222,16 @@ export default function FunnelResult({
       <div className={styles.secondaryRow}>
         <span className={styles.secondaryLabel}>Faturamento estimado</span>
         <div className={styles.secondaryValueBlock}>
-          <span className={styles.secondaryValue}>{formatCurrency(faturamentoSimulado)}</span>
+          <span className={styles.secondaryValue}>
+            {formatCurrency(faturamentoSimulado)}
+          </span>
           {deltaFaturamento !== 0 && (
             <span
               className={`${styles.secondaryDelta} ${
                 deltaFaturamento > 0 ? styles.deltaUp : styles.deltaDown
               }`}
             >
-              {deltaFaturamento > 0 ? '+' : '-'}
+              {deltaFaturamento > 0 ? "+" : "-"}
               {formatCurrency(Math.abs(deltaFaturamento))}
             </span>
           )}
@@ -205,13 +244,17 @@ export default function FunnelResult({
           o elo do meio. Exposto para fechar o rastro do funil. */}
       <div className={styles.secondaryRow}>
         <span className={styles.secondaryLabel}>Visitas ao perfil</span>
-        <span className={styles.secondaryValue}>{formatValue(result.visitas)}</span>
+        <span className={styles.secondaryValue}>
+          {formatValue(result.visitas)}
+        </span>
       </div>
 
       {/* Cliques no link */}
       <div className={styles.secondaryRow}>
         <span className={styles.secondaryLabel}>Cliques no link</span>
-        <span className={styles.secondaryValue}>{formatValue(result.cliques)}</span>
+        <span className={styles.secondaryValue}>
+          {formatValue(result.cliques)}
+        </span>
       </div>
 
       {/* Insight */}
@@ -222,9 +265,9 @@ export default function FunnelResult({
         type="button"
         className={styles.ctaButton}
         onClick={() => setShowSaveModal(true)}
-        disabled={saveStatus === 'saving'}
+        disabled={saveStatus === "saving"}
       >
-        {saveStatus === 'saving' ? 'Salvando…' : 'Salvar meta deste cenário'}
+        {saveStatus === "saving" ? "Salvando…" : "Salvar meta deste cenário"}
       </button>
 
       {showSaveModal && (
@@ -238,7 +281,7 @@ export default function FunnelResult({
               value={goalName}
               onChange={(e) => setGoalName(e.target.value)}
               className={styles.modalInput}
-              disabled={saveStatus === 'saving'}
+              disabled={saveStatus === "saving"}
               autoFocus
             />
 
@@ -247,10 +290,10 @@ export default function FunnelResult({
                 type="button"
                 className={styles.modalCancel}
                 onClick={() => {
-                  setShowSaveModal(false)
-                  setGoalName('')
+                  setShowSaveModal(false);
+                  setGoalName("");
                 }}
-                disabled={saveStatus === 'saving'}
+                disabled={saveStatus === "saving"}
               >
                 Cancelar
               </button>
@@ -258,18 +301,20 @@ export default function FunnelResult({
                 type="button"
                 className={styles.modalConfirm}
                 onClick={handleSaveGoal}
-                disabled={!goalName.trim() || saveStatus === 'saving'}
+                disabled={!goalName.trim() || saveStatus === "saving"}
               >
-                {saveStatus === 'success' ? 'Salvo!' : 'Salvar'}
+                {saveStatus === "success" ? "Salvo!" : "Salvar"}
               </button>
             </div>
 
-            {saveStatus === 'error' && (
-              <div className={styles.modalError}>Erro ao salvar. Tente novamente.</div>
+            {saveStatus === "error" && (
+              <div className={styles.modalError}>
+                Erro ao salvar. Tente novamente.
+              </div>
             )}
           </div>
         </div>
       )}
     </div>
-  )
+  );
 }
