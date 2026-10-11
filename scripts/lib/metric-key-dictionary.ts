@@ -113,26 +113,40 @@
 
 /** Formato mínimo de uma entrada de string_map_data que este módulo consome. */
 export interface MetricEntryLike {
-  value?: string | undefined
+  value?: string | undefined;
 }
 
-export type StringMapLike = Record<string, MetricEntryLike | undefined>
+export type StringMapLike = Record<string, MetricEntryLike | undefined>;
 
 /** Normaliza uma chave para comparação robusta a NFC/NFD. */
 function normalizeKey(s: string): string {
-  return s.normalize('NFC')
+  return s.normalize("NFC");
 }
 
 /** Constrói um mapa com chaves normalizadas, preservando o valor original. */
-function buildNormalizedLookup(smd: StringMapLike): Map<string, MetricEntryLike | undefined> {
-  const map = new Map<string, MetricEntryLike | undefined>()
+function buildNormalizedLookup(
+  smd: StringMapLike,
+): Map<string, MetricEntryLike | undefined> {
+  const map = new Map<string, MetricEntryLike | undefined>();
   for (const [k, v] of Object.entries(smd)) {
-    map.set(normalizeKey(k), v)
+    map.set(normalizeKey(k), v);
   }
-  return map
+  return map;
 }
 
 /* ── Dicionário canônico ────────────────────────────────────────────────────── */
+// Adicionar ao dicionário existente
+export const METRIC_KEYS_PT_BR = {
+  "Intervalo de datas": "DATE_RANGE",
+  "Curtidas do post": "LIKES_POST",
+  "Salvamentos do post": "SAVES_POST",
+  "Respostas ao story": "COMMENTS_POST", // ou similar
+  "Compartilhamento de story": "SHARES_POST",
+  "Curtidas em vídeos do Reels": "LIKES_REELS",
+  "Comentários em reels": "COMMENTS_REELS",
+  "Compartilhamentos de vídeos do Reels": "SHARES_REELS",
+  // ... adicionar mais conforme necessário
+};
 
 export const METRIC_KEYS = {
   // ── Interações de post ──────────────────────────────────────────────────
@@ -142,80 +156,103 @@ export const METRIC_KEYS = {
   // única forma já cobre o caso; as demais têm forma mojibake própria
   // porque o export tem o mesmo bug de encoding do pt-BR.
   SHARES_POST: [
-    'Compartilhamento do post', 'Compartilhamento\u00c3\u00a3o do post',
-    'Partilhas de publicações', 'PartilhasÃ de publicaÃ§Ãµes', 'Partilhas de publica\u00c3\u00a7\u00c3\u00b5es',
+    "Compartilhamento do post",
+    "Compartilhamento\u00c3\u00a3o do post",
+    "Partilhas de publicações",
+    "PartilhasÃ de publicaÃ§Ãµes",
+    "Partilhas de publica\u00c3\u00a7\u00c3\u00b5es",
   ],
   SAVES_POST: [
-    'Salvamentos do post', 'Salvamentos\u00c3 do post',
-    'Pub. guardada',
+    "Salvamentos do post",
+    "Salvamentos\u00c3 do post",
+    "Pub. guardada",
   ],
   LIKES_POST: [
-    'Curtidas do post', 'Curtidas\u00c3 do post',
-    'Gostos em publicações', 'Gostos em publica\u00c3\u00a7\u00c3\u00b5es',
+    "Curtidas do post",
+    "Curtidas\u00c3 do post",
+    "Gostos em publicações",
+    "Gostos em publica\u00c3\u00a7\u00c3\u00b5es",
   ],
   // v1.8.0 — NOVO. Confirmado em export real (eupetruchio84, 29/08/2026):
   // chave existe e nunca tinha sido lida por nenhum script anterior.
   COMMENTS_POST: [
-    'Comentários do post', 'Coment\u00c3\u00a1rios do post',
-    'Comentários em publicações', 'Coment\u00c3\u00a1rios em publica\u00c3\u00a7\u00c3\u00b5es',
+    "Comentários do post",
+    "Coment\u00c3\u00a1rios do post",
+    "Comentários em publicações",
+    "Coment\u00c3\u00a1rios em publica\u00c3\u00a7\u00c3\u00b5es",
   ],
 
   // ── Interações de Reels ──────────────────────────────────────────────────
   // v1.9.0 — Variantes de mojibake completadas com "Ã" (A com til)
   // v2.0.0 — NOVO: variantes pt-PT confirmadas (mauricioartphoto, 13/09/2026).
   SHARES_REELS: [
-    'Compartilhamentos de vídeos do Reels',
-    'CompartilhamentosÃ de vÃdeos do Reels',
-    'Compartilhamentos\u00c3 de v\u00c3\u00addeos do Reels',
-    'Partilhas de reels',
+    "Compartilhamentos de vídeos do Reels",
+    "CompartilhamentosÃ de vÃdeos do Reels",
+    "Compartilhamentos\u00c3 de v\u00c3\u00addeos do Reels",
+    "Partilhas de reels",
   ],
   // ⚠️ SAVES_REELS: nenhuma variante pt-PT encontrada — este export
   // (mauricioartphoto) simplesmente não tem um campo de "salvamentos de
   // reels" separado. Não inventar uma chave aqui; fica 0 de propósito.
   SAVES_REELS: [
-    'Salvamentos de vídeos do Reels',
-    'SalvamentosÃ de vÃdeos do Reels',
-    'Salvamentos\u00c3 de v\u00c3\u00addeos do Reels',
+    "Salvamentos de vídeos do Reels",
+    "SalvamentosÃ de vÃdeos do Reels",
+    "Salvamentos\u00c3 de v\u00c3\u00addeos do Reels",
   ],
   LIKES_REELS: [
-    'Curtidas em vídeos do Reels',
-    'CurtidasÃ em vÃdeos do Reels',
-    'Curtidas\u00c3 em v\u00c3\u00addeos do Reels',
-    'Gostos nos reels',
+    "Curtidas em vídeos do Reels",
+    "CurtidasÃ em vÃdeos do Reels",
+    "Curtidas\u00c3 em v\u00c3\u00addeos do Reels",
+    "Gostos nos reels",
   ],
   COMMENTS_REELS: [
-    'Comentários em reels', 'Coment\u00c3\u00a1rios em reels',
-    'Comentários nos reels', 'Coment\u00c3\u00a1rios nos reels',
+    "Comentários em reels",
+    "Coment\u00c3\u00a1rios em reels",
+    "Comentários nos reels",
+    "Coment\u00c3\u00a1rios nos reels",
   ],
 
   // ── Métricas por post individual (nível ig_posts, usadas no ingest-l0) ──
-  REACH: ['Contas alcançadas', 'Contas alcan\u00c3\u00a7adas', 'Accounts reached'],
-  IMPRESSIONS: [
-    'Impressões', 'Impress\u00c3\u00b5es', 'Impressions',
-    'Impressões (total)', 'Impress\u00c3\u00b5es (total)', // NOVO — confirmado (dogativo, 13/09/2026)
+  REACH: [
+    "Contas alcançadas",
+    "Contas alcan\u00c3\u00a7adas",
+    "Accounts reached",
   ],
-  COMMENTS: ['Comentários', 'Coment\u00c3\u00a1rios', 'Comments'],
-  SHARES: ['Compartilhamentos', 'Compartilhamentos\u00c3', 'Shares'],
-  SAVES: ['Salvamentos', 'Salvamentos\u00c3', 'Saves'],
-  LIKES: ['Curtidas', 'Curtidas\u00c3', 'Likes'],
-  PROFILE_VISITS_FROM: ['Visitas ao perfil', 'Visitas ao perfil\u00c3', 'Profile visits'],
-  FOLLOWS_FROM_INTERACTION: ['Seguidores', 'Seguidores\u00c3', 'Followers'],
+  IMPRESSIONS: [
+    "Impressões",
+    "Impress\u00c3\u00b5es",
+    "Impressions",
+    "Impressões (total)",
+    "Impress\u00c3\u00b5es (total)", // NOVO — confirmado (dogativo, 13/09/2026)
+  ],
+  COMMENTS: ["Comentários", "Coment\u00c3\u00a1rios", "Comments"],
+  SHARES: ["Compartilhamentos", "Compartilhamentos\u00c3", "Shares"],
+  SAVES: ["Salvamentos", "Salvamentos\u00c3", "Saves"],
+  LIKES: ["Curtidas", "Curtidas\u00c3", "Likes"],
+  PROFILE_VISITS_FROM: [
+    "Visitas ao perfil",
+    "Visitas ao perfil\u00c3",
+    "Profile visits",
+  ],
+  FOLLOWS_FROM_INTERACTION: ["Seguidores", "Seguidores\u00c3", "Followers"],
 
   // ── Cliques / CTA ────────────────────────────────────────────────────────
   // v2.0.0 — NOVO pt-PT (mauricioartphoto, 13/09/2026): "ligações" em vez
   // de "links".
   EXTERNAL_LINK_TAPS: [
-    'Toques em links externos', 'External link taps',
-    'Toques em ligações externas', 'Toques em liga\u00c3\u00a7\u00c3\u00b5es externas',
-    'Cliques em links', // NOVO — confirmado (dogativo, 13/09/2026)
+    "Toques em links externos",
+    "External link taps",
+    "Toques em ligações externas",
+    "Toques em liga\u00c3\u00a7\u00c3\u00b5es externas",
+    "Cliques em links", // NOVO — confirmado (dogativo, 13/09/2026)
   ],
 
   // ── Seguidores / audiência (nível de conta, vem de audience_insights.json) ──
-  FOLLOWERS: ['Seguidores', 'Seguidores\u00c3', 'Followers'],
+  FOLLOWERS: ["Seguidores", "Seguidores\u00c3", "Followers"],
   TOTAL_FOLLOWERS: [
-    'Total de seguidores',
-    'Total de seguidores\u00c3',
-    'Total followers',
+    "Total de seguidores",
+    "Total de seguidores\u00c3",
+    "Total followers",
   ],
 
   // ── Composição do alcance (nível de conta, vem de profiles_reached.json) ──
@@ -224,8 +261,8 @@ export const METRIC_KEYS = {
   // Confirmado em export real: valor vem como percentual com PONTO decimal
   // ("61.2%"), diferente da vírgula usada em audience_insights.json — use
   // resolvePercentMetric(), não resolveIntMetric(), para ler este campo.
-  REACH_FROM_FOLLOWERS_PCT: ['Seguidores'],
-  REACH_FROM_NON_FOLLOWERS_PCT: ['Não seguidores', 'N\u00c3\u00a3o seguidores'],
+  REACH_FROM_FOLLOWERS_PCT: ["Seguidores"],
+  REACH_FROM_NON_FOLLOWERS_PCT: ["Não seguidores", "N\u00c3\u00a3o seguidores"],
 
   // ── Demografia ───────────────────────────────────────────────────────────
   // v2.0.0 — NOVO pt-PT (mauricioartphoto, 13/09/2026): confirmado por log
@@ -254,105 +291,117 @@ export const METRIC_KEYS = {
   // tem as chaves abaixo. As variantes ficam registradas aqui para o caso
   // de exports futuros incluírem esses campos.
   PCT_MALE: [
-    'Porcentagem do total de seguidores para homens',
-    'Porcentagem do total de seguidores para homens\u00c3',
-    'Percentagem total de seguidores que são homens',
-    'Percentagem total de seguidores que s\u00c3\u00a3o homens',
+    "Porcentagem do total de seguidores para homens",
+    "Porcentagem do total de seguidores para homens\u00c3",
+    "Percentagem total de seguidores que são homens",
+    "Percentagem total de seguidores que s\u00c3\u00a3o homens",
     // Gênero inferido — variantes observadas em UI (podem aparecer em ZIPs futuros)
-    'Masculino',
-    'Homens',
+    "Masculino",
+    "Homens",
   ],
   PCT_FEMALE: [
-    'Porcentagem do total de seguidores para mulheres',
-    'Porcentagem do total de seguidores para mulheres\u00c3',
-    'Percentagem total de seguidores para mulheres',
+    "Porcentagem do total de seguidores para mulheres",
+    "Porcentagem do total de seguidores para mulheres\u00c3",
+    "Percentagem total de seguidores para mulheres",
     // Gênero inferido — variantes observadas em UI (podem aparecer em ZIPs futuros)
-    'Feminino',
-    'Mulheres',
+    "Feminino",
+    "Mulheres",
   ],
   PCT_AGE_ALL_GENDERS: [
-    'Porcentagem de seguidores por idade para todos os gêneros',
-    'Porcentagem de seguidores por idade para todos os g\u00c3\u00aaneros',
-    'Percentagem de seguidores por idade para todos os géneros',
-    'Percentagem de seguidores por idade para todos os g\u00c3\u00a9neros',
+    "Porcentagem de seguidores por idade para todos os gêneros",
+    "Porcentagem de seguidores por idade para todos os g\u00c3\u00aaneros",
+    "Percentagem de seguidores por idade para todos os géneros",
+    "Percentagem de seguidores por idade para todos os g\u00c3\u00a9neros",
   ],
   PCT_CITY: [
-    'Porcentagem de seguidores por cidade',
-    'Porcentagem de seguidores por cidade\u00c3',
-    'Percentagem de seguidores por cidade',
+    "Porcentagem de seguidores por cidade",
+    "Porcentagem de seguidores por cidade\u00c3",
+    "Percentagem de seguidores por cidade",
   ],
   // v1.9.0 — Variantes de PCT_COUNTRY completadas com espaço antes de "s"
   // v2.0.0 — NOVO pt-PT: "Percentagem" em vez de "Porcentagem".
   PCT_COUNTRY: [
-    'Porcentagem de seguidores por país',
-    'Porcentagem de seguidores por paÃs',
-    'Porcentagem de seguidores por paÃ s',
-    'Porcentagem de seguidores por pa\u00c3\u00ad s',
-    'Percentagem de seguidores por país',
-    'Percentagem de seguidores por pa\u00c3\u00ads',
+    "Porcentagem de seguidores por país",
+    "Porcentagem de seguidores por paÃs",
+    "Porcentagem de seguidores por paÃ s",
+    "Porcentagem de seguidores por pa\u00c3\u00ad s",
+    "Percentagem de seguidores por país",
+    "Percentagem de seguidores por pa\u00c3\u00ads",
   ],
 
   // ── Metadados diversos ───────────────────────────────────────────────────
-  MEDIA_THUMBNAIL: ['Miniatura de mídia', 'Miniatura de m\u00c3\u00addia'],
-  MEDIA_LABEL: ['mídia', 'm\u00c3\u00addia', 'midia'],
-  USERNAME: ['Nome de usuário', 'Username'],
-  DATE_RANGE: ['Intervalo de datas', 'Date range'],
-} as const
+  MEDIA_THUMBNAIL: ["Miniatura de mídia", "Miniatura de m\u00c3\u00addia"],
+  MEDIA_LABEL: ["mídia", "m\u00c3\u00addia", "midia"],
+  USERNAME: ["Nome de usuário", "Username"],
+  DATE_RANGE: ["Intervalo de datas", "Date range"],
+} as const;
 
-export type MetricKeyName = keyof typeof METRIC_KEYS
+export type MetricKeyName = keyof typeof METRIC_KEYS;
 
 /* ── Resolvers genéricos ────────────────────────────────────────────────────── */
 
 export function resolveIntMetric(
   smd: StringMapLike,
   keyName: MetricKeyName,
-  onMiss?: (smd: StringMapLike, keyName: MetricKeyName, triedVariants: readonly string[]) => void
+  onMiss?: (
+    smd: StringMapLike,
+    keyName: MetricKeyName,
+    triedVariants: readonly string[],
+  ) => void,
 ): number {
-  const variants = METRIC_KEYS[keyName]
-  const lookup = buildNormalizedLookup(smd)
+  const variants = METRIC_KEYS[keyName];
+  const lookup = buildNormalizedLookup(smd);
   for (const key of variants) {
-    const raw = lookup.get(normalizeKey(key))?.value
+    const raw = lookup.get(normalizeKey(key))?.value;
     if (raw !== undefined) {
-      const cleaned = raw.replace(/[^0-9\-]/g, '')
-      const parsed = parseInt(cleaned || '0', 10)
-      if (parsed !== 0) return parsed
+      const cleaned = raw.replace(/[^0-9\-]/g, "");
+      const parsed = parseInt(cleaned || "0", 10);
+      if (parsed !== 0) return parsed;
     }
   }
-  onMiss?.(smd, keyName, variants)
-  return 0
+  onMiss?.(smd, keyName, variants);
+  return 0;
 }
 
 export function resolveIntMetricOrNull(
   smd: StringMapLike,
   keyName: MetricKeyName,
-  onMiss?: (smd: StringMapLike, keyName: MetricKeyName, triedVariants: readonly string[]) => void
+  onMiss?: (
+    smd: StringMapLike,
+    keyName: MetricKeyName,
+    triedVariants: readonly string[],
+  ) => void,
 ): number | null {
-  const variants = METRIC_KEYS[keyName]
-  const lookup = buildNormalizedLookup(smd)
+  const variants = METRIC_KEYS[keyName];
+  const lookup = buildNormalizedLookup(smd);
   for (const key of variants) {
-    const raw = lookup.get(normalizeKey(key))?.value
+    const raw = lookup.get(normalizeKey(key))?.value;
     if (raw !== undefined) {
-      const cleaned = raw.replace(/[^0-9\-]/g, '')
-      return parseInt(cleaned || '0', 10)
+      const cleaned = raw.replace(/[^0-9\-]/g, "");
+      return parseInt(cleaned || "0", 10);
     }
   }
-  onMiss?.(smd, keyName, variants)
-  return null
+  onMiss?.(smd, keyName, variants);
+  return null;
 }
 
 export function resolveStringMetric(
   smd: StringMapLike,
   keyName: MetricKeyName,
-  onMiss?: (smd: StringMapLike, keyName: MetricKeyName, triedVariants: readonly string[]) => void
+  onMiss?: (
+    smd: StringMapLike,
+    keyName: MetricKeyName,
+    triedVariants: readonly string[],
+  ) => void,
 ): string {
-  const variants = METRIC_KEYS[keyName]
-  const lookup = buildNormalizedLookup(smd)
+  const variants = METRIC_KEYS[keyName];
+  const lookup = buildNormalizedLookup(smd);
   for (const key of variants) {
-    const entry = lookup.get(normalizeKey(key))
-    if (entry?.value && entry.value.trim()) return entry.value
+    const entry = lookup.get(normalizeKey(key));
+    if (entry?.value && entry.value.trim()) return entry.value;
   }
-  onMiss?.(smd, keyName, variants)
-  return ''
+  onMiss?.(smd, keyName, variants);
+  return "";
 }
 
 /**
@@ -374,38 +423,43 @@ export function resolveStringMetric(
 export function resolvePercentMetric(
   smd: StringMapLike,
   keyName: MetricKeyName,
-  onMiss?: (smd: StringMapLike, keyName: MetricKeyName, triedVariants: readonly string[]) => void
+  onMiss?: (
+    smd: StringMapLike,
+    keyName: MetricKeyName,
+    triedVariants: readonly string[],
+  ) => void,
 ): number | null {
-  const raw = resolveStringMetric(smd, keyName, onMiss)
-  if (!raw) return null
+  const raw = resolveStringMetric(smd, keyName, onMiss);
+  if (!raw) return null;
 
-  const hasComma = raw.includes(',')
-  const hasDot = raw.includes('.')
-  const normalized = hasComma && !hasDot ? raw.replace(',', '.') : raw
+  const hasComma = raw.includes(",");
+  const hasDot = raw.includes(".");
+  const normalized = hasComma && !hasDot ? raw.replace(",", ".") : raw;
 
-  const match = normalized.match(/-?\d+(\.\d+)?/)
-  if (!match) return null
+  const match = normalized.match(/-?\d+(\.\d+)?/);
+  if (!match) return null;
 
-  const value = parseFloat(match[0])
-  return Number.isNaN(value) ? null : value
+  const value = parseFloat(match[0]);
+  return Number.isNaN(value) ? null : value;
 }
 
 export function resolveMapEntry<T>(
   map: Record<string, T | undefined>,
-  keyName: MetricKeyName
+  keyName: MetricKeyName,
 ): T | undefined {
-  const variants = METRIC_KEYS[keyName]
-  const normalizedMap = new Map<string, T | undefined>()
-  for (const [k, v] of Object.entries(map)) normalizedMap.set(normalizeKey(k), v)
+  const variants = METRIC_KEYS[keyName];
+  const normalizedMap = new Map<string, T | undefined>();
+  for (const [k, v] of Object.entries(map))
+    normalizedMap.set(normalizeKey(k), v);
   for (const key of variants) {
-    const hit = normalizedMap.get(normalizeKey(key))
-    if (hit !== undefined) return hit
+    const hit = normalizedMap.get(normalizeKey(key));
+    if (hit !== undefined) return hit;
   }
-  return undefined
+  return undefined;
 }
 
 export function variantsFor(keyName: MetricKeyName): readonly string[] {
-  return METRIC_KEYS[keyName]
+  return METRIC_KEYS[keyName];
 }
 
 /* ── v2.2.0 — Gaps estruturais conhecidos ──────────────────────────────────────
@@ -417,45 +471,53 @@ export function variantsFor(keyName: MetricKeyName): readonly string[] {
 
 interface KnownSchemaGap {
   /** Só para leitura humana no log de debug — não afeta a lógica. */
-  label: string
+  label: string;
   /** Se qualquer uma destas chaves existir no arquivo, este schema está ativo. */
-  fingerprintKeys: readonly string[]
+  fingerprintKeys: readonly string[];
   /** Métricas cuja ausência é esperada e conhecida para este schema. */
-  expectedAbsent: readonly MetricKeyName[]
+  expectedAbsent: readonly MetricKeyName[];
 }
 
 const KNOWN_SCHEMA_GAPS: readonly KnownSchemaGap[] = [
   {
     // Confirmado: dogativo, 15/09/2026 — content_interactions.json com
     // 8 chaves, sem quebra por tipo de mídia (Reels/Carrossel/Estático).
-    label: 'agregado por post, sem quebra por Reels (dogativo)',
-    fingerprintKeys: ['Salvamentos do post', 'Salvamentos\u00c3 do post'],
-    expectedAbsent: ['SHARES_REELS', 'SAVES_REELS', 'LIKES_REELS', 'COMMENTS_REELS'],
+    label: "agregado por post, sem quebra por Reels (dogativo)",
+    fingerprintKeys: ["Salvamentos do post", "Salvamentos\u00c3 do post"],
+    expectedAbsent: [
+      "SHARES_REELS",
+      "SAVES_REELS",
+      "LIKES_REELS",
+      "COMMENTS_REELS",
+    ],
   },
   {
     // Confirmado: mauricioartphoto / eupetruchio84, 15/09/2026 —
     // content_interactions.json "totais com versão delta". Impressões,
     // Visitas ao perfil e Cliques em links não existem neste arquivo —
     // vêm de outro arquivo do export (ex. profiles_reached.json).
-    label: 'totais com versão delta (mauricioartphoto / eupetruchio84)',
-    fingerprintKeys: ['Interações com conteúdos', 'InteraÃ§Ãµes com conteÃºdos'],
+    label: "totais com versão delta (mauricioartphoto / eupetruchio84)",
+    fingerprintKeys: [
+      "Interações com conteúdos",
+      "InteraÃ§Ãµes com conteÃºdos",
+    ],
     expectedAbsent: [
-      'IMPRESSIONS',
-      'PROFILE_VISITS_FROM',
-      'EXTERNAL_LINK_TAPS',
-      'SHARES_REELS',
-      'SAVES_REELS',
-      'LIKES_REELS',
-      'COMMENTS_REELS',
+      "IMPRESSIONS",
+      "PROFILE_VISITS_FROM",
+      "EXTERNAL_LINK_TAPS",
+      "SHARES_REELS",
+      "SAVES_REELS",
+      "LIKES_REELS",
+      "COMMENTS_REELS",
     ],
   },
-]
+];
 
 function detectActiveSchemaGaps(smd: StringMapLike): readonly KnownSchemaGap[] {
-  const availableKeys = new Set(Object.keys(smd).map(normalizeKey))
+  const availableKeys = new Set(Object.keys(smd).map(normalizeKey));
   return KNOWN_SCHEMA_GAPS.filter((gap) =>
-    gap.fingerprintKeys.some((fp) => availableKeys.has(normalizeKey(fp)))
-  )
+    gap.fingerprintKeys.some((fp) => availableKeys.has(normalizeKey(fp))),
+  );
 }
 
 /**
@@ -468,43 +530,54 @@ function detectActiveSchemaGaps(smd: StringMapLike): readonly KnownSchemaGap[] {
  * comum continua disparando (falha para o lado seguro).
  */
 function fileDeclaresNoGenderData(smd: StringMapLike): boolean {
-  const lookup = buildNormalizedLookup(smd)
+  const lookup = buildNormalizedLookup(smd);
   const nota = (
-    lookup.get(normalizeKey('Observação'))?.value ??
-    lookup.get(normalizeKey('Observa\u00c3\u00a7\u00c3\u00a3o'))?.value ??
-    ''
+    lookup.get(normalizeKey("Observação"))?.value ??
+    lookup.get(normalizeKey("Observa\u00c3\u00a7\u00c3\u00a3o"))?.value ??
+    ""
   )
-    .normalize('NFC')
-    .toLowerCase()
-  if (!nota) return false
-  const mencionaGenero = nota.includes('gênero') || nota.includes('sexo')
+    .normalize("NFC")
+    .toLowerCase();
+  if (!nota) return false;
+  const mencionaGenero = nota.includes("gênero") || nota.includes("sexo");
   const mencionaAusencia =
-    nota.includes('nenhum') || nota.includes('não está disponível') || nota.includes('não disponível')
-  return mencionaGenero && mencionaAusencia
+    nota.includes("nenhum") ||
+    nota.includes("não está disponível") ||
+    nota.includes("não disponível");
+  return mencionaGenero && mencionaAusencia;
 }
 
 export function logMissingKey(
   smd: StringMapLike,
   keyName: MetricKeyName,
-  triedVariants: readonly string[]
+  triedVariants: readonly string[],
 ): void {
-  const activeGaps = detectActiveSchemaGaps(smd)
-  const schemaGap = activeGaps.find((gap) => gap.expectedAbsent.includes(keyName))
+  const activeGaps = detectActiveSchemaGaps(smd);
+  const schemaGap = activeGaps.find((gap) =>
+    gap.expectedAbsent.includes(keyName),
+  );
   if (schemaGap) {
     console.info(
-      `   ℹ️  [metric-key-dictionary] "${keyName}" ausente — esperado, schema "${schemaGap.label}" não tem esta métrica (não é bug)`
-    )
-    return
+      `   ℹ️  [metric-key-dictionary] "${keyName}" ausente — esperado, schema "${schemaGap.label}" não tem esta métrica (não é bug)`,
+    );
+    return;
   }
 
-  if ((keyName === 'PCT_MALE' || keyName === 'PCT_FEMALE') && fileDeclaresNoGenderData(smd)) {
+  if (
+    (keyName === "PCT_MALE" || keyName === "PCT_FEMALE") &&
+    fileDeclaresNoGenderData(smd)
+  ) {
     console.info(
-      `   ℹ️  [metric-key-dictionary] "${keyName}" ausente — o export declara (campo "Observação") que não há dado de gênero para esta conta (não é bug)`
-    )
-    return
+      `   ℹ️  [metric-key-dictionary] "${keyName}" ausente — o export declara (campo "Observação") que não há dado de gênero para esta conta (não é bug)`,
+    );
+    return;
   }
 
-  console.warn(`   ⚠️  [metric-key-dictionary] Nenhuma variante encontrada para "${keyName}"`)
-  console.warn(`      Tentativas: ${triedVariants.join(' | ')}`)
-  console.warn(`      Chaves disponíveis no arquivo: ${Object.keys(smd).slice(0, 8).join(', ')}`)
+  console.warn(
+    `   ⚠️  [metric-key-dictionary] Nenhuma variante encontrada para "${keyName}"`,
+  );
+  console.warn(`      Tentativas: ${triedVariants.join(" | ")}`);
+  console.warn(
+    `      Chaves disponíveis no arquivo: ${Object.keys(smd).slice(0, 8).join(", ")}`,
+  );
 }

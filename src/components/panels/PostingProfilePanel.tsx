@@ -162,7 +162,7 @@ export function PostingProfilePanel({
         <span
           className={styles.levelBadge}
           data-testid="posting-level"
-          title="Derivado por contagem dos posts coletados — não é medição direta da plataforma"
+          title="Derivado por contagem dos posts coletados."
         >
           L1
         </span>

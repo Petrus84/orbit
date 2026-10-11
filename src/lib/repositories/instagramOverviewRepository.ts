@@ -278,6 +278,7 @@ async function fetchPostingProfile(
     .schema("orbit")
     .from("ig_posts")
     .select("published_at, content_format, created_at, import_session")
+    .neq("content_format", "story")
     .eq("client_id", clientId)
     .gte("published_at", start)
     .lte("published_at", end)

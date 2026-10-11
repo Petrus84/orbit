@@ -1,16 +1,12 @@
-Você não está atrasado em cinco frameworks. Está **no meio do 1**, com pedaços do 2 já vistos, e a tela atual é um **RWP precoce** (tiles ligados sem ficha). O gap 0,05% puxa para o 4–5. Não vá.
 
-A sequência **não muda**. O que muda é o **único cartão da semana**.
-
----
 
 ## Onde você está agora (estado, não opinião)
 
 | # | Nome | Estado | Prova |
 |---|---|---|---|
-| 1 | **KCR** | **Aberto** — núcleo existe, fichas não | 34 ids no registry antigo; 23 `nao_verificado`; modelo forense não emitiu `KpiContract[]` |
-| 2 | **OGP** | **Parcial** — origem mapeada, lote não auditado por ficha | Protocolo E1/E2 27/09; JSON tem likes/comments/plays/ts; shares/saves/reach **não nesta fonte** |
-| 3 | **RWP** | **Cedo demais** — Overview já pinta 4 scores | Utilidade 0,05% + “só o dado”; ER/VPS com meta provisória e **Ação** |
+| 1 | **KCR** | **Finalizado** — núcleo e fichas existem | 34 ids no registry antigo; status de verificação? x `nao_verificado` y `verificado`; emitido `KpiContract[]` |
+| 2 | **OGP** | **Finalizado** — origem mapeada, lote não auditado por ficha | Protocolo E1/E2 27/09; JSON tem likes/comments/plays/ts/saves/reach; |
+| 3 | **RWP** | **Fiinalizao** — Overview já pinta 3 scores | 
 | 4 | **SSC** | **Não começou** | Tela ≠ oracle do mesmo token |
 | 5 | **3 camadas** | **Infra existe, gate não** | Zod mappers ok; não validam o Overview atual |
 

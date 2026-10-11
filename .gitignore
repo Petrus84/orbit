@@ -88,3 +88,4 @@ contracts/ops/
 .vscode/settings.json
 *.swp
 *.swo
+*.patch
