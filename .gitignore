@@ -63,7 +63,6 @@ src/..orbit-dashboard-clean.tar.gz
 # Temporary & Generated Files
 # ============================================================================
 *.txt
-*.sql
 *.pdf
 *.xlsx
 *.zip
