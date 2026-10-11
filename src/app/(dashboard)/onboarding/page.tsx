@@ -13,59 +13,37 @@
    desta tarefa.
    ========================================================================== */
 
-'use client'
+"use client";
 
-import { useState } from 'react'
-import OnboardingScreen from '@/components/screens/OnboardingScreen'
-import { CLIENTS, type ClientKey } from '@/lib/constants'
+import { useState } from "react";
+import OnboardingScreen from "@/components/screens/OnboardingScreen";
+import { ClientPeriodBar } from "@/components/layout/ClientPeriodBar";
+import { CLIENTS, type ClientKey } from "@/lib/constants";
 
 export default function OnboardingPage() {
-  const clientKeys = Object.keys(CLIENTS) as ClientKey[]
-  const [activeClientKey, setActiveClientKey] = useState<ClientKey>(clientKeys[0] ?? 'cpimportstore')
-  const activeClient = CLIENTS[activeClientKey]
+  const clientKeys = Object.keys(CLIENTS) as ClientKey[];
+  const [activeClientKey, setActiveClientKey] = useState<ClientKey>(
+    clientKeys[0] ?? "cpimportstore",
+  );
+  const activeClient = CLIENTS[activeClientKey];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: 'var(--bg)' }}>
-      <nav
-        style={{
-          display: 'flex',
-          gap: '8px',
-          padding: '12px 20px',
-          borderBottom: '1px solid var(--line)',
-          background: 'var(--bg1)',
-        }}
-        aria-label="Selecionar cliente"
-      >
-        {clientKeys.map((key) => (
-          <button
-            key={key}
-            type="button"
-            onClick={() => setActiveClientKey(key)}
-            aria-pressed={activeClientKey === key}
-            style={{
-              padding: '6px 14px',
-              borderRadius: '8px',
-              border: activeClientKey === key
-                ? '1px solid var(--acc)'
-                : '1px solid var(--line)',
-              background: activeClientKey === key
-                ? 'var(--bg3)'
-                : 'transparent',
-              color: activeClientKey === key ? 'var(--acc)' : 'var(--t2)',
-              cursor: 'pointer',
-              fontSize: '13px',
-              fontWeight: activeClientKey === key ? 500 : 400,
-              transition: 'all 0.15s',
-            }}
-          >
-            {CLIENTS[key].label}
-          </button>
-        ))}
-      </nav>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
+        background: "var(--bg)",
+      }}
+    >
+      <ClientPeriodBar
+        activeKey={activeClientKey}
+        onSelect={setActiveClientKey}
+      />
 
-      <div style={{ flex: 1, overflow: 'auto' }}>
+      <div style={{ flex: 1, overflow: "auto" }}>
         <OnboardingScreen clientId={activeClient.id} />
       </div>
     </div>
-  )
+  );
 }

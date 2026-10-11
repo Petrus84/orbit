@@ -7,10 +7,8 @@ import { useClientNow } from "@/hooks/useClientNow";
 import { OrbitDashboardProvider } from "@/context/OrbitDashboardContext";
 import FunnelScreen from "@/components/screens/FunnelScreen";
 import { useFunnel } from "@/hooks/useFunnel";
-import {
-  DateRangeControl,
-  type PeriodRange,
-} from "@/components/common/DateRangeControl";
+import type { PeriodRange } from "@/components/common/DateRangeControl";
+import { ClientPeriodBar } from "@/components/layout/ClientPeriodBar";
 
 export default function FunnelPage() {
   const clientKeys = Object.keys(CLIENTS) as (keyof typeof CLIENTS)[];
@@ -48,49 +46,16 @@ export default function FunnelPage() {
         style={{ display: "flex", flexDirection: "column", height: "100vh" }}
       >
         {/* Client Selector Nav */}
-        <nav
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "8px",
-            padding: "16px 20px",
-            borderBottom: "1px solid var(--line)",
-            background: "var(--bg1)",
+        <ClientPeriodBar
+          activeKey={activeClientKey}
+          onSelect={setActiveClientKey}
+          period={{
+            value: period,
+            onChange: setPeriod,
+            minDate: PERIOD_START,
+            maxDate: periodEnd,
           }}
-        >
-          <div style={{ display: "flex", gap: "8px" }}>
-            {clientKeys.map((key) => (
-              <button
-                key={key}
-                onClick={() => setActiveClientKey(key)}
-                style={{
-                  padding: "8px 16px",
-                  borderRadius: "8px",
-                  border:
-                    activeClientKey === key
-                      ? "1px solid var(--acc)"
-                      : "1px solid var(--line)",
-                  background:
-                    activeClientKey === key ? "var(--bg3)" : "transparent",
-                  color: "var(--t0)",
-                  cursor: "pointer",
-                  fontSize: "13px",
-                  fontWeight: activeClientKey === key ? 500 : 400,
-                }}
-              >
-                {CLIENTS[key].name}
-              </button>
-            ))}
-          </div>
-
-          <DateRangeControl
-            value={period}
-            onChange={setPeriod}
-            minDate={PERIOD_START}
-            maxDate={periodEnd}
-          />
-        </nav>
+        />
 
         {/* Funel Screen */}
         <div style={{ flex: 1, overflow: "auto" }}>

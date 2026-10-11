@@ -17,10 +17,8 @@ import { AudienceSummaryPanel } from "@/components/content/AudienceSummaryPanel"
 import { SectorPositioningPanel } from "@/components/panels/SectorPositioningPanel";
 import { PostingProfilePanel } from "@/components/panels/PostingProfilePanel";
 import { GlassCard } from "@/components/common/GlassCard";
-import {
-  DateRangeControl,
-  type PeriodRange,
-} from "@/components/common/DateRangeControl";
+import type { PeriodRange } from "@/components/common/DateRangeControl";
+import { ClientPeriodBar } from "@/components/layout/ClientPeriodBar";
 import styles from "./InstagramOverviewPage.module.css";
 
 import type {
@@ -73,56 +71,16 @@ export default function InstagramOverviewPage() {
     <div
       style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
     >
-      <nav
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: "0.5rem",
-          padding: "0.75rem 1.5rem",
-          background: "rgba(255,255,255,0.04)",
-          borderBottom: "1px solid rgba(255,255,255,0.08)",
+      <ClientPeriodBar
+        activeKey={activeClientKey}
+        onSelect={setActiveClientKey}
+        period={{
+          value: period,
+          onChange: setPeriod,
+          minDate,
+          maxDate,
         }}
-        aria-label="Selecionar cliente"
-      >
-        {clientIds.length > 1 && (
-          <div style={{ display: "flex", gap: "0.5rem" }}>
-            {clientIds.map((key) => (
-              <button
-                key={key}
-                onClick={() => setActiveClientKey(key)}
-                aria-pressed={activeClientKey === key}
-                style={{
-                  padding: "0.4rem 1rem",
-                  borderRadius: "6px",
-                  border: "none",
-                  cursor: "pointer",
-                  fontWeight: activeClientKey === key ? 700 : 400,
-                  background:
-                    activeClientKey === key
-                      ? "rgba(0,255,255,0.15)"
-                      : "var(--bg-hover)",
-                  color:
-                    activeClientKey === key
-                      ? "var(--neon-cyan)"
-                      : "var(--text-muted)",
-                  transition: "all 0.15s",
-                }}
-              >
-                {CLIENTS[key].label}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* ✅ FIX: Passar minDate e maxDate como constantes (não mudam entre servidor/cliente) */}
-        <DateRangeControl
-          value={period}
-          onChange={setPeriod}
-          minDate={minDate}
-          maxDate={maxDate}
-        />
-      </nav>
+      />
 
       <OrbitDashboardProvider
         key={activeClient.id}

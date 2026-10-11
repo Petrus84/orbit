@@ -27,26 +27,40 @@
      layout), sempre lê deste Provider externo.
    ========================================================================== */
 
-'use client'
+"use client";
 
-import { OrbitDashboardProvider } from '@/context/OrbitDashboardContext'
-import { Sidebar } from '@/components/layout/Sidebar'
-import { CLIENTS, PERIOD_START, getPeriodEnd } from '@/lib/constants'
-import { useClientNow } from '@/hooks/useClientNow'
+import { useEffect, useState } from "react";
+import { OrbitDashboardProvider } from "@/context/OrbitDashboardContext";
+import { Sidebar } from "@/components/layout/Sidebar";
+import { CLIENTS, PERIOD_START, getPeriodEnd } from "@/lib/constants";
+import { useClientNow } from "@/hooks/useClientNow";
+import styles from "./layout.module.css";
 
 export default function DashboardLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  const defaultClientKey = Object.keys(CLIENTS)[0] as keyof typeof CLIENTS
-  const defaultClient = CLIENTS[defaultClientKey]
+  const defaultClientKey = Object.keys(CLIENTS)[0] as keyof typeof CLIENTS;
+  const defaultClient = CLIENTS[defaultClientKey];
 
   // FIX v1.0.2 (ripple effect de src/lib/constants.ts): ver nota em
   // src/app/(dashboard)/funil/page.tsx sobre por que PERIOD_END virou
   // getPeriodEnd() + useClientNow().
-  const clientNow = useClientNow()
-  const periodEnd = clientNow ?? getPeriodEnd()
+  const clientNow = useClientNow();
+  const periodEnd = clientNow ?? getPeriodEnd();
+
+  // Drawer da sidebar abaixo de 1024px (CSS em layout.module.css). Acima
+  // disso o estado é ignorado — a sidebar fica sempre visível.
+  const [menuOpen, setMenuOpen] = useState(false);
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menuOpen]);
 
   return (
     <OrbitDashboardProvider
@@ -54,16 +68,37 @@ export default function DashboardLayout({
       periodStart={PERIOD_START}
       periodEnd={periodEnd}
     >
-      {/* FIX a11y/responsivo (15/09/2026): só 7 de 35 CSS Modules tinham
-          @media e a sidebar tem largura fixa sem breakpoint — abaixo de
-          ~900px o conteúdo era espremido sem alternativa. `overflowX: auto`
-          é a rede de segurança mínima (rola em vez de quebrar o layout);
-          um padrão de colapso de sidebar fica para uma decisão de produto
-          à parte — ver nota em Sidebar.module.css. */}
-      <div style={{ display: 'flex', minHeight: '100vh', overflowX: 'auto' }}>
-        <Sidebar />
-        <div style={{ flex: 1, overflow: 'auto', minWidth: 680 }}>{children}</div>
+      {/* FIX shell/responsivo (11/10/2026): teto de 1500px no shell inteiro
+          (sidebar + conteúdo) e `minWidth: 0` no conteúdo — o `minWidth: 680`
+          impedia os grids de encolher e forçava rolagem horizontal. Abaixo
+          de 1024px a sidebar vira drawer (botão flutuante + backdrop). */}
+      <div className={styles.shell} data-open={menuOpen}>
+        <div
+          id="orbit-sidebar"
+          className={styles.slot}
+          onClick={(e) => {
+            if ((e.target as HTMLElement).closest("a")) setMenuOpen(false);
+          }}
+        >
+          <Sidebar />
+        </div>
+        <button
+          type="button"
+          className={styles.menuBtn}
+          aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+          aria-expanded={menuOpen}
+          aria-controls="orbit-sidebar"
+          onClick={() => setMenuOpen((v) => !v)}
+        >
+          {menuOpen ? "✕" : "☰"}
+        </button>
+        <div
+          className={styles.backdrop}
+          aria-hidden="true"
+          onClick={() => setMenuOpen(false)}
+        />
+        <div className={styles.content}>{children}</div>
       </div>
     </OrbitDashboardProvider>
-  )
+  );
 }

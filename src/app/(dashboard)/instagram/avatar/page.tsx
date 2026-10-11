@@ -14,27 +14,37 @@
    tocado).
    ========================================================================== */
 
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { CLIENTS, PERIOD_START, getPeriodEnd, type ClientKey } from '@/lib/constants'
-import { useClientNow } from '@/hooks/useClientNow'
-import { OrbitDashboardProvider } from '@/context/OrbitDashboardContext'
-import { AvatarScreen } from '@/components/screens/AvatarScreen'
-import { DateRangeControl, type PeriodRange } from '@/components/common/DateRangeControl'
+import { useState } from "react";
+import {
+  CLIENTS,
+  PERIOD_START,
+  getPeriodEnd,
+  type ClientKey,
+} from "@/lib/constants";
+import { useClientNow } from "@/hooks/useClientNow";
+import { OrbitDashboardProvider } from "@/context/OrbitDashboardContext";
+import { AvatarScreen } from "@/components/screens/AvatarScreen";
+import type { PeriodRange } from "@/components/common/DateRangeControl";
+import { ClientPeriodBar } from "@/components/layout/ClientPeriodBar";
 
 export default function AvatarPage() {
-  const clientKeys = Object.keys(CLIENTS) as ClientKey[]
-  const initialClientKey = clientKeys[0] ?? 'cpimportstore'
-  const [activeClientKey, setActiveClientKey] = useState<ClientKey>(initialClientKey)
-  const activeClient = CLIENTS[activeClientKey]
+  const clientKeys = Object.keys(CLIENTS) as ClientKey[];
+  const initialClientKey = clientKeys[0] ?? "cpimportstore";
+  const [activeClientKey, setActiveClientKey] =
+    useState<ClientKey>(initialClientKey);
+  const activeClient = CLIENTS[activeClientKey];
 
   // FIX v1.0.2 (ripple effect de src/lib/constants.ts): ver nota em
   // src/app/(dashboard)/funil/page.tsx sobre por que PERIOD_END virou
   // getPeriodEnd() + useClientNow().
-  const clientNow = useClientNow()
-  const periodEnd = clientNow ?? getPeriodEnd()
-  const [period, setPeriod] = useState<PeriodRange>({ start: PERIOD_START, end: periodEnd })
+  const clientNow = useClientNow();
+  const periodEnd = clientNow ?? getPeriodEnd();
+  const [period, setPeriod] = useState<PeriodRange>({
+    start: PERIOD_START,
+    end: periodEnd,
+  });
 
   return (
     <OrbitDashboardProvider
@@ -42,59 +52,29 @@ export default function AvatarPage() {
       periodStart={period.start}
       periodEnd={period.end}
     >
-      <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: 'var(--bg)' }}>
-        <nav
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '8px',
-            padding: '12px 20px',
-            borderBottom: '1px solid var(--line)',
-            background: 'var(--bg1)',
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          height: "100vh",
+          background: "var(--bg)",
+        }}
+      >
+        <ClientPeriodBar
+          activeKey={activeClientKey}
+          onSelect={setActiveClientKey}
+          period={{
+            value: period,
+            onChange: setPeriod,
+            minDate: PERIOD_START,
+            maxDate: periodEnd,
           }}
-          aria-label="Selecionar cliente"
-        >
-          <div style={{ display: 'flex', gap: '8px' }}>
-            {clientKeys.map((key) => (
-              <button
-                key={key}
-                type="button"
-                onClick={() => setActiveClientKey(key)}
-                aria-pressed={activeClientKey === key}
-                style={{
-                  padding: '6px 14px',
-                  borderRadius: '8px',
-                  border: activeClientKey === key
-                    ? '1px solid var(--acc)'
-                    : '1px solid var(--line)',
-                  background: activeClientKey === key
-                    ? 'var(--bg3)'
-                    : 'transparent',
-                  color: activeClientKey === key ? 'var(--acc)' : 'var(--t2)',
-                  cursor: 'pointer',
-                  fontSize: '13px',
-                  fontWeight: activeClientKey === key ? 500 : 400,
-                  transition: 'all 0.15s',
-                }}
-              >
-                {CLIENTS[key].label}
-              </button>
-            ))}
-          </div>
+        />
 
-          <DateRangeControl
-            value={period}
-            onChange={setPeriod}
-            minDate={PERIOD_START}
-            maxDate={periodEnd}
-          />
-        </nav>
-
-        <div style={{ flex: 1, overflow: 'auto' }}>
+        <div style={{ flex: 1, overflow: "auto" }}>
           <AvatarScreen clientId={activeClient.id} />
         </div>
       </div>
     </OrbitDashboardProvider>
-  )
+  );
 }

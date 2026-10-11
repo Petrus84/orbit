@@ -1,0 +1,65 @@
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+  padding: 12px clamp(16px, 2.5vw, 24px);
+  border-bottom: 1px solid var(--line);
+  background: var(--bg1);
+}
+
+.chips {
+  display: flex;
+  gap: 8px;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.chips::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  flex: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--t2);
+  font-size: 13px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    background 0.15s,
+    color 0.15s;
+}
+.chip[aria-pressed="true"] {
+  border-color: var(--acc);
+  background: var(--bg3);
+  color: var(--t0);
+}
+.chip:focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 2px;
+}
+
+.period {
+  flex: none;
+}
+
+@media (max-width: 700px) {
+  .bar {
+    flex-wrap: wrap;
+  }
+  .chips {
+    flex-basis: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip {
+    transition: none;
+  }
+}
