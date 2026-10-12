@@ -56,7 +56,7 @@ export default function AvatarPage() {
         style={{
           display: "flex",
           flexDirection: "column",
-          height: "100vh",
+          minHeight: "100dvh",
           background: "var(--bg)",
         }}
       >
@@ -71,7 +71,7 @@ export default function AvatarPage() {
           }}
         />
 
-        <div style={{ flex: 1, overflow: "auto" }}>
+        <div style={{ flex: 1 }}>
           <AvatarScreen clientId={activeClient.id} />
         </div>
       </div>

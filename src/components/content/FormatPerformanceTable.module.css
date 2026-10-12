@@ -3,6 +3,7 @@
 .wrapper {
   display: flex;
   flex-direction: column;
+  overflow-x: auto; /* mobile: rola em vez de estourar o card */
 }
 
 .title {
@@ -16,6 +17,7 @@
 
 .table {
   width: 100%;
+  min-width: 30rem;
   border-collapse: collapse;
 }
 
@@ -121,6 +123,7 @@
 
 .postRow {
   display: grid;
+  min-width: 26rem;
   grid-template-columns: 56px 136px minmax(0, 1fr) 64px 104px;
   align-items: center;
   column-gap: var(--space-3);

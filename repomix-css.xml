@@ -1,0 +1,6629 @@
+This file is a merged representation of a subset of the codebase, containing specifically included files, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of a subset of the repository's contents that is considered the most important context.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Only files matching these patterns are included: src/**/*.css
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+src/
+  app/
+    instagram/
+      InstagramOverviewPage.module.css
+    globals.css
+  components/
+    common/
+      AlertCard.module.css
+      AlignmentBars.module.css
+      AlignmentFormula.module.css
+      AvatarCard.module.css
+      AvatarComparison.module.css
+      ClientCard.module.css
+      DmFunnelPanel.module.css
+      FunnelChart.module.css
+      FunnelResult.module.css
+      FunnelSimulator.module.css
+      FunnelStep.module.css
+      GlassCard.module.css
+      RecommendationAlert.module.css
+      SectionHead.module.css
+      Semaphore.module.css
+      Slider.module.css
+      StatusPill.module.css
+    content/
+      AudienceSummaryPanel.module.css
+      CriticalAlert.module.css
+      DataStatusNotice.module.css
+      FormatPerformanceTable.module.css
+      InsightCard.module.css
+      QualityScoresPanel.module.css
+    kpi/
+      DeltaText.module.css
+      GlowingNumber.module.css
+      KPICard.module.css
+      SemaphoreIndicator.module.css
+    layout/
+      Header.module.css
+      Sidebar.module.css
+    panels/
+      PostingProfilePanel.module.css
+      SectorPositioningPanel.module.css
+    screens/
+      AvatarScreen.module.css
+      CarteiraScreen.module.css
+      FunnelScreen.module.css
+      IGOverviewScreen.module.css
+      OnboardingScreen.module.css
+  styles/
+    ssot-design-tokens.css
+    ssot-globals.css
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="src/components/content/InsightCard.module.css">
+/* InsightCard.module.css */
+
+.card {
+  display:       flex;
+  align-items:   flex-start;
+  gap:           var(--space-3);
+  background:    var(--bg-hover);
+  border:        var(--border-width) solid rgba(0, 255, 255, 0.2);
+  border-radius: var(--border-radius-md);
+  padding:       var(--space-3) var(--space-4);
+  margin-top:    auto;
+}
+
+.icon {
+  font-size:  var(--font-size-base);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.text {
+  font-size:   var(--font-size-sm);
+  color:       var(--text-secondary);
+  line-height: 1.5;
+}
+
+.label {
+  color:       var(--neon-cyan);
+  font-weight: var(--font-weight-bold);
+}
+</file>
+
+<file path="src/components/layout/Header.module.css">
+/* Header.module.css */
+
+.header {
+  height:          var(--header-height);
+  background:      var(--bg-card);
+  border-bottom:   var(--border-width) solid var(--border-default);
+  display:         flex;
+  align-items:     center;
+  padding:         0 var(--space-6);
+  gap:             var(--space-4);
+  position:        sticky;
+  top:             0;
+  z-index:         10;
+}
+
+/* Título */
+
+.titleBlock {
+  display:        flex;
+  flex-direction: column;
+  gap:            2px;
+  min-width:      0;
+}
+
+.title {
+  font-size:      var(--font-size-lg);
+  font-weight:    var(--font-weight-bold);
+  color:          var(--text-primary);
+  letter-spacing: 0.3px;
+  white-space:    nowrap;
+  overflow:       hidden;
+  text-overflow:  ellipsis;
+}
+
+.subtitle {
+  font-size:   var(--font-size-xs);
+  color:       var(--text-dim);
+  display:     flex;
+  align-items: center;
+  gap:         var(--space-1);
+}
+
+.dot {
+  color: var(--border-default);
+}
+
+/* Spacer */
+
+.spacer {
+  flex: 1;
+}
+
+/* Date pill */
+
+.datePill {
+  display:       flex;
+  align-items:   center;
+  gap:           var(--space-2);
+  background:    var(--bg-hover);
+  border:        var(--border-width) solid var(--border-default);
+  border-radius: var(--border-radius-sm);
+  padding:       var(--space-2) var(--space-3);
+  white-space:   nowrap;
+  flex-shrink:   0;
+}
+
+.datePillIcon {
+  font-size: var(--font-size-sm);
+  line-height: 1;
+}
+
+.datePillText {
+  font-size: var(--font-size-xs);
+  color:     var(--text-muted);
+}
+
+/* Tabs */
+
+.tabGroup {
+  display:   flex;
+  gap:       var(--space-1);
+  flex-shrink: 0;
+}
+
+.tab {
+  padding:       var(--space-2) var(--space-4);
+  border-radius: var(--border-radius-sm);
+  font-size:     var(--font-size-xs);
+  font-family:   var(--font-family);
+  font-weight:   var(--font-weight-bold);
+  cursor:        pointer;
+  border:        var(--border-width) solid transparent;
+  color:         var(--text-muted);
+  background:    transparent;
+  transition:    all var(--transition-fast);
+  white-space:   nowrap;
+}
+
+.tab:hover {
+  color:      var(--text-primary);
+  background: var(--bg-hover);
+}
+
+.tabActive {
+  background:  var(--neon-cyan);
+  color:       var(--bg-base);
+  border-color: var(--neon-cyan);
+  box-shadow:  0 0 12px rgba(0, 255, 255, 0.4);
+}
+
+.tabActive:hover {
+  background: var(--neon-cyan-dark);
+  color:      var(--bg-base);
+}
+</file>
+
+<file path="src/components/common/DmFunnelPanel.module.css">
+/* Painel de funil de DMs — usa só tokens já existentes no app. */
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg2, transparent);
+}
+.label {
+  font-size: 12px;
+  color: var(--t1, inherit);
+}
+.value {
+  font-family: var(--font-mono, monospace);
+  font-size: 14px;
+  color: var(--t0);
+  font-variant-numeric: tabular-nums;
+}
+.note {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--t2, inherit);
+  margin-top: 4px;
+}
+</file>
+
+<file path="src/components/common/GlassCard.module.css">
+/* GlassCard.module.css */
+
+.card {
+  background:    var(--bg-card);
+  border:        var(--border-width) solid var(--border-default);
+  border-radius: var(--border-radius-lg);
+  padding:       var(--space-6);
+  box-shadow:    var(--shadow-outer-md);
+  transition:    background var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+  position:      relative;
+  overflow:      hidden;
+}
+
+.card:hover {
+  background: var(--bg-hover);
+}
+
+/* Variantes de glow */
+
+.glowCyan {
+  border-color: var(--border-glow-cyan);
+  box-shadow:   var(--shadow-outer-md), var(--shadow-inner-cyan);
+}
+
+.glowCyan:hover {
+  box-shadow: var(--shadow-outer-lg), var(--shadow-inner-cyan);
+}
+
+.glowRed {
+  border-color: var(--border-glow-red);
+  box-shadow:   var(--shadow-outer-md), var(--shadow-inner-red);
+}
+
+.glowRed:hover {
+  box-shadow: var(--shadow-outer-lg), var(--shadow-inner-red);
+}
+
+.glowGold {
+  border-color: var(--border-glow-gold);
+  box-shadow:   var(--shadow-outer-md), var(--shadow-inner-gold);
+}
+
+.glowGold:hover {
+  box-shadow: var(--shadow-outer-lg), var(--shadow-inner-gold);
+}
+
+.glowGreen {
+  border-color: var(--border-glow-green);
+  box-shadow:   var(--shadow-outer-md), var(--shadow-inner-green);
+}
+
+.glowGreen:hover {
+  box-shadow: var(--shadow-outer-lg), var(--shadow-inner-green);
+}
+
+.glowNone {
+  border-color: var(--border-default);
+  box-shadow:   var(--shadow-outer-sm);
+}
+</file>
+
+<file path="src/components/common/SectionHead.module.css">
+/* SectionHead.module.css
+   Espelha .section-head / .section-title / .section-sub do protótipo SSOT
+   (gestao_social_prototipo.html, linhas ~181-185) */
+
+.wrap {
+  display:        flex;
+  flex-direction: column;
+  gap:            2px;
+}
+
+.title {
+  font-family: var(--font-family);
+  font-size:   var(--font-size-xl); /* 16px — igual .section-title do protótipo */
+  font-weight: 500;
+  color:       var(--text-primary);
+  letter-spacing: -0.2px;
+}
+
+.subtitle {
+  font-family: var(--font-family);
+  font-size:   var(--font-size-sm); /* 12px — igual .section-sub */
+  color:       var(--text-muted);
+  margin-top:  2px;
+}
+</file>
+
+<file path="src/components/content/DataStatusNotice.module.css">
+.notice {
+  border: 1px solid color-mix(in srgb, var(--neon-cyan) 30%, transparent);
+  border-radius: var(--radius-lg, 8px);
+  background: var(--bg-card);
+  padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1, 0.25rem);
+}
+
+.item {
+  font-size: var(--font-size-xs);
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+
+.item::before {
+  content: 'ℹ ';
+  color: var(--neon-cyan);
+}
+</file>
+
+<file path="src/components/kpi/DeltaText.module.css">
+/* DeltaText.module.css */
+
+.wrapper {
+  display:     inline-flex;
+  align-items: center;
+  gap:         var(--space-2);
+}
+
+.positive {
+  font-size:   var(--font-size-sm);
+  font-family: var(--font-mono);
+  color:       var(--neon-cyan);
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+}
+
+.negative {
+  font-size:   var(--font-size-sm);
+  font-family: var(--font-mono);
+  color:       var(--neon-red);
+  text-shadow: 0 0 8px rgba(255, 68, 68, 0.5);
+}
+
+.label {
+  font-size: var(--font-size-xs);
+  color:     var(--text-dim);
+}
+</file>
+
+<file path="src/components/kpi/KPICard.module.css">
+/* KPICard.module.css */
+
+.card {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-1);
+  padding:        var(--space-4) var(--space-5);
+  min-width:      0;
+}
+
+.header {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  margin-bottom:   var(--space-2);
+}
+
+.label {
+  font-size: var(--font-size-xs);
+  letter-spacing: 2px;
+  color:          var(--text-dim);
+  font-weight:    var(--font-weight-bold);
+  text-transform: uppercase;
+}
+
+.valueRow {
+  line-height: 1;
+  margin-bottom: var(--space-1);
+}
+
+.unit {
+  font-size:      var(--font-size-xs);
+  color:          var(--text-dim);
+  letter-spacing: 0.5px;
+}
+
+.deltaRow {
+  margin-top: var(--space-2);
+}
+
+.subtitle {
+  font-size:  var(--font-size-xs);
+  color:      var(--text-dim);
+  margin-top: var(--space-1);
+}
+</file>
+
+<file path="src/components/panels/PostingProfilePanel.module.css">
+/* ==========================================================================
+   ORBIT · Component — PostingProfilePanel.module.css (RWP-3)
+   Versão: 1.2.0  |  Data: 2026-10-06
+
+   v1.2.0: o TSX passou a usar 5 classes que não existiam aqui (reference,
+   referenceHead, referenceLine, referenceMeta, referenceMuted — bloco de
+   referência do segmento). Sem elas, CSS Modules devolve `undefined` e o
+   bloco renderizava sem estilo nenhum. Adicionadas abaixo, mesmo glasscard
+   do QualityScoresPanel (gradiente cyan sutil + borda cyan translúcida +
+   glow inset), aninhado dentro de .block com raio menor (--r6) e SEM
+   hover/lift próprio, para não competir com o .block pai.
+
+   Mesmo vocabulário do QualityScoresPanel.module.css:
+   painel = .panel; bloco interno = .scoreBox + .boxCyan; sem estado de
+   alerta (cadência e mix são contagem, nunca semáforo). 100% tokens SSOT.
+   A cor da posição (gold/cyan) vem do StatusPill — o container da
+   referência fica sempre cyan, neutro.
+   ========================================================================== */
+
+/* ═══════════════════════════════════════════════════════════════
+   PAINEL PRINCIPAL
+   ═══════════════════════════════════════════════════════════════ */
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background-color: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: var(--r12);
+  box-shadow: var(--shadow-glow-cyan);
+  transition: all var(--transition-base);
+}
+
+.panel:hover {
+  border-color: var(--border-glow-cyan);
+  box-shadow: var(--shadow-glow-cyan-30);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TÍTULO + BADGE DE NÍVEL
+   ═══════════════════════════════════════════════════════════════ */
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--line);
+}
+
+.title {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--neon-cyan);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.levelBadge {
+  display: inline-block;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--r4);
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--t1);
+  background-color: var(--bg3);
+  border: 1px solid var(--line2);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GRID DOS 2 BLOCOS (Cadência | Mix)
+   ═══════════════════════════════════════════════════════════════ */
+
+.blocks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+@media (max-width: 768px) {
+  .blocks {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BLOCO — mesma receita de .scoreBox + .boxCyan
+   ═══════════════════════════════════════════════════════════════ */
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: var(--gradient-cyan-subtle);
+  border: 1px solid rgba(var(--color-cyan-rgb), var(--opacity-30));
+  border-radius: var(--r8);
+  box-shadow: var(--shadow-glow-cyan-inset);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    border-color var(--transition-fast),
+    background var(--transition-fast);
+  cursor: default;
+}
+
+.block:hover {
+  background: var(--gradient-cyan-hover);
+  border-color: rgba(var(--color-cyan-rgb), var(--opacity-50));
+  box-shadow: var(--shadow-glow-cyan-inset-hover);
+  transform: translateY(-2px);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CONTEÚDO DO BLOCO
+   ═══════════════════════════════════════════════════════════════ */
+
+.label {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.headline {
+  font-family: var(--mono);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--neon-cyan);
+  /* "1 post a cada 12,3 semanas" é longo p/ meia coluna em 22px mono */
+  overflow-wrap: anywhere;
+}
+
+/* sem base: neutro, nunca vermelho/âmbar (ausência de dado não é alerta) */
+.headlineMuted {
+  composes: headline;
+  font-size: var(--font-size-2xl);
+  color: var(--t1);
+}
+
+.detail {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-base);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   REFERÊNCIA DO SEGMENTO (dentro do bloco Cadência)
+   Glasscard aninhado: mesmo gradiente/borda/glow cyan do .block, um
+   degrau mais quieto (raio menor, borda mais fraca, sem hover/lift).
+   A cor de posição (gold/cyan) NÃO vem daqui — vem do StatusPill.
+   ═══════════════════════════════════════════════════════════════ */
+
+.reference {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+  padding: var(--space-3);
+  background: var(--gradient-cyan-subtle);
+  border: 1px solid rgba(var(--color-cyan-rgb), 0.2);
+  border-radius: var(--r6);
+  box-shadow: var(--shadow-glow-cyan-inset);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.referenceHead {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-1);
+  border-bottom: 1px solid var(--line);
+}
+
+/* linha principal: média · mediana (o dado que o leitor compara) */
+.referenceLine {
+  font-family: var(--font);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-base);
+  color: var(--text-primary);
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* faixa P25–P75, contas, período fixo (contexto, não destaque) */
+.referenceMeta {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-relaxed);
+  color: var(--text-muted);
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* sem referência: neutro, sem borda/glow — ausência não é alerta */
+.referenceMuted {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-style: italic;
+  line-height: var(--line-height-base);
+  color: var(--text-muted);
+  margin: var(--space-2) 0 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MIX DE FORMATOS
+   ═══════════════════════════════════════════════════════════════ */
+
+.mixList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.mixRow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: var(--space-3);
+  row-gap: var(--space-1);
+  align-items: baseline;
+  font-family: var(--font);
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+}
+
+.mixCount {
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  color: var(--t1);
+}
+
+/* largura da barra vem de --pct, definida inline no TSX */
+.barTrack {
+  grid-column: 1 / -1;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--line);
+  overflow: hidden;
+}
+
+.barFill {
+  display: block;
+  height: 100%;
+  width: var(--pct, 0%);
+  background: var(--neon-cyan);
+  border-radius: inherit;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   NOTA DE RODAPÉ
+   ═══════════════════════════════════════════════════════════════ */
+
+.note {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-style: italic;
+  line-height: var(--line-height-relaxed);
+  color: var(--text-muted);
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border-left: 3px solid var(--neon-cyan);
+  background-color: rgba(var(--color-cyan-rgb), 0.05);
+  border-radius: var(--r8);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVIDADE E ACESSIBILIDADE
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .block {
+    transition: none;
+  }
+
+  .block:hover {
+    transform: none;
+  }
+}
+
+.panel:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 2px;
+}
+</file>
+
+<file path="src/app/instagram/InstagramOverviewPage.module.css">
+/* InstagramOverviewPage.module.css */
+
+/* ── Shell principal ────────────────────────────────────────────────────── */
+
+.shell {
+display:    flex;
+width:      100%;
+height:     100vh;
+overflow:   hidden;
+background: var(--bg-primary);
+}
+
+/* ── Coluna direita (header + main) ─────────────────────────────────────── */
+
+.rightPane {
+display:        flex;
+flex-direction: column;
+flex:           1;
+min-width:      0;
+overflow:       hidden;
+}
+
+/* ── Main scrollável ────────────────────────────────────────────────────── */
+
+.main {
+flex:       1;
+overflow-y: auto;
+padding:    var(--space-5) var(--space-6);
+display:    flex;
+flex-direction: column;
+gap:        var(--space-4);
+}
+
+/* ── Linha 1: 4 KPI Cards ───────────────────────────────────────────────── */
+
+.kpiRow {
+display:               grid;
+grid-template-columns: repeat(4, 1fr);
+gap:                   var(--space-4);
+}
+
+@media (max-width: 1200px) {
+.kpiRow {
+  grid-template-columns: repeat(2, 1fr);
+}
+}
+
+@media (max-width: 720px) {
+.kpiRow {
+  grid-template-columns: 1fr;
+}
+}
+
+/* ── Linha 2: Scores + Performance ─────────────────────────────────────── */
+
+.midRow {
+display:               grid;
+grid-template-columns: 1fr 1fr;
+gap:                   var(--space-4);
+}
+
+@media (max-width: 960px) {
+.midRow {
+  grid-template-columns: 1fr;
+}
+}
+
+/* ✅ FIX: Classe .tabContent estava faltando */
+
+.tabContent {
+display:        flex;
+flex-direction: column;
+gap:            var(--space-4);
+}
+
+@media (max-width: 960px) {
+.tabContent {
+  flex-direction: column;
+}
+}
+
+/* ── Painel direito (tabela + insight) ──────────────────────────────────── */
+
+.rightPanel {
+display:        flex;
+flex-direction: column;
+gap:            var(--space-4);
+padding:        var(--space-5);
+}
+
+/* Stack de insights */
+
+.insightStack {
+display:        flex;
+flex-direction: column;
+gap:            var(--space-2);
+margin-top:     auto;
+}
+
+/* ── Linha 3: Alertas full-width ────────────────────────────────────────── */
+
+.alertRow {
+display:        flex;
+flex-direction: column;
+gap:            var(--space-3);
+}
+
+/* ── Estados de carregamento ────────────────────────────────────────────── */
+
+.stateCenter {
+display:         flex;
+align-items:     center;
+justify-content: center;
+gap:             var(--space-2);
+padding:         var(--space-12) 0;
+}
+
+.loadingDot {
+width:            8px;
+height:           8px;
+border-radius:    50%;
+background:       var(--neon-cyan);
+box-shadow:       0 0 8px var(--neon-cyan);
+animation:        pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+0%, 100% { opacity: 0.3; transform: scale(0.8); }
+50%       { opacity: 1;   transform: scale(1.2); }
+}
+
+.errorText {
+font-size: var(--font-size-sm);
+color:     var(--neon-red);
+text-shadow: 0 0 8px rgba(255, 68, 68, 0.5);
+}
+
+/* ── Scrollbar ──────────────────────────────────────────────────────────── */
+
+.main::-webkit-scrollbar       { width: 4px; }
+.main::-webkit-scrollbar-track { background: transparent; }
+.main::-webkit-scrollbar-thumb { background: var(--bg-active); border-radius: 2px; }
+</file>
+
+<file path="src/components/common/FunnelChart.module.css">
+/* FunnelChart.module.css — MANTÉM ORIGINAL 100% */
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+  height: 100%;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: auto;
+  padding-top: var(--space-3);
+  width: 100%;
+}
+
+.footerStat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  border: var(--border-width) solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--bg-hover);
+}
+
+.footerDivider {
+  display: none;
+}
+
+.footerLabel {
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.footerValue {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+</file>
+
+<file path="src/components/common/FunnelResult.module.css">
+/* FunnelResult.module.css
+   Todas as classes usadas por FunnelResult.tsx estão definidas aqui —
+   nada depende de módulos externos. min-height + gap explícitos em cada
+   bloco para nunca sobrepor o vizinho, mesmo com valores zerados. */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  margin-top: auto;
+  padding: var(--space-4);
+  border: var(--border-width) solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg2);
+  box-shadow: var(--shadow-soft);
+}
+
+.headlineBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-height: 58px;
+}
+
+.headlineLabel {
+  font-family: var(--font-family);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.headlineRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.headline {
+  font-family: var(--font-mono);
+  font-size: clamp(1.9rem, 3vw, 2.8rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.delta {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.deltaUp { color: var(--green); }
+.deltaDown { color: var(--red); }
+.deltaNeutral { color: var(--text-muted); }
+
+.secondaryRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: 46px;
+  padding: var(--space-2) var(--space-3);
+  border: var(--border-width) solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg-hover);
+}
+
+.secondaryLabel {
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.secondaryValueBlock {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.secondaryValue {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--amber);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.secondaryDelta {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.insight {
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  line-height: 1.6;
+  color: var(--text-muted);
+  border-top: var(--border-width) solid var(--border-default);
+  padding-top: var(--space-3);
+  margin: 0;
+}
+
+.bottleneckAlert {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-3);
+  border-radius: var(--radius-lg);
+  border: var(--border-width) solid var(--border-default);
+}
+
+.bottleneck-critical {
+  border-color: color-mix(in srgb, var(--red) 40%, transparent);
+  background: color-mix(in srgb, var(--red) 10%, transparent);
+}
+
+.bottleneck-warning {
+  border-color: color-mix(in srgb, var(--amber) 35%, transparent);
+  background: color-mix(in srgb, var(--amber) 10%, transparent);
+}
+
+.bottleneck-info {
+  border-color: var(--border-default);
+  background: var(--bg-hover);
+}
+
+.bottleneckMessage {
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.bottleneckAction {
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
+.ctaButton {
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--bg-base);
+  background: var(--acc);
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-4);
+  cursor: pointer;
+  transition: filter var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+  box-shadow: var(--shadow-soft);
+}
+
+.ctaButton:hover:not(:disabled) {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.ctaButton:focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 2px;
+}
+
+.ctaButton:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.ctaButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  background: color-mix(in srgb, black 65%, transparent);
+  z-index: 50;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 360px;
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  border: var(--border-width) solid var(--border-default);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-lg);
+}
+
+.modalTitle {
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.modalInput {
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  background: var(--bg-hover);
+  border: var(--border-width) solid var(--border-default);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  outline: none;
+}
+
+.modalInput:focus {
+  border-color: var(--acc);
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+.modalCancel,
+.modalConfirm {
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+  border: var(--border-width) solid var(--border-default);
+}
+
+.modalCancel {
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.modalConfirm {
+  background: var(--acc);
+  color: var(--bg-base);
+  border-color: transparent;
+}
+
+.modalCancel:disabled,
+.modalConfirm:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+.modalError {
+  font-family: var(--font-family);
+  font-size:   var(--font-size-xs);
+  color:       var(--red);
+}
+</file>
+
+<file path="src/components/common/FunnelSimulator.module.css">
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  height: 100%;
+}
+
+.diagnosticBox {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: var(--space-2) var(--space-3);
+  border: var(--border-width) solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: var(--bg-hover);
+}
+
+.diagnosticStrong {
+  color: var(--text-primary);
+}
+
+.slidersBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sliderGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.degradedHint {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--amber);
+}
+
+.saturationAlert {
+  padding: var(--space-3);
+  border: var(--border-width) solid color-mix(in srgb, var(--amber) 30%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--amber) 10%, transparent);
+  font-family: var(--font-family);
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--amber);
+}
+
+.footerActions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto;
+}
+
+.exportBtn {
+  appearance: none;
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-4);
+  background: var(--acc);
+  color: var(--bg-base);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+}
+
+.exportBtn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.04);
+}
+
+.exportBtn:focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 2px;
+}
+
+.exportBtn:active {
+  transform: translateY(0);
+}
+</file>
+
+<file path="src/components/common/RecommendationAlert.module.css">
+/* RecommendationAlert.module.css
+   Migrado de Tailwind (border-rose-500/60, bg-rose-950/40...) para tokens.
+   Reaproveita o mesmo vocabulário de severidade de AlertCard/Semaphore
+   (critical → --red, warning → --amber, healthy → --green) em vez de uma
+   paleta própria (rose/amber/emerald do Tailwind), pra não criar uma quarta
+   variação de "vermelho" no sistema.
+
+   ✅ FIX: fundo/borda/glow do cartão inteiro agora vêm do <GlassCard> real
+   (mesmo componente usado em AvatarComparison/AlignmentBars), com
+   glowColor mapeado do status (critical→red, warning→gold, healthy→green).
+   .wrapper deixou de desenhar border/background própria — só define
+   --sev-color, usado pelos elementos internos (badge, ícone, headline). */
+
+.wrapper {
+  overflow: hidden;
+  padding: 0 !important;
+}
+
+.critical { --sev-color: var(--red); }
+.warning  { --sev-color: var(--amber); }
+.healthy  { --sev-color: var(--green); }
+
+.headerBtn {
+  display:      flex;
+  align-items:  center;
+  gap:          var(--space-3);
+  width:        100%;
+  padding:      var(--space-4);
+  text-align:   left;
+  background:   transparent;
+  border:       none;
+  cursor:       pointer;
+  transition:   background var(--transition-fast);
+}
+
+.headerBtn:hover {
+  background: var(--bg-hover);
+}
+
+.iconBadge {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  flex-shrink:     0;
+  width:           36px;
+  height:          36px;
+  border-radius:   var(--radius-md);
+  background:      color-mix(in srgb, var(--sev-color) 20%, transparent);
+  font-size:       var(--font-size-lg);
+}
+
+.headerText {
+  flex:      1;
+  min-width: 0;
+}
+
+.metaRow {
+  display:      flex;
+  align-items:  center;
+  gap:          var(--space-2);
+  flex-wrap:    wrap;
+  margin-bottom: 2px;
+}
+
+.badge {
+  font-family:    var(--font-family);
+  font-size:      10px;
+  font-weight:    700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding:        1px 8px;
+  border:         var(--border-width) solid color-mix(in srgb, var(--sev-color) 30%, transparent);
+  border-radius:  var(--radius-sm);
+  background:     color-mix(in srgb, var(--sev-color) 20%, transparent);
+  color:          var(--sev-color);
+}
+
+.scoreText {
+  font-family: var(--font-family);
+  font-size:   var(--font-size-xs);
+  color:       var(--text-muted);
+}
+
+.headline {
+  font-family: var(--font-family);
+  font-size:   var(--font-size-sm);
+  font-weight: 600;
+  color:       var(--sev-color);
+}
+
+.chevron {
+  flex-shrink: 0;
+  font-family: var(--font-family);
+  font-size:   10px;
+  color:       var(--text-muted);
+}
+
+.body {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-2);
+  padding:        0 var(--space-4) var(--space-4);
+}
+
+.divider {
+  height:     1px;
+  background: var(--border-default);
+  margin-bottom: var(--space-1);
+}
+
+.item {
+  display:        flex;
+  gap:            var(--space-3);
+  padding:        var(--space-3);
+  border:         var(--border-width) solid var(--border-default);
+  border-radius:  var(--radius-md);
+  background:     var(--bg-hover);
+}
+
+.itemIcon {
+  flex-shrink: 0;
+  font-size:   var(--font-size-base);
+  margin-top:  1px;
+}
+
+.itemTitle {
+  font-family: var(--font-family);
+  font-size:   var(--font-size-sm);
+  font-weight: 600;
+  color:       var(--text-secondary);
+}
+
+.itemDesc {
+  font-family: var(--font-family);
+  font-size:   var(--font-size-xs);
+  line-height: 1.6;
+  color:       var(--text-muted);
+  margin-top:  2px;
+}
+</file>
+
+<file path="src/components/common/StatusPill.module.css">
+/* StatusPill.module.css */
+
+.pill {
+  display:        inline-block;
+  border-radius:  var(--border-radius-sm);
+  padding:        2px 8px;
+  font-size:      var(--font-size-xs);
+  font-family:    var(--font-family);
+  font-weight:    var(--font-weight-bold);
+  letter-spacing: 0.5px;
+  white-space:    nowrap;
+}
+
+/* rgba(...) fixo trocado por color-mix() a partir do token — uma fonte só
+   por cor, sem precisar redigitar o valor RGB do neon em cada regra. */
+
+.cyan {
+  background:  color-mix(in srgb, var(--neon-cyan) 10%, transparent);
+  border:      var(--border-width) solid color-mix(in srgb, var(--neon-cyan) 40%, transparent);
+  color:       var(--neon-cyan);
+  text-shadow: 0 0 6px color-mix(in srgb, var(--neon-cyan) 40%, transparent);
+}
+
+.red {
+  background:  color-mix(in srgb, var(--neon-red) 10%, transparent);
+  border:      var(--border-width) solid color-mix(in srgb, var(--neon-red) 40%, transparent);
+  color:       var(--neon-red);
+  text-shadow: 0 0 6px color-mix(in srgb, var(--neon-red) 40%, transparent);
+}
+
+.gold {
+  background:  color-mix(in srgb, var(--neon-gold) 10%, transparent);
+  border:      var(--border-width) solid color-mix(in srgb, var(--neon-gold) 40%, transparent);
+  color:       var(--neon-gold);
+  text-shadow: 0 0 6px color-mix(in srgb, var(--neon-gold) 40%, transparent);
+}
+
+.green {
+  background:  color-mix(in srgb, var(--neon-green) 10%, transparent);
+  border:      var(--border-width) solid color-mix(in srgb, var(--neon-green) 40%, transparent);
+  color:       var(--neon-green);
+  text-shadow: 0 0 6px color-mix(in srgb, var(--neon-green) 40%, transparent);
+}
+</file>
+
+<file path="src/components/content/CriticalAlert.module.css">
+/* ============================================================================
+   CriticalAlert.module.css — Refatoração 15/08/2026
+   Todos os valores vêm de ssot-design-tokens.css (var(--token)). Nenhum
+   :root local redeclarado — token duplicado era exatamente a causa da
+   divergência de paleta entre este arquivo e AlertCard.module.css.
+   4 classes de severidade porque AlertSeverity tem 4 valores reais
+   (info|warning|critical|success) — ver orbit.ts.
+   ============================================================================ */
+
+.card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  border: var(--border-width) solid var(--line);
+  border-radius: var(--r12);
+  padding: var(--space-4) var(--space-5);
+  width: 100%;
+  background-color: var(--bg2);
+  font-family: var(--font);
+  transition: all var(--transition-fast);
+}
+
+.critical {
+  background: linear-gradient(135deg, rgba(255, 68, 68, 0.08), transparent);
+  border-color: var(--neon-red);
+  box-shadow: var(--shadow-glow-red);
+}
+
+.warning {
+  background: linear-gradient(135deg, rgba(255, 195, 0, 0.08), transparent);
+  border-color: var(--neon-gold);
+  box-shadow: var(--shadow-glow-gold);
+}
+
+.info {
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.06), transparent);
+  border-color: var(--neon-cyan);
+  box-shadow: var(--shadow-glow-cyan);
+}
+
+.success {
+  background: linear-gradient(135deg, rgba(46, 204, 113, 0.06), transparent);
+  border-color: var(--green);
+  /* EXTRAPOLADO: não existe --shadow-glow-green em ssot-design-tokens.css;
+     valor abaixo segue o mesmo padrão (cor do estado, alpha 0.2) dos glows
+     confirmados, mas não está no SSOT. */
+  box-shadow: 0 0 20px rgba(46, 204, 113, 0.2);
+}
+
+.icon {
+  font-size: var(--font-size-lg);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--t0);
+}
+
+.body {
+  font-size: var(--font-size-xs);
+  color: var(--t1);
+  line-height: var(--line-height-base);
+}
+
+.action {
+  align-self: flex-start;
+  margin-top: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border: none;
+  border-radius: var(--r4);
+  background: transparent;
+  color: var(--acc);
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color var(--transition-fast);
+}
+
+.action:hover {
+  color: var(--acc2-text); /* FIX WCAG: --acc2 puro é 4.17:1 sobre --bg2 (falha AA) */
+}
+
+.label {
+  font-weight: var(--font-weight-bold);
+  color: var(--t0);
+}
+
+.actionText {
+  margin-top: var(--space-1);
+  font-size: var(--font-size-xs);
+  color: var(--t0);
+  line-height: var(--line-height-base);
+}
+</file>
+
+<file path="src/components/kpi/GlowingNumber.module.css">
+/* GlowingNumber.module.css */
+
+.wrapper {
+  display:     inline-flex;
+  align-items: baseline;
+  gap:         var(--space-1);
+}
+
+.number {
+  font-family:    var(--font-mono);
+  font-weight:    var(--font-weight-bold);
+  letter-spacing: -0.5px;
+  line-height:    1;
+}
+
+/* Tamanhos */
+.sizeSm { font-size: var(--font-size-xl);  }
+.sizeMd { font-size: var(--font-size-2xl); }
+.sizeLg { font-size: var(--font-size-3xl); }
+.sizeXl { font-size: var(--font-size-4xl); }
+
+/* Cores + glow */
+.cyan {
+  color:       var(--neon-cyan);
+  text-shadow: 0 0 12px rgba(0, 255, 255, 0.6), 0 0 24px rgba(0, 255, 255, 0.2);
+}
+
+.red {
+  color:       var(--neon-red);
+  text-shadow: 0 0 12px rgba(255, 68, 68, 0.6), 0 0 24px rgba(255, 68, 68, 0.2);
+}
+
+.gold {
+  color:       var(--neon-gold);
+  text-shadow: 0 0 12px rgba(255, 195, 0, 0.6), 0 0 24px rgba(255, 195, 0, 0.2);
+}
+
+.green {
+  color:       var(--neon-green);
+  text-shadow: 0 0 12px rgba(46, 204, 113, 0.6), 0 0 24px rgba(46, 204, 113, 0.2);
+}
+
+.muted {
+  color:       var(--text-muted);
+  text-shadow: none;
+}
+
+/* Unidade */
+.unit {
+  font-size:   var(--font-size-xs);
+  color:       var(--text-dim);
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: 0.5px;
+}
+</file>
+
+<file path="src/components/kpi/SemaphoreIndicator.module.css">
+/* SemaphoreIndicator.module.css */
+
+.badge {
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  width:           20px;
+  height:          20px;
+  border-radius:   50%;
+  font-size:       10px;
+  font-weight:     var(--font-weight-bold);
+  flex-shrink:     0;
+  line-height:     1;
+}
+
+.verde {
+  background: rgba(46, 204, 113, 0.15);
+  border:     var(--border-width) solid var(--neon-green);
+  color:      var(--neon-green);
+}
+
+.ambar {
+  background: rgba(255, 195, 0, 0.15);
+  border:     var(--border-width) solid var(--neon-gold);
+  color:      var(--neon-gold);
+}
+
+.vermelho {
+  background: rgba(255, 68, 68, 0.15);
+  border:     var(--border-width) solid var(--neon-red);
+  color:      var(--neon-red);
+}
+
+/* ✅ NOVO (PR-A): 'neutro' = sem recorte de mercado (não é alerta, não é
+   "tudo bem" — é ausência de régua). Cinza deliberado, sem cor de semáforo,
+   pra não ser lido como positivo nem como atenção. */
+.neutro {
+  background: rgba(255, 255, 255, 0.06);
+  border:     var(--border-width) solid rgba(255, 255, 255, 0.24);
+  color:      rgba(255, 255, 255, 0.55);
+}
+</file>
+
+<file path="src/components/layout/Sidebar.module.css">
+/* Sidebar.module.css */
+
+.sidebar {
+  width:          var(--sidebar-width);
+  min-width:      var(--sidebar-width);
+  flex-shrink:    0; /* FIX a11y (15/09/2026): sem isso, um flex container
+    apertado deixa o navegador encolher a sidebar por baixo de 220px,
+    quebrando .navItem/.navLabel de forma imprevisível por tela. */
+  background:     var(--bg-card);
+  border-right:   var(--border-width) solid var(--border-default);
+  padding:        var(--space-5) var(--space-4);
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-1);
+  overflow-y:     auto;
+  height:         100%;
+}
+
+/* DECISÃO DE ESCOPO (15/09/2026): a sidebar não tem um padrão de colapso
+   (ícone-only + toggle) porque isso é uma funcionalidade nova — precisa de
+   estado, affordance de abrir/fechar e provavelmente tooltip nos ícones, e
+   inventar isso sem especificação arrisca esconder o texto do link do jeito
+   errado (display:none no .navLabel apagaria o nome acessível do link, já
+   que o ícone tem aria-hidden). Rede de segurança até essa decisão de
+   produto: abaixo de 900px o shell inteiro rola na horizontal em vez de
+   esmagar a sidebar ou o conteúdo — ver `(dashboard)/layout.tsx`. */
+
+/* Logo */
+
+.logo {
+  display:       flex;
+  align-items:   center;
+  gap:           var(--space-2);
+  padding-bottom: var(--space-5);
+  border-bottom: var(--border-width) solid var(--border-default);
+  margin-bottom: var(--space-2);
+}
+
+.logoBadge {
+  width:           28px;
+  height:          28px;
+  border-radius:   var(--border-radius-md);
+  background:      rgba(0, 255, 255, 0.1);
+  border:          var(--border-width) solid rgba(0, 255, 255, 0.3);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  font-size:       11px;
+  font-weight:     var(--font-weight-bold);
+  color:           var(--neon-cyan);
+  text-shadow:     0 0 8px var(--neon-cyan);
+  flex-shrink:     0;
+}
+
+.logoName {
+  font-size:      13px;
+  font-weight:    var(--font-weight-bold);
+  color:          var(--text-primary);
+  letter-spacing: 2px;
+}
+
+.logoSub {
+  font-size: var(--font-size-xs);
+  color:          var(--text-dim);
+  letter-spacing: 2px;
+  margin-top:     1px;
+}
+
+/* Cliente ativo */
+
+.clientBox {
+  background:    var(--bg-hover);
+  border:        var(--border-width) solid var(--border-default);
+  border-radius: var(--border-radius-md);
+  padding:       var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.clientLabel {
+  font-size: var(--font-size-xs);
+  color:          var(--text-dim);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom:  var(--space-1);
+}
+
+.clientName {
+  display:     flex;
+  align-items: center;
+  gap:         var(--space-2);
+  font-size:   var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color:       var(--text-primary);
+}
+
+.clientDot {
+  width:         6px;
+  height:        6px;
+  border-radius: 50%;
+  background:    var(--neon-green);
+  box-shadow:    0 0 6px var(--neon-green);
+  margin-left:   auto;
+}
+
+/* Seção label */
+
+.sectionLabel {
+  font-size: var(--font-size-xs);
+  color:          var(--text-dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding:        var(--space-4) var(--space-2) var(--space-2);
+}
+
+/* Nav */
+
+.navList {
+  list-style:     none;
+  display:        flex;
+  flex-direction: column;
+  gap:            2px;
+}
+
+.navItem {
+  display:       flex;
+  align-items:   center;
+  gap:           var(--space-2);
+  padding:       var(--space-2) var(--space-3);
+  border-radius: var(--border-radius-md);
+  font-size:     var(--font-size-sm);
+  color:         var(--text-muted);
+  text-decoration: none;
+  transition:    background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+  border-left:   2px solid transparent;
+}
+
+.navItem:hover {
+  background: var(--bg-hover);
+  color:      var(--text-primary);
+}
+
+.navItemActive {
+  background:   var(--bg-hover);
+  color:        var(--text-primary);
+  border-left:  2px solid var(--neon-cyan);
+}
+
+.navIcon {
+  font-size:   var(--font-size-base);
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.navLabel {
+  flex: 1;
+  min-width: 0;
+  overflow:   hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Badges */
+
+.badge {
+  margin-left:   auto;
+  border:        var(--border-width) solid var(--border-default);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-xs);
+  padding:       1px 5px;
+  font-family:   var(--font-mono);
+  flex-shrink:   0;
+}
+
+.badgeDefault {
+  color: var(--text-dim);
+}
+
+.badgeAlert {
+  border-color: var(--border-glow-gold);
+  color:        var(--neon-gold);
+}
+</file>
+
+<file path="src/components/panels/SectorPositioningPanel.module.css">
+/* ==========================================================================
+   ORBIT · Component — SectorPositioningPanel.module.css
+   Bloco 1 da aba Audiência: setor/nicho/funil + benchmarking
+   Versão: 1.0.0  |  Data: 2026-08-31
+   
+   Alinhado 100% com TOKENS SSOT (src/lib/tokens.ts)
+   ========================================================================== */
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background-color: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: var(--r12);
+  box-shadow: var(--shadow-glow-cyan);
+  transition: all var(--transition-base);
+}
+
+.panel:hover {
+  border-color: var(--border-glow-cyan);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TÍTULO DO PAINEL
+   ═══════════════════════════════════════════════════════════════ */
+
+.panelTitle {
+  font-family: var(--font);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--neon-cyan);
+  text-transform: uppercase;
+  margin: 0;
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--line);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LINHA DE INFORMAÇÕES (Setor + Funil)
+   ═══════════════════════════════════════════════════════════════ */
+
+.infoRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+@media (max-width: 768px) {
+  .infoRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+.infoCard {
+  padding: var(--space-3);
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.08) 0%, rgba(0, 255, 255, 0.04) 100%);
+  border: 1px solid rgba(0, 255, 255, 0.15);
+  border-radius: var(--r8);
+  transition: all var(--transition-fast);
+}
+
+.infoCard:hover {
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.12) 0%, rgba(0, 255, 255, 0.08) 100%);
+  border-color: rgba(0, 255, 255, 0.3);
+}
+
+.infoLabel {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--text-muted); /* FIX WCAG: era var(--t2), 3.21:1 sobre hover — falha AA. --text-muted já resolve para --t1 (8:1+) */
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin: 0 0 var(--space-2) 0;
+}
+
+.infoValue {
+  font-family: var(--font);
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--t0);
+  margin: 0 0 var(--space-1) 0;
+  line-height: 1.3;
+}
+
+.infoSub {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  color: var(--t1);
+  margin: var(--space-1) 0 0 0;
+  line-height: 1.4;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LABEL DE BLOCO (BENCHMARKING)
+   ═══════════════════════════════════════════════════════════════ */
+
+.blockLabel {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--neon-cyan);
+  text-transform: uppercase;
+  margin: var(--space-4) 0 var(--space-3) 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GRID DE MÉTRICAS (ER Real, VPS, Score Polêmica)
+   ═══════════════════════════════════════════════════════════════ */
+
+.metricsRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+@media (max-width: 1024px) {
+  .metricsRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .metricsRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+.metricCard {
+  padding: var(--space-3);
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+  border: 1px solid var(--line);
+  border-radius: var(--r8);
+  text-align: center;
+  transition: all var(--transition-fast);
+}
+
+.metricCard:hover {
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+  border-color: rgba(0, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.metricLabel {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--text-muted); /* FIX WCAG: era var(--t2), 3.21:1 sobre hover — falha AA. --text-muted já resolve para --t1 (8:1+) */
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin: 0 0 var(--space-2) 0;
+}
+
+.metricValue {
+  font-family: var(--mono);
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--neon-cyan);
+  margin: 0 0 var(--space-2) 0;
+  line-height: 1.2;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BADGES DE STATUS (Verde, Amarelo, Vermelho)
+   ═══════════════════════════════════════════════════════════════ */
+
+.badgeNeutral {
+  display: inline-block;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--r4);
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  background-color: rgba(112, 110, 106, 0.2);
+  color: var(--t1);
+  border: 1px solid rgba(112, 110, 106, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.badgeWarning {
+  display: inline-block;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--r4);
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  background-color: rgba(255, 176, 32, 0.15);
+  color: var(--amber);
+  border: 1px solid var(--amber);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  box-shadow: 0 0 10px rgba(255, 176, 32, 0.2);
+}
+
+.badgeDanger {
+  display: inline-block;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--r4);
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  background-color: rgba(255, 68, 68, 0.15);
+  color: var(--red);
+  border: 1px solid var(--red);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  box-shadow: 0 0 10px rgba(255, 68, 68, 0.2);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TEXTO DE REGRA (Declaração de regra / threshold)
+   ═══════════════════════════════════════════════════════════════ */
+
+.ruleText {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  color: var(--t1);
+  padding: var(--space-3);
+  padding-left: var(--space-4);
+  border-left: 3px solid var(--neon-cyan);
+  background-color: rgba(0, 255, 255, 0.05);
+  border-radius: var(--r8);
+  margin-top: var(--space-3);
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.ruleText::before {
+  content: "ℹ";
+  display: inline-block;
+  margin-right: var(--space-2);
+  color: var(--neon-cyan);
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVIDADE E ACESSIBILIDADE
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .infoCard,
+  .metricCard {
+    transition: none;
+  }
+}
+
+/* Focus visible para acessibilidade */
+.panel:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 2px;
+}
+
+.metricCard:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 1px;
+}
+</file>
+
+<file path="src/components/screens/IGOverviewScreen.module.css">
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: var(--space-6);
+}
+
+/* .section-head — título+subtítulo à esquerda, tabs à direita, mesma linha */
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  font-family: var(--font-family);
+  font-size: var(--font-size-xl);
+  font-weight: 500;
+  color: var(--text-primary);
+  letter-spacing: -0.2px;
+}
+
+.subtitle {
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+}
+
+/* Segmented control — mesmo padrão de AlertasScreen.module.css (.tabs/.tab/.tab.on) */
+.tabs {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+  padding: 3px;
+  border: var(--border-width) solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg-hover);
+}
+
+.tab {
+  padding: 5px 14px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.tabOn {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
+}
+
+/* KPI row — .grid4 do protótipo: 4 colunas, gap 12px (--space-3) */
+.kpiRow {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: var(--space-3);
+}
+
+@media (min-width: 640px) {
+  .kpiRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1200px) {
+  .kpiRow {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Scores + performance — .grid2 do protótipo: 2 colunas iguais, gap 16px (--space-4) */
+.midRow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .midRow {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.rightPanel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.insightStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* Diagnóstico — sub-título de seção sem card ao redor, igual ao protótipo (linha ~832) */
+.diagnosticHead {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.alertRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.stateCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-12) 0;
+}
+
+.loadingDot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin: 0 3px;
+  border-radius: 50%;
+  background: var(--acc);
+  animation: bounce 1s infinite ease-in-out;
+}
+
+@keyframes bounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0.6);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.errorText {
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  color: var(--red);
+}
+</file>
+
+<file path="src/components/common/AvatarComparison.module.css">
+/* ==========================================================================
+   ORBIT · Component — AvatarComparison
+   Layout lado a lado (Avatar Esperado × Audiência Real) com divisor "VS".
+   Resolve seu próprio glow a partir de `status` — não recebe cor pronta.
+   Versão: 2.1.0
+   ========================================================================== */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+/* Eyebrow — --t3 removido: sobre --bg2 caía perto de 2:1, ilegível */
+.sectionLabel {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--t1);
+}
+
+.row {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-3);
+}
+
+.cardSlot {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Divisor "VS" — largura fixa de 24px (var(--space-6)) */
+.divider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  width: var(--space-6);
+  flex-shrink: 0;
+}
+
+.dividerLine {
+  width: 1px;
+  flex: 1;
+  background: linear-gradient(to bottom, transparent, var(--line2), transparent);
+}
+
+.vsLabel {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 2px;
+  color: var(--t1);
+}
+</file>
+
+<file path="src/components/common/Semaphore.module.css">
+/* Semaphore.module.css — paleta neon única (cyan/gold/red/none) */
+
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.md { width: 20px; height: 20px; font-size: 10px; }
+.sm { width: 14px; height: 14px; font-size: var(--font-size-xs); }
+
+.cyan {
+  background: rgba(0, 255, 255, 0.15);
+  border: var(--border-width) solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  box-shadow: 0 0 6px rgba(0, 255, 255, 0.35);
+}
+.gold {
+  background: rgba(255, 195, 0, 0.15);
+  border: var(--border-width) solid var(--neon-gold);
+  color: var(--neon-gold);
+  box-shadow: 0 0 6px rgba(255, 195, 0, 0.35);
+}
+.red {
+  background: rgba(255, 68, 68, 0.15);
+  border: var(--border-width) solid var(--neon-red);
+  color: var(--neon-red);
+  box-shadow: 0 0 6px rgba(255, 68, 68, 0.35);
+}
+.none {
+  background: rgba(112, 110, 106, 0.12);
+  border: var(--border-width) solid var(--line);
+  color: var(--t1);
+}
+
+.label {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+}
+</file>
+
+<file path="src/components/common/Slider.module.css">
+/* Slider.module.css
+   Espelha .slider-wrap/.slider-head/.slider-label/.slider-val e o
+   input[type=range] do protótipo (linhas ~210-217). */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.label {
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.labelGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.tooltipTrigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  padding: 0;
+  border: 1px solid var(--border-default);
+  border-radius: 50%;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1;
+  cursor: help;
+}
+
+.tooltipTrigger:focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 2px;
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  bottom: calc(100% + var(--space-2));
+  width: min(250px, 70vw);
+  padding: var(--space-2) var(--space-3);
+  border: var(--border-width) solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: var(--bg4);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+  line-height: 1.45;
+  box-shadow: var(--shadow-soft);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(4px);
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.tooltipTrigger:hover .tooltip,
+.tooltipTrigger:focus-visible .tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.valueDisplay {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.trackRow {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.trackFill {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 5px;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: var(--bg-active);
+  pointer-events: none;
+}
+
+.trackFillInner {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--acc);
+  opacity: 0.85;
+  transition: width 75ms linear;
+}
+
+.input {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  appearance: none;
+  background: transparent;
+}
+
+.input:focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 4px;
+  border-radius: var(--radius-pill);
+}
+
+.input::-webkit-slider-runnable-track {
+  height: 5px;
+  border-radius: var(--radius-pill);
+  background: transparent;
+}
+
+.input::-webkit-slider-thumb {
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--text-primary);
+  border: 2px solid var(--acc);
+  box-shadow: 0 0 0 3px rgba(24, 160, 255, 0.2);
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  margin-top: -5px;
+}
+
+.input::-webkit-slider-thumb:hover {
+  transform: scale(1.08);
+}
+
+.input::-moz-range-track {
+  height: 5px;
+  border-radius: var(--radius-pill);
+  background: transparent;
+}
+
+.input::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--acc);
+  border-radius: 50%;
+  background: var(--text-primary);
+  cursor: pointer;
+}
+
+.rangeLabels {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.rangeLabel {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+</file>
+
+<file path="src/styles/ssot-globals.css">
+/* ==========================================================================
+   ORBIT · App Globals (Dual Design System)
+   Versão: 2.1.0  |  Data: 2026-09-07
+   ========================================================================== */
+
+/* Os arquivos CSS Modules são descobertos pelo Tailwind a partir do entrypoint global. */
+@import 'tailwindcss';
+
+/* Restaura o fundo absoluto do Orbit (camada base #0C0C0F) */
+@layer base {
+  body {
+    background-color: #0C0C0F;
+    color: #F0EFE8;
+    font-family: 'DM Sans', sans-serif;
+  }
+}
+</file>
+
+<file path="src/components/common/AlignmentBars.module.css">
+/* AlignmentBars.module.css */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sectionLabel {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--t1);
+}
+
+.card {
+  padding: var(--space-5);
+}
+
+/* Ritmo vertical compacto entre itens */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.itemDivider {
+  padding-top: var(--space-4);
+  border-top: var(--border-width) solid var(--line);
+}
+
+.labelRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.labelLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.label {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--t1);
+}
+
+.metricsRight {
+  display: flex;
+  gap: var(--space-3);
+  font-size: var(--font-size-xs);
+  color: var(--t1);
+}
+
+.metricValue {
+  font-weight: 700;
+  color: var(--t1);
+}
+
+/* ─── Régua compacta — TOLERÂNCIA ZERO acima de 8px ─── */
+/* REDESENHADO (19/09/2026): seguindo o vocabulário visual de
+   FunnelStep.module.css (".bar") — vazado, sem preenchimento sólido.
+   Trilho = glass card (fundo do card + borda), preenchimentos = gradiente
+   translúcido da cor semântica + borda de aresta + glow, não bloco opaco.
+   Nenhum prop/estrutura do componente mudou, só a linguagem visual. */
+.track {
+  position: relative;
+  height: 8px;
+  border-radius: var(--r4);
+  background: var(--bg-card); /* era var(--bg4) sólido */
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+.expectedFill {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  border-radius: var(--r4);
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--acc2) 18%, transparent) 0%,
+    color-mix(in srgb, var(--acc2) 4%, transparent) 100%
+  ); /* era opacidade 35% fixa — gradiente tênue, mesma leitura do Funil */
+  border-right: 1px solid color-mix(in srgb, var(--acc2) 55%, transparent);
+  transition: width var(--transition-slow);
+}
+.realFill {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  border-radius: var(--r4);
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--fill-color, var(--t1)) 32%, transparent) 0%,
+    color-mix(in srgb, var(--fill-color, var(--t1)) 6%, transparent) 100%
+  ); /* era bloco sólido a 90% de opacidade */
+  border-right: 2px solid var(--fill-color, var(--t1));
+  box-shadow: 0 0 6px color-mix(in srgb, var(--fill-color, var(--t1)) 45%, transparent);
+  transition: width var(--transition-slow);
+}
+.targetLine {
+  position: absolute;
+  inset-block: 0;
+  width: 2px;
+  background: var(--acc2);
+  box-shadow: 0 0 4px color-mix(in srgb, var(--acc2) 60%, transparent);
+}
+
+/* Foot row */
+.footRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.alignmentPill {
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  padding: 2px var(--space-2);
+  border-radius: var(--r4);
+  border: var(--border-width) solid transparent;
+}
+
+.legend {
+  display: flex;
+  gap: var(--space-3);
+  font-size: var(--font-size-xs);
+  color: var(--t1);
+}
+
+.legendSwatch,
+.legendSwatchExpected {
+  display: inline-block;
+  width: 10px;
+  height: 4px;
+  border-radius: 2px;
+  margin-right: 4px;
+}
+
+.legendSwatch {
+  background: var(--fill-color, var(--t1)); /* chip pequeno da legenda continua solido de proposito -- so a barra grande virou vazada */
+}
+
+.legendSwatchExpected {
+  background: color-mix(in srgb, var(--acc2) 60%, transparent);
+}
+
+/* Glow classes — mesmo padrão de GlassCard.tsx */
+.dotCyan { background: var(--neon-cyan); }
+.dotGold { background: var(--neon-gold); }
+.dotRed  { background: var(--neon-red); }
+.dotGreen { background: var(--neon-green); }
+.dotNone { background: var(--t2); }
+
+.fillCyan { --fill-color: var(--neon-cyan); }
+.fillGold { --fill-color: var(--neon-gold); }
+.fillRed  { --fill-color: var(--neon-red); }
+.fillGreen { --fill-color: var(--neon-green); }
+.fillNone { --fill-color: var(--t2); }
+
+.pillCyan { color: var(--neon-cyan); border-color: color-mix(in srgb, var(--neon-cyan) 40%, transparent); background: color-mix(in srgb, var(--neon-cyan) 8%, transparent); }
+.pillGold { color: var(--neon-gold); border-color: color-mix(in srgb, var(--neon-gold) 40%, transparent); background: color-mix(in srgb, var(--neon-gold) 8%, transparent); }
+.pillRed  { color: var(--neon-red);  border-color: color-mix(in srgb, var(--neon-red) 40%, transparent); background: color-mix(in srgb, var(--neon-red) 8%, transparent); }
+.pillGreen { color: var(--neon-green); border-color: color-mix(in srgb, var(--neon-green) 40%, transparent); background: color-mix(in srgb, var(--neon-green) 8%, transparent); }
+.pillNone { color: var(--t1);        border-color: var(--line); }
+</file>
+
+<file path="src/components/common/AvatarCard.module.css">
+/* AvatarCard.module.css */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.icon {
+  font-size: var(--font-size-xl);
+  line-height: 1;
+}
+
+.titleBadge {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--t1);
+}
+
+.block {
+  margin-bottom: var(--space-4);
+}
+
+/* Corrigido: labels de dado real (Gênero, Faixa Etária...) saem de --t3 → --t2 */
+.blockLabel {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--t1);
+  margin-bottom: var(--space-2);
+}
+
+/* Gênero — trilho compacto, 8px */
+.genderTrack {
+  position: relative;
+  height: 8px;
+  border-radius: var(--r4);
+  background: var(--bg4);
+  overflow: hidden;
+  margin-bottom: var(--space-2);
+}
+
+.genderFill {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  border-radius: var(--r4);
+  transition: width var(--transition-slow);
+}
+
+.genderLegend {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-xs);
+  color: var(--t1);
+}
+
+.genderValue {
+  font-weight: var(--font-weight-bold);
+}
+
+/* Valores */
+.value {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--t0);
+}
+
+.text {
+  font-size: var(--font-size-base);
+  color: var(--t1);
+  font-weight: 500;
+}
+
+.geoRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-size-base);
+  color: var(--t1);
+  font-weight: 500;
+}
+
+.confidenceTag {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--t1);
+}
+
+/* Insight */
+.insightBlock {
+  margin-top: auto;
+  padding-top: var(--space-4);
+  border-top: var(--border-width) solid var(--line);
+}
+
+.insightText {
+  font-size: var(--font-size-sm);
+  color: var(--t1);
+  line-height: 1.5;
+}
+
+/* Único uso de tom apagado legítimo: placeholder, não dado real */
+.insightFallback {
+  color: var(--text-muted); /* FIX WCAG: era var(--t2), 3.21:1 sobre hover — falha AA. --text-muted já resolve para --t1 (8:1+) */
+  font-style: italic;
+}
+
+/* Glow classes — mesmo padrão de GlassCard.tsx / GlowingNumber.tsx */
+.fillCyan { background: var(--neon-cyan); }
+.fillGold { background: var(--neon-gold); }
+.fillRed  { background: var(--neon-red); }
+.fillGreen { background: var(--neon-green); }
+.fillNone { background: var(--t2); }
+
+.textCyan { color: var(--neon-cyan); }
+.textGold { color: var(--neon-gold); }
+.textRed  { color: var(--neon-red); }
+.textGreen { color: var(--neon-green); }
+.textNone { color: var(--t1); }
+</file>
+
+<file path="src/components/common/FunnelStep.module.css">
+/* FunnelStep.module.css
+   ============================================================================
+   CORES: a cor de cada etapa (--step-color) chega pronta via inline style,
+   já resolvida em FunnelChart.tsx a partir do vocabulário GlowColor
+   ('cyan' | 'gold' | 'red') — o mesmo usado em KPICardData, QualityScoreItem,
+   FormatPerformanceRow e no glow do GlassCard deste painel. Este arquivo
+   nunca decide cor sozinho; só consome --step-color. Isso evita reintroduzir
+   um tom fora do sistema (ex.: --acc, que no SSOT real é #C8FF57 — verde-
+   lima de marca, não um substituto de azul).
+
+   LAYOUT (cascata): a etapa inteira (barra + badge de queda) encolhe como
+   uma unidade só via `width` real em `.stepInner` (ver FunnelStep.tsx) —
+   nunca via flex-basis num contêiner column, que controla altura, não
+   largura, e era a causa do desalinhamento/overlap anterior.
+   ============================================================================ */
+
+.stepContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2, 0.5rem);
+  padding: var(--space-1, 0.25rem) 0;
+  width: 100%;
+}
+
+.stepInner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1, 0.25rem);
+  min-width: min(220px, 100%);
+  margin: 0 auto;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3, 0.75rem);
+  min-height: 48px;
+  padding: var(--space-2, 0.5rem) var(--space-4, 1rem);
+  border-radius: var(--radius-lg, 8px);
+  /* Glass: sem preenchimento sólido — fundo do card + tint mínimo da cor da
+     etapa, com borda e glow interno seguindo --step-color (mesma linguagem
+     dos variantes glow* do GlassCard). */
+  background:
+    linear-gradient(135deg,
+      color-mix(in srgb, var(--step-color) 8%, transparent) 0%,
+      color-mix(in srgb, var(--step-color) 2%, transparent) 100%),
+    var(--bg-card);
+  border: 1px solid color-mix(in srgb, var(--step-color) 45%, transparent);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.25),
+    inset 0 0 12px color-mix(in srgb, var(--step-color) 10%, transparent);
+  transition:
+    transform var(--transition-fast, 120ms ease),
+    box-shadow var(--transition-fast, 120ms ease),
+    border-color var(--transition-fast, 120ms ease);
+}
+
+.bar:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--step-color) 70%, transparent);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.35),
+    inset 0 0 16px color-mix(in srgb, var(--step-color) 16%, transparent);
+}
+
+.barInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.name,
+.label {
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--text-primary); /* era #fff literal — --t0 é visualmente equivalente e é o token oficial */
+  font-weight: var(--font-weight-semibold, 600);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.value {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs, 0.75rem);
+  color: color-mix(in srgb, var(--text-primary) 82%, transparent); /* era rgba(255,255,255,.82) literal */
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.percentage {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm, 0.875rem);
+  font-weight: var(--font-weight-bold, 700);
+  color: var(--step-color);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.dropoffWrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2, 0.5rem);
+  padding-right: var(--space-1, 0.25rem);
+}
+
+.dropoffBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 0.35rem;
+  border-radius: var(--radius-pill, 9999px);
+  background: color-mix(in srgb, var(--step-color) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--step-color) 35%, transparent);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs, 0.75rem);
+  font-weight: var(--font-weight-bold, 700);
+  letter-spacing: 0.02em;
+  color: var(--step-color);
+}
+
+.dropoffLabel {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs, 0.75rem);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.dropoffNote {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs, 0.75rem);
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: right;
+}
+
+/* Linha fina conectando esta etapa à próxima — reforça a leitura de
+   cascata/funil entre retângulos de largura decrescente. */
+.connector {
+  width: 1px;
+  height: var(--space-3, 0.75rem);
+  background: linear-gradient(180deg, var(--border-default), transparent);
+}
+</file>
+
+<file path="src/components/content/AudienceSummaryPanel.module.css">
+/* ==========================================================================
+   ORBIT · Component — AudienceSummaryPanel
+   Versão: 1.0.0  |  Data: 2026-08-31
+
+   Design Logic:
+   - .panel: GlassCard container (cyan glow, como QualityScoresPanel)
+   - .statsRow: 3 colunas (flex, gap-3) — padrão de CriticalAlert
+   - .genderBlock: Barra de progresso horizontal (stacked) + legenda
+   - .citiesBlock: Lista com ranking (city name + percentage)
+   - Tipografia: Sans para labels, Monospace para números (FormatPerformanceTable)
+   - Cores: Tokens do SSOT, sem hardcoded
+   - Transições: suaves em hover/expand
+   ========================================================================== */
+
+/* ── Container principal ────────────────────────────────────────────────── */
+
+.panel {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-4);
+}
+
+.panelTitle {
+  font-size: var(--font-size-xs);
+  letter-spacing: 2px;
+  color:          var(--text-dim);
+  font-weight:    var(--font-weight-bold);
+  text-transform: uppercase;
+  margin:         0;
+}
+
+/* ── Stats Row (3 colunas: Alcance, Visitas, Cliques) ──────────────────── */
+
+.statsRow {
+  display:        flex;
+  gap:            var(--space-3);
+  flex-wrap:      wrap;
+}
+
+.stat {
+  flex:           1;
+  min-width:      120px;
+  padding:        var(--space-3) var(--space-3);
+  background:     rgba(0, 255, 255, 0.04);
+  border:         var(--border-width) solid rgba(0, 255, 255, 0.15);
+  border-radius:  var(--r8);
+  transition:     all var(--transition-fast);
+}
+
+.stat:hover {
+  background:     rgba(0, 255, 255, 0.08);
+  border-color:   rgba(0, 255, 255, 0.25);
+}
+
+.statLabel {
+  font-size: var(--font-size-xs);
+  letter-spacing: 1px;
+  color:          var(--text-dim);
+  text-transform: uppercase;
+  margin:         0 0 var(--space-2) 0;
+  font-weight:    var(--font-weight-bold);
+}
+
+.statValue {
+  font-size:      var(--font-size-lg);
+  font-family:    var(--font-mono);
+  color:          var(--neon-cyan);
+  margin:         0;
+  line-height:    1;
+}
+
+/* ── Gender Block (Barra horizontal stacked + legenda) ───────────────────── */
+
+.genderBlock {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-3);
+  padding:        var(--space-3) var(--space-4);
+  background:     rgba(255, 195, 0, 0.04);
+  border:         var(--border-width) solid rgba(255, 195, 0, 0.15);
+  border-radius:  var(--r8);
+}
+
+.blockLabel {
+  font-size: var(--font-size-xs);
+  letter-spacing: 2px;
+  color:          var(--text-dim);
+  font-weight:    var(--font-weight-bold);
+  text-transform: uppercase;
+  margin:         0;
+}
+
+/* ── Gender Bar (Barra de progresso horizontal) ──────────────────────────── */
+
+.genderBar {
+  display:        flex;
+  width:          100%;
+  height:         24px;
+  background:     rgba(31, 31, 40, 0.5);
+  border-radius:  var(--r4);
+  overflow:       hidden;
+  border:         var(--border-width) solid rgba(255, 255, 255, 0.1);
+}
+
+.genderBarFemale {
+  background:     linear-gradient(90deg, rgba(255, 105, 180, 0.6), rgba(255, 105, 180, 0.4));
+  height:         100%;
+  transition:     width var(--transition-fast);
+  position:       relative;
+}
+
+.genderBarFemale::after {
+  content:        '';
+  position:       absolute;
+  top:            0;
+  left:           0;
+  right:          0;
+  bottom:         0;
+  background:     linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent);
+  pointer-events: none;
+}
+
+.genderBarMale {
+  background:     linear-gradient(90deg, rgba(74, 144, 255, 0.6), rgba(74, 144, 255, 0.4));
+  height:         100%;
+  transition:     width var(--transition-fast);
+  position:       relative;
+}
+
+.genderBarMale::after {
+  content:        '';
+  position:       absolute;
+  top:            0;
+  left:           0;
+  right:          0;
+  bottom:         0;
+  background:     linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent);
+  pointer-events: none;
+}
+
+/* ── Gender Legend (Dots + labels) ──────────────────────────────────────── */
+
+.genderLegend {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-2);
+  font-size:      var(--font-size-xs);
+  color:          var(--text-secondary);
+}
+
+.genderLegend span {
+  display:        flex;
+  align-items:    center;
+  gap:            var(--space-2);
+}
+
+.dotFemale {
+  display:        inline-block;
+  width:          8px;
+  height:         8px;
+  border-radius:  50%;
+  background:     rgba(255, 105, 180, 0.8);
+  flex-shrink:    0;
+}
+
+.dotMale {
+  display:        inline-block;
+  width:          8px;
+  height:         8px;
+  border-radius:  50%;
+  background:     rgba(74, 144, 255, 0.8);
+  flex-shrink:    0;
+}
+
+/* ── Cities Block (Lista de cidades com ranking) ──────────────────────────── */
+
+.citiesBlock {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-3);
+  padding:        var(--space-3) var(--space-4);
+  background:     rgba(46, 204, 113, 0.04);
+  border:         var(--border-width) solid rgba(46, 204, 113, 0.15);
+  border-radius:  var(--r8);
+}
+
+.citiesList {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--space-2);
+}
+
+.cityRow {
+  display:        flex;
+  justify-content: space-between;
+  align-items:    center;
+  padding:        var(--space-2) 0;
+  border-bottom:  var(--border-width) solid rgba(31, 31, 40, 0.3);
+  font-size:      var(--font-size-sm);
+}
+
+.cityRow:last-child {
+  border-bottom: none;
+}
+
+.cityName {
+  color:          var(--text-primary);
+  font-family:    var(--font);
+  font-weight:    var(--font-weight-medium);
+}
+
+.cityPct {
+  color:          var(--text-secondary);
+  font-family:    var(--font-mono);
+  font-size:      var(--font-size-xs);
+  min-width:      40px;
+  text-align:     right;
+}
+
+/* ── Empty State ────────────────────────────────────────────────────────── */
+
+.emptyState {
+  text-align:     center;
+  font-size:      var(--font-size-sm);
+  color:          var(--text-dim);
+  padding:        var(--space-4);
+  margin:         0;
+  font-style:     italic;
+}
+</file>
+
+<file path="src/components/content/QualityScoresPanel.module.css">
+/* ==========================================================================
+   ORBIT · Component — QualityScoresPanel.module.css
+   Grade 2×2: Score Utilidade · Score Polêmica · VFE · ER Real
+   Versão: 1.0.3  |  Data: 2026-10-05
+
+   MUDANÇA v1.0.3 (SSOT Compliance):
+   - Removidos TODOS os valores hardcoded rgba/gradientes
+   - Substituídos por tokens: --opacity-*, --color-*-rgb, --gradient-*, --shadow-*
+   - Resultado: 100% SSOT compliance, zero hardcoding
+   ========================================================================== */
+
+/* ═══════════════════════════════════════════════════════════════
+   PAINEL PRINCIPAL
+   ═══════════════════════════════════════════════════════════════ */
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background-color: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: var(--r12);
+  box-shadow: var(--shadow-glow-cyan);
+  transition: all var(--transition-base);
+}
+
+.panel:hover {
+  border-color: var(--border-glow-cyan);
+  box-shadow: var(--shadow-glow-cyan-30);  /* ✅ Token em vez de hardcoded */
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TÍTULO DO PAINEL
+   ═══════════════════════════════════════════════════════════════ */
+
+.panelTitle {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--neon-cyan);
+  text-transform: uppercase;
+  margin: 0;
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--line);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GRID 2×2
+   ═══════════════════════════════════════════════════════════════ */
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCORE BOX — BASE
+   ═══════════════════════════════════════════════════════════════ */
+
+.scoreBox {
+  padding: var(--space-3) var(--space-4);
+  background: var(--gradient-cyan-subtle);  /* ✅ Token em vez de hardcoded */
+  border: 1px solid var(--line);
+  border-radius: var(--r8);
+  transition: 
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    border-color var(--transition-fast),
+    background var(--transition-fast);
+  cursor: default;
+}
+.grid > .scoreBox:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+.scoreBox:hover {
+  background: var(--gradient-cyan-hover);  /* ✅ Token em vez de hardcoded */
+  transform: translateY(-2px);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCORE BOX — VARIANTES DE COR (Glow)
+   ═══════════════════════════════════════════════════════════════ */
+
+.boxCyan {
+  border-color: rgba(var(--color-cyan-rgb), var(--opacity-30));  /* ✅ RGB + opacity tokens */
+  box-shadow: var(--shadow-glow-cyan-inset);  /* ✅ Token */
+}
+
+.boxCyan:hover {
+  border-color: rgba(var(--color-cyan-rgb), var(--opacity-50));  /* ✅ RGB + opacity tokens */
+  box-shadow: var(--shadow-glow-cyan-inset-hover);  /* ✅ Token */
+}
+
+.boxRed {
+  border-color: rgba(var(--color-red-rgb), var(--opacity-30));  /* ✅ RGB + opacity tokens */
+  box-shadow: var(--shadow-glow-red-inset);  /* ✅ Token */
+}
+
+.boxRed:hover {
+  border-color: rgba(var(--color-red-rgb), var(--opacity-50));  /* ✅ RGB + opacity tokens */
+  box-shadow: var(--shadow-glow-red-inset-hover);  /* ✅ Token */
+}
+
+.boxGold {
+  border-color: rgba(var(--color-gold-rgb), var(--opacity-30));  /* ✅ RGB + opacity tokens */
+  box-shadow: var(--shadow-glow-gold-inset);  /* ✅ Token */
+}
+
+.boxGold:hover {
+  border-color: rgba(var(--color-gold-rgb), var(--opacity-50));  /* ✅ RGB + opacity tokens */
+  box-shadow: var(--shadow-glow-gold-inset-hover);  /* ✅ Token */
+}
+
+.boxNeutral {
+  border-color: var(--line);
+  box-shadow: none;
+}
+
+.boxNeutral:hover {
+  border-color: var(--line2);
+  background: var(--gradient-gray-hover);  /* ✅ Token em vez de hardcoded */
+}
+
+.boxGreen {
+  border-color: rgba(var(--color-green-rgb), var(--opacity-30));
+  box-shadow: var(--shadow-glow-green-inset);
+}
+
+.boxGreen:hover {
+  border-color: rgba(var(--color-green-rgb), var(--opacity-50));
+  box-shadow: var(--shadow-glow-green-inset-hover);
+}
+
+.statusSuccess {
+  color: var(--green);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CONTEÚDO INTERNO DO SCORE BOX
+   ═══════════════════════════════════════════════════════════════ */
+
+.scoreLabel {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);  /* ✅ Token em vez de hardcoded 500 */
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin: 0 0 var(--space-2) 0;
+}
+
+.scoreValue {
+  margin: 0 0 var(--space-2) 0;
+  line-height: 1;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.naValue {
+  font-family: var(--mono);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);  /* ✅ Token em vez de hardcoded 700 */
+  color: var(--t1);
+  line-height: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   STATUS TEXT
+   ═══════════════════════════════════════════════════════════════ */
+
+.statusText {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);  /* ✅ Token */
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin: 0;
+  line-height: var(--line-height-base);  /* ✅ Token em vez de hardcoded 1.4 */
+}
+
+.statusOk {
+  color: var(--green);
+}
+
+.statusWarn {
+  color: var(--amber);
+}
+
+.statusDanger {
+  color: var(--red-text);
+}
+
+.statusNeutral {
+  color: var(--text-muted);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVIDADE E ACESSIBILIDADE
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .scoreBox {
+    transition: none;
+  }
+
+  .scoreBox:hover {
+    transform: none;
+  }
+}
+
+.panel:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 2px;
+}
+
+.scoreBox:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 1px;
+}
+
+.actionText {
+  margin-top: var(--space-1);  /* ✅ Removido fallback manual */
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-base);  /* ✅ Token */
+  color: var(--text-primary);
+}
+
+.referenceNote {
+  margin-top: var(--space-1);  /* ✅ Removido fallback manual */
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-base);  /* ✅ Token */
+  font-style: italic;
+  color: var(--text-muted);
+}
+</file>
+
+<file path="src/components/screens/AvatarScreen.module.css">
+/* AvatarScreen.module.css */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-6);
+  /* ✅ FIX: min-height:100vh duplicava o 100vh que já vem do
+     src/app/(dashboard)/layout.tsx (Sidebar+conteúdo). vh sempre mede a
+     viewport, então os dois se somavam em vez de se conterem, deixando
+     uma sobra vazia enorme abaixo do conteúdo — o mesmo sintoma visto
+     no CarteiraScreen. min-height:100% preenche só o espaço que o
+     layout pai já reservou. */
+  min-height: 100%;
+  /* ✅ CORREÇÃO: sem max-width, o conteúdo esticava borda a borda em
+     monitores largos — cards ficavam desproporcionalmente largos/rasos.
+     Mesmo valor (1400px) que FunnelScreen.module.css/.main já usa para
+     o mesmo tipo de tela (área de conteúdo dentro do shell, sem sidebar
+     própria) — não um número novo inventado. */
+  max-width: 1500px;
+  width: 100%;
+  margin: 0 auto;
+  background: var(--bg);
+  font-family: var(--font);
+  color: var(--t0);
+}
+
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.headerText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.title {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.5px;
+  color: var(--t0);
+}
+
+.titleMuted {
+  font-weight: var(--font-weight-normal);
+  color: var(--t1);
+}
+
+/* Corrigido: --t2 sobre --bg fica ~4.2:1 (abaixo de AA 4.5:1) — usar --t1 */
+.subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--t1);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* ─── Skeleton ─── */
+
+.skeletonStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.skeletonRow {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.skeleton {
+  background: var(--bg4);
+  border: var(--border-width) solid var(--line);
+  border-radius: var(--r8);
+  animation: orbitPulse 1.5s ease-in-out infinite;
+}
+
+.skeletonCard {
+  flex: 1;
+  min-width: 0;
+  height: 208px;
+}
+
+.skeletonBars {
+  height: 160px;
+}
+
+.skeletonFormula {
+  height: 128px;
+}
+
+.skeletonRecs {
+  height: 96px;
+}
+
+@keyframes orbitPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ─── Estado centralizado (sem cliente, retrying, erro, idle) ───
+   Reaproveitado pelos 5 estados de erro de useAvatar() + guard de
+   clientId ausente — antes cada bloco improvisava seu próprio wrapper
+   Tailwind (min-h-screen flex items-center...), com paleta genérica
+   (gray-950/gray-900/blue-600) desconectada dos tokens SSOT que o
+   resto da tela (AvatarCard, AvatarComparison) já usa. */
+.center {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+}
+
+.centerInner {
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.stateIcon {
+  font-size: 40px;
+  line-height: 1;
+  margin-bottom: var(--space-2);
+}
+
+.stateIconSpin {
+  animation: orbitSpin 1s linear infinite;
+}
+
+@keyframes orbitSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.stateTitle {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--t0);
+}
+
+.stateBody {
+  font-size: var(--font-size-sm);
+  color: var(--t1);
+  line-height: 1.5;
+}
+
+/* Caixa "O que fazer" / "Possíveis causas" / detalhe técnico do erro —
+   substitui bg-gray-900/50 border-gray-800 (paleta genérica) */
+.detailCard {
+  width: 100%;
+  text-align: left;
+  background: var(--bg2);
+  border: var(--border-width) solid var(--line);
+  border-radius: var(--r8);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.detailTitle {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--t1);
+}
+
+.detailList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--t1);
+  list-style: none;
+}
+
+.errorDetail {
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  color: var(--t1);
+  word-break: break-word;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+/* Botão primário — mesmo acento único do sistema (--acc), nunca azul
+   genérico. Idioma visual de pílula já estabelecido em
+   AlertCard.module.css/.btn e FunnelScreen.module.css/.retryBtn. */
+.btnPrimary {
+  font-family: var(--font);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  padding: var(--space-2) var(--space-6);
+  border-radius: var(--radius-pill);
+  border: var(--border-width) solid var(--acc);
+  background: color-mix(in srgb, var(--acc) 18%, transparent);
+  color: var(--acc);
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    opacity var(--transition-fast);
+  width: 100%;
+}
+
+.btnPrimary:hover {
+  background: color-mix(in srgb, var(--acc) 28%, transparent);
+}
+.btnPrimary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Botão ghost — ação secundária (Atualizar Dados no rodapé da tela de sucesso) */
+.btnGhost {
+  font-family: var(--font);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  padding: var(--space-2) var(--space-6);
+  border-radius: var(--radius-pill);
+  border: var(--border-width) solid var(--line);
+  background: var(--bg2);
+  color: var(--t1);
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.btnGhost:hover {
+  background: var(--bg3);
+  color: var(--t0);
+}
+
+.hint {
+  font-size: var(--font-size-xs);
+  color: var(--t1);
+}
+
+/* Banner de erro genérico (isError sem errorCode) — full width, não
+   centralizado, aparece no topo da página como CriticalAlert já faz */
+.genericErrorBanner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--r12);
+  border: var(--border-width) solid
+    color-mix(in srgb, var(--red) 30%, transparent);
+  background: color-mix(in srgb, var(--red) 8%, transparent);
+}
+
+.genericErrorTitle {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--red);
+}
+
+.genericErrorBody {
+  font-size: var(--font-size-xs);
+  color: var(--t1);
+  margin-top: var(--space-1);
+}
+
+/* ─── Meta (última atualização) ─── */
+
+.metaLabel {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--t1);
+}
+
+.metaValue {
+  font-size: var(--font-size-xs);
+  color: var(--t1);
+  margin-top: var(--space-1);
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--space-4);
+}
+</file>
+
+<file path="src/components/screens/CarteiraScreen.module.css">
+/* ============================================================================
+   CarteiraScreen — CSS Modules
+   ============================================================================ */
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: var(--space-6);
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  /* ✅ FIX (proporção dos cards): estabelece um container query context.
+     A partir daqui, .kpiGrid e .clientsGrid reagem à largura REAL
+     disponível para o conteúdo (já descontada a sidebar de 220px),
+     em vez da largura da janela inteira do navegador — que é o que
+     @media sempre mede, e por isso os cards ficavam largos/rasos
+     depois que a sidebar entrou no layout. */
+  container-type: inline-size;
+  container-name: carteira;
+}
+
+@container carteira (min-width: 640px) {
+  .main {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* ─── Header Row ─────────────────────────────────────────────────────── */
+
+.headRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+/* ─── Tabs ───────────────────────────────────────────────────────────── */
+
+.tabsContainer {
+  border-radius: 1rem;
+  border: 1px solid var(--line);
+  background-color: var(--bg2);
+  padding: 0.5rem;
+}
+
+.tabsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: all 200ms;
+  border: none;
+  cursor: pointer;
+}
+
+.tabActive {
+  background-color: var(--bg3);
+  color: var(--t0);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.tabInactive {
+  background-color: transparent;
+  color: var(--t1);
+}
+
+.tabInactive:hover {
+  background-color: var(--bg3);
+  color: var(--t0);
+}
+
+/* ─── KPI Grid ───────────────────────────────────────────────────────── */
+
+.kpiGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+/* ✅ FIX: @media → @container (ver nota em .main) */
+@container carteira (min-width: 640px) {
+  .kpiGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.kpiCard {
+  border-radius: 1rem;
+  border: 1px solid var(--line);
+  background-color: var(--bg2);
+  padding: 1rem;
+  transition:
+    border-color var(--transition-base, 150ms),
+    box-shadow var(--transition-base, 150ms);
+}
+
+/* ✅ FIX (SSOT — 11/09/2026): os 3 KPIs eram visualmente idênticos, sem
+   nenhum destaque de severidade — mesmos tokens de glow que GlassCard.tsx
+   já usa em glowCyan/glowGold/glowRed (Visão Geral IG), aplicados aqui via
+   classe própria porque este card não passa por <GlassCard>. */
+.kpiCardNeutral {
+  border-color: var(--border-glow-cyan);
+  box-shadow: var(--shadow-inner-cyan);
+}
+
+.kpiCardWarning {
+  border-color: var(--border-glow-gold);
+  box-shadow: var(--shadow-inner-gold);
+}
+
+.kpiCardCritical {
+  border-color: var(--border-glow-red);
+  box-shadow: var(--shadow-inner-red);
+}
+
+.kpiLabel {
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--t1);
+}
+
+.kpiValue {
+  margin-top: 0.5rem;
+  font-family: var(--mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--t0);
+}
+
+.kpiValueWarning {
+  color: var(--amber);
+}
+
+.kpiValueError {
+  color: var(--red);
+}
+
+/* ─── Skeleton ───────────────────────────────────────────────────────── */
+
+.cardSkeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-radius: 1rem;
+  background-color: rgba(24, 24, 31, 0.5);
+  padding: 1rem;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.skeletonHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.skeletonAvatar {
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 9999px;
+  background-color: var(--bg4);
+}
+
+.skeletonInfo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.skeletonLine {
+  height: 0.75rem;
+  width: 8rem;
+  border-radius: 0.25rem;
+  background-color: var(--bg4);
+}
+
+.skeletonLineSmall {
+  height: 0.625rem;
+  width: 5rem;
+  border-radius: 0.25rem;
+  background-color: var(--bg4);
+}
+
+.skeletonDot {
+  height: 0.625rem;
+  width: 0.625rem;
+  border-radius: 9999px;
+  background-color: var(--bg4);
+}
+
+.skeletonDivider {
+  height: 1px;
+  width: 100%;
+  background-color: var(--line);
+}
+
+.skeletonGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.skeletonItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.skeletonLabel {
+  height: 0.5rem;
+  width: 3rem;
+  border-radius: 0.25rem;
+  background-color: var(--bg4);
+}
+
+.skeletonValue {
+  height: 0.875rem;
+  width: 4rem;
+  border-radius: 0.25rem;
+  background-color: var(--bg4);
+}
+
+.skeletonsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+/* ✅ FIX: @media → @container (ver nota em .main) */
+@container carteira (min-width: 640px) {
+  .skeletonsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container carteira (min-width: 1024px) {
+  .skeletonsGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@container carteira (min-width: 1280px) {
+  .skeletonsGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* ─── Error State ────────────────────────────────────────────────────── */
+
+.errorState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 1rem;
+  background-color: rgba(255, 68, 68, 0.1);
+  border: 1px solid rgba(255, 68, 68, 0.2);
+  padding: 2rem;
+  text-align: center;
+}
+
+.errorMessage {
+  font-size: 0.875rem;
+  color: var(--red);
+}
+
+.retryButton {
+  border-radius: 9999px;
+  background-color: rgba(255, 68, 68, 0.2);
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--red);
+  transition: background-color 200ms;
+  border: 1px solid rgba(255, 68, 68, 0.4);
+  cursor: pointer;
+}
+
+.retryButton:hover {
+  background-color: rgba(255, 68, 68, 0.3);
+}
+
+/* ─── Empty State ────────────────────────────────────────────────────── */
+
+.emptyState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  border: 1px solid var(--line);
+  background-color: rgba(24, 24, 31, 0.2);
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.emptyMessage {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+/* ─── Clients Grid ───────────────────────────────────────────────────── */
+
+.clientsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+/* ✅ FIX principal: @media → @container. Antes, este grid contava colunas
+   com base na largura da JANELA (ignorando os 220px da sidebar); agora
+   conta com base na largura real disponível para o .main (container
+   "carteira" definido acima) — os cards voltam a ter o tamanho/proporção
+   desenhados independente da largura da sidebar. */
+@container carteira (min-width: 640px) {
+  .clientsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container carteira (min-width: 1024px) {
+  .clientsGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@container carteira (min-width: 1280px) {
+  .clientsGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.clientWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.alertsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-left: 0.25rem;
+}
+
+/* ─── Global Alerts Section ──────────────────────────────────────────── */
+
+.globalAlertsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  border-top: 1px solid var(--line);
+  padding-top: 1.25rem;
+}
+
+.globalAlertsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.globalAlertsLabel {
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--t1);
+}
+
+.globalAlertsBadge {
+  border-radius: 9999px;
+  border: 1px solid var(--line);
+  background-color: var(--bg2);
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  font-family: var(--mono);
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: var(--red);
+}
+
+.globalAlertsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+</file>
+
+<file path="src/components/screens/FunnelScreen.module.css">
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: var(--space-6);
+  /* ✅ FIX (mesma causa do CarteiraScreen): .grid/.gridAsymmetric abaixo
+     decidiam colunas com @media, medindo a JANELA inteira do navegador
+     em vez do espaço que sobra depois da sidebar de 220px do layout.tsx
+     compartilhado. container-type aqui faz os @container abaixo reagirem
+     à largura real disponível para o conteúdo. */
+  container-type: inline-size;
+  container-name: funil;
+}
+
+.errorBox {
+  max-width: 1500px;
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--space-8);
+  text-align: center;
+  border: var(--border-width) solid
+    color-mix(in srgb, var(--red) 25%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--red) 8%, transparent);
+}
+
+.errorText {
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  color: var(--red);
+  margin-bottom: var(--space-4);
+}
+
+.retryBtn {
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  padding: var(--space-1) var(--space-4);
+  border-radius: var(--radius-pill);
+  border: var(--border-width) solid
+    color-mix(in srgb, var(--red) 40%, transparent);
+  background: color-mix(in srgb, var(--red) 20%, transparent);
+  color: var(--red);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.retryBtn:hover {
+  background: color-mix(in srgb, var(--red) 30%, transparent);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  width: 100%;
+  align-items: stretch;
+}
+
+@container funil (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.gridAsymmetric {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  width: 100%;
+  align-items: stretch;
+}
+
+@container funil (max-width: 900px) {
+  .gridAsymmetric {
+    grid-template-columns: 1fr;
+  }
+}
+
+.colStretch {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 100%;
+  padding: var(--space-3);
+  border: var(--border-width) solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--bg2);
+  box-shadow: var(--shadow-soft);
+}
+
+.panelTitle {
+  font-family: var(--font-family);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-muted);
+}
+
+.panelBody {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  /* ✅ CORREÇÃO: align-items:center encolhia FunnelSimulator (.wrap não
+     declara width:100%) para a largura do conteúdo em vez de preencher
+     o painel — um dos motivos do simulador aparecer desproporcional/
+     descentralizado dentro do grid. stretch é o comportamento correto
+     para um painel de largura total. */
+  align-items: stretch;
+}
+
+.chartWrap {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  flex: 1;
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+}
+
+/* ── Skeletons ── */
+.skeletonPulse {
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.skeletonRows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+.skeletonRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.skeletonLineRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.skeletonLine {
+  height: 10px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-active);
+}
+
+.skeletonBar {
+  height: 8px;
+  width: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--bg-active);
+  overflow: hidden;
+}
+
+.skeletonBarFill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--line2);
+}
+
+.skeletonBlock {
+  height: 128px;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  background: var(--bg-active);
+}
+</file>
+
+<file path="src/app/globals.css">
+/* ==========================================================================
+   ORBIT · App Globals (Dual Design System)
+   Versão: 2.0.0  |  Data: 2026-07-05
+   
+   Suporta AMBOS:
+   - CSS Modules antigos (orbit v1.1.0)
+   - Componentes Tailwind novos (SSOT v2.0.0)
+   ========================================================================== */
+
+/* ─── Tailwind v4 (sintaxe única) ─── */
+@import 'tailwindcss';
+
+/* ─── Tokens legados (CSS Modules antigos) ─── */
+@import '../styles/ssot-design-tokens.css';
+
+/* ─── Fundo absoluto do ORBIT (camada base #0C0C0F) ───
+   Regra restaurada de ssot-globals.css (07/09/2026), que deixou de ser
+   importado por src/app/layout.tsx ao corrigir o erro de recursão do
+   Tailwind (@layer sem 'tailwindcss' na própria cadeia). Fica AQUI porque
+   este é o único arquivo que o layout.tsx de fato importa — ssot-globals.css
+   permanece órfão e não deve voltar a ser importado diretamente. */
+@layer base {
+  body {
+    background-color: var(--bg);
+    color: var(--t0);
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* FIX a11y (15/09/2026): 27 dos 35 CSS Modules não tinham nenhum estado
+     de foco. Regra global cobre esses 27 de uma vez, sem editar componente
+     por componente. Onde um módulo já define seu próprio :focus-visible
+     (8 arquivos), aquela regra é mais específica e continua vencendo —
+     esta é só o piso, não substitui nada que já existe. */
+  :focus-visible {
+    outline: 2px solid var(--neon-cyan);
+    outline-offset: 2px;
+    border-radius: var(--radius-xs);
+  }
+
+  /* FIX a11y (15/09/2026): só 2 arquivos respeitavam prefers-reduced-motion,
+     mas há @keyframes contínuas (orbitSpin, orbitPulse) em 5 telas. Regra
+     global cobre todas de uma vez — nenhuma animação é removida, só some
+     para quem pediu isso no SO. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+</file>
+
+<file path="src/components/common/AlignmentFormula.module.css">
+/* AlignmentFormula.module.css */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sectionLabel {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--t1);
+}
+
+.card {
+  padding: var(--space-5);
+}
+
+.codeBlock {
+  background: var(--bg);
+  border: var(--border-width) solid var(--line);
+  border-radius: var(--r8);
+  padding: var(--space-4);
+  font-family: var(--mono);
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  overflow-x: auto;
+}
+
+.line {
+  white-space: pre;
+}
+
+.indent {
+  padding-left: var(--space-4);
+}
+
+.varName {
+  color: var(--acc2-text); /* FIX WCAG: --acc2 puro é 4.17:1 sobre --bg2 (falha AA). --acc2-text mantém a identidade roxa com 5.7:1+ */
+}
+
+.operator {
+  color: var(--t1);
+}
+
+.paren {
+  color: var(--acc3); /* laranja terciário */
+}
+
+.weight {
+  color: var(--acc); /* lima — acento único, reservado para o valor-chave */
+  font-weight: var(--font-weight-bold);
+}
+
+.weightComment {
+  color: var(--t1);
+  margin-left: var(--space-2);
+  font-size: var(--font-size-xs);
+}
+
+.divider {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: var(--border-width) solid var(--line);
+}
+
+.subFormula {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+}
+
+.subExpr {
+  color: var(--t1);
+}
+
+/* Legenda de pesos */
+.legendGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.legendTile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-3) var(--space-2);
+  border-radius: var(--r8);
+  background: var(--bg1);
+  border: var(--border-width) solid var(--line);
+  text-align: center;
+}
+
+.legendValue {
+  font-family: var(--mono);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--t0);
+}
+
+.legendLabel {
+  font-size: var(--font-size-xs);
+  color: var(--t1);
+}
+</file>
+
+<file path="src/components/common/ClientCard.module.css">
+/* ClientCard.module.css */
+
+.card {
+  position: relative;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: var(--space-4);
+  border: var(--border-width) solid var(--line);
+  border-radius: var(--r16);
+  background: linear-gradient(180deg, var(--bg2) 0%, rgba(12, 12, 15, 0.94) 100%);
+  padding: var(--space-4);
+  text-align: left;
+  transition: transform var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+/* ✅ ADICIONADO 08/09 — filete de topo por severidade (paridade com
+   .client-card::before / .cc-cyan/.cc-gold/.cc-red do protótipo). */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+.accentHealthy::before { background: var(--neon-cyan); }
+.accentWarning::before { background: var(--neon-gold); }
+.accentCritical::before { background: var(--neon-red); }
+.accentUnknown::before { background: var(--line2); }
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: var(--line2);
+  background: var(--bg3);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 2px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.avatarImage {
+  height: 40px;
+  width: 40px;
+  border-radius: var(--radius-pill);
+  object-fit: cover;
+}
+
+.avatarFallback {
+  display: flex;
+  height: 40px;
+  width: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  background-color: var(--bg4);
+  font-family: var(--font);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--t1);
+}
+
+.identity {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--t0);
+}
+
+.handle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  color: var(--t1);
+}
+
+.divider {
+  height: 1px;
+  width: 100%;
+  background-color: var(--line);
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-pill);
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+/* FIX 09/09/2026 — cores eram Tailwind (emerald/amber/rose), fora da
+   paleta Orbit. Corrigido pra paleta neon única (healthy=cyan, não verde
+   — ver decisão de 22/07/2026 documentada no protótipo SSOT, mesmo
+   vocabulário do .accentHealthy/.accentWarning/.accentCritical acima). */
+.statusHealthy {
+  background-color: rgba(0, 255, 255, 0.1);
+  color: var(--neon-cyan);
+}
+
+.statusWarning {
+  background-color: rgba(255, 195, 0, 0.1);
+  color: var(--neon-gold);
+}
+
+.statusCritical {
+  background-color: rgba(255, 68, 68, 0.1);
+  color: var(--neon-red);
+}
+
+.statusUnknown {
+  background-color: var(--bg4);
+  color: var(--t1);
+}
+
+/* ✅ AJUSTADO 07/09 — passa a empilhar semáforo + badge de status (antes
+   só continha o semáforo; badge era classe morta). Alinhado ao
+   client-card do protótipo (dot + badge de texto, alinhados à direita). */
+.semaphoreWrap {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: var(--space-1);
+  flex-shrink: 0;
+}
+
+.snapshotInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--r8);
+  background: var(--bg1);
+  border: 1px solid var(--line);
+}
+
+.snapshotLabel {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal);
+  color: var(--t1);
+}
+
+.snapshotValue {
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+  color: var(--t0);
+}
+
+.metricsRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+}
+
+.metricCol {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metricLabel {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--t1);
+}
+
+.metricValue {
+  font-family: var(--mono);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+  color: var(--t0);
+}
+
+.metricValueDimmed {
+  color: var(--t1);
+}
+
+/* ✅ ADICIONADO 08/09 — linha-resumo do alerta mais urgente do cliente,
+   paridade com a linha "⚠ ..." no rodapé do .client-card do protótipo. */
+.topAlertText {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  color: var(--neon-red);
+  line-height: 1.4;
+}
+</file>
+
+<file path="src/components/common/AlertCard.module.css">
+/* ============================================================================
+   AlertCard.module.css
+   Reconstruído 14/08/2026 no padrão real do projeto (CSS Modules por
+   componente), confirmado contra CriticalAlert.module.css — substitui a
+   entrega anterior (alerts.css global, classes .alert/.alert-crit, tokens
+   extraídos do protótipo HTML). Esse padrão anterior não é o que o projeto
+   usa de verdade; REGRA-07/convenção real pede CSS Module por componente.
+
+   TOKENS CONFIRMADOS (vistos literalmente em CriticalAlert.module.css):
+     --space-1, --space-3, --space-4, --space-5
+     --border-width, --border-default, --border-radius-lg
+     --border-glow-red, --border-glow-gold, --border-glow-cyan
+     --text-primary, --text-muted
+     --font-size-lg, --font-size-sm, --font-size-xs
+     --font-weight-bold
+
+   TOKENS NÃO CONFIRMADOS (usados abaixo por necessidade — AlertCard tem
+   mais elementos que CriticalAlert: métrica comparativa, botões, status).
+   Marcados inline com ⚠️. Não vi nenhum arquivo que confirme o nome real
+   destes — se o token real tiver outro nome, é achar-e-substituir, não
+   reescrever a estrutura.
+   FIX 09/09/2026 — rgba(255, 65, 54, ...) corrigido pra rgba(255, 68, 68, ...)
+   em 4 ocorrências (.critical, .severityBadge.critical, .critical .btn).
+   O valor antigo era um vermelho ligeiramente diferente do --red/--neon-red
+   oficial (#FF4444 = rgb(255,68,68)) — drift confirmado contra o protótipo
+   SSOT, provavelmente cópia manual desatualizada. Demais cores (gold, cyan,
+   green) já batiam exatamente com os tokens, não precisaram de correção.
+   ============================================================================ */
+
+.card {
+  position: relative;
+  display: flex;
+  gap: var(--space-4);
+  border: var(--border-width) solid var(--border-default);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-4) var(--space-5);
+  width: 100%;
+}
+
+.critical {
+  background: linear-gradient(135deg, rgba(255, 68, 68, 0.08), rgba(255, 68, 68, 0.03));
+  border-color: var(--border-glow-red);
+  box-shadow: 0 0 24px rgba(255, 68, 68, 0.1);
+}
+
+.warning {
+  background: linear-gradient(135deg, rgba(255, 195, 0, 0.08), rgba(255, 195, 0, 0.03));
+  border-color: var(--border-glow-gold);
+  box-shadow: 0 0 24px rgba(255, 195, 0, 0.1);
+}
+
+.info {
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.06), rgba(0, 255, 255, 0.02));
+  border-color: var(--border-glow-cyan);
+  box-shadow: 0 0 24px rgba(0, 255, 255, 0.08);
+}
+
+/* ✅ ADICIONADO 07/09 — AlertSeverity inclui 'success' (orbit.ts), mas o
+   módulo só cobria critical/warning/info. Usa --green (SSOT), não uma
+   nova cor fora da paleta. */
+.success {
+  background: linear-gradient(135deg, rgba(46, 204, 113, 0.08), rgba(46, 204, 113, 0.03));
+  border-color: var(--green);
+  box-shadow: 0 0 24px rgba(46, 204, 113, 0.1);
+}
+.success .btn {
+  background: rgba(46, 204, 113, 0.12);
+  border-color: var(--green);
+  color: var(--text-primary);
+}
+
+.icon {
+  font-size: var(--font-size-lg);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* ✅ ADICIONADO 07/09 — linha título + timestamp (padrão .row-between do
+   protótipo, aplicado como CSS Module em vez de classe global). */
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+/* ✅ ADICIONADO 08/09 — agrupa título + badge de severidade no cabeçalho,
+   paridade com `row-between mb8` (alert-title + badge-red/amber) do
+   protótipo. */
+.titleGroup {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+/* Badge pequeno — cores próprias, não reaproveita o gradiente/glow de
+   .critical/.warning/.info/.success (feitos para o card inteiro; um glow
+   de 24px numa pill de texto pequena borra o contorno). */
+.severityBadge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  padding: 1px var(--space-3);
+  border-radius: var(--radius-lg);
+  border: var(--border-width) solid;
+  background: none;
+  box-shadow: none;
+}
+
+.severityBadge.critical {
+  color: var(--red-text); /* FIX (19/09/2026): hex cru #ff8080 voltou numa edição posterior — reaplicado o token */
+  border-color: var(--border-glow-red);
+  background: rgba(255, 68, 68, 0.15);
+}
+.severityBadge.warning {
+  color: var(--amber);
+  border-color: var(--border-glow-gold);
+  background: rgba(255, 195, 0, 0.12);
+}
+.severityBadge.info {
+  color: var(--blue-text); /* FIX (19/09/2026): hex cru #7eb3ff voltou numa edição posterior — reaplicado o token */
+  border-color: var(--border-glow-cyan);
+  background: rgba(0, 255, 255, 0.1);
+}
+.severityBadge.success {
+  color: var(--green);
+  border-color: var(--green);
+  background: rgba(46, 204, 113, 0.12);
+}
+
+.timestamp {
+  flex-shrink: 0;
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.text {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ✅ ADICIONADO (P0 — v8.2): fileira de chips de contexto (métrica,
+   natureza, confiança). Mesma lógica visual do .severityBadge (pill
+   pequena, sem o glow de 24px do card inteiro), mas neutra — não é um
+   indicador de severidade, é metadado de proveniência do alerta. */
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-top: var(--space-1);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  padding: 1px var(--space-3);
+  border-radius: var(--border-radius-lg);
+  border: var(--border-width) solid var(--border-default);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* natureza: 'tecnica' | 'comunicacao' — mesma paleta cyan do .info, mas
+   sem glow (é rótulo de metadado, não status de alerta). */
+.chipNatureza {
+  border-color: var(--border-glow-cyan);
+  color: var(--blue-text); /* FIX (19/09/2026): novo desde a última rodada — nasceu com hex cru #7eb3ff em vez do token, mesmo drift dos outros dois badges */
+  background: rgba(0, 255, 255, 0.06);
+}
+
+/* confidence_level: L0/L1/L2 — FIX (19/09/2026): as cores estavam na
+   direção errada (L2 verde/melhor, L0 neutro/pior). Confirmado contra
+   contentContractEngine.ts (15+ usos: L0 = dado real/direto, L2 = fallback
+   sem breakdown ou amostra insuficiente) e contra KPICard.tsx (L0 sempre
+   foi verde ali). L0 = Medido (melhor) → verde. L1 = Estimado → âmbar.
+   L2 = Hipótese (pior) → neutro, sem alarmar como se fosse erro. */
+.chipConfidenceL0 {
+  border-color: var(--green);
+  color: var(--green);
+  background: rgba(46, 204, 113, 0.1);
+}
+.chipConfidenceL1 {
+  border-color: var(--border-glow-gold);
+  color: var(--amber);
+  background: rgba(255, 195, 0, 0.1);
+}
+.chipConfidenceL2 {
+  border-color: var(--border-default);
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* ⚠️ --space-2 não confirmado — usei --space-1 (confirmado) como aproximação
+   conservadora até alguém confirmar se --space-2 existe de verdade. */
+.meta {
+  margin-top: var(--space-3);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--border-radius-lg);
+  background: rgba(0, 0, 0, 0.25);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+}
+
+.action {
+  margin-top: var(--space-3);
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* ⚠️ --font-weight-medium e --border-radius-md/full não confirmados.
+   Usei --font-weight-bold (confirmado) e --border-radius-lg (confirmado)
+   até ter o arquivo real de botão pra conferir. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  padding: var(--space-1) var(--space-4);
+  border-radius: var(--border-radius-lg);
+  cursor: pointer;
+  border: var(--border-width) solid;
+  background: none;
+  text-decoration: none;
+  transition: opacity 120ms ease;
+}
+.btn:hover { opacity: 0.85; }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.critical .btn {
+  background: rgba(255, 68, 68, 0.15);
+  border-color: var(--border-glow-red);
+  color: var(--text-primary);
+}
+.warning .btn {
+  background: rgba(255, 195, 0, 0.12);
+  border-color: var(--border-glow-gold);
+  color: var(--text-primary);
+}
+.info .btn {
+  background: rgba(0, 255, 255, 0.12);
+  border-color: var(--border-glow-cyan);
+  color: var(--text-primary);
+}
+
+.btnGhost {
+  background: none !important;
+  border-color: var(--border-default) !important;
+  color: var(--text-muted) !important;
+}
+
+.status {
+  margin-top: var(--space-3);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
+.dismiss {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: var(--space-1);
+}
+.dismiss:hover { color: var(--text-primary); }
+</file>
+
+<file path="src/styles/ssot-design-tokens.css">
+/* ==========================================================================
+   ORBIT · Design Tokens (SSOT Prototype — 100% Aligned)
+   Versão: 2.1.0  |  Data: 2026-09-09
+
+   CORRIGIDO para bater com os valores reais do protótipo
+   (orbit-prototipo-consolidado-neon.html :root), verificado token a token.
+   Mudanças vs. 2.0.0: spacing, font-size, radius, transitions, font-weight,
+   line-height. Nomes/aliases existentes mantidos para não quebrar os
+   ~25 arquivos .module.css que já consomem estes tokens.
+   ========================================================================== */
+
+:root {
+  /* ═══════════════════════════════════════════════════════════════
+     BACKGROUNDS (SSOT — 5 camadas neomorphic) — sem alteração
+     ═══════════════════════════════════════════════════════════════ */
+
+  --bg: #0C0C0F;
+  --bg1: #111116;
+  --bg2: #18181F;
+  --bg3: #1F1F28;
+  --bg4: #26262F;
+
+  --bg-base: var(--bg);
+  --bg-primary: var(--bg1);
+  --bg-card: var(--bg2);
+  --bg-hover: var(--bg3);
+  --bg-active: var(--bg4);
+
+  /* ═══════════════════════════════════════════════════════════════
+     BORDERS (SSOT) — sem alteração
+     ═══════════════════════════════════════════════════════════════ */
+
+  --line: #2A2A35;
+  --line2: #33333F;
+
+  --border-default: var(--line);
+  --border-glow-cyan: #00FFFF;
+  --border-glow-red: #FF4444;
+  --border-glow-gold: #FFC300;
+  --border-glow-green: #2ECC71;
+  --border-width: 1px;
+
+  /* ═══════════════════════════════════════════════════════════════
+     TEXT (SSOT — Hierarchy com warmth) — sem alteração
+     ═══════════════════════════════════════════════════════════════ */
+
+  --t0: #F0EFE8;
+  --t1: #B8B6B0;
+  --t2: #706E6A;
+  --t3: #454340;
+
+  --text-primary: var(--t0);
+  --text-secondary: var(--t1);
+  /* FIX WCAG 1.4.3 mantido: --t2/--t3 falham AA, redirecionado pra --t1 */
+  --text-muted: var(--t1);
+  --text-dim: var(--t1);
+
+  /* ═══════════════════════════════════════════════════════════════
+     ACCENTS & NEONS (SSOT — Unique identity) — sem alteração
+     ═══════════════════════════════════════════════════════════════ */
+
+  --acc: #C8FF57;
+  --acc2: #8B5CF6;
+  --acc3: #FF6B35;
+
+  /* FIX WCAG 1.4.3 (15/09/2026): --acc2 usado como cor de TEXTO falha AA
+     (4.17:1 sobre --bg2, 3.86:1 sobre --bg3). --acc2 continua válido para
+     bordas/fundos/ícones, que só precisam de 3:1. Para texto, usar
+     --acc2-text (mesmo roxo, 20% mais claro — 5.7:1+ em qualquer fundo). */
+  --acc2-text: #a27df8;
+
+  --red: #FF4444;
+  --amber: #FFB020;
+  --green: #2ECC71;
+  --blue: #4A90FF;
+
+  /* Variantes claras p/ texto sobre badge já tingido (ex.: rgba(--red, 0.15)
+     de fundo) — mantém legibilidade sem introduzir tom fora do sistema.
+     Consolida os hex que existiam soltos (#ff8080, #7eb3ff) em tokens nomeados. */
+  --red-text: #ff8080;
+  --blue-text: #7eb3ff;
+
+  --neon-cyan: #00FFFF;
+  --neon-red: #FF4444;
+  --neon-gold: #FFC300;
+  --neon-green: var(--green); /* alias legado — #00FF00 não existe no protótipo (nota da v2.0.0); mapeado pro verde oficial em 09/09/2026 */
+
+  /* ═══════════════════════════════════════════════════════════════
+     TYPOGRAPHY (SSOT — DM Sans + DM Mono)
+     CORRIGIDO: escala inteira estava maior que o protótipo
+     ═══════════════════════════════════════════════════════════════ */
+
+  --font: 'DM Sans', sans-serif;
+  --mono: 'DM Mono', monospace;
+
+  --font-family: var(--font);
+  --font-mono: var(--mono);
+
+  /* pesos — adicionados light/medium que faltavam */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: var(--font-weight-semibold); /* alias mantido p/ compatibilidade */
+
+  /* line-heights — adicionados tight/relaxed que faltavam */
+  --line-height-tight: 1.2;
+  --line-height-base: 1.5;
+  --line-height-relaxed: 1.6;
+
+  /* Font sizes — corrigido pra bater exatamente com o protótipo */
+  --font-size-xs: 10px;
+  --font-size-sm: 11px;
+  --font-size-base: 12px;
+  --font-size-md: 13px;
+  --font-size-lg: 15px;
+  --font-size-xl: 15px;
+  --font-size-2xl: 16px;
+  --font-size-3xl: 22px;
+  --font-size-4xl: 26px;
+
+  /* ═══════════════════════════════════════════════════════════════
+     BORDER RADIUS (SSOT)
+     CORRIGIDO: md/lg estavam deslocados em relação ao protótipo
+     ═══════════════════════════════════════════════════════════════ */
+
+  --r3: 3px;
+  --r4: 4px;
+  --r6: 6px;
+  --r8: 8px;
+  --r12: 12px;
+  --r16: 16px;
+  --r24: 24px;
+
+  --border-radius-sm: var(--r4);
+  --border-radius-md: var(--r6);
+  --border-radius-lg: var(--r8);
+  --radius-xs: var(--r3);
+  --radius-sm: var(--r4);
+  --radius-md: var(--r6);
+  --radius-lg: var(--r8);
+  --radius-xl: var(--r12);
+  --radius-2xl: var(--r16);
+  --radius-3xl: var(--r24);
+  --radius-pill: 9999px;
+
+  /* ═══════════════════════════════════════════════════════════════
+     SHADOWS — sem alteração
+     ═══════════════════════════════════════════════════════════════ */
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+
+  --shadow-glow-cyan: 0 0 20px rgba(0, 255, 255, 0.3);
+  --shadow-glow-red: 0 0 20px rgba(255, 68, 68, 0.3);
+  --shadow-glow-gold: 0 0 20px rgba(255, 195, 0, 0.3);
+  --shadow-glow-green: 0 0 20px rgba(46, 204, 113, 0.3);
+
+  --shadow-outer-sm: var(--shadow-sm);
+  --shadow-outer-md: var(--shadow-md);
+  --shadow-outer-lg: var(--shadow-lg);
+  --shadow-inner-cyan: var(--shadow-glow-cyan);
+  --shadow-inner-red: var(--shadow-glow-red);
+  --shadow-inner-gold: var(--shadow-glow-gold);
+  --shadow-inner-green: var(--shadow-glow-green);
+
+  /* ═══════════════════════════════════════════════════════════════
+     TRANSITIONS
+     CORRIGIDO: durações e easing estavam diferentes do protótipo
+     ═══════════════════════════════════════════════════════════════ */
+
+  --transition-fast: 120ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
+
+  /* ═══════════════════════════════════════════════════════════════
+     SPACING (SSOT)
+     CORRIGIDO: escala inteira estava maior que o protótipo,
+     e faltavam space-7 e space-9
+     ═══════════════════════════════════════════════════════════════ */
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 8px;
+  --space-4: 12px;
+  --space-5: 16px;
+  --space-6: 16px;
+  --space-7: 20px;
+  --space-8: 24px;
+  --space-9: 32px;
+  --space-10: 48px;
+  --space-12: var(--space-10); /* alias mantido p/ compatibilidade com código existente */
+
+  /* ═══════════════════════════════════════════════════════════════
+     LAYOUT (SSOT — dimensões fixas) — sem alteração
+     ═══════════════════════════════════════════════════════════════ */
+
+  --sidebar-width: 220px;
+  --header-height: 52px;
+
+  /* ── Tokens derivados (usados por QualityScoresPanel.module.css) ── */
+  --color-cyan-rgb: 0, 255, 255;
+  --color-red-rgb: 255, 68, 68;
+  --color-gold-rgb: 255, 195, 0;
+  --color-green-rgb: 46, 204, 113;
+
+  --opacity-30: 0.3;
+  --opacity-50: 0.5;
+
+  --shadow-glow-cyan-30: 0 0 24px rgba(var(--color-cyan-rgb), 0.3);
+
+  --shadow-glow-cyan-inset: inset 0 0 12px rgba(var(--color-cyan-rgb), 0.08);
+  --shadow-glow-cyan-inset-hover: inset 0 0 16px rgba(var(--color-cyan-rgb), 0.16);
+  --shadow-glow-red-inset: inset 0 0 12px rgba(var(--color-red-rgb), 0.08);
+  --shadow-glow-red-inset-hover: inset 0 0 16px rgba(var(--color-red-rgb), 0.16);
+  --shadow-glow-gold-inset: inset 0 0 12px rgba(var(--color-gold-rgb), 0.08);
+  --shadow-glow-gold-inset-hover: inset 0 0 16px rgba(var(--color-gold-rgb), 0.16);
+  --shadow-glow-green-inset: inset 0 0 12px rgba(var(--color-green-rgb), 0.08);
+  --shadow-glow-green-inset-hover: inset 0 0 16px rgba(var(--color-green-rgb), 0.16);
+
+  --gradient-cyan-subtle: linear-gradient(180deg, rgba(var(--color-cyan-rgb), 0.04), transparent);
+  --gradient-cyan-hover: linear-gradient(180deg, rgba(var(--color-cyan-rgb), 0.08), transparent);
+  --gradient-gray-hover: linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent);
+}
+</file>
+
+<file path="src/components/content/FormatPerformanceTable.module.css">
+/* FormatPerformanceTable.module.css */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: var(--font-size-xs);
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  margin-bottom: var(--space-4);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.th {
+  font-size: var(--font-size-xs);
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  text-align: left;
+  padding: 0 0 var(--space-3);
+  border-bottom: var(--border-width) solid var(--border-default);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+}
+
+.tr {
+  border-bottom: var(--border-width) solid rgba(31, 41, 55, 0.5);
+}
+
+.tr:last-child {
+  border-bottom: none;
+}
+
+.td {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  padding: var(--space-3) 0;
+  font-family: var(--font-mono);
+}
+
+.tdFormat {
+  font-family: var(--font-family);
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+}
+
+/* ── Expansão por posts individuais (v2.0.0) ────────────────────────────── */
+
+.tdChevron {
+  width: 20px;
+  padding: var(--space-3) 0;
+}
+
+.trClickable {
+  cursor: pointer;
+}
+
+.trClickable:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.chevron,
+.chevronOpen {
+  color: var(--text-dim);
+  transition: transform var(--transition-fast);
+}
+
+.chevronOpen {
+  transform: rotate(90deg);
+}
+
+.formatIcon {
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-dim);
+  margin-right: var(--space-2);
+  vertical-align: -3px;
+}
+
+.tdDetail {
+  padding: 0 0 var(--space-3);
+  border-bottom: var(--border-width) solid rgba(31, 41, 55, 0.5);
+}
+
+.postList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-2) 0 0 26px;
+}
+
+/* ✅ v2.3.0 (grid — corrige 3 bugs reportados em runtime pelo cliente):
+   Antes era `display:flex` com .postCaption em `flex: 0 1 480px` — uma
+   caixa de largura FIXA (480px) reservada pra um texto que já vinha
+   pré-cortado em 60 caracteres via truncateCaption() (FormatPerformance-
+   Table.tsx). Duas truncagens independentes, dimensionadas pra suposições
+   diferentes, empilhadas: a caixa CSS quase nunca enchia (sobrava vão em
+   branco à direita do texto) e o corte em 60 caracteres acontecia mesmo
+   quando a tela tinha espaço de sobra pra mostrar mais legenda.
+
+   Grid com `minmax(0, 1fr)` na coluna de legenda resolve isso na raiz:
+   a coluna PREENCHE exatamente o espaço realmente disponível (não um
+   chute de 480px) e só corta via `text-overflow: ellipsis` quando o
+   texto de fato não cabe — o corte passa a refletir a largura real da
+   tela, não um número de caracteres arbitrário. `truncateCaption()`
+   continua existindo como teto de segurança (ver default em
+   FormatPerformanceTable.tsx), não mais como truncagem primária.
+
+   Grid também dá ao Boost uma coluna própria de largura FIXA, sempre
+   reservada (presente ou não o badge) — antes, por ser um item
+   condicional dentro de um flex row, sua ausência/presença deslocava
+   .postScore horizontalmente entre linhas; "Polêmica: X%" não ficava
+   alinhado na coluna entre um post com Boost e um sem. */
+
+.postRow {
+  display: grid;
+  grid-template-columns: 56px 136px minmax(0, 1fr) 64px 104px;
+  align-items: center;
+  column-gap: var(--space-3);
+  font-size: var(--font-size-xs);
+  font-family: var(--font-mono);
+  padding: 4px 0;
+}
+
+.postDate {
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.postMetrics {
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ✅ Caption ocupa exatamente a coluna que sobra (minmax(0,1fr) no grid
+   acima) — `min-width: 0` é obrigatório aqui: sem ele, um item de grid
+   nunca encolhe abaixo do tamanho intrínseco do conteúdo, e o ellipsis
+   simplesmente não dispara. */
+
+.postCaption {
+  min-width: 0;
+  color: var(--text-dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: help;
+  border-bottom: 1px dotted rgba(0, 255, 200, 0.2);
+  padding-bottom: 2px;
+  transition: color var(--transition-fast);
+}
+
+.postCaption:hover {
+  color: var(
+    --neon-cyan
+  ); /* removido fallback #00c8ff — terceiro tom de cyan fora da paleta; --neon-cyan já está sempre definido */
+  border-bottom-color: rgba(0, 255, 200, 0.5);
+}
+
+/* ✅ Slot de largura fixa pro badge de Boost — SEMPRE ocupa a coluna do
+   grid, com ou sem o badge dentro. É isso que garante que .postScore
+   nunca se desloque entre uma linha com Boost e outra sem. */
+
+.postBoostSlot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.postScore {
+  color: var(--text-secondary);
+  white-space: nowrap;
+  text-align: right;
+}
+
+.postScoreMuted {
+  color: var(--text-dim);
+  white-space: nowrap;
+  text-align: right;
+}
+
+/* ✅ v2.2.0: badge de boost candidate — reusa --acc, o acento único do
+   design (ssot-design-tokens.css), em vez de introduzir uma terceira cor
+   de "destaque positivo" no vocabulário já fragmentado do projeto. */
+
+.postBoostBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 1px 6px;
+  border-radius: var(--radius-pill, 9999px);
+  border: var(--border-width) solid var(--acc);
+  color: var(--acc);
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+/* ─────────────────────────────────────────────────────────────────────────
+   RWP-5: Interações (novo)
+   ───────────────────────────────────────────────────────────────────────── */
+
+.interactionsEmpty {
+  color: var(--text-dim);
+  font-size: var(--font-size-sm);
+}
+
+.interactionsValue {
+  display: inline;
+  color: var(--text-primary);
+  font-weight: var(--font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.interactionsCoverage {
+  display: block;
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+  margin-top: var(--space-1);
+  font-style: italic;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   PostDetailRow: Play/View Ratio (Reels)
+   ───────────────────────────────────────────────────────────────────────── */
+
+.postPlayRatio {
+  display: inline-block;
+  padding: var(--space-1) var(--space-2);
+  background: rgba(var(--color-cyan-rgb), 0.08);
+  border: var(--border-width) solid rgba(var(--color-cyan-rgb), 0.2);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.postPlayRatio:hover {
+  background: rgba(var(--color-cyan-rgb), 0.12);
+  border-color: rgba(var(--color-cyan-rgb), 0.3);
+}
+</file>
+
+<file path="src/components/screens/OnboardingScreen.module.css">
+/* src/components/screens/OnboardingScreen.module.css */
+
+.container {
+  min-height: 100%;
+  max-width: 1500px;
+  gap: var(--space-6);
+  padding: var(--space-6);
+}
+
+/* ============================================================================
+   HEADER
+   ============================================================================ */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--bg3);
+  padding-bottom: 1.5rem;
+}
+
+.title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin: 0.25rem 0 0 0;
+}
+
+.completeness {
+  text-align: right;
+}
+
+.pct {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--neon-cyan);
+}
+
+.pctLabel {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ============================================================================
+   BANNERS
+   ============================================================================ */
+.bannerError {
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-glow-red);
+  background-color: rgba(255, 68, 68, 0.2);
+  padding: 1rem;
+  color: var(--red-text);
+  font-size: 0.875rem;
+}
+
+.bannerSuccess {
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-glow-green);
+  background-color: rgba(46, 204, 113, 0.2);
+  padding: 1rem;
+  color: color-mix(in srgb, var(--green) 70%, white);
+  font-size: 0.875rem;
+}
+
+/* ============================================================================
+   LOADING
+   ============================================================================ */
+.loading {
+  border-radius: 0.5rem;
+  border: 1px solid var(--line);
+  background-color: rgba(31, 31, 40, 0.3);
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.empty {
+  color: var(--text-muted);
+}
+
+/* ============================================================================
+   SECTIONS
+   ============================================================================ */
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.card {
+  border-radius: 0.5rem;
+  border: 1px solid var(--line);
+  background-color: rgba(31, 31, 40, 0.3);
+  padding: 1.5rem;
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 1rem 0;
+}
+
+.idx {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background-color: rgba(0, 255, 255, 0.2);
+  font-size: 0.75rem;
+  font-family: "Monaco", "Courier New", monospace;
+  color: var(--neon-cyan);
+}
+
+/* ============================================================================
+   GRID & SPACING
+   ============================================================================ */
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.fieldGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.spaceY {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.spaceY > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ============================================================================
+   FORM FIELDS
+   ============================================================================ */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.field > label,
+.card :global(dt) {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.help {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin: 0.25rem 0 0 0;
+}
+
+.input,
+.select,
+.textarea {
+  border-radius: 0.375rem;
+  border: 1px solid var(--line);
+  background-color: var(--bg1);
+  padding: 0.5rem 0.75rem;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.875rem;
+  transition: border-color 0.2s ease;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 0 2px rgba(0, 255, 255, 0.1);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 4rem;
+}
+
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.card :global(dd) {
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* ============================================================================
+   REPEATABLE ROWS
+   ============================================================================ */
+.repRows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.repRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+
+/* ✅ FIX (integração 12/09/2026): existia no CSS original mas nunca era
+   aplicada no JSX (só .repRow sozinho) — a linha do Schwartz tem 4 campos
+   (chave, valor, prioridade, remover), não 3, e quebrava o grid. Ver
+   renderSchwartzEditor() no OnboardingScreen.tsx. */
+.repRow.schwartz {
+  grid-template-columns: 1fr 1fr 120px auto;
+}
+
+.btnRemove {
+  border-radius: 0.375rem;
+  background-color: rgba(255, 68, 68, 0.3);
+  border: 1px solid rgba(255, 68, 68, 0.5);
+  padding: 0.5rem 0.75rem;
+  color: var(--red-text);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnRemove:hover {
+  background-color: rgba(255, 68, 68, 0.5);
+}
+
+.btnAdd {
+  border-radius: 0.375rem;
+  background-color: var(--bg1);
+  border: 1px solid var(--line);
+  padding: 0.5rem 0.75rem;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnAdd:hover {
+  background-color: var(--bg3);
+  border-color: var(--line2);
+}
+
+/* ============================================================================
+   PILLS & LINKS
+   ============================================================================ */
+.pillList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 9999px;
+  background-color: rgba(0, 255, 255, 0.2);
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  color: var(--neon-cyan);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.pill:hover {
+  background-color: rgba(0, 255, 255, 0.3);
+}
+
+/* ============================================================================
+   AUDIENCE METER
+   ============================================================================ */
+.audMeterWrap {
+  margin-top: 1rem;
+}
+
+.audMeter {
+  display: flex;
+  height: 0.5rem;
+  border-radius: 9999px;
+  overflow: hidden;
+  background-color: var(--bg3);
+  margin-bottom: 0.5rem;
+}
+
+.audMeter > div {
+  transition: width 0.3s ease;
+}
+
+.audLabel {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ============================================================================
+   SUM CHECK
+   ============================================================================ */
+.sumCheck {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+}
+
+.sumCheck.empty {
+  background-color: rgba(31, 31, 40, 0.3);
+  border: 1px solid var(--line);
+  color: var(--text-muted);
+}
+
+.sumCheck.ok {
+  background-color: rgba(46, 204, 113, 0.2);
+  border: 1px solid var(--border-glow-green);
+  color: color-mix(in srgb, var(--green) 70%, white);
+}
+
+.sumCheck.bad {
+  background-color: rgba(255, 68, 68, 0.2);
+  border: 1px solid var(--border-glow-red);
+  color: var(--red-text);
+}
+
+/* ============================================================================
+   ACTIONS
+   ============================================================================ */
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.btnPrimary,
+.btnGhost {
+  border-radius: 0.375rem;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.btnPrimary {
+  background-color: var(--neon-cyan);
+  color: var(--bg);
+}
+
+.btnPrimary:hover:not(:disabled) {
+  background-color: color-mix(in srgb, var(--neon-cyan) 75%, black);
+}
+
+.btnPrimary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btnGhost {
+  background-color: transparent;
+  border: 1px solid var(--line);
+  color: var(--text-secondary);
+}
+
+.btnGhost:hover {
+  background-color: var(--bg3);
+  border-color: var(--line2);
+}
+
+/* ============================================================================
+   LOG PANEL
+   ============================================================================ */
+.logPanel {
+  border-radius: 0.5rem;
+  border: 1px solid var(--line);
+  background-color: rgba(31, 31, 40, 0.3);
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.logPanel[open] {
+  padding-bottom: 1rem;
+}
+
+.logSummary {
+  font-weight: 500;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.logContent {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.logEmpty {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.logEntry {
+  border-left: 2px solid var(--line);
+  padding-left: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.logEntry time {
+  display: block;
+  color: var(--text-muted);
+  font-family: "Monaco", "Courier New", monospace;
+  font-size: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.logEntry span {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.logEntry div {
+  color: var(--text-primary);
+  margin-top: 0.25rem;
+}
+
+/* ============================================================================
+   LABEL (para Schwartz)
+   ============================================================================ */
+.label {
+  display: inline-block;
+  margin-bottom: 0.375rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  background-color: rgba(31, 31, 40, 0.5);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ============================================================================
+   RESPONSIVE
+   ============================================================================ */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+    gap: 1rem;
+  }
+  .repRow,
+  .repRowSchwartz {
+    grid-template-columns: 1fr;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .completeness {
+    text-align: left;
+  }
+
+  .grid2 {
+    grid-template-columns: 1fr;
+  }
+
+  .repRow,
+  .repRow.schwartz {
+    grid-template-columns: 1fr;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .sectionTitle {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0.75rem;
+    gap: 0.75rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .btnPrimary,
+  .btnGhost {
+    width: 100%;
+  }
+
+  .pct {
+    font-size: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.25rem;
+  }
+}
+
+/* ============================================================================
+   PRINT
+   ============================================================================ */
+@media print {
+  .actions,
+  .logPanel {
+    display: none;
+  }
+
+  .card {
+    page-break-inside: avoid;
+  }
+}
+
+/* troca .repRow.schwartz */
+.repRowSchwartz {
+  grid-template-columns: 1fr 1fr 120px auto;
+}
+
+/* troca .sumCheck.empty / .ok / .bad */
+.sumCheckEmpty {
+  background-color: color-mix(in srgb, var(--bg3) 30%, transparent);
+  border: 1px solid var(--line);
+  color: var(--text-muted);
+}
+
+.sumCheckOk {
+  background-color: rgba(46, 204, 113, 0.2);
+  border: 1px solid var(--border-glow-green);
+  color: color-mix(in srgb, var(--green) 70%, white);
+}
+
+.sumCheckBad {
+  background-color: rgba(255, 68, 68, 0.2);
+  border: 1px solid var(--border-glow-red);
+  color: var(--red-text);
+}
+
+.wrapper {
+  width: min(100%, 760px);
+  margin: 0 auto;
+}
+
+.container {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.progress {
+  display: grid;
+  width: 3.5rem;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 2px solid var(--neon-cyan);
+  border-radius: 50%;
+  color: var(--neon-cyan);
+  font-weight: 700;
+}
+
+.progressValue {
+  font-variant-numeric: tabular-nums;
+}
+
+.progressBar {
+  height: 0.4rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--bg3);
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--neon-cyan);
+  transition: width 220ms ease;
+}
+
+.cardTitle {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.25rem;
+}
+
+.cardDescription {
+  margin: 0.35rem 0 1.25rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.fieldsContainer {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.fieldWrapper {
+  display: grid;
+  min-width: 0;
+  gap: 0.55rem;
+}
+
+.labelContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.label {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.required,
+.alertIcon,
+.errorIcon {
+  color: var(--red-text);
+}
+
+.fieldsContainer .input,
+.fieldsContainer .textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.inputError {
+  border-color: var(--red-text) !important;
+}
+
+.errorText {
+  margin: 0.35rem 0 0;
+  color: var(--red-text);
+  font-size: 0.8rem;
+}
+
+.radioGroup,
+.checkboxGroup {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.radioLabel,
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.radioInput,
+.checkboxInput {
+  accent-color: var(--neon-cyan);
+}
+
+.tooltipWrapper {
+  position: relative;
+  display: inline-flex;
+  color: var(--text-muted);
+  cursor: help;
+}
+
+.helpIcon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 2;
+  bottom: calc(100% + 0.45rem);
+  left: 50%;
+  width: max-content;
+  max-width: min(16rem, 80vw);
+  visibility: hidden;
+  border: 1px solid var(--line);
+  border-radius: 0.35rem;
+  background: var(--bg1);
+  padding: 0.5rem 0.65rem;
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  transform: translateX(-50%);
+}
+
+.tooltipWrapper:hover .tooltip,
+.tooltipWrapper:focus-within .tooltip {
+  visibility: visible;
+}
+
+.fieldInsight {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.fieldInsightIcon {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  color: var(--neon-cyan);
+}
+
+.insightCard {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--neon-cyan);
+  border-radius: 0.4rem;
+  background: var(--bg1);
+  padding: 1rem 1.1rem;
+}
+
+.insightHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.insightIcon {
+  width: 1.1rem;
+  height: 1.1rem;
+  color: var(--neon-cyan);
+}
+
+.insightTitle {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.insightText,
+.insightSource {
+  margin: 0.6rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.insightSource {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.buttonPrimary,
+.buttonSecondary {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid transparent;
+  border-radius: 0.35rem;
+  padding: 0.65rem 1rem;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.buttonPrimary {
+  background: var(--neon-cyan);
+  color: var(--bg);
+}
+
+.buttonPrimary:disabled,
+.buttonSecondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.buttonSecondary {
+  border-color: var(--line);
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.buttonSecondary:hover:not(:disabled) {
+  background: var(--bg3);
+}
+
+.chevronIcon,
+.loaderIcon,
+.messageIcon {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+}
+
+.loadingState,
+.errorState {
+  display: flex;
+  min-height: 10rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  color: var(--text-muted);
+}
+
+.message {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 0.35rem;
+  padding: 0.75rem 0.9rem;
+  font-size: 0.875rem;
+}
+
+.messageError {
+  border-color: var(--border-glow-red);
+  background: rgba(255, 68, 68, 0.12);
+  color: var(--red-text);
+}
+
+.messageWarning {
+  border-color: rgba(245, 158, 11, 0.55);
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--text-primary);
+}
+
+@media (max-width: 480px) {
+  .header {
+    gap: 0.75rem;
+  }
+
+  .buttonGroup {
+    flex-direction: column-reverse;
+  }
+
+  .buttonPrimary,
+  .buttonSecondary {
+    width: 100%;
+  }
+}
+</file>
+
+</files>

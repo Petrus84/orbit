@@ -12,12 +12,7 @@
      no CarteiraScreen. min-height:100% preenche só o espaço que o
      layout pai já reservou. */
   min-height: 100%;
-  /* ✅ CORREÇÃO: sem max-width, o conteúdo esticava borda a borda em
-     monitores largos — cards ficavam desproporcionalmente largos/rasos.
-     Mesmo valor (1400px) que FunnelScreen.module.css/.main já usa para
-     o mesmo tipo de tela (área de conteúdo dentro do shell, sem sidebar
-     própria) — não um número novo inventado. */
-  max-width: 1500px;
+  /* Teto de largura: AppShell (--shell-max em ssot-design-tokens.css). */
   width: 100%;
   margin: 0 auto;
   background: var(--bg);

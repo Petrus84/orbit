@@ -32,7 +32,7 @@ export default function OnboardingPage() {
       style={{
         display: "flex",
         flexDirection: "column",
-        height: "100vh",
+        minHeight: "100dvh",
         background: "var(--bg)",
       }}
     >
@@ -41,7 +41,7 @@ export default function OnboardingPage() {
         onSelect={setActiveClientKey}
       />
 
-      <div style={{ flex: 1, overflow: "auto" }}>
+      <div style={{ flex: 1 }}>
         <OnboardingScreen clientId={activeClient.id} />
       </div>
     </div>

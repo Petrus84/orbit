@@ -7,6 +7,7 @@ import {
 import { CLIENTS, PERIOD_START, getPeriodEnd } from "@/lib/constants";
 import { useClientNow } from "@/hooks/useClientNow";
 import { Sidebar } from "@/components/layout/Sidebar";
+import { AppShell } from "@/components/layout/AppShell";
 import { Header } from "@/components/layout/Header";
 import KPICard, { type KPI } from "@/components/kpi/KPICard";
 import { QualityScoresPanel } from "@/components/content/QualityScoresPanel";
@@ -68,30 +69,29 @@ export default function InstagramOverviewPage() {
   const maxDate = periodEnd;
 
   return (
-    <div
-      style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+    <OrbitDashboardProvider
+      key={activeClient.id}
+      clientId={activeClient.id}
+      periodStart={period.start}
+      periodEnd={period.end}
+      initialActiveTab="overview"
     >
-      <ClientPeriodBar
-        activeKey={activeClientKey}
-        onSelect={setActiveClientKey}
-        period={{
-          value: period,
-          onChange: setPeriod,
-          minDate,
-          maxDate,
-        }}
-      />
-
-      <OrbitDashboardProvider
-        key={activeClient.id}
-        clientId={activeClient.id}
-        periodStart={period.start}
-        periodEnd={period.end}
-        initialActiveTab="overview"
-      >
-        <InstagramOverviewLayout />
-      </OrbitDashboardProvider>
-    </div>
+      <AppShell sidebar={<Sidebar />}>
+        <div className={styles.page}>
+          <ClientPeriodBar
+            activeKey={activeClientKey}
+            onSelect={setActiveClientKey}
+            period={{
+              value: period,
+              onChange: setPeriod,
+              minDate,
+              maxDate,
+            }}
+          />
+          <InstagramOverviewLayout />
+        </div>
+      </AppShell>
+    </OrbitDashboardProvider>
   );
 }
 
@@ -99,137 +99,131 @@ function InstagramOverviewLayout() {
   const { data, status, error, activeTab } = useOrbitDashboard();
 
   return (
-    <div className={styles.shell}>
-      <Sidebar />
-      <div className={styles.rightPane}>
-        <Header />
+    <div className={styles.rightPane}>
+      <Header />
 
-        <main className={styles.main} id="main-content">
-          {/* LOADING */}
-          {status === "loading" && (
-            <div
-              className={styles.stateCenter}
-              aria-live="polite"
-              aria-label="Carregando dados"
-            >
-              <span className={styles.loadingDot} />
-              <span
-                className={styles.loadingDot}
-                style={{ animationDelay: "0.2s" }}
-              />
-              <span
-                className={styles.loadingDot}
-                style={{ animationDelay: "0.4s" }}
-              />
-            </div>
-          )}
+      <main className={styles.main} id="main-content">
+        {/* LOADING */}
+        {status === "loading" && (
+          <div
+            className={styles.stateCenter}
+            aria-live="polite"
+            aria-label="Carregando dados"
+          >
+            <span className={styles.loadingDot} />
+            <span
+              className={styles.loadingDot}
+              style={{ animationDelay: "0.2s" }}
+            />
+            <span
+              className={styles.loadingDot}
+              style={{ animationDelay: "0.4s" }}
+            />
+          </div>
+        )}
 
-          {/* ERRO */}
-          {status === "error" && error && (
-            <div className={styles.stateCenter} role="alert">
-              <p className={styles.errorText}>
-                Erro ao carregar dados: ⚠️ {error}
-              </p>
-            </div>
-          )}
+        {/* ERRO */}
+        {status === "error" && error && (
+          <div className={styles.stateCenter} role="alert">
+            <p className={styles.errorText}>
+              Erro ao carregar dados: ⚠️ {error}
+            </p>
+          </div>
+        )}
 
-          {/* SUCESSO */}
-          {status === "success" && data && (
-            <>
-              {/* TELA 1 — Visão Geral */}
-              {activeTab === "overview" && (
-                <>
-                  <section
-                    className={styles.kpiRow}
-                    aria-label="KPIs principais"
-                  >
-                    {data.kpis.map((kpi: KPICardData) => (
-                      <KPICard key={kpi.id} kpi={mapKPICardDataToKPI(kpi)} />
-                    ))}
-                  </section>
+        {/* SUCESSO */}
+        {status === "success" && data && (
+          <>
+            {/* TELA 1 — Visão Geral */}
+            {activeTab === "overview" && (
+              <>
+                <section className={styles.kpiRow} aria-label="KPIs principais">
+                  {data.kpis.map((kpi: KPICardData) => (
+                    <KPICard key={kpi.id} kpi={mapKPICardDataToKPI(kpi)} />
+                  ))}
+                </section>
 
-                  <section
-                    className={styles.midRow}
-                    aria-label="Análise de conteúdo"
-                  >
-                    <QualityScoresPanel scores={data.qualityScores} />
-                    <GlassCard glowColor="cyan" className={styles.rightPanel}>
-                      <FormatPerformanceTable
-                        rows={data.formatPerformance}
-                        expandable={false}
-                      />
-                      {data.insights.length > 0 && (
-                        <div className={styles.insightStack}>
-                          {data.insights.map((insight: Insight) => (
-                            <InsightCard key={insight.id} insight={insight} />
-                          ))}
-                        </div>
-                      )}
-                    </GlassCard>
-                  </section>
-                </>
-              )}
+                <section
+                  className={styles.midRow}
+                  aria-label="Análise de conteúdo"
+                >
+                  <QualityScoresPanel scores={data.qualityScores} />
+                  <GlassCard glowColor="cyan" className={styles.rightPanel}>
+                    <FormatPerformanceTable
+                      rows={data.formatPerformance}
+                      expandable={false}
+                    />
+                    {data.insights.length > 0 && (
+                      <div className={styles.insightStack}>
+                        {data.insights.map((insight: Insight) => (
+                          <InsightCard key={insight.id} insight={insight} />
+                        ))}
+                      </div>
+                    )}
+                  </GlassCard>
+                </section>
+              </>
+            )}
 
-              {/* TELA 2 — Por post
+            {/* TELA 2 — Por post
                   ✅ CORRIGIDO 06/09/2026: usa `tabContent` (flex de largura cheia),
                   não `midRow` (grid de 2 colunas da Visão Geral).
                   ✅ RWP-3 (06/10/2026): PostingProfilePanel mora aqui, depois da
                   tabela de formatos. Cadência e mix são contagem de posts. */}
-              {activeTab === "por-post" && (
-                <section
-                  className={styles.tabContent}
-                  aria-label="Dados detalhados por postagem"
-                >
-                  <GlassCard glowColor="cyan">
-                    <h3
-                      style={{
-                        color: "var(--text-primary)",
-                        marginBottom: "1rem",
-                      }}
-                    >
-                      Métricas Agregadas por Formato
-                    </h3>
-                    <FormatPerformanceTable rows={data.formatPerformance} />
-                  </GlassCard>
+            {activeTab === "por-post" && (
+              <section
+                className={styles.tabContent}
+                aria-label="Dados detalhados por postagem"
+              >
+                <GlassCard glowColor="cyan">
+                  <h3
+                    style={{
+                      color: "var(--text-primary)",
+                      marginBottom: "1rem",
+                    }}
+                  >
+                    Métricas Agregadas por Formato
+                  </h3>
+                  <FormatPerformanceTable rows={data.formatPerformance} />
+                </GlassCard>
 
-                  <PostingProfilePanel
-                    cadence={data.cadence}
-                    mix={data.mix}
-                    benchmark={data.benchmarkCadence}
-                  />
-                </section>
-              )}
+                <PostingProfilePanel
+                  cadence={data.cadence}
+                  mix={data.mix}
+                  benchmark={data.benchmarkCadence}
+                />
+              </section>
+            )}
 
-              {/* TELA 3 — Audiência ✅ NOVO */}
-              {activeTab === "audiencia" && (
-                <div className={styles.tabContent}>
-                  {/* Painel de Posicionamento */}
-                  {data.positioning && (
-                    <SectorPositioningPanel positioning={data.positioning} />
-                  )}
+            {/* TELA 3 — Audiência ✅ NOVO */}
+            {activeTab === "audiencia" && (
+              <div className={styles.tabContent}>
+                {/* Painel de Posicionamento */}
+                {data.positioning && (
+                  <SectorPositioningPanel positioning={data.positioning} />
+                )}
 
-                  {/* Painel de Resumo de Audiência */}
-                  {data.audienceSummary && (
-                    <AudienceSummaryPanel summary={data.audienceSummary} />
-                  )}
-                </div>
-              )}
+                {/* Painel de Resumo de Audiência */}
+                {data.audienceSummary && (
+                  <AudienceSummaryPanel summary={data.audienceSummary} />
+                )}
+              </div>
+            )}
 
-              {/* Alertas críticos */}
-              {data.criticalAlerts.length > 0 && (
-                <section
-                  className={styles.alertRow}
-                  aria-label="Alertas críticos"
-                >
-                  {data.criticalAlerts.map((alert: Alert) => (
-                    <CriticalAlert key={alert.id} alert={alert} />
-                  ))}
-                </section>
-              )}
-            </>
-          )}
-        </main>
-      </div>
+            {/* Alertas críticos */}
+            {data.criticalAlerts.length > 0 && (
+              <section
+                className={styles.alertRow}
+                aria-label="Alertas críticos"
+              >
+                {data.criticalAlerts.map((alert: Alert) => (
+                  <CriticalAlert key={alert.id} alert={alert} />
+                ))}
+              </section>
+            )}
+          </>
+        )}
+      </main>
     </div>
   );
 }

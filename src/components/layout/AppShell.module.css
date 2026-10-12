@@ -8,29 +8,32 @@
   position: relative;
 }
 
-/* Wrapper da Sidebar: não altera o componente. O seletor `> aside` faz a
-   barra acompanhar a altura do shell (nos prints ela terminava no fim do
-   conteúdo). Se Sidebar.module.css já define altura própria, remova a
-   regra. */
 .slot {
   flex: none;
-  display: flex;
-}
-.slot > :global(aside) {
-  align-self: stretch;
-  height: auto;
-  min-height: 100%;
 }
 
+/* Sem overflow aqui: a rolagem é a da janela, então a barra de rolagem
+   fica na borda da tela e não no meio dela. */
 .content {
   flex: 1 1 0;
   min-width: 0;
-  overflow: auto;
 }
 
 .menuBtn,
 .backdrop {
   display: none;
+}
+
+/* Desktop: sidebar acompanha a rolagem e ocupa a altura da janela
+   (Sidebar.module.css define height:100%, que não resolve sem pai com
+   altura definida — por isso ela terminava junto com o conteúdo). */
+@media (min-width: 1024px) {
+  .slot > :global(aside) {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100dvh;
+  }
 }
 
 @media (max-width: 1023px) {

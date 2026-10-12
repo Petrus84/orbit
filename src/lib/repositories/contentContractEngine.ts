@@ -65,7 +65,7 @@ export interface AlertContractFields {
 export interface EngagementScoreInput {
   snapshotId: string;
   erRealPct: number;
-  utilityScorePct: number;
+  utilityScorePct: number | null;
   polemicScorePct: number;
   // ✅ FIX (15/09/2026 — regressão do fix de VPS C-02): passou a `number |
   // null`. ORB-DEBT-034 confirma que `reach_followers_pct` nunca foi

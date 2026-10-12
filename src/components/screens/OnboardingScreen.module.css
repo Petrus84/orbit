@@ -2,7 +2,6 @@
 
 .container {
   min-height: 100%;
-  max-width: 1500px;
   gap: var(--space-6);
   padding: var(--space-6);
 }
@@ -231,6 +230,12 @@
    renderSchwartzEditor() no OnboardingScreen.tsx. */
 .repRow.schwartz {
   grid-template-columns: 1fr 1fr 120px auto;
+}
+
+@media (max-width: 640px) {
+  .repRow.schwartz {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .btnRemove {
@@ -550,6 +555,12 @@
 /* troca .repRow.schwartz */
 .repRowSchwartz {
   grid-template-columns: 1fr 1fr 120px auto;
+}
+
+@media (max-width: 640px) {
+  .repRowSchwartz {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* troca .sumCheck.empty / .ok / .bad */

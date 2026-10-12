@@ -40,7 +40,11 @@ export default function FunnelPage() {
       periodEnd={period.end}
     >
       <div
-        style={{ display: "flex", flexDirection: "column", height: "100vh" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100dvh",
+        }}
       >
         {/* Client Selector Nav */}
         <ClientPeriodBar
@@ -55,7 +59,7 @@ export default function FunnelPage() {
         />
 
         {/* Funel Screen */}
-        <div style={{ flex: 1, overflow: "auto" }}>
+        <div style={{ flex: 1 }}>
           <FunnelScreen
             key={`${activeClient.id}:${period.start.toISOString()}:${period.end.toISOString()}`}
             clientId={activeClient.id}

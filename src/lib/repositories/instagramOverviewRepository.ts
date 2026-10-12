@@ -72,6 +72,7 @@
 
 import { supabase } from "@/lib/supabase";
 import { repairMojibake } from "@/lib/textRepair";
+import { medianOf } from "@/lib/stats/median";
 import { z } from "zod";
 
 import type {
@@ -381,7 +382,9 @@ export interface FetchOverviewParams {
 export interface EngagementScoreSnapshot {
   snapshotId: string;
   erRealPct: number;
-  utilityScorePct: number;
+  // KCR-C5/RWP-1: tile Utilidade fora do Overview e utility_score_pct sem
+  // régua. Ausência de utilidade não derruba mais ER Real e Polêmica.
+  utilityScorePct: number | null;
   polemicScorePct: number;
   // ✅ FIX (15/09/2026): `number | null` — ver comentário em
   // EngagementScoreInput (contentContractEngine.ts). Reach_followers_pct
@@ -769,7 +772,7 @@ async function fetchQualityScores(
     .schema("orbit")
     .from("v_quality_scores")
     .select(
-      "id, score_key, score_value, status_text, status_variant, period_start, period_end, semaphore_key, ref_category, ref_source, ref_direction, ref_green_min, ref_green_max, ref_red_min, ref_red_max, ref_p50",
+      "id, score_key, metric_name, score_value, status_text, status_variant, period_start, period_end, semaphore_key, ref_category, ref_source, ref_direction, ref_green_min, ref_green_max, ref_red_min, ref_red_max, ref_p50",
     )
     .eq("client_id", clientId)
     .lte("period_start", end)
@@ -784,13 +787,62 @@ async function fetchQualityScores(
   const num = (v: unknown): number | null =>
     v == null ? null : Number.isFinite(Number(v)) ? Number(v) : null;
 
+  // SSC-1: o card de Polêmica não vem do snapshot da view (que ignora o
+  // período do header): valor = mediana por post no período; semáforo =
+  // fn_classify_metric sobre esse valor, mesma chamada que a view faz
+  // (setor = clients.benchmark_category, porte 'all'). Os ref_* da view
+  // (régua e direção) não dependem do valor e seguem alimentando o copy.
+  // Se a classificação voltar degradada (L2: RPC indisponível), mantém a
+  // linha da view intacta em vez de pintar uma cor que ninguém calculou.
+  let polemicOverride: {
+    value: number | null;
+    semaphore: SemaphoreKey | null;
+  } | null = null;
+  if ((orbitRows ?? []).some((r) => r.metric_name === "polemic_score_pct")) {
+    const [median, clientRes] = await Promise.all([
+      fetchPolemicMedianInPeriod(clientId, start, end),
+      supabase
+        .schema("orbit")
+        .from("clients")
+        .select("benchmark_category")
+        .eq("id", clientId)
+        .maybeSingle()
+        .overrideTypes<
+          { benchmark_category: string | null },
+          { merge: false }
+        >(),
+    ]);
+    if (median == null) {
+      polemicOverride = { value: null, semaphore: null };
+    } else {
+      const classified = await classifyMetric(
+        "polemic_score_pct",
+        median,
+        clientRes.data?.benchmark_category?.trim() || "all",
+        "all",
+      );
+      if (
+        classified.confidenceLevel !== "L2" &&
+        classified.semaphore !== "neutro"
+      ) {
+        polemicOverride = { value: median, semaphore: classified.semaphore };
+      }
+    }
+  }
+
   return (orbitRows ?? []).map((row) => {
     const scoreKey = String(row.score_key);
     const rawStatus = String(row.status_text ?? "");
-    const semaphore = (row.semaphore_key ?? null) as SemaphoreKey | null;
+    const ov = row.metric_name === "polemic_score_pct" ? polemicOverride : null;
+    const semaphore = (
+      ov ? ov.semaphore : (row.semaphore_key ?? null)
+    ) as SemaphoreKey | null;
     const sem = semaphore ? SEMAPHORE_UI[semaphore] : undefined;
-    const value =
-      row.score_value != null ? toFiniteNumber(row.score_value) : null;
+    const value = ov
+      ? ov.value
+      : row.score_value != null
+        ? toFiniteNumber(row.score_value)
+        : null;
 
     const copy = buildScoreCopy({
       value: typeof value === "number" ? value : null,
@@ -1218,6 +1270,12 @@ async function fetchAlgoRiskScore(
     .schema("orbit")
     .from("ig_posts")
     .select("published_at, likes, comments")
+    // Stories entram em ig_posts (content_format 'story') após o ingest
+    // --kind=stories. Baseline do algo_risk_score é histórico de PUBLICAÇÕES
+    // do feed: story (várias por dia, sem likes/comments comparáveis) vazaria
+    // pro IQR-trim e empurraria posts reais pra fora do limit(80).
+    // Mesmo critério de fetchPostingProfile.
+    .neq("content_format", "story")
     .eq("client_id", clientId)
     .order("published_at", { ascending: false })
     .limit(80)
@@ -1236,15 +1294,50 @@ async function fetchAlgoRiskScore(
   );
 }
 
+/**
+ * SSC-1 (10/10/2026): Polêmica = mediana por post (ficha `mediana_conta`) de
+ * ig_posts.polemic_score_pct no período do header, calculada aqui — o banco
+ * fornece o dado por post e não recalcula. Não cai pro snapshot da conta:
+ * duas camadas pra mesma métrica foi o que o alinhamento de 10/10 recusou.
+ * Recorte: cliente, [start, end], L0/L1, sem story. Post sem polemic_score_pct
+ * (likes<=0 ou campo ausente) fica fora; sem nenhum => null, nunca 0.
+ * A janela efetiva (header ∩ cobertura) sai sozinha: não existe post depois
+ * da data de coleta.
+ */
+async function fetchPolemicMedianInPeriod(
+  clientId: string,
+  start: string,
+  end: string,
+): Promise<number | null> {
+  const { data, error } = await supabase
+    .schema("orbit")
+    .from("ig_posts")
+    .select("polemic_score_pct")
+    .neq("content_format", "story")
+    .eq("client_id", clientId)
+    .gte("published_at", start)
+    .lte("published_at", end)
+    .in("confidence_level", CONFIDENCE_LEVELS)
+    .not("polemic_score_pct", "is", null)
+    .returns<{ polemic_score_pct: number | string }[]>();
+
+  if (error) {
+    console.error("[fetchPolemicMedianInPeriod]", error.message);
+    return null;
+  }
+  return medianOf((data ?? []).map((r) => Number(r.polemic_score_pct)));
+}
+
 export async function fetchSectorPositioning(
   clientId: string,
   start: string,
   end: string,
 ): Promise<SectorPositioning | null> {
-  const [onboarding, snapshot, algoRisk] = await Promise.all([
+  const [onboarding, snapshot, algoRisk, polemicMedian] = await Promise.all([
     fetchClientOnboarding(clientId),
     fetchLatestEngagementScoreSnapshot(clientId, start, end),
     fetchAlgoRiskScore(clientId),
+    fetchPolemicMedianInPeriod(clientId, start, end),
   ]);
 
   if (!onboarding) return null;
@@ -1255,7 +1348,17 @@ export async function fetchSectorPositioning(
   const safeCategory = category ?? "all";
   const safeTier = tier ?? "all";
 
-  const [erReal, vps, polemicScore] = snapshot
+  const polemicScore =
+    polemicMedian != null
+      ? await classifyMetric(
+          "polemic_score_pct",
+          polemicMedian,
+          safeCategory,
+          safeTier,
+        )
+      : null;
+
+  const [erReal, vps] = snapshot
     ? await Promise.all([
         classifyMetric(
           "er_real_pct",
@@ -1271,14 +1374,8 @@ export async function fetchSectorPositioning(
         snapshot.vpsPct != null
           ? classifyMetric("vps_pct", snapshot.vpsPct, safeCategory, safeTier)
           : Promise.resolve(null),
-        classifyMetric(
-          "polemic_score_pct",
-          snapshot.polemicScorePct,
-          safeCategory,
-          safeTier,
-        ),
       ])
-    : [null, null, null];
+    : [null, null];
 
   return {
     setorBenchmark: onboarding.setor_benchmark,
@@ -1290,7 +1387,7 @@ export async function fetchSectorPositioning(
     vps,
     vpsValue: snapshot?.vpsPct ?? null,
     polemicScore,
-    polemicScoreValue: snapshot?.polemicScorePct ?? null,
+    polemicScoreValue: polemicMedian,
     algoRisk,
     engagementPeriodNotes: onboarding.q1_engagement_period_notes,
     contentProxyNotes: onboarding.q2_content_proxy_notes,
@@ -1435,11 +1532,10 @@ export async function fetchLatestEngagementScoreSnapshot(
         ) / 10000
       : null;
 
-  if (
-    er_real_pct == null ||
-    utility_score_pct == null ||
-    polemic_score_pct == null
-  ) {
+  // Só ER Real e Polêmica são requisitos do snapshot. utility_score_pct
+  // nulo segue como `null` no contrato e não bloqueia as outras duas
+  // (gap de código registrado em decisions.md, 2026-10-05).
+  if (er_real_pct == null || polemic_score_pct == null) {
     return null;
   }
 
