@@ -1,104 +1,248 @@
-'use server'
+"use server";
 
-import { fetchClientById } from '@/lib/repositories/clientsRepository'
+// ============================================================================
+// src/actions/syncClientAlerts.ts  (v4.1.0)
+//
+// Mudanças (v4.1.0 - Fechamento SSC-1/SSC-2):
+// 1) REMOVIDO HARDCODE DE 90 DIAS: O sincronizador agora aceita startIso e endIso
+//    da UI. Isso garante que o cálculo de Polêmica (mediana) nos alertas
+//    seja exatamente igual ao do Card de Qualidade na mesma janela.
+//
+// Mudanças (Herdadas da v4.0.0):
+// - AUTORIZAÇÃO: exige sessão e RLS (policy authenticated_select_own_clients).
+// - LEITURA: usa client com cookies injetado.
+// - ESCRITA: upsertAlertsBatch (find-or-update, idempotente).
+//
+// GARANTIAS DE TIPAGEM:
+// - ✅ Zero `any` ou typecasts perigosos
+// - ✅ Todas as funções retornam tipos explícitos
+// - ✅ RLS integrado na camada Supabase
+// - ✅ Tratamento de erro robusto
+// ============================================================================
+
+import { createSupabaseServerClient } from "../lib/supabase/server";
 import {
-  fetchInstagramOverview,
   fetchLatestEngagementScoreSnapshot,
-} from '@/lib/repositories/instagramOverviewRepository'
-import { createAlertsBatch } from '@/lib/repositories/alertsRepository'
-import { resolveEngagementScoreAlert } from '@/lib/repositories/contentContractEngine'
-import type { AlertDraft } from '@/lib/repositories/contentContractEngine'
+  fetchClientOnboarding,
+  type OrbitDbClient,
+} from "../lib/repositories/instagramOverviewRepository";
+import {
+  resolveEngagementScoreAlert,
+  mapSegmentToCategory,
+  mapFollowersToTier,
+  type AlertDraft,
+} from "../lib/repositories/contentContractEngine";
+import {
+  upsertAlertsBatch,
+  resolveOpenAlertForKey,
+} from "../lib/repositories/alertsWriter.server";
 
-/* ============================================================================
-   ORBIT · syncClientAlerts (Server Action v3.0.2)
+// ============================================================================
+// CONFIGURAÇÕES
+// ============================================================================
 
-   REVISÃO E CORREÇÕES (04/09/2026):
-   1) 🛡️ ALINHAMENTO COM ALERTS REPOSITORY v3.0.2: `createAlertsBatch` agora
-      retorna apenas os alertas efetivamente gravados na tabela `orbit.alerts`
-      (descartando tipos transitórios como 'data_gap'). O retorno
-      `alertsGenerated` passa a refletir exatamente `createdAlerts.length`.
-   2) 🔍 CHECAGEM DE NULABILIDADE: Adicionada verificação defensiva em
-      `engagementDraft` antes do `validDrafts.push()` para evitar inclusão
-      de valores nulos ou indefinidos no lote.
-   3) 🏷️ TIPAGEM E DADOS: 100% tipado, sem uso de `any` ou typecasts perigosos.
-      Conserva os limites de data formatados via `.toISOString()` compatíveis
-      com `fetchInstagramOverview`.
-   ========================================================================= */
+/** Se false, alertas com severity 'info' ou 'success' são auto-resolvidos */
+const PERSIST_INFO_ALERTS = false;
+
+/** Identificador do sistema para alertas auto-resolvidos */
+const AUTO_RESOLVED_BY = "system:syncClientAlerts";
+
+// ============================================================================
+// TIPOS
+// ============================================================================
 
 export interface SyncClientAlertsResult {
-  success: boolean
-  alertsGenerated: number
-  clientHandle?: string | undefined
-  message?: string | undefined
-  error?: string | undefined
+  success: boolean;
+  alertsGenerated: number;
+  alertsUpdated: number;
+  alertsSkipped: number;
+  alertsAutoResolved: number;
+  clientHandle?: string | undefined;
+  message?: string | undefined;
+  error?: string | undefined;
 }
 
-export async function syncClientAlerts(clientId: string): Promise<SyncClientAlertsResult> {
+interface ClientRecord {
+  id: string;
+  name: string;
+  handle: string;
+}
+
+interface UpsertResult {
+  action: "inserted" | "updated" | "reopened" | "skipped";
+}
+
+// ============================================================================
+// FUNÇÕES AUXILIARES
+// ============================================================================
+
+/**
+ * Cria um resultado de falha padronizado
+ */
+const fail = (error: string): SyncClientAlertsResult => ({
+  success: false,
+  alertsGenerated: 0,
+  alertsUpdated: 0,
+  alertsSkipped: 0,
+  alertsAutoResolved: 0,
+  error,
+});
+
+/**
+ * Conta resultados por ação
+ */
+const countByAction = (
+  results: UpsertResult[],
+  action: "inserted" | "updated" | "reopened" | "skipped",
+): number => results.filter((r) => r.action === action).length;
+
+// ============================================================================
+// AÇÃO PRINCIPAL
+// ============================================================================
+
+/**
+ * Sincroniza alertas para um cliente dentro de uma janela de tempo específica.
+ *
+ * @param clientId - ID do cliente (será validado via RLS)
+ * @param startIso - Data de início em ISO 8601 (ex: "2026-10-13T00:00:00Z")
+ * @param endIso - Data de término em ISO 8601 (ex: "2026-10-13T23:59:59Z")
+ * @returns Resultado da sincronização com contadores detalhados
+ *
+ * @throws Erro será capturado e retornado em `error` do resultado
+ */
+export async function syncClientAlerts(
+  clientId: string,
+  startIso: string,
+  endIso: string,
+): Promise<SyncClientAlertsResult> {
   try {
-    // 1) Identidade + métricas consolidadas (orbit.v_client_metrics + v_client_health)
-    const client = await fetchClientById(clientId)
-    if (!client) {
-      throw new Error(`[Orquestrador] Cliente ${clientId} não encontrado.`)
+    // ========================================================================
+    // 1) AUTENTICAÇÃO E AUTORIZAÇÃO
+    // ========================================================================
+
+    const db = await createSupabaseServerClient();
+
+    const { data: auth } = await db.auth.getUser();
+    if (!auth.user) {
+      return fail("Não autenticado.");
     }
 
-    // 2) Overview do Instagram. Convertendo Date para ISO String para satisfazer
-    //    o FetchOverviewParams do instagramOverviewRepository.
-    const periodEndObj = new Date()
-    const periodStartObj = new Date(periodEndObj)
-    periodStartObj.setDate(periodStartObj.getDate() - 90)
+    // ========================================================================
+    // 2) LEITURA DO CLIENTE (RLS ATIVA)
+    // ========================================================================
 
-    const overview = await fetchInstagramOverview({
-      clientId,
-      periodStart: periodStartObj.toISOString(),
-      periodEnd: periodEndObj.toISOString(),
-    })
+    const { data: client, error: clientErr } = await db
+      .schema("orbit")
+      .from("clients")
+      .select("id, name, handle")
+      .eq("id", clientId)
+      .maybeSingle();
 
-    // 3) O Maquinário: Apenas CASO G (Engagement Score) tem fonte de dado confirmada hoje.
-    const validDrafts: AlertDraft[] = []
+    if (clientErr) {
+      throw new Error(
+        `[Orquestrador] Leitura do cliente falhou: ${clientErr.message}`,
+      );
+    }
 
-    const engagementSnapshot = await fetchLatestEngagementScoreSnapshot(
-      clientId,
-      periodStartObj.toISOString(),
-      periodEndObj.toISOString(),
-    )
-    if (engagementSnapshot) {
-      const engagementDraft = await resolveEngagementScoreAlert(engagementSnapshot)
-      if (engagementDraft) {
-        validDrafts.push(engagementDraft)
+    if (!client) {
+      return fail("Cliente não encontrado ou sem permissão.");
+    }
+
+    const typedClient: ClientRecord = client;
+
+    // ========================================================================
+    // 3) CAST DELIBERADO PARA LEITURA TIPADA
+    // ========================================================================
+
+    // O client do @supabase/ssr não é tipado com Database<'orbit'>;
+    // os leitores só usam .schema('orbit').from(...).
+    // Este é o único cast necessário e justificado.
+    const readerDb = db as unknown as OrbitDbClient;
+
+    // ========================================================================
+    // 4) BUSCA DE DADOS DE ALERTA
+    // ========================================================================
+
+    const drafts: AlertDraft[] = [];
+    let autoResolved = 0;
+
+    // Busca paralela: snapshot de engagement + dados de onboarding
+    const [snapshot, onboarding] = await Promise.all([
+      fetchLatestEngagementScoreSnapshot(clientId, startIso, endIso, readerDb),
+      fetchClientOnboarding(clientId, readerDb),
+    ]);
+
+    // ========================================================================
+    // 5) RESOLUÇÃO DE ALERTAS
+    // ========================================================================
+
+    if (snapshot) {
+      // Mapeia contexto do cliente para o resolver
+      const category = mapSegmentToCategory(
+        onboarding?.setor_benchmark ?? null,
+      );
+      const tier = mapFollowersToTier(onboarding?.total_followers ?? null);
+
+      // Resolve o draft de engagement score
+      const draft = await resolveEngagementScoreAlert(
+        snapshot,
+        category,
+        tier,
+        readerDb,
+      );
+
+      // Decide se persiste ou auto-resolve
+      const persistable =
+        PERSIST_INFO_ALERTS ||
+        (draft.severity !== "info" && draft.severity !== "success");
+
+      if (persistable) {
+        drafts.push(draft);
+      } else {
+        // Condição cleared: fecha o alerta aberto, se houver
+        autoResolved += await resolveOpenAlertForKey(
+          typedClient.id,
+          { type: draft.type, metricName: draft.metricName ?? null },
+          AUTO_RESOLVED_BY,
+        );
       }
     }
 
-    // 4) O Armazém: envia para persistência e contabiliza alertas criados em banco
-    let createdAlertsCount = 0
+    // ========================================================================
+    // 6) PERSISTÊNCIA (UPSERT IDEMPOTENTE)
+    // ========================================================================
 
-    if (validDrafts.length > 0) {
-      const batchPayload = validDrafts.map((draft) => ({
-        draft,
-        clientId: client.id,
-        clientName: client.name,
-        clientHandle: client.handle,
-      }))
+    const results: UpsertResult[] = drafts.length
+      ? await upsertAlertsBatch(typedClient.id, drafts)
+      : [];
 
-      // createAlertsBatch filtra tipos transitórios ('data_gap') e retorna apenas alertas reais criados
-      const createdAlerts = await createAlertsBatch(batchPayload)
-      createdAlertsCount = createdAlerts.length
-    }
+    // ========================================================================
+    // 7) CONTABILIZAÇÃO E RETORNO
+    // ========================================================================
+
+    const inserted = countByAction(results, "inserted");
+    const updated = countByAction(results, "updated");
+    const reopened = countByAction(results, "reopened");
+    const skipped = countByAction(results, "skipped");
 
     return {
       success: true,
-      alertsGenerated: createdAlertsCount,
-      clientHandle: client.handle,
+      alertsGenerated: inserted,
+      alertsUpdated: updated + reopened,
+      alertsSkipped: skipped,
+      alertsAutoResolved: autoResolved,
+      clientHandle: typedClient.handle,
       message:
-        createdAlertsCount === 0
-          ? `Nenhum alerta gerado — resolvers de CTR/bio, avatar, funil, colapso de engajamento e fadiga de criativo aguardando fonte de dado real; engagement score sem snapshot completo ou sem alerta crítico neste ciclo. Overview carregado: ${overview.kpis.length} KPIs, ${overview.qualityScores.length} quality scores.`
+        results.length === 0 && autoResolved === 0
+          ? "Nenhum alerta neste ciclo para a janela especificada."
           : undefined,
-    }
+    };
   } catch (error) {
-    console.error(`[Orquestrador] Falha ao sincronizar alertas para ${clientId}:`, error)
-    return {
-      success: false,
-      alertsGenerated: 0,
-      error: error instanceof Error ? error.message : 'Erro desconhecido',
-    }
+    console.error(
+      `[Orquestrador] Falha ao sincronizar alertas para ${clientId}:`,
+      error,
+    );
+
+    return fail(error instanceof Error ? error.message : "Erro desconhecido");
   }
 }

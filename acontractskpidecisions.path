@@ -1,0 +1,15 @@
+diff --git a/contracts/kpi/decisions.md b/contracts/kpi/decisions.md
+--- a/contracts/kpi/decisions.md
++++ b/contracts/kpi/decisions.md
+@@ -0,0 +1,12 @@
++
++## 2026-10-13 SSC-1
++polemic_score_pct do Overview e do alerta = mediana por post
++de (comments/likes × 100) no header, likes > 0, n ≥ 5.
++NULL se n < 5 ou sem likes. Snapshot e soma ponderada
++não são o oráculo. 20% recusado.
++
++## 2026-10-13 SSC-2
++cadencia_posts vigente = postsPerWeek sobre janela efetiva
++(header ∩ coleta), n ≥ 3.
++postsPerWeekActive = informativo, não é o oráculo.

@@ -24,7 +24,7 @@
 //  - ingest_script = 'manual' (convenção dos CSVs anteriores; evita alterar o enum).
 //
 // Uso:
-//   npx tsx scripts/ingest-meta-csv.ts --file="C:\Projetos\Export_clients\CPImportstore\Sep-09-2026_Oct-06-2026_1574795624332093.csv"
+//   npx tsx scripts/ingest-meta-csv.ts --file="C:\Projetos\Export_clients\Acenxovais\Sep-09-2026_Oct-06-2026_1574795624332093.csv"
 //   npx tsx scripts/ingest-meta-csv.ts --file="..." --apply
 //   npx tsx scripts/ingest-meta-csv.ts --file="..." --parse-only      # só valida o arquivo, sem banco
 //

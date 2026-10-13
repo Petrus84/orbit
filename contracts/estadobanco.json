@@ -1,0 +1,151 @@
+{
+  "gerado_em": "2026-10-12T01:10:17.513Z",
+  "kpis origem banco": [
+    {
+      "table_name": "orbit.ads_meta_creatives",
+      "trigger_name": "trg_meta_creatives_updated_at",
+      "trigger_definition": "CREATE TRIGGER trg_meta_creatives_updated_at BEFORE UPDATE ON orbit.ads_meta_creatives FOR EACH ROW EXECUTE FUNCTION orbit.set_updated_at()",
+      "function_name": "orbit.set_updated_at"
+    },
+    {
+      "table_name": "orbit.client_onboarding",
+      "trigger_name": "trg_log_followers_measurement",
+      "trigger_definition": "CREATE TRIGGER trg_log_followers_measurement AFTER INSERT OR UPDATE OF total_followers ON orbit.client_onboarding FOR EACH ROW EXECUTE FUNCTION orbit.fn_log_followers_measurement()",
+      "function_name": "orbit.fn_log_followers_measurement"
+    },
+    {
+      "table_name": "orbit.client_onboarding",
+      "trigger_name": "trg_recalc_followers_total_from_onboarding",
+      "trigger_definition": "CREATE TRIGGER trg_recalc_followers_total_from_onboarding AFTER INSERT OR UPDATE OF total_followers, updated_at ON orbit.client_onboarding FOR EACH ROW EXECUTE FUNCTION orbit.fn_recalc_followers_total_from_onboarding()",
+      "function_name": "orbit.fn_recalc_followers_total_from_onboarding"
+    },
+    {
+      "table_name": "orbit.client_onboarding",
+      "trigger_name": "trg_sync_onboarding_to_clients",
+      "trigger_definition": "CREATE TRIGGER trg_sync_onboarding_to_clients AFTER INSERT OR UPDATE ON orbit.client_onboarding FOR EACH ROW EXECUTE FUNCTION orbit.fn_sync_onboarding_to_clients()",
+      "function_name": "orbit.fn_sync_onboarding_to_clients"
+    },
+    {
+      "table_name": "orbit.ig_account_snapshots",
+      "trigger_name": "trg_check_churn_alert",
+      "trigger_definition": "CREATE TRIGGER trg_check_churn_alert AFTER INSERT OR UPDATE ON orbit.ig_account_snapshots FOR EACH ROW EXECUTE FUNCTION orbit.check_churn_alert()",
+      "function_name": "orbit.check_churn_alert"
+    },
+    {
+      "table_name": "orbit.ig_account_snapshots",
+      "trigger_name": "trg_fill_followers_total_on_snapshot",
+      "trigger_definition": "CREATE TRIGGER trg_fill_followers_total_on_snapshot BEFORE INSERT OR UPDATE OF followers_new, followers_lost, period_start ON orbit.ig_account_snapshots FOR EACH ROW EXECUTE FUNCTION orbit.fn_fill_followers_total_on_snapshot()",
+      "function_name": "orbit.fn_fill_followers_total_on_snapshot"
+    },
+    {
+      "table_name": "orbit.ig_audience_snapshots",
+      "trigger_name": "trg_avatar_alignment_snapshot",
+      "trigger_definition": "CREATE TRIGGER trg_avatar_alignment_snapshot AFTER INSERT ON orbit.ig_audience_snapshots FOR EACH ROW EXECUTE FUNCTION orbit.fn_avatar_alignment_snapshot()",
+      "function_name": "orbit.fn_avatar_alignment_snapshot"
+    },
+    {
+      "table_name": "orbit.ig_posts",
+      "trigger_name": "trg_eval_boost_candidate",
+      "trigger_definition": "CREATE TRIGGER trg_eval_boost_candidate BEFORE INSERT OR UPDATE ON orbit.ig_posts FOR EACH ROW EXECUTE FUNCTION orbit.eval_boost_candidate()",
+      "function_name": "orbit.eval_boost_candidate"
+    },
+
+    {
+      "table_name": "orbit.ads_meta_creatives",
+      "trigger_name": "trg_meta_creatives_updated_at",
+      "trigger_definition": "CREATE TRIGGER trg_meta_creatives_updated_at BEFORE UPDATE ON orbit.ads_meta_creatives FOR EACH ROW EXECUTE FUNCTION orbit.set_updated_at()",
+      "function_name": "orbit.set_updated_at"
+    },
+    {
+      "table_name": "orbit.client_onboarding",
+      "trigger_name": "trg_log_followers_measurement",
+      "trigger_definition": "CREATE TRIGGER trg_log_followers_measurement AFTER INSERT OR UPDATE OF total_followers ON orbit.client_onboarding FOR EACH ROW EXECUTE FUNCTION orbit.fn_log_followers_measurement()",
+      "function_name": "orbit.fn_log_followers_measurement"
+    },
+    {
+      "table_name": "orbit.client_onboarding",
+      "trigger_name": "trg_recalc_followers_total_from_onboarding",
+      "trigger_definition": "CREATE TRIGGER trg_recalc_followers_total_from_onboarding AFTER INSERT OR UPDATE OF total_followers, updated_at ON orbit.client_onboarding FOR EACH ROW EXECUTE FUNCTION orbit.fn_recalc_followers_total_from_onboarding()",
+      "function_name": "orbit.fn_recalc_followers_total_from_onboarding"
+    },
+    {
+      "table_name": "orbit.client_onboarding",
+      "trigger_name": "trg_sync_onboarding_to_clients",
+      "trigger_definition": "CREATE TRIGGER trg_sync_onboarding_to_clients AFTER INSERT OR UPDATE ON orbit.client_onboarding FOR EACH ROW EXECUTE FUNCTION orbit.fn_sync_onboarding_to_clients()",
+      "function_name": "orbit.fn_sync_onboarding_to_clients"
+    },
+    {
+      "table_name": "orbit.ig_account_snapshots",
+      "trigger_name": "trg_check_churn_alert",
+      "trigger_definition": "CREATE TRIGGER trg_check_churn_alert AFTER INSERT OR UPDATE ON orbit.ig_account_snapshots FOR EACH ROW EXECUTE FUNCTION orbit.check_churn_alert()",
+      "function_name": "orbit.check_churn_alert"
+    },
+    {
+      "table_name": "orbit.ig_account_snapshots",
+      "trigger_name": "trg_fill_followers_total_on_snapshot",
+      "trigger_definition": "CREATE TRIGGER trg_fill_followers_total_on_snapshot BEFORE INSERT OR UPDATE OF followers_new, followers_lost, period_start ON orbit.ig_account_snapshots FOR EACH ROW EXECUTE FUNCTION orbit.fn_fill_followers_total_on_snapshot()",
+      "function_name": "orbit.fn_fill_followers_total_on_snapshot"
+    },
+    {
+      "table_name": "orbit.ig_audience_snapshots",
+      "trigger_name": "trg_avatar_alignment_snapshot",
+      "trigger_definition": "CREATE TRIGGER trg_avatar_alignment_snapshot AFTER INSERT ON orbit.ig_audience_snapshots FOR EACH ROW EXECUTE FUNCTION orbit.fn_avatar_alignment_snapshot()",
+      "function_name": "orbit.fn_avatar_alignment_snapshot"
+    },
+    {
+      "table_name": "orbit.ig_posts",
+      "trigger_name": "trg_eval_boost_candidate",
+      "trigger_definition": "CREATE TRIGGER trg_eval_boost_candidate BEFORE INSERT OR UPDATE ON orbit.ig_posts FOR EACH ROW EXECUTE FUNCTION orbit.eval_boost_candidate()",
+      "function_name": "orbit.eval_boost_candidate"
+    },
+
+    {
+      "table_name": "orbit.ads_meta_creatives",
+      "trigger_name": "trg_meta_creatives_updated_at",
+      "trigger_definition": "CREATE TRIGGER trg_meta_creatives_updated_at BEFORE UPDATE ON orbit.ads_meta_creatives FOR EACH ROW EXECUTE FUNCTION orbit.set_updated_at()",
+      "function_name": "orbit.set_updated_at"
+    },
+    {
+      "table_name": "orbit.client_onboarding",
+      "trigger_name": "trg_log_followers_measurement",
+      "trigger_definition": "CREATE TRIGGER trg_log_followers_measurement AFTER INSERT OR UPDATE OF total_followers ON orbit.client_onboarding FOR EACH ROW EXECUTE FUNCTION orbit.fn_log_followers_measurement()",
+      "function_name": "orbit.fn_log_followers_measurement"
+    },
+    {
+      "table_name": "orbit.client_onboarding",
+      "trigger_name": "trg_recalc_followers_total_from_onboarding",
+      "trigger_definition": "CREATE TRIGGER trg_recalc_followers_total_from_onboarding AFTER INSERT OR UPDATE OF total_followers, updated_at ON orbit.client_onboarding FOR EACH ROW EXECUTE FUNCTION orbit.fn_recalc_followers_total_from_onboarding()",
+      "function_name": "orbit.fn_recalc_followers_total_from_onboarding"
+    },
+    {
+      "table_name": "orbit.client_onboarding",
+      "trigger_name": "trg_sync_onboarding_to_clients",
+      "trigger_definition": "CREATE TRIGGER trg_sync_onboarding_to_clients AFTER INSERT OR UPDATE ON orbit.client_onboarding FOR EACH ROW EXECUTE FUNCTION orbit.fn_sync_onboarding_to_clients()",
+      "function_name": "orbit.fn_sync_onboarding_to_clients"
+    },
+    {
+      "table_name": "orbit.ig_account_snapshots",
+      "trigger_name": "trg_check_churn_alert",
+      "trigger_definition": "CREATE TRIGGER trg_check_churn_alert AFTER INSERT OR UPDATE ON orbit.ig_account_snapshots FOR EACH ROW EXECUTE FUNCTION orbit.check_churn_alert()",
+      "function_name": "orbit.check_churn_alert"
+    },
+    {
+      "table_name": "orbit.ig_account_snapshots",
+      "trigger_name": "trg_fill_followers_total_on_snapshot",
+      "trigger_definition": "CREATE TRIGGER trg_fill_followers_total_on_snapshot BEFORE INSERT OR UPDATE OF followers_new, followers_lost, period_start ON orbit.ig_account_snapshots FOR EACH ROW EXECUTE FUNCTION orbit.fn_fill_followers_total_on_snapshot()",
+      "function_name": "orbit.fn_fill_followers_total_on_snapshot"
+    },
+    {
+      "table_name": "orbit.ig_audience_snapshots",
+      "trigger_name": "trg_avatar_alignment_snapshot",
+      "trigger_definition": "CREATE TRIGGER trg_avatar_alignment_snapshot AFTER INSERT ON orbit.ig_audience_snapshots FOR EACH ROW EXECUTE FUNCTION orbit.fn_avatar_alignment_snapshot()",
+      "function_name": "orbit.fn_avatar_alignment_snapshot"
+    },
+    {
+      "table_name": "orbit.ig_posts",
+      "trigger_name": "trg_eval_boost_candidate",
+      "trigger_definition": "CREATE TRIGGER trg_eval_boost_candidate BEFORE INSERT OR UPDATE ON orbit.ig_posts FOR EACH ROW EXECUTE FUNCTION orbit.eval_boost_candidate()",
+      "function_name": "orbit.eval_boost_candidate"
+    }
+  ]
+}

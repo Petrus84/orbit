@@ -1,4 +1,4 @@
-This file is a merged representation of a subset of the codebase, containing specifically included files, combined into a single document by Repomix.
+This file is a merged representation of a subset of the codebase, containing specifically included files and files not matching ignore patterns, combined into a single document by Repomix.
 
 <file_summary>
 This section contains a summary of this file.
@@ -32,7 +32,8 @@ The content is organized as follows:
 <notes>
 - Some files may have been excluded based on .gitignore rules and Repomix's configuration
 - Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
-- Only files matching these patterns are included: src/**/*.{ts,tsx,}
+- Only files matching these patterns are included: src/**/*.{ts,tsx,js}
+- Files matching these patterns are excluded: **/*.lock, **/*py, **/*.json, **/*.svg, **/*.test.*, **/*.spec.*
 - Files matching patterns in .gitignore are excluded
 - Files matching default ignore patterns are excluded
 - Files are sorted by Git change count (files with more changes are at the bottom)
@@ -183,6 +184,9 @@ src/
       instagramOverviewRepository.ts
       onboardingRepository.ts
       supabaseAdmin.ts
+    stats/
+      median.test.ts
+      median.ts
     supabase/
       server.ts
     constants.ts
@@ -205,69 +209,6 @@ src/
 
 <files>
 This section contains the contents of the repository's files.
-
-<file path="src/components/layout/AppShell.tsx">
-"use client";
-
-import { useEffect, useState, type ReactNode } from "react";
-import styles from "./AppShell.module.css";
-
-interface AppShellProps {
-  sidebar: ReactNode;
-  children: ReactNode;
-}
-
-/**
- * Shell único do app: sidebar + conteúdo, com teto `--shell-max` e drawer
- * da sidebar abaixo de 1024px. Usado por (dashboard)/layout.tsx e por
- * /instagram, para as duas árvores terem o mesmo comportamento.
- *
- * A rolagem é a da janela (não há mais rolagem interna por página), e a
- * sidebar fica sticky em telas largas.
- */
-export function AppShell({ sidebar, children }: AppShellProps) {
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    if (!menuOpen) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setMenuOpen(false);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [menuOpen]);
-
-  return (
-    <div className={styles.shell} data-open={menuOpen}>
-      <div
-        id="orbit-sidebar"
-        className={styles.slot}
-        onClick={(e) => {
-          if ((e.target as HTMLElement).closest("a")) setMenuOpen(false);
-        }}
-      >
-        {sidebar}
-      </div>
-      <button
-        type="button"
-        className={styles.menuBtn}
-        aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
-        aria-expanded={menuOpen}
-        aria-controls="orbit-sidebar"
-        onClick={() => setMenuOpen((v) => !v)}
-      >
-        {menuOpen ? "✕" : "☰"}
-      </button>
-      <div
-        className={styles.backdrop}
-        aria-hidden="true"
-        onClick={() => setMenuOpen(false)}
-      />
-      <div className={styles.content}>{children}</div>
-    </div>
-  );
-}
-</file>
 
 <file path="src/app/(dashboard)/alertas/page.tsx">
 /* ==========================================================================
@@ -991,6 +932,69 @@ export function DeltaText({ value, label }: DeltaTextProps) {
       )}
     </span>
   )
+}
+</file>
+
+<file path="src/components/layout/AppShell.tsx">
+"use client";
+
+import { useEffect, useState, type ReactNode } from "react";
+import styles from "./AppShell.module.css";
+
+interface AppShellProps {
+  sidebar: ReactNode;
+  children: ReactNode;
+}
+
+/**
+ * Shell único do app: sidebar + conteúdo, com teto `--shell-max` e drawer
+ * da sidebar abaixo de 1024px. Usado por (dashboard)/layout.tsx e por
+ * /instagram, para as duas árvores terem o mesmo comportamento.
+ *
+ * A rolagem é a da janela (não há mais rolagem interna por página), e a
+ * sidebar fica sticky em telas largas.
+ */
+export function AppShell({ sidebar, children }: AppShellProps) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menuOpen]);
+
+  return (
+    <div className={styles.shell} data-open={menuOpen}>
+      <div
+        id="orbit-sidebar"
+        className={styles.slot}
+        onClick={(e) => {
+          if ((e.target as HTMLElement).closest("a")) setMenuOpen(false);
+        }}
+      >
+        {sidebar}
+      </div>
+      <button
+        type="button"
+        className={styles.menuBtn}
+        aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+        aria-expanded={menuOpen}
+        aria-controls="orbit-sidebar"
+        onClick={() => setMenuOpen((v) => !v)}
+      >
+        {menuOpen ? "✕" : "☰"}
+      </button>
+      <div
+        className={styles.backdrop}
+        aria-hidden="true"
+        onClick={() => setMenuOpen(false)}
+      />
+      <div className={styles.content}>{children}</div>
+    </div>
+  );
 }
 </file>
 
@@ -2447,6 +2451,49 @@ export const supabaseAdmin = createClient(url, serviceRoleKey, {
 })
 </file>
 
+<file path="src/lib/stats/median.test.ts">
+import test from "node:test";
+import assert from "node:assert/strict";
+import { medianOf } from "./median";
+
+test("medianOf: ímpar, par, não ordenado", () => {
+  assert.equal(medianOf([3, 1, 2]), 2);
+  assert.equal(medianOf([4, 1, 3, 2]), 2.5);
+  assert.equal(medianOf([7]), 7);
+});
+
+test("medianOf: vazio ou só não-finitos => null (nunca 0)", () => {
+  assert.equal(medianOf([]), null);
+  assert.equal(medianOf([Number.NaN, Number.POSITIVE_INFINITY]), null);
+});
+
+test("medianOf: ignora não-finitos e não muta a entrada", () => {
+  const input = [5, Number.NaN, 1, 3];
+  assert.equal(medianOf(input), 3);
+  assert.deepEqual(input.slice(0, 1), [5]);
+});
+
+test("medianOf: zero é valor real, não ausência", () => {
+  assert.equal(medianOf([0, 0, 0]), 0);
+});
+</file>
+
+<file path="src/lib/stats/median.ts">
+/**
+ * Mediana de uma lista de números. Ignora não-finitos (NaN/±Infinity) e
+ * devolve `null` para lista vazia — ausência nunca vira 0.
+ * Módulo puro (sem supabase) para poder ser testado com node:test.
+ */
+export function medianOf(values: readonly number[]): number | null {
+  const sorted = values.filter((v) => Number.isFinite(v)).sort((a, b) => a - b);
+  if (sorted.length === 0) return null;
+  const mid = Math.floor(sorted.length / 2);
+  return sorted.length % 2 === 1
+    ? (sorted[mid] as number)
+    : ((sorted[mid - 1] as number) + (sorted[mid] as number)) / 2;
+}
+</file>
+
 <file path="src/lib/supabase/server.ts">
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
@@ -3890,58 +3937,6 @@ export type {
   // Nota: IGOverviewData usa campo 'meta' (não 'header') — ver patch B abaixo
   IGOverviewData,
 } from './orbit'
-</file>
-
-<file path="src/app/(dashboard)/onboarding/page.tsx">
-/* ==========================================================================
-   ORBIT · Onboarding Page
-   Caminho: src/app/(dashboard)/onboarding/page.tsx
-   Versão: 1.1.0
-
-   ⚠️ ORB-DEBT-040 (ver relatório final / novo ADR): onboardingRepository.ts
-   usa o client `supabase` padrão (anon key, client-side) para
-   upsertClientOnboarding(). As tabelas do padrão authenticated_select_own_*
-   (ADR-005) são SELECT-only para `authenticated` — não há policy de
-   INSERT/UPDATE. Isso significa que o botão "Salvar" nesta tela falha hoje,
-   silenciosamente, por RLS, independente desta rota estar religada
-   corretamente. Este arquivo NÃO tenta corrigir RLS — está fora do escopo
-   desta tarefa.
-   ========================================================================== */
-
-"use client";
-
-import { useState } from "react";
-import OnboardingScreen from "@/components/screens/OnboardingScreen";
-import { ClientPeriodBar } from "@/components/layout/ClientPeriodBar";
-import { CLIENTS, type ClientKey } from "@/lib/constants";
-
-export default function OnboardingPage() {
-  const clientKeys = Object.keys(CLIENTS) as ClientKey[];
-  const [activeClientKey, setActiveClientKey] = useState<ClientKey>(
-    clientKeys[0] ?? "cpimportstore",
-  );
-  const activeClient = CLIENTS[activeClientKey];
-
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        minHeight: "100dvh",
-        background: "var(--bg)",
-      }}
-    >
-      <ClientPeriodBar
-        activeKey={activeClientKey}
-        onSelect={setActiveClientKey}
-      />
-
-      <div style={{ flex: 1 }}>
-        <OnboardingScreen clientId={activeClient.id} />
-      </div>
-    </div>
-  );
-}
 </file>
 
 <file path="src/components/common/AlertIcon.tsx">
@@ -5498,66 +5493,54 @@ export type {
 } from './orbit'
 </file>
 
-<file path="src/app/(dashboard)/layout.tsx">
+<file path="src/app/(dashboard)/onboarding/page.tsx">
 /* ==========================================================================
-   ORBIT · Dashboard Shell Layout
-   Caminho: src/app/(dashboard)/layout.tsx
-   Versão: 1.0.0
+   ORBIT · Onboarding Page
+   Caminho: src/app/(dashboard)/onboarding/page.tsx
+   Versão: 1.1.0
 
-   Corrige Seção 5.3 do prompt de auditoria: Sidebar/Header só eram
-   montados dentro de src/app/instagram/page.tsx — /carteira, /alertas,
-   /avatar, /funil, /instagram/avatar, /instagram/funil e /onboarding
-   renderizavam a tela isolada, sem caminho de volta.
-
-   Decisão confirmada com o usuário (não inventada aqui):
-   - Header.tsx fica SÓ em /instagram — está fisicamente hardcoded para a
-     tela de Instagram Overview (título "Instagram — CP Import Store" e as
-     3 abas Overview/Por post/Audiência lidas de data.meta), então colocá-lo
-     neste layout mostraria informação enganosa nas outras rotas.
-   - Sidebar.tsx é reaproveitada exatamente como está (não redesenhada).
-     Ela depende de useOrbitDashboard() (lança exceção sem Provider), então
-     este layout paga o custo de um OrbitDashboardProvider (fetch de
-     Instagram Overview) só para currentClient/alertCount funcionarem aqui
-     — custo aceito explicitamente pelo usuário, não decisão unilateral.
-   - Cliente usado para esse Provider "de sidebar": o primeiro de CLIENTS
-     (mesma ordem usada como default em avatar/funil/onboarding). Cada
-     página filha que precisa de um cliente diferente já gerencia seu
-     próprio seletor + OrbitDashboardProvider aninhado (avatar/funil), que
-     sobrescreve este para os componentes abaixo dele na árvore — a Sidebar
-     em si, por estar acima desses providers aninhados (renderizada aqui no
-     layout), sempre lê deste Provider externo.
+   ⚠️ ORB-DEBT-040 (ver relatório final / novo ADR): onboardingRepository.ts
+   usa o client `supabase` padrão (anon key, client-side) para
+   upsertClientOnboarding(). As tabelas do padrão authenticated_select_own_*
+   (ADR-005) são SELECT-only para `authenticated` — não há policy de
+   INSERT/UPDATE. Isso significa que o botão "Salvar" nesta tela falha hoje,
+   silenciosamente, por RLS, independente desta rota estar religada
+   corretamente. Este arquivo NÃO tenta corrigir RLS — está fora do escopo
+   desta tarefa.
    ========================================================================== */
 
 "use client";
 
-import { OrbitDashboardProvider } from "@/context/OrbitDashboardContext";
-import { Sidebar } from "@/components/layout/Sidebar";
-import { CLIENTS, PERIOD_START, getPeriodEnd } from "@/lib/constants";
-import { useClientNow } from "@/hooks/useClientNow";
-import { AppShell } from "@/components/layout/AppShell";
+import { useState } from "react";
+import OnboardingScreen from "@/components/screens/OnboardingScreen";
+import { ClientPeriodBar } from "@/components/layout/ClientPeriodBar";
+import { CLIENTS, type ClientKey } from "@/lib/constants";
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const defaultClientKey = Object.keys(CLIENTS)[0] as keyof typeof CLIENTS;
-  const defaultClient = CLIENTS[defaultClientKey];
-
-  // FIX v1.0.2 (ripple effect de src/lib/constants.ts): ver nota em
-  // src/app/(dashboard)/funil/page.tsx sobre por que PERIOD_END virou
-  // getPeriodEnd() + useClientNow().
-  const clientNow = useClientNow();
-  const periodEnd = clientNow ?? getPeriodEnd();
+export default function OnboardingPage() {
+  const clientKeys = Object.keys(CLIENTS) as ClientKey[];
+  const [activeClientKey, setActiveClientKey] = useState<ClientKey>(
+    clientKeys[0] ?? "cpimportstore",
+  );
+  const activeClient = CLIENTS[activeClientKey];
 
   return (
-    <OrbitDashboardProvider
-      clientId={defaultClient.id}
-      periodStart={PERIOD_START}
-      periodEnd={periodEnd}
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100dvh",
+        background: "var(--bg)",
+      }}
     >
-      <AppShell sidebar={<Sidebar />}>{children}</AppShell>
-    </OrbitDashboardProvider>
+      <ClientPeriodBar
+        activeKey={activeClientKey}
+        onSelect={setActiveClientKey}
+      />
+
+      <div style={{ flex: 1 }}>
+        <OnboardingScreen clientId={activeClient.id} />
+      </div>
+    </div>
   );
 }
 </file>
@@ -6156,74 +6139,65 @@ export async function syncClientAlerts(
 }
 </file>
 
-<file path="src/app/(dashboard)/instagram/funil/page.tsx">
-// src/app/instagram/funil/page.tsx
+<file path="src/app/(dashboard)/layout.tsx">
+/* ==========================================================================
+   ORBIT · Dashboard Shell Layout
+   Caminho: src/app/(dashboard)/layout.tsx
+   Versão: 1.0.0
+
+   Corrige Seção 5.3 do prompt de auditoria: Sidebar/Header só eram
+   montados dentro de src/app/instagram/page.tsx — /carteira, /alertas,
+   /avatar, /funil, /instagram/avatar, /instagram/funil e /onboarding
+   renderizavam a tela isolada, sem caminho de volta.
+
+   Decisão confirmada com o usuário (não inventada aqui):
+   - Header.tsx fica SÓ em /instagram — está fisicamente hardcoded para a
+     tela de Instagram Overview (título "Instagram — CP Import Store" e as
+     3 abas Overview/Por post/Audiência lidas de data.meta), então colocá-lo
+     neste layout mostraria informação enganosa nas outras rotas.
+   - Sidebar.tsx é reaproveitada exatamente como está (não redesenhada).
+     Ela depende de useOrbitDashboard() (lança exceção sem Provider), então
+     este layout paga o custo de um OrbitDashboardProvider (fetch de
+     Instagram Overview) só para currentClient/alertCount funcionarem aqui
+     — custo aceito explicitamente pelo usuário, não decisão unilateral.
+   - Cliente usado para esse Provider "de sidebar": o primeiro de CLIENTS
+     (mesma ordem usada como default em avatar/funil/onboarding). Cada
+     página filha que precisa de um cliente diferente já gerencia seu
+     próprio seletor + OrbitDashboardProvider aninhado (avatar/funil), que
+     sobrescreve este para os componentes abaixo dele na árvore — a Sidebar
+     em si, por estar acima desses providers aninhados (renderizada aqui no
+     layout), sempre lê deste Provider externo.
+   ========================================================================== */
+
 "use client";
 
-import { useState } from "react";
+import { OrbitDashboardProvider } from "@/context/OrbitDashboardContext";
+import { Sidebar } from "@/components/layout/Sidebar";
 import { CLIENTS, PERIOD_START, getPeriodEnd } from "@/lib/constants";
 import { useClientNow } from "@/hooks/useClientNow";
-import { OrbitDashboardProvider } from "@/context/OrbitDashboardContext";
-import FunnelScreen from "@/components/screens/FunnelScreen";
-import { useFunnel } from "@/hooks/useFunnel";
-import type { PeriodRange } from "@/components/common/DateRangeControl";
-import { ClientPeriodBar } from "@/components/layout/ClientPeriodBar";
+import { AppShell } from "@/components/layout/AppShell";
 
-export default function FunnelPage() {
-  const clientKeys = Object.keys(CLIENTS) as (keyof typeof CLIENTS)[];
-  const initialClientKey = clientKeys[0] ?? "cpimportstore";
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const defaultClientKey = Object.keys(CLIENTS)[0] as keyof typeof CLIENTS;
+  const defaultClient = CLIENTS[defaultClientKey];
 
-  const [activeClientKey, setActiveClientKey] =
-    useState<keyof typeof CLIENTS>(initialClientKey);
-  const activeClient = CLIENTS[activeClientKey];
-
-  // REFATORAÇÃO (período dinâmico, 2026-08-31): PERIOD_START/PERIOD_END de
-  // constants.ts continuam sendo os valores DEFAULT (compat com o
-  // comportamento anterior) — mas agora são só o valor inicial de um
-  // estado que o usuário pode mudar via DateRangeControl, em vez de uma
-  // constante fixa passada direto pro Provider.
-  // FIX v1.0.2 (ripple effect de src/lib/constants.ts): PERIOD_END não existe
-  // mais como constante — "agora" só é seguro depois do mount no cliente.
+  // FIX v1.0.2 (ripple effect de src/lib/constants.ts): ver nota em
+  // src/app/(dashboard)/funil/page.tsx sobre por que PERIOD_END virou
+  // getPeriodEnd() + useClientNow().
   const clientNow = useClientNow();
   const periodEnd = clientNow ?? getPeriodEnd();
 
-  const [period, setPeriod] = useState<PeriodRange>({
-    start: PERIOD_START,
-    end: periodEnd,
-  });
-
   return (
     <OrbitDashboardProvider
-      clientId={activeClient.id}
-      periodStart={period.start}
-      periodEnd={period.end}
+      clientId={defaultClient.id}
+      periodStart={PERIOD_START}
+      periodEnd={periodEnd}
     >
-      <div
-        style={{ display: "flex", flexDirection: "column", minHeight: "100dvh" }}
-      >
-        {/* Client Selector Nav */}
-        <ClientPeriodBar
-          activeKey={activeClientKey}
-          onSelect={setActiveClientKey}
-          period={{
-            value: period,
-            onChange: setPeriod,
-            minDate: PERIOD_START,
-            maxDate: periodEnd,
-          }}
-        />
-
-        {/* Funel Screen */}
-        <div style={{ flex: 1 }}>
-          <FunnelScreen
-            key={`${activeClient.id}:${period.start.toISOString()}:${period.end.toISOString()}`}
-            clientId={activeClient.id}
-            periodStart={period.start.toISOString()}
-            periodEnd={period.end.toISOString()}
-            useFunnel={useFunnel}
-          />
-        </div>
-      </div>
+      <AppShell sidebar={<Sidebar />}>{children}</AppShell>
     </OrbitDashboardProvider>
   );
 }
@@ -7287,90 +7261,7 @@ export function getPeriodEnd(): Date {
 }
 </file>
 
-<file path="src/app/(dashboard)/avatar/page.tsx">
-/* ==========================================================================
-   ORBIT · Avatar Page
-   Caminho: src/app/instagram/avatar/page.tsx
-   Versão: 2.2.0
-
-   FIX TS2613: import nomeado { AvatarScreen } — AvatarScreen.tsx não tem default export
-   FIX TS2322: PERIOD_START/END passados como Date (sem .toISOString())
-
-   REFATORAÇÃO (período dinâmico, 2026-08-31): PERIOD_START/PERIOD_END de
-   constants.ts deixam de ser passados fixos pro Provider — viram só o
-   valor default de um estado (`period`) editável via DateRangeControl.
-   `AvatarScreen` continua recebendo só `clientId`, sem props de período —
-   nada muda nela nem no hook que ela usa por baixo (useAvatar não foi
-   tocado).
-   ========================================================================== */
-
-"use client";
-
-import { useState } from "react";
-import {
-  CLIENTS,
-  PERIOD_START,
-  getPeriodEnd,
-  type ClientKey,
-} from "@/lib/constants";
-import { useClientNow } from "@/hooks/useClientNow";
-import { OrbitDashboardProvider } from "@/context/OrbitDashboardContext";
-import { AvatarScreen } from "@/components/screens/AvatarScreen";
-import type { PeriodRange } from "@/components/common/DateRangeControl";
-import { ClientPeriodBar } from "@/components/layout/ClientPeriodBar";
-
-export default function AvatarPage() {
-  const clientKeys = Object.keys(CLIENTS) as ClientKey[];
-  const [activeClientKey, setActiveClientKey] = useState<ClientKey>(
-    clientKeys[0]!,
-  );
-  const activeClient = CLIENTS[activeClientKey];
-
-  // FIX v1.0.2 (ripple effect de src/lib/constants.ts): ver nota em
-  // src/app/(dashboard)/funil/page.tsx sobre por que PERIOD_END virou
-  // getPeriodEnd() + useClientNow().
-  const clientNow = useClientNow();
-  const periodEnd = clientNow ?? getPeriodEnd();
-  const [period, setPeriod] = useState<PeriodRange>({
-    start: PERIOD_START,
-    end: periodEnd,
-  });
-
-  return (
-    <OrbitDashboardProvider
-      clientId={activeClient.id}
-      periodStart={period.start} // ✅ Date — sem .toISOString()
-      periodEnd={period.end} // ✅ Date — sem .toISOString()
-    >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          minHeight: "100dvh",
-          background: "var(--bg)",
-        }}
-      >
-        <ClientPeriodBar
-          activeKey={activeClientKey}
-          onSelect={setActiveClientKey}
-          period={{
-            value: period,
-            onChange: setPeriod,
-            minDate: PERIOD_START,
-            maxDate: periodEnd,
-          }}
-        />
-
-        <div style={{ flex: 1 }}>
-          <AvatarScreen clientId={activeClient.id} />
-        </div>
-      </div>
-    </OrbitDashboardProvider>
-  );
-}
-</file>
-
-<file path="src/app/(dashboard)/funil/page.tsx">
+<file path="src/app/(dashboard)/instagram/funil/page.tsx">
 // src/app/instagram/funil/page.tsx
 "use client";
 
@@ -7396,14 +7287,11 @@ export default function FunnelPage() {
   // comportamento anterior) — mas agora são só o valor inicial de um
   // estado que o usuário pode mudar via DateRangeControl, em vez de uma
   // constante fixa passada direto pro Provider.
-  //
-  // FIX v1.0.2 (ripple effect de src/lib/constants.ts): PERIOD_END não
-  // existe mais como constante — "agora" só é seguro depois do mount no
-  // cliente. useClientNow() retorna null no SSR/primeiro render do
-  // cliente (idênticos, sem mismatch) e só preenche o valor real depois
-  // do useEffect; getPeriodEnd() é o fallback estável até lá.
+  // FIX v1.0.2 (ripple effect de src/lib/constants.ts): PERIOD_END não existe
+  // mais como constante — "agora" só é seguro depois do mount no cliente.
   const clientNow = useClientNow();
   const periodEnd = clientNow ?? getPeriodEnd();
+
   const [period, setPeriod] = useState<PeriodRange>({
     start: PERIOD_START,
     end: periodEnd,
@@ -7416,7 +7304,11 @@ export default function FunnelPage() {
       periodEnd={period.end}
     >
       <div
-        style={{ display: "flex", flexDirection: "column", minHeight: "100dvh" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100dvh",
+        }}
       >
         {/* Client Selector Nav */}
         <ClientPeriodBar
@@ -7439,89 +7331,6 @@ export default function FunnelPage() {
             periodEnd={period.end.toISOString()}
             useFunnel={useFunnel}
           />
-        </div>
-      </div>
-    </OrbitDashboardProvider>
-  );
-}
-</file>
-
-<file path="src/app/(dashboard)/instagram/avatar/page.tsx">
-/* ==========================================================================
-   ORBIT · Avatar Page
-   Caminho: src/app/instagram/avatar/page.tsx
-   Versão: 2.2.0
-
-   FIX TS2613: import nomeado { AvatarScreen } — AvatarScreen.tsx não tem default export
-   FIX TS2322: PERIOD_START/END passados como Date (sem .toISOString())
-
-   REFATORAÇÃO (período dinâmico, 2026-08-31): PERIOD_START/PERIOD_END de
-   constants.ts deixam de ser passados fixos pro Provider — viram só o
-   valor default de um estado (`period`) editável via DateRangeControl.
-   `AvatarScreen` continua recebendo só `clientId`, sem props de período —
-   nada muda nela nem no hook que ela usa por baixo (useAvatar não foi
-   tocado).
-   ========================================================================== */
-
-"use client";
-
-import { useState } from "react";
-import {
-  CLIENTS,
-  PERIOD_START,
-  getPeriodEnd,
-  type ClientKey,
-} from "@/lib/constants";
-import { useClientNow } from "@/hooks/useClientNow";
-import { OrbitDashboardProvider } from "@/context/OrbitDashboardContext";
-import { AvatarScreen } from "@/components/screens/AvatarScreen";
-import type { PeriodRange } from "@/components/common/DateRangeControl";
-import { ClientPeriodBar } from "@/components/layout/ClientPeriodBar";
-
-export default function AvatarPage() {
-  const clientKeys = Object.keys(CLIENTS) as ClientKey[];
-  const initialClientKey = clientKeys[0] ?? "cpimportstore";
-  const [activeClientKey, setActiveClientKey] =
-    useState<ClientKey>(initialClientKey);
-  const activeClient = CLIENTS[activeClientKey];
-
-  // FIX v1.0.2 (ripple effect de src/lib/constants.ts): ver nota em
-  // src/app/(dashboard)/funil/page.tsx sobre por que PERIOD_END virou
-  // getPeriodEnd() + useClientNow().
-  const clientNow = useClientNow();
-  const periodEnd = clientNow ?? getPeriodEnd();
-  const [period, setPeriod] = useState<PeriodRange>({
-    start: PERIOD_START,
-    end: periodEnd,
-  });
-
-  return (
-    <OrbitDashboardProvider
-      clientId={activeClient.id}
-      periodStart={period.start}
-      periodEnd={period.end}
-    >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          minHeight: "100dvh",
-          background: "var(--bg)",
-        }}
-      >
-        <ClientPeriodBar
-          activeKey={activeClientKey}
-          onSelect={setActiveClientKey}
-          period={{
-            value: period,
-            onChange: setPeriod,
-            minDate: PERIOD_START,
-            maxDate: periodEnd,
-          }}
-        />
-
-        <div style={{ flex: 1 }}>
-          <AvatarScreen clientId={activeClient.id} />
         </div>
       </div>
     </OrbitDashboardProvider>
@@ -8706,6 +8515,252 @@ export type {
 // consts (valor em runtime), não tipos — precisam de re-export sem `type`,
 // ao contrário de tudo acima.
 export { ALIGNMENT_THRESHOLDS, ALIGNMENT_STATUS_LABEL, ALIGNMENT_STATUS_COLOR } from './orbit'
+</file>
+
+<file path="src/app/(dashboard)/avatar/page.tsx">
+/* ==========================================================================
+   ORBIT · Avatar Page
+   Caminho: src/app/instagram/avatar/page.tsx
+   Versão: 2.2.0
+
+   FIX TS2613: import nomeado { AvatarScreen } — AvatarScreen.tsx não tem default export
+   FIX TS2322: PERIOD_START/END passados como Date (sem .toISOString())
+
+   REFATORAÇÃO (período dinâmico, 2026-08-31): PERIOD_START/PERIOD_END de
+   constants.ts deixam de ser passados fixos pro Provider — viram só o
+   valor default de um estado (`period`) editável via DateRangeControl.
+   `AvatarScreen` continua recebendo só `clientId`, sem props de período —
+   nada muda nela nem no hook que ela usa por baixo (useAvatar não foi
+   tocado).
+   ========================================================================== */
+
+"use client";
+
+import { useState } from "react";
+import {
+  CLIENTS,
+  PERIOD_START,
+  getPeriodEnd,
+  type ClientKey,
+} from "@/lib/constants";
+import { useClientNow } from "@/hooks/useClientNow";
+import { OrbitDashboardProvider } from "@/context/OrbitDashboardContext";
+import { AvatarScreen } from "@/components/screens/AvatarScreen";
+import type { PeriodRange } from "@/components/common/DateRangeControl";
+import { ClientPeriodBar } from "@/components/layout/ClientPeriodBar";
+
+export default function AvatarPage() {
+  const clientKeys = Object.keys(CLIENTS) as ClientKey[];
+  const [activeClientKey, setActiveClientKey] = useState<ClientKey>(
+    clientKeys[0]!,
+  );
+  const activeClient = CLIENTS[activeClientKey];
+
+  // FIX v1.0.2 (ripple effect de src/lib/constants.ts): ver nota em
+  // src/app/(dashboard)/funil/page.tsx sobre por que PERIOD_END virou
+  // getPeriodEnd() + useClientNow().
+  const clientNow = useClientNow();
+  const periodEnd = clientNow ?? getPeriodEnd();
+  const [period, setPeriod] = useState<PeriodRange>({
+    start: PERIOD_START,
+    end: periodEnd,
+  });
+
+  return (
+    <OrbitDashboardProvider
+      clientId={activeClient.id}
+      periodStart={period.start} // ✅ Date — sem .toISOString()
+      periodEnd={period.end} // ✅ Date — sem .toISOString()
+    >
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100dvh",
+          background: "var(--bg)",
+        }}
+      >
+        <ClientPeriodBar
+          activeKey={activeClientKey}
+          onSelect={setActiveClientKey}
+          period={{
+            value: period,
+            onChange: setPeriod,
+            minDate: PERIOD_START,
+            maxDate: periodEnd,
+          }}
+        />
+
+        <div style={{ flex: 1 }}>
+          <AvatarScreen clientId={activeClient.id} />
+        </div>
+      </div>
+    </OrbitDashboardProvider>
+  );
+}
+</file>
+
+<file path="src/app/(dashboard)/funil/page.tsx">
+// src/app/instagram/funil/page.tsx
+"use client";
+
+import { useState } from "react";
+import { CLIENTS, PERIOD_START, getPeriodEnd } from "@/lib/constants";
+import { useClientNow } from "@/hooks/useClientNow";
+import { OrbitDashboardProvider } from "@/context/OrbitDashboardContext";
+import FunnelScreen from "@/components/screens/FunnelScreen";
+import { useFunnel } from "@/hooks/useFunnel";
+import type { PeriodRange } from "@/components/common/DateRangeControl";
+import { ClientPeriodBar } from "@/components/layout/ClientPeriodBar";
+
+export default function FunnelPage() {
+  const clientKeys = Object.keys(CLIENTS) as (keyof typeof CLIENTS)[];
+  const initialClientKey = clientKeys[0] ?? "cpimportstore";
+
+  const [activeClientKey, setActiveClientKey] =
+    useState<keyof typeof CLIENTS>(initialClientKey);
+  const activeClient = CLIENTS[activeClientKey];
+
+  // REFATORAÇÃO (período dinâmico, 2026-08-31): PERIOD_START/PERIOD_END de
+  // constants.ts continuam sendo os valores DEFAULT (compat com o
+  // comportamento anterior) — mas agora são só o valor inicial de um
+  // estado que o usuário pode mudar via DateRangeControl, em vez de uma
+  // constante fixa passada direto pro Provider.
+  //
+  // FIX v1.0.2 (ripple effect de src/lib/constants.ts): PERIOD_END não
+  // existe mais como constante — "agora" só é seguro depois do mount no
+  // cliente. useClientNow() retorna null no SSR/primeiro render do
+  // cliente (idênticos, sem mismatch) e só preenche o valor real depois
+  // do useEffect; getPeriodEnd() é o fallback estável até lá.
+  const clientNow = useClientNow();
+  const periodEnd = clientNow ?? getPeriodEnd();
+  const [period, setPeriod] = useState<PeriodRange>({
+    start: PERIOD_START,
+    end: periodEnd,
+  });
+
+  return (
+    <OrbitDashboardProvider
+      clientId={activeClient.id}
+      periodStart={period.start}
+      periodEnd={period.end}
+    >
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100dvh",
+        }}
+      >
+        {/* Client Selector Nav */}
+        <ClientPeriodBar
+          activeKey={activeClientKey}
+          onSelect={setActiveClientKey}
+          period={{
+            value: period,
+            onChange: setPeriod,
+            minDate: PERIOD_START,
+            maxDate: periodEnd,
+          }}
+        />
+
+        {/* Funel Screen */}
+        <div style={{ flex: 1 }}>
+          <FunnelScreen
+            key={`${activeClient.id}:${period.start.toISOString()}:${period.end.toISOString()}`}
+            clientId={activeClient.id}
+            periodStart={period.start.toISOString()}
+            periodEnd={period.end.toISOString()}
+            useFunnel={useFunnel}
+          />
+        </div>
+      </div>
+    </OrbitDashboardProvider>
+  );
+}
+</file>
+
+<file path="src/app/(dashboard)/instagram/avatar/page.tsx">
+/* ==========================================================================
+   ORBIT · Avatar Page
+   Caminho: src/app/instagram/avatar/page.tsx
+   Versão: 2.2.0
+
+   FIX TS2613: import nomeado { AvatarScreen } — AvatarScreen.tsx não tem default export
+   FIX TS2322: PERIOD_START/END passados como Date (sem .toISOString())
+
+   REFATORAÇÃO (período dinâmico, 2026-08-31): PERIOD_START/PERIOD_END de
+   constants.ts deixam de ser passados fixos pro Provider — viram só o
+   valor default de um estado (`period`) editável via DateRangeControl.
+   `AvatarScreen` continua recebendo só `clientId`, sem props de período —
+   nada muda nela nem no hook que ela usa por baixo (useAvatar não foi
+   tocado).
+   ========================================================================== */
+
+"use client";
+
+import { useState } from "react";
+import {
+  CLIENTS,
+  PERIOD_START,
+  getPeriodEnd,
+  type ClientKey,
+} from "@/lib/constants";
+import { useClientNow } from "@/hooks/useClientNow";
+import { OrbitDashboardProvider } from "@/context/OrbitDashboardContext";
+import { AvatarScreen } from "@/components/screens/AvatarScreen";
+import type { PeriodRange } from "@/components/common/DateRangeControl";
+import { ClientPeriodBar } from "@/components/layout/ClientPeriodBar";
+
+export default function AvatarPage() {
+  const clientKeys = Object.keys(CLIENTS) as ClientKey[];
+  const initialClientKey = clientKeys[0] ?? "cpimportstore";
+  const [activeClientKey, setActiveClientKey] =
+    useState<ClientKey>(initialClientKey);
+  const activeClient = CLIENTS[activeClientKey];
+
+  // FIX v1.0.2 (ripple effect de src/lib/constants.ts): ver nota em
+  // src/app/(dashboard)/funil/page.tsx sobre por que PERIOD_END virou
+  // getPeriodEnd() + useClientNow().
+  const clientNow = useClientNow();
+  const periodEnd = clientNow ?? getPeriodEnd();
+  const [period, setPeriod] = useState<PeriodRange>({
+    start: PERIOD_START,
+    end: periodEnd,
+  });
+
+  return (
+    <OrbitDashboardProvider
+      clientId={activeClient.id}
+      periodStart={period.start}
+      periodEnd={period.end}
+    >
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100dvh",
+          background: "var(--bg)",
+        }}
+      >
+        <ClientPeriodBar
+          activeKey={activeClientKey}
+          onSelect={setActiveClientKey}
+          period={{
+            value: period,
+            onChange: setPeriod,
+            minDate: PERIOD_START,
+            maxDate: periodEnd,
+          }}
+        />
+
+        <div style={{ flex: 1 }}>
+          <AvatarScreen clientId={activeClient.id} />
+        </div>
+      </div>
+    </OrbitDashboardProvider>
+  );
+}
 </file>
 
 <file path="src/components/common/AvatarCard.tsx">
@@ -19226,6 +19281,238 @@ export async function fetchAvatarProfile(
 }
 </file>
 
+<file path="src/app/instagram/page.tsx">
+"use client";
+import { useState } from "react";
+import {
+  OrbitDashboardProvider,
+  useOrbitDashboard,
+} from "@/context/OrbitDashboardContext";
+import { CLIENTS, PERIOD_START, getPeriodEnd } from "@/lib/constants";
+import { useClientNow } from "@/hooks/useClientNow";
+import { Sidebar } from "@/components/layout/Sidebar";
+import { AppShell } from "@/components/layout/AppShell";
+import { Header } from "@/components/layout/Header";
+import KPICard, { type KPI } from "@/components/kpi/KPICard";
+import { QualityScoresPanel } from "@/components/content/QualityScoresPanel";
+import { FormatPerformanceTable } from "@/components/content/FormatPerformanceTable";
+import { InsightCard } from "@/components/content/InsightCard";
+import { CriticalAlert } from "@/components/content/CriticalAlert";
+import { AudienceSummaryPanel } from "@/components/content/AudienceSummaryPanel";
+import { SectorPositioningPanel } from "@/components/panels/SectorPositioningPanel";
+import { PostingProfilePanel } from "@/components/panels/PostingProfilePanel";
+import { GlassCard } from "@/components/common/GlassCard";
+import type { PeriodRange } from "@/components/common/DateRangeControl";
+import { ClientPeriodBar } from "@/components/layout/ClientPeriodBar";
+import styles from "./InstagramOverviewPage.module.css";
+
+import type {
+  KPICardData,
+  InsightData as Insight,
+  CriticalAlertData as Alert,
+} from "@/types/orbit";
+
+// KPICardData (SSOT em src/types/orbit.ts) e KPI (contrato do componente
+// KPICard) têm formas diferentes — este mapper faz a ponte entre os dois.
+function mapKPICardDataToKPI(data: KPICardData): KPI {
+  return {
+    label: data.label,
+    value: data.value,
+    delta: data.delta,
+    trend: data.delta > 0 ? "up" : data.delta < 0 ? "down" : "neutral",
+    // FIX (19/09/2026): fallback era 'L0' — mostrava badge verde "Medido"
+    // quando sourceLevel vem null/undefined, ou seja, quando na verdade não
+    // sabemos a origem do dado. O fallback correto pro pior caso é 'L2'
+    // (Hipótese), não o melhor. Ver KPICard.tsx FLAG_TOKENS.
+    flagLevel: (data.sourceLevel as "L0" | "L1" | "L2") || "L2",
+    ...(data.unit ? { unit: data.unit } : {}),
+  };
+}
+
+export default function InstagramOverviewPage() {
+  const clientIds = Object.keys(CLIENTS) as (keyof typeof CLIENTS)[];
+  const [activeClientKey, setActiveClientKey] = useState<keyof typeof CLIENTS>(
+    clientIds[0] ?? "cpimportstore",
+  );
+  const activeClient = CLIENTS[activeClientKey];
+
+  // FIX v1.0.2 (ripple effect de src/lib/constants.ts): PERIOD_END não existe
+  // mais como constante — "agora" só é seguro depois do mount no cliente.
+  // useClientNow() retorna null no SSR/primeiro render do cliente (idênticos,
+  // sem mismatch) e só preenche o valor real depois do useEffect;
+  // getPeriodEnd() é o fallback estável até lá.
+  const clientNow = useClientNow();
+  const periodEnd = clientNow ?? getPeriodEnd();
+
+  const [period, setPeriod] = useState<PeriodRange>({
+    start: PERIOD_START,
+    end: periodEnd,
+  });
+
+  const minDate = PERIOD_START;
+  const maxDate = periodEnd;
+
+  return (
+    <OrbitDashboardProvider
+      key={activeClient.id}
+      clientId={activeClient.id}
+      periodStart={period.start}
+      periodEnd={period.end}
+      initialActiveTab="overview"
+    >
+      <AppShell sidebar={<Sidebar />}>
+        <div className={styles.page}>
+          <ClientPeriodBar
+            activeKey={activeClientKey}
+            onSelect={setActiveClientKey}
+            period={{
+              value: period,
+              onChange: setPeriod,
+              minDate,
+              maxDate,
+            }}
+          />
+          <InstagramOverviewLayout />
+        </div>
+      </AppShell>
+    </OrbitDashboardProvider>
+  );
+}
+
+function InstagramOverviewLayout() {
+  const { data, status, error, activeTab } = useOrbitDashboard();
+
+  return (
+    <div className={styles.rightPane}>
+      <Header />
+
+      <main className={styles.main} id="main-content">
+        {/* LOADING */}
+        {status === "loading" && (
+          <div
+            className={styles.stateCenter}
+            aria-live="polite"
+            aria-label="Carregando dados"
+          >
+            <span className={styles.loadingDot} />
+            <span
+              className={styles.loadingDot}
+              style={{ animationDelay: "0.2s" }}
+            />
+            <span
+              className={styles.loadingDot}
+              style={{ animationDelay: "0.4s" }}
+            />
+          </div>
+        )}
+
+        {/* ERRO */}
+        {status === "error" && error && (
+          <div className={styles.stateCenter} role="alert">
+            <p className={styles.errorText}>
+              Erro ao carregar dados: ⚠️ {error}
+            </p>
+          </div>
+        )}
+
+        {/* SUCESSO */}
+        {status === "success" && data && (
+          <>
+            {/* TELA 1 — Visão Geral */}
+            {activeTab === "overview" && (
+              <>
+                <section className={styles.kpiRow} aria-label="KPIs principais">
+                  {data.kpis.map((kpi: KPICardData) => (
+                    <KPICard key={kpi.id} kpi={mapKPICardDataToKPI(kpi)} />
+                  ))}
+                </section>
+
+                <section
+                  className={styles.midRow}
+                  aria-label="Análise de conteúdo"
+                >
+                  <QualityScoresPanel scores={data.qualityScores} />
+                  <GlassCard glowColor="cyan" className={styles.rightPanel}>
+                    <FormatPerformanceTable
+                      rows={data.formatPerformance}
+                      expandable={false}
+                    />
+                    {data.insights.length > 0 && (
+                      <div className={styles.insightStack}>
+                        {data.insights.map((insight: Insight) => (
+                          <InsightCard key={insight.id} insight={insight} />
+                        ))}
+                      </div>
+                    )}
+                  </GlassCard>
+                </section>
+              </>
+            )}
+
+            {/* TELA 2 — Por post
+                  ✅ CORRIGIDO 06/09/2026: usa `tabContent` (flex de largura cheia),
+                  não `midRow` (grid de 2 colunas da Visão Geral).
+                  ✅ RWP-3 (06/10/2026): PostingProfilePanel mora aqui, depois da
+                  tabela de formatos. Cadência e mix são contagem de posts. */}
+            {activeTab === "por-post" && (
+              <section
+                className={styles.tabContent}
+                aria-label="Dados detalhados por postagem"
+              >
+                <GlassCard glowColor="cyan">
+                  <h3
+                    style={{
+                      color: "var(--text-primary)",
+                      marginBottom: "1rem",
+                    }}
+                  >
+                    Métricas Agregadas por Formato
+                  </h3>
+                  <FormatPerformanceTable rows={data.formatPerformance} />
+                </GlassCard>
+
+                <PostingProfilePanel
+                  cadence={data.cadence}
+                  mix={data.mix}
+                  benchmark={data.benchmarkCadence}
+                />
+              </section>
+            )}
+
+            {/* TELA 3 — Audiência ✅ NOVO */}
+            {activeTab === "audiencia" && (
+              <div className={styles.tabContent}>
+                {/* Painel de Posicionamento */}
+                {data.positioning && (
+                  <SectorPositioningPanel positioning={data.positioning} />
+                )}
+
+                {/* Painel de Resumo de Audiência */}
+                {data.audienceSummary && (
+                  <AudienceSummaryPanel summary={data.audienceSummary} />
+                )}
+              </div>
+            )}
+
+            {/* Alertas críticos */}
+            {data.criticalAlerts.length > 0 && (
+              <section
+                className={styles.alertRow}
+                aria-label="Alertas críticos"
+              >
+                {data.criticalAlerts.map((alert: Alert) => (
+                  <CriticalAlert key={alert.id} alert={alert} />
+                ))}
+              </section>
+            )}
+          </>
+        )}
+      </main>
+    </div>
+  );
+}
+</file>
+
 <file path="src/lib/repositories/contentContractEngine.ts">
 /* ==========================================================================
    ORBIT · contentContractEngine.ts
@@ -19294,8 +19581,9 @@ export interface AlertContractFields {
 export interface EngagementScoreInput {
   snapshotId: string;
   erRealPct: number;
-  utilityScorePct: number;
-  polemicScorePct: number;
+  utilityScorePct: number | null;
+  // SSC-1: mediana por post no período; null = sem post com o campo.
+  polemicScorePct: number | null;
   // ✅ FIX (15/09/2026 — regressão do fix de VPS C-02): passou a `number |
   // null`. ORB-DEBT-034 confirma que `reach_followers_pct` nunca foi
   // ingerido pros clientes reais — sem ele não existe VPS C-02 válido
@@ -20816,14 +21104,30 @@ export async function resolveEngagementScoreAlert(
           calibrationMethod: null,
           zeroInflated: null,
         }),
-    classifyMetric(
-      "polemic_score_pct",
-      input.polemicScorePct,
-      categoryForClassify,
-      tierForClassify,
-      db,
-    ),
+    input.polemicScorePct != null
+      ? classifyMetric(
+          "polemic_score_pct",
+          input.polemicScorePct,
+          categoryForClassify,
+          tierForClassify,
+          db,
+        )
+      : Promise.resolve<ClassifiedMetric>({
+          value: 0,
+          semaphore: "neutro",
+          statusText:
+            "Polêmica indisponível: nenhum post do período tem o campo calculado. Não é classificada com dado ausente.",
+          confidenceLevel: "L0",
+          thresholdSource: null,
+          confidenceScore: null,
+          ruleDeclaration:
+            "Sem posts com polemic_score_pct no período não existe mediana por post.",
+          calibrationMethod: null,
+          zeroInflated: null,
+        }),
   ]);
+  // Narrowing: `polemicPct` só é número quando a mediana existe.
+  const polemicPct = input.polemicScorePct;
 
   // ✅ NOVO (execução ORBIT, verificação do fio CASO G, 14/09/2026): guarda
   // EXPLÍCITA, não implícita. er_real_pct/vps_pct estão fora de
@@ -20893,7 +21197,7 @@ export async function resolveEngagementScoreAlert(
     };
   }
 
-  if (polemic.zeroInflated) {
+  if (polemicPct != null && polemic.zeroInflated) {
     const isWithinNormalRange =
       polemic.semaphore !== "vermelho" &&
       (polemic.confidenceScore === null || polemic.confidenceScore >= 0.75);
@@ -20902,8 +21206,8 @@ export async function resolveEngagementScoreAlert(
       type: "polemic_score_high",
       severity: isWithinNormalRange ? "info" : "warning",
       title: isWithinNormalRange
-        ? `${formatPtBr(input.polemicScorePct)}% dos seus posts têm gente discordando nos comentários — isso é normal no seu segmento`
-        : `${formatPtBr(input.polemicScorePct)}% dos seus posts têm gente discordando nos comentários`,
+        ? `${formatPtBr(polemicPct)}% dos seus posts têm gente discordando nos comentários — isso é normal no seu segmento`
+        : `${formatPtBr(polemicPct)}% dos seus posts têm gente discordando nos comentários`,
       description: stripTranslation(polemic.statusText),
       natureza: "tecnica",
       probableCause: isWithinNormalRange
@@ -20919,16 +21223,16 @@ export async function resolveEngagementScoreAlert(
       ruleDeclaration: polemic.ruleDeclaration,
       snapshotId: input.snapshotId,
       metricName: "polemic_score_pct",
-      metricValue: input.polemicScorePct,
+      metricValue: polemicPct,
       thresholdValue: null,
     };
   }
 
-  if (polemic.semaphore === "vermelho") {
+  if (polemicPct != null && polemic.semaphore === "vermelho") {
     return {
       type: "polemic_score_high",
       severity: "warning",
-      title: `${formatPtBr(input.polemicScorePct)}% dos seus posts têm gente discordando nos comentários — acima do normal`,
+      title: `${formatPtBr(polemicPct)}% dos seus posts têm gente discordando nos comentários — acima do normal`,
       description: stripTranslation(polemic.statusText),
       natureza: "tecnica",
       probableCause:
@@ -20942,7 +21246,7 @@ export async function resolveEngagementScoreAlert(
       ruleDeclaration: polemic.ruleDeclaration,
       snapshotId: input.snapshotId,
       metricName: "polemic_score_pct",
-      metricValue: input.polemicScorePct,
+      metricValue: polemicPct,
       thresholdValue: null,
     };
   }
@@ -21103,238 +21407,6 @@ export function toCriticalAlert(draft: AlertDraft): CriticalAlertData {
 }
 </file>
 
-<file path="src/app/instagram/page.tsx">
-"use client";
-import { useState } from "react";
-import {
-  OrbitDashboardProvider,
-  useOrbitDashboard,
-} from "@/context/OrbitDashboardContext";
-import { CLIENTS, PERIOD_START, getPeriodEnd } from "@/lib/constants";
-import { useClientNow } from "@/hooks/useClientNow";
-import { Sidebar } from "@/components/layout/Sidebar";
-import { AppShell } from "@/components/layout/AppShell";
-import { Header } from "@/components/layout/Header";
-import KPICard, { type KPI } from "@/components/kpi/KPICard";
-import { QualityScoresPanel } from "@/components/content/QualityScoresPanel";
-import { FormatPerformanceTable } from "@/components/content/FormatPerformanceTable";
-import { InsightCard } from "@/components/content/InsightCard";
-import { CriticalAlert } from "@/components/content/CriticalAlert";
-import { AudienceSummaryPanel } from "@/components/content/AudienceSummaryPanel";
-import { SectorPositioningPanel } from "@/components/panels/SectorPositioningPanel";
-import { PostingProfilePanel } from "@/components/panels/PostingProfilePanel";
-import { GlassCard } from "@/components/common/GlassCard";
-import type { PeriodRange } from "@/components/common/DateRangeControl";
-import { ClientPeriodBar } from "@/components/layout/ClientPeriodBar";
-import styles from "./InstagramOverviewPage.module.css";
-
-import type {
-  KPICardData,
-  InsightData as Insight,
-  CriticalAlertData as Alert,
-} from "@/types/orbit";
-
-// KPICardData (SSOT em src/types/orbit.ts) e KPI (contrato do componente
-// KPICard) têm formas diferentes — este mapper faz a ponte entre os dois.
-function mapKPICardDataToKPI(data: KPICardData): KPI {
-  return {
-    label: data.label,
-    value: data.value,
-    delta: data.delta,
-    trend: data.delta > 0 ? "up" : data.delta < 0 ? "down" : "neutral",
-    // FIX (19/09/2026): fallback era 'L0' — mostrava badge verde "Medido"
-    // quando sourceLevel vem null/undefined, ou seja, quando na verdade não
-    // sabemos a origem do dado. O fallback correto pro pior caso é 'L2'
-    // (Hipótese), não o melhor. Ver KPICard.tsx FLAG_TOKENS.
-    flagLevel: (data.sourceLevel as "L0" | "L1" | "L2") || "L2",
-    ...(data.unit ? { unit: data.unit } : {}),
-  };
-}
-
-export default function InstagramOverviewPage() {
-  const clientIds = Object.keys(CLIENTS) as (keyof typeof CLIENTS)[];
-  const [activeClientKey, setActiveClientKey] = useState<keyof typeof CLIENTS>(
-    clientIds[0] ?? "cpimportstore",
-  );
-  const activeClient = CLIENTS[activeClientKey];
-
-  // FIX v1.0.2 (ripple effect de src/lib/constants.ts): PERIOD_END não existe
-  // mais como constante — "agora" só é seguro depois do mount no cliente.
-  // useClientNow() retorna null no SSR/primeiro render do cliente (idênticos,
-  // sem mismatch) e só preenche o valor real depois do useEffect;
-  // getPeriodEnd() é o fallback estável até lá.
-  const clientNow = useClientNow();
-  const periodEnd = clientNow ?? getPeriodEnd();
-
-  const [period, setPeriod] = useState<PeriodRange>({
-    start: PERIOD_START,
-    end: periodEnd,
-  });
-
-  const minDate = PERIOD_START;
-  const maxDate = periodEnd;
-
-  return (
-    <OrbitDashboardProvider
-      key={activeClient.id}
-      clientId={activeClient.id}
-      periodStart={period.start}
-      periodEnd={period.end}
-      initialActiveTab="overview"
-    >
-      <AppShell sidebar={<Sidebar />}>
-        <div className={styles.page}>
-          <ClientPeriodBar
-            activeKey={activeClientKey}
-            onSelect={setActiveClientKey}
-            period={{
-              value: period,
-              onChange: setPeriod,
-              minDate,
-              maxDate,
-            }}
-          />
-          <InstagramOverviewLayout />
-        </div>
-      </AppShell>
-    </OrbitDashboardProvider>
-  );
-}
-
-function InstagramOverviewLayout() {
-  const { data, status, error, activeTab } = useOrbitDashboard();
-
-  return (
-    <div className={styles.rightPane}>
-      <Header />
-
-      <main className={styles.main} id="main-content">
-        {/* LOADING */}
-        {status === "loading" && (
-          <div
-            className={styles.stateCenter}
-            aria-live="polite"
-            aria-label="Carregando dados"
-          >
-            <span className={styles.loadingDot} />
-            <span
-              className={styles.loadingDot}
-              style={{ animationDelay: "0.2s" }}
-            />
-            <span
-              className={styles.loadingDot}
-              style={{ animationDelay: "0.4s" }}
-            />
-          </div>
-        )}
-
-        {/* ERRO */}
-        {status === "error" && error && (
-          <div className={styles.stateCenter} role="alert">
-            <p className={styles.errorText}>
-              Erro ao carregar dados: ⚠️ {error}
-            </p>
-          </div>
-        )}
-
-        {/* SUCESSO */}
-        {status === "success" && data && (
-          <>
-            {/* TELA 1 — Visão Geral */}
-            {activeTab === "overview" && (
-              <>
-                <section className={styles.kpiRow} aria-label="KPIs principais">
-                  {data.kpis.map((kpi: KPICardData) => (
-                    <KPICard key={kpi.id} kpi={mapKPICardDataToKPI(kpi)} />
-                  ))}
-                </section>
-
-                <section
-                  className={styles.midRow}
-                  aria-label="Análise de conteúdo"
-                >
-                  <QualityScoresPanel scores={data.qualityScores} />
-                  <GlassCard glowColor="cyan" className={styles.rightPanel}>
-                    <FormatPerformanceTable
-                      rows={data.formatPerformance}
-                      expandable={false}
-                    />
-                    {data.insights.length > 0 && (
-                      <div className={styles.insightStack}>
-                        {data.insights.map((insight: Insight) => (
-                          <InsightCard key={insight.id} insight={insight} />
-                        ))}
-                      </div>
-                    )}
-                  </GlassCard>
-                </section>
-              </>
-            )}
-
-            {/* TELA 2 — Por post
-                  ✅ CORRIGIDO 06/09/2026: usa `tabContent` (flex de largura cheia),
-                  não `midRow` (grid de 2 colunas da Visão Geral).
-                  ✅ RWP-3 (06/10/2026): PostingProfilePanel mora aqui, depois da
-                  tabela de formatos. Cadência e mix são contagem de posts. */}
-            {activeTab === "por-post" && (
-              <section
-                className={styles.tabContent}
-                aria-label="Dados detalhados por postagem"
-              >
-                <GlassCard glowColor="cyan">
-                  <h3
-                    style={{
-                      color: "var(--text-primary)",
-                      marginBottom: "1rem",
-                    }}
-                  >
-                    Métricas Agregadas por Formato
-                  </h3>
-                  <FormatPerformanceTable rows={data.formatPerformance} />
-                </GlassCard>
-
-                <PostingProfilePanel
-                  cadence={data.cadence}
-                  mix={data.mix}
-                  benchmark={data.benchmarkCadence}
-                />
-              </section>
-            )}
-
-            {/* TELA 3 — Audiência ✅ NOVO */}
-            {activeTab === "audiencia" && (
-              <div className={styles.tabContent}>
-                {/* Painel de Posicionamento */}
-                {data.positioning && (
-                  <SectorPositioningPanel positioning={data.positioning} />
-                )}
-
-                {/* Painel de Resumo de Audiência */}
-                {data.audienceSummary && (
-                  <AudienceSummaryPanel summary={data.audienceSummary} />
-                )}
-              </div>
-            )}
-
-            {/* Alertas críticos */}
-            {data.criticalAlerts.length > 0 && (
-              <section
-                className={styles.alertRow}
-                aria-label="Alertas críticos"
-              >
-                {data.criticalAlerts.map((alert: Alert) => (
-                  <CriticalAlert key={alert.id} alert={alert} />
-                ))}
-              </section>
-            )}
-          </>
-        )}
-      </main>
-    </div>
-  );
-}
-</file>
-
 <file path="src/lib/repositories/instagramOverviewRepository.ts">
 /* ==========================================================================
    ORBIT · Repository — Instagram Overview (v4.3.3)
@@ -21410,6 +21482,7 @@ function InstagramOverviewLayout() {
 
 import { supabase } from "@/lib/supabase";
 import { repairMojibake } from "@/lib/textRepair";
+import { medianOf } from "@/lib/stats/median";
 import { z } from "zod";
 
 import type {
@@ -21719,8 +21792,13 @@ export interface FetchOverviewParams {
 export interface EngagementScoreSnapshot {
   snapshotId: string;
   erRealPct: number;
-  utilityScorePct: number;
-  polemicScorePct: number;
+  // KCR-C5/RWP-1: tile Utilidade fora do Overview e utility_score_pct sem
+  // régua. Ausência de utilidade não derruba mais ER Real e Polêmica.
+  utilityScorePct: number | null;
+  // SSC-1: mediana por post no período (fetchPolemicMedianInPeriod), não a
+  // coluna do snapshot. null = nenhum post do período com polemic_score_pct;
+  // não derruba ER Real/VPS (mesma regra da utilidade).
+  polemicScorePct: number | null;
   // ✅ FIX (15/09/2026): `number | null` — ver comentário em
   // EngagementScoreInput (contentContractEngine.ts). Reach_followers_pct
   // não ingerido (ORB-DEBT-034) é um estado real, não um erro que deva
@@ -21732,7 +21810,6 @@ interface EngagementScoreSnapshotRow {
   id: string;
   er_real_pct: number | null;
   utility_score_pct: number | null;
-  polemic_score_pct: number | null;
   reach_total: number | null;
   // ✅ FIX (v8.2 §1.4 — VPS C-02): faltava essa coluna. Sem ela o cálculo
   // caía pra reach_total/totalFollowers puro (ver comentário no v4.2.0
@@ -22107,7 +22184,7 @@ async function fetchQualityScores(
     .schema("orbit")
     .from("v_quality_scores")
     .select(
-      "id, score_key, score_value, status_text, status_variant, period_start, period_end, semaphore_key, ref_category, ref_source, ref_direction, ref_green_min, ref_green_max, ref_red_min, ref_red_max, ref_p50",
+      "id, score_key, metric_name, score_value, status_text, status_variant, period_start, period_end, semaphore_key, ref_category, ref_source, ref_direction, ref_green_min, ref_green_max, ref_red_min, ref_red_max, ref_p50",
     )
     .eq("client_id", clientId)
     .lte("period_start", end)
@@ -22122,13 +22199,62 @@ async function fetchQualityScores(
   const num = (v: unknown): number | null =>
     v == null ? null : Number.isFinite(Number(v)) ? Number(v) : null;
 
+  // SSC-1: o card de Polêmica não vem do snapshot da view (que ignora o
+  // período do header): valor = mediana por post no período; semáforo =
+  // fn_classify_metric sobre esse valor, mesma chamada que a view faz
+  // (setor = clients.benchmark_category, porte 'all'). Os ref_* da view
+  // (régua e direção) não dependem do valor e seguem alimentando o copy.
+  // Se a classificação voltar degradada (L2: RPC indisponível), mantém a
+  // linha da view intacta em vez de pintar uma cor que ninguém calculou.
+  let polemicOverride: {
+    value: number | null;
+    semaphore: SemaphoreKey | null;
+  } | null = null;
+  if ((orbitRows ?? []).some((r) => r.metric_name === "polemic_score_pct")) {
+    const [median, clientRes] = await Promise.all([
+      fetchPolemicMedianInPeriod(clientId, start, end),
+      supabase
+        .schema("orbit")
+        .from("clients")
+        .select("benchmark_category")
+        .eq("id", clientId)
+        .maybeSingle()
+        .overrideTypes<
+          { benchmark_category: string | null },
+          { merge: false }
+        >(),
+    ]);
+    if (median == null) {
+      polemicOverride = { value: null, semaphore: null };
+    } else {
+      const classified = await classifyMetric(
+        "polemic_score_pct",
+        median,
+        clientRes.data?.benchmark_category?.trim() || "all",
+        "all",
+      );
+      if (
+        classified.confidenceLevel !== "L2" &&
+        classified.semaphore !== "neutro"
+      ) {
+        polemicOverride = { value: median, semaphore: classified.semaphore };
+      }
+    }
+  }
+
   return (orbitRows ?? []).map((row) => {
     const scoreKey = String(row.score_key);
     const rawStatus = String(row.status_text ?? "");
-    const semaphore = (row.semaphore_key ?? null) as SemaphoreKey | null;
+    const ov = row.metric_name === "polemic_score_pct" ? polemicOverride : null;
+    const semaphore = (
+      ov ? ov.semaphore : (row.semaphore_key ?? null)
+    ) as SemaphoreKey | null;
     const sem = semaphore ? SEMAPHORE_UI[semaphore] : undefined;
-    const value =
-      row.score_value != null ? toFiniteNumber(row.score_value) : null;
+    const value = ov
+      ? ov.value
+      : row.score_value != null
+        ? toFiniteNumber(row.score_value)
+        : null;
 
     const copy = buildScoreCopy({
       value: typeof value === "number" ? value : null,
@@ -22556,6 +22682,12 @@ async function fetchAlgoRiskScore(
     .schema("orbit")
     .from("ig_posts")
     .select("published_at, likes, comments")
+    // Stories entram em ig_posts (content_format 'story') após o ingest
+    // --kind=stories. Baseline do algo_risk_score é histórico de PUBLICAÇÕES
+    // do feed: story (várias por dia, sem likes/comments comparáveis) vazaria
+    // pro IQR-trim e empurraria posts reais pra fora do limit(80).
+    // Mesmo critério de fetchPostingProfile.
+    .neq("content_format", "story")
     .eq("client_id", clientId)
     .order("published_at", { ascending: false })
     .limit(80)
@@ -22574,15 +22706,51 @@ async function fetchAlgoRiskScore(
   );
 }
 
+/**
+ * SSC-1 (10/10/2026): Polêmica = mediana por post (ficha `mediana_conta`) de
+ * ig_posts.polemic_score_pct no período do header, calculada aqui — o banco
+ * fornece o dado por post e não recalcula. Não cai pro snapshot da conta:
+ * duas camadas pra mesma métrica foi o que o alinhamento de 10/10 recusou.
+ * Recorte: cliente, [start, end], L0/L1, sem story. Post sem polemic_score_pct
+ * (likes<=0 ou campo ausente) fica fora; sem nenhum => null, nunca 0.
+ * A janela efetiva (header ∩ cobertura) sai sozinha: não existe post depois
+ * da data de coleta.
+ */
+async function fetchPolemicMedianInPeriod(
+  clientId: string,
+  start: string,
+  end: string,
+  db: OrbitDbClient = supabase,
+): Promise<number | null> {
+  const { data, error } = await db
+    .schema("orbit")
+    .from("ig_posts")
+    .select("polemic_score_pct")
+    .neq("content_format", "story")
+    .eq("client_id", clientId)
+    .gte("published_at", start)
+    .lte("published_at", end)
+    .in("confidence_level", CONFIDENCE_LEVELS)
+    .not("polemic_score_pct", "is", null)
+    .returns<{ polemic_score_pct: number | string }[]>();
+
+  if (error) {
+    console.error("[fetchPolemicMedianInPeriod]", error.message);
+    return null;
+  }
+  return medianOf((data ?? []).map((r) => Number(r.polemic_score_pct)));
+}
+
 export async function fetchSectorPositioning(
   clientId: string,
   start: string,
   end: string,
 ): Promise<SectorPositioning | null> {
-  const [onboarding, snapshot, algoRisk] = await Promise.all([
+  const [onboarding, snapshot, algoRisk, polemicMedian] = await Promise.all([
     fetchClientOnboarding(clientId),
     fetchLatestEngagementScoreSnapshot(clientId, start, end),
     fetchAlgoRiskScore(clientId),
+    fetchPolemicMedianInPeriod(clientId, start, end),
   ]);
 
   if (!onboarding) return null;
@@ -22593,7 +22761,17 @@ export async function fetchSectorPositioning(
   const safeCategory = category ?? "all";
   const safeTier = tier ?? "all";
 
-  const [erReal, vps, polemicScore] = snapshot
+  const polemicScore =
+    polemicMedian != null
+      ? await classifyMetric(
+          "polemic_score_pct",
+          polemicMedian,
+          safeCategory,
+          safeTier,
+        )
+      : null;
+
+  const [erReal, vps] = snapshot
     ? await Promise.all([
         classifyMetric(
           "er_real_pct",
@@ -22609,14 +22787,8 @@ export async function fetchSectorPositioning(
         snapshot.vpsPct != null
           ? classifyMetric("vps_pct", snapshot.vpsPct, safeCategory, safeTier)
           : Promise.resolve(null),
-        classifyMetric(
-          "polemic_score_pct",
-          snapshot.polemicScorePct,
-          safeCategory,
-          safeTier,
-        ),
       ])
-    : [null, null, null];
+    : [null, null];
 
   return {
     setorBenchmark: onboarding.setor_benchmark,
@@ -22628,7 +22800,7 @@ export async function fetchSectorPositioning(
     vps,
     vpsValue: snapshot?.vpsPct ?? null,
     polemicScore,
-    polemicScoreValue: snapshot?.polemicScorePct ?? null,
+    polemicScoreValue: polemicMedian,
     algoRisk,
     engagementPeriodNotes: onboarding.q1_engagement_period_notes,
     contentProxyNotes: onboarding.q2_content_proxy_notes,
@@ -22716,12 +22888,12 @@ export async function fetchLatestEngagementScoreSnapshot(
   end: string,
   db: OrbitDbClient = supabase,
 ): Promise<EngagementScoreSnapshot | null> {
-  const [{ data, error }, totalFollowers] = await Promise.all([
+  const [{ data, error }, totalFollowers, polemicMedian] = await Promise.all([
     db
       .schema("orbit")
       .from("ig_account_snapshots")
       .select(
-        "id, er_real_pct, utility_score_pct, polemic_score_pct, reach_total, reach_followers_pct, period_end",
+        "id, er_real_pct, utility_score_pct, reach_total, reach_followers_pct, period_end",
       )
       .eq("client_id", clientId)
       .lte("period_start", end)
@@ -22731,6 +22903,7 @@ export async function fetchLatestEngagementScoreSnapshot(
       .maybeSingle()
       .overrideTypes<EngagementScoreSnapshotRow, { merge: false }>(),
     fetchTotalFollowers(clientId, db),
+    fetchPolemicMedianInPeriod(clientId, start, end, db),
   ]);
 
   if (error) {
@@ -22745,7 +22918,6 @@ export async function fetchLatestEngagementScoreSnapshot(
     id,
     er_real_pct,
     utility_score_pct,
-    polemic_score_pct,
     reach_total,
     reach_followers_pct,
   } = data;
@@ -22773,11 +22945,10 @@ export async function fetchLatestEngagementScoreSnapshot(
         ) / 10000
       : null;
 
-  if (
-    er_real_pct == null ||
-    utility_score_pct == null ||
-    polemic_score_pct == null
-  ) {
+  // Só ER Real é requisito do snapshot. utility_score_pct e a polêmica
+  // (mediana por post) nulos seguem como `null` no contrato e não bloqueiam
+  // as outras métricas (gap de código de decisions.md, 2026-10-05).
+  if (er_real_pct == null) {
     return null;
   }
 
@@ -22785,7 +22956,7 @@ export async function fetchLatestEngagementScoreSnapshot(
     snapshotId: id,
     erRealPct: er_real_pct,
     utilityScorePct: utility_score_pct,
-    polemicScorePct: polemic_score_pct,
+    polemicScorePct: polemicMedian,
     vpsPct,
   };
 }
