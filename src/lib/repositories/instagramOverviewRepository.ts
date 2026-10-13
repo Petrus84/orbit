@@ -385,7 +385,10 @@ export interface EngagementScoreSnapshot {
   // KCR-C5/RWP-1: tile Utilidade fora do Overview e utility_score_pct sem
   // régua. Ausência de utilidade não derruba mais ER Real e Polêmica.
   utilityScorePct: number | null;
-  polemicScorePct: number;
+  // SSC-1: mediana por post no período (fetchPolemicMedianInPeriod), não a
+  // coluna do snapshot. null = nenhum post do período com polemic_score_pct;
+  // não derruba ER Real/VPS (mesma regra da utilidade).
+  polemicScorePct: number | null;
   // ✅ FIX (15/09/2026): `number | null` — ver comentário em
   // EngagementScoreInput (contentContractEngine.ts). Reach_followers_pct
   // não ingerido (ORB-DEBT-034) é um estado real, não um erro que deva
@@ -397,7 +400,6 @@ interface EngagementScoreSnapshotRow {
   id: string;
   er_real_pct: number | null;
   utility_score_pct: number | null;
-  polemic_score_pct: number | null;
   reach_total: number | null;
   // ✅ FIX (v8.2 §1.4 — VPS C-02): faltava essa coluna. Sem ela o cálculo
   // caía pra reach_total/totalFollowers puro (ver comentário no v4.2.0
@@ -1308,8 +1310,9 @@ async function fetchPolemicMedianInPeriod(
   clientId: string,
   start: string,
   end: string,
+  db: OrbitDbClient = supabase,
 ): Promise<number | null> {
-  const { data, error } = await supabase
+  const { data, error } = await db
     .schema("orbit")
     .from("ig_posts")
     .select("polemic_score_pct")
@@ -1475,12 +1478,12 @@ export async function fetchLatestEngagementScoreSnapshot(
   end: string,
   db: OrbitDbClient = supabase,
 ): Promise<EngagementScoreSnapshot | null> {
-  const [{ data, error }, totalFollowers] = await Promise.all([
+  const [{ data, error }, totalFollowers, polemicMedian] = await Promise.all([
     db
       .schema("orbit")
       .from("ig_account_snapshots")
       .select(
-        "id, er_real_pct, utility_score_pct, polemic_score_pct, reach_total, reach_followers_pct, period_end",
+        "id, er_real_pct, utility_score_pct, reach_total, reach_followers_pct, period_end",
       )
       .eq("client_id", clientId)
       .lte("period_start", end)
@@ -1490,6 +1493,7 @@ export async function fetchLatestEngagementScoreSnapshot(
       .maybeSingle()
       .overrideTypes<EngagementScoreSnapshotRow, { merge: false }>(),
     fetchTotalFollowers(clientId, db),
+    fetchPolemicMedianInPeriod(clientId, start, end, db),
   ]);
 
   if (error) {
@@ -1504,7 +1508,6 @@ export async function fetchLatestEngagementScoreSnapshot(
     id,
     er_real_pct,
     utility_score_pct,
-    polemic_score_pct,
     reach_total,
     reach_followers_pct,
   } = data;
@@ -1532,10 +1535,10 @@ export async function fetchLatestEngagementScoreSnapshot(
         ) / 10000
       : null;
 
-  // Só ER Real e Polêmica são requisitos do snapshot. utility_score_pct
-  // nulo segue como `null` no contrato e não bloqueia as outras duas
-  // (gap de código registrado em decisions.md, 2026-10-05).
-  if (er_real_pct == null || polemic_score_pct == null) {
+  // Só ER Real é requisito do snapshot. utility_score_pct e a polêmica
+  // (mediana por post) nulos seguem como `null` no contrato e não bloqueiam
+  // as outras métricas (gap de código de decisions.md, 2026-10-05).
+  if (er_real_pct == null) {
     return null;
   }
 
@@ -1543,7 +1546,7 @@ export async function fetchLatestEngagementScoreSnapshot(
     snapshotId: id,
     erRealPct: er_real_pct,
     utilityScorePct: utility_score_pct,
-    polemicScorePct: polemic_score_pct,
+    polemicScorePct: polemicMedian,
     vpsPct,
   };
 }

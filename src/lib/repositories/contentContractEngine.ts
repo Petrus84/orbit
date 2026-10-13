@@ -66,7 +66,8 @@ export interface EngagementScoreInput {
   snapshotId: string;
   erRealPct: number;
   utilityScorePct: number | null;
-  polemicScorePct: number;
+  // SSC-1: mediana por post no período; null = sem post com o campo.
+  polemicScorePct: number | null;
   // ✅ FIX (15/09/2026 — regressão do fix de VPS C-02): passou a `number |
   // null`. ORB-DEBT-034 confirma que `reach_followers_pct` nunca foi
   // ingerido pros clientes reais — sem ele não existe VPS C-02 válido
@@ -1587,14 +1588,30 @@ export async function resolveEngagementScoreAlert(
           calibrationMethod: null,
           zeroInflated: null,
         }),
-    classifyMetric(
-      "polemic_score_pct",
-      input.polemicScorePct,
-      categoryForClassify,
-      tierForClassify,
-      db,
-    ),
+    input.polemicScorePct != null
+      ? classifyMetric(
+          "polemic_score_pct",
+          input.polemicScorePct,
+          categoryForClassify,
+          tierForClassify,
+          db,
+        )
+      : Promise.resolve<ClassifiedMetric>({
+          value: 0,
+          semaphore: "neutro",
+          statusText:
+            "Polêmica indisponível: nenhum post do período tem o campo calculado. Não é classificada com dado ausente.",
+          confidenceLevel: "L0",
+          thresholdSource: null,
+          confidenceScore: null,
+          ruleDeclaration:
+            "Sem posts com polemic_score_pct no período não existe mediana por post.",
+          calibrationMethod: null,
+          zeroInflated: null,
+        }),
   ]);
+  // Narrowing: `polemicPct` só é número quando a mediana existe.
+  const polemicPct = input.polemicScorePct;
 
   // ✅ NOVO (execução ORBIT, verificação do fio CASO G, 14/09/2026): guarda
   // EXPLÍCITA, não implícita. er_real_pct/vps_pct estão fora de
@@ -1664,7 +1681,7 @@ export async function resolveEngagementScoreAlert(
     };
   }
 
-  if (polemic.zeroInflated) {
+  if (polemicPct != null && polemic.zeroInflated) {
     const isWithinNormalRange =
       polemic.semaphore !== "vermelho" &&
       (polemic.confidenceScore === null || polemic.confidenceScore >= 0.75);
@@ -1673,8 +1690,8 @@ export async function resolveEngagementScoreAlert(
       type: "polemic_score_high",
       severity: isWithinNormalRange ? "info" : "warning",
       title: isWithinNormalRange
-        ? `${formatPtBr(input.polemicScorePct)}% dos seus posts têm gente discordando nos comentários — isso é normal no seu segmento`
-        : `${formatPtBr(input.polemicScorePct)}% dos seus posts têm gente discordando nos comentários`,
+        ? `${formatPtBr(polemicPct)}% dos seus posts têm gente discordando nos comentários — isso é normal no seu segmento`
+        : `${formatPtBr(polemicPct)}% dos seus posts têm gente discordando nos comentários`,
       description: stripTranslation(polemic.statusText),
       natureza: "tecnica",
       probableCause: isWithinNormalRange
@@ -1690,16 +1707,16 @@ export async function resolveEngagementScoreAlert(
       ruleDeclaration: polemic.ruleDeclaration,
       snapshotId: input.snapshotId,
       metricName: "polemic_score_pct",
-      metricValue: input.polemicScorePct,
+      metricValue: polemicPct,
       thresholdValue: null,
     };
   }
 
-  if (polemic.semaphore === "vermelho") {
+  if (polemicPct != null && polemic.semaphore === "vermelho") {
     return {
       type: "polemic_score_high",
       severity: "warning",
-      title: `${formatPtBr(input.polemicScorePct)}% dos seus posts têm gente discordando nos comentários — acima do normal`,
+      title: `${formatPtBr(polemicPct)}% dos seus posts têm gente discordando nos comentários — acima do normal`,
       description: stripTranslation(polemic.statusText),
       natureza: "tecnica",
       probableCause:
@@ -1713,7 +1730,7 @@ export async function resolveEngagementScoreAlert(
       ruleDeclaration: polemic.ruleDeclaration,
       snapshotId: input.snapshotId,
       metricName: "polemic_score_pct",
-      metricValue: input.polemicScorePct,
+      metricValue: polemicPct,
       thresholdValue: null,
     };
   }
