@@ -4,9 +4,9 @@
    cadência do segmento (view v_benchmark_cadence_by_segment).
 
    Regras:
-   - Conta e referência usam a MESMA régua: posts por semana entre o primeiro e
-     o último post (span ativo), só com base mínima (>= 5 posts e >= 28 dias).
-     Nunca comparar taxa por período selecionado com taxa por span ativo.
+   - Número principal (oráculo): Cadência baseada na JANELA EFETIVA (período selecionado).
+   - Conta e referência usam a MESMA régua para cor/comparação: posts por semana 
+     entre o primeiro e o último post (span ativo), só com base mínima (>= 5 posts e >= 28 dias).
    - A referência é de PERÍODO FIXO (o da própria view), não o período
      selecionado. As datas aparecem escritas na tela.
    - Contas sem posts qualificáveis NÃO entram como zero; "n de N contas"
@@ -67,38 +67,39 @@ function plural(n: number, singular: string, pluralForm: string): string {
   return n === 1 ? singular : pluralForm;
 }
 
-// Taxa que o painel exibe e compara: span ativo, quando a conta tem base mínima.
+// Taxa para o BENCHMARK: span ativo, quando a conta tem base mínima.
 function activeRate(c: PostingCadence | null | undefined): number | null {
   return c?.postsPerWeekActive ?? null;
 }
 
+// Headline da cadência baseada na JANELA EFETIVA (oráculo), e não no span ativo.
 function cadenceHeadline(c: PostingCadence): string {
-  const active = activeRate(c);
-  if (active !== null) {
-    const weeksPerPost = c.weeksPerPostActive ?? null;
-    // abaixo de 1/semana, "1 post a cada N semanas" é mais legível que "0,4 por semana"
-    if (active < 1 && weeksPerPost !== null)
-      return `1 post a cada ${ptBr(weeksPerPost)} semanas`;
-    return `${ptBr(active)} posts por semana`;
-  }
-  if (c.reason !== "ok" || c.postsPerWeek === null)
+  if (c.reason !== "ok" || c.postsPerWeek === null) {
     return "Poucos posts para calcular";
-  // Sem base mínima de span: mostra a taxa do período selecionado, sem comparação.
+  }
+
   if (c.postsPerWeek < 1 && c.weeksPerPost !== null) {
     return `1 post a cada ${ptBr(c.weeksPerPost)} semanas`;
   }
   return `${ptBr(c.postsPerWeek)} posts por semana`;
 }
 
+// Detalhamento mesclando os dados da janela com o span ativo
 function cadenceDetail(c: PostingCadence): string {
-  if (activeRate(c) !== null && c.activeSpanDays != null) {
-    return `${c.nPosts} ${plural(c.nPosts, "post", "posts")} em ${c.activeSpanDays} dias, do primeiro ao último post do período selecionado.`;
-  }
   const dias = Math.round(c.windowDays);
+
   if (c.reason !== "ok") {
     return `${c.nPosts} ${plural(c.nPosts, "post", "posts")} no período — mínimo de 3 para estimar o ritmo.`;
   }
-  return `${c.nPosts} posts em ${dias} dias (período selecionado) — sem base mínima de 5 posts em 28 dias para comparar com o segmento.`;
+
+  const windowText = `${c.nPosts} ${plural(c.nPosts, "post", "posts")} em ${dias} dias (período selecionado).`;
+
+  const active = activeRate(c);
+  if (active !== null && c.activeSpanDays != null) {
+    return `${windowText} Ritmo ativo de ${ptBr(active)} posts/sem (em ${c.activeSpanDays} dias, do primeiro ao último post).`;
+  }
+
+  return `${windowText} Sem base mínima de 5 posts em 28 dias para extrair ritmo ativo ou comparar com o segmento.`;
 }
 
 // Recência separada da cadência: "com que ritmo postou quando postava" (acima)
@@ -115,7 +116,6 @@ function recencyLine(c: PostingCadence): string | null {
 }
 
 // Compara posts/semana (span ativo) da conta com a faixa P25–P75 da view.
-// Os limites vêm da view; nada de limiar fixo aqui.
 function classifyCadenceVsBenchmark(
   postsPerWeek: number,
   b: BenchmarkCadence,
@@ -136,6 +136,7 @@ export function PostingProfilePanel({
   mix,
   benchmark,
 }: PostingProfilePanelProps) {
+  // Account rate usado EXCLUSIVAMENTE para a cor do benchmark (apples-to-apples)
   const accountRate = activeRate(cadence);
 
   const canColor =
@@ -296,8 +297,8 @@ export function PostingProfilePanel({
 
       <p className={styles.note}>
         {benchmark
-          ? "Conta e referência usam o mesmo cálculo: posts por semana entre o primeiro e o último post, só para contas com pelo menos 5 posts e 28 dias entre eles. A referência usa um período fixo e descreve o ritmo observado — não indica efeito sobre resultado. A recência é medida até a data da coleta, não até hoje."
-          : "Contagem dos posts coletados no período, sem comparação de mercado."}
+          ? "A cadência principal reflete o período selecionado. A comparação de segmento exige base mínima e avalia o ritmo ativo (do primeiro ao último post). A referência usa um período fixo e descreve o ritmo observado — não indica efeito sobre resultado. A recência é medida até a coleta."
+          : "Contagem dos posts coletados no período selecionado, sem comparação de mercado."}
       </p>
     </section>
   );

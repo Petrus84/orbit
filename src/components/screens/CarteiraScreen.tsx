@@ -1,21 +1,21 @@
-import React, { useState } from 'react'
-import styles from './CarteiraScreen.module.css'
-import SectionHead from '@/components/common/SectionHead'
-import ClientCard from '@/components/common/ClientCard'
-import AlertCard from '@/components/common/AlertCard'
-import type { Client } from '@/types/client'
-import type { UseAlertsReturn } from '@/hooks/useAlerts'
-import type { UseClientsResult } from '@/types/orbit'
+import React, { useState } from "react";
+import styles from "./CarteiraScreen.module.css";
+import SectionHead from "@/components/common/SectionHead";
+import ClientCard from "@/components/common/ClientCard";
+import AlertCard from "@/components/common/AlertCard";
+import type { Client } from "@/types/client";
+import type { UseAlertsReturn } from "@/hooks/useAlerts";
+import type { UseClientsResult } from "@/types/orbit";
 
 // ─── Filter tabs (paridade com screen-carteira do protótipo) ──
 
-type FilterTab = 'all' | 'critical' | 'healthy'
+type FilterTab = "all" | "critical" | "healthy";
 
 const TABS: { id: FilterTab; label: string }[] = [
-  { id: 'all', label: 'Todos' },
-  { id: 'critical', label: 'Críticos' },
-  { id: 'healthy', label: 'Saudáveis' },
-]
+  { id: "all", label: "Todos" },
+  { id: "critical", label: "Críticos" },
+  { id: "healthy", label: "Saudáveis" },
+];
 
 // ─── Loading skeleton ────────────────────────────────────────
 
@@ -40,97 +40,103 @@ function CardSkeleton(): React.ReactElement {
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 // ─── Error state ────────────────────────────────────────────
 
 interface ErrorStateProps {
-  message: string
-  onRetry: () => void
+  message: string;
+  onRetry: () => void;
 }
 
 function ErrorState({ message, onRetry }: ErrorStateProps): React.ReactElement {
   return (
     <div className={styles.errorState}>
       <p className={styles.errorMessage}>{message}</p>
-      <button
-        type="button"
-        onClick={onRetry}
-        className={styles.retryButton}
-      >
+      <button type="button" onClick={onRetry} className={styles.retryButton}>
         Tentar novamente
       </button>
     </div>
-  )
+  );
 }
 
 // ─── Empty state ────────────────────────────────────────────
 
 function EmptyState({ tab }: { tab: FilterTab }): React.ReactElement {
   const messages: Record<FilterTab, string> = {
-    all: 'Nenhum cliente na carteira.',
-    critical: 'Nenhum cliente crítico no momento.',
-    healthy: 'Nenhum cliente saudável no momento.',
-  }
+    all: "Nenhum cliente na carteira.",
+    critical: "Nenhum cliente crítico no momento.",
+    healthy: "Nenhum cliente saudável no momento.",
+  };
   return (
     <div className={styles.emptyState}>
       <p className={styles.emptyMessage}>{messages[tab]}</p>
     </div>
-  )
+  );
 }
 
 // ─── Screen ─────────────────────────────────────────────────
 
 interface CarteiraScreenProps {
-  useClients: () => UseClientsResult
-  useAlerts: (filter?: 'critical' | 'warning' | 'info') => UseAlertsReturn
+  useClients: () => UseClientsResult;
+  useAlerts: (filter?: "critical" | "warning" | "info") => UseAlertsReturn;
 }
 
 function CarteiraScreen({
   useClients,
   useAlerts,
 }: CarteiraScreenProps): React.ReactElement {
-  const { data, status, error, refetch } = useClients()
+  const { data, status, error, refetch } = useClients();
   // PR-B / N9: "Com alerta" e os AlertCards embaixo de cada ClientCard são
   // sobre alertas em geral (qualquer severity) — precisam de useAlerts()
   // sem filtro. "Alertas críticos" + a seção "urgentes" continuam restritos
   // a useAlerts('critical'). Antes, os dois liam da mesma chamada filtrada
   // e "Com alerta" só contava cliente com alerta crítico.
-  const { data: allAlerts, refetch: refetchAllAlerts } = useAlerts()
-  const { data: criticalAlerts, refetch: refetchCriticalAlerts } = useAlerts('critical')
-  const [activeTab, setActiveTab] = useState<FilterTab>('all')
+  const { data: allAlerts, refetch: refetchAllAlerts } = useAlerts();
+  const { data: criticalAlerts, refetch: refetchCriticalAlerts } =
+    useAlerts("critical");
+  const [activeTab, setActiveTab] = useState<FilterTab>("all");
 
-  const allClients: Client[] = data ?? []
+  const allClients: Client[] = data ?? [];
   const clients: Client[] =
-    activeTab === 'all'
+    activeTab === "all"
       ? allClients
-      : allClients.filter((c) => c.status === activeTab)
-  const isLoading = status === 'loading' || status === 'idle'
+      : allClients.filter((c) => c.status === activeTab);
+  const isLoading = status === "loading" || status === "idle";
 
   const clientsWithAlerts = allClients.filter((c) =>
-    allAlerts.some((a) => a.clientId === c.id)
-  ).length
-  const totalAlerts = criticalAlerts.length
+    allAlerts.some((a) => a.clientId === c.id),
+  ).length;
+  const totalAlerts = criticalAlerts.length;
+  // Badge "Crítico" e aba "Críticos" usam client.status (orbit.v_client_health).
+  // "Alertas críticos" conta linhas abertas em orbit.alerts. São fontes
+  // diferentes; o KPI de topo usa a mesma fonte dos badges.
+  const criticalClients = allClients.filter(
+    (c) => c.status === "critical",
+  ).length;
 
   const refetchAlerts = (): void => {
-    refetchAllAlerts()
-    refetchCriticalAlerts()
-  }
+    refetchAllAlerts();
+    refetchCriticalAlerts();
+  };
 
   const subtitle =
-    status === 'success'
-      ? `${allClients.length} cliente${allClients.length !== 1 ? 's' : ''} ativo${allClients.length !== 1 ? 's' : ''}${
+    status === "success"
+      ? `${allClients.length} cliente${allClients.length !== 1 ? "s" : ""} ativo${allClients.length !== 1 ? "s" : ""}${
           clientsWithAlerts > 0
-            ? ` · ${clientsWithAlerts} com alerta${clientsWithAlerts !== 1 ? 's' : ''}`
-            : ''
+            ? ` · ${clientsWithAlerts} com alerta${clientsWithAlerts !== 1 ? "s" : ""}`
+            : ""
         }${
           totalAlerts > 0
-            ? ` · ${totalAlerts} alerta${totalAlerts !== 1 ? 's' : ''} crítico${totalAlerts !== 1 ? 's' : ''}`
-            : ''
+            ? ` · ${totalAlerts} alerta${totalAlerts !== 1 ? "s" : ""} crítico${totalAlerts !== 1 ? "s" : ""}`
+            : ""
         }`
-      : undefined
+      : undefined;
 
+  // TS2375 (exactOptionalPropertyTypes): `subtitle` é `string | undefined`, mas
+  // SectionHeadProps.subtitle é opcional — passar subtitle={undefined} não é o
+  // mesmo que omitir a prop. O spread condicional só cria a chave com valor.
   return (
     <main className={styles.main}>
       <div className={styles.headRow}>
@@ -138,12 +144,6 @@ function CarteiraScreen({
           title="Carteira de clientes"
           {...(subtitle !== undefined ? { subtitle } : {})}
         />
-        {/* PR-F (parcial) / TS2375: `subtitle` é `string | undefined`
-            (calculado condicionalmente acima), mas SectionHeadProps.subtitle
-            é opcional sob exactOptionalPropertyTypes — passar
-            subtitle={undefined} explicitamente não é o mesmo que omitir a
-            prop. Spread condicional garante que a chave só existe quando
-            há valor. */}
 
         <div
           className={styles.tabsContainer}
@@ -176,15 +176,19 @@ function CarteiraScreen({
         </div>
         <div className={`${styles.kpiCard} ${styles.kpiCardWarning}`}>
           <p className={styles.kpiLabel}>Com alerta</p>
-          <p className={`${styles.kpiValue} ${styles.kpiValueWarning}`}>{clientsWithAlerts}</p>
+          <p className={`${styles.kpiValue} ${styles.kpiValueWarning}`}>
+            {clientsWithAlerts}
+          </p>
         </div>
         <div className={`${styles.kpiCard} ${styles.kpiCardCritical}`}>
-          <p className={styles.kpiLabel}>Alertas críticos</p>
-          <p className={`${styles.kpiValue} ${styles.kpiValueError}`}>{totalAlerts}</p>
+          <p className={styles.kpiLabel}>Clientes críticos</p>
+          <p className={`${styles.kpiValue} ${styles.kpiValueError}`}>
+            {criticalClients}
+          </p>
         </div>
       </div>
 
-      {status === 'error' && error ? (
+      {status === "error" && error ? (
         <ErrorState message={error} onRetry={refetch} />
       ) : isLoading ? (
         <div
@@ -201,7 +205,9 @@ function CarteiraScreen({
       ) : (
         <div className={styles.clientsGrid}>
           {clients.map((client: Client) => {
-            const clientAlerts = allAlerts.filter((a) => a.clientId === client.id)
+            const clientAlerts = allAlerts.filter(
+              (a) => a.clientId === client.id,
+            );
 
             return (
               <div key={client.id} className={styles.clientWrapper}>
@@ -232,7 +238,7 @@ function CarteiraScreen({
                   </div>
                 )}
               </div>
-            )
+            );
           })}
         </div>
       )}
@@ -262,7 +268,7 @@ function CarteiraScreen({
         </section>
       )}
     </main>
-  )
+  );
 }
 
-export default CarteiraScreen
+export default CarteiraScreen;

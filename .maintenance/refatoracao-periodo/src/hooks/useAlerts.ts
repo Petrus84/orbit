@@ -2,13 +2,20 @@
 // src/hooks/useAlerts.ts
 // ============================================================================
 
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { fetchAlerts, fetchCriticalAlerts } from '@/lib/repositories/alertsRepository'
-import type { Alert, AlertSeverity, FetchStatus } from '@/types/alert'
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  fetchAlerts,
+  fetchCriticalAlerts,
+} from "../../../../src/lib/repositories/alertsRepository";
+import type {
+  Alert,
+  AlertSeverity,
+  FetchStatus,
+} from "../../../../src/types/alert";
 
 // ── Config ────────────────────────────────────────────────────────────────
-const MAX_RETRIES = 3
-const BASE_BACKOFF_MS = 500 // 500 → 1000 → 2000 ms
+const MAX_RETRIES = 3;
+const BASE_BACKOFF_MS = 500; // 500 → 1000 → 2000 ms
 
 // ── Derived counts ────────────────────────────────────────────────────────
 // ⚠️ Este AlertCounts (com `total`) é INTENCIONALMENTE diferente do
@@ -19,10 +26,10 @@ const BASE_BACKOFF_MS = 500 // 500 → 1000 → 2000 ms
 // não algo que dava pra decidir sozinho aqui. Deixei como
 // `AlertSeverityCounts` para não colidir e não fingir que são a mesma coisa.
 export interface AlertSeverityCounts {
-  critical: number
-  warning: number
-  info: number
-  total: number
+  critical: number;
+  warning: number;
+  info: number;
+  total: number;
 }
 
 /**
@@ -38,92 +45,94 @@ export interface AlertSeverityCounts {
 function countBySeverity(alerts: Alert[]): AlertSeverityCounts {
   return alerts.reduce(
     (acc, a) => {
-      const bucket: 'critical' | 'warning' | 'info' =
-        a.severity === 'success' ? 'info' : a.severity
-      acc[bucket]++
-      acc.total++
-      return acc
+      const bucket: "critical" | "warning" | "info" =
+        a.severity === "success" ? "info" : a.severity;
+      acc[bucket]++;
+      acc.total++;
+      return acc;
     },
-    { critical: 0, warning: 0, info: 0, total: 0 } as AlertSeverityCounts
-  )
+    { critical: 0, warning: 0, info: 0, total: 0 } as AlertSeverityCounts,
+  );
 }
 
 // ── Return type ───────────────────────────────────────────────────────────
 export interface UseAlertsReturn {
-  data: Alert[]
-  counts: AlertSeverityCounts
-  status: FetchStatus
-  error: string | null
-  lastUpdated: Date | null
-  refetch: () => void
+  data: Alert[];
+  counts: AlertSeverityCounts;
+  status: FetchStatus;
+  error: string | null;
+  lastUpdated: Date | null;
+  refetch: () => void;
 }
 
 // ── Hook ──────────────────────────────────────────────────────────────────
 export function useAlerts(filter?: AlertSeverity): UseAlertsReturn {
-  const [data, setData] = useState<Alert[]>([])
-  const [status, setStatus] = useState<FetchStatus>('idle')
-  const [error, setError] = useState<string | null>(null)
-  const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
+  const [data, setData] = useState<Alert[]>([]);
+  const [status, setStatus] = useState<FetchStatus>("idle");
+  const [error, setError] = useState<string | null>(null);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
-  const isMountedRef = useRef(true)
-  const fetchTokenRef = useRef(0)
+  const isMountedRef = useRef(true);
+  const fetchTokenRef = useRef(0);
 
   const load = useCallback(
     async (token: number): Promise<void> => {
-      if (!isMountedRef.current) return
+      if (!isMountedRef.current) return;
 
-      setStatus('loading')
-      setError(null)
+      setStatus("loading");
+      setError(null);
 
-      let attempt = 0
-      let lastError: Error | null = null
+      let attempt = 0;
+      let lastError: Error | null = null;
 
       while (attempt < MAX_RETRIES) {
-        if (fetchTokenRef.current !== token) return
+        if (fetchTokenRef.current !== token) return;
 
         try {
           const result =
-            filter === 'critical' ? await fetchCriticalAlerts() : await fetchAlerts(filter)
+            filter === "critical"
+              ? await fetchCriticalAlerts()
+              : await fetchAlerts(filter);
 
-          if (fetchTokenRef.current !== token || !isMountedRef.current) return
+          if (fetchTokenRef.current !== token || !isMountedRef.current) return;
 
-          setData(result)
-          setStatus('success')
-          setLastUpdated(new Date())
-          return
+          setData(result);
+          setStatus("success");
+          setLastUpdated(new Date());
+          return;
         } catch (err) {
-          lastError = err instanceof Error ? err : new Error(String(err))
-          attempt++
+          lastError = err instanceof Error ? err : new Error(String(err));
+          attempt++;
 
           if (attempt < MAX_RETRIES) {
-            const delay = BASE_BACKOFF_MS * Math.pow(2, attempt - 1)
-            await new Promise<void>((resolve) => setTimeout(resolve, delay))
+            const delay = BASE_BACKOFF_MS * Math.pow(2, attempt - 1);
+            await new Promise<void>((resolve) => setTimeout(resolve, delay));
           }
         }
       }
 
-      if (fetchTokenRef.current !== token || !isMountedRef.current) return
+      if (fetchTokenRef.current !== token || !isMountedRef.current) return;
 
-      setStatus('error')
-      setError(lastError?.message ?? 'Erro desconhecido ao buscar alertas.')
+      setStatus("error");
+      setError(lastError?.message ?? "Erro desconhecido ao buscar alertas.");
     },
-    [filter]
-  )
+    [filter],
+  );
 
   const refetch = useCallback((): void => {
-    const token = ++fetchTokenRef.current
-    void load(token)
-  }, [load])
+    const token = ++fetchTokenRef.current;
+    void load(token);
+  }, [load]);
 
   useEffect(() => {
-    isMountedRef.current = true
-    const token = ++fetchTokenRef.current
-    void load(token)
+    isMountedRef.current = true;
+    const token = ++fetchTokenRef.current;
+    void load(token);
 
     return () => {
-      isMountedRef.current = false
-    }
-  }, [load])
+      isMountedRef.current = false;
+    };
+  }, [load]);
 
   return {
     data,
@@ -132,5 +141,5 @@ export function useAlerts(filter?: AlertSeverity): UseAlertsReturn {
     error,
     lastUpdated,
     refetch,
-  }
+  };
 }

@@ -1658,6 +1658,74 @@ export type Database = {
           },
         ];
       };
+      client_users: {
+        Row: {
+          client_id: string;
+          created_at: string;
+          user_id: string;
+        };
+        Insert: {
+          client_id: string;
+          created_at?: string;
+          user_id: string;
+        };
+        Update: {
+          client_id?: string;
+          created_at?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "client_users_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "clients";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "client_users_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_avatar_alignment";
+            referencedColumns: ["client_id"];
+          },
+          {
+            foreignKeyName: "client_users_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_avatar_alignment";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "client_users_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_avatar_alignment_latest";
+            referencedColumns: ["client_id"];
+          },
+          {
+            foreignKeyName: "client_users_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_carteira_clients";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "client_users_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_client_health";
+            referencedColumns: ["client_id"];
+          },
+          {
+            foreignKeyName: "client_users_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_client_metrics";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       clients: {
         Row: {
           avatar_alignment_hypothesis: string | null;
@@ -2601,6 +2669,110 @@ export type Database = {
           },
         ];
       };
+      projections: {
+        Row: {
+          actual: number | null;
+          client_id: string;
+          confidence: number | null;
+          id: string;
+          ig_post_uri: string | null;
+          method_version: string;
+          metric: string;
+          n_history: number;
+          predicted_at: string;
+          predicted_point: number;
+          published_at: string | null;
+          range_high: number;
+          range_low: number;
+          resolved_at: string | null;
+          within_range: boolean | null;
+        };
+        Insert: {
+          actual?: number | null;
+          client_id: string;
+          confidence?: number | null;
+          id?: string;
+          ig_post_uri?: string | null;
+          method_version: string;
+          metric: string;
+          n_history: number;
+          predicted_at?: string;
+          predicted_point: number;
+          published_at?: string | null;
+          range_high: number;
+          range_low: number;
+          resolved_at?: string | null;
+          within_range?: boolean | null;
+        };
+        Update: {
+          actual?: number | null;
+          client_id?: string;
+          confidence?: number | null;
+          id?: string;
+          ig_post_uri?: string | null;
+          method_version?: string;
+          metric?: string;
+          n_history?: number;
+          predicted_at?: string;
+          predicted_point?: number;
+          published_at?: string | null;
+          range_high?: number;
+          range_low?: number;
+          resolved_at?: string | null;
+          within_range?: boolean | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "projections_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "clients";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "projections_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_avatar_alignment";
+            referencedColumns: ["client_id"];
+          },
+          {
+            foreignKeyName: "projections_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_avatar_alignment";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "projections_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_avatar_alignment_latest";
+            referencedColumns: ["client_id"];
+          },
+          {
+            foreignKeyName: "projections_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_carteira_clients";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "projections_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_client_health";
+            referencedColumns: ["client_id"];
+          },
+          {
+            foreignKeyName: "projections_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_client_metrics";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       raw_ig_ingest: {
         Row: {
           client_id: string;
@@ -3111,6 +3283,27 @@ export type Database = {
           plan?: string;
           price_monthly?: number;
           updated_at?: string | null;
+        };
+        Relationships: [];
+      };
+      user_roles: {
+        Row: {
+          created_at: string;
+          role: Database["orbit"]["Enums"]["app_role"];
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          role?: Database["orbit"]["Enums"]["app_role"];
+          updated_at?: string;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          role?: Database["orbit"]["Enums"]["app_role"];
+          updated_at?: string;
+          user_id?: string;
         };
         Relationships: [];
       };
@@ -3986,6 +4179,66 @@ export type Database = {
           },
         ];
       };
+      v_projection_hit_rate: {
+        Row: {
+          acerto_pct: number | null;
+          client_id: string | null;
+          erro_mediano_pct: number | null;
+          metric: string | null;
+          n_resolvidas: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "projections_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "clients";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "projections_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_avatar_alignment";
+            referencedColumns: ["client_id"];
+          },
+          {
+            foreignKeyName: "projections_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_avatar_alignment";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "projections_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_avatar_alignment_latest";
+            referencedColumns: ["client_id"];
+          },
+          {
+            foreignKeyName: "projections_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_carteira_clients";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "projections_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_client_health";
+            referencedColumns: ["client_id"];
+          },
+          {
+            foreignKeyName: "projections_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_client_metrics";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       v_quality_scores: {
         Row: {
           client_id: string | null;
@@ -4128,6 +4381,8 @@ export type Database = {
     };
     Functions: {
       calc_utility_score_pct: { Args: { caption: string }; Returns: number };
+      can_read_client: { Args: { p_client_id: string }; Returns: boolean };
+      can_write_client: { Args: { p_client_id: string }; Returns: boolean };
       compute_avatar_alignment: {
         Args: { p_audience_id: string; p_client_id: string };
         Returns: {
@@ -4166,6 +4421,9 @@ export type Database = {
           table_name: string;
         }[];
       };
+      has_workspace_access: { Args: never; Returns: boolean };
+      is_owner: { Args: never; Returns: boolean };
+      is_staff: { Args: never; Returns: boolean };
       metric_has_negative_slope: {
         Args: {
           p_client_id: string;
@@ -4190,7 +4448,9 @@ export type Database = {
         | "follower_churn_high"
         | "polemic_score_high"
         | "boost_opportunity"
-        | "budget_pace";
+        | "budget_pace"
+        | "data_outdated";
+      app_role: "owner" | "gestor" | "cliente";
       asset_status: "active" | "paused" | "archived" | "draft" | "under_review";
       calibration_method:
         | "percentile_relative"
@@ -4230,6 +4490,43 @@ export type Database = {
         | "ga4_api"
         | "manual_input";
       semaphore_color: "verde" | "ambar" | "vermelho";
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
+  };
+  public: {
+    Tables: {
+      [_ in never]: never;
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      show_limit: { Args: never; Returns: number };
+      show_trgm: { Args: { "": string }; Returns: string[] };
+    };
+    Enums: {
+      alert_action_variant: "primary" | "secondary" | "danger";
+      alert_severity: "critical" | "warning" | "info";
+      alignment_color: "green" | "amber" | "red";
+      campaign_objective:
+        | "OUTREACH"
+        | "TRAFFIC"
+        | "ENGAGEMENT"
+        | "LEADS"
+        | "APP_PROMOTION"
+        | "SALES";
+      campaign_status: "ACTIVE" | "PAUSED" | "ARCHIVED";
+      delta_direction: "up" | "down" | "neutral";
+      glow_color: "cyan" | "red" | "gold" | "none";
+      google_ads_kpi_status: "ok" | "warn" | "error";
+      health_status: "critical" | "warning" | "healthy";
+      meta_kpi_status: "green" | "amber" | "red" | "gray";
+      semaphore_color: "verde" | "ambar" | "vermelho";
+      source_level: "L0" | "L1" | "L2";
+      status_variant: "ok" | "warn" | "neutral";
+      trend_color: "cyan" | "red" | "gold";
     };
     CompositeTypes: {
       [_ in never]: never;
@@ -4370,7 +4667,9 @@ export const Constants = {
         "polemic_score_high",
         "boost_opportunity",
         "budget_pace",
+        "data_outdated",
       ],
+      app_role: ["owner", "gestor", "cliente"],
       asset_status: ["active", "paused", "archived", "draft", "under_review"],
       calibration_method: [
         "percentile_relative",
@@ -4421,6 +4720,31 @@ export const Constants = {
         "manual_input",
       ],
       semaphore_color: ["verde", "ambar", "vermelho"],
+    },
+  },
+  public: {
+    Enums: {
+      alert_action_variant: ["primary", "secondary", "danger"],
+      alert_severity: ["critical", "warning", "info"],
+      alignment_color: ["green", "amber", "red"],
+      campaign_objective: [
+        "OUTREACH",
+        "TRAFFIC",
+        "ENGAGEMENT",
+        "LEADS",
+        "APP_PROMOTION",
+        "SALES",
+      ],
+      campaign_status: ["ACTIVE", "PAUSED", "ARCHIVED"],
+      delta_direction: ["up", "down", "neutral"],
+      glow_color: ["cyan", "red", "gold", "none"],
+      google_ads_kpi_status: ["ok", "warn", "error"],
+      health_status: ["critical", "warning", "healthy"],
+      meta_kpi_status: ["green", "amber", "red", "gray"],
+      semaphore_color: ["verde", "ambar", "vermelho"],
+      source_level: ["L0", "L1", "L2"],
+      status_variant: ["ok", "warn", "neutral"],
+      trend_color: ["cyan", "red", "gold"],
     },
   },
 } as const;

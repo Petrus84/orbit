@@ -3,6 +3,12 @@
  * ClientCard — Refatoração 15/08/2026 + Integração Snapshot 04/09/2026
  * ============================================================================
  *
+ * v2.1.0 (13/10/2026 — NULL ≠ 0):
+ * - 🐛 CORRIGIDO: engagement_real e follower_balance nulos apareciam como
+ *   "0.0%" / "+0". formatPercent/formatFollowerBalance agora aceitam null e
+ *   devolvem '—' (mesma regra que o CTR já tinha). Zero real continua "0.0%".
+ * - Requer ClientMetrics com campos `number | null` (ver PATCHES.md).
+ *
  * v2.0.1 (integração snapshot — 04/09/2026):
  * - ✅ MANTIDO: CSS Module, Semaphore, Router, Image, MetricCol
  * - ✅ NOVO: Props opcionais healthStatus, snapshotCount, lastSnapshotDate
@@ -27,53 +33,59 @@
  * ============================================================================
  */
 
-import React from 'react'
-import { useRouter } from 'next/navigation'
-import Image from 'next/image'
-import Semaphore, { STATUS_LABELS } from './Semaphore'
-import type { SemaphoreStatus } from './Semaphore'
-import type { Client, ClientHealthStatus } from '@/types/client'
-import styles from './ClientCard.module.css'
+import React from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import Semaphore, { STATUS_LABELS } from "./Semaphore";
+import type { SemaphoreStatus } from "./Semaphore";
+import type { Client, ClientHealthStatus } from "@/types/client";
+import styles from "./ClientCard.module.css";
 
 export interface ClientCardProps {
-  client: Client
-  healthStatus?: ClientHealthStatus
-  snapshotCount?: number
-  lastSnapshotDate?: string | null
+  client: Client;
+  healthStatus?: ClientHealthStatus;
+  snapshotCount?: number;
+  lastSnapshotDate?: string | null;
 }
 
-function formatFollowerBalance(value: number): string {
-  const sign = value >= 0 ? '+' : ''
+// NULL = ausência de dado ('—'). 0 = métrica zerada, dado real ('0.0%' / '+0').
+// Nunca colapsar um no outro.
+const EMPTY_METRIC = "—";
+
+function formatFollowerBalance(value: number | null | undefined): string {
+  if (value == null) return EMPTY_METRIC;
+  const sign = value >= 0 ? "+" : "";
   if (Math.abs(value) >= 1000) {
-    return `${sign}${(value / 1000).toFixed(1)}k`
+    return `${sign}${(value / 1000).toFixed(1)}k`;
   }
-  return `${sign}${value}`
+  return `${sign}${value}`;
 }
 
-function formatPercent(value: number): string {
-  return `${value.toFixed(1)}%`
+function formatPercent(value: number | null | undefined): string {
+  if (value == null) return EMPTY_METRIC;
+  return `${value.toFixed(1)}%`;
 }
 
 function formatDate(dateString: string | null | undefined): string {
-  if (!dateString) return '--'
+  if (!dateString) return "--";
   try {
-    const date = new Date(dateString)
-    return date.toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    })
+    const date = new Date(dateString);
+    return date.toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
   } catch {
-    return '--'
+    return "--";
   }
 }
 
 const STATUS_BADGE_CLASS: Record<ClientHealthStatus, string> = {
-  healthy: styles.statusHealthy ?? '',
-  warning: styles.statusWarning ?? '',
-  critical: styles.statusCritical ?? '',
-  unknown: styles.statusUnknown ?? '',
-}
+  healthy: styles.statusHealthy ?? "",
+  warning: styles.statusWarning ?? "",
+  critical: styles.statusCritical ?? "",
+  unknown: styles.statusUnknown ?? "",
+};
 
 // ✅ FIX (SSOT — 11/09/2026): `.accentHealthy/.accentWarning/.accentCritical/
 // .accentUnknown` já existiam em ClientCard.module.css (filete de 3px no
@@ -81,27 +93,36 @@ const STATUS_BADGE_CLASS: Record<ClientHealthStatus, string> = {
 // aplicadas aqui — CSS morto. Era a causa do card parecer monocromático
 // mesmo tendo os tokens de destaque prontos.
 const ACCENT_CLASS: Record<ClientHealthStatus, string> = {
-  healthy: styles.accentHealthy ?? '',
-  warning: styles.accentWarning ?? '',
-  critical: styles.accentCritical ?? '',
-  unknown: styles.accentUnknown ?? '',
-}
+  healthy: styles.accentHealthy ?? "",
+  warning: styles.accentWarning ?? "",
+  critical: styles.accentCritical ?? "",
+  unknown: styles.accentUnknown ?? "",
+};
 
 interface MetricColProps {
-  label: string
-  value: string
-  dimmed?: boolean
+  label: string;
+  value: string;
+  dimmed?: boolean;
 }
 
-function MetricCol({ label, value, dimmed }: MetricColProps): React.ReactElement {
+function MetricCol({
+  label,
+  value,
+  dimmed,
+}: MetricColProps): React.ReactElement {
   return (
     <div className={styles.metricCol}>
       <span className={styles.metricLabel}>{label}</span>
-      <span className={[styles.metricValue, dimmed ? styles.metricValueDimmed : ''].join(' ')}>
+      <span
+        className={[
+          styles.metricValue,
+          dimmed ? styles.metricValueDimmed : "",
+        ].join(" ")}
+      >
         {value}
       </span>
     </div>
-  )
+  );
 }
 
 export default function ClientCard({
@@ -110,21 +131,17 @@ export default function ClientCard({
   snapshotCount: propSnapshotCount,
   lastSnapshotDate: propLastSnapshotDate,
 }: ClientCardProps): React.ReactElement {
-  const router = useRouter()
+  const router = useRouter();
 
   // ✅ Fallbacks que priorizam as props e recorrem ao objeto client
-  const healthStatus: ClientHealthStatus = propHealthStatus ?? client.status ?? 'unknown'
-  const snapshotCount = propSnapshotCount ?? client.snapshotCount ?? 0
-  const lastSnapshotDate = propLastSnapshotDate ?? client.lastSnapshotDate ?? null
+  const healthStatus: ClientHealthStatus =
+    propHealthStatus ?? client.status ?? "unknown";
+  const snapshotCount = propSnapshotCount ?? client.snapshotCount ?? 0;
+  const lastSnapshotDate =
+    propLastSnapshotDate ?? client.lastSnapshotDate ?? null;
 
   // ✅ Cast seguro: healthStatus é ClientHealthStatus, que é compatível com SemaphoreStatus
-  const semaphoreStatus: SemaphoreStatus = healthStatus
-
-  // ✅ Regra estrita: NULL/undefined exibe '—', 0 exibe '0.0%'
-  const ctrDisplay =
-    client.metrics.ctr_link == null
-      ? '—'
-      : formatPercent(client.metrics.ctr_link)
+  const semaphoreStatus: SemaphoreStatus = healthStatus;
 
   return (
     <button
@@ -155,7 +172,9 @@ export default function ClientCard({
 
         <span className={styles.semaphoreWrap}>
           <Semaphore status={semaphoreStatus} showLabel={false} />
-          <span className={`${styles.statusBadge} ${STATUS_BADGE_CLASS[healthStatus]}`}>
+          <span
+            className={`${styles.statusBadge} ${STATUS_BADGE_CLASS[healthStatus]}`}
+          >
             {STATUS_LABELS[healthStatus]}
           </span>
         </span>
@@ -176,15 +195,25 @@ export default function ClientCard({
         <MetricCol
           label="Saldo seg."
           value={formatFollowerBalance(client.metrics.follower_balance)}
-          dimmed={client.metrics.follower_balance === 0}
+          dimmed={
+            client.metrics.follower_balance == null ||
+            client.metrics.follower_balance === 0
+          }
         />
         <MetricCol
           label="Eng. real"
           value={formatPercent(client.metrics.engagement_real)}
-          dimmed={client.metrics.engagement_real === 0}
+          dimmed={
+            client.metrics.engagement_real == null ||
+            client.metrics.engagement_real === 0
+          }
         />
-        <MetricCol label="CTR link" value={ctrDisplay} dimmed={client.metrics.ctr_link == null} />
+        <MetricCol
+          label="CTR link"
+          value={formatPercent(client.metrics.ctr_link)}
+          dimmed={client.metrics.ctr_link == null}
+        />
       </div>
     </button>
-  )
+  );
 }

@@ -237,6 +237,7 @@ async function fetchCollectedAt(
   if (hasSessions) {
     const { data, error } = await supabase
       .schema("orbit")
+      .schema("orbit")
       .from("ig_import_sessions")
       .select("id, processed_at")
       .eq("client_id", clientId)
@@ -276,6 +277,7 @@ async function fetchPostingProfile(
   end: string,
 ) {
   const { data, error } = await supabase
+    .schema("orbit")
     .schema("orbit")
     .from("ig_posts")
     .select("published_at, content_format, created_at, import_session")
@@ -486,6 +488,7 @@ export async function fetchInstagramOverview(
   const normalizedClientId = clientId?.trim();
   const { data: clientRow, error: clientError } = await supabase
     .schema("orbit")
+    .schema("orbit")
     .from("clients")
     .select("handle, benchmark_category, segment")
     .eq("id", normalizedClientId)
@@ -623,6 +626,7 @@ async function fetchBenchmarkCadence(
 
   const { data, error } = await supabase
     .schema("orbit")
+    .schema("orbit")
     .from("v_benchmark_cadence_by_segment")
     .select(
       "segment_category, content_format, period_start, period_end, window_days, benchmark_accounts_total, accounts_with_posts, posts_total, mean_posts_per_day, median_posts_per_day, p25_posts_per_day, p75_posts_per_day, " +
@@ -719,6 +723,7 @@ async function fetchKPIs(
 ): Promise<KPICardData[]> {
   const { data: orbitData, error: orbitError } = await supabase
     .schema("orbit")
+    .schema("orbit")
     .from("v_kpi_snapshots")
     .select("*")
     .eq("client_id", clientId)
@@ -772,6 +777,7 @@ async function fetchQualityScores(
 
   const { data: orbitRows, error: orbitError } = await supabase
     .schema("orbit")
+    .schema("orbit")
     .from("v_quality_scores")
     .select(
       "id, score_key, metric_name, score_value, status_text, status_variant, period_start, period_end, semaphore_key, ref_category, ref_source, ref_direction, ref_green_min, ref_green_max, ref_red_min, ref_red_max, ref_p50",
@@ -785,6 +791,13 @@ async function fetchQualityScores(
     console.error("[fetchQualityScores]", orbitError.message);
     return [];
   }
+  const ageDays = (d: unknown): number | null => {
+    if (typeof d !== "string") return null;
+    const timestamp = Date.parse(`${d.slice(0, 10)}T00:00:00Z`);
+    return Number.isNaN(timestamp)
+      ? null
+      : Math.max(0, Math.floor((Date.now() - timestamp) / 86_400_000));
+  };
 
   const num = (v: unknown): number | null =>
     v == null ? null : Number.isFinite(Number(v)) ? Number(v) : null;
@@ -804,6 +817,7 @@ async function fetchQualityScores(
     const [median, clientRes] = await Promise.all([
       fetchPolemicMedianInPeriod(clientId, start, end),
       supabase
+        .schema("orbit")
         .schema("orbit")
         .from("clients")
         .select("benchmark_category")
@@ -845,7 +859,6 @@ async function fetchQualityScores(
       : row.score_value != null
         ? toFiniteNumber(row.score_value)
         : null;
-
     const copy = buildScoreCopy({
       value: typeof value === "number" ? value : null,
       semaphore,
@@ -857,6 +870,7 @@ async function fetchQualityScores(
       redMin: num(row.ref_red_min),
       redMax: num(row.ref_red_max),
       p50: num(row.ref_p50),
+      dataAgeDays: ageDays(row.period_end),
     });
 
     return {
@@ -881,6 +895,7 @@ export async function fetchPostsByFormat(
   const byFormat = new Map<string, PostSummary[]>();
 
   const { data, error } = await supabase
+    .schema("orbit")
     .schema("orbit")
     .from("ig_posts")
     .select(
@@ -966,6 +981,7 @@ async function fetchInteractionsByFormat(
 
   const { data, error } = await supabase
     .schema("orbit")
+    .schema("orbit")
     .from("ig_posts")
     .select("content_format, likes, comments, shares, saves")
     .eq("client_id", clientId)
@@ -1016,6 +1032,7 @@ async function fetchFormatPerformance(
   end: string,
 ): Promise<FormatPerformanceRow[]> {
   const { data: orbitRows, error: orbitError } = await supabase
+    .schema("orbit")
     .schema("orbit")
     .from("v_format_performance")
     .select(
@@ -1071,6 +1088,7 @@ async function fetchSharesSummary(
   end: string,
 ): Promise<SharesSummary> {
   const { data, error } = await supabase
+    .schema("orbit")
     .schema("orbit")
     .from("ig_account_snapshots")
     .select("interactions_shares, period_start, period_end")
@@ -1134,6 +1152,7 @@ async function fetchAudienceSummary(
   const [audienceRes, accountRes] = await Promise.all([
     supabase
       .schema("orbit")
+      .schema("orbit")
       .from("ig_audience_snapshots")
       .select(
         "gender_female_pct, gender_male_pct, gender_other_pct, top_cities, period_start, period_end",
@@ -1146,6 +1165,7 @@ async function fetchAudienceSummary(
       .maybeSingle()
       .overrideTypes<AudienceRowRaw, { merge: false }>(),
     supabase
+      .schema("orbit")
       .schema("orbit")
       .from("ig_account_snapshots")
       .select("reach_followers_pct, profile_visits, link_clicks")
@@ -1225,6 +1245,7 @@ export async function fetchClientOnboarding(
 ): Promise<ClientOnboarding | null> {
   const { data, error } = await db
     .schema("orbit")
+    .schema("orbit")
     .from("client_onboarding")
     .select("*")
     .eq("client_id", clientId)
@@ -1267,8 +1288,9 @@ export async function fetchClientOnboarding(
  */
 async function fetchAlgoRiskScore(
   clientId: string,
+  db: OrbitDbClient = supabase,
 ): Promise<AlgoRiskScore | null> {
-  const { data, error } = await supabase
+  const { data, error } = await db
     .schema("orbit")
     .from("ig_posts")
     .select("published_at, likes, comments")
@@ -1285,7 +1307,12 @@ async function fetchAlgoRiskScore(
       { published_at: string; likes: number | null; comments: number | null }[]
     >();
 
-  if (error || !data || data.length === 0) return null;
+  if (error) {
+    throw new Error(
+      `[instagramOverviewRepository] falha ao buscar posts para algo_risk_score de ${clientId}: ${error.message}`,
+    );
+  }
+  if (!data || data.length === 0) return null;
 
   return computeAlgoRiskScore(
     data.map((row) => ({
@@ -1314,6 +1341,7 @@ async function fetchPolemicMedianInPeriod(
 ): Promise<number | null> {
   const { data, error } = await db
     .schema("orbit")
+    .schema("orbit")
     .from("ig_posts")
     .select("polemic_score_pct")
     .neq("content_format", "story")
@@ -1328,57 +1356,60 @@ async function fetchPolemicMedianInPeriod(
     console.error("[fetchPolemicMedianInPeriod]", error.message);
     return null;
   }
-  return medianOf((data ?? []).map((r) => Number(r.polemic_score_pct)));
-}
+
+  const values = (data ?? []).map((r) => Number(r.polemic_score_pct));
+  if (values.length < 5) return null;
+  return medianOf(values); // Retorno da mediana
+} // Chave de fechamento adicionada aqui
 
 export async function fetchSectorPositioning(
   clientId: string,
   start: string,
   end: string,
+  db: OrbitDbClient = supabase,
 ): Promise<SectorPositioning | null> {
-  const [onboarding, snapshot, algoRisk, polemicMedian] = await Promise.all([
-    fetchClientOnboarding(clientId),
-    fetchLatestEngagementScoreSnapshot(clientId, start, end),
-    fetchAlgoRiskScore(clientId),
-    fetchPolemicMedianInPeriod(clientId, start, end),
+  const [onboarding, snapshot, algoRisk] = await Promise.all([
+    fetchClientOnboarding(clientId, db),
+    fetchLatestEngagementScoreSnapshot(clientId, start, end, db),
+    fetchAlgoRiskScore(clientId, db),
   ]);
 
   if (!onboarding) return null;
 
   const category = mapSegmentToCategory(onboarding.setor_benchmark);
   const tier = mapFollowersToTier(onboarding.total_followers);
-
   const safeCategory = category ?? "all";
   const safeTier = tier ?? "all";
 
-  const polemicScore =
-    polemicMedian != null
-      ? await classifyMetric(
-          "polemic_score_pct",
-          polemicMedian,
-          safeCategory,
-          safeTier,
-        )
-      : null;
-
-  const [erReal, vps] = snapshot
+  const [erReal, vps, polemicScore] = snapshot
     ? await Promise.all([
         classifyMetric(
           "er_real_pct",
           snapshot.erRealPct,
           safeCategory,
           safeTier,
+          db,
         ),
-        // ✅ FIX (15/09/2026): snapshot.vpsPct agora é `number | null`
-        // (ver EngagementScoreSnapshot) — classifyMetric() exige number.
-        // Sem reach_followers_pct (ORB-DEBT-034) não existe classificação
-        // pra fazer, então pula a RPC em vez de mandar `null`/`0` fingindo
-        // ser dado real.
-        snapshot.vpsPct != null
-          ? classifyMetric("vps_pct", snapshot.vpsPct, safeCategory, safeTier)
+        snapshot.vpsPct !== null
+          ? classifyMetric(
+              "vps_pct",
+              snapshot.vpsPct,
+              safeCategory,
+              safeTier,
+              db,
+            )
+          : Promise.resolve(null),
+        snapshot.polemicScorePct !== null
+          ? classifyMetric(
+              "polemic_score_pct",
+              snapshot.polemicScorePct,
+              safeCategory,
+              safeTier,
+              db,
+            )
           : Promise.resolve(null),
       ])
-    : [null, null];
+    : [null, null, null];
 
   return {
     setorBenchmark: onboarding.setor_benchmark,
@@ -1390,7 +1421,7 @@ export async function fetchSectorPositioning(
     vps,
     vpsValue: snapshot?.vpsPct ?? null,
     polemicScore,
-    polemicScoreValue: polemicMedian,
+    polemicScoreValue: snapshot?.polemicScorePct ?? null,
     algoRisk,
     engagementPeriodNotes: onboarding.q1_engagement_period_notes,
     contentProxyNotes: onboarding.q2_content_proxy_notes,
@@ -1405,52 +1436,58 @@ export async function fetchSectorPositioning(
   };
 }
 
-// ── CASO G (engagement score) ─────────────────────────────────────────────
-
 async function fetchCriticalAlerts(
   clientId: string,
   start: string,
   end: string,
+  db: OrbitDbClient = supabase,
 ): Promise<CriticalAlertData[]> {
   const alerts: CriticalAlertData[] = [];
 
-  // CASO G — score de engajamento (depende de snapshot)
-  try {
-    const [snapshot, onboarding] = await Promise.all([
-      fetchLatestEngagementScoreSnapshot(clientId, start, end),
-      fetchClientOnboarding(clientId),
-    ]);
-    if (snapshot) {
+  const [engagementResult, algoResult] = await Promise.allSettled([
+    (async () => {
+      const [snapshot, onboarding] = await Promise.all([
+        fetchLatestEngagementScoreSnapshot(clientId, start, end, db),
+        fetchClientOnboarding(clientId, db),
+      ]);
+      if (!snapshot) return null;
+
       const category = mapSegmentToCategory(
         onboarding?.setor_benchmark ?? null,
       );
       const tier = mapFollowersToTier(onboarding?.total_followers ?? null);
-      const draft = await resolveEngagementScoreAlert(snapshot, category, tier);
-      if (draft.severity !== "info" && draft.severity !== "success") {
-        alerts.push(toCriticalAlert(draft));
-      }
-    }
-  } catch (err) {
-    console.error("[fetchCriticalAlerts] falha ao resolver CASO G:", err);
+      return resolveEngagementScoreAlert(snapshot, category, tier, db);
+    })(),
+    fetchAlgoRiskScore(clientId, db),
+  ]);
+
+  if (engagementResult.status === "rejected") {
+    console.error(
+      "[fetchCriticalAlerts] falha ao resolver alertas de engagement score:",
+      engagementResult.reason,
+    );
+  } else if (
+    engagementResult.value &&
+    engagementResult.value.severity !== "info" &&
+    engagementResult.value.severity !== "success"
+  ) {
+    alerts.push(toCriticalAlert(engagementResult.value));
   }
 
-  // Risco algorítmico — self-reference, independe de snapshot.
-  // Limiares 0,30 (aviso) / 0,50 (crítico) aprovados pelo Lobo em 19/09/2026.
-  try {
-    const algo = await fetchAlgoRiskScore(clientId);
-    if (algo) {
-      const draft = resolveAlgoRiskScoreAlert({
-        snapshotId: `algo_risk:${clientId}:${end}`,
-        algoRiskScore: algo.value,
-        nRecent: algo.recentWindowSize,
-      });
-      if (draft) alerts.push(toCriticalAlert(draft));
-    }
-  } catch (err) {
+  if (algoResult.status === "rejected") {
     console.error(
       "[fetchCriticalAlerts] falha ao resolver algo_risk_score:",
-      err,
+      algoResult.reason,
     );
+  } else if (algoResult.value) {
+    const draft = resolveAlgoRiskScoreAlert({
+      snapshotId: `algo_risk:${clientId}:${end}`,
+      algoRiskScore: algoResult.value.value,
+      nRecent: algoResult.value.recentWindowSize,
+      recentMedian: algoResult.value.recentMedian,
+      baselineMedian: algoResult.value.baselineMedian,
+    });
+    if (draft) alerts.push(toCriticalAlert(draft));
   }
 
   return alerts;
@@ -1468,8 +1505,12 @@ async function fetchTotalFollowers(
     .maybeSingle()
     .overrideTypes<{ total_followers: number | null }, { merge: false }>();
 
-  if (error || !data) return null;
-  return data.total_followers ?? null;
+  if (error) {
+    throw new Error(
+      `[instagramOverviewRepository] falha ao buscar total_followers de ${clientId}: ${error.message}`,
+    );
+  }
+  return data?.total_followers ?? null;
 }
 
 export async function fetchLatestEngagementScoreSnapshot(
@@ -1480,6 +1521,7 @@ export async function fetchLatestEngagementScoreSnapshot(
 ): Promise<EngagementScoreSnapshot | null> {
   const [{ data, error }, totalFollowers, polemicMedian] = await Promise.all([
     db
+      .schema("orbit")
       .schema("orbit")
       .from("ig_account_snapshots")
       .select(
@@ -1512,17 +1554,6 @@ export async function fetchLatestEngagementScoreSnapshot(
     reach_followers_pct,
   } = data;
 
-  // ✅ FIX (v8.2 §1.4 — VPS C-02, gap #7 do doc): a fórmula anterior era
-  // reach_total / totalFollowers * 100 — isso é "alcance / seguidores",
-  // não VPS. Dá 111% quando reach passa da base de seguidores num
-  // período agregado (exatamente o card "Alcance acumulado na base em
-  // 111,2%" que aparece hardcoded como aviso separado na tela, prova de
-  // que essa métrica errada já tinha vazado pra outro lugar da UI).
-  //
-  // VPS C-02 real: (reach × reach_followers_pct/100) / followers × 100.
-  // "Só classificar se reach_followers_pct ≠ null" (doc) — sem esse dado
-  // não existe VPS pra esse snapshot, não cai pra a fórmula errada como
-  // fallback.
   const vpsPct =
     reach_total != null &&
     reach_followers_pct != null &&
@@ -1535,9 +1566,6 @@ export async function fetchLatestEngagementScoreSnapshot(
         ) / 10000
       : null;
 
-  // Só ER Real é requisito do snapshot. utility_score_pct e a polêmica
-  // (mediana por post) nulos seguem como `null` no contrato e não bloqueiam
-  // as outras métricas (gap de código de decisions.md, 2026-10-05).
   if (er_real_pct == null) {
     return null;
   }

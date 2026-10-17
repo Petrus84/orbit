@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-10-11T01:10:17.513Z",
+  "gerado_em": "2026-10-16T17:14:29.336Z",
   "kpis": [
     {
       "kpi_id": "followers_net_balance",
@@ -162,7 +162,7 @@
       "regra_calculo_vigente": "polemic_score_pct = (comentarios / curtidas) * 100",
       "regra_recusada": "ALERTA SE > 20%",
       "writer_declarado": "resolveEngagementScoreAlert ramo polemic",
-      "writer_check": "chamado em: C:\\Projetos\\orbit-dashboard\\src\\actions\\syncClientAlerts.ts, C:\\Projetos\\orbit-dashboard\\src\\lib\\repositories\\instagramOverviewRepository.ts",
+      "writer_check": "chamado em: C:\\Projetos\\orbit-dashboard\\src\\actions\\syncClientAlerts.ts, C:\\Projetos\\orbit-dashboard\\src\\hooks\\useSyncClientAlerts.ts, C:\\Projetos\\orbit-dashboard\\src\\lib\\repositories\\instagramOverviewRepository.ts",
       "binding_check": "possível match de coluna: polemic_score_pct, curtidas"
     },
     {

@@ -3,6 +3,7 @@
    Content Contract v1.5.1 + textos de cliente (06/09/2026)
    Patch 15/09/2026: fix TS2345 (formatPtBr(vpsPct) sem guarda de null) +
     P0b (template cta_rate_pct) — ver ANALISE_CONVERGENTE_ORBIT.md
+   Patch 13/10/2026: + resolvePolemicAlert() e resolveStalenessAlert()
 
    REGRA DE OURO: nenhuma função aqui reimplementa threshold em JS.
    A régua vive em orbit.fn_classify_metric (Postgres). Este arquivo
@@ -1857,6 +1858,148 @@ export async function resolveEngagementScoreAlert(
     metricName: "er_real_pct",
     metricValue: input.erRealPct,
     thresholdValue: null,
+  };
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Chaves de alerta (type + metric_name) — usadas pelo sync para auto-resolver */
+/* -------------------------------------------------------------------------- */
+
+export const POLEMIC_ALERT_TYPE = "polemic_score_high";
+export const POLEMIC_METRIC_NAME = "polemic_score_pct";
+
+export const STALENESS_ALERT_TYPE = "data_outdated";
+export const STALENESS_METRIC_NAME = "snapshot_age_days";
+
+/* -------------------------------------------------------------------------- */
+/*  Polêmica (discussão nos comentários)                                      */
+/* -------------------------------------------------------------------------- */
+
+export interface PolemicAlertInput {
+  snapshotId: string;
+  // Mediana por post no período (SSC-1). null = nenhum post com o campo.
+  polemicScorePct: number | null;
+}
+
+// Decisão de produto (ver voz no topo do arquivo: polêmica NÃO é incentivo e
+// NÃO é crise). Vermelho na régua do setor abre "warning". Se o produto quiser
+// que vermelho vire "critical" (para o contador "Alertas críticos" bater com o
+// card da Carteira), é esta constante — uma linha.
+const POLEMIC_RED_SEVERITY: AlertDraft["severity"] = "warning";
+
+/**
+ * Compara a polêmica com a régua do SETOR (fn_classify_metric via
+ * classifyMetric — REGRA DE OURO: nenhum threshold reimplementado em JS).
+ *
+ * Retorna:
+ *  - AlertDraft  → polêmica acima do recorte (semáforo vermelho)
+ *  - null        → saudável OU sem dado. Quem chama distingue os dois olhando
+ *                  para `input.polemicScorePct` (null = sem dado, não fechar
+ *                  alerta aberto; número = saudável, pode fechar).
+ */
+export async function resolvePolemicAlert(
+  input: PolemicAlertInput,
+  category?: string | null,
+  tier?: string | null,
+  db: typeof supabase = supabase,
+): Promise<AlertDraft | null> {
+  const polemicPct = input.polemicScorePct;
+  if (polemicPct == null) return null;
+
+  const polemic = await classifyMetric(
+    "polemic_score_pct",
+    polemicPct,
+    category ?? undefined,
+    tier ?? undefined,
+    db,
+  );
+
+  if (polemic.semaphore !== "vermelho") return null;
+
+  return {
+    type: POLEMIC_ALERT_TYPE,
+    severity: POLEMIC_RED_SEVERITY,
+    title: `${formatPtBr(polemicPct)}% dos seus posts têm gente discordando nos comentários — acima do normal`,
+    description: stripTranslation(polemic.statusText),
+    natureza: "tecnica",
+    probableCause:
+      "Há mais gente discordando nos comentários do que o recorte costuma ver. Pode ser conversa útil ou briga. Não é meta para subir.",
+    immediateAction:
+      "Leia os 20 comentários mais recentes. Se forem pergunta e opinião, mantenha o tom. Se forem ataque, feche a moderação desses posts.",
+    confidenceLevel: polemic.confidenceLevel,
+    dataSource: "real_snapshot",
+    thresholdSource: polemic.thresholdSource,
+    confidenceScore: polemic.confidenceScore,
+    ruleDeclaration: polemic.ruleDeclaration,
+    snapshotId: input.snapshotId,
+    metricName: POLEMIC_METRIC_NAME,
+    metricValue: polemicPct,
+    thresholdValue: null,
+  };
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Staleness (dado desatualizado)                                            */
+/* -------------------------------------------------------------------------- */
+
+export const STALENESS_WARNING_DAYS = 14;
+export const STALENESS_CRITICAL_DAYS = 30;
+
+function formatIsoDayBr(day: string): string {
+  return `${day.slice(8, 10)}/${day.slice(5, 7)}/${day.slice(0, 4)}`;
+}
+
+/**
+ * Idade do último snapshot em dias de calendário (UTC), relativa a `now`.
+ *  > 14 dias → warning · > 30 dias → critical · senão null.
+ *
+ * `lastSnapshotId` (opcional) vira o snapshotId do draft. Importante: o writer
+ * (alertsWriter.server.ts) só REABRE um alerta resolvido quando o snapshot_id
+ * muda; sem ele, um alerta fechado por auto-resolve nunca reabriria na próxima
+ * vez que a conta ficar parada.
+ *
+ * `lastSnapshotDate` null → null (sem como medir idade; não é "saudável" nem
+ * "desatualizado" — quem chama não deve auto-resolver nesse caso).
+ */
+export async function resolveStalenessAlert(
+  lastSnapshotDate: string | null,
+  now: Date = new Date(),
+  lastSnapshotId?: string | null,
+): Promise<AlertDraft | null> {
+  const lastDay = isoDay(lastSnapshotDate);
+  const today = isoDay(now.toISOString());
+  if (lastDay === null || today === null) return null;
+
+  const ageDays = dayDiff(lastDay, today);
+  if (ageDays <= STALENESS_WARNING_DAYS) return null;
+
+  const isCritical = ageDays > STALENESS_CRITICAL_DAYS;
+  const lastLabel = formatIsoDayBr(lastDay);
+
+  return {
+    type: STALENESS_ALERT_TYPE,
+    severity: isCritical ? "critical" : "warning",
+    title: isCritical
+      ? `Os dados desta conta estão parados há ${ageDays} dias — última coleta em ${lastLabel}`
+      : `Os dados desta conta não são atualizados há ${ageDays} dias — última coleta em ${lastLabel}`,
+    description: isCritical
+      ? `Passaram mais de ${STALENESS_CRITICAL_DAYS} dias desde a última coleta. Qualquer número desta conta descreve um período que já ficou para trás.`
+      : `Passaram mais de ${STALENESS_WARNING_DAYS} dias desde a última coleta. Os números ainda servem de referência, mas já não mostram a semana atual.`,
+    natureza: "tecnica",
+    probableCause:
+      "A coleta de dados desta conta não rodou no ritmo esperado. Pode ser exportação não enviada, permissão revogada ou conta desconectada — o número parado não diz qual.",
+    immediateAction: isCritical
+      ? "Rode uma nova coleta desta conta hoje e confirme que a permissão de acesso continua ativa."
+      : "Rode uma nova coleta desta conta nesta semana, antes de usar os números em decisão de verba.",
+    confidenceLevel: "L0",
+    dataSource: "real_snapshot",
+    metricName: STALENESS_METRIC_NAME,
+    metricValue: ageDays,
+    thresholdValue: isCritical
+      ? STALENESS_CRITICAL_DAYS
+      : STALENESS_WARNING_DAYS,
+    // exactOptionalPropertyTypes: omitir a chave em vez de atribuir undefined.
+    ...(lastSnapshotId ? { snapshotId: lastSnapshotId } : {}),
   };
 }
 

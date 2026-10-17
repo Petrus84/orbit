@@ -7,7 +7,7 @@
 | 1 | **KCR** | **Finalizado** — núcleo e fichas existem | 34 ids no registry antigo; status de verificação? x `nao_verificado` y `verificado`; emitido `KpiContract[]` |
 | 2 | **OGP** | **Finalizado** — origem mapeada, lote não auditado por ficha | Protocolo E1/E2 27/09; JSON tem likes/comments/plays/ts/saves/reach; |
 | 3 | **RWP** | **Fiinalizao** — Overview já pinta 3 scores | 
-| 4 | **SSC** | **Não começou** | Tela ≠ oracle do mesmo token |
+| 4 | **SSC** | **Em andamento** | Tela ≠ oracle do mesmo token |
 | 5 | **3 camadas** | **Infra existe, gate não** | Zod mappers ok; não validam o Overview atual |
 
 Regra anti-salto: **gap na tela = nota no KCR, não ticket de UI.**

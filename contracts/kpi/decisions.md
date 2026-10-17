@@ -110,3 +110,35 @@ não são o oráculo. 20% recusado.
 cadencia_posts vigente = postsPerWeek sobre janela efetiva
 (header ∩ coleta), n ≥ 3.
 postsPerWeekActive = informativo, não é o oráculo.
+
+## VAL-1 — fechado
+
+2026-10-14: promessa principal = previsão (simulação de alcance) com benchmark horizontal como régua. Insights compara a conta com ela mesma; o ORBIT compara com o segmento.
+reach_simulation é autorreferente (ref_thresholds metric='reach', category='self_reference', n 14-17, conf 0,30). Não existe benchmark de alcance por setor. Não escrever "benchmark do setor" para alcance.
+
+## VAL-2 — fechado
+
+2026-10-14: cobertura de benchmark verificada em ref_thresholds. polêmica v2 nos 5 segmentos (conf 0,74-0,88); engajamento público e play/view são v1 legado e saem rotulados "referência v1". ER Real e VPS sem benchmark de mercado (n=0): não vão a público.
+Régua de afirmação (benchmark_cell_resolution): n>=100 e conf>=0,70 = "comparado ao segmento"; 30<=n<100 = "referência preliminar"; abaixo disso, não comparar.
+
+## VAL-3 — fechado
+
+2026-10-14: polêmica = mediana por post de comments/likes*100; n<5 retorna null; sem fallback para snapshot; 20% fixo recusado. A ficha polemic_score_pct já guarda "mediana_conta, não média_post"; o registry legado (34 fichas) ainda diz "substituir_20pct_por_RPC" e fica superado.
+Número de polêmica de cliente real não vai a público (A.C.: snapshot 25% sobre 4 curtidas contra 5 comentários em 144 curtidas nos 11 posts).
+
+## VAL-4 — aberto
+
+2026-10-14: infoprodutor_autoridade_personal tem 1 célula de polêmica (n=37) e n=35-38 em engajamento e play/view; o benchmark forte está em infoprodutor_educador_pago e autoridade_personal_branding_b2b. Decidir o mapa entre as categorias antes de prometer benchmark de infoprodutor.
+
+## VAL-5 — aberto
+
+2026-10-14: conversion_rate_pct existe em células de 4 dos 5 segmentos (não em monetizacao_nativa_plataforma), mas a origem não está documentada nos contracts. Sem fonte, a ficha conversion_rate_ref não passa a vigente e o número não é publicado.
+
+## VAL-6 — aberto
+
+2026-10-14: o motor do 160 projetado (faixa 84-263) do teste CP não está no repo nem no banco. Registrar de onde vem ou reconstruir a partir dos 16 reels.
+Contas de prova hoje: cpimportstore 18 posts (0,47/sem, 15/15 reels com play); eupetruchio84 11 posts (0,29/sem). Abaixo de 14 posts com reach não há simulação (self_reference n_min=14). A cadência do fundador é pré-requisito do plano de vendas.
+
+## Nota de higiene
+
+2026-10-14: contracts/kpi/registry.json do zip (34 fichas, formato legado status_doc2) não é o registry vigente; o vigente é o runtime-alpha.json (22 fichas, formato KpiContract). registry.proposed.json = 22 vigentes + 5 propostas de valor.

@@ -1,57 +1,61 @@
 "use server";
 
 // ============================================================================
-// src/actions/syncClientAlerts.ts  (v4.1.0)
+// src/actions/syncClientAlerts.ts (v5.0.1)
+//
+// v5.0.1: staleness lê a MESMA fonte do semáforo da Carteira
+//   (orbit.v_client_health.last_updated); ig_account_snapshots só entra como
+//   fallback de data e como snapshot_id (necessário para reabrir alertas).
+//   Polêmica depende de fetchPolemicMedianInPeriod usar o oráculo SSC-1
+//   (n >= 5, likes > 0) — ver PATCHES.md §C.
+//
+// Mudanças (v5.0.0 — Opção B, escopo completo):
+// 1) Passa a avaliar TRÊS fontes de alerta: Engajamento, Polêmica e
+//    Staleness (dado desatualizado). Antes só o Engajamento era avaliado, e a
+//    Carteira (v_client_health) pintava "Crítico" sem nenhum alerta no banco.
+// 2) Todos os drafts são acumulados e deduplicados por chave
+//    (type + metricName) antes de ir para upsertAlertsBatch — o resolver de
+//    Engajamento também pode devolver um draft de polêmica, e o writer só
+//    aceita uma linha por chave.
+// 3) Auto-resolve: chave "saudável" (métrica presente e sem alerta) fecha o
+//    alerta aberto da mesma chave. Métrica AUSENTE nunca fecha alerta —
+//    ausência de dado não é saúde.
 //
 // Mudanças (v4.1.0 - Fechamento SSC-1/SSC-2):
-// 1) REMOVIDO HARDCODE DE 90 DIAS: O sincronizador agora aceita startIso e endIso
-//    da UI. Isso garante que o cálculo de Polêmica (mediana) nos alertas
-//    seja exatamente igual ao do Card de Qualidade na mesma janela.
+// - Aceita startIso/endIso da UI (sem hardcode de 90 dias) para que a
+//   mediana de Polêmica seja igual à do Card de Qualidade na mesma janela.
 //
-// Mudanças (Herdadas da v4.0.0):
-// - AUTORIZAÇÃO: exige sessão e RLS (policy authenticated_select_own_clients).
-// - LEITURA: usa client com cookies injetado.
-// - ESCRITA: upsertAlertsBatch (find-or-update, idempotente).
-//
-// GARANTIAS DE TIPAGEM:
-// - ✅ Zero `any` ou typecasts perigosos
-// - ✅ Todas as funções retornam tipos explícitos
-// - ✅ RLS integrado na camada Supabase
-// - ✅ Tratamento de erro robusto
+// Herdado da v4.0.0: sessão + RLS; leitura com client de cookies; escrita via
+// upsertAlertsBatch (find-or-update, idempotente).
 // ============================================================================
 
-import { createSupabaseServerClient } from "../lib/supabase/server";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 import {
   fetchLatestEngagementScoreSnapshot,
   fetchClientOnboarding,
-  type OrbitDbClient,
-} from "../lib/repositories/instagramOverviewRepository";
+} from "@/lib/repositories/instagramOverviewRepository";
+import type { OrbitDbClient } from "@/lib/repositories/instagramOverviewRepository";
 import {
   resolveEngagementScoreAlert,
+  resolvePolemicAlert,
+  resolveStalenessAlert,
   mapSegmentToCategory,
   mapFollowersToTier,
-  type AlertDraft,
-} from "../lib/repositories/contentContractEngine";
+  POLEMIC_ALERT_TYPE,
+  POLEMIC_METRIC_NAME,
+  STALENESS_ALERT_TYPE,
+  STALENESS_METRIC_NAME,
+} from "@/lib/repositories/contentContractEngine";
+import type { AlertDraft } from "@/lib/repositories/contentContractEngine";
 import {
   upsertAlertsBatch,
   resolveOpenAlertForKey,
-  type UpsertAlertResult,
-  type UpsertAction,
-} from "../lib/repositories/alertsWriter.server";
+} from "@/lib/repositories/alertsWriter.server";
+import type { AlertKey } from "@/lib/repositories/alertsWriter.server";
+import type { AlertSeverity } from "@/types/alert";
 
-// ============================================================================
-// CONFIGURAÇÕES
-// ============================================================================
-
-/** Se false, alertas com severity 'info' ou 'success' são auto-resolvidos */
 const PERSIST_INFO_ALERTS = false;
-
-/** Identificador do sistema para alertas auto-resolvidos */
 const AUTO_RESOLVED_BY = "system:syncClientAlerts";
-
-// ============================================================================
-// TIPOS
-// ============================================================================
 
 export interface SyncClientAlertsResult {
   success: boolean;
@@ -64,19 +68,6 @@ export interface SyncClientAlertsResult {
   error?: string | undefined;
 }
 
-interface ClientRecord {
-  id: string;
-  name: string;
-  handle: string;
-}
-
-// ============================================================================
-// FUNÇÕES AUXILIARES
-// ============================================================================
-
-/**
- * Cria um resultado de falha padronizado
- */
 const fail = (error: string): SyncClientAlertsResult => ({
   success: false,
   alertsGenerated: 0,
@@ -86,50 +77,80 @@ const fail = (error: string): SyncClientAlertsResult => ({
   error,
 });
 
-/**
- * Conta resultados por ação
- * ✅ Usa o tipo real UpsertAction importado de alertsWriter.server
- */
-const countByAction = (
-  results: UpsertAlertResult[],
-  action: UpsertAction,
-): number => results.filter((r) => r.action === action).length;
+const SEVERITY_RANK: Record<AlertSeverity, number> = {
+  success: 0,
+  info: 1,
+  warning: 2,
+  critical: 3,
+};
 
-// ============================================================================
-// AÇÃO PRINCIPAL
-// ============================================================================
+const keyOf = (type: string, metricName: string | null | undefined): string =>
+  `${type}|${metricName ?? ""}`;
 
-/**
- * Sincroniza alertas para um cliente dentro de uma janela de tempo específica.
- *
- * @param clientId - ID do cliente (será validado via RLS)
- * @param startIso - Data de início em ISO 8601 (ex: "2026-10-13T00:00:00Z")
- * @param endIso - Data de término em ISO 8601 (ex: "2026-10-13T23:59:59Z")
- * @returns Resultado da sincronização com contadores detalhados
- *
- * @throws Erro será capturado e retornado em `error` do resultado
- */
+// Último snapshot da conta, SEM filtro de janela: staleness mede "quanto tempo
+// faz desde a última coleta", não "o que existe na janela da tela".
+// ⚠️ Confirmar que bate com orbit.v_carteira_clients.last_snapshot_date (o que o
+// ClientCard exibe). Se a view usar outra coluna, troque aqui.
+type LatestSnapshotMeta = { id: string; period_end: string };
+
+async function fetchLatestSnapshotMeta(
+  clientId: string,
+  db: OrbitDbClient,
+): Promise<LatestSnapshotMeta | null> {
+  const { data, error } = await db
+    .schema("orbit")
+    .from("ig_account_snapshots")
+    .select("id, period_end")
+    .eq("client_id", clientId)
+    .order("period_end", { ascending: false })
+    .limit(1)
+    .maybeSingle()
+    .overrideTypes<LatestSnapshotMeta, { merge: false }>();
+
+  if (error) {
+    throw new Error(
+      `[Orquestrador] leitura do último snapshot falhou: ${error.message}`,
+    );
+  }
+  return data ?? null;
+}
+
+// Mesma fonte do badge da Carteira (v_client_health). Se a view não tiver
+// linha ou last_updated vier null, devolve null e o chamador usa o fallback.
+type HealthFreshnessRow = { last_updated: string | null };
+
+async function fetchHealthLastUpdated(
+  clientId: string,
+  db: OrbitDbClient,
+): Promise<string | null> {
+  const { data, error } = await db
+    .schema("orbit")
+    .from("v_client_health")
+    .select("last_updated")
+    .eq("client_id", clientId)
+    .maybeSingle()
+    .overrideTypes<HealthFreshnessRow, { merge: false }>();
+
+  if (error) {
+    throw new Error(
+      `[Orquestrador] leitura de v_client_health falhou: ${error.message}`,
+    );
+  }
+  return data?.last_updated ?? null;
+}
+
 export async function syncClientAlerts(
   clientId: string,
   startIso: string,
   endIso: string,
 ): Promise<SyncClientAlertsResult> {
   try {
-    // ========================================================================
-    // 1) AUTENTICAÇÃO E AUTORIZAÇÃO
-    // ========================================================================
-
     const db = await createSupabaseServerClient();
 
     const { data: auth } = await db.auth.getUser();
-    if (!auth.user) {
-      return fail("Não autenticado.");
-    }
+    if (!auth.user) return fail("Não autenticado.");
 
-    // ========================================================================
-    // 2) LEITURA DO CLIENTE (RLS ATIVA)
-    // ========================================================================
-
+    // RLS decide: se o usuário não é dono do cliente, volta null.
     const { data: client, error: clientErr } = await db
       .schema("orbit")
       .from("clients")
@@ -137,104 +158,148 @@ export async function syncClientAlerts(
       .eq("id", clientId)
       .maybeSingle();
 
-    if (clientErr) {
+    if (clientErr)
       throw new Error(
-        `[Orquestrador] Leitura do cliente falhou: ${clientErr.message}`,
+        `[Orquestrador] leitura do cliente falhou: ${clientErr.message}`,
       );
-    }
 
-    if (!client) {
-      return fail("Cliente não encontrado ou sem permissão.");
-    }
+    if (!client) return fail("Cliente não encontrado ou sem permissão.");
 
-    const typedClient: ClientRecord = client;
-
-    // ========================================================================
-    // 3) CAST DELIBERADO PARA LEITURA TIPADA
-    // ========================================================================
-
-    // O client do @supabase/ssr não é tipado com Database<'orbit'>;
-    // os leitores só usam .schema('orbit').from(...).
-    // Este é o único cast necessário e justificado.
     const readerDb = db as unknown as OrbitDbClient;
 
-    // ========================================================================
-    // 4) BUSCA DE DADOS DE ALERTA
-    // ========================================================================
+    const [snapshot, onboarding, latestSnapshot, healthLastUpdated] =
+      await Promise.all([
+        fetchLatestEngagementScoreSnapshot(
+          clientId,
+          startIso,
+          endIso,
+          readerDb,
+        ),
+        fetchClientOnboarding(clientId, readerDb),
+        fetchLatestSnapshotMeta(clientId, readerDb),
+        fetchHealthLastUpdated(clientId, readerDb),
+      ]);
 
-    const drafts: AlertDraft[] = [];
-    let autoResolved = 0;
+    // Todos os candidatos, antes da deduplicação.
+    const candidates: AlertDraft[] = [];
+    // Chaves cuja condição está comprovadamente saudável (métrica presente e
+    // resolver sem alerta). Só estas podem fechar um alerta aberto.
+    const healthyKeys = new Map<string, AlertKey>();
 
-    // Busca paralela: snapshot de engagement + dados de onboarding
-    const [snapshot, onboarding] = await Promise.all([
-      fetchLatestEngagementScoreSnapshot(clientId, startIso, endIso, readerDb),
-      fetchClientOnboarding(clientId, readerDb),
-    ]);
-
-    // ========================================================================
-    // 5) RESOLUÇÃO DE ALERTAS
-    // ========================================================================
-
+    // ── 1) Engajamento (e polêmica "normal" que ele já emite) ───────────────
     if (snapshot) {
-      // Mapeia contexto do cliente para o resolver
       const category = mapSegmentToCategory(
         onboarding?.setor_benchmark ?? null,
       );
       const tier = mapFollowersToTier(onboarding?.total_followers ?? null);
 
-      // Resolve o draft de engagement score
-      const draft = await resolveEngagementScoreAlert(
+      const engagementDraft = await resolveEngagementScoreAlert(
         snapshot,
         category,
         tier,
         readerDb,
       );
+      candidates.push(engagementDraft);
 
-      // Decide se persiste ou auto-resolve
+      // ── 2) Polêmica ─────────────────────────────────────────────────────
+      const polemicDraft = await resolvePolemicAlert(
+        {
+          snapshotId: snapshot.snapshotId,
+          polemicScorePct: snapshot.polemicScorePct,
+        },
+        category,
+        tier,
+        readerDb,
+      );
+      if (polemicDraft) {
+        candidates.push(polemicDraft);
+      } else if (snapshot.polemicScorePct != null) {
+        // número presente + sem alerta = saudável → pode fechar o aberto.
+        healthyKeys.set(keyOf(POLEMIC_ALERT_TYPE, POLEMIC_METRIC_NAME), {
+          type: POLEMIC_ALERT_TYPE,
+          metricName: POLEMIC_METRIC_NAME,
+        });
+      }
+    }
+
+    // ── 3) Staleness ────────────────────────────────────────────────────────
+    // Independe de haver snapshot na janela: conta parada é justamente o caso
+    // em que a janela da tela pode estar vazia.
+    const freshnessDate =
+      healthLastUpdated ?? latestSnapshot?.period_end ?? null;
+    const stalenessDraft = await resolveStalenessAlert(
+      freshnessDate,
+      new Date(),
+      latestSnapshot?.id ?? null,
+    );
+    if (stalenessDraft) {
+      candidates.push(stalenessDraft);
+    } else if (freshnessDate !== null) {
+      healthyKeys.set(keyOf(STALENESS_ALERT_TYPE, STALENESS_METRIC_NAME), {
+        type: STALENESS_ALERT_TYPE,
+        metricName: STALENESS_METRIC_NAME,
+      });
+    }
+
+    // ── Deduplicação por chave: fica o draft de maior severidade ───────────
+    const byKey = new Map<string, AlertDraft>();
+    for (const draft of candidates) {
+      const k = keyOf(draft.type, draft.metricName);
+      const current = byKey.get(k);
+      if (
+        !current ||
+        SEVERITY_RANK[draft.severity] > SEVERITY_RANK[current.severity]
+      ) {
+        byKey.set(k, draft);
+      }
+    }
+
+    const drafts: AlertDraft[] = [];
+    const resolveKeys = new Map<string, AlertKey>(healthyKeys);
+
+    for (const [k, draft] of byKey) {
       const persistable =
         PERSIST_INFO_ALERTS ||
         (draft.severity !== "info" && draft.severity !== "success");
 
       if (persistable) {
         drafts.push(draft);
+        resolveKeys.delete(k); // há alerta vigente nesta chave
       } else {
-        // Condição cleared: fecha o alerta aberto, se houver
-        autoResolved += await resolveOpenAlertForKey(
-          typedClient.id,
-          { type: draft.type, metricName: draft.metricName ?? null },
-          AUTO_RESOLVED_BY,
-        );
+        // draft informativo = condição deixou de valer → fecha o aberto.
+        resolveKeys.set(k, {
+          type: draft.type,
+          metricName: draft.metricName ?? null,
+        });
       }
     }
 
-    // ========================================================================
-    // 6) PERSISTÊNCIA (UPSERT IDEMPOTENTE)
-    // ========================================================================
+    let autoResolved = 0;
+    for (const key of resolveKeys.values()) {
+      autoResolved += await resolveOpenAlertForKey(
+        client.id,
+        key,
+        AUTO_RESOLVED_BY,
+      );
+    }
 
-    // ✅ Usa o tipo real importado de alertsWriter.server
-    const results: UpsertAlertResult[] = drafts.length
-      ? await upsertAlertsBatch(typedClient.id, drafts)
+    const results = drafts.length
+      ? await upsertAlertsBatch(client.id, drafts)
       : [];
 
-    // ========================================================================
-    // 7) CONTABILIZAÇÃO E RETORNO
-    // ========================================================================
-
-    // Contagem de cada ação conforme contrato real de UpsertAction
-    const inserted = countByAction(results, "inserted");
-    const updated = countByAction(results, "updated");
-    const reopened = countByAction(results, "reopened");
-    const skippedResolved = countByAction(results, "skipped_resolved");
-    const skippedTransient = countByAction(results, "skipped_transient");
+    const count = (a: string) => results.filter((r) => r.action === a).length;
 
     return {
       success: true,
-      alertsGenerated: inserted,
-      alertsUpdated: updated + reopened,
-      // ✅ Agrupa ambos os tipos "skipped" (resolvido + transitório)
-      alertsSkipped: skippedResolved + skippedTransient,
+      alertsGenerated: count("inserted"),
+      alertsUpdated: count("updated") + count("reopened"),
+      alertsSkipped:
+        results.length -
+        count("inserted") -
+        count("updated") -
+        count("reopened"),
       alertsAutoResolved: autoResolved,
-      clientHandle: typedClient.handle,
+      clientHandle: client.handle,
       message:
         results.length === 0 && autoResolved === 0
           ? "Nenhum alerta neste ciclo para a janela especificada."
@@ -245,7 +310,6 @@ export async function syncClientAlerts(
       `[Orquestrador] Falha ao sincronizar alertas para ${clientId}:`,
       error,
     );
-
     return fail(error instanceof Error ? error.message : "Erro desconhecido");
   }
 }
