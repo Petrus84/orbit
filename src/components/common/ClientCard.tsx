@@ -3,6 +3,11 @@
  * ClientCard — Refatoração 15/08/2026 + Integração Snapshot 04/09/2026
  * ============================================================================
  *
+ * v2.2.0 (17/10/2026 — formatação pt-BR + vocabulário único):
+ * - Saldo de seguidores passa por formatCompactPtBr ("1,7 mil", não "1.7k").
+ * - Labels das métricas via term() (lib/ui-labels) e "Último Snapshot" vira
+ *   "Dados até". Null continua '—' (regra v2.1.0 preservada).
+ *
  * v2.1.0 (13/10/2026 — NULL ≠ 0):
  * - 🐛 CORRIGIDO: engagement_real e follower_balance nulos apareciam como
  *   "0.0%" / "+0". formatPercent/formatFollowerBalance agora aceitam null e
@@ -39,6 +44,8 @@ import Image from "next/image";
 import Semaphore, { STATUS_LABELS } from "./Semaphore";
 import type { SemaphoreStatus } from "./Semaphore";
 import type { Client, ClientHealthStatus } from "@/types/client";
+import { term } from "@/lib/ui-labels";
+import { formatCompactPtBr } from "@/lib/format";
 import styles from "./ClientCard.module.css";
 
 export interface ClientCardProps {
@@ -55,10 +62,7 @@ const EMPTY_METRIC = "—";
 function formatFollowerBalance(value: number | null | undefined): string {
   if (value == null) return EMPTY_METRIC;
   const sign = value >= 0 ? "+" : "";
-  if (Math.abs(value) >= 1000) {
-    return `${sign}${(value / 1000).toFixed(1)}k`;
-  }
-  return `${sign}${value}`;
+  return `${sign}${formatCompactPtBr(value)}`;
 }
 
 function formatPercent(value: number | null | undefined): string {
@@ -184,7 +188,7 @@ export default function ClientCard({
 
       {snapshotCount > 0 && lastSnapshotDate && (
         <div className={styles.snapshotInfo}>
-          <span className={styles.snapshotLabel}>Último Snapshot</span>
+          <span className={styles.snapshotLabel}>Dados até</span>
           <span className={styles.snapshotValue}>
             {formatDate(lastSnapshotDate)} · {snapshotCount}
           </span>
@@ -193,7 +197,7 @@ export default function ClientCard({
 
       <div className={styles.metricsRow}>
         <MetricCol
-          label="Saldo seg."
+          label={term("saldo_seguidores")}
           value={formatFollowerBalance(client.metrics.follower_balance)}
           dimmed={
             client.metrics.follower_balance == null ||
@@ -201,7 +205,7 @@ export default function ClientCard({
           }
         />
         <MetricCol
-          label="Eng. real"
+          label={term("er_real")}
           value={formatPercent(client.metrics.engagement_real)}
           dimmed={
             client.metrics.engagement_real == null ||
@@ -209,7 +213,7 @@ export default function ClientCard({
           }
         />
         <MetricCol
-          label="CTR link"
+          label={term("ctr_link")}
           value={formatPercent(client.metrics.ctr_link)}
           dimmed={client.metrics.ctr_link == null}
         />
