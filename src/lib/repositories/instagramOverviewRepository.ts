@@ -1053,13 +1053,31 @@ async function fetchFormatPerformance(
     fetchInteractionsByFormat(clientId, start, end),
   ]);
 
+  const headerStart = start.slice(0, 10);
+  const headerEnd = end.slice(0, 10);
+
   return (orbitRows ?? []).map((row) => {
     const label = String(row.format_name ?? "Outros");
     const inter = interactionsByFormat.get(label);
+    const detail = postsByFormat.get(label) ?? [];
+
+    // v_format_performance agrega TODO o histórico do formato: period_start /
+    // period_end são o 1º e o último post, não o header. Então post_count e
+    // trend_label só valem para o header quando esse histórico inteiro cabe
+    // nele. Fora disso a contagem vem de ig_posts no header (mesma fonte de
+    // interações e Insights) e a tendência não é exibida (sem inventar regra).
+    const viewStart = String(row.period_start ?? "").slice(0, 10);
+    const viewEnd = String(row.period_end ?? "").slice(0, 10);
+    const trendInHeader =
+      viewStart !== "" &&
+      viewEnd !== "" &&
+      viewStart >= headerStart &&
+      viewEnd <= headerEnd;
+
     return {
       id: String(row.id),
       format: label,
-      posts: toFiniteNumber(row.post_count),
+      posts: detail.length,
       shares: toFiniteNumber(row.share_count),
       // RWP-5: o que a tabela mostra. null = sem dado (a tela exibe "—").
       // `shares` acima segue vindo da view (COALESCE(sum,0): null vira 0) e
@@ -1075,9 +1093,13 @@ async function fetchFormatPerformance(
       // pra um dos 4 estados reais. Trocado de 'Estável'/'gold' (mentira por
       // omissão: parecia dado calculado) para um texto que declara a
       // ausência, igual ao resto do app faz em casos de dado faltante.
-      trendLabel: String(row.trend_label ?? "Sem tendência calculada"),
-      trendColor: (row.trend_color as GlowColor) ?? "none",
-      postsDetail: postsByFormat.get(label) ?? [],
+      trendLabel: trendInHeader
+        ? String(row.trend_label ?? "Sem tendência calculada")
+        : "Sem tendência no período",
+      trendColor: trendInHeader
+        ? ((row.trend_color as GlowColor) ?? "none")
+        : "none",
+      postsDetail: detail,
     };
   });
 }
