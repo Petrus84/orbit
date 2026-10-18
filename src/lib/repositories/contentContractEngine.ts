@@ -41,6 +41,8 @@ import type {
 } from "@/types/orbit";
 
 import { supabase } from "@/lib/supabase";
+import { AUSENCIA } from "@/lib/ui-labels";
+import { formatPtBr } from "@/lib/format";
 
 export interface AlertContractFields {
   natureza: AlertNatureza;
@@ -532,10 +534,8 @@ export function computeAlgoRiskScore(
 /* -------------------------------------------------------------------------- */
 /*  Utilitários de tradução numérica                                          */
 /* -------------------------------------------------------------------------- */
-
-function formatPtBr(value: number, decimals: number = 1): string {
-  return value.toFixed(decimals).replace(".", ",");
-}
+// formatPtBr() agora vive em lib/format.ts (fonte única — ver cabeçalho do
+// arquivo). Mantida aqui só a documentação do helper específico de VPS:
 
 // ✅ FIX (15/09/2026, TS2345 linhas 1132/1152): helper dedicado para
 // formatar o trecho de VPS num título/descrição quando o valor pode ser
@@ -546,7 +546,7 @@ function formatPtBr(value: number, decimals: number = 1): string {
 // ausência.
 function formatVpsSegment(vpsPct: number | null): string {
   if (vpsPct == null) {
-    return "alcance na base indisponível (reach_followers_pct não ingerido — ver ORB-DEBT-034)";
+    return AUSENCIA.vps;
   }
   return `${formatPtBr(vpsPct)}% dos seguidores viram`;
 }
@@ -725,7 +725,7 @@ function buildTechnicalErrorText(metricName: string): string {
 // produto que de fato é).
 function buildNoMarketRecortText(metricName: string): string {
   void metricName;
-  return "Sem comparação de mercado.";
+  return AUSENCIA.sem_causa;
 }
 
 function guardOutOfRangePercentMetric(
@@ -761,8 +761,7 @@ function buildLowConfidenceCard(
   if (confidenceScore === null) {
     return {
       title: `${capitalize(label)} em ${formatPtBr(value, 2)}% — sem referência para o seu negócio`,
-      probableCause:
-        "Não há régua calibrada para o seu tipo de conta. Confira o setor marcado no onboarding.",
+      probableCause: AUSENCIA.regua,
       immediateAction:
         "Acompanhe este número na sua própria conta, semana a semana. Não mude oferta por ele agora.",
     };
@@ -813,7 +812,7 @@ export async function classifyMetric(
       confidenceLevel: "L2",
       thresholdSource: null,
       confidenceScore: null,
-      ruleDeclaration: "Sem régua de mercado calibrada para esta métrica.",
+      ruleDeclaration: AUSENCIA.regua_metrica,
       calibrationMethod: null,
       zeroInflated: null,
     };
@@ -1579,13 +1578,15 @@ export async function resolveEngagementScoreAlert(
       : Promise.resolve<ClassifiedMetric>({
           value: 0,
           semaphore: "neutro",
-          statusText:
-            "VPS indisponível: reach_followers_pct ainda não foi ingerido para esta conta (ver ORB-DEBT-034). O número não aparece até a ingestão ser corrigida — não é classificado com dado ausente.",
-          confidenceLevel: "L0",
+          statusText: AUSENCIA.vps,
+          // ✅ FIX (17/10/2026): estava "L0" ("Dado confirmado") para um
+          // valor que o próprio bloco acima trata como ausente — contradição
+          // direta com AUSENCIA.vps. Dado ausente é L2 ("Falta um dado para
+          // afirmar"), mesmo nível usado no bloco MARKET_RPC_METRICS acima.
+          confidenceLevel: "L2",
           thresholdSource: null,
           confidenceScore: null,
-          ruleDeclaration:
-            "Sem reach_followers_pct não é possível calcular VPS C-02.",
+          ruleDeclaration: AUSENCIA.regua_metrica,
           calibrationMethod: null,
           zeroInflated: null,
         }),

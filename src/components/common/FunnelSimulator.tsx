@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Slider from "./Slider";
 import type { SetorBenchmark } from "@/types/orbit";
 import { fonteEngajamentoDetalhada } from "@/lib/ui-labels";
+import { formatPtBr } from "@/lib/format";
 import styles from "./FunnelSimulator.module.css";
 
 interface SaturationOutput {
@@ -94,21 +95,21 @@ export default function FunnelSimulator({
       "Orbit — Cenário simulado do funil",
       setor ? `Setor: ${SETOR_LABELS[setor]}` : null,
       `Alcance simulado: ${state.alcance.toLocaleString("pt-BR")}`,
-      `CTR alvo da bio: ${state.ctrBio.toFixed(1)}%${
+      `CTR alvo da bio: ${formatPtBr(state.ctrBio, 1)}%${
         razaoEscala > 1
-          ? ` (aplicado na simulação: ${ctrEfetivo.toFixed(2)}%)`
+          ? ` (aplicado na simulação: ${formatPtBr(ctrEfetivo, 2)}%)`
           : ""
       }`,
-      `Taxa de conversão: ${state.taxaConv.toFixed(1)}%${
+      `Taxa de conversão: ${formatPtBr(state.taxaConv, 1)}%${
         razaoEscala > 1
-          ? ` (aplicado na simulação: ${convEfetivo.toFixed(2)}%)`
+          ? ` (aplicado na simulação: ${formatPtBr(convEfetivo, 2)}%)`
           : ""
       }`,
       `Ticket médio: R$ ${state.ticketMedio.toFixed(0)}`,
       `${fonteEngajamentoDetalhada(engajamentoFonte)}: ${engajamentoEfetivo}%`,
       conversaoNota ?? null,
       isSaturated
-        ? `⚠ Saturação: escala ${razaoEscala.toFixed(1)}x acima da bolha histórica — CTR e conversão acima já vêm degradados.`
+        ? `⚠ Saturação: escala ${formatPtBr(razaoEscala, 1)}x acima da bolha histórica — CTR e conversão acima já vêm degradados.`
         : null,
     ].filter((linha): linha is string => linha !== null);
 
@@ -188,9 +189,9 @@ export default function FunnelSimulator({
           />
           {razaoEscala > 1 && (
             <div className={styles.degradedHint}>
-              ↳ Aplicado na simulação: {ctrEfetivo.toFixed(2)}% — nesta escala,
-              parte do público alcançado é frio (nunca te seguiu), e público
-              frio visita/clica menos.
+              ↳ Aplicado na simulação: {formatPtBr(ctrEfetivo, 2)}% — nesta
+              escala, parte do público alcançado é frio (nunca te seguiu), e
+              público frio visita/clica menos.
             </div>
           )}
         </div>
@@ -208,8 +209,8 @@ export default function FunnelSimulator({
           />
           {razaoEscala > 1 && (
             <div className={styles.degradedHint}>
-              ↳ Aplicado na simulação: {convEfetivo.toFixed(2)}% — mesmo motivo:
-              quem chega frio demora mais pra confiar e comprar.
+              ↳ Aplicado na simulação: {formatPtBr(convEfetivo, 2)}% — mesmo
+              motivo: quem chega frio demora mais pra confiar e comprar.
             </div>
           )}
         </div>
@@ -231,7 +232,7 @@ export default function FunnelSimulator({
       {isSaturated && (
         <div className={styles.saturationAlert}>
           <strong>
-            Alcance {razaoEscala.toFixed(1)}x acima do que sua conta já
+            Alcance {formatPtBr(razaoEscala, 1)}x acima do que sua conta já
             entregou.
           </strong>{" "}
           Nessa faixa, o público extra é majoritariamente frio — por isso o CTR

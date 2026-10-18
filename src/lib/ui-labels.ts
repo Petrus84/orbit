@@ -45,6 +45,10 @@ export const TERMO: Record<string, { texto: string; ajuda?: string }> = {
     ajuda: "De cada 100 pessoas que viram, quantas clicaram.",
   },
   ctr_link: { texto: "Cliques no link da bio" },
+  frequencia: {
+    texto: "Frequência",
+    ajuda: "Quantas vezes, em média, a mesma pessoa viu o anúncio.",
+  },
   roas: {
     texto: "Retorno do anúncio",
     ajuda: "Para cada R$ 1 investido, quanto voltou em vendas.",

@@ -1,12 +1,13 @@
-import React from 'react';
+import React from "react";
+import { formatPtBr, formatCompactPtBr } from "@/lib/format";
 
-export type FlagLevel = 'L0' | 'L1' | 'L2';
+export type FlagLevel = "L0" | "L1" | "L2";
 
 export interface KPI {
   label: string;
   value: number | string;
   delta?: number;
-  trend?: 'up' | 'down' | 'neutral';
+  trend?: "up" | "down" | "neutral";
   flagLevel: FlagLevel;
   unit?: string;
   sparkline?: number[]; // series of values for the mini chart
@@ -18,25 +19,31 @@ interface KPICardProps {
 
 // ─── Flag badge ───────────────────────────────────────────────
 
-const FLAG_TOKENS: Record<FlagLevel, { bg: string; text: string; label: string }> = {
-  L0: { bg: 'bg-emerald-500/20', text: 'text-emerald-400', label: 'Medido' },
-  L1: { bg: 'bg-amber-500/20',   text: 'text-amber-400',   label: 'Estimado' },
-  L2: { bg: 'bg-red-500/20',     text: 'text-red-400',     label: 'Hipótese' },
+const FLAG_TOKENS: Record<
+  FlagLevel,
+  { bg: string; text: string; label: string }
+> = {
+  L0: { bg: "bg-emerald-500/20", text: "text-emerald-400", label: "Medido" },
+  L1: { bg: "bg-amber-500/20", text: "text-amber-400", label: "Estimado" },
+  L2: { bg: "bg-red-500/20", text: "text-red-400", label: "Hipótese" },
 };
 
 // ─── Delta arrow ──────────────────────────────────────────────
 
-const DELTA_TOKENS: Record<'up' | 'down' | 'neutral', { color: string; arrow: string }> = {
-  up:      { color: 'text-emerald-400', arrow: '↑' },
-  down:    { color: 'text-red-400',     arrow: '↓' },
-  neutral: { color: 'text-[var(--text-dim)]',    arrow: '→' },
+const DELTA_TOKENS: Record<
+  "up" | "down" | "neutral",
+  { color: string; arrow: string }
+> = {
+  up: { color: "text-emerald-400", arrow: "↑" },
+  down: { color: "text-red-400", arrow: "↓" },
+  neutral: { color: "text-[var(--text-dim)]", arrow: "→" },
 };
 
 // ─── Sparkline ────────────────────────────────────────────────
 
 interface SparklineProps {
   data: number[];
-  trend: 'up' | 'down' | 'neutral';
+  trend: "up" | "down" | "neutral";
 }
 
 function Sparkline({ data, trend }: SparklineProps): React.ReactElement | null {
@@ -54,10 +61,14 @@ function Sparkline({ data, trend }: SparklineProps): React.ReactElement | null {
       const y = H - ((v - min) / range) * H;
       return `${x.toFixed(1)},${y.toFixed(1)}`;
     })
-    .join(' ');
+    .join(" ");
 
   const strokeColor =
-    trend === 'up' ? 'var(--green)' : trend === 'down' ? 'var(--red)' : 'var(--text-dim)';
+    trend === "up"
+      ? "var(--green)"
+      : trend === "down"
+        ? "var(--red)"
+        : "var(--text-dim)";
 
   return (
     <svg
@@ -83,10 +94,8 @@ function Sparkline({ data, trend }: SparklineProps): React.ReactElement | null {
 // ─── Value formatter ──────────────────────────────────────────
 
 function formatValue(value: number | string): string {
-  if (typeof value === 'string') return value;
-  if (Math.abs(value) >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
-  if (Math.abs(value) >= 1_000) return `${(value / 1_000).toFixed(1)}k`;
-  return value.toLocaleString('pt-BR');
+  if (typeof value === "string") return value;
+  return formatCompactPtBr(value);
 }
 
 // ─── Component ────────────────────────────────────────────────
@@ -130,9 +139,10 @@ export default function KPICard({ kpi }: KPICardProps): React.ReactElement {
 
           {/* Delta */}
           {kpi.delta !== undefined && deltaTokens && (
-            <span className={`font-sans text-xs font-medium ${deltaTokens.color}`}>
-              {deltaTokens.arrow}{' '}
-              {Math.abs(kpi.delta).toFixed(1)}%{' '}
+            <span
+              className={`font-sans text-xs font-medium ${deltaTokens.color}`}
+            >
+              {deltaTokens.arrow} {formatPtBr(Math.abs(kpi.delta), 1)}%{" "}
               <span className="text-zinc-600">vs período anterior</span>
             </span>
           )}
@@ -140,7 +150,7 @@ export default function KPICard({ kpi }: KPICardProps): React.ReactElement {
 
         {/* Sparkline — só renderiza com série real; sem dado, sem gráfico fabricado */}
         {kpi.sparkline && kpi.sparkline.length >= 2 && (
-          <Sparkline data={kpi.sparkline} trend={kpi.trend ?? 'neutral'} />
+          <Sparkline data={kpi.sparkline} trend={kpi.trend ?? "neutral"} />
         )}
       </div>
     </div>

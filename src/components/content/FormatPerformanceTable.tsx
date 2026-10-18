@@ -5,6 +5,7 @@ import { StatusPill } from "@/components/common/StatusPill";
 import styles from "./FormatPerformanceTable.module.css";
 import { SEVERITY_TO_GLOW, type GlowColor } from "@/types/orbit";
 import type { FormatPerformanceRow, PostSummary } from "@/types/orbit";
+import { formatPtBr } from "@/lib/format";
 
 export interface FormatPerformanceTableProps {
   rows: FormatPerformanceRow[];
@@ -215,11 +216,13 @@ export function PostDetailRow({ post }: { post: PostSummary }) {
           className={styles.postPlayRatio}
           title="Plays / visualizações do reel"
         >
-          {`Play/View: ${post.playToViewRatio.toFixed(2)}`}
+          {`Play/View: ${formatPtBr(post.playToViewRatio, 2)}`}
         </span>
       )}
       <span className={hasScore ? styles.postScore : styles.postScoreMuted}>
-        {hasScore ? `Polêmica: ${post.polemicScorePct?.toFixed(1)}%` : "—"}
+        {hasScore && post.polemicScorePct != null
+          ? `Polêmica: ${formatPtBr(post.polemicScorePct, 1)}%`
+          : "—"}
       </span>
     </div>
   );

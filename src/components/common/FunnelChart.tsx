@@ -4,6 +4,7 @@ import React from "react";
 import FunnelStep from "./FunnelStep";
 import type { FunnelStepDataExtended, FunnelKind } from "@/types/orbit";
 import { ausenciaVendas, textoAusencia } from "@/lib/ui-labels";
+import { formatPtBr } from "@/lib/format";
 import styles from "./FunnelChart.module.css";
 
 export interface FunnelData {
@@ -86,7 +87,7 @@ export default function FunnelChart({
       dropoffPct: dropoffVisitas ?? undefined,
       dropoffLabel:
         dropoffVisitas != null
-          ? `↓ ${dropoffVisitas.toFixed(1)}% queda`
+          ? `↓ ${formatPtBr(dropoffVisitas, 1)}% queda`
           : undefined,
     },
     {
@@ -97,7 +98,7 @@ export default function FunnelChart({
       dropoffPct: dropoffCliques ?? undefined,
       dropoffLabel:
         dropoffCliques != null
-          ? `↓ ${dropoffCliques.toFixed(1)}% queda`
+          ? `↓ ${formatPtBr(dropoffCliques, 1)}% queda`
           : "sem dado no período",
     },
     {
@@ -109,7 +110,7 @@ export default function FunnelChart({
       dropoffPct: dropoffVendas ?? undefined,
       dropoffLabel:
         dropoffVendas != null
-          ? `↓ ${dropoffVendas.toFixed(1)}% queda`
+          ? `↓ ${formatPtBr(dropoffVendas, 1)}% queda`
           : (textoAusencia(ausenciaVendas(funnelType)) ??
             "sem dado no período"),
     },
@@ -117,7 +118,7 @@ export default function FunnelChart({
 
   const overallConv =
     data.alcance > 0 && data.vendas != null
-      ? ((data.vendas / data.alcance) * 100).toFixed(3)
+      ? formatPtBr((data.vendas / data.alcance) * 100, 3)
       : "—";
   const faturamentoEstimado =
     data.vendas != null ? data.vendas * data.ticketMedio : null;
