@@ -893,10 +893,11 @@ export interface IGOverviewLegacyData {
 export type ClientHealthStatus = "healthy" | "warning" | "critical" | "unknown";
 
 export interface ClientMetrics {
-  engagement_real: number;
-  ctr_link: number;
+  // null = sem medição. Nunca 0: a Carteira mostra "—" (régua única, 17/10/2026).
+  engagement_real: number | null;
+  ctr_link: number | null;
   follower_balance: number;
-  polemic_score_pct: number;
+  polemic_score_pct: number | null;
   follower_churn_pct: number;
   segment: {
     // ✅ PATCH (perícia enums 14/08): faltava 'non_binary' — orbit.gender_category
