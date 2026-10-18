@@ -169,6 +169,16 @@ function baseCopy(
   if (ref.direction === "lower_is_better" && ref.redMin !== null) {
     const limite = ref.redMin;
     if (semaphore === "verde") {
+      // Valor 0 = a maioria dos posts do período não recebeu comentários (no
+      // banco, polemic_score_pct = 0 só ocorre em post sem comentários). Isso é
+      // ausência de sinal: não é "dentro do padrão" nem classificação de setor.
+      if (value === 0) {
+        return {
+          text: "A maioria dos posts do período não recebeu comentários. Não é classificação de setor.",
+          action: null,
+          note,
+        };
+      }
       return {
         text: `Dentro do padrão ${escopo} (abaixo de ${fmt(limite)}%).`,
         action: null,
