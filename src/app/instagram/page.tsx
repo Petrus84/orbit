@@ -205,7 +205,16 @@ function InstagramOverviewLayout() {
 
                 {/* Painel de Resumo de Audiência */}
                 {data.audienceSummary && (
-                  <AudienceSummaryPanel summary={data.audienceSummary} />
+                  <AudienceSummaryPanel
+                    summary={data.audienceSummary}
+                    // Injetando as expectativas do banco de dados:
+                    expectedGenderCategory={
+                      data.onboarding?.avatar_expected_gender
+                    }
+                    expectedGenderPct={
+                      data.onboarding?.avatar_expected_gender_pct
+                    }
+                  />
                 )}
               </div>
             )}

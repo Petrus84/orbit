@@ -58,14 +58,22 @@
 
 .infoCard {
   padding: var(--space-3);
-  background: linear-gradient(135deg, rgba(0, 255, 255, 0.08) 0%, rgba(0, 255, 255, 0.04) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 255, 0.08) 0%,
+    rgba(0, 255, 255, 0.04) 100%
+  );
   border: 1px solid rgba(0, 255, 255, 0.15);
   border-radius: var(--r8);
   transition: all var(--transition-fast);
 }
 
 .infoCard:hover {
-  background: linear-gradient(135deg, rgba(0, 255, 255, 0.12) 0%, rgba(0, 255, 255, 0.08) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 255, 0.12) 0%,
+    rgba(0, 255, 255, 0.08) 100%
+  );
   border-color: rgba(0, 255, 255, 0.3);
 }
 
@@ -73,7 +81,9 @@
   font-family: var(--font);
   font-size: var(--font-size-xs);
   font-weight: 500;
-  color: var(--text-muted); /* FIX WCAG: era var(--t2), 3.21:1 sobre hover — falha AA. --text-muted já resolve para --t1 (8:1+) */
+  color: var(
+    --text-muted
+  ); /* FIX WCAG: era var(--t2), 3.21:1 sobre hover — falha AA. --text-muted já resolve para --t1 (8:1+) */
   text-transform: uppercase;
   letter-spacing: 0.03em;
   margin: 0 0 var(--space-2) 0;
@@ -137,7 +147,11 @@
 
 .metricCard {
   padding: var(--space-3);
-  background: linear-gradient(135deg, rgba(0, 255, 255, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 255, 0.05) 0%,
+    rgba(139, 92, 246, 0.05) 100%
+  );
   border: 1px solid var(--line);
   border-radius: var(--r8);
   text-align: center;
@@ -145,7 +159,11 @@
 }
 
 .metricCard:hover {
-  background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 255, 0.1) 0%,
+    rgba(139, 92, 246, 0.1) 100%
+  );
   border-color: rgba(0, 255, 255, 0.3);
   transform: translateY(-2px);
 }
@@ -154,7 +172,9 @@
   font-family: var(--font);
   font-size: var(--font-size-xs);
   font-weight: 500;
-  color: var(--text-muted); /* FIX WCAG: era var(--t2), 3.21:1 sobre hover — falha AA. --text-muted já resolve para --t1 (8:1+) */
+  color: var(
+    --text-muted
+  ); /* FIX WCAG: era var(--t2), 3.21:1 sobre hover — falha AA. --text-muted já resolve para --t1 (8:1+) */
   text-transform: uppercase;
   letter-spacing: 0.03em;
   margin: 0 0 var(--space-2) 0;
@@ -265,4 +285,22 @@
 .metricCard:focus-visible {
   outline: 2px solid var(--neon-cyan);
   outline-offset: 1px;
+}
+/* Referência em validação (comentários e alcance) */
+.refRange {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  color: var(--t1);
+  margin: var(--space-2) 0 0 0;
+  line-height: 1.5;
+}
+
+.refNote {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  color: var(--t1);
+  opacity: 0.75;
+  margin: var(--space-1) 0 0 0;
+  line-height: 1.5;
+  font-style: italic;
 }

@@ -76,6 +76,7 @@
 // ============================================================================
 
 import type { ReactNode } from "react";
+import type { Database } from "@/types/database.types";
 
 // ============================================================================
 // SEÇÃO 0: TIPOS CANÔNICOS COMPARTILHADOS
@@ -628,6 +629,14 @@ export interface IGOverviewData {
   cadence?: PostingCadence | null | undefined;
   mix?: FormatMix | null | undefined;
   benchmarkCadence?: BenchmarkCadence | null | undefined;
+  /** Meta de gênero do avatar (orbit.client_onboarding). null = sem onboarding. */
+  onboarding: OnboardingGenderExpectation | null;
+}
+
+/** Subconjunto de orbit.client_onboarding usado pelo gap de gênero (AudienceSummaryPanel). */
+export interface OnboardingGenderExpectation {
+  avatar_expected_gender: Database["orbit"]["Enums"]["gender_category"] | null;
+  avatar_expected_gender_pct: number | null;
 }
 
 export interface BenchmarkCadence {
@@ -833,6 +842,26 @@ export interface FunnelMetricsRow {
  * correspondente em ClientOnboarding, e erReal/vps/polemicScore usando
  * ClassifiedMetric (já existente) porque vêm de classifyMetric().
  */
+/** Referência empírica (run orbit_comments_v2, nao_verificado). Sem semáforo. */
+export interface CommentReferenceItem {
+  metric:
+    | "resposta_da_base"
+    | "views_por_seguidor"
+    | "intencao_nos_comentarios"
+    | "tom_dos_comentarios";
+  label: string;
+  unit: "%" | "pts";
+  /** null = número do cliente ainda não calculado (nunca 0). */
+  clientValue: number | null;
+  p25: number | null;
+  p50: number | null;
+  p75: number | null;
+  sampleCount: number | null;
+  /** Posição descritiva do cliente na régua; null sem valor. */
+  positionText: string | null;
+  note: string;
+}
+
 export interface SectorPositioning {
   setorBenchmark: SetorBenchmark | null;
   nicho: string | null;
@@ -848,6 +877,8 @@ export interface SectorPositioning {
   // benchmark de mercado). Tipo próprio, não ClassifiedMetric: não tem
   // semaphore verde/ambar/vermelho de mercado, nunca chama fn_classify_metric.
   algoRisk: AlgoRiskScore | null;
+  /** Régua nova em validação; opcional para não quebrar construtores antigos. */
+  commentReference?: CommentReferenceItem[];
   engagementPeriodNotes: string | null;
   contentProxyNotes: string | null;
   misalignmentNotes: string | null;

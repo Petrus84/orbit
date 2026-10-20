@@ -22,6 +22,10 @@
 
    polemic_score_pct na UI = "discussão nos comentários"
    (posts em que alguém discorda, não só curte). Não é incentivo a polêmica.
+   SSC-1: o valor é a MEDIANA por post de (comentários / curtidas × 100) —
+   nunca "% de posts". O texto ao cliente fala do post típico ("X comentários
+   para cada 100 curtidas") e não afirma discordância: o número não distingue
+   conversa útil de ataque.
    ========================================================================== */
 
 import type {
@@ -169,7 +173,7 @@ const ZERO_INFLATED_EVENT_NOUN: Record<string, string> = {
   er_real_pct:
     "ação de quem viu (curtida, comentário, salvamento ou compartilhamento)",
   vps_pct: "alcance dentro da própria base de seguidores",
-  polemic_score_pct: "discordância nos comentários",
+  polemic_score_pct: "comentário",
   utility_score_pct: "salvamento ou compartilhamento",
   cta_rate_pct: "pedido de compra",
   // ✅ NOVO (2026-09-18)
@@ -178,13 +182,20 @@ const ZERO_INFLATED_EVENT_NOUN: Record<string, string> = {
   play_to_view_ratio: "reprodução completa do reel",
 };
 
+// SSC-1: polemic_score_pct = mediana por post de comentários/curtidas × 100.
+// Traduzir como contagem do post típico — nunca como "% dos posts".
+function describePolemicTypicalPost(v: number): string {
+  return v === 0
+    ? "nenhum comentário no post típico do período"
+    : `${formatPtBr(v)} comentários para cada 100 curtidas no post típico do período`;
+}
+
 const METRIC_TRANSLATION_TEMPLATE: Record<string, (value: number) => string> = {
   er_real_pct: (v) =>
     `Traduzindo: de cada 100 pessoas que viram o post, ${formatPtBr(v)} pararam para curtir, comentar, salvar ou compartilhar.`,
   vps_pct: (v) =>
     `Traduzindo: de cada 100 seguidores que você tem hoje, ${formatPtBr(v)} viram esse post.`,
-  polemic_score_pct: (v) =>
-    `Traduzindo: em ${formatPtBr(v)}% dos posts, teve gente discordando nos comentários — não só curtindo.`,
+  polemic_score_pct: (v) => `Traduzindo: ${describePolemicTypicalPost(v)}.`,
   utility_score_pct: (v) =>
     `Traduzindo: ${formatPtBr(v)}% dos posts foram guardados ou repassados por alguém.`,
   // ✅ P0b: template adicionado. Sem ele, withTranslation() retornava só o
@@ -1684,24 +1695,32 @@ export async function resolveEngagementScoreAlert(
   }
 
   if (polemicPct != null && polemic.zeroInflated) {
-    const isWithinNormalRange =
-      polemic.semaphore !== "vermelho" &&
-      (polemic.confidenceScore === null || polemic.confidenceScore >= 0.75);
+    const typical = capitalize(describePolemicTypicalPost(polemicPct));
+    const isRed = polemic.semaphore === "vermelho";
+    // Confiança baixa enfraquece a afirmação; nunca a inverte. Antes, confiança
+    // < 0.75 com semáforo não vermelho caía no texto "acima do normal" (warning).
+    const isLowConfidence =
+      polemic.confidenceScore !== null && polemic.confidenceScore < 0.75;
+    const isWithinNormalRange = !isRed && !isLowConfidence;
 
     return {
       type: "polemic_score_high",
-      severity: isWithinNormalRange ? "info" : "warning",
-      title: isWithinNormalRange
-        ? `${formatPtBr(polemicPct)}% dos seus posts têm gente discordando nos comentários — isso é normal no seu segmento`
-        : `${formatPtBr(polemicPct)}% dos seus posts têm gente discordando nos comentários`,
+      severity: isRed ? "warning" : "info",
+      title: isRed
+        ? `${typical} — acima do normal do seu segmento`
+        : isWithinNormalRange
+          ? `${typical} — dentro do normal do seu segmento`
+          : `${typical} — a comparação com o seu segmento ainda é curta`,
       description: stripTranslation(polemic.statusText),
       natureza: "tecnica",
-      probableCause: isWithinNormalRange
-        ? "O seu número está na faixa de quem tem esse tipo de comentário — não é sinal de crise nem convite para criar briga."
-        : "Há mais gente discordando nos comentários do que o normal do seu segmento. Pode ser dúvida útil ou ataque — o número sozinho não diferencia.",
-      immediateAction: isWithinNormalRange
-        ? "Não mude o tom dos posts por este cartão. Releia em 30 dias, com mais posts publicados."
-        : "Leia os 20 comentários mais recentes. Se forem pergunta e opinião, mantenha o tom. Se forem ataque, feche a moderação desses posts.",
+      probableCause: isRed
+        ? `Há mais comentários por curtida do que o normal do seu segmento. Pode ser dúvida útil ou ataque — o número sozinho não diferencia.${isLowConfidence ? " A comparação neste recorte ainda tem poucas contas: trate como pista." : ""}`
+        : isWithinNormalRange
+          ? "O seu número está na faixa de quem tem esse tipo de comentário — não é sinal de crise nem convite para criar briga."
+          : "O número da conta é real; a base de comparação deste recorte é curta.",
+      immediateAction: isRed
+        ? "Leia os 20 comentários mais recentes. Se forem pergunta e opinião, mantenha o tom. Se forem ataque, feche a moderação desses posts."
+        : "Não mude o tom dos posts por este cartão. Releia em 30 dias, com mais posts publicados.",
       confidenceLevel: polemic.confidenceLevel,
       dataSource: "real_snapshot",
       thresholdSource: polemic.thresholdSource,
@@ -1718,11 +1737,11 @@ export async function resolveEngagementScoreAlert(
     return {
       type: "polemic_score_high",
       severity: "warning",
-      title: `${formatPtBr(polemicPct)}% dos seus posts têm gente discordando nos comentários — acima do normal`,
+      title: `${capitalize(describePolemicTypicalPost(polemicPct))} — acima do normal do seu segmento`,
       description: stripTranslation(polemic.statusText),
       natureza: "tecnica",
       probableCause:
-        "Há mais gente discordando nos comentários do que o recorte costuma ver. Pode ser conversa útil ou briga. Não é meta para subir.",
+        "Há mais comentários por curtida do que o recorte costuma ver. Pode ser conversa útil ou briga — o número sozinho não diferencia. Não é meta para subir.",
       immediateAction:
         "Leia os 20 comentários mais recentes. Se forem pergunta e opinião, mantenha o tom. Se forem ataque, feche a moderação desses posts.",
       confidenceLevel: polemic.confidenceLevel,
@@ -1920,11 +1939,11 @@ export async function resolvePolemicAlert(
   return {
     type: POLEMIC_ALERT_TYPE,
     severity: POLEMIC_RED_SEVERITY,
-    title: `${formatPtBr(polemicPct)}% dos seus posts têm gente discordando nos comentários — acima do normal`,
+    title: `${capitalize(describePolemicTypicalPost(polemicPct))} — acima do normal do seu segmento`,
     description: stripTranslation(polemic.statusText),
     natureza: "tecnica",
     probableCause:
-      "Há mais gente discordando nos comentários do que o recorte costuma ver. Pode ser conversa útil ou briga. Não é meta para subir.",
+      "Há mais comentários por curtida do que o recorte costuma ver. Pode ser conversa útil ou briga — o número sozinho não diferencia. Não é meta para subir.",
     immediateAction:
       "Leia os 20 comentários mais recentes. Se forem pergunta e opinião, mantenha o tom. Se forem ataque, feche a moderação desses posts.",
     confidenceLevel: polemic.confidenceLevel,

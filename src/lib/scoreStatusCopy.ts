@@ -51,6 +51,12 @@ export interface ScoreReference {
   redMin: number | null;
   redMax: number | null;
   p50: number | null;
+  /** metric_name da view (ex.: 'polemic_score_pct'). Opcional. */
+  metric?: string | null;
+  /** v_quality_scores.ref_dataset_id: de qual levantamento veio a régua. Opcional. */
+  datasetId?: string | null;
+  /** v_quality_scores.ref_validation_status (benchmark_runs). Opcional. */
+  validationStatus?: string | null;
   /** Dias entre hoje e o period_end do dado do card. Opcional. */
   dataAgeDays?: number | null;
 }
@@ -99,6 +105,26 @@ const NO_SECTOR_NOTE =
 const STALE_NOTE =
   "Esse número vem de uma coleta antiga e pode ter mudado. Atualize os dados antes de decidir com base nele.";
 
+// Proveniência da régua (benchmark_runs.validation_status). Só os status listados
+// pedem o rótulo "método em validação" e suprimem a Ação. 'nao_aplicavel' (régua
+// de gestão) e 'nao_verificado' (execuções legacy_*) ficam de fora DE PROPÓSITO:
+// mudar o texto dessas réguas é decisão de produto. Para incluir as legadas,
+// acrescente 'nao_verificado' aqui — é a única linha a mexer.
+const VALIDATION_PENDING_STATUSES: ReadonlySet<string> = new Set([
+  "em_validacao",
+]);
+// Réguas empíricas novas (run orbit_comments_v2_*) entram como REFERÊNCIA em
+// validação mesmo com status 'nao_verificado' (o CHECK do banco não aceita
+// 'em_validacao'). Escopo por métrica, não por status: as réguas legacy_* de
+// polêmica/engagement/play_to_view, também 'nao_verificado', seguem como hoje.
+const VALIDATION_PENDING_METRICS: ReadonlySet<string> = new Set([
+  "resposta_da_base",
+  "views_por_seguidor",
+  "intencao_nos_comentarios",
+  "tom_dos_comentarios",
+]);
+export const VALIDATION_NOTE = "Levantamento próprio, método em validação.";
+
 // Sentinelas de "sem setor" em ref_thresholds.category (D9: 'all' e 'global').
 const NON_SECTOR_CATEGORIES: ReadonlySet<string> = new Set([
   "all",
@@ -128,11 +154,26 @@ function baseCopy(
     ref.category !== null &&
     !NON_SECTOR_CATEGORIES.has(ref.category);
   const escopo = isGestao ? "de gestão" : hasSectorCell ? "do setor" : "geral";
-  const note = isGestao ? GESTAO_NOTE : hasSectorCell ? null : NO_SECTOR_NOTE;
+  const inValidation =
+    ref.validationStatus != null &&
+    (VALIDATION_PENDING_STATUSES.has(ref.validationStatus) ||
+      (ref.validationStatus === "nao_verificado" &&
+        ref.metric != null &&
+        VALIDATION_PENDING_METRICS.has(ref.metric)));
+  const baseNote = isGestao
+    ? GESTAO_NOTE
+    : hasSectorCell
+      ? null
+      : NO_SECTOR_NOTE;
+  const note = inValidation
+    ? [baseNote, VALIDATION_NOTE].filter(Boolean).join(" ")
+    : baseNote;
 
   // RWP-2: ponto único de decisão. Gestão => sem Ação, em qualquer ramo.
+  // Régua em validação (execução de benchmark ainda não validada) também não
+  // gera Ação: só habilita ação quando a execução estiver validada.
   const actionFor = (action: string | null): string | null =>
-    isGestao ? null : action;
+    isGestao || inValidation ? null : action;
 
   // higher_is_better: meta = green_min, piso = red_max
   if (
@@ -151,7 +192,7 @@ function baseCopy(
     }
     if (semaphore === "ambar") {
       return {
-        text: `Quase lá: faltam ${fmt(meta - value)} p.p. para a meta ${escopo} (${fmt(meta)}%), e você já está acima do piso (${fmt(piso)}%).`,
+        text: `Quase lá: faltam ${fmt(meta - value)} % para a meta ${escopo} (${fmt(meta)}%). Você já está acima do piso (${fmt(piso)}%).`,
         action: actionFor(
           ACTION_COPY.ambar(`cair abaixo do piso (${fmt(piso)}%)`),
         ),
@@ -172,7 +213,9 @@ function baseCopy(
       // Valor 0 = a maioria dos posts do período não recebeu comentários (no
       // banco, polemic_score_pct = 0 só ocorre em post sem comentários). Isso é
       // ausência de sinal: não é "dentro do padrão" nem classificação de setor.
-      if (value === 0) {
+      // Só vale para polêmica: outra métrica lower_is_better com valor 0 segue
+      // o texto padrão abaixo (a frase fala de comentários).
+      if (value === 0 && ref.metric === "polemic_score_pct") {
         return {
           text: "A maioria dos posts do período não recebeu comentários. Não é classificação de setor.",
           action: null,
@@ -191,7 +234,7 @@ function baseCopy(
           ? `${value > ref.p50 ? "acima" : "abaixo"} da mediana do setor (${fmt(ref.p50)}%) e `
           : "";
       return {
-        text: `Atenção: ${pos}a ${fmt(limite - value)} p.p. do limite (${fmt(limite)}%).`,
+        text: `Atenção: ${pos}a ${fmt(limite - value)} % do limite (${fmt(limite)}%).`,
         action: actionFor(
           ACTION_COPY.ambar(`passar do limite (${fmt(limite)}%)`),
         ),

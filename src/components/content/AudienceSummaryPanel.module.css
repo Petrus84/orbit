@@ -1,202 +1,225 @@
 /* ==========================================================================
-   ORBIT · Component — AudienceSummaryPanel
-   Versão: 1.0.0  |  Data: 2026-08-31
+   ORBIT · Component — AudienceSummaryPanel.module.css
+   Resumo de audiência: Alcance · Visitas · Cliques · Gênero · Cidades
+   Versão: 1.3.0  |  Data: 2026-10-20
+
+   MUDANÇA v1.1.0 (SSOT Compliance — alinhado ao QualityScoresPanel v1.0.3):
+- Removidos TODOS os valores hardcoded rgba/gradientes
+- Cores via tokens: --color-*-rgb + --opacity-*, --gradient-*, --shadow-*
+- `transition: all` substituído por propriedades explícitas
+- Regras duplicadas (barras de gênero, dots, sheen) consolidadas
+- Adicionados hover com elevação, prefers-reduced-motion e focus-visible
+- Fonte mono: --mono (mesmo token do QualityScoresPanel)
+
+   MUDANÇA v1.2.0 (zero preenchimento sólido):
+- Barras e dots de gênero agora são tint translúcido (color-mix) + borda,
+     mesmo padrão do bottleneck-* do FunnelResult
+- Removido --gradient-sheen (não é mais necessário)
+
+   MUDANÇA v1.3.0 (Integração GAP Analysis - Opção C):
+- Adicionada seção `.gapSection` e seus sub-componentes.
+- Barras de GAP (.barFillReal, .barFillExpected) adotam a MESMA regra de
+  "zero preenchimento sólido" da v1.2.0 (color-mix com hex variables nativas).
+- Pista (track) hachurada incorporada para o "espaço restante".
+
+   ⚠ TOKENS NOVOS A CRIAR NO SSOT (usados abaixo, ainda não existem):
+- --color-pink-rgb:   255, 105, 180
+- --color-blue-rgb:   74, 144, 255
 
    Design Logic:
-   - .panel: GlassCard container (cyan glow, como QualityScoresPanel)
-   - .statsRow: 3 colunas (flex, gap-3) — padrão de CriticalAlert
-   - .genderBlock: Barra de progresso horizontal (stacked) + legenda
-   - .citiesBlock: Lista com ranking (city name + percentage)
-   - Tipografia: Sans para labels, Monospace para números (FormatPerformanceTable)
-   - Cores: Tokens do SSOT, sem hardcoded
-   - Transições: suaves em hover/expand
+- .panel: apenas layout (o GlassCard pai fornece o container/glow)
+- .statsRow: 3 colunas (flex) — mesmo visual dos scoreBox cyan
+- .genderBar: barra empilhada + legenda
+- .citiesBlock: lista com ranking (nome + percentual)
+- Tipografia: Sans para labels, Mono para números
    ========================================================================== */
 
-/* ── Container principal ────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   PAINEL PRINCIPAL
+   ═══════════════════════════════════════════════════════════════ */
 
 .panel {
-  display:        flex;
+  display: flex;
   flex-direction: column;
-  gap:            var(--space-4);
+  gap: var(--space-4);
 }
 
 .panelTitle {
+  font-family: var(--font);
   font-size: var(--font-size-xs);
-  letter-spacing: 2px;
-  color:          var(--text-dim);
-  font-weight:    var(--font-weight-bold);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--neon-cyan);
   text-transform: uppercase;
-  margin:         0;
-}
-
-/* ── Stats Row (3 colunas: Alcance, Visitas, Cliques) ──────────────────── */
-
-.statsRow {
-  display:        flex;
-  gap:            var(--space-3);
-  flex-wrap:      wrap;
-}
-
-.stat {
-  flex:           1;
-  min-width:      120px;
-  padding:        var(--space-3) var(--space-3);
-  background:     rgba(0, 255, 255, 0.04);
-  border:         var(--border-width) solid rgba(0, 255, 255, 0.15);
-  border-radius:  var(--r8);
-  transition:     all var(--transition-fast);
-}
-
-.stat:hover {
-  background:     rgba(0, 255, 255, 0.08);
-  border-color:   rgba(0, 255, 255, 0.25);
-}
-
-.statLabel {
-  font-size: var(--font-size-xs);
-  letter-spacing: 1px;
-  color:          var(--text-dim);
-  text-transform: uppercase;
-  margin:         0 0 var(--space-2) 0;
-  font-weight:    var(--font-weight-bold);
-}
-
-.statValue {
-  font-size:      var(--font-size-lg);
-  font-family:    var(--font-mono);
-  color:          var(--neon-cyan);
-  margin:         0;
-  line-height:    1;
-}
-
-/* ── Gender Block (Barra horizontal stacked + legenda) ───────────────────── */
-
-.genderBlock {
-  display:        flex;
-  flex-direction: column;
-  gap:            var(--space-3);
-  padding:        var(--space-3) var(--space-4);
-  background:     rgba(255, 195, 0, 0.04);
-  border:         var(--border-width) solid rgba(255, 195, 0, 0.15);
-  border-radius:  var(--r8);
+  margin: 0;
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--line);
 }
 
 .blockLabel {
-  font-size: var(--font-size-xs);
-  letter-spacing: 2px;
-  color:          var(--text-dim);
-  font-weight:    var(--font-weight-bold);
-  text-transform: uppercase;
-  margin:         0;
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-2);
+  margin-top: 0;
 }
 
-/* ── Gender Bar (Barra de progresso horizontal) ──────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   STATS ROW (Alcance, Visitas, Cliques)
+   ═══════════════════════════════════════════════════════════════ */
+
+.statsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.stat {
+  flex: 1;
+  min-width: 120px;
+  padding: var(--space-3);
+  background: var(--gradient-cyan-subtle);
+  border: 1px solid rgba(var(--color-cyan-rgb), var(--opacity-30));
+  border-radius: var(--r8);
+  box-shadow: var(--shadow-glow-cyan-inset);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    border-color var(--transition-fast),
+    background var(--transition-fast);
+}
+
+.stat:hover {
+  background: var(--gradient-cyan-hover);
+  border-color: rgba(var(--color-cyan-rgb), var(--opacity-50));
+  box-shadow: var(--shadow-glow-cyan-inset-hover);
+  transform: translateY(-2px);
+}
+
+.statLabel {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin: 0 0 var(--space-2) 0;
+}
+
+.statValue {
+  font-family: var(--mono);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--neon-cyan);
+  line-height: 1;
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GÊNERO — BARRA EMPILHADA
+   ═══════════════════════════════════════════════════════════════ */
 
 .genderBar {
-  display:        flex;
-  width:          100%;
-  height:         24px;
-  background:     rgba(31, 31, 40, 0.5);
-  border-radius:  var(--r4);
-  overflow:       hidden;
-  border:         var(--border-width) solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  width: 100%;
+  height: 24px;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--r4);
+  overflow: hidden;
+}
+
+/* Segmentos: tint translúcido + glow inset, sem fill sólido */
+.genderBarFemale,
+.genderBarMale {
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, rgb(var(--seg-rgb)) 25%, transparent),
+    color-mix(in srgb, rgb(var(--seg-rgb)) 8%, transparent)
+  );
+  box-shadow: inset 0 0 12px
+    color-mix(in srgb, rgb(var(--seg-rgb)) 16%, transparent);
+  transition: width var(--transition-fast);
 }
 
 .genderBarFemale {
-  background:     linear-gradient(90deg, rgba(255, 105, 180, 0.6), rgba(255, 105, 180, 0.4));
-  height:         100%;
-  transition:     width var(--transition-fast);
-  position:       relative;
-}
-
-.genderBarFemale::after {
-  content:        '';
-  position:       absolute;
-  top:            0;
-  left:           0;
-  right:          0;
-  bottom:         0;
-  background:     linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent);
-  pointer-events: none;
+  --seg-rgb: var(--color-pink-rgb);
+  border-right: 1px solid rgba(var(--seg-rgb), var(--opacity-50));
 }
 
 .genderBarMale {
-  background:     linear-gradient(90deg, rgba(74, 144, 255, 0.6), rgba(74, 144, 255, 0.4));
-  height:         100%;
-  transition:     width var(--transition-fast);
-  position:       relative;
+  --seg-rgb: var(--color-blue-rgb);
 }
 
-.genderBarMale::after {
-  content:        '';
-  position:       absolute;
-  top:            0;
-  left:           0;
-  right:          0;
-  bottom:         0;
-  background:     linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent);
-  pointer-events: none;
-}
-
-/* ── Gender Legend (Dots + labels) ──────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   GÊNERO — LEGENDA
+   ═══════════════════════════════════════════════════════════════ */
 
 .genderLegend {
-  display:        flex;
+  display: flex;
   flex-direction: column;
-  gap:            var(--space-2);
-  font-size:      var(--font-size-xs);
-  color:          var(--text-secondary);
+  gap: var(--space-2);
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
 }
 
 .genderLegend span {
-  display:        flex;
-  align-items:    center;
-  gap:            var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.dotFemale,
+.dotMale {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: color-mix(in srgb, rgb(var(--seg-rgb)) 25%, transparent);
+  border: 1px solid rgba(var(--seg-rgb), var(--opacity-50));
 }
 
 .dotFemale {
-  display:        inline-block;
-  width:          8px;
-  height:         8px;
-  border-radius:  50%;
-  background:     rgba(255, 105, 180, 0.8);
-  flex-shrink:    0;
+  --seg-rgb: var(--color-pink-rgb);
 }
 
 .dotMale {
-  display:        inline-block;
-  width:          8px;
-  height:         8px;
-  border-radius:  50%;
-  background:     rgba(74, 144, 255, 0.8);
-  flex-shrink:    0;
+  --seg-rgb: var(--color-blue-rgb);
 }
 
-/* ── Cities Block (Lista de cidades com ranking) ──────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   CIDADES — RANKING
+   ═══════════════════════════════════════════════════════════════ */
 
 .citiesBlock {
-  display:        flex;
+  display: flex;
   flex-direction: column;
-  gap:            var(--space-3);
-  padding:        var(--space-3) var(--space-4);
-  background:     rgba(46, 204, 113, 0.04);
-  border:         var(--border-width) solid rgba(46, 204, 113, 0.15);
-  border-radius:  var(--r8);
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid rgba(var(--color-green-rgb), var(--opacity-30));
+  border-radius: var(--r8);
+  box-shadow: var(--shadow-glow-green-inset);
+  margin-top: var(--space-4);
 }
 
 .citiesList {
-  display:        flex;
+  display: flex;
   flex-direction: column;
-  gap:            var(--space-2);
+  gap: var(--space-2);
 }
 
 .cityRow {
-  display:        flex;
+  display: flex;
   justify-content: space-between;
-  align-items:    center;
-  padding:        var(--space-2) 0;
-  border-bottom:  var(--border-width) solid rgba(31, 31, 40, 0.3);
-  font-size:      var(--font-size-sm);
+  align-items: center;
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--font-size-sm);
 }
 
 .cityRow:last-child {
@@ -204,26 +227,225 @@
 }
 
 .cityName {
-  color:          var(--text-primary);
-  font-family:    var(--font);
-  font-weight:    var(--font-weight-medium);
+  font-family: var(--font);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
 }
 
 .cityPct {
-  color:          var(--text-secondary);
-  font-family:    var(--font-mono);
-  font-size:      var(--font-size-xs);
-  min-width:      40px;
-  text-align:     right;
+  min-width: 40px;
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  text-align: right;
 }
 
-/* ── Empty State ────────────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   GAP ANALYSIS (OPÇÃO C - DELTAS EM FOCO)
+   ═══════════════════════════════════════════════════════════════ */
+
+.gapSection {
+  margin-top: var(--space-6);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.gapCards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.metricCardReal,
+.metricCardExpected {
+  background-color: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Efeito de tint no próprio card acompanhando a barra */
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--card-glow) 5%, transparent),
+    transparent
+  );
+  box-shadow: inset 0 2px 10px
+    color-mix(in srgb, var(--card-glow) 5%, transparent);
+}
+
+.metricCardReal {
+  --card-glow: var(--neon-green);
+}
+
+.metricCardExpected {
+  --card-glow: var(--acc2);
+}
+
+.metricValue {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
+}
+
+.metricLabel {
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  color: var(--text-dim);
+  margin-top: var(--space-2);
+  letter-spacing: 0.05em;
+}
+
+.metricCardReal .metricValue {
+  color: var(--neon-green);
+}
+.metricCardExpected .metricValue {
+  color: var(--acc2-text);
+}
+
+/* -- Badge de GAP -- */
+.gapBadge {
+  font-family: var(--font-family);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  text-align: center;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-pill);
+  transition: var(--transition-base);
+}
+
+.gapBadge[data-status="positive"] {
+  color: var(--neon-green);
+  border: 1px solid color-mix(in srgb, var(--neon-green) 50%, transparent);
+  box-shadow: var(--shadow-glow-green-inset);
+  background: color-mix(in srgb, var(--neon-green) 5%, transparent);
+}
+
+.gapBadge[data-status="negative"] {
+  color: var(--red-text);
+  border: 1px solid color-mix(in srgb, var(--neon-red) 50%, transparent);
+  box-shadow: var(--shadow-glow-red-inset);
+  background: color-mix(in srgb, var(--neon-red) 5%, transparent);
+}
+
+/* -- Barras de Progresso Desacopladas (Translúcidas) -- */
+.gapBarsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-top: var(--space-2);
+}
+
+.barGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.barLabels {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+}
+
+.textReal {
+  color: var(--neon-green);
+}
+.textExpected {
+  color: var(--acc2-text);
+}
+.textRest {
+  color: var(--text-dim);
+}
+
+.barTrack {
+  height: 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: transparent;
+  overflow: hidden;
+  position: relative;
+  /* Striped pattern para simular a área "Restante" do protótipo */
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 4px,
+    rgba(255, 255, 255, 0.03) 4px,
+    rgba(255, 255, 255, 0.03) 8px
+  );
+}
+
+/* Efeito v1.2.0: Zero preenchimento sólido + Glassmorphism Glow */
+.barFillReal,
+.barFillExpected {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  transition: width var(--transition-slow);
+
+  /* Fundo da trilha é escuro para não deixar vazar o striped pattern pelo vidro */
+  background-color: var(--bg);
+
+  /* Gradiente translúcido (TINT) por cima do background escuro */
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--bar-color) 25%, transparent),
+    color-mix(in srgb, var(--bar-color) 8%, transparent)
+  );
+
+  /* Glow interno e Borda de finalização */
+  box-shadow: inset 0 0 12px
+    color-mix(in srgb, var(--bar-color) 16%, transparent);
+  border-right: 1px solid color-mix(in srgb, var(--bar-color) 50%, transparent);
+}
+
+.barFillReal {
+  --bar-color: var(--neon-green);
+}
+
+.barFillExpected {
+  --bar-color: var(--acc2);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   EMPTY STATE
+   ═══════════════════════════════════════════════════════════════ */
 
 .emptyState {
-  text-align:     center;
-  font-size:      var(--font-size-sm);
-  color:          var(--text-dim);
-  padding:        var(--space-4);
-  margin:         0;
-  font-style:     italic;
+  margin: 0;
+  padding: var(--space-4);
+  font-size: var(--font-size-sm);
+  font-style: italic;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVIDADE E ACESSIBILIDADE
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .stat,
+  .genderBarFemale,
+  .genderBarMale,
+  .barFillReal,
+  .barFillExpected,
+  .gapBadge {
+    transition: none;
+  }
+
+  .stat:hover {
+    transform: none;
+  }
+}
+
+.stat:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 1px;
 }

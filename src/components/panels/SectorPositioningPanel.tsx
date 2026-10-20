@@ -1,7 +1,11 @@
 "use client";
 import { GlassCard } from "@/components/common/GlassCard";
 import styles from "./SectorPositioningPanel.module.css";
-import type { SectorPositioning, ClassifiedMetric } from "@/types/orbit";
+import type {
+  SectorPositioning,
+  ClassifiedMetric,
+  CommentReferenceItem,
+} from "@/types/orbit";
 import { term, AUSENCIA } from "@/lib/ui-labels";
 
 export interface SectorPositioningPanelProps {
@@ -93,6 +97,37 @@ function algoRiskCard(algoRisk: SectorPositioning["algoRisk"]) {
   );
 }
 
+const fmtRef = (v: number, unit: "%" | "pts") =>
+  `${v.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}${unit === "%" ? "%" : ""}`;
+
+// Referência em validação: sem semáforo, sem Ação. Número do cliente só quando
+// existe cálculo; senão o card diz que ainda não foi calculado.
+function commentReferenceCard(item: CommentReferenceItem) {
+  const hasRange = item.p25 != null && item.p50 != null && item.p75 != null;
+  return (
+    <div className={styles.metricCard} key={item.metric}>
+      <p className={styles.metricLabel}>{item.label}</p>
+      <p className={styles.metricValue}>
+        {item.clientValue != null ? fmtRef(item.clientValue, item.unit) : "—"}
+      </p>
+      {item.positionText && (
+        <span className={styles.badgeNeutral}>{item.positionText}</span>
+      )}
+      {hasRange && (
+        <p className={styles.refRange}>
+          Referência global: P25 {fmtRef(item.p25 as number, item.unit)} ·
+          mediana {fmtRef(item.p50 as number, item.unit)} · P75{" "}
+          {fmtRef(item.p75 as number, item.unit)}
+          {item.sampleCount != null
+            ? ` · ${item.sampleCount.toLocaleString("pt-BR")} posts`
+            : ""}
+        </p>
+      )}
+      <p className={styles.refNote}>{item.note}</p>
+    </div>
+  );
+}
+
 export function SectorPositioningPanel({
   positioning,
 }: SectorPositioningPanelProps) {
@@ -178,6 +213,23 @@ export function SectorPositioningPanel({
 
       {ruleDeclaration && <p className={styles.ruleText}>{ruleDeclaration}</p>}
       {noMarketNote && <p className={styles.ruleText}>{noMarketNote}</p>}
+
+      {positioning.commentReference &&
+        positioning.commentReference.length > 0 && (
+          <>
+            <p className={styles.blockLabel}>
+              REFERÊNCIA — COMENTÁRIOS E ALCANCE
+            </p>
+            <div className={styles.metricsRow}>
+              {positioning.commentReference.map(commentReferenceCard)}
+            </div>
+            <p className={styles.ruleText}>
+              Percentis globais de um levantamento próprio, ainda em validação.
+              Seguidores atuais, não os da data do post. Mostra onde a conta
+              está, sem nota de bom ou ruim.
+            </p>
+          </>
+        )}
 
       {/* ✅ NOVO (18/09/2026): seção separada, rótulo distinto de
         "BENCHMARKING" de propósito — algo_risk_score é família Ln

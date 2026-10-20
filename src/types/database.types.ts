@@ -1328,6 +1328,106 @@ export type Database = {
           },
         ];
       };
+      benchmark_run_sources: {
+        Row: {
+          created_at: string;
+          id: number;
+          import_session_id: string | null;
+          raw_ingest_id: string | null;
+          run_id: string;
+          source_ref: string;
+          source_role: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          id?: never;
+          import_session_id?: string | null;
+          raw_ingest_id?: string | null;
+          run_id: string;
+          source_ref: string;
+          source_role?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          id?: never;
+          import_session_id?: string | null;
+          raw_ingest_id?: string | null;
+          run_id?: string;
+          source_ref?: string;
+          source_role?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "benchmark_run_sources_import_session_id_fkey";
+            columns: ["import_session_id"];
+            isOneToOne: false;
+            referencedRelation: "ig_import_sessions";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "benchmark_run_sources_raw_ingest_id_fkey";
+            columns: ["raw_ingest_id"];
+            isOneToOne: false;
+            referencedRelation: "raw_ig_ingest";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "benchmark_run_sources_run_id_fkey";
+            columns: ["run_id"];
+            isOneToOne: false;
+            referencedRelation: "benchmark_runs";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      benchmark_runs: {
+        Row: {
+          artifact_ref: string | null;
+          code_revision: string | null;
+          created_at: string;
+          dataset_id: string | null;
+          id: string;
+          input_file_name: string | null;
+          input_sha256: string | null;
+          method_version: string | null;
+          notes: string | null;
+          run_at: string | null;
+          run_label: string;
+          sample_criteria: Json;
+          validation_status: string;
+        };
+        Insert: {
+          artifact_ref?: string | null;
+          code_revision?: string | null;
+          created_at?: string;
+          dataset_id?: string | null;
+          id?: string;
+          input_file_name?: string | null;
+          input_sha256?: string | null;
+          method_version?: string | null;
+          notes?: string | null;
+          run_at?: string | null;
+          run_label: string;
+          sample_criteria?: Json;
+          validation_status?: string;
+        };
+        Update: {
+          artifact_ref?: string | null;
+          code_revision?: string | null;
+          created_at?: string;
+          dataset_id?: string | null;
+          id?: string;
+          input_file_name?: string | null;
+          input_sha256?: string | null;
+          method_version?: string | null;
+          notes?: string | null;
+          run_at?: string | null;
+          run_label?: string;
+          sample_criteria?: Json;
+          validation_status?: string;
+        };
+        Relationships: [];
+      };
       client_followers_history: {
         Row: {
           client_id: string;
@@ -2875,6 +2975,80 @@ export type Database = {
           },
         ];
       };
+      ref_er_by_tier_provisional: {
+        Row: {
+          accounts_n: number;
+          benchmark_run_id: string | null;
+          computed_on: string;
+          confidence_level: string;
+          created_at: string;
+          formula: string;
+          id: number;
+          median_pct: number;
+          metric_name: string;
+          notes: string | null;
+          p25_pct: number;
+          p75_pct: number;
+          p90_pct: number;
+          posts_n: number;
+          sample_note: string;
+          source_doc: string;
+          tier: string;
+          tier_scheme: string;
+          usable_for_alerts: boolean;
+        };
+        Insert: {
+          accounts_n: number;
+          benchmark_run_id?: string | null;
+          computed_on?: string;
+          confidence_level?: string;
+          created_at?: string;
+          formula?: string;
+          id?: never;
+          median_pct: number;
+          metric_name?: string;
+          notes?: string | null;
+          p25_pct: number;
+          p75_pct: number;
+          p90_pct: number;
+          posts_n: number;
+          sample_note?: string;
+          source_doc?: string;
+          tier: string;
+          tier_scheme?: string;
+          usable_for_alerts?: boolean;
+        };
+        Update: {
+          accounts_n?: number;
+          benchmark_run_id?: string | null;
+          computed_on?: string;
+          confidence_level?: string;
+          created_at?: string;
+          formula?: string;
+          id?: never;
+          median_pct?: number;
+          metric_name?: string;
+          notes?: string | null;
+          p25_pct?: number;
+          p75_pct?: number;
+          p90_pct?: number;
+          posts_n?: number;
+          sample_note?: string;
+          source_doc?: string;
+          tier?: string;
+          tier_scheme?: string;
+          usable_for_alerts?: boolean;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "ref_er_by_tier_provisional_benchmark_run_id_fkey";
+            columns: ["benchmark_run_id"];
+            isOneToOne: false;
+            referencedRelation: "benchmark_runs";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       ref_export_file_catalog: {
         Row: {
           confidence_level:
@@ -2943,6 +3117,7 @@ export type Database = {
           amber_max: number | null;
           amber_min: number | null;
           benchmark_note: string | null;
+          benchmark_run_id: string | null;
           calibration_method:
             Database["orbit"]["Enums"]["calibration_method"] | null;
           category: string | null;
@@ -2978,6 +3153,7 @@ export type Database = {
           amber_max?: number | null;
           amber_min?: number | null;
           benchmark_note?: string | null;
+          benchmark_run_id?: string | null;
           calibration_method?:
             Database["orbit"]["Enums"]["calibration_method"] | null;
           category?: string | null;
@@ -3013,6 +3189,7 @@ export type Database = {
           amber_max?: number | null;
           amber_min?: number | null;
           benchmark_note?: string | null;
+          benchmark_run_id?: string | null;
           calibration_method?:
             Database["orbit"]["Enums"]["calibration_method"] | null;
           category?: string | null;
@@ -3044,7 +3221,15 @@ export type Database = {
           zero_count?: number | null;
           zero_rate?: number | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "ref_thresholds_benchmark_run_id_fkey";
+            columns: ["benchmark_run_id"];
+            isOneToOne: false;
+            referencedRelation: "benchmark_runs";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       ref_thresholds_backup_20260918: {
         Row: {
@@ -3344,6 +3529,28 @@ export type Database = {
       };
     };
     Views: {
+      v_alert_verdicts: {
+        Row: {
+          alert_type: string | null;
+          client_id: string | null;
+          confidence_level: string | null;
+          data_source: string | null;
+          description: string | null;
+          handle: string | null;
+          metric_name: string | null;
+          metric_value: number | null;
+          probable_cause: string | null;
+          rule: string | null;
+          sample_n: number | null;
+          severity: string | null;
+          snapshot_id: string | null;
+          state: string | null;
+          suggested_action: string | null;
+          threshold_value: number | null;
+          title: string | null;
+        };
+        Relationships: [];
+      };
       v_alerts: {
         Row: {
           actionUrl: string | null;
@@ -4247,7 +4454,9 @@ export type Database = {
           metric_name: string | null;
           period_end: string | null;
           period_start: string | null;
+          ref_benchmark_run_id: string | null;
           ref_category: string | null;
+          ref_dataset_id: string | null;
           ref_direction: string | null;
           ref_green_max: number | null;
           ref_green_min: number | null;
@@ -4255,7 +4464,11 @@ export type Database = {
           ref_p75: number | null;
           ref_red_max: number | null;
           ref_red_min: number | null;
+          ref_resolution_level: number | null;
+          ref_run_label: string | null;
           ref_source: string | null;
+          ref_threshold_id: number | null;
+          ref_validation_status: string | null;
           score_key: string | null;
           score_value: number | null;
           semaphore_key: string | null;
@@ -4313,6 +4526,23 @@ export type Database = {
             referencedColumns: ["id"];
           },
         ];
+      };
+      v_ref_thresholds_provenance: {
+        Row: {
+          category: string | null;
+          dataset_id: string | null;
+          id: number | null;
+          input_file_name: string | null;
+          metric_name: string | null;
+          run_at: string | null;
+          run_label: string | null;
+          sem_dataset_id: boolean | null;
+          sem_execucao: boolean | null;
+          sem_fontes_registradas: boolean | null;
+          tier_normalized: string | null;
+          validation_status: string | null;
+        };
+        Relationships: [];
       };
       v_roas_viability: {
         Row: {
@@ -4411,6 +4641,18 @@ export type Database = {
           zero_pct: number;
         }[];
       };
+      fn_resolve_threshold: {
+        Args: { p_category?: string; p_metric_name: string; p_tier?: string };
+        Returns: {
+          benchmark_run_id: string;
+          dataset_id: string;
+          resolution_level: number;
+          run_label: string;
+          threshold_id: number;
+          threshold_source: string;
+          validation_status: string;
+        }[];
+      };
       get_schema_info: {
         Args: never;
         Returns: {
@@ -4432,6 +4674,21 @@ export type Database = {
           p_platform: string;
         };
         Returns: boolean;
+      };
+      refresh_alerts: {
+        Args: {
+          p_client_id?: string;
+          p_dry_run?: boolean;
+          p_min_polemic_posts?: number;
+          p_rules?: string[];
+        };
+        Returns: {
+          out_action: string;
+          out_alert_type: string;
+          out_handle: string;
+          out_metric: string;
+          out_state: string;
+        }[];
       };
       user_owns_client: { Args: { p_client_id: string }; Returns: boolean };
     };
@@ -4490,43 +4747,6 @@ export type Database = {
         | "ga4_api"
         | "manual_input";
       semaphore_color: "verde" | "ambar" | "vermelho";
-    };
-    CompositeTypes: {
-      [_ in never]: never;
-    };
-  };
-  public: {
-    Tables: {
-      [_ in never]: never;
-    };
-    Views: {
-      [_ in never]: never;
-    };
-    Functions: {
-      show_limit: { Args: never; Returns: number };
-      show_trgm: { Args: { "": string }; Returns: string[] };
-    };
-    Enums: {
-      alert_action_variant: "primary" | "secondary" | "danger";
-      alert_severity: "critical" | "warning" | "info";
-      alignment_color: "green" | "amber" | "red";
-      campaign_objective:
-        | "OUTREACH"
-        | "TRAFFIC"
-        | "ENGAGEMENT"
-        | "LEADS"
-        | "APP_PROMOTION"
-        | "SALES";
-      campaign_status: "ACTIVE" | "PAUSED" | "ARCHIVED";
-      delta_direction: "up" | "down" | "neutral";
-      glow_color: "cyan" | "red" | "gold" | "none";
-      google_ads_kpi_status: "ok" | "warn" | "error";
-      health_status: "critical" | "warning" | "healthy";
-      meta_kpi_status: "green" | "amber" | "red" | "gray";
-      semaphore_color: "verde" | "ambar" | "vermelho";
-      source_level: "L0" | "L1" | "L2";
-      status_variant: "ok" | "warn" | "neutral";
-      trend_color: "cyan" | "red" | "gold";
     };
     CompositeTypes: {
       [_ in never]: never;
@@ -4720,31 +4940,6 @@ export const Constants = {
         "manual_input",
       ],
       semaphore_color: ["verde", "ambar", "vermelho"],
-    },
-  },
-  public: {
-    Enums: {
-      alert_action_variant: ["primary", "secondary", "danger"],
-      alert_severity: ["critical", "warning", "info"],
-      alignment_color: ["green", "amber", "red"],
-      campaign_objective: [
-        "OUTREACH",
-        "TRAFFIC",
-        "ENGAGEMENT",
-        "LEADS",
-        "APP_PROMOTION",
-        "SALES",
-      ],
-      campaign_status: ["ACTIVE", "PAUSED", "ARCHIVED"],
-      delta_direction: ["up", "down", "neutral"],
-      glow_color: ["cyan", "red", "gold", "none"],
-      google_ads_kpi_status: ["ok", "warn", "error"],
-      health_status: ["critical", "warning", "healthy"],
-      meta_kpi_status: ["green", "amber", "red", "gray"],
-      semaphore_color: ["verde", "ambar", "vermelho"],
-      source_level: ["L0", "L1", "L2"],
-      status_variant: ["ok", "warn", "neutral"],
-      trend_color: ["cyan", "red", "gold"],
     },
   },
 } as const;

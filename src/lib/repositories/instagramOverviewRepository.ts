@@ -72,7 +72,8 @@
 
 import { supabase } from "@/lib/supabase";
 import { repairMojibake } from "@/lib/textRepair";
-import { medianOf } from "@/lib/stats/median";
+import { polemicMedianOfPeriod } from "@/lib/stats/polemic";
+import { periodUpperExclusive } from "@/lib/stats/period";
 import { z } from "zod";
 
 import type {
@@ -89,11 +90,22 @@ import type {
   PostSummary,
   AudienceSummary,
   ClientOnboarding,
+  OnboardingGenderExpectation,
   SectorPositioning,
+  CommentReferenceItem,
   AlgoRiskScore,
 } from "@/types/orbit";
 
-import { buildScoreCopy, type SemaphoreKey } from "@/lib/scoreStatusCopy";
+import {
+  buildScoreCopy,
+  VALIDATION_NOTE,
+  type SemaphoreKey,
+} from "@/lib/scoreStatusCopy";
+import {
+  percentilePosition,
+  respostaDaBaseMedian,
+  viewsPorSeguidorMedian,
+} from "@/lib/stats/commentReference";
 import {
   resolveEngagementScoreAlert,
   resolveAlgoRiskScoreAlert,
@@ -284,7 +296,7 @@ async function fetchPostingProfile(
     .neq("content_format", "story")
     .eq("client_id", clientId)
     .gte("published_at", start)
-    .lte("published_at", end)
+    .lt("published_at", periodUpperExclusive(end))
     .in("confidence_level", CONFIDENCE_LEVELS)
     .returns<PostingProfileRow[]>();
 
@@ -428,6 +440,7 @@ export async function fetchInstagramOverview(
     fetchCriticalAlerts(clientId, periodStart, periodEnd),
     fetchSectorPositioning(clientId, periodStart, periodEnd),
     fetchPostingProfile(clientId, periodStart, periodEnd),
+    fetchOnboardingExpectations(clientId),
   ]);
 
   results.forEach((res, idx) => {
@@ -469,6 +482,9 @@ export async function fetchInstagramOverview(
 
   const postingProfile =
     results[7].status === "fulfilled" ? results[7].value : null;
+
+  const onboarding: OnboardingGenderExpectation | null =
+    results[8].status === "fulfilled" ? results[8].value : null;
 
   // ✅ FIX (tsc TS2339): `import.meta.env.VITE_*` é Vite — sobrou de antes
   // da migração pra Next.js, onde env var de cliente é `process.env.NEXT_PUBLIC_*`
@@ -557,6 +573,7 @@ export async function fetchInstagramOverview(
     cadence: postingProfile?.cadence ?? null,
     mix: postingProfile?.mix ?? null,
     benchmarkCadence,
+    onboarding,
   };
 }
 
@@ -775,17 +792,36 @@ async function fetchQualityScores(
     vermelho: { glow: "red", variant: "warn", label: "Vermelho" },
   };
 
-  const { data: orbitRows, error: orbitError } = await supabase
+  // Proveniência da régua (ref_dataset_id / ref_validation_status) vem da
+  // migration fn_classify_metric_global_fallback_and_provenance. Se o ambiente
+  // ainda não a tem, o Postgres devolve 42703 (coluna inexistente): cai no
+  // select antigo em vez de zerar o painel.
+  const withProvenance = await supabase
     .schema("orbit")
     .schema("orbit")
     .from("v_quality_scores")
     .select(
-      "id, score_key, metric_name, score_value, status_text, status_variant, period_start, period_end, semaphore_key, ref_category, ref_source, ref_direction, ref_green_min, ref_green_max, ref_red_min, ref_red_max, ref_p50",
+      "id, score_key, metric_name, score_value, status_text, status_variant, period_start, period_end, semaphore_key, ref_category, ref_source, ref_direction, ref_green_min, ref_green_max, ref_red_min, ref_red_max, ref_p50, ref_dataset_id, ref_validation_status",
     )
     .eq("client_id", clientId)
     .lte("period_start", end)
     .gte("period_end", start)
     .returns<RawRow[]>();
+
+  const { data: orbitRows, error: orbitError } =
+    withProvenance.error?.code === "42703"
+      ? await supabase
+          .schema("orbit")
+          .schema("orbit")
+          .from("v_quality_scores")
+          .select(
+            "id, score_key, metric_name, score_value, status_text, status_variant, period_start, period_end, semaphore_key, ref_category, ref_source, ref_direction, ref_green_min, ref_green_max, ref_red_min, ref_red_max, ref_p50",
+          )
+          .eq("client_id", clientId)
+          .lte("period_start", end)
+          .gte("period_end", start)
+          .returns<RawRow[]>()
+      : withProvenance;
 
   if (orbitError) {
     console.error("[fetchQualityScores]", orbitError.message);
@@ -807,8 +843,8 @@ async function fetchQualityScores(
   // fn_classify_metric sobre esse valor, mesma chamada que a view faz
   // (setor = clients.benchmark_category, porte 'all'). Os ref_* da view
   // (régua e direção) não dependem do valor e seguem alimentando o copy.
-  // Se a classificação voltar degradada (L2: RPC indisponível), mantém a
-  // linha da view intacta em vez de pintar uma cor que ninguém calculou.
+  // Se a classificação voltar degradada (L2: RPC indisponível), o valor do
+  // período fica e o semáforo vai sem cor — nada de cor que ninguém calculou.
   let polemicOverride: {
     value: number | null;
     semaphore: SemaphoreKey | null;
@@ -837,12 +873,13 @@ async function fetchQualityScores(
         clientRes.data?.benchmark_category?.trim() || "all",
         "all",
       );
-      if (
-        classified.confidenceLevel !== "L2" &&
-        classified.semaphore !== "neutro"
-      ) {
-        polemicOverride = { value: median, semaphore: classified.semaphore };
-      }
+      // Classificação degradada (L2/neutro): o VALOR continua sendo o do
+      // período do header; só o semáforo fica sem cor (null). Nunca volta ao
+      // valor do snapshot, que é de outra janela (SSC-1: sem fallback).
+      polemicOverride =
+        classified.confidenceLevel !== "L2" && classified.semaphore !== "neutro"
+          ? { value: median, semaphore: classified.semaphore }
+          : { value: median, semaphore: null };
     }
   }
 
@@ -870,6 +907,12 @@ async function fetchQualityScores(
       redMin: num(row.ref_red_min),
       redMax: num(row.ref_red_max),
       p50: num(row.ref_p50),
+      metric: row.metric_name != null ? String(row.metric_name) : null,
+      datasetId: row.ref_dataset_id != null ? String(row.ref_dataset_id) : null,
+      validationStatus:
+        row.ref_validation_status != null
+          ? String(row.ref_validation_status)
+          : null,
       dataAgeDays: ageDays(row.period_end),
     });
 
@@ -903,7 +946,7 @@ export async function fetchPostsByFormat(
     )
     .eq("client_id", clientId)
     .gte("published_at", start)
-    .lte("published_at", end)
+    .lt("published_at", periodUpperExclusive(end))
     .in("confidence_level", CONFIDENCE_LEVELS)
     .order("published_at", { ascending: false })
     .returns<RawRow[]>();
@@ -986,7 +1029,7 @@ async function fetchInteractionsByFormat(
     .select("content_format, likes, comments, shares, saves")
     .eq("client_id", clientId)
     .gte("published_at", start)
-    .lte("published_at", end)
+    .lt("published_at", periodUpperExclusive(end))
     .in("confidence_level", CONFIDENCE_LEVELS)
     .returns<InteractionPostRow[]>();
 
@@ -1043,9 +1086,10 @@ async function fetchFormatPerformance(
     .gte("period_end", start)
     .returns<RawRow[]>();
 
+  // A view só fornece a TENDÊNCIA. Se ela falhar, a tabela continua existindo
+  // (a contagem vem de ig_posts) e a tendência fica como "sem tendência".
   if (orbitError) {
     console.error("[fetchFormatPerformance]", orbitError.message);
-    return [];
   }
 
   const [postsByFormat, interactionsByFormat] = await Promise.all([
@@ -1056,51 +1100,60 @@ async function fetchFormatPerformance(
   const headerStart = start.slice(0, 10);
   const headerEnd = end.slice(0, 10);
 
-  return (orbitRows ?? []).map((row) => {
-    const label = String(row.format_name ?? "Outros");
-    const inter = interactionsByFormat.get(label);
+  // Universo da tabela = formatos que têm post NO HEADER (ig_posts), na ordem
+  // da view quando existe linha dela e, depois, os demais. Antes a tabela
+  // partia das linhas da view: formato com post no header e sem linha na view
+  // sumia (e dos Insights); formato só com histórico fora do header aparecia
+  // com 0 posts.
+  const viewByLabel = new Map<string, RawRow>();
+  for (const row of orbitError ? [] : (orbitRows ?? [])) {
+    viewByLabel.set(String(row.format_name ?? "Outros"), row);
+  }
+  const labels = [...viewByLabel.keys()];
+  for (const label of postsByFormat.keys()) {
+    if (!viewByLabel.has(label)) labels.push(label);
+  }
+
+  return labels.flatMap((label): FormatPerformanceRow[] => {
     const detail = postsByFormat.get(label) ?? [];
+    if (detail.length === 0) return [];
+
+    const row = viewByLabel.get(label);
+    const inter = interactionsByFormat.get(label);
 
     // v_format_performance agrega TODO o histórico do formato: period_start /
-    // period_end são o 1º e o último post, não o header. Então post_count e
-    // trend_label só valem para o header quando esse histórico inteiro cabe
-    // nele. Fora disso a contagem vem de ig_posts no header (mesma fonte de
-    // interações e Insights) e a tendência não é exibida (sem inventar regra).
-    const viewStart = String(row.period_start ?? "").slice(0, 10);
-    const viewEnd = String(row.period_end ?? "").slice(0, 10);
+    // period_end são o 1º e o último post, não o header. A tendência da view
+    // só vale para o header quando esse histórico inteiro cabe nele. Fora
+    // disso (ou sem linha na view) ela não é exibida — sem inventar regra.
+    const viewStart = String(row?.period_start ?? "").slice(0, 10);
+    const viewEnd = String(row?.period_end ?? "").slice(0, 10);
     const trendInHeader =
+      row != null &&
       viewStart !== "" &&
       viewEnd !== "" &&
       viewStart >= headerStart &&
       viewEnd <= headerEnd;
 
-    return {
-      id: String(row.id),
-      format: label,
-      posts: detail.length,
-      shares: toFiniteNumber(row.share_count),
-      // RWP-5: o que a tabela mostra. null = sem dado (a tela exibe "—").
-      // `shares` acima segue vindo da view (COALESCE(sum,0): null vira 0) e
-      // por isso NÃO deve ser exibido como contagem — fica só por compatibilidade.
-      interactions: inter?.interactions ?? null,
-      interactionsKnownPosts: inter?.knownPosts ?? 0,
-      interactionsTotalPosts: inter?.totalPosts ?? 0,
-      // ✅ FIX (ORB-DEBT-047, 15/09/2026): a view v_format_performance agora
-      // calcula tendência real (comparação de duas metades cronológicas do
-      // histórico de posts por formato, ver fix_trend_v_format_performance.sql).
-      // Este fallback só dispara se a view devolver `null` por algum motivo
-      // inesperado — não deve mais acontecer, já que a view sempre resolve
-      // pra um dos 4 estados reais. Trocado de 'Estável'/'gold' (mentira por
-      // omissão: parecia dado calculado) para um texto que declara a
-      // ausência, igual ao resto do app faz em casos de dado faltante.
-      trendLabel: trendInHeader
-        ? String(row.trend_label ?? "Sem tendência calculada")
-        : "Sem tendência no período",
-      trendColor: trendInHeader
-        ? ((row.trend_color as GlowColor) ?? "none")
-        : "none",
-      postsDetail: detail,
-    };
+    return [
+      {
+        id: row != null ? String(row.id) : `fmt:${clientId}:${label}`,
+        format: label,
+        posts: detail.length,
+        // Só por compatibilidade (histórico da view; a tela não exibe).
+        shares: toFiniteNumber(row?.share_count),
+        // RWP-5: o que a tabela mostra. null = sem dado (a tela exibe "—").
+        interactions: inter?.interactions ?? null,
+        interactionsKnownPosts: inter?.knownPosts ?? 0,
+        interactionsTotalPosts: inter?.totalPosts ?? 0,
+        trendLabel: trendInHeader
+          ? String(row?.trend_label ?? "Sem tendência calculada")
+          : "Sem tendência no período",
+        trendColor: trendInHeader
+          ? ((row?.trend_color as GlowColor) ?? "none")
+          : "none",
+        postsDetail: detail,
+      },
+    ];
   });
 }
 
@@ -1278,6 +1331,31 @@ export async function fetchClientOnboarding(
   return data;
 }
 
+// Meta de gênero do avatar — só as 2 colunas que o gap do AudienceSummaryPanel
+// precisa (evita o select("*") de fetchClientOnboarding). Sem linha de
+// onboarding => null (estado normal, não é erro).
+export async function fetchOnboardingExpectations(
+  clientId: string,
+  db: OrbitDbClient = supabase,
+): Promise<OnboardingGenderExpectation | null> {
+  const { data, error } = await db
+    .schema("orbit")
+    .from("client_onboarding")
+    .select("avatar_expected_gender, avatar_expected_gender_pct")
+    .eq("client_id", clientId)
+    .maybeSingle()
+    .overrideTypes<OnboardingGenderExpectation, { merge: false }>();
+
+  if (error) {
+    console.error(
+      "[Repository] Erro ao buscar client_onboarding (meta de gênero):",
+      error.message,
+    );
+    return null;
+  }
+  return data ?? null;
+}
+
 /* ==========================================================================
    fetchSectorPositioning — card de setor (client_onboarding, direto, sem
    cálculo) + benchmarking das 3 métricas via classifyMetric().
@@ -1361,28 +1439,142 @@ async function fetchPolemicMedianInPeriod(
   end: string,
   db: OrbitDbClient = supabase,
 ): Promise<number | null> {
+  // SSC-1: a mediana é calculada por polemicMedianOfPeriod (stats/polemic.ts,
+  // a função com testes), sobre comments/likes crus dos posts do header.
+  // Antes lia a coluna pré-calculada polemic_score_pct, que podia divergir
+  // do oráculo e não aplicava likes > 0 aqui. Stories ficam fora (decisão).
   const { data, error } = await db
     .schema("orbit")
     .schema("orbit")
     .from("ig_posts")
-    .select("polemic_score_pct")
+    .select("comments, likes")
     .neq("content_format", "story")
     .eq("client_id", clientId)
     .gte("published_at", start)
-    .lte("published_at", end)
+    .lt("published_at", periodUpperExclusive(end))
     .in("confidence_level", CONFIDENCE_LEVELS)
-    .not("polemic_score_pct", "is", null)
-    .returns<{ polemic_score_pct: number | string }[]>();
+    .returns<
+      { comments: number | string | null; likes: number | string | null }[]
+    >();
 
   if (error) {
     console.error("[fetchPolemicMedianInPeriod]", error.message);
     return null;
   }
 
-  const values = (data ?? []).map((r) => Number(r.polemic_score_pct));
-  if (values.length < 5) return null;
-  return medianOf(values); // Retorno da mediana
-} // Chave de fechamento adicionada aqui
+  const toNum = (v: number | string | null): number | null =>
+    v == null ? null : Number.isFinite(Number(v)) ? Number(v) : null;
+
+  return polemicMedianOfPeriod(
+    (data ?? []).map((r) => ({
+      comments: toNum(r.comments),
+      likes: toNum(r.likes),
+    })),
+  );
+}
+
+const COMMENT_REFERENCE_METRICS = [
+  { metric: "resposta_da_base", label: "Resposta da base", unit: "%" },
+  { metric: "views_por_seguidor", label: "Views por seguidor", unit: "%" },
+  {
+    metric: "intencao_nos_comentarios",
+    label: "Intenção nos comentários",
+    unit: "%",
+  },
+  { metric: "tom_dos_comentarios", label: "Tom dos comentários", unit: "pts" },
+] as const;
+
+const NOT_COMPUTED_NOTE = "Seu número ainda não foi calculado.";
+
+/**
+ * Régua global (category 'global', tier 'all') da run orbit_comments_v2 +
+ * valor do cliente quando existe cálculo. resposta_da_base e views_por_seguidor
+ * saem de ig_posts (mediana por post, header, L0/L1, sem story). Intenção e tom
+ * dependem de classificação do texto dos comentários: não existe por cliente
+ * hoje, então ficam como referência pura. Falha vira lista vazia: o painel não
+ * quebra e nada é inventado.
+ */
+async function fetchCommentReference(
+  clientId: string,
+  start: string,
+  end: string,
+  db: OrbitDbClient = supabase,
+): Promise<CommentReferenceItem[]> {
+  const names = COMMENT_REFERENCE_METRICS.map((m) => m.metric);
+  const [refRes, postsRes, followers] = await Promise.all([
+    db
+      .schema("orbit")
+      .from("ref_thresholds")
+      .select(
+        "id, metric_name, percentile_p25, percentile_p50, percentile_p75, sample_count",
+      )
+      .in("metric_name", names)
+      .eq("category", "global")
+      .eq("tier_normalized", "all")
+      .order("id", { ascending: false }),
+    db
+      .schema("orbit")
+      .from("ig_posts")
+      .select("likes, comments, reel_views")
+      .neq("content_format", "story")
+      .eq("client_id", clientId)
+      .gte("published_at", start)
+      .lt("published_at", periodUpperExclusive(end))
+      .in("confidence_level", CONFIDENCE_LEVELS),
+    fetchTotalFollowers(clientId, db).catch((e: unknown) => {
+      console.error("[fetchCommentReference] followers:", e);
+      return null;
+    }),
+  ]);
+
+  if (refRes.error) {
+    console.error("[fetchCommentReference]", refRes.error.message);
+    return [];
+  }
+  if (postsRes.error) {
+    console.error("[fetchCommentReference] posts:", postsRes.error.message);
+  }
+
+  const posts = (postsRes.data ?? []).map((r) => ({
+    likes: r.likes,
+    comments: r.comments,
+    views: r.reel_views,
+  }));
+  const clientValues: Record<string, number | null> = {
+    resposta_da_base: respostaDaBaseMedian(posts, followers),
+    views_por_seguidor: viewsPorSeguidorMedian(posts, followers),
+    intencao_nos_comentarios: null,
+    tom_dos_comentarios: null,
+  };
+
+  const items: CommentReferenceItem[] = [];
+  for (const m of COMMENT_REFERENCE_METRICS) {
+    // order id desc: a execução mais recente vence se houver duplicata.
+    const ref = (refRes.data ?? []).find((r) => r.metric_name === m.metric);
+    if (!ref) continue;
+    const p = {
+      p25: ref.percentile_p25,
+      p50: ref.percentile_p50,
+      p75: ref.percentile_p75,
+    };
+    const clientValue = clientValues[m.metric] ?? null;
+    const position = percentilePosition(clientValue, p);
+    items.push({
+      metric: m.metric,
+      label: m.label,
+      unit: m.unit,
+      clientValue,
+      ...p,
+      sampleCount: ref.sample_count,
+      positionText: position,
+      note:
+        clientValue == null
+          ? `${NOT_COMPUTED_NOTE} ${VALIDATION_NOTE}`
+          : VALIDATION_NOTE,
+    });
+  }
+  return items;
+}
 
 export async function fetchSectorPositioning(
   clientId: string,
@@ -1390,10 +1582,11 @@ export async function fetchSectorPositioning(
   end: string,
   db: OrbitDbClient = supabase,
 ): Promise<SectorPositioning | null> {
-  const [onboarding, snapshot, algoRisk] = await Promise.all([
+  const [onboarding, snapshot, algoRisk, commentReference] = await Promise.all([
     fetchClientOnboarding(clientId, db),
     fetchLatestEngagementScoreSnapshot(clientId, start, end, db),
     fetchAlgoRiskScore(clientId, db),
+    fetchCommentReference(clientId, start, end, db),
   ]);
 
   if (!onboarding) return null;
@@ -1445,6 +1638,7 @@ export async function fetchSectorPositioning(
     polemicScore,
     polemicScoreValue: snapshot?.polemicScorePct ?? null,
     algoRisk,
+    commentReference,
     engagementPeriodNotes: onboarding.q1_engagement_period_notes,
     contentProxyNotes: onboarding.q2_content_proxy_notes,
     misalignmentNotes: onboarding.q3_misalignment_notes,
