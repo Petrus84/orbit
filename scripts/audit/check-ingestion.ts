@@ -19,23 +19,24 @@
 //   (a coluna que de fato existe e representa "quando o dado entrou").
 // ============================================================================
 
-import { createClient } from '@supabase/supabase-js'
-import dotenv from 'dotenv'
+import { createClient } from "@supabase/supabase-js";
+import dotenv from "dotenv";
 
-dotenv.config({ path: '.env.local' })
+dotenv.config({ path: ".env.local" });
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
+  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+);
 
 async function check() {
-  console.log('🔍 Verificando dados inseridos...\n')
+  console.log("🔍 Verificando dados inseridos...\n");
 
   const { data, error } = await supabase
-    .schema('orbit')
-    .from('raw_ig_ingest')
-    .select(`
+    .schema("orbit")
+    .from("raw_ig_ingest")
+    .select(
+      `
       id,
       client_id,
       import_session,
@@ -48,40 +49,52 @@ async function check() {
       parse_error,
       parsed_into,
       clients:client_id ( handle )
-    `)
-    .order('ingested_at', { ascending: false })
+    `,
+    )
+    .order("ingested_at", { ascending: false });
 
   if (error) {
-    console.error('❌ Erro na query:', error)
-    return
+    console.error("❌ Erro na query:", error);
+    return;
   }
 
-  console.log(`Total de registros encontrados: ${data?.length || 0}\n`)
+  console.log(`Total de registros encontrados: ${data?.length || 0}\n`);
 
   if (data && data.length > 0) {
-    console.table(data.map(row => {
-      // O join client:client_id vem como objeto (ou array, dependendo da
-      // versão do supabase-js) — normaliza pros dois casos sem usar `any`.
-      const clientRel = row.clients as { handle?: string } | { handle?: string }[] | null
-      const handle = Array.isArray(clientRel) ? clientRel[0]?.handle : clientRel?.handle
+    console.table(
+      data.map((row) => {
+        // O join client:client_id vem como objeto (ou array, dependendo da
+        // versão do supabase-js) — normaliza pros dois casos sem usar `any`.
+        const clientRel = row.clients as
+          { handle?: string } | { handle?: string }[] | null;
+        const handle = Array.isArray(clientRel)
+          ? clientRel[0]?.handle
+          : clientRel?.handle;
 
-      return {
-        id: row.id.slice(0, 8) + '...',
-        handle: handle ?? row.client_id.slice(0, 8) + '...',
-        ingest_script: row.ingest_script,
-        source_file: row.source_file,
-        ingested_at: row.ingested_at,
-        parsed: row.parsed,
-        confidence: row.confidence_level,
-        parse_error: row.parse_error ?? '',
-      }
-    }))
+        return {
+          id: row.id.slice(0, 8) + "...",
+          handle: handle ?? row.client_id.slice(0, 8) + "...",
+          ingest_script: row.ingest_script,
+          source_file: row.source_file,
+          ingested_at: row.ingested_at,
+          parsed: row.parsed,
+          confidence: row.confidence_level,
+          parse_error: row.parse_error ?? "",
+        };
+      }),
+    );
   } else {
-    console.log('⚠️  Nenhum registro encontrado em orbit.raw_ig_ingest')
-    console.log('   Isso pode significar: (a) os scripts de ingest ainda não gravam')
-    console.log('   nessa tabela de auditoria (só nas tabelas finais), ou (b) realmente')
-    console.log('   não há nada ingerido ainda. Confirme com uma query direta se tiver dúvida.')
+    console.log("⚠️  Nenhum registro encontrado em orbit.raw_ig_ingest");
+    console.log(
+      "   Isso pode significar: (a) os scripts de ingest ainda não gravam",
+    );
+    console.log(
+      "   nessa tabela de auditoria (só nas tabelas finais), ou (b) realmente",
+    );
+    console.log(
+      "   não há nada ingerido ainda. Confirme com uma query direta se tiver dúvida.",
+    );
   }
 }
 
-check()
+check();

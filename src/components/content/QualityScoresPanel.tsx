@@ -15,17 +15,14 @@
      derivados por indexação.
    ========================================================================== */
 
-import { GlassCard }     from '@/components/common/GlassCard'
-import { GlowingNumber } from '@/components/kpi/GlowingNumber'
-import styles            from './QualityScoresPanel.module.css'
-import type {
-  GlowColor,
-  QualityScoreItem,
-  StatusVariant,
-} from '@/types/orbit'
+import { GlassCard } from "@/components/common/GlassCard";
+import { GlowingNumber } from "@/components/kpi/GlowingNumber";
+import { provenanceLine } from "@/lib/provenanceText";
+import styles from "./QualityScoresPanel.module.css";
+import type { GlowColor, QualityScoreItem, StatusVariant } from "@/types/orbit";
 
 export interface QualityScoresPanelProps {
-  scores: QualityScoreItem[]
+  scores: QualityScoreItem[];
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -38,7 +35,7 @@ export interface QualityScoresPanelProps {
  * o `?? ''` elimina o undefined (classe ausente = nenhuma classe aplicada).
  */
 function cls(name: string): string {
-  return styles[name] ?? ''
+  return styles[name] ?? "";
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -46,26 +43,26 @@ function cls(name: string): string {
    ═══════════════════════════════════════════════════════════════ */
 
 const GLOW_COLOR_CLASS_MAP: Record<GlowColor, string> = {
-  cyan:  cls('boxCyan'),
-  red:   cls('boxRed'),
-  gold:  cls('boxGold'),
-  green: cls('boxGreen'),
-  none:  cls('boxNeutral'),
-}
+  cyan: cls("boxCyan"),
+  red: cls("boxRed"),
+  gold: cls("boxGold"),
+  green: cls("boxGreen"),
+  none: cls("boxNeutral"),
+};
 
 const GLOW_COLOR_STATUS_MAP: Record<GlowColor, string> = {
-  cyan:  cls('statusOk'),
-  gold:  cls('statusWarn'),
-  red:   cls('statusDanger'),
-  green: cls('statusSuccess'),
-  none:  cls('statusNeutral'),
-}
+  cyan: cls("statusOk"),
+  gold: cls("statusWarn"),
+  red: cls("statusDanger"),
+  green: cls("statusSuccess"),
+  none: cls("statusNeutral"),
+};
 
 const STATUS_ICON: Record<StatusVariant, string> = {
-  ok: '▲',
-  warn: '▲',
-  neutral: '—',
-}
+  ok: "▲",
+  warn: "▲",
+  neutral: "—",
+};
 
 /* ═══════════════════════════════════════════════════════════════
    RWP-1 — FILTRO DE SCORES OCULTOS NO OVERVIEW
@@ -80,11 +77,11 @@ const STATUS_ICON: Record<StatusVariant, string> = {
  */
 function normalizeForMatch(text: string): string {
   return text
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, ' ')
-    .trim()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
 }
 
 /**
@@ -98,16 +95,16 @@ function normalizeForMatch(text: string): string {
 const HIDDEN_SCORE_PATTERNS: readonly RegExp[] = [
   /\butil(?:idade|ity)\b/,
   /\bplay ?to ?view\b/,
-]
+];
 
 function isHiddenText(text: string): boolean {
-  const normalized = normalizeForMatch(text)
-  return HIDDEN_SCORE_PATTERNS.some((pattern) => pattern.test(normalized))
+  const normalized = normalizeForMatch(text);
+  return HIDDEN_SCORE_PATTERNS.some((pattern) => pattern.test(normalized));
 }
 
 /** Um score é visível se NEM o id NEM o label casam com padrão oculto. */
 function isScoreVisible(score: QualityScoreItem): boolean {
-  return !isHiddenText(score.id) && !isHiddenText(score.label)
+  return !isHiddenText(score.id) && !isHiddenText(score.label);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -115,11 +112,11 @@ function isScoreVisible(score: QualityScoreItem): boolean {
    ═══════════════════════════════════════════════════════════════ */
 
 function getScoreBoxClass(glowColor: GlowColor): string {
-  return GLOW_COLOR_CLASS_MAP[glowColor]
+  return GLOW_COLOR_CLASS_MAP[glowColor];
 }
 
 function getStatusClass(glowColor: GlowColor): string {
-  return GLOW_COLOR_STATUS_MAP[glowColor]
+  return GLOW_COLOR_STATUS_MAP[glowColor];
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -128,7 +125,7 @@ function getStatusClass(glowColor: GlowColor): string {
 
 export function QualityScoresPanel({ scores }: QualityScoresPanelProps) {
   // RWP-1: filtra só na renderização; `scores` não é alterado.
-  const visibleScores = scores.filter(isScoreVisible)
+  const visibleScores = scores.filter(isScoreVisible);
 
   return (
     <GlassCard glowColor="cyan" className={styles.panel}>
@@ -138,12 +135,15 @@ export function QualityScoresPanel({ scores }: QualityScoresPanelProps) {
         {visibleScores.map((score) => (
           <div
             key={score.id}
-            className={[styles.scoreBox, getScoreBoxClass(score.glowColor)].join(' ')}
+            className={[
+              styles.scoreBox,
+              getScoreBoxClass(score.glowColor),
+            ].join(" ")}
           >
             <p className={styles.scoreLabel}>{score.label}</p>
 
             <div className={styles.scoreValue}>
-              {typeof score.value === 'number' ? (
+              {typeof score.value === "number" ? (
                 <GlowingNumber
                   value={score.value}
                   unit={score.unit}
@@ -159,7 +159,7 @@ export function QualityScoresPanel({ scores }: QualityScoresPanelProps) {
               className={[
                 styles.statusText,
                 getStatusClass(score.glowColor),
-              ].join(' ')}
+              ].join(" ")}
             >
               {STATUS_ICON[score.statusVariant]} {score.statusText}
             </p>
@@ -171,9 +171,18 @@ export function QualityScoresPanel({ scores }: QualityScoresPanelProps) {
             {score.referenceNote && (
               <p className={styles.referenceNote}>{score.referenceNote}</p>
             )}
+
+            {score.provenance && (
+              <p
+                className={styles.referenceNote}
+                title={score.provenance.method}
+              >
+                {provenanceLine(score.provenance)}
+              </p>
+            )}
           </div>
         ))}
       </div>
     </GlassCard>
-  )
+  );
 }

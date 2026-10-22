@@ -1,47 +1,31 @@
 /**
  * ============================================================================
- * ClientCard — Refatoração 15/08/2026 + Integração Snapshot 04/09/2026
+ * ClientCard
  * ============================================================================
  *
+ * v2.3.0 (tipagem de status):
+ * - 🐛 CORRIGIDO: o componente tratava 'unknown' como membro de
+ *   ClientHealthStatus (que é healthy/warning/critical/info). Agora o status
+ *   de domínio é `ClientHealthStatus | null` e a conversão para o vocabulário
+ *   visual é feita por toSemaphoreStatus() (null → 'unknown').
+ * - Prop `healthStatus` aceita `null` (Client.status é nullable).
+ * - Mapas de classe cobrem 'info'.
+ *
  * v2.2.0 (17/10/2026 — formatação pt-BR + vocabulário único):
- * - Saldo de seguidores passa por formatCompactPtBr ("1,7 mil", não "1.7k").
- * - Labels das métricas via term() (lib/ui-labels) e "Último Snapshot" vira
- *   "Dados até". Null continua '—' (regra v2.1.0 preservada).
+ * - Saldo de seguidores via formatCompactPtBr; labels via term().
  *
  * v2.1.0 (13/10/2026 — NULL ≠ 0):
- * - 🐛 CORRIGIDO: engagement_real e follower_balance nulos apareciam como
- *   "0.0%" / "+0". formatPercent/formatFollowerBalance agora aceitam null e
- *   devolvem '—' (mesma regra que o CTR já tinha). Zero real continua "0.0%".
- * - Requer ClientMetrics com campos `number | null` (ver PATCHES.md).
+ * - engagement_real e follower_balance nulos → '—'. Zero real continua "0.0%".
  *
- * v2.0.1 (integração snapshot — 04/09/2026):
- * - ✅ MANTIDO: CSS Module, Semaphore, Router, Image, MetricCol
- * - ✅ NOVO: Props opcionais healthStatus, snapshotCount, lastSnapshotDate
- * - ✅ NOVO: Fallbacks que priorizam props, depois recorrem ao client
- * - ✅ NOVO: Snapshot info renderizado acima das métricas
- * - ✅ NOVO: Regra estrita para CTR: NULL/undefined → '—', 0 → '0.0%'
- *
- * v2.0.2 (SSOT vs protótipo — 07/09/2026):
- * - 🐛 CORRIGIDO: o protótipo (client-card) mostra o semáforo JUNTO com um
- *   badge de texto ("Crítico"/"Saudável"). O componente já tinha as classes
- *   prontas para isso (`.statusBadge`, `.statusHealthy`, `.statusWarning`,
- *   `.statusCritical`, `.statusUnknown` em ClientCard.module.css) mas nunca
- *   as usava — `showLabel` do Semaphore ficava fixo em `false` e o card
- *   renderizava só o círculo, sem rótulo. Adicionado o badge de status
- *   reaproveitando `STATUS_LABELS` (fonte única, já exportada por
- *   Semaphore.tsx) — não duplica vocabulário novo.
- *
- * v1.0.0 (15/08/2026):
- * O contrato de dados já estava certo: `Client` vem do barrel
- * (`../../types/client` → `orbit.ts`), sem redeclaração local.
- * Convertido para CSS Module consumindo `var(--token)` (REGRA-03).
+ * v2.0.x: props opcionais healthStatus/snapshotCount/lastSnapshotDate,
+ * badge de status com STATUS_LABELS, filete de acento por status.
  * ============================================================================
  */
 
 import React from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import Semaphore, { STATUS_LABELS } from "./Semaphore";
+import Semaphore, { STATUS_LABELS, toSemaphoreStatus } from "./Semaphore";
 import type { SemaphoreStatus } from "./Semaphore";
 import type { Client, ClientHealthStatus } from "@/types/client";
 import { term } from "@/lib/ui-labels";
@@ -50,7 +34,7 @@ import styles from "./ClientCard.module.css";
 
 export interface ClientCardProps {
   client: Client;
-  healthStatus?: ClientHealthStatus;
+  healthStatus?: ClientHealthStatus | null;
   snapshotCount?: number;
   lastSnapshotDate?: string | null;
 }
@@ -84,22 +68,20 @@ function formatDate(dateString: string | null | undefined): string {
   }
 }
 
-const STATUS_BADGE_CLASS: Record<ClientHealthStatus, string> = {
+const STATUS_BADGE_CLASS: Record<SemaphoreStatus, string> = {
   healthy: styles.statusHealthy ?? "",
   warning: styles.statusWarning ?? "",
   critical: styles.statusCritical ?? "",
+  info: styles.statusInfo ?? styles.statusUnknown ?? "",
   unknown: styles.statusUnknown ?? "",
 };
 
-// ✅ FIX (SSOT — 11/09/2026): `.accentHealthy/.accentWarning/.accentCritical/
-// .accentUnknown` já existiam em ClientCard.module.css (filete de 3px no
-// topo do card, cores --neon-cyan/--neon-gold/--neon-red) mas nunca eram
-// aplicadas aqui — CSS morto. Era a causa do card parecer monocromático
-// mesmo tendo os tokens de destaque prontos.
-const ACCENT_CLASS: Record<ClientHealthStatus, string> = {
+// Filete de 3px no topo do card (cores --neon-cyan/--neon-gold/--neon-red).
+const ACCENT_CLASS: Record<SemaphoreStatus, string> = {
   healthy: styles.accentHealthy ?? "",
   warning: styles.accentWarning ?? "",
   critical: styles.accentCritical ?? "",
+  info: styles.accentInfo ?? styles.accentUnknown ?? "",
   unknown: styles.accentUnknown ?? "",
 };
 
@@ -137,21 +119,20 @@ export default function ClientCard({
 }: ClientCardProps): React.ReactElement {
   const router = useRouter();
 
-  // ✅ Fallbacks que priorizam as props e recorrem ao objeto client
-  const healthStatus: ClientHealthStatus =
-    propHealthStatus ?? client.status ?? "unknown";
+  // Props têm prioridade; depois o client. null (sem dado) vira 'unknown'
+  // somente aqui, na borda visual.
+  const semaphoreStatus: SemaphoreStatus = toSemaphoreStatus(
+    propHealthStatus ?? client.status,
+  );
   const snapshotCount = propSnapshotCount ?? client.snapshotCount ?? 0;
   const lastSnapshotDate =
     propLastSnapshotDate ?? client.lastSnapshotDate ?? null;
-
-  // ✅ Cast seguro: healthStatus é ClientHealthStatus, que é compatível com SemaphoreStatus
-  const semaphoreStatus: SemaphoreStatus = healthStatus;
 
   return (
     <button
       type="button"
       onClick={() => router.push(`/clients/${client.id}`)}
-      className={`${styles.card} ${ACCENT_CLASS[healthStatus]}`}
+      className={`${styles.card} ${ACCENT_CLASS[semaphoreStatus]}`}
       aria-label={`Abrir cliente ${client.name}`}
     >
       <div className={styles.header}>
@@ -177,9 +158,9 @@ export default function ClientCard({
         <span className={styles.semaphoreWrap}>
           <Semaphore status={semaphoreStatus} showLabel={false} />
           <span
-            className={`${styles.statusBadge} ${STATUS_BADGE_CLASS[healthStatus]}`}
+            className={`${styles.statusBadge} ${STATUS_BADGE_CLASS[semaphoreStatus]}`}
           >
-            {STATUS_LABELS[healthStatus]}
+            {STATUS_LABELS[semaphoreStatus]}
           </span>
         </span>
       </div>

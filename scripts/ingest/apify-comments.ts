@@ -21,7 +21,9 @@ export interface CommentRow {
   ig_comment_id: string;
   comment_text: string;
   commented_at: string | null;
-  author_hash: string;
+  author_username: string;
+  /** Legado: só preenchido se COMMENT_HASH_SALT estiver definido. */
+  author_hash: string | null;
   is_owner_reply: boolean;
   likes_count: number | null;
 }
@@ -37,7 +39,7 @@ export function buildRows(
   clientId: string,
   postId: string,
   dbHandle: string,
-  salt: string,
+  salt?: string,
 ): CommentRow[] {
   const rows: CommentRow[] = [];
   for (const c of post.latestComments ?? []) {
@@ -52,7 +54,8 @@ export function buildRows(
       ig_comment_id: id,
       comment_text: text,
       commented_at: c.timestamp ?? null,
-      author_hash: hashAuthor(salt, author),
+      author_username: author,
+      author_hash: salt ? hashAuthor(salt, author) : null,
       is_owner_reply: author.toLowerCase() === dbHandle.toLowerCase(),
       likes_count: typeof c.likesCount === "number" ? c.likesCount : null,
     });

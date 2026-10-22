@@ -5,8 +5,10 @@ import type {
   SectorPositioning,
   ClassifiedMetric,
   CommentReferenceItem,
+  MetricProvenance,
 } from "@/types/orbit";
 import { term, AUSENCIA } from "@/lib/ui-labels";
+import { provenanceLine } from "@/lib/provenanceText";
 
 export interface SectorPositioningPanelProps {
   positioning: SectorPositioning;
@@ -48,6 +50,30 @@ const PROOF_LABEL: Record<string, string> = {
   nenhum_observavel: "Nenhum mecanismo observável",
 };
 
+// RN-23: proveniência dos cards de Benchmarking (ER Real, VPS, Polêmica).
+const BENCH_PROVENANCE: Record<"er" | "vps" | "pol", MetricProvenance> = {
+  er: {
+    source:
+      "ig_account_snapshots (snapshot mais recente do período) · classificação fn_classify_metric",
+    period: "snapshot",
+    method:
+      "(salvamentos + compartilhamentos + comentários) ÷ alcance × 100; sem benchmark empírico, só corte de gestão L2",
+  },
+  vps: {
+    source:
+      "ig_account_snapshots (snapshot mais recente do período) · classificação fn_classify_metric",
+    period: "snapshot",
+    method:
+      "(alcance × % do alcance em seguidores) ÷ seguidores × 100 (RN-20); sem benchmark empírico, só corte de gestão L2",
+  },
+  pol: {
+    source: "cálculo por post (ig_posts) · classificação fn_classify_metric",
+    period: "header_window",
+    method:
+      "mediana por post de comentários ÷ curtidas × 100 (curtidas > 0); régua do setor em validação",
+  },
+};
+
 const fmtValue = (v: number) =>
   `${v.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%`;
 
@@ -55,6 +81,7 @@ function metricCard(
   label: string,
   value: number | null,
   metric: ClassifiedMetric | null,
+  provenance?: MetricProvenance,
 ) {
   const isAmar = metric?.semaphore === "ambar";
   const isVerm = metric?.semaphore === "vermelho";
@@ -74,6 +101,11 @@ function metricCard(
         {value != null ? fmtValue(value) : "—"}
       </p>
       {hasVerdict && <span className={badgeCls}>{metric.statusText}</span>}
+      {provenance && (
+        <p className={styles.refNote} title={provenance.method}>
+          {provenanceLine(provenance)}
+        </p>
+      )}
     </div>
   );
 }
@@ -108,7 +140,10 @@ function commentReferenceCard(item: CommentReferenceItem) {
     <div className={styles.metricCard} key={item.metric}>
       <p className={styles.metricLabel}>{item.label}</p>
       <p className={styles.metricValue}>
-        {item.clientValue != null ? fmtRef(item.clientValue, item.unit) : "—"}
+        {item.valueText ??
+          (item.clientValue != null
+            ? fmtRef(item.clientValue, item.unit)
+            : "—")}
       </p>
       {item.positionText && (
         <span className={styles.badgeNeutral}>{item.positionText}</span>
@@ -124,6 +159,15 @@ function commentReferenceCard(item: CommentReferenceItem) {
         </p>
       )}
       <p className={styles.refNote}>{item.note}</p>
+      {item.provenance && (
+        <p className={styles.refNote} title={item.provenance.method}>
+          Fonte: {item.provenance.source} · Período:{" "}
+          {item.provenance.period === "snapshot"
+            ? "snapshot (não segue o cabeçalho)"
+            : "janela do cabeçalho"}{" "}
+          · Método: {item.provenance.method}
+        </p>
+      )}
     </div>
   );
 }
@@ -198,16 +242,19 @@ export function SectorPositioningPanel({
           "ER real",
           positioning.erReal?.value ?? null,
           positioning.erReal ?? null,
+          BENCH_PROVENANCE.er,
         )}
         {metricCard(
           "VPS",
           positioning.vps?.value ?? null,
           positioning.vps ?? null,
+          BENCH_PROVENANCE.vps,
         )}
         {metricCard(
           "Score polêmica",
           positioning.polemicScore?.value ?? null,
           positioning.polemicScore ?? null,
+          BENCH_PROVENANCE.pol,
         )}
       </div>
 

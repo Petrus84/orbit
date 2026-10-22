@@ -6,6 +6,25 @@ import styles from "./FormatPerformanceTable.module.css";
 import { SEVERITY_TO_GLOW, type GlowColor } from "@/types/orbit";
 import type { FormatPerformanceRow, PostSummary } from "@/types/orbit";
 import { formatPtBr } from "@/lib/format";
+import { provenanceLine } from "@/lib/provenanceText";
+import type { MetricProvenance } from "@/types/orbit";
+
+// RN-23: proveniência da tabela. Posts e interações vêm de ig_posts no
+// cabeçalho; a tendência vem da view, com janela própria (todo o histórico).
+const COUNTS_PROVENANCE: MetricProvenance = {
+  source: "cálculo por post (ig_posts)",
+  period: "header_window",
+  method:
+    "posts por formato no cabeçalho; interações = curtidas + comentários + compartilhamentos + salvamentos nos posts com os quatro valores; mínimo 5 posts por formato",
+};
+const TREND_PROVENANCE: MetricProvenance = {
+  source: "orbit.v_format_performance",
+  period: "snapshot",
+  periodLabel:
+    "todo o histórico do formato (exibida só quando ele cabe no cabeçalho)",
+  method:
+    "média de utility_score_pct na 2ª metade cronológica contra a 1ª; ±15%; mínimo 2 posts com score por metade. utility_score_pct tem o defeito F6 do SSOT: a tendência não mede interações",
+};
 
 export interface FormatPerformanceTableProps {
   rows: FormatPerformanceRow[];
@@ -351,6 +370,12 @@ export function FormatPerformanceTable({
           })}
         </tbody>
       </table>
+      <p style={{ fontSize: 11, opacity: 0.7, marginTop: 8 }}>
+        Posts e interações — {provenanceLine(COUNTS_PROVENANCE)}
+      </p>
+      <p style={{ fontSize: 11, opacity: 0.7, marginTop: 4 }}>
+        Tendência — {provenanceLine(TREND_PROVENANCE)}
+      </p>
     </div>
   );
 }

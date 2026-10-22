@@ -135,18 +135,6 @@ function buildNormalizedLookup(
 }
 
 /* ── Dicionário canônico ────────────────────────────────────────────────────── */
-// Adicionar ao dicionário existente
-export const METRIC_KEYS_PT_BR = {
-  "Intervalo de datas": "DATE_RANGE",
-  "Curtidas do post": "LIKES_POST",
-  "Salvamentos do post": "SAVES_POST",
-  "Respostas ao story": "COMMENTS_POST", // ou similar
-  "Compartilhamento de story": "SHARES_POST",
-  "Curtidas em vídeos do Reels": "LIKES_REELS",
-  "Comentários em reels": "COMMENTS_REELS",
-  "Compartilhamentos de vídeos do Reels": "SHARES_REELS",
-  // ... adicionar mais conforme necessário
-};
 
 export const METRIC_KEYS = {
   // ── Interações de post ──────────────────────────────────────────────────

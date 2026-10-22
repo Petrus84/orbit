@@ -1,10 +1,10 @@
 /* ============================================================================
-   ORBIT · scripts/cleanup-example-seed.mjs
+   ORBIT · scripts/db/cleanup-example-seed.mjs
    P0 — v8.2, item "route.ts (seed) → DELETE → Remover example.com"
 
    Contexto: não existe nenhum route.ts de seed no projeto hoje (auditado —
    o único route.ts é src/app/api/admin/clients/route.ts, sem relação com
-   isso), e scripts/seed-dynamic.ts não insere example.com. Os registros de
+   isso), e scripts/db/seed-dynamic.ts não insere example.com. Os registros de
    orbit.alerts com action_url em example.com/example.org/localhost são
    sobra manual de teste (check_seed.mjs / check_seed_fixed.mjs só liam,
    nunca apagavam). Esse script fecha o ciclo: lê, mostra, e só apaga com
@@ -17,8 +17,8 @@
    é "zero example.com", não "zero example.com visível".
 
    Uso:
-     node scripts/cleanup-example-seed.mjs              # dry-run (só lista)
-     node scripts/cleanup-example-seed.mjs --confirm     # apaga de verdade
+     node scripts/db/cleanup-example-seed.mjs              # dry-run (só lista)
+     node scripts/db/cleanup-example-seed.mjs --confirm     # apaga de verdade
    ========================================================================== */
 
 import { createClient } from '@supabase/supabase-js'
@@ -84,7 +84,7 @@ async function main() {
 
   if (!CONFIRM) {
     console.log('ℹ️  Dry-run (nada apagado). Rode com --confirm para apagar de verdade:')
-    console.log('    node scripts/cleanup-example-seed.mjs --confirm')
+    console.log('    node scripts/db/cleanup-example-seed.mjs --confirm')
     return
   }
 

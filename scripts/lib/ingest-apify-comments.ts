@@ -27,7 +27,7 @@ import {
   qualifiedPosts,
   type ApifyPost,
   type CommentRow,
-} from "./apify-comments";
+} from "../ingest/apify-comments";
 
 dotenv.config({ path: ".env.local" });
 

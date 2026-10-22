@@ -24,9 +24,9 @@
 //  - ingest_script = 'manual' (convenção dos CSVs anteriores; evita alterar o enum).
 //
 // Uso:
-//   npx tsx scripts/ingest-meta-csv.ts --file="C:\Projetos\Export_clients\Acenxovais\Sep-09-2026_Oct-06-2026_1574795624332093.csv"
-//   npx tsx scripts/ingest-meta-csv.ts --file="..." --apply
-//   npx tsx scripts/ingest-meta-csv.ts --file="..." --parse-only      # só valida o arquivo, sem banco
+//   npx tsx scripts/ingest/ingest-meta-csv.ts --file="C:\Projetos\Export_clients\Acenxovais\Sep-09-2026_Oct-06-2026_1574795624332093.csv"
+//   npx tsx scripts/ingest/ingest-meta-csv.ts --file="..." --apply
+//   npx tsx scripts/ingest/ingest-meta-csv.ts --file="..." --parse-only      # só valida o arquivo, sem banco
 //
 // Opções: --client=<handle> (padrão: "Nome de usuário da conta" do CSV)  --client-id=<uuid> (trava de segurança)
 //         --tz=<IANA>  --allow-partial  --repair-captions  --impressions-from-views=reel|all|none
@@ -48,7 +48,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { createHash } from "crypto";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
-import { resolveClientId } from "./lib/resolveClientId";
+import { resolveClientId } from "../lib/resolveClientId";
 
 dotenv.config({ path: ".env.local" });
 
@@ -139,6 +139,11 @@ const STORY_REQUIRED: string[] = [
   COL.shares,
 ];
 const REQUIRED: string[] = STORIES ? STORY_REQUIRED : Object.values(COL);
+
+// A Meta omite a(s) última(s) célula(s) VAZIA(S) de algumas linhas (ex.: stories com "Toques em figurinhas"
+// em branco chegam com 18 células em vez de 19). Só toleramos isso para colunas FINAIS e OPCIONAIS;
+// qualquer outro desalinhamento continua sendo erro (nunca chutar o alinhamento).
+const TRAILING_OPTIONAL: string[] = ["Toques em figurinhas"];
 
 interface ParsedPost {
   line: number;
@@ -513,6 +518,12 @@ function parsePosts(text: string): {
   for (let r = 1; r < table.length; r++) {
     const cells = table[r]!;
     const line = r + 1;
+    if (cells.length < header.length) {
+      const faltam = header.slice(cells.length);
+      if (faltam.every((h) => TRAILING_OPTIONAL.includes(h))) {
+        while (cells.length < header.length) cells.push("");
+      }
+    }
     if (cells.length !== header.length) {
       throw new Error(
         `Linha ${line}: ${cells.length} colunas, esperado ${header.length} (arquivo corrompido?)`,

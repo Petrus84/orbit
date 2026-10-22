@@ -29,6 +29,19 @@ import type {
   GlowColor,
 } from "@/types/orbit";
 import styles from "./PostingProfilePanel.module.css";
+import { provenanceLine } from "@/lib/provenanceText";
+import type { MetricProvenance } from "@/types/orbit";
+
+// RN-23 / D-21: cadência = posts do cabeçalho; referência = view com período
+// fixo. A view não expõe benchmark_run_id (proveniência de run pendente).
+const CADENCE_PROVENANCE: MetricProvenance = {
+  source:
+    "cálculo por post (ig_posts) · referência orbit.v_benchmark_cadence_by_segment",
+  period: "header_window",
+  periodLabel: "posts do cabeçalho; referência em período fixo informado acima",
+  method:
+    "posts ÷ semanas do período; ritmo ativo = do primeiro ao último post; compara com P25–P75 do segmento (mínimo 5 posts); run da referência ainda não exposto pela view (D-21)",
+};
 
 const FORMAT_LABEL: Record<string, string> = {
   reel: "Reels",
@@ -294,6 +307,8 @@ export function PostingProfilePanel({
           )}
         </div>
       </div>
+
+      <p className={styles.note}>{provenanceLine(CADENCE_PROVENANCE)}</p>
 
       <p className={styles.note}>
         {benchmark

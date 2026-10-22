@@ -42,6 +42,8 @@ function mapKPICardDataToKPI(data: KPICardData): KPI {
     // (Hipótese), não o melhor. Ver KPICard.tsx FLAG_TOKENS.
     flagLevel: (data.sourceLevel as "L0" | "L1" | "L2") || "L2",
     ...(data.unit ? { unit: data.unit } : {}),
+    ...(data.hasComparison === false ? { hasComparison: false } : {}),
+    ...(data.provenance ? { provenance: data.provenance } : {}),
   };
 }
 

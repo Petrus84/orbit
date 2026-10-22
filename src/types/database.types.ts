@@ -2530,6 +2530,118 @@ export type Database = {
           },
         ];
       };
+      ig_post_comments: {
+        Row: {
+          author_hash: string | null;
+          author_username: string | null;
+          client_id: string;
+          collected_at: string;
+          comment_text: string;
+          commented_at: string | null;
+          id: string;
+          ig_comment_id: string;
+          ig_shortcode: string;
+          is_owner_reply: boolean;
+          likes_count: number | null;
+          post_id: string;
+          source: string;
+        };
+        Insert: {
+          author_hash?: string | null;
+          author_username?: string | null;
+          client_id: string;
+          collected_at?: string;
+          comment_text: string;
+          commented_at?: string | null;
+          id?: string;
+          ig_comment_id: string;
+          ig_shortcode: string;
+          is_owner_reply?: boolean;
+          likes_count?: number | null;
+          post_id: string;
+          source?: string;
+        };
+        Update: {
+          author_hash?: string | null;
+          author_username?: string | null;
+          client_id?: string;
+          collected_at?: string;
+          comment_text?: string;
+          commented_at?: string | null;
+          id?: string;
+          ig_comment_id?: string;
+          ig_shortcode?: string;
+          is_owner_reply?: boolean;
+          likes_count?: number | null;
+          post_id?: string;
+          source?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "ig_post_comments_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "clients";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ig_post_comments_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_avatar_alignment";
+            referencedColumns: ["client_id"];
+          },
+          {
+            foreignKeyName: "ig_post_comments_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_avatar_alignment";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ig_post_comments_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_avatar_alignment_latest";
+            referencedColumns: ["client_id"];
+          },
+          {
+            foreignKeyName: "ig_post_comments_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_carteira_clients";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ig_post_comments_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_client_health";
+            referencedColumns: ["client_id"];
+          },
+          {
+            foreignKeyName: "ig_post_comments_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_client_metrics";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ig_post_comments_post_id_fkey";
+            columns: ["post_id"];
+            isOneToOne: false;
+            referencedRelation: "ig_posts";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ig_post_comments_post_id_fkey";
+            columns: ["post_id"];
+            isOneToOne: false;
+            referencedRelation: "v_boost_candidates";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       ig_posts: {
         Row: {
           boost_conditions_met: number;
@@ -4108,7 +4220,7 @@ export type Database = {
           post_count: number | null;
           save_count: number | null;
           share_count: number | null;
-          trend_color: string | null;
+          trend_color: Database["public"]["Enums"]["glow_color"] | null;
           trend_label: string | null;
         };
         Relationships: [
@@ -4471,9 +4583,9 @@ export type Database = {
           ref_validation_status: string | null;
           score_key: string | null;
           score_value: number | null;
-          semaphore_key: string | null;
+          semaphore_key: Database["public"]["Enums"]["semaphore_color"] | null;
           status_text: string | null;
-          status_variant: string | null;
+          status_variant: Database["public"]["Enums"]["status_variant"] | null;
         };
         Relationships: [
           {
@@ -4752,6 +4864,43 @@ export type Database = {
       [_ in never]: never;
     };
   };
+  public: {
+    Tables: {
+      [_ in never]: never;
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      show_limit: { Args: never; Returns: number };
+      show_trgm: { Args: { "": string }; Returns: string[] };
+    };
+    Enums: {
+      alert_action_variant: "primary" | "secondary" | "danger";
+      alert_severity: "critical" | "warning" | "info";
+      alignment_color: "green" | "amber" | "red";
+      campaign_objective:
+        | "OUTREACH"
+        | "TRAFFIC"
+        | "ENGAGEMENT"
+        | "LEADS"
+        | "APP_PROMOTION"
+        | "SALES";
+      campaign_status: "ACTIVE" | "PAUSED" | "ARCHIVED";
+      delta_direction: "up" | "down" | "neutral";
+      glow_color: "cyan" | "red" | "gold" | "none";
+      google_ads_kpi_status: "ok" | "warn" | "error";
+      health_status: "critical" | "warning" | "healthy";
+      meta_kpi_status: "green" | "amber" | "red" | "gray";
+      semaphore_color: "verde" | "ambar" | "vermelho";
+      source_level: "L0" | "L1" | "L2";
+      status_variant: "ok" | "warn" | "neutral";
+      trend_color: "cyan" | "red" | "gold";
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
+  };
 };
 
 type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">;
@@ -4940,6 +5089,31 @@ export const Constants = {
         "manual_input",
       ],
       semaphore_color: ["verde", "ambar", "vermelho"],
+    },
+  },
+  public: {
+    Enums: {
+      alert_action_variant: ["primary", "secondary", "danger"],
+      alert_severity: ["critical", "warning", "info"],
+      alignment_color: ["green", "amber", "red"],
+      campaign_objective: [
+        "OUTREACH",
+        "TRAFFIC",
+        "ENGAGEMENT",
+        "LEADS",
+        "APP_PROMOTION",
+        "SALES",
+      ],
+      campaign_status: ["ACTIVE", "PAUSED", "ARCHIVED"],
+      delta_direction: ["up", "down", "neutral"],
+      glow_color: ["cyan", "red", "gold", "none"],
+      google_ads_kpi_status: ["ok", "warn", "error"],
+      health_status: ["critical", "warning", "healthy"],
+      meta_kpi_status: ["green", "amber", "red", "gray"],
+      semaphore_color: ["verde", "ambar", "vermelho"],
+      source_level: ["L0", "L1", "L2"],
+      status_variant: ["ok", "warn", "neutral"],
+      trend_color: ["cyan", "red", "gold"],
     },
   },
 } as const;

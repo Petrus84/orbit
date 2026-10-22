@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 import {
+  commentTextStateNote,
   percentilePosition,
+  postsComComentario,
+  postsComComentarioText,
+  refNullReason,
   respostaDaBaseMedian,
   viewsPorSeguidorMedian,
   type RefPost,
@@ -57,5 +61,60 @@ describe("percentilePosition", () => {
   it("sem valor ou sem régua => null", () => {
     expect(percentilePosition(null, ref)).toBeNull();
     expect(percentilePosition(1, { p25: null, p50: 1, p75: 2 })).toBeNull();
+  });
+});
+
+describe("postsComComentario (RN-21)", () => {
+  const c = (n: number | null) => ({ comments: n });
+  it("nulo fica fora do denominador: 3 de 18 (17%)", () => {
+    const posts = [
+      ...Array.from({ length: 15 }, () => c(0)),
+      c(2),
+      c(2),
+      c(1),
+      c(null),
+    ];
+    const r = postsComComentario(posts);
+    expect(r).toMatchObject({ withComment: 3, valid: 18, total: 19 });
+    expect(postsComComentarioText(r).note).toBe(
+      "3 de 18 posts (17%) têm comentário",
+    );
+  });
+  it("nenhum com comentário => texto sem percentual", () => {
+    const r = postsComComentario(Array.from({ length: 19 }, () => c(0)));
+    expect(postsComComentarioText(r).note).toBe("0 de 19 posts têm comentário");
+  });
+  it("menos de 5 posts válidos => amostra insuficiente", () => {
+    const r = postsComComentario([c(1), c(0), c(null)]);
+    expect(postsComComentarioText(r).note).toBe(
+      "Amostra insuficiente: 2 de 5 posts",
+    );
+  });
+  it("todos nulos => não calculado, nunca zero", () => {
+    const r = postsComComentario([c(null), c(null)]);
+    expect(r.state).toBe("not_collected");
+    expect(postsComComentarioText(r).valueText).toBe("—");
+  });
+});
+
+describe("textos de estado (RN-22)", () => {
+  it("Intenção e Tom sem texto coletado", () => {
+    const t = "Não calculado: sem texto de comentários coletado";
+    expect(commentTextStateNote("intencao_nos_comentarios", 0)).toBe(t);
+    expect(commentTextStateNote("tom_dos_comentarios", 0)).toBe(t);
+  });
+  it("Intenção com menos de 30 comentários; Tom não liberado", () => {
+    expect(commentTextStateNote("intencao_nos_comentarios", 12)).toBe(
+      "Amostra insuficiente: 12 de 30 comentários",
+    );
+    expect(commentTextStateNote("tom_dos_comentarios", 12)).toBe(
+      "Não liberado para cor ou Ação",
+    );
+  });
+  it("views por seguidor com 3 Reels => amostra insuficiente", () => {
+    const posts = [1, 2, 3].map((v) => ({ likes: 1, comments: 0, views: v }));
+    expect(refNullReason(posts, 1804, "views")).toBe(
+      "Amostra insuficiente: 3 de 5 posts",
+    );
   });
 });

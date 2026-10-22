@@ -1,10 +1,10 @@
-// scripts/copy-audit-neuromarketing.mjs
+// scripts/copy/copy-audit-neuromarketing.mjs
 // Auditoria de Copy com Foco em Neuromarketing para Português BR
 // Uso:
-//   node scripts/copy-audit-neuromarketing.mjs
-//   node scripts/copy-audit-neuromarketing.mjs --only-flagged
-//   node scripts/copy-audit-neuromarketing.mjs --dir=src/components --include-tests
-//   node scripts/copy-audit-neuromarketing.mjs --verbose
+//   node scripts/copy/copy-audit-neuromarketing.mjs
+//   node scripts/copy/copy-audit-neuromarketing.mjs --only-flagged
+//   node scripts/copy/copy-audit-neuromarketing.mjs --dir=src/components --include-tests
+//   node scripts/copy/copy-audit-neuromarketing.mjs --verbose
 // Saída: reports/copy-audit.csv, reports/copy-audit.md, reports/copy-audit-recomendacoes.json
 
 import fs from 'node:fs'

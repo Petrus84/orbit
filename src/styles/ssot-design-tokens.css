@@ -29,13 +29,14 @@
   --color-pink-rgb: 255, 105, 180;
   --color-blue-rgb: 74, 144, 255;
   --gradient-sheen: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.1),
-      transparent
-    )
-    /* ═══════════════════════════════════════════════════════════════
+    180deg,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+
+  /* ═══════════════════════════════════════════════════════════════
      BORDERS (SSOT) — sem alteração
-     ══════════════════════════════════════════════
+     ═══════════════════════════════════════════════════════════════ */
 
   --line: #2a2a35;
   --line2: #33333f;
@@ -50,7 +51,7 @@
   /* ═══════════════════════════════════════════════════════════════
      TEXT (SSOT — Hierarchy com warmth) — sem alteração
      ═══════════════════════════════════════════════════════════════ */
-    --t0: #f0efe8;
+  --t0: #f0efe8;
   --t1: #b8b6b0;
   --t2: #706e6a;
   --t3: #454340;
@@ -87,6 +88,10 @@
   --blue-text: #7eb3ff;
 
   --neon-cyan: #00ffff;
+  /* --neon-cyan-dark: hover state do tab ativo em Header.module.css (fundo
+     cyan escurece no hover); nunca tinha sido definida no SSOT (bug: o
+     background computava para transparent). */
+  --neon-cyan-dark: #00b8b8;
   --neon-red: #ff4444;
   --neon-gold: #ffc300;
   --neon-green: var(
@@ -98,8 +103,13 @@
      CORRIGIDO: escala inteira estava maior que o protótipo
      ═══════════════════════════════════════════════════════════════ */
 
-  --font: "DM Sans", sans-serif;
-  --mono: "DM Mono", monospace;
+  /* FIX: "DM Sans"/"DM Mono" nunca eram carregadas por nenhum font loader
+     (nem next/font, nem <link> do Google Fonts) — o navegador renderizava
+     no fallback genérico. Agora apontam para as CSS vars que o
+     next/font/google injeta via layout.tsx (ver RootLayout), que por sua
+     vez já inclui "DM Sans"/"DM Mono" na cadeia de fallback gerada. */
+  --font: var(--font-dm-sans), sans-serif;
+  --mono: var(--font-dm-mono), monospace;
 
   --font-family: var(--font);
   --font-mono: var(--mono);
@@ -161,6 +171,11 @@
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+  /* --shadow-soft: usada por ClientCard, Slider (tooltip), FunnelResult,
+     FunnelSimulator e FunnelScreen como sombra de repouso de cards/tooltips —
+     mais difusa e mais clara que --shadow-md, nunca tinha sido definida no
+     SSOT (bug: computava para "none"). */
+  --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.35);
 
   --shadow-glow-cyan: 0 0 20px rgba(0, 255, 255, 0.3);
   --shadow-glow-red: 0 0 20px rgba(255, 68, 68, 0.3);

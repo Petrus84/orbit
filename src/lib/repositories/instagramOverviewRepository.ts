@@ -80,6 +80,7 @@ import type {
   IGOverviewData,
   DashboardHeaderMeta,
   KPICardData,
+  MetricProvenance,
   FormatPerformanceRow,
   QualityScoreItem,
   InsightData,
@@ -101,8 +102,19 @@ import {
   VALIDATION_NOTE,
   type SemaphoreKey,
 } from "@/lib/scoreStatusCopy";
+// FIX (reforma do vocabulário de cor): substitui o dicionário local
+// SEMAPHORE_UI e o `as GlowColor` por validadores centralizados em orbit.ts.
 import {
+  SEMAPHORE_TO_GLOW,
+  toSemaphoreColor,
+  toGlowColor,
+} from "@/types/orbit";
+import {
+  commentTextStateNote,
   percentilePosition,
+  postsComComentario,
+  postsComComentarioText,
+  refNullReason,
   respostaDaBaseMedian,
   viewsPorSeguidorMedian,
 } from "@/lib/stats/commentReference";
@@ -142,6 +154,30 @@ const KPI_ORDER = [
   "alcance-90d",
   "cliques-no-link",
 ];
+
+// Proveniência por métrica de KPI (fonte, período e método declarados).
+// "saldo-90-dias" é só a CHAVE no banco. Pela definição real de
+// orbit.v_kpi_snapshots (conferida no banco em 21/10/2026): saldo = última
+// medição de orbit.client_followers_history MENOS a medição mais antiga dentro
+// dos 90 dias anteriores a ela. A âncora é a última medição (não o fim do
+// snapshot nem o cabeçalho) e só a linha do snapshot mais recente recebe o
+// valor. Com poucas medições próximas (a.c_enxovais: 07/10 e 09/10, ambas
+// 1.804) o resultado é 0, sem comprovar variação de 90 dias. Também não é a
+// mesma medida de v_client_metrics.follower_balance (novos − perdidos no
+// snapshot), então o rótulo não pode sugerir equivalência com ela.
+const KPI_DISPLAY: Partial<
+  Record<string, { label: string; provenance: MetricProvenance }>
+> = {
+  "saldo-90-dias": {
+    label: "SALDO DE SEGUIDORES (ENTRE MEDIÇÕES)",
+    provenance: {
+      source: "orbit.v_kpi_snapshots (metric_key = saldo-90-dias)",
+      period: "snapshot",
+      method:
+        "Última medição de seguidores menos a mais antiga nos 90 dias anteriores a ela (client_followers_history); pode cobrir bem menos que 90 dias e não segue o intervalo do cabeçalho.",
+    },
+  },
+};
 
 const FORMAT_LABEL: Record<string, string> = {
   reel: "Reels",
@@ -324,10 +360,11 @@ function kpiRowToCardData(row: KpiRow): KPICardData {
   const delta = toFiniteNumber(row.delta_pct);
   const semaphore: SemaphoreColor =
     (row.semaphore as SemaphoreColor) ?? "ambar";
+  const display = KPI_DISPLAY[key];
 
   return {
     id: row.id,
-    label: key.toUpperCase().replace(/-/g, " "),
+    label: display?.label ?? key.toUpperCase().replace(/-/g, " "),
     value: numVal,
     unit: null,
     delta,
@@ -348,6 +385,10 @@ function kpiRowToCardData(row: KpiRow): KPICardData {
     // genuinamente diferente de "calculou e é baixa confiança" — não
     // inventar um nível que o dado não afirma.
     sourceLevel: row.confidence_level ?? undefined,
+    ...(display ? { provenance: display.provenance } : {}),
+    // toFiniteNumber(null) vira 0: sem este flag um delta nulo aparecia como
+    // "0,0%". Nulo = sem comparação (SSOT v1.5, Seção 9).
+    ...(row.delta_pct == null ? { hasComparison: false } : {}),
   };
 }
 
@@ -774,22 +815,60 @@ async function fetchKPIs(
 // régua alguma. A cor do semáforo vem da view; a origem da régua ainda não é
 // exposta na tela (ver pendência "meta de gestão" no changelog).
 
+// RN-23: proveniência dos scores do Overview. Datas do snapshot entram em
+// periodLabel quando o score vem de v_quality_scores (snapshot).
+const ER_NO_SHARES_TEXT =
+  "Faltam compartilhamentos (interactions_shares) no snapshot. ER Real = (salvamentos + compartilhamentos + comentários) ÷ alcance.";
+
+const QUALITY_PROVENANCE: Record<string, MetricProvenance> = {
+  polemic_score_pct: {
+    source: "cálculo por post (ig_posts) · classificação fn_classify_metric",
+    period: "header_window",
+    method:
+      "mediana por post de comentários ÷ curtidas × 100 (curtidas > 0); régua do setor em validação. Não é o agregado do snapshot da v_quality_scores",
+  },
+  vps_pct: {
+    source: "orbit.v_quality_scores (snapshot)",
+    period: "snapshot",
+    method:
+      "calculado na view; fórmula oficial (RN-20): (alcance × % do alcance em seguidores) ÷ seguidores × 100; meta de gestão L2, não é benchmark. Alinhamento da view pendente (D-18)",
+  },
+  er_real_pct: {
+    source: "orbit.v_quality_scores (snapshot)",
+    period: "snapshot",
+    method:
+      "(salvamentos + compartilhamentos + comentários) ÷ alcance × 100; exige interactions_shares; meta de gestão L2, não é benchmark",
+  },
+};
+
+const fmtDateBR = (d: unknown): string =>
+  typeof d === "string" && /^\d{4}-\d{2}-\d{2}/.test(d)
+    ? `${d.slice(8, 10)}/${d.slice(5, 7)}/${d.slice(0, 4)}`
+    : "—";
+
 async function fetchQualityScores(
   clientId: string,
   start: string,
   end: string,
 ): Promise<QualityScoreItem[]> {
-  // Dicionário de cores do produto (Semaphore.tsx): verde = ciano, âmbar = dourado,
-  // vermelho = vermelho. A cor vem do semáforo real (status_text da view), NÃO
-  // de status_variant — ele funde vermelho em "warn" e âmbar em "neutral", o que
-  // pintava "vermelho" de dourado e "âmbar" sem cor.
+  // FIX (reforma do vocabulário de cor): a cor vem do semáforo real
+  // (semaphore_key da view), NÃO de status_variant — ele funde vermelho em
+  // "warn" e âmbar em "neutral", o que pintava "vermelho" de dourado e
+  // "âmbar" sem cor. O dicionário local foi substituído por
+  // toSemaphoreColor()/SEMAPHORE_TO_GLOW (types/orbit.ts), que validam o
+  // valor cru em vez de assumir que o banco só manda verde/ambar/vermelho.
   const SEMAPHORE_UI: Record<
-    string,
+    "verde" | "ambar" | "vermelho" | "neutro",
     { glow: GlowColor; variant: "ok" | "warn"; label: string }
   > = {
-    verde: { glow: "cyan", variant: "ok", label: "Verde" },
-    ambar: { glow: "gold", variant: "warn", label: "Âmbar" },
-    vermelho: { glow: "red", variant: "warn", label: "Vermelho" },
+    verde: { glow: SEMAPHORE_TO_GLOW.verde, variant: "ok", label: "Verde" },
+    ambar: { glow: SEMAPHORE_TO_GLOW.ambar, variant: "warn", label: "Âmbar" },
+    vermelho: {
+      glow: SEMAPHORE_TO_GLOW.vermelho,
+      variant: "warn",
+      label: "Vermelho",
+    },
+    neutro: { glow: SEMAPHORE_TO_GLOW.neutro, variant: "ok", label: "—" },
   };
 
   // Proveniência da régua (ref_dataset_id / ref_validation_status) vem da
@@ -883,13 +962,38 @@ async function fetchQualityScores(
     }
   }
 
+  // RN-22: ER Real nulo por falta de compartilhamentos não é "poucos posts".
+  const erRowMissing = (orbitRows ?? []).some(
+    (r) => r.metric_name === "er_real_pct" && r.score_value == null,
+  );
+  const sharesMissing = erRowMissing
+    ? (await fetchSharesSummary(clientId, start, end)).total == null
+    : false;
+
   return (orbitRows ?? []).map((row) => {
     const scoreKey = String(row.score_key);
+    const metricName = row.metric_name != null ? String(row.metric_name) : "";
+    const baseProv = QUALITY_PROVENANCE[metricName];
+    const provenance: MetricProvenance | undefined = baseProv
+      ? baseProv.period === "snapshot"
+        ? {
+            ...baseProv,
+            periodLabel: `snapshot ${fmtDateBR(row.period_start)} a ${fmtDateBR(row.period_end)}`,
+          }
+        : baseProv
+      : undefined;
     const rawStatus = String(row.status_text ?? "");
     const ov = row.metric_name === "polemic_score_pct" ? polemicOverride : null;
-    const semaphore = (
-      ov ? ov.semaphore : (row.semaphore_key ?? null)
-    ) as SemaphoreKey | null;
+    // FIX (reforma do vocabulário de cor): sem cast cego. toSemaphoreColor
+    // valida contra o vocabulário real e cai em 'neutro' se vier algo
+    // inesperado; 'neutro' não existe em SemaphoreKey (buildScoreCopy só
+    // aceita verde/ambar/vermelho/null), então vira null aqui.
+    const rawSemaphore = ov ? ov.semaphore : (row.semaphore_key ?? null);
+    const validatedSemaphore = toSemaphoreColor(
+      typeof rawSemaphore === "string" ? rawSemaphore : null,
+    );
+    const semaphore: SemaphoreKey | null =
+      validatedSemaphore === "neutro" ? null : validatedSemaphore;
     const sem = semaphore ? SEMAPHORE_UI[semaphore] : undefined;
     const value = ov
       ? ov.value
@@ -921,11 +1025,15 @@ async function fetchQualityScores(
       label: scoreKey,
       value: value ?? "N/A",
       unit: "%",
-      statusText: copy.text || rawStatus || "Sem dados",
+      statusText:
+        sharesMissing && metricName === "er_real_pct" && value == null
+          ? ER_NO_SHARES_TEXT
+          : copy.text || rawStatus || "Sem dados",
       statusVariant: sem ? sem.variant : "neutral",
       glowColor: (sem ? sem.glow : "none") as GlowColor,
       actionText: copy.action,
       referenceNote: copy.note,
+      ...(provenance ? { provenance } : {}),
     };
   });
 }
@@ -1145,12 +1253,21 @@ async function fetchFormatPerformance(
         interactions: inter?.interactions ?? null,
         interactionsKnownPosts: inter?.knownPosts ?? 0,
         interactionsTotalPosts: inter?.totalPosts ?? 0,
-        trendLabel: trendInHeader
-          ? String(row?.trend_label ?? "Sem tendência calculada")
-          : "Sem tendência no período",
-        trendColor: trendInHeader
-          ? ((row?.trend_color as GlowColor) ?? "none")
-          : "none",
+        // RN-15: menos de 5 posts no formato = amostra insuficiente.
+        trendLabel:
+          detail.length < 5
+            ? `Amostra insuficiente: ${detail.length} de 5 posts`
+            : trendInHeader
+              ? String(row?.trend_label ?? "Sem tendência calculada")
+              : "Sem tendência no período",
+        trendColor:
+          detail.length < 5
+            ? "gold"
+            : trendInHeader
+              ? toGlowColor(
+                  typeof row?.trend_color === "string" ? row.trend_color : null,
+                )
+              : "none",
         postsDetail: detail,
       },
     ];
@@ -1474,7 +1591,9 @@ async function fetchPolemicMedianInPeriod(
 }
 
 const COMMENT_REFERENCE_METRICS = [
-  { metric: "resposta_da_base", label: "Resposta da base", unit: "%" },
+  // P-4 (PO, 21/10/2026): rotular "ER por post" na tela; o nome no banco
+  // (resposta_da_base) só muda na próxima migration de métrica (RN-11).
+  { metric: "resposta_da_base", label: "ER por post", unit: "%" },
   { metric: "views_por_seguidor", label: "Views por seguidor", unit: "%" },
   {
     metric: "intencao_nos_comentarios",
@@ -1484,8 +1603,90 @@ const COMMENT_REFERENCE_METRICS = [
   { metric: "tom_dos_comentarios", label: "Tom dos comentários", unit: "pts" },
 ] as const;
 
-const NOT_COMPUTED_NOTE = "Seu número ainda não foi calculado.";
+// RN-23: fonte, período e método declarados em cada card de referência.
+const REF_PROVENANCE: Record<CommentReferenceItem["metric"], MetricProvenance> =
+  {
+    resposta_da_base: {
+      source:
+        "cálculo por post (ig_posts) · régua orbit.ref_thresholds, run orbit_comments_v2",
+      period: "header_window",
+      method:
+        "mediana por post de (curtidas + comentários) ÷ seguidores atuais × 100; mínimo 5 posts; seguidores ≥ 1.000; não é o ER Real",
+    },
+    views_por_seguidor: {
+      source:
+        "cálculo por post (ig_posts) · régua orbit.ref_thresholds, run orbit_comments_v2",
+      period: "header_window",
+      method:
+        "mediana por post de visualizações de Reel ÷ seguidores atuais × 100; mínimo 5 posts; não é o VPS",
+    },
+    posts_com_comentario: {
+      source: "cálculo por post (ig_posts.comments)",
+      period: "header_window",
+      method:
+        "posts com comentário ÷ posts com contagem de comentários; mínimo 5 posts; sem cor, régua ou Ação",
+    },
+    intencao_nos_comentarios: {
+      source:
+        "texto dos comentários (ig_post_comments) · régua orbit.ref_thresholds, run orbit_comments_v2",
+      period: "header_window",
+      method:
+        "% de comentários com intenção; mínimo 30 comentários; informativa, sem cor",
+    },
+    tom_dos_comentarios: {
+      source:
+        "texto dos comentários (ig_post_comments) · régua orbit.ref_thresholds, run orbit_comments_v2",
+      period: "header_window",
+      method:
+        "(p_pos − p_neg) × 100 em posts com ≥ 3 comentários; não liberado para cor ou Ação",
+    },
+  };
 
+interface CommentCountQuery {
+  select(
+    columns: string,
+    options: { count: "exact"; head: true },
+  ): {
+    in(
+      column: string,
+      values: string[],
+    ): PromiseLike<{
+      count: number | null;
+      error: { message: string; code?: string; details?: string } | null;
+      status?: number;
+      statusText?: string;
+    }>;
+  };
+}
+
+async function fetchCommentTextCount(
+  postIds: readonly string[],
+  db: OrbitDbClient,
+): Promise<number | null> {
+  const comments = (
+    db.schema("orbit") as unknown as {
+      from(relation: string): CommentCountQuery;
+    }
+  ).from("ig_post_comments");
+  let total = 0;
+  for (let i = 0; i < postIds.length; i += 100) {
+    const { count, error, status, statusText } = await comments
+      .select("post_id", { count: "exact", head: true })
+      .in("post_id", postIds.slice(i, i + 100));
+    if (error) {
+      // head:true = requisição HEAD, sem corpo: error.message vem vazio.
+      console.warn("[fetchCommentTextCount]", {
+        status,
+        statusText,
+        code: error.code,
+        message: error.message,
+      });
+      return null;
+    }
+    total += count ?? 0;
+  }
+  return total;
+}
 /**
  * Régua global (category 'global', tier 'all') da run orbit_comments_v2 +
  * valor do cliente quando existe cálculo. resposta_da_base e views_por_seguidor
@@ -1515,7 +1716,7 @@ async function fetchCommentReference(
     db
       .schema("orbit")
       .from("ig_posts")
-      .select("likes, comments, reel_views")
+      .select("id, likes, comments, reel_views")
       .neq("content_format", "story")
       .eq("client_id", clientId)
       .gte("published_at", start)
@@ -1540,6 +1741,10 @@ async function fetchCommentReference(
     comments: r.comments,
     views: r.reel_views,
   }));
+  const textCount = await fetchCommentTextCount(
+    (postsRes.data ?? []).map((r) => r.id as string),
+    db,
+  );
   const clientValues: Record<string, number | null> = {
     resposta_da_base: respostaDaBaseMedian(posts, followers),
     views_por_seguidor: viewsPorSeguidorMedian(posts, followers),
@@ -1559,6 +1764,15 @@ async function fetchCommentReference(
     };
     const clientValue = clientValues[m.metric] ?? null;
     const position = percentilePosition(clientValue, p);
+    // RN-22: o "—" diz o motivo (amostra, seguidores ou texto não coletado).
+    const nullNote =
+      clientValue != null
+        ? null
+        : m.metric === "resposta_da_base"
+          ? refNullReason(posts, followers, "er")
+          : m.metric === "views_por_seguidor"
+            ? refNullReason(posts, followers, "views")
+            : commentTextStateNote(m.metric, textCount);
     items.push({
       metric: m.metric,
       label: m.label,
@@ -1567,12 +1781,30 @@ async function fetchCommentReference(
       ...p,
       sampleCount: ref.sample_count,
       positionText: position,
-      note:
-        clientValue == null
-          ? `${NOT_COMPUTED_NOTE} ${VALIDATION_NOTE}`
-          : VALIDATION_NOTE,
+      note: nullNote ? `${nullNote}. ${VALIDATION_NOTE}` : VALIDATION_NOTE,
+      provenance: REF_PROVENANCE[m.metric],
     });
   }
+
+  // RN-21 (P-6): informativa, sem cor, sem régua e sem Ação.
+  const pcc = postsComComentario(posts);
+  const pccText = postsComComentarioText(pcc);
+  const pccItem: CommentReferenceItem = {
+    metric: "posts_com_comentario",
+    label: "Posts com comentário",
+    unit: "%",
+    clientValue: pcc.pct,
+    p25: null,
+    p50: null,
+    p75: null,
+    sampleCount: null,
+    positionText: null,
+    note: `${pccText.note}. ${VALIDATION_NOTE}`,
+    valueText: pccText.valueText,
+    provenance: REF_PROVENANCE.posts_com_comentario,
+  };
+  const at = items.findIndex((i) => i.metric === "intencao_nos_comentarios");
+  items.splice(at < 0 ? items.length : at, 0, pccItem);
   return items;
 }
 

@@ -14,7 +14,13 @@
 // sempre devia estar: src/app/(dashboard)/layout.tsx, aninhado dentro
 // deste root layout pelo próprio App Router — não duplicado aqui.
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+// FIX (reconciliação de fontes): o SSOT (ssot-design-tokens.css) sempre
+// declarou DM Sans/DM Mono como as fontes oficiais, mas este root layout
+// carregava Geist/Geist_Mono — duas famílias que nenhuma regra de CSS
+// consumia — enquanto "DM Sans"/"DM Mono" eram usadas como string literal
+// sem nenhum loader por trás, caindo no fallback genérico do navegador.
+// Substituído pela família que o design system realmente especifica.
+import { DM_Sans, DM_Mono } from "next/font/google";
 // 🐛 CORRIGIDO 07/09/2026: importava '../styles/ssot-globals.css' direto,
 // pulando './globals.css' — o único arquivo que faz `@import 'tailwindcss'`.
 // Resultado: o Tailwind NUNCA entrava no pipeline de build (build passava
@@ -25,14 +31,17 @@ import { Geist, Geist_Mono } from "next/font/google";
 // cadeia. Import corrigido para o único ponto de entrada correto.
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
+  // cobre --font-weight-light/normal/medium/semibold do SSOT
+  weight: ["300", "400", "500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const dmMono = DM_Mono({
+  variable: "--font-dm-mono",
   subsets: ["latin"],
+  weight: ["300", "400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -48,7 +57,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} min-h-screen flex flex-col antialiased`}
+        className={`${dmSans.variable} ${dmMono.variable} min-h-screen flex flex-col antialiased`}
         suppressHydrationWarning
       >
         {children}

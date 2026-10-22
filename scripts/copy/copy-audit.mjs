@@ -1,8 +1,8 @@
-// scripts/copy-audit.mjs
+// scripts/copy/copy-audit.mjs
 // Uso:
-//   node scripts/copy-audit.mjs
-//   node scripts/copy-audit.mjs --only-flagged
-//   node scripts/copy-audit.mjs --dir=src/components --include-tests
+//   node scripts/copy/copy-audit.mjs
+//   node scripts/copy/copy-audit.mjs --only-flagged
+//   node scripts/copy/copy-audit.mjs --dir=src/components --include-tests
 // Saída: reports/copy-audit.csv  e  reports/copy-audit.md
 
 import fs from 'node:fs'

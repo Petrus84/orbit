@@ -4,13 +4,13 @@ import dotenv from "dotenv";
 import * as fs from "fs";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { z } from "zod";
-import { resolveClientId } from "./lib/resolveClientId.ts";
+import { resolveClientId } from "../lib/resolveClientId";
 import {
   resolveIntMetricOrNull,
   resolveStringMetric,
   resolvePercentMetric,
   logMissingKey,
-} from "./lib/metric-key-dictionary.ts";
+} from "../lib/metric-key-dictionary";
 import AdmZip from "adm-zip";
 import { createHash } from "crypto";
 

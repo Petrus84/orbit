@@ -12,6 +12,7 @@ import type { DiagnosticAlertData } from "@/components/common/DiagnosticAlert";
 import type {
   IGOverviewData,
   KPICardData,
+  MetricProvenance,
   QualityScoreItem,
   CriticalAlertData,
 } from "@/types/orbit";
@@ -34,6 +35,7 @@ interface KPI {
   trend: "up" | "down" | "neutral";
   flagLevel: "L0" | "L1" | "L2";
   unit?: string;
+  provenance?: MetricProvenance;
 }
 
 function KPICard({ kpi }: { kpi: KPI }): React.ReactElement {
@@ -65,6 +67,18 @@ function KPICard({ kpi }: { kpi: KPI }): React.ReactElement {
           {kpi.delta}%
         </span>
       </div>
+      {kpi.provenance && (
+        <p
+          className="font-sans text-[10px] leading-snug text-zinc-500"
+          title={kpi.provenance.method}
+        >
+          Fonte: {kpi.provenance.source} ·{" "}
+          {kpi.provenance.period === "snapshot"
+            ? "período: snapshot (não recalcula pelo cabeçalho)"
+            : "período: janela do cabeçalho"}{" "}
+          · Método: {kpi.provenance.method}
+        </p>
+      )}
     </div>
   );
 }
@@ -77,6 +91,7 @@ function mapKPICardDataToKPI(data: KPICardData): KPI {
     trend: data.delta > 0 ? "up" : data.delta < 0 ? "down" : "neutral",
     flagLevel: (data.sourceLevel as "L0" | "L1" | "L2") || "L2",
     ...(data.unit ? { unit: data.unit } : {}),
+    ...(data.provenance ? { provenance: data.provenance } : {}),
   };
 }
 

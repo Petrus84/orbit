@@ -1,5 +1,7 @@
 import React from "react";
 import { formatPtBr, formatCompactPtBr } from "@/lib/format";
+import { provenanceLine } from "@/lib/provenanceText";
+import type { MetricProvenance } from "@/types/orbit";
 
 export type FlagLevel = "L0" | "L1" | "L2";
 
@@ -11,6 +13,9 @@ export interface KPI {
   flagLevel: FlagLevel;
   unit?: string;
   sparkline?: number[]; // series of values for the mini chart
+  /** false = delta nulo na view: exibe "Sem comparação", nunca 0%. */
+  hasComparison?: boolean;
+  provenance?: MetricProvenance;
 }
 
 interface KPICardProps {
@@ -138,13 +143,20 @@ export default function KPICard({ kpi }: KPICardProps): React.ReactElement {
           </span>
 
           {/* Delta */}
-          {kpi.delta !== undefined && deltaTokens && (
-            <span
-              className={`font-sans text-xs font-medium ${deltaTokens.color}`}
-            >
-              {deltaTokens.arrow} {formatPtBr(Math.abs(kpi.delta), 1)}%{" "}
-              <span className="text-zinc-600">vs período anterior</span>
+          {kpi.hasComparison === false ? (
+            <span className="font-sans text-xs font-medium text-zinc-500">
+              Sem comparação
             </span>
+          ) : (
+            kpi.delta !== undefined &&
+            deltaTokens && (
+              <span
+                className={`font-sans text-xs font-medium ${deltaTokens.color}`}
+              >
+                {deltaTokens.arrow} {formatPtBr(Math.abs(kpi.delta), 1)}%{" "}
+                <span className="text-zinc-600">vs período anterior</span>
+              </span>
+            )
           )}
         </div>
 
@@ -153,6 +165,15 @@ export default function KPICard({ kpi }: KPICardProps): React.ReactElement {
           <Sparkline data={kpi.sparkline} trend={kpi.trend ?? "neutral"} />
         )}
       </div>
+
+      {kpi.provenance && (
+        <p
+          className="font-sans text-[10px] leading-snug text-zinc-500"
+          title={kpi.provenance.method}
+        >
+          {provenanceLine(kpi.provenance)}
+        </p>
+      )}
     </div>
   );
 }

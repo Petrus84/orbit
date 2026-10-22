@@ -1,6 +1,6 @@
 "use strict";
 /**
- * scripts/reconcile-kpi-contracts.ts
+ * scripts/contracts/reconcile-kpi-contracts.ts
  *
  * Robô KCR (Etapa 1 do pipeline ORBIT — KPI Contract Registry).
  * Lê contracts/kpi/inbox/briefing-v1.json (Doc 1) e contracts/kpi/inbox/contract-v2.json
@@ -13,7 +13,7 @@
  * "NÃO ENCONTRADO" e "escrito mas nunca chamado" (RWP escondido dentro do KCR).
  *
  * Uso:
- *   npx tsx scripts/reconcile-kpi-contracts.ts
+ *   npx tsx scripts/contracts/reconcile-kpi-contracts.ts
  *
  * Variáveis de ambiente:
  *   ORBIT_SCHEMA_DUMP  caminho para o dump SQL do schema `orbit` (DDL).

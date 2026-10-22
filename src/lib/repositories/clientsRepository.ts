@@ -1,13 +1,15 @@
 // ============================================================================
-// ORBIT · Repository — Clients (v3.2.0)
+// ORBIT · Repository — Clients (v3.3.0)
 //
-// v3.2.0 (filtro de benchmark e suporte a snapshots):
-// - 🎯 Driver principal alterado para orbit.v_carteira_clients (is_benchmark = false).
-//   Isso garante que apenas os clientes reais da carteira (ex: cpimportstore,
-//   eupetruchio84) cheguem à UI, filtrando as 89 contas de benchmark.
-// - 🔌 Injeção nativa de snapshot_count e last_snapshot_date trazidos diretamente
-//   da view agregada do Postgres.
-// - Mantido o cruzamento com v_client_metrics (métricas) e v_client_health (saúde).
+// v3.3.0 (tipagem de status):
+// - 🐛 CORRIGIDO: o repositório fabricava "unknown", que não pertence a
+//   ClientHealthStatus (healthy/warning/critical/info). Conforme o contrato
+//   do orbit.ts, "sem dado" é `null`: Client.status é `ClientHealthStatus | null`.
+// - STATUS_ORDER cobre 'info' e a ordenação trata null explicitamente
+//   (sem dado vai por último), em vez de indexar o Record com null.
+//
+// v3.2.0: driver orbit.v_carteira_clients (is_benchmark = false), snapshots
+// nativos, cruzamento com v_client_metrics e v_client_health.
 // ============================================================================
 
 import { supabase } from "@/lib/supabase";
@@ -35,28 +37,30 @@ interface ClientMetricsRow {
 }
 
 // ── Raw shape from orbit.v_client_health ──────────────────────────────────
+// A view só produz 3 valores (ou null); todos são membros de ClientHealthStatus.
 interface ClientHealthRow {
   client_id: string;
-  health_status: "healthy" | "warning" | "critical" | null;
+  health_status: ClientHealthStatus | null;
 }
 
 const STATUS_ORDER: Record<ClientHealthStatus, number> = {
   critical: 0,
   warning: 1,
-  healthy: 2,
-  unknown: 3,
+  info: 2,
+  healthy: 3,
 };
 
-function normalizeHealthStatus(
-  status: "healthy" | "warning" | "critical" | null,
-): ClientHealthStatus {
-  return status ?? "unknown";
+// Sem dado (null) vai depois de todos os status conhecidos.
+const NO_DATA_ORDER = Object.keys(STATUS_ORDER).length;
+
+function statusRank(status: ClientHealthStatus | null): number {
+  return status === null ? NO_DATA_ORDER : STATUS_ORDER[status];
 }
 
 function toClient(
   carteiraRow: CarteiraClientRow,
   metrics: ClientMetricsRow | undefined,
-  healthStatus: ClientHealthStatus,
+  healthStatus: ClientHealthStatus | null,
 ): Client {
   return {
     id: carteiraRow.id,
@@ -85,7 +89,9 @@ function toClient(
   };
 }
 
-async function fetchHealthMap(): Promise<Map<string, ClientHealthStatus>> {
+async function fetchHealthMap(): Promise<
+  Map<string, ClientHealthStatus | null>
+> {
   const { data, error } = await supabase
     .schema("orbit")
     .from("v_client_health")
@@ -98,9 +104,9 @@ async function fetchHealthMap(): Promise<Map<string, ClientHealthStatus>> {
     );
   }
 
-  const map = new Map<string, ClientHealthStatus>();
+  const map = new Map<string, ClientHealthStatus | null>();
   for (const row of data ?? []) {
-    map.set(row.client_id, normalizeHealthStatus(row.health_status));
+    map.set(row.client_id, row.health_status);
   }
   return map;
 }
@@ -146,9 +152,9 @@ export async function fetchClientsWithHealth(): Promise<Client[]> {
 
   return (carteiraData ?? [])
     .map((row) =>
-      toClient(row, metricsMap.get(row.id), healthMap.get(row.id) ?? "unknown"),
+      toClient(row, metricsMap.get(row.id), healthMap.get(row.id) ?? null),
     )
-    .sort((a, b) => STATUS_ORDER[a.status] - STATUS_ORDER[b.status]);
+    .sort((a, b) => statusRank(a.status) - statusRank(b.status));
 }
 
 // ── fetchClientById ───────────────────────────────────────────────────────
@@ -194,7 +200,7 @@ export async function fetchClientById(
   return toClient(
     carteiraData,
     metricsData ?? undefined,
-    healthMap.get(clientId) ?? "unknown",
+    healthMap.get(clientId) ?? null,
   );
 }
 

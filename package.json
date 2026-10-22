@@ -9,11 +9,22 @@
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx",
     "format": "prettier --write .",
-    "ingest:l0": "tsx scripts/ingest-from-zip.ts --client",
     "check:drift": "ts-node src/types/check-schema-drift.ts",
-    "check:db": "tsx scripts/check-ingestion.ts",
     "test": "tsx --test src/lib/funnel/registry.test.ts src/lib/repositories/funnelMath.test.ts",
-    "prepare": "husky"
+    "test:bloco-a": "vitest run e2e/blocoA.e2e.test.ts",
+    "prepare": "husky",
+    "ingest:zip": "tsx scripts/ingest/ingest-from-zip.ts",
+    "ingest:csv": "tsx scripts/ingest/ingest-meta-csv.ts",
+    "ingest:reels": "tsx scripts/ingest/ingest-apify-reel-views.ts",
+    "ingest:comments": "tsx scripts/ingest/ingest-apify-comments.ts",
+    "audit:ingest": "tsx scripts/audit/check-ingestion.ts",
+    "audit:clients": "tsx scripts/audit/audit-5-clients.ts",
+    "audit:ogp": "tsx scripts/audit/ogp-audit.ts",
+    "audit:copy": "node scripts/copy/copy-audit.mjs",
+    "kcr:reconcile": "tsx scripts/contracts/reconcile-kpi-contracts.ts",
+    "db:seed": "tsx scripts/db/seed-dynamic.ts",
+    "db:cleanup": "node scripts/db/cleanup-example-seed.mjs",
+    "typecheck:scripts": "tsc -p tsconfig.scripts.json"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.3",
@@ -51,19 +62,11 @@
     "tailwindcss": "^4",
     "ts-node": "^10.9.2",
     "tsx": "^4.22.4",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.7"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,json,css,md}": "prettier --write"
-  },
-  "compilerOptions": {
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
   },
   "ts-node": {
     "esm": true,

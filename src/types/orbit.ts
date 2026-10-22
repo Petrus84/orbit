@@ -408,6 +408,95 @@ export const SEVERITY_TO_GLOW: Record<
   danger: "red",
 };
 
+// ============================================================================
+// REFORMA DO VOCABULÁRIO DE COR (banco + app, encapsulado num só lugar)
+// ============================================================================
+// Até aqui, cada vocabulário (GlowColor, SemaphoreColor, StatusVariant,
+// ClientHealthStatus, e os ENUMs do Postgres orbit.health_status /
+// public.health_status / public.glow_color / public.semaphore_color) era
+// confiado via cast (`as GlowColor`) ou reimplementado localmente (ver
+// SEMAPHORE_UI em instagramOverviewRepository.ts). Isso permite que uma
+// string inesperada do banco vire "cor errada" silenciosamente — exatamente
+// a classe de bug que já pegamos em ClientHealthStatus.unknown.
+//
+// A partir daqui: toda leitura de uma coluna de cor/status do banco passa
+// por um destes validadores, nunca por `as`. Entrada inválida cai no
+// "sem dado" (null/"none"), nunca inventa um valor.
+
+export const SEMAPHORE_TO_GLOW: Record<SemaphoreColor, GlowColor> = {
+  verde: "cyan",
+  ambar: "gold",
+  vermelho: "red",
+  neutro: "none",
+};
+
+/**
+ * Valida um valor cru do banco (coluna `semaphore_key`, hoje `string | null`,
+ * mas que deveria vir tipada como `public.semaphore_color` — ver nota SQL)
+ * contra o vocabulário real. `public.semaphore_color` só tem 3 valores
+ * (verde/ambar/vermelho); "sem dado" não é um 4º valor do enum do banco —
+ * é a ausência de linha/leitura, por isso vira 'neutro' aqui na borda, não
+ * no banco.
+ */
+export function toSemaphoreColor(
+  raw: string | null | undefined,
+): SemaphoreColor {
+  if (raw === "verde" || raw === "ambar" || raw === "vermelho") return raw;
+  if (raw != null) {
+    console.warn(`[toSemaphoreColor] valor inesperado do banco: "${raw}"`);
+  }
+  return "neutro";
+}
+
+/**
+ * Valida um valor cru do banco (ex.: `v_format_performance.trend_color`,
+ * hoje `string | null` — ver PATCH DB-06 acima, já documentada como
+ * GlowColor) contra o vocabulário real, em vez do `as GlowColor` que existia
+ * em instagramOverviewRepository.ts.
+ */
+export function toGlowColor(raw: string | null | undefined): GlowColor {
+  if (
+    raw === "cyan" ||
+    raw === "gold" ||
+    raw === "red" ||
+    raw === "green" ||
+    raw === "none"
+  ) {
+    return raw;
+  }
+  if (raw != null) {
+    console.warn(`[toGlowColor] valor inesperado do banco: "${raw}"`);
+  }
+  return "none";
+}
+
+/**
+ * orbit.health_status (banco, 4 valores: healthy/warning/critical/unknown)
+ * → ClientHealthStatus (app, 4 valores: healthy/warning/critical/info).
+ * 'unknown' do banco e 'info' do app NÃO são a mesma coisa (ver PATCH no
+ * ClientHealthStatus acima) — por isso 'unknown' vira null (sem dado), e
+ * 'info' nunca sai desta função: hoje nenhuma fonte do banco produz o
+ * conceito de "info" real, só a ausência de status.
+ */
+export function toClientHealthStatusFromOrbitEnum(
+  raw: "healthy" | "warning" | "critical" | "unknown" | null | undefined,
+): ClientHealthStatus | null {
+  if (raw === "healthy" || raw === "warning" || raw === "critical") return raw;
+  return null; // raw === "unknown" | null | undefined
+}
+
+/**
+ * public.health_status (banco, 3 valores: critical/warning/healthy, sem
+ * 'unknown' nenhum) → ClientHealthStatus. Este enum do banco não tem como
+ * representar "sem dado" — se a coluna vier null, o chamador decide (null
+ * aqui também), mas o enum em si nunca permite um 4º valor.
+ */
+export function toClientHealthStatusFromPublicEnum(
+  raw: "healthy" | "warning" | "critical" | null | undefined,
+): ClientHealthStatus | null {
+  return raw ?? null;
+}
+
 export interface AlertAction {
   type: "link" | "dismiss" | "resolve";
   label: string;
@@ -510,6 +599,20 @@ export interface DashboardHeaderMeta {
   };
 }
 
+/**
+ * Proveniência declarada de uma métrica exibida: de onde vem (source), a que
+ * período se refere (period) e como é calculada (method). `header_window` =
+ * recalcula com o intervalo do cabeçalho; `snapshot` = valor da última
+ * medição, não recalcula pelo cabeçalho.
+ */
+export interface MetricProvenance {
+  source: string;
+  period: "header_window" | "snapshot";
+  /** Texto de período mais específico (ex.: datas do snapshot). */
+  periodLabel?: string;
+  method: string;
+}
+
 export interface KPICardData {
   id: string;
   label: string;
@@ -525,6 +628,9 @@ export interface KPICardData {
   // não-conflitante (superset), sem divergência de shape.
   sourceLevel?: string;
   playRate?: number | null;
+  provenance?: MetricProvenance;
+  /** false = a view não trouxe delta (nulo); a tela diz "Sem comparação", nunca 0%. */
+  hasComparison?: boolean;
 }
 
 export interface QualityScoreItem {
@@ -538,6 +644,7 @@ export interface QualityScoreItem {
   // Cadeia dado -> informação -> ação (scoreStatusCopy.ts)
   actionText?: string | null;
   referenceNote?: string | null;
+  provenance?: MetricProvenance;
 }
 
 export interface FormatPerformanceRow {
@@ -847,6 +954,7 @@ export interface CommentReferenceItem {
   metric:
     | "resposta_da_base"
     | "views_por_seguidor"
+    | "posts_com_comentario"
     | "intencao_nos_comentarios"
     | "tom_dos_comentarios";
   label: string;
@@ -860,6 +968,10 @@ export interface CommentReferenceItem {
   /** Posição descritiva do cliente na régua; null sem valor. */
   positionText: string | null;
   note: string;
+  /** Texto principal quando o card não é um número simples (ex.: "3 de 18"). */
+  valueText?: string;
+  /** Fonte, período e método (RN-23). */
+  provenance?: MetricProvenance;
 }
 
 export interface SectorPositioning {
@@ -918,10 +1030,15 @@ export interface IGOverviewLegacyData {
 /**
  * SSOT: orbit.v_client_health (view calculada). Nunca ler
  * clients.health_status (coluna estática, deprecated — R-03).
- * ⚠️ OBSERVAÇÃO (13): 4º valor 'unknown' não existe em AlignmentStatus,
- * apesar de ambos modelarem "saúde/status" de forma similar.
+ *
+ * FIX (vocabulário centralizado): 'unknown' foi substituído por 'info'.
+ * Não são a mesma coisa — 'unknown' representava "sem dado" e renderizava
+ * neutro/cinza; 'info' é um 4º status real, com cor própria
+ * (--border-glow-cyan). "Sem dado" deixou de ser um valor do enum: agora é
+ * `status: ClientHealthStatus | null`, e quem renderiza trata `null` caindo
+ * na cor padrão de título, sem badge/glow (ver Semaphore.tsx).
  */
-export type ClientHealthStatus = "healthy" | "warning" | "critical" | "unknown";
+export type ClientHealthStatus = "healthy" | "warning" | "critical" | "info";
 
 export interface ClientMetrics {
   // null = sem medição. Nunca 0: a Carteira mostra "—" (régua única, 17/10/2026).
@@ -946,7 +1063,9 @@ export interface Client {
   handle: string;
   name: string;
   avatar?: string | undefined;
-  status: ClientHealthStatus;
+  // FIX (vocabulário centralizado): null = sem dado de saúde ainda
+  // (estava sendo representado pela string "unknown", removida do enum).
+  status: ClientHealthStatus | null;
   metrics: ClientMetrics;
   snapshotCount?: number;
   lastSnapshotDate?: string | null;
