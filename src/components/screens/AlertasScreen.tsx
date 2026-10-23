@@ -1,30 +1,30 @@
-import React, { useState } from 'react'
-import SectionHead from '../common/SectionHead'
-import AlertCard from '../common/AlertCard'
+import React, { useState } from "react";
+import SectionHead from "../common/SectionHead";
+import AlertCard from "../common/AlertCard";
 // 🐛 CORRIGIDO: importava `Alert` de '../common/AlertCard'. AlertCard é um
 // componente de UI, não deveria re-exportar tipo de domínio — e o `Alert`
 // que ele exportava lá era uma versão fabricada, incompatível com o
 // contrato real (ver AlertCard.tsx). Fonte correta é o barrel de tipos.
-import type { Alert } from '../../types/alert'
-import type { UseAlertsReturn } from '../../hooks/useAlerts'
+import type { Alert } from "../../types/alert";
+import type { UseAlertsReturn } from "../../hooks/useAlerts";
 
 // ─── Filter tabs ──────────────────────────────────────────────
 
-type FilterTab = 'all' | 'critical' | 'warning' | 'info'
+type FilterTab = "all" | "critical" | "warning" | "info";
 
 const TABS: { id: FilterTab; label: string }[] = [
-  { id: 'all', label: 'Todos' },
-  { id: 'critical', label: 'Críticos' },
-  { id: 'warning', label: 'Atenção' },
-  { id: 'info', label: 'Info' },
-]
+  { id: "all", label: "Todos" },
+  { id: "critical", label: "Críticos" },
+  { id: "warning", label: "Atenção" },
+  { id: "info", label: "Info" },
+];
 
 const TAB_ACTIVE: Record<FilterTab, string> = {
-  all: 'bg-zinc-700 text-white',
-  critical: 'bg-red-500/20 text-red-400 border border-red-500/40',
-  warning: 'bg-amber-500/20 text-amber-400 border border-amber-500/40',
-  info: 'bg-blue-500/20 text-blue-400 border border-blue-500/40',
-}
+  all: "bg-zinc-700 text-white",
+  critical: "bg-red-500/20 text-red-400 border border-red-500/40",
+  warning: "bg-amber-500/20 text-amber-400 border border-amber-500/40",
+  info: "bg-blue-500/20 text-blue-400 border border-blue-500/40",
+};
 
 // ─── Skeleton ─────────────────────────────────────────────────
 
@@ -48,12 +48,18 @@ function AlertSkeleton(): React.ReactElement {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 // ─── Error state ──────────────────────────────────────────────
 
-function ErrorState({ message, onRetry }: { message: string; onRetry: () => void }): React.ReactElement {
+function ErrorState({
+  message,
+  onRetry,
+}: {
+  message: string;
+  onRetry: () => void;
+}): React.ReactElement {
   return (
     <div className="flex flex-col items-center gap-4 rounded-2xl border border-red-500/20 bg-red-900/10 p-8 text-center">
       <p className="font-sans text-sm text-red-400">{message}</p>
@@ -65,64 +71,76 @@ function ErrorState({ message, onRetry }: { message: string; onRetry: () => void
         Tentar novamente
       </button>
     </div>
-  )
+  );
 }
 
 // ─── Empty state ──────────────────────────────────────────────
 
 function EmptyState({ tab }: { tab: FilterTab }): React.ReactElement {
   const messages: Record<FilterTab, string> = {
-    all: 'Nenhum alerta encontrado.',
-    critical: 'Nenhum alerta crítico. Tudo certo por aqui.',
-    warning: 'Nenhum alerta de atenção no momento.',
-    info: 'Nenhuma informação pendente.',
-  }
+    all: "Os alertas aparecem aqui assim que houver algum.",
+    critical: "Tudo certo por aqui, nada crítico no momento.",
+    warning: "Tudo tranquilo: nada pede atenção no momento.",
+    info: "Tudo em dia, nada pendente.",
+  };
   return (
     <div className="flex items-center justify-center rounded-2xl border border-zinc-800 bg-zinc-900/20 py-12">
       <p className="font-sans text-sm text-zinc-500">{messages[tab]}</p>
     </div>
-  )
+  );
 }
 
 // ─── Badge counter ────────────────────────────────────────────
 
-function TabBadge({ count, tab }: { count: number; tab: FilterTab }): React.ReactElement | null {
-  if (count === 0) return null
+function TabBadge({
+  count,
+  tab,
+}: {
+  count: number;
+  tab: FilterTab;
+}): React.ReactElement | null {
+  if (count === 0) return null;
   const colors: Record<FilterTab, string> = {
-    all: 'bg-zinc-600 text-zinc-300',
-    critical: 'bg-red-500/30 text-red-400',
-    warning: 'bg-amber-500/30 text-amber-400',
-    info: 'bg-blue-500/30 text-blue-400',
-  }
+    all: "bg-zinc-600 text-zinc-300",
+    critical: "bg-red-500/30 text-red-400",
+    warning: "bg-amber-500/30 text-amber-400",
+    info: "bg-blue-500/30 text-blue-400",
+  };
   return (
-    <span className={`ml-1.5 rounded-full px-1.5 py-0.5 font-mono text-[10px] font-medium tabular-nums ${colors[tab]}`}>
+    <span
+      className={`ml-1.5 rounded-full px-1.5 py-0.5 font-mono text-[10px] font-medium tabular-nums ${colors[tab]}`}
+    >
       {count}
     </span>
-  )
+  );
 }
 
 // ─── Screen ───────────────────────────────────────────────────
 
 interface AlertasScreenProps {
-  useAlerts: (filter?: 'critical' | 'warning' | 'info') => UseAlertsReturn
+  useAlerts: (filter?: "critical" | "warning" | "info") => UseAlertsReturn;
 }
 
-export default function AlertasScreen({ useAlerts }: AlertasScreenProps): React.ReactElement {
+export default function AlertasScreen({
+  useAlerts,
+}: AlertasScreenProps): React.ReactElement {
   // 🐛 CORRIGIDO: a versão anterior desestruturava `{ alerts, status, error, refetch }`.
   // O hook real (useAlerts.ts) devolve `data`, não `alerts` — e também já
   // devolve `counts` pronto, então não precisa recalcular com 3x .filter().
-  const { data: alerts, counts, status, error, refetch } = useAlerts()
-  const [activeTab, setActiveTab] = useState<FilterTab>('all')
+  const { data: alerts, counts, status, error, refetch } = useAlerts();
+  const [activeTab, setActiveTab] = useState<FilterTab>("all");
 
   const tabCounts: Record<FilterTab, number> = {
     all: counts.total,
     critical: counts.critical,
     warning: counts.warning,
     info: counts.info,
-  }
+  };
 
   const visibleAlerts: Alert[] =
-    activeTab === 'all' ? alerts : alerts.filter((a) => a.severity === activeTab)
+    activeTab === "all"
+      ? alerts
+      : alerts.filter((a) => a.severity === activeTab);
 
   // 🐛 CORRIGIDO: a versão anterior ordenava por `a.acknowledged` e
   // `a.triggeredAt` — nenhum dos dois existe em `Alert` (nem na tabela
@@ -130,24 +148,30 @@ export default function AlertasScreen({ useAlerts }: AlertasScreenProps): React.
   // `createdAt` (string). Critério: não-resolvidos primeiro, depois mais
   // recentes primeiro.
   const sortedAlerts = [...visibleAlerts].sort((a, b) => {
-    if (a.isResolved !== b.isResolved) return a.isResolved ? 1 : -1
-    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  })
+    if (a.isResolved !== b.isResolved) return a.isResolved ? 1 : -1;
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
 
   const subtitle =
-    status === 'success'
-      ? `${counts.total} alerta${counts.total !== 1 ? 's' : ''}${
-          counts.critical > 0 ? ` · ${counts.critical} crítico${counts.critical !== 1 ? 's' : ''}` : ''
+    status === "success"
+      ? `${counts.total} alerta${counts.total !== 1 ? "s" : ""}${
+          counts.critical > 0
+            ? ` · ${counts.critical} crítico${counts.critical !== 1 ? "s" : ""}`
+            : ""
         } · todos os clientes`
-      : undefined
+      : undefined;
 
-  const isLoading = status === 'idle' || status === 'loading'
+  const isLoading = status === "idle" || status === "loading";
 
   return (
     <main className="flex min-h-screen flex-col gap-6 bg-[var(--bg)] px-4 py-6 sm:px-6">
       <SectionHead title="Central de alertas" subtitle={subtitle} />
 
-      <div className="flex gap-1.5 flex-wrap" role="tablist" aria-label="Filtrar alertas">
+      <div
+        className="flex gap-1.5 flex-wrap"
+        role="tablist"
+        aria-label="Filtrar alertas"
+      >
         {TABS.map((tab) => (
           <button
             key={tab.id}
@@ -158,7 +182,7 @@ export default function AlertasScreen({ useAlerts }: AlertasScreenProps): React.
             className={`rounded-full px-3 py-1.5 font-sans text-xs font-medium transition-colors ${
               activeTab === tab.id
                 ? TAB_ACTIVE[tab.id]
-                : 'bg-zinc-900 text-zinc-500 hover:bg-zinc-800 hover:text-zinc-300'
+                : "bg-zinc-900 text-zinc-500 hover:bg-zinc-800 hover:text-zinc-300"
             }`}
           >
             {tab.label}
@@ -167,10 +191,14 @@ export default function AlertasScreen({ useAlerts }: AlertasScreenProps): React.
         ))}
       </div>
 
-      {status === 'error' && error ? (
+      {status === "error" && error ? (
         <ErrorState message={error} onRetry={refetch} />
       ) : isLoading ? (
-        <div className="flex flex-col gap-3" role="status" aria-label="Carregando alertas">
+        <div
+          className="flex flex-col gap-3"
+          role="status"
+          aria-label="Carregando alertas"
+        >
           {[0, 1, 2, 3].map((i) => (
             <AlertSkeleton key={i} />
           ))}
@@ -180,10 +208,14 @@ export default function AlertasScreen({ useAlerts }: AlertasScreenProps): React.
       ) : (
         <div className="flex flex-col gap-3" role="tabpanel">
           {sortedAlerts.map((alert) => (
-            <AlertCard key={alert.id} alert={alert} onAcknowledge={async () => refetch()} />
+            <AlertCard
+              key={alert.id}
+              alert={alert}
+              onAcknowledge={async () => refetch()}
+            />
           ))}
         </div>
       )}
     </main>
-  )
+  );
 }

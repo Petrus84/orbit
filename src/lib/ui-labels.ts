@@ -33,9 +33,9 @@ export const SETOR: Record<string, string> = {
 
 /** Nível de confiança do dado. */
 export const CONFIANCA: Record<"L0" | "L1" | "L2", string> = {
-  L0: "Dado confirmado",
-  L1: "Estimativa com base nos seus dados", // CONFIRMAR: bate com o que L1 significa?
-  L2: "Falta um dado para afirmar",
+  L0: "Medido",
+  L1: "Estimado",
+  L2: "Hipótese",
 };
 
 /** Termos de tela. Sigla só com explicação ao lado (tooltip na UI). */
@@ -137,7 +137,7 @@ export const AUSENCIA = {
   regua:
     "Ainda não temos comparação para o seu tipo de conta. Confira o ramo marcado no cadastro.",
   regua_metrica: "Ainda não temos comparação de mercado para este indicador.",
-  sem_causa: "Sem comparação de mercado por enquanto.", // no lugar de "n/a — sem régua…"
+  sem_causa: "A comparação de mercado ainda não está disponível.", // no lugar de "n/a — sem régua…"
 } as const;
 
 /**

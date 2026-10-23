@@ -121,7 +121,7 @@ export default function AlertCard({
     } catch (err) {
       console.error("[AlertCard] Erro ao reconhecer alerta:", err);
       // ✅ FIX: o erro era só logado — o botão parecia não fazer nada.
-      setAckError("Não foi possível resolver este alerta. Tente novamente.");
+      setAckError("Algo deu errado ao resolver este alerta. Tente novamente.");
     } finally {
       setIsLoading(false);
     }
@@ -164,7 +164,7 @@ export default function AlertCard({
             {alert.thresholdValue !== null && (
               <>
                 {" "}
-                vs <strong>{alert.thresholdValue.toFixed(2)}</strong>
+                contra <strong>{alert.thresholdValue.toFixed(2)}</strong>
               </>
             )}
           </p>

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 export interface QualityScore {
   label: string;
   value: number | null;
-  status: 'ok' | 'neutral' | 'warn';
+  status: "ok" | "neutral" | "warn";
   statusText: string;
 }
 
@@ -19,51 +19,63 @@ type StatusTokens = {
   statusText: string;
 };
 
-const STATUS_TOKENS: Record<QualityScore['status'], StatusTokens> = {
+const STATUS_TOKENS: Record<QualityScore["status"], StatusTokens> = {
   ok: {
-    ring:       'border-emerald-500/30',
-    valueBg:    'bg-emerald-900/20',
-    valueText:  'text-emerald-400',
-    dot:        'bg-emerald-400 shadow-[0_0_6px_2px_rgba(46,204,113,0.45)]',
-    statusText: 'text-emerald-400/80',
+    ring: "border-emerald-500/30",
+    valueBg: "bg-emerald-900/20",
+    valueText: "text-emerald-400",
+    dot: "bg-emerald-400 shadow-[0_0_6px_2px_rgba(46,204,113,0.45)]",
+    statusText: "text-emerald-400/80",
   },
   neutral: {
-    ring:       'border-zinc-700',
-    valueBg:    'bg-zinc-800/40',
-    valueText:  'text-zinc-300',
-    dot:        'bg-zinc-500',
-    statusText: 'text-zinc-500',
+    ring: "border-zinc-700",
+    valueBg: "bg-zinc-800/40",
+    valueText: "text-zinc-300",
+    dot: "bg-zinc-500",
+    statusText: "text-zinc-500",
   },
   warn: {
-    ring:       'border-amber-500/30',
-    valueBg:    'bg-amber-900/20',
-    valueText:  'text-amber-400',
-    dot:        'bg-amber-400 shadow-[0_0_6px_2px_rgba(255,176,32,0.45)]',
-    statusText: 'text-amber-400/80',
+    ring: "border-amber-500/30",
+    valueBg: "bg-amber-900/20",
+    valueText: "text-amber-400",
+    dot: "bg-amber-400 shadow-[0_0_6px_2px_rgba(255,176,32,0.45)]",
+    statusText: "text-amber-400/80",
   },
 };
 
-export default function QualityScoreCard({ score }: QualityScoreCardProps): React.ReactElement {
+export default function QualityScoreCard({
+  score,
+}: QualityScoreCardProps): React.ReactElement {
   const tokens = STATUS_TOKENS[score.status];
-  const displayValue = score.value === null ? 'N/A' : `${score.value.toFixed(2)}%`;
+  const displayValue =
+    score.value === null ? "Aguardando" : `${score.value.toFixed(2)}%`;
 
   return (
-    <div className={`flex flex-col gap-3 rounded-2xl border bg-[var(--bg-card)] p-4 ${tokens.ring}`}>
+    <div
+      className={`flex flex-col gap-3 rounded-2xl border bg-[var(--bg-card)] p-4 ${tokens.ring}`}
+    >
       {/* Label */}
       <span className="font-sans text-xs font-medium uppercase tracking-widest text-zinc-500">
         {score.label}
       </span>
 
       {/* Value pill */}
-      <div className={`flex w-fit items-center rounded-xl px-3 py-1.5 ${tokens.valueBg}`}>
-        <span className={`font-mono text-xl font-bold tabular-nums leading-none ${tokens.valueText}`}>
+      <div
+        className={`flex w-fit items-center rounded-xl px-3 py-1.5 ${tokens.valueBg}`}
+      >
+        <span
+          className={`font-mono text-xl font-bold tabular-nums leading-none ${tokens.valueText}`}
+        >
           {displayValue}
         </span>
       </div>
 
       {/* Status row */}
       <div className="flex items-center gap-1.5">
-        <span className={`h-1.5 w-1.5 rounded-full flex-shrink-0 ${tokens.dot}`} aria-hidden="true" />
+        <span
+          className={`h-1.5 w-1.5 rounded-full flex-shrink-0 ${tokens.dot}`}
+          aria-hidden="true"
+        />
         <span className={`font-sans text-xs leading-snug ${tokens.statusText}`}>
           {score.statusText}
         </span>
@@ -93,27 +105,29 @@ export function useInstagramData() {
         const token = localStorage.getItem("authToken");
 
         if (!token) {
-          throw new Error("Token de autenticação não encontrado");
+          throw new Error(
+            "Não encontramos sua sessão. Entre novamente para ver os dados.",
+          );
         }
 
         const response = await fetch("http://localhost:3000/api/instagram", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         });
 
         if (!response.ok) {
           const errorText = await response.text();
-          throw new Error(`Erro ${response.status}: ${errorText}`);
+          throw new Error(`Algo deu errado (${response.status}): ${errorText}`);
         }
 
         const result: InstagramDataResponse = await response.json();
         setData(result);
         setError(null);
       } catch (err) {
-        const message = err instanceof Error ? err.message : "Erro desconhecido";
+        const message = err instanceof Error ? err.message : "Algo deu errado";
         console.error("Falha na requisição Instagram:", message);
         setError(message);
         setData(null);
@@ -136,15 +150,23 @@ export function InstagramOverviewScreen(): React.ReactElement {
   const { data, loading, error } = useInstagramData();
 
   if (loading) {
-    return <div className="p-4 text-zinc-400">⏳ Carregando dados do Instagram...</div>;
+    return (
+      <div className="p-4 text-zinc-400">
+        ⏳ Carregando dados do Instagram...
+      </div>
+    );
   }
 
   if (error) {
-    return <div className="p-4 text-red-400">❌ Erro: {error}</div>;
+    return <div className="p-4 text-red-400">❌ Algo deu errado: {error}</div>;
   }
 
   if (!data?.qualityScores) {
-    return <div className="p-4 text-zinc-400">📭 Nenhum dado disponível</div>;
+    return (
+      <div className="p-4 text-zinc-400">
+        📭 Os dados aparecem aqui assim que chegarem
+      </div>
+    );
   }
 
   return (

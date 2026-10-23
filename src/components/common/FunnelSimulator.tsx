@@ -92,7 +92,7 @@ export default function FunnelSimulator({
   // este handler é o lugar certo para trocar de implementação.
   const handleExport = async () => {
     const linhas = [
-      "Orbit — Cenário simulado do funil",
+      "Orbit: cenário simulado do funil de vendas",
       setor ? `Setor: ${SETOR_LABELS[setor]}` : null,
       `Alcance simulado: ${state.alcance.toLocaleString("pt-BR")}`,
       `CTR alvo da bio: ${formatPtBr(state.ctrBio, 1)}%${
@@ -109,7 +109,7 @@ export default function FunnelSimulator({
       `${fonteEngajamentoDetalhada(engajamentoFonte)}: ${engajamentoEfetivo}%`,
       conversaoNota ?? null,
       isSaturated
-        ? `⚠ Saturação: escala ${formatPtBr(razaoEscala, 1)}x acima da bolha histórica — CTR e conversão acima já vêm degradados.`
+        ? `⚠ Saturação: escala ${formatPtBr(razaoEscala, 1)}x acima da bolha histórica: CTR e conversão acima já vêm degradados.`
         : null,
     ].filter((linha): linha is string => linha !== null);
 
@@ -155,7 +155,7 @@ export default function FunnelSimulator({
         <div className={styles.sliderGroup}>
           <Slider
             label="Alcance simulado"
-            helpText="Quantas pessoas a publicação ou campanha deve alcançar."
+            helpText="Quantas pessoas você quer alcançar com a publicação ou campanha."
             min={1000}
             max={500000}
             step={1000}
@@ -179,7 +179,7 @@ export default function FunnelSimulator({
               como um novo slider — decisão de produto, não deste patch. */}
           <Slider
             label="Taxa de visita ao perfil"
-            helpText="De cada 100 pessoas alcançadas, quantas visitam seu perfil. (O clique no link da bio vem depois, calculado a partir do seu histórico real — por isso o resultado final pode parecer menor do que só este número sugere.)"
+            helpText="De cada 100 pessoas alcançadas, quantas visitam seu perfil. (O clique no link da bio vem depois, calculado a partir do seu histórico real, por isso o resultado final pode parecer menor do que só este número sugere.)"
             min={0}
             max={20}
             step={0.1}
@@ -189,7 +189,7 @@ export default function FunnelSimulator({
           />
           {razaoEscala > 1 && (
             <div className={styles.degradedHint}>
-              ↳ Aplicado na simulação: {formatPtBr(ctrEfetivo, 2)}% — nesta
+              ↳ Aplicado na simulação: {formatPtBr(ctrEfetivo, 2)}%: nesta
               escala, parte do público alcançado é frio (nunca te seguiu), e
               público frio visita/clica menos.
             </div>
@@ -209,7 +209,7 @@ export default function FunnelSimulator({
           />
           {razaoEscala > 1 && (
             <div className={styles.degradedHint}>
-              ↳ Aplicado na simulação: {formatPtBr(convEfetivo, 2)}% — mesmo
+              ↳ Aplicado na simulação: {formatPtBr(convEfetivo, 2)}%: mesmo
               motivo: quem chega frio demora mais pra confiar e comprar.
             </div>
           )}
@@ -235,8 +235,8 @@ export default function FunnelSimulator({
             Alcance {formatPtBr(razaoEscala, 1)}x acima do que sua conta já
             entregou.
           </strong>{" "}
-          Nessa faixa, o público extra é majoritariamente frio — por isso o CTR
-          e a conversão já aparecem reduzidos logo acima, e as vendas estimadas
+          Nessa faixa, o público extra é majoritariamente frio, por isso o CTR e
+          a conversão já aparecem reduzidos logo acima, e as vendas estimadas
           abaixo já refletem essa redução. Não é um limite fixo do simulador: é
           o comportamento esperado quando se escala tráfego além do que a conta
           comprovou organicamente.

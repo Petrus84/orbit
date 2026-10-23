@@ -70,8 +70,8 @@ function detectBottleneck(
       return {
         detected: true,
         type: "zero_clicks",
-        message: "Gargalo detectado: zero cliques no link da bio",
-        suggestedAction: "Revise o CTA ou a visibilidade do link",
+        message: "Ninguém clicou no link da bio neste cenário",
+        suggestedAction: "Revise o convite para agir ou a visibilidade do link",
         severity: "critical",
       };
     }
@@ -79,7 +79,7 @@ function detectBottleneck(
       return {
         detected: true,
         type: "none",
-        message: "Sem vendas informadas no período",
+        message: "Vendas do período ainda não informadas",
         suggestedAction:
           "Informe as vendas do período para a simulação usar a taxa de conversão da conta.",
         severity: "warning",
@@ -97,7 +97,7 @@ function detectBottleneck(
     return {
       detected: true,
       type: "none",
-      message: "Cenário similar ao atual — sem mudanças significativas",
+      message: "Cenário similar ao atual, sem mudanças significativas",
       suggestedAction: "Ajuste os parâmetros à direita para ver o impacto",
       severity: "warning",
     };
@@ -164,13 +164,13 @@ export default function FunnelResult({
   const insight = isVendaFracionada
     ? `Neste ritmo, é preciso algo como ${formatValue(
         cliquesParaFecharUmaVenda ?? 0,
-      )} cliques para fechar 1 venda — aumente o alcance simulado ou o CTR/conversão para chegar lá dentro deste cenário.`
+      )} cliques para fechar 1 venda. Aumente o alcance simulado ou o CTR/conversão para chegar lá dentro deste cenário.`
     : result.vendas > safeBaseVendas * 1.5
-      ? "Potencial alto — vale aumentar o investimento em tráfego."
+      ? "Potencial alto: vale aumentar o investimento em tráfego."
       : result.vendas > safeBaseVendas
-        ? "Cenário positivo — pequenos ajustes geram impacto real."
+        ? "Cenário positivo: pequenos ajustes geram impacto real."
         : result.vendas < safeBaseVendas * 0.8
-          ? "Cenário desfavorável — revise o CTR da bio ou a taxa de conversão."
+          ? "Cenário desfavorável: revise o CTR da bio ou a taxa de conversão."
           : "Cenário similar ao atual.";
 
   const handleSaveGoal = async () => {
@@ -273,11 +273,11 @@ export default function FunnelResult({
       {showSaveModal && (
         <div className={styles.modal} role="dialog" aria-modal="true">
           <div className={styles.modalContent}>
-            <h3 className={styles.modalTitle}>Salvar meta de funil</h3>
+            <h3 className={styles.modalTitle}>Salvar meta de vendas</h3>
 
             <input
               type="text"
-              placeholder="Ex: Meta de 150 vendas/mês"
+              placeholder="Ex.: meta de 150 vendas por mês"
               value={goalName}
               onChange={(e) => setGoalName(e.target.value)}
               className={styles.modalInput}
@@ -309,7 +309,7 @@ export default function FunnelResult({
 
             {saveStatus === "error" && (
               <div className={styles.modalError}>
-                Erro ao salvar. Tente novamente.
+                Algo deu errado ao salvar. Tente novamente.
               </div>
             )}
           </div>

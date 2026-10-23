@@ -45,7 +45,7 @@ export const STATUS_LABELS: Record<SemaphoreStatus, string> = {
   warning: "Atenção",
   critical: "Crítico",
   info: "Info",
-  unknown: "Sem dado",
+  unknown: "Aguardando dados",
 };
 
 const CLASS_MAP: Record<SemaphoreStatus, string> = {

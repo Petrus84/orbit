@@ -190,7 +190,7 @@ export function AudienceSummaryPanel({
 
       {!hasGender && !hasCities && !hasGapData && (
         <p className={styles.emptyState}>
-          Sem dado de audiência para este período ainda.
+          Os dados de audiência deste período aparecem aqui assim que chegarem.
         </p>
       )}
     </GlassCard>

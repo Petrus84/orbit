@@ -87,7 +87,9 @@
 }
 
 .action:hover {
-  color: var(--acc2-text); /* FIX WCAG: --acc2 puro é 4.17:1 sobre --bg2 (falha AA) */
+  color: var(
+    --acc2-text
+  ); /* FIX WCAG: --acc2 puro é 4.17:1 sobre --bg2 (falha AA) */
 }
 
 .label {

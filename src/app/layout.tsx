@@ -46,7 +46,8 @@ const dmMono = DM_Mono({
 
 export const metadata: Metadata = {
   title: "ORBIT",
-  description: "Sistema de Gestão de Funil e Performance de Contas",
+  description:
+    "Sistema de gestão do funil de vendas e do desempenho das contas",
 };
 
 export default function RootLayout({

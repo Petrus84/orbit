@@ -21,33 +21,33 @@ function humanizeSlug(slug: string): string {
 }
 
 const SETOR_LABEL: Record<string, string> = {
-  saas_ferramenta: "SaaS / ferramenta",
-  comercio_direto_ecommerce_social: "Comércio direto — e-commerce social",
-  comissionamento_afiliados: "Comissionamento e afiliados",
-  infoprodutor_educador_pago: "Infoprodutor / educador pago",
-  servico_consultoria_profissional: "Serviço / consultoria profissional",
-  patrocinio_publicidade_marca: "Patrocínio e publicidade de marca",
-  membership_assinatura_comunidade: "Membership / assinatura de comunidade",
-  monetizacao_nativa_plataforma: "Monetização nativa de plataforma",
-  autoridade_personal_branding_b2b: "Autoridade / personal branding B2B",
-  pre_monetizacao_a_validar: "Pré-monetização — a validar",
+  saas_ferramenta: "Software ou ferramenta online",
+  comercio_direto_ecommerce_social: "Comércio direto pelas redes sociais",
+  comissionamento_afiliados: "Comissão por indicação (afiliados)",
+  infoprodutor_educador_pago: "Cursos e conteúdo digital pago",
+  servico_consultoria_profissional: "Serviços e consultoria",
+  patrocinio_publicidade_marca: "Publis e parcerias com marcas",
+  membership_assinatura_comunidade: "Assinatura e comunidade paga",
+  monetizacao_nativa_plataforma: "Ganhos pela própria plataforma",
+  autoridade_personal_branding_b2b: "Marca pessoal para vender a empresas",
+  pre_monetizacao_a_validar: "Ainda sem receita, validando a ideia",
 };
 
 const FUNNEL_LABEL: Record<string, string> = {
-  funil_basico: "Funil básico",
-  nao_implementado: "Não implementado",
-  implementado_fragmentado: "Implementado, fragmentado",
-  implementado_unificado: "Implementado, unificado",
+  funil_basico: "Caminho de venda básico",
+  nao_implementado: "Ainda não montado",
+  implementado_fragmentado: "Montado, em partes soltas",
+  implementado_unificado: "Montado e integrado",
 };
 
 const PROOF_LABEL: Record<string, string> = {
-  clientes_ativos_gestao: "Clientes ativos em gestão",
+  clientes_ativos_gestao: "Clientes atendidos hoje",
   prova_social: "Prova social",
   autoridade: "Autoridade",
-  escassez_urgencia: "Escassez / urgência",
+  escassez_urgencia: "Vagas limitadas e prazo curto",
   associacao_marca: "Associação de marca",
   resultado_documentado: "Resultado documentado",
-  nenhum_observavel: "Nenhum mecanismo observável",
+  nenhum_observavel: "Nada que prove o resultado",
 };
 
 // RN-23: proveniência dos cards de Benchmarking (ER Real, VPS, Polêmica).
@@ -57,14 +57,14 @@ const BENCH_PROVENANCE: Record<"er" | "vps" | "pol", MetricProvenance> = {
       "ig_account_snapshots (snapshot mais recente do período) · classificação fn_classify_metric",
     period: "snapshot",
     method:
-      "(salvamentos + compartilhamentos + comentários) ÷ alcance × 100; sem benchmark empírico, só corte de gestão L2",
+      "(salvamentos + compartilhamentos + comentários) ÷ alcance × 100; sem referência de mercado medida, só meta de gestão (hipótese)",
   },
   vps: {
     source:
       "ig_account_snapshots (snapshot mais recente do período) · classificação fn_classify_metric",
     period: "snapshot",
     method:
-      "(alcance × % do alcance em seguidores) ÷ seguidores × 100 (RN-20); sem benchmark empírico, só corte de gestão L2",
+      "(alcance × % do alcance em seguidores) ÷ seguidores × 100 (RN-20); sem referência de mercado medida, só meta de gestão (hipótese)",
   },
   pol: {
     source: "cálculo por post (ig_posts) · classificação fn_classify_metric",
@@ -221,10 +221,10 @@ export function SectorPositioningPanel({
           )}
         </div>
         <div className={styles.infoCard}>
-          <p className={styles.infoLabel}>Funil e prova social</p>
+          <p className={styles.infoLabel}>Caminho de venda e prova</p>
           <p className={styles.infoValue}>{funnelLabel}</p>
           <p className={styles.infoSub}>
-            Mecanismo de prova: {proofLabel.toLowerCase()}
+            Como prova que funciona: {proofLabel.toLowerCase()}
           </p>
         </div>
       </div>

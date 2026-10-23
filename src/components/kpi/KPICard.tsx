@@ -13,7 +13,7 @@ export interface KPI {
   flagLevel: FlagLevel;
   unit?: string;
   sparkline?: number[]; // series of values for the mini chart
-  /** false = delta nulo na view: exibe "Sem comparação", nunca 0%. */
+  /** false = delta nulo na view: exibe "Comparação ainda indisponível", nunca 0%. */
   hasComparison?: boolean;
   provenance?: MetricProvenance;
 }
@@ -145,7 +145,7 @@ export default function KPICard({ kpi }: KPICardProps): React.ReactElement {
           {/* Delta */}
           {kpi.hasComparison === false ? (
             <span className="font-sans text-xs font-medium text-zinc-500">
-              Sem comparação
+              Comparação ainda indisponível
             </span>
           ) : (
             kpi.delta !== undefined &&
@@ -154,7 +154,9 @@ export default function KPICard({ kpi }: KPICardProps): React.ReactElement {
                 className={`font-sans text-xs font-medium ${deltaTokens.color}`}
               >
                 {deltaTokens.arrow} {formatPtBr(Math.abs(kpi.delta), 1)}%{" "}
-                <span className="text-zinc-600">vs período anterior</span>
+                <span className="text-zinc-600">
+                  em relação ao período anterior
+                </span>
               </span>
             )
           )}

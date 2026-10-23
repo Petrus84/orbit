@@ -23,7 +23,7 @@ const TREND_PROVENANCE: MetricProvenance = {
   periodLabel:
     "todo o histórico do formato (exibida só quando ele cabe no cabeçalho)",
   method:
-    "média de utility_score_pct na 2ª metade cronológica contra a 1ª; ±15%; mínimo 2 posts com score por metade. utility_score_pct tem o defeito F6 do SSOT: a tendência não mede interações",
+    "média de utility_score_pct na 2ª metade cronológica contra a 1ª; ±15%; mínimo 2 posts com score por metade. a tendência usa a nota de utilidade do post, não as interações",
 };
 
 export interface FormatPerformanceTableProps {
@@ -210,12 +210,14 @@ export function PostDetailRow({ post }: { post: PostSummary }) {
     <div className={styles.postRow}>
       <span className={styles.postDate}>{formatDate(post.publishedAt)}</span>
       <span className={styles.postMetrics}>
-        {post.likes != null ? `${post.likes} likes` : "sem likes"}
-        {post.comments != null ? ` · ${post.comments} comments` : ""}
+        {post.likes != null
+          ? `${post.likes} curtidas`
+          : "curtidas não informadas"}
+        {post.comments != null ? ` · ${post.comments} comentários` : ""}
       </span>
       <span
         className={styles.postCaption}
-        title={post.caption || "Sem legenda"}
+        title={post.caption || "Legenda não informada"}
       >
         {captionDisplay}
       </span>
@@ -233,9 +235,9 @@ export function PostDetailRow({ post }: { post: PostSummary }) {
       {post.playToViewRatio != null && (
         <span
           className={styles.postPlayRatio}
-          title="Plays / visualizações do reel"
+          title="Reproduções e visualizações do reel"
         >
-          {`Play/View: ${formatPtBr(post.playToViewRatio, 2)}`}
+          {`Reproduções por visualização: ${formatPtBr(post.playToViewRatio, 2)}`}
         </span>
       )}
       <span className={hasScore ? styles.postScore : styles.postScoreMuted}>
@@ -256,10 +258,10 @@ function InteractionsCell({ row }: { row: FormatPerformanceRow }) {
     return (
       <span
         className={styles.interactionsEmpty}
-        title="Sem curtidas, comentários, compartilhamentos e salvamentos para estes posts"
+        title="Curtidas, comentários, compartilhamentos e salvamentos ainda não informados para estes posts"
       >
         <span aria-hidden="true">—</span>
-        <span style={visuallyHidden}>sem dados</span>
+        <span style={visuallyHidden}>dados ainda não informados</span>
       </span>
     );
   }
@@ -291,15 +293,15 @@ export function FormatPerformanceTable({
 
   return (
     <div className={styles.wrapper}>
-      <p className={styles.title}>PERFORMANCE POR FORMATO</p>
-      <table className={styles.table} aria-label="Performance por formato">
+      <p className={styles.title}>DESEMPENHO POR FORMATO</p>
+      <table className={styles.table} aria-label="Desempenho por formato">
         <thead>
           <tr>
             <th className={styles.th}></th>
             <th className={styles.th}>FORMATO</th>
             <th className={styles.th}>POSTS</th>
             <th className={styles.th}>INTERAÇÕES</th>
-            <th className={styles.th}>TREND</th>
+            <th className={styles.th}>TENDÊNCIA</th>
           </tr>
         </thead>
         <tbody>
@@ -371,10 +373,10 @@ export function FormatPerformanceTable({
         </tbody>
       </table>
       <p style={{ fontSize: 11, opacity: 0.7, marginTop: 8 }}>
-        Posts e interações — {provenanceLine(COUNTS_PROVENANCE)}
+        Posts e interações: {provenanceLine(COUNTS_PROVENANCE)}
       </p>
       <p style={{ fontSize: 11, opacity: 0.7, marginTop: 4 }}>
-        Tendência — {provenanceLine(TREND_PROVENANCE)}
+        Tendência: {provenanceLine(TREND_PROVENANCE)}
       </p>
     </div>
   );

@@ -31,28 +31,28 @@
      essas páginas migrarem para TOKENS, este componente deve migrar junto.
    ========================================================================== */
 
-'use client'
+"use client";
 
-import type { ChangeEvent, CSSProperties } from 'react'
-import type { DashboardHeaderMeta } from '@/types/orbit'
+import type { ChangeEvent, CSSProperties } from "react";
+import type { DashboardHeaderMeta } from "@/types/orbit";
 
 /** Mesma forma de src/types/orbit.ts (`DashboardHeaderMeta['dateRange']`) — não é um tipo novo. */
-export type PeriodRange = DashboardHeaderMeta['dateRange']
+export type PeriodRange = DashboardHeaderMeta["dateRange"];
 
 export interface DateRangeControlProps {
-  value: PeriodRange
-  onChange: (next: PeriodRange) => void
+  value: PeriodRange;
+  onChange: (next: PeriodRange) => void;
   /** Limite inferior selecionável (ex.: PERIOD_START — início da janela com dado ingerido). */
-  minDate?: Date
+  minDate?: Date;
   /** Limite superior selecionável (ex.: PERIOD_END — "agora", não faz sentido período futuro). */
-  maxDate?: Date
+  maxDate?: Date;
   /** Desabilita os dois inputs (ex.: enquanto status === 'loading'). */
-  disabled?: boolean
+  disabled?: boolean;
 }
 
 function toInputValue(date: Date): string {
   // yyyy-mm-dd, o formato que <input type="date"> espera
-  return date.toISOString().slice(0, 10)
+  return date.toISOString().slice(0, 10);
 }
 
 /**
@@ -71,21 +71,21 @@ function toInputValue(date: Date): string {
  * aberto.
  */
 function parseInputValue(raw: string): Date | null {
-  if (!raw) return null
-  const parsed = new Date(`${raw}T00:00:00.000Z`)
-  return Number.isNaN(parsed.getTime()) ? null : parsed
+  if (!raw) return null;
+  const parsed = new Date(`${raw}T00:00:00.000Z`);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
 }
 
 const inputStyle: CSSProperties = {
-  padding: '6px 10px',
-  borderRadius: '8px',
-  border: '1px solid var(--line)',
-  background: 'transparent',
-  color: 'var(--t0)',
-  fontSize: '13px',
-  fontFamily: 'inherit',
-  colorScheme: 'dark',
-}
+  padding: "6px 10px",
+  borderRadius: "8px",
+  border: "1px solid var(--line)",
+  background: "transparent",
+  color: "var(--t0)",
+  fontSize: "13px",
+  fontFamily: "inherit",
+  colorScheme: "dark",
+};
 
 export function DateRangeControl({
   value,
@@ -95,24 +95,24 @@ export function DateRangeControl({
   disabled = false,
 }: DateRangeControlProps) {
   const handleStartChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const next = parseInputValue(e.target.value)
-    if (!next) return
+    const next = parseInputValue(e.target.value);
+    if (!next) return;
     // não deixa o início passar do fim já selecionado
-    if (next > value.end) return
-    onChange({ start: next, end: value.end })
-  }
+    if (next > value.end) return;
+    onChange({ start: next, end: value.end });
+  };
 
   const handleEndChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const next = parseInputValue(e.target.value)
-    if (!next) return
+    const next = parseInputValue(e.target.value);
+    if (!next) return;
     // não deixa o fim ficar antes do início já selecionado
-    if (next < value.start) return
-    onChange({ start: value.start, end: next })
-  }
+    if (next < value.start) return;
+    onChange({ start: value.start, end: next });
+  };
 
   return (
     <div
-      style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+      style={{ display: "flex", alignItems: "center", gap: "8px" }}
       role="group"
       aria-label="Selecionar período de análise"
     >
@@ -126,7 +126,7 @@ export function DateRangeControl({
         disabled={disabled}
         style={inputStyle}
       />
-      <span style={{ color: 'var(--t2)', fontSize: '13px' }} aria-hidden="true">
+      <span style={{ color: "var(--t2)", fontSize: "13px" }} aria-hidden="true">
         até
       </span>
       <input
@@ -140,5 +140,5 @@ export function DateRangeControl({
         style={inputStyle}
       />
     </div>
-  )
+  );
 }

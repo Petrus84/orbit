@@ -21,19 +21,19 @@
 //   não mais bg-blue-600 (cor que não aparece em nenhum outro componente
 //   do app).
 
-'use client'
+"use client";
 
-import React from 'react'
-import { useOrbitDashboard } from '@/context/OrbitDashboardContext'
-import { useAvatar } from '@/hooks/useAvatar'
-import { AvatarComparison } from '@/components/common/AvatarComparison'
-import { AlignmentBars } from '@/components/common/AlignmentBars'
-import { AlignmentFormula } from '@/components/common/AlignmentFormula'
-import { RecommendationAlert } from '@/components/common/RecommendationAlert'
-import styles from './AvatarScreen.module.css'
+import React from "react";
+import { useOrbitDashboard } from "@/context/OrbitDashboardContext";
+import { useAvatar } from "@/hooks/useAvatar";
+import { AvatarComparison } from "@/components/common/AvatarComparison";
+import { AlignmentBars } from "@/components/common/AlignmentBars";
+import { AlignmentFormula } from "@/components/common/AlignmentFormula";
+import { RecommendationAlert } from "@/components/common/RecommendationAlert";
+import styles from "./AvatarScreen.module.css";
 
 interface AvatarScreenProps {
-  clientId?: string
+  clientId?: string;
 }
 
 // ─── Skeleton ────────────────────────────────────────────────────────────
@@ -41,19 +41,27 @@ interface AvatarScreenProps {
 const AvatarScreenSkeleton: React.FC = () => (
   <div className={styles.skeletonStack}>
     <div className={styles.skeletonRow}>
-      <div className={`${styles.skeleton} ${styles.skeletonCard}`} style={{ flex: 1 }} />
+      <div
+        className={`${styles.skeleton} ${styles.skeletonCard}`}
+        style={{ flex: 1 }}
+      />
       <div className={styles.skeleton} style={{ width: 24 }} />
-      <div className={`${styles.skeleton} ${styles.skeletonCard}`} style={{ flex: 1 }} />
+      <div
+        className={`${styles.skeleton} ${styles.skeletonCard}`}
+        style={{ flex: 1 }}
+      />
     </div>
     <div className={`${styles.skeleton} ${styles.skeletonBars}`} />
     <div className={`${styles.skeleton} ${styles.skeletonFormula}`} />
     <div className={`${styles.skeleton} ${styles.skeletonRecs}`} />
   </div>
-)
+);
 
 // ─── Header (compartilhado pelos estados loading e sucesso) ──────────────
 
-const Header: React.FC<{ lastUpdatedLabel?: string }> = ({ lastUpdatedLabel }) => (
+const Header: React.FC<{ lastUpdatedLabel?: string }> = ({
+  lastUpdatedLabel,
+}) => (
   <div className={styles.headerRow}>
     <div className={styles.headerText}>
       <h1 className={styles.title}>Avatar Alignment</h1>
@@ -69,20 +77,20 @@ const Header: React.FC<{ lastUpdatedLabel?: string }> = ({ lastUpdatedLabel }) =
       </div>
     )}
   </div>
-)
+);
 
 // ─── Estado centralizado genérico (reutilizado pelos 5 estados de erro) ──
 
 interface CenterStateProps {
-  icon: string
-  spin?: boolean
-  title: string
-  body: string
-  detailTitle?: string
-  detailItems?: string[]
-  detailRaw?: string | undefined
-  primaryAction?: { label: string; onClick: () => void }
-  hint?: string
+  icon: string;
+  spin?: boolean;
+  title: string;
+  body: string;
+  detailTitle?: string;
+  detailItems?: string[];
+  detailRaw?: string | undefined;
+  primaryAction?: { label: string; onClick: () => void };
+  hint?: string;
 }
 
 const CenterState: React.FC<CenterStateProps> = ({
@@ -98,7 +106,11 @@ const CenterState: React.FC<CenterStateProps> = ({
 }) => (
   <div className={styles.center}>
     <div className={styles.centerInner}>
-      <span className={`${styles.stateIcon} ${spin ? styles.stateIconSpin : ''}`}>{icon}</span>
+      <span
+        className={`${styles.stateIcon} ${spin ? styles.stateIconSpin : ""}`}
+      >
+        {icon}
+      </span>
       <h2 className={styles.stateTitle}>{title}</h2>
       <p className={styles.stateBody}>{body}</p>
 
@@ -126,17 +138,20 @@ const CenterState: React.FC<CenterStateProps> = ({
       )}
     </div>
   </div>
-)
+);
 
-export const AvatarScreen: React.FC<AvatarScreenProps> = ({ clientId: propClientId }) => {
-  const { clientId: contextClientId } = useOrbitDashboard()
-  const clientId = propClientId || contextClientId
+export const AvatarScreen: React.FC<AvatarScreenProps> = ({
+  clientId: propClientId,
+}) => {
+  const { clientId: contextClientId } = useOrbitDashboard();
+  const clientId = propClientId || contextClientId;
 
-  const { data, status, error, errorCode, isRetrying, refetch, lastUpdated } = useAvatar(clientId || '')
+  const { data, status, error, errorCode, isRetrying, refetch, lastUpdated } =
+    useAvatar(clientId || "");
 
-  const isLoading = status === 'loading' && !isRetrying
-  const isError = status === 'error'
-  const isSuccess = status === 'success' && data
+  const isLoading = status === "loading" && !isRetrying;
+  const isError = status === "error";
+  const isSuccess = status === "success" && data;
 
   // ─── GUARD: Cliente não identificado ────────────────────────────────────
 
@@ -145,7 +160,7 @@ export const AvatarScreen: React.FC<AvatarScreenProps> = ({ clientId: propClient
       <div className={styles.page}>
         <CenterState icon="❓" title="Cliente não identificado" body="" />
       </div>
-    )
+    );
   }
 
   // ─── ESTADO: Carregando ──────────────────────────────────────────────────
@@ -156,7 +171,7 @@ export const AvatarScreen: React.FC<AvatarScreenProps> = ({ clientId: propClient
         <Header />
         <AvatarScreenSkeleton />
       </div>
-    )
+    );
   }
 
   // ─── ESTADO: Tentando reconectar ───────────────────────────────────────
@@ -168,15 +183,15 @@ export const AvatarScreen: React.FC<AvatarScreenProps> = ({ clientId: propClient
           icon="🔄"
           spin
           title="Tentando reconectar..."
-          body="Por favor, aguarde."
+          body="Só um instante, estamos carregando."
         />
       </div>
-    )
+    );
   }
 
   // ─── ESTADO: Erro NO_DATA (Cliente sem avatar) ──────────────────────────
 
-  if (isError && errorCode === 'NO_DATA') {
+  if (isError && errorCode === "NO_DATA") {
     return (
       <div className={styles.page}>
         <CenterState
@@ -185,40 +200,40 @@ export const AvatarScreen: React.FC<AvatarScreenProps> = ({ clientId: propClient
           body="Este cliente ainda não possui um alinhamento de avatar configurado no sistema."
           detailTitle="O que fazer:"
           detailItems={[
-            'Verifique se o cliente foi criado corretamente',
-            'Confirme que os dados de avatar foram sincronizados',
-            'Configure um novo avatar para este cliente se necessário',
+            "Verifique se o cliente foi criado corretamente",
+            "Confirme que os dados de avatar foram sincronizados",
+            "Se precisar, você pode criar um novo avatar para este cliente",
           ]}
-          primaryAction={{ label: '🔄 Tentar Novamente', onClick: refetch }}
+          primaryAction={{ label: "🔄 Tentar Novamente", onClick: refetch }}
         />
       </div>
-    )
+    );
   }
 
   // ─── ESTADO: Erro NETWORK_ERROR (Conexão) ───────────────────────────────
 
-  if (isError && errorCode === 'NETWORK_ERROR') {
+  if (isError && errorCode === "NETWORK_ERROR") {
     return (
       <div className={styles.page}>
         <CenterState
           icon="🌐"
-          title="Erro de conexão"
-          body="Não foi possível conectar ao servidor para buscar os dados de avatar."
+          title="Conexão interrompida"
+          body="A conexão com o servidor falhou e os dados do avatar não carregaram. Tente de novo em instantes."
           detailTitle="Possíveis causas:"
           detailItems={[
-            'Sua conexão com a internet pode estar instável',
-            'O servidor pode estar temporariamente indisponível',
-            'Verifique sua conexão e tente novamente',
+            "Sua conexão com a internet pode estar instável",
+            "O servidor pode estar temporariamente indisponível",
+            "Verifique sua conexão e tente novamente",
           ]}
-          primaryAction={{ label: '🔗 Reconectar', onClick: refetch }}
+          primaryAction={{ label: "🔗 Reconectar", onClick: refetch }}
         />
       </div>
-    )
+    );
   }
 
   // ─── ESTADO: Erro VALIDATION_FAILED (Dados inválidos) ────────────────────
 
-  if (isError && errorCode === 'VALIDATION_FAILED') {
+  if (isError && errorCode === "VALIDATION_FAILED") {
     return (
       <div className={styles.page}>
         <CenterState
@@ -227,16 +242,16 @@ export const AvatarScreen: React.FC<AvatarScreenProps> = ({ clientId: propClient
           body="O servidor retornou dados que não passaram na validação."
           detailTitle="Detalhes do erro:"
           detailRaw={error ?? undefined}
-          primaryAction={{ label: '🔄 Tentar Novamente', onClick: refetch }}
+          primaryAction={{ label: "🔄 Tentar Novamente", onClick: refetch }}
           hint="Se o problema persistir, entre em contato com o suporte."
         />
       </div>
-    )
+    );
   }
 
   // ─── ESTADO: Erro UNKNOWN (Genérico) ────────────────────────────────────
 
-  if (isError && errorCode === 'UNKNOWN') {
+  if (isError && errorCode === "UNKNOWN") {
     return (
       <div className={styles.page}>
         <CenterState
@@ -245,11 +260,11 @@ export const AvatarScreen: React.FC<AvatarScreenProps> = ({ clientId: propClient
           body="Ocorreu um erro inesperado ao carregar o alinhamento de avatar."
           detailTitle="Mensagem:"
           detailRaw={error ?? undefined}
-          primaryAction={{ label: '🔄 Tentar Novamente', onClick: refetch }}
+          primaryAction={{ label: "🔄 Tentar Novamente", onClick: refetch }}
           hint="Verifique o console do navegador para mais detalhes."
         />
       </div>
-    )
+    );
   }
 
   // ─── ESTADO: Erro genérico (sem errorCode) ──────────────────────────────
@@ -258,14 +273,23 @@ export const AvatarScreen: React.FC<AvatarScreenProps> = ({ clientId: propClient
     return (
       <div className={styles.page}>
         <div className={styles.genericErrorBanner}>
-          <span className={styles.stateIcon} style={{ fontSize: 24, marginBottom: 0 }}>❌</span>
+          <span
+            className={styles.stateIcon}
+            style={{ fontSize: 24, marginBottom: 0 }}
+          >
+            ❌
+          </span>
           <div>
-            <p className={styles.genericErrorTitle}>Erro ao carregar dados</p>
-            <p className={styles.genericErrorBody}>{error || 'Erro desconhecido'}</p>
+            <p className={styles.genericErrorTitle}>
+              Algo deu errado ao carregar os dados
+            </p>
+            <p className={styles.genericErrorBody}>
+              {error || "Erro desconhecido"}
+            </p>
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   // ─── ESTADO: Sucesso ─────────────────────────────────────────────────────
@@ -276,13 +300,13 @@ export const AvatarScreen: React.FC<AvatarScreenProps> = ({ clientId: propClient
     // para "agora" mesmo sem nenhum fetch novo ter ocorrido. Agora usa o
     // `lastUpdated` real do hook, setado só quando o fetch de fato resolve.
     const lastUpdatedLabel = lastUpdated
-      ? lastUpdated.toLocaleDateString('pt-BR', {
-          day: '2-digit',
-          month: 'short',
-          hour: '2-digit',
-          minute: '2-digit',
+      ? lastUpdated.toLocaleDateString("pt-BR", {
+          day: "2-digit",
+          month: "short",
+          hour: "2-digit",
+          minute: "2-digit",
         })
-      : '—'
+      : "—";
 
     return (
       <div className={styles.page}>
@@ -314,14 +338,18 @@ export const AvatarScreen: React.FC<AvatarScreenProps> = ({ clientId: propClient
           </button>
         </div>
       </div>
-    )
+    );
   }
 
   // ─── ESTADO: Idle (nunca deveria chegar aqui) ────────────────────────────
 
   return (
     <div className={styles.page}>
-      <CenterState icon="⏳" title="" body="Pronto para carregar dados de avatar." />
+      <CenterState
+        icon="⏳"
+        title=""
+        body="Pronto para carregar dados de avatar."
+      />
     </div>
-  )
-}
+  );
+};

@@ -212,7 +212,7 @@ const METRIC_TRANSLATION_TEMPLATE: Record<string, (value: number) => string> = {
   // play_to_view_ratio: é ratio (0–1+), não percentual. Texto descreve o
   // que 1 significa (todos que viram iniciaram reprodução).
   play_to_view_ratio: (v) =>
-    `Traduzindo: para cada visualização, houve ${formatPtBr(v, 2)} reprodução — ${v >= 1 ? "todos que viram iniciaram o reel" : "parte das visualizações não virou play"}.`,
+    `Traduzindo: para cada visualização, houve ${formatPtBr(v, 2)} reprodução: ${v >= 1 ? "todos que viram iniciaram o reel" : "parte das visualizações não virou play"}.`,
 };
 
 const BOUNDED_PERCENT_METRICS: ReadonlySet<string> = new Set([
@@ -452,7 +452,7 @@ function buildAlgoRiskText(value: number | null): string {
     return `Precisa de ao menos ${ALGO_RISK_N_RECENT_MIN} posts recentes e de um histórico anterior com curtidas e comentários.`;
   }
   if (Math.abs(value) < 0.02)
-    return "Engajamento recente na mesma faixa do seu histórico — estável.";
+    return "Engajamento recente na mesma faixa do seu histórico: estável.";
   if (value > 0) {
     return `Engajamento recente ${formatPtBr(value * 100)}% abaixo da sua própria mediana histórica.`;
   }
@@ -710,7 +710,7 @@ function buildZeroInflatedText(
   const location = locateValueInRange(value, signalRangeLabel);
   const zeroPhrase = toFriendlyFraction(zeroPct) ?? `${zeroPct.toFixed(0)}%`;
 
-  let text = `${zeroPhrase} dos posts da amostra não têm ${eventNoun} — padrão, não falha da conta. Quando têm, o volume fica em ${formatSignalRange(signalRangeLabel)}.`;
+  let text = `${zeroPhrase} dos posts da amostra não têm ${eventNoun}. É padrão, não falha da conta. Quando têm, o volume fica em ${formatSignalRange(signalRangeLabel)}.`;
 
   if (location) {
     text += ` Você está ${location}.`;
@@ -750,7 +750,7 @@ function guardOutOfRangePercentMetric(
   return {
     value,
     semaphore: "ambar",
-    statusText: `${capitalize(label)} em ${formatPtBr(value)}% — fora do intervalo esperado para um post individual (0 a 100%). Pode ser soma de vários posts ou erro de ingestão. Confirme antes de decidir.`,
+    statusText: `${capitalize(label)} em ${formatPtBr(value)}%, fora do intervalo esperado para um post individual (0 a 100%). Pode ser soma de vários posts ou erro de ingestão. Confirme antes de decidir.`,
     confidenceLevel: "L2",
     thresholdSource: "global",
     confidenceScore: null,
@@ -771,7 +771,7 @@ function buildLowConfidenceCard(
 
   if (confidenceScore === null) {
     return {
-      title: `${capitalize(label)} em ${formatPtBr(value, 2)}% — sem referência para o seu negócio`,
+      title: `${capitalize(label)} em ${formatPtBr(value, 2)}%: sem referência para o seu negócio`,
       probableCause: AUSENCIA.regua,
       immediateAction:
         "Acompanhe este número na sua própria conta, semana a semana. Não mude oferta por ele agora.",
@@ -779,7 +779,7 @@ function buildLowConfidenceCard(
   }
 
   return {
-    title: `${capitalize(label)} em ${formatPtBr(value, 2)}% — ainda não dá para julgar este número`,
+    title: `${capitalize(label)} em ${formatPtBr(value, 2)}%: ainda não dá para julgar este número`,
     probableCause:
       "O número da conta é real; a base de comparação deste recorte é curta.",
     immediateAction:
@@ -1037,14 +1037,14 @@ export function resolveCtrBioAlert(input: CtrBioInput): AlertDraft {
               "Quem clica no link da bio muda dependendo de onde a pessoa veio",
             description: `${buildCtrTranslation(input.ctrValue)} Em uma origem o clique some; nas outras, acontece.`,
             probableCause:
-              "A bio serve para parte do público. O buraco está em quem chega por um caminho específico — post, busca ou hashtag.",
+              "A bio serve para parte do público. O buraco está em quem chega por um caminho específico: post, busca ou hashtag.",
             immediateAction:
               "Não mexa na bio. Identifique a origem fraca e interrompa esse caminho antes de testar texto novo.",
           }
         : {
             type: "ctr_below_threshold" as const,
             severity: "warning" as AlertSeverity,
-            title: "Quem chega na bio não clica — em nenhuma origem de tráfego",
+            title: "Quem chega na bio não clica, em nenhuma origem de tráfego",
             description: buildCtrTranslation(input.ctrValue),
             probableCause:
               "O problema é a promessa da bio ou da oferta, não de onde a pessoa veio.",
@@ -1094,7 +1094,7 @@ export function resolveAvatarAlert(input: AvatarDivergenceInput): AlertDraft {
       probableCause:
         "O retrato veio de curtida e comentário, não de pedido pago. São dois grupos que podem não ser o mesmo.",
       immediateAction:
-        "Antes de mudar posicionamento, separe: quem interage vs. quem já pagou. Sem esse cruzamento, não mude o alvo.",
+        "Antes de mudar posicionamento, separe: quem interage e quem já pagou. Sem esse cruzamento, não mude o alvo.",
       confidenceLevel: "L2",
       dataSource: "real_snapshot",
     };
@@ -1104,7 +1104,7 @@ export function resolveAvatarAlert(input: AvatarDivergenceInput): AlertDraft {
     input.productAdaptableToRealAudience === null
       ? "Isso não é automático. Decida com o cliente: falar com quem já compra, ou mudar o produto. As duas coisas ao mesmo tempo espalham o teste."
       : input.productAdaptableToRealAudience
-        ? "Ajuste a comunicação para quem já compra. O produto já serve a esse público — não redesenhe a oferta."
+        ? "Ajuste a comunicação para quem já compra. O produto já serve a esse público. Não redesenhe a oferta."
         : "O produto não serve ao público que está pagando hoje. Ou adapta a oferta, ou aceita um mercado menor do que o briefing pintou.";
 
   return {
@@ -1168,7 +1168,7 @@ export function buildFunnelInsight(
   return {
     id: crypto.randomUUID(),
     text: isFallback
-      ? `${ctrText} — mas este número não é do período pedido. Não use para projetar venda nem para subir verba. ${fallbackReason[result.dataSource as Exclude<FunnelResult["dataSource"], "real_snapshot">]}`
+      ? `${ctrText}, mas este número não é do período pedido. Não use para projetar venda nem para subir verba. ${fallbackReason[result.dataSource as Exclude<FunnelResult["dataSource"], "real_snapshot">]}`
       : `${ctrText} neste período.`,
     natureza: "tecnica",
     probableCause: isFallback
@@ -1202,7 +1202,7 @@ export function resolveEngagementCollapseAlert(
         return {
           type: "engagement_collapse" as const,
           severity: "critical" as AlertSeverity,
-          title: `Curtida, comentário e salvamento caíram ${formatPtBr(input.engagementChangePct)}% em ${input.windowDays} dias — e você está perdendo seguidores também`,
+          title: `Curtida, comentário e salvamento caíram ${formatPtBr(input.engagementChangePct)}% em ${input.windowDays} dias, e você está perdendo seguidores também`,
           description: null,
           probableCause:
             "Não é só menos gente vendo o post. Quem já seguia está deixando de seguir. Isso não parece troca voluntária de assunto.",
@@ -1294,7 +1294,7 @@ export function resolveCreativeFatigueAlert(
         probableCause:
           "Repetição de exposição e retorno financeiro medem coisas diferentes. Um pode subir sem o outro ter quebrado.",
         immediateAction:
-          "Não troque ainda. Se o retorno cair antes de bater o limite combinado, investigue outra causa — não troque só por repetição.",
+          "Não troque ainda. Se o retorno cair antes de bater o limite combinado, investigue outra causa. Não troque só por repetição.",
       };
     },
   );
@@ -1343,7 +1343,7 @@ export function resolveRoasBelowMinimumAlert(
         return {
           type: "roas_below_minimum" as const,
           severity: "critical" as AlertSeverity,
-          title: `Retorno em ${roasPlain} — mostrar anúncio ficou mais caro para todo mundo na plataforma, não só para você`,
+          title: `Retorno em ${roasPlain}: mostrar anúncio ficou mais caro para todo mundo na plataforma, não só para você`,
           description: null,
           probableCause:
             "O custo da sua conta subiu no mesmo ritmo do mercado inteiro. Não é o criativo que piorou; é o preço do anúncio no período.",
@@ -1356,7 +1356,7 @@ export function resolveRoasBelowMinimumAlert(
         return {
           type: "roas_below_minimum" as const,
           severity: "critical" as AlertSeverity,
-          title: `Retorno em ${roasPlain} — só a sua conta ficou mais cara, e é o mesmo anúncio se repetindo para as mesmas pessoas`,
+          title: `Retorno em ${roasPlain}: só a sua conta ficou mais cara, e é o mesmo anúncio se repetindo para as mesmas pessoas`,
           description: null,
           probableCause:
             "O público já viu esta peça demais. Isso encarece só a sua conta, não o mercado.",
@@ -1368,7 +1368,7 @@ export function resolveRoasBelowMinimumAlert(
       return {
         type: "roas_below_minimum" as const,
         severity: "critical" as AlertSeverity,
-        title: `Retorno em ${roasPlain} — sua conta ficou mais cara sem o mesmo anúncio se repetir mais`,
+        title: `Retorno em ${roasPlain}: sua conta ficou mais cara sem o mesmo anúncio se repetir mais`,
         description: null,
         probableCause:
           "Não parece as mesmas pessoas vendo demais o anúncio. O grupo visado pode ter esgotado.",
@@ -1427,14 +1427,14 @@ export async function resolveEngagementPublicAlert(
 
   const isRed = classified.semaphore === "vermelho";
   const v1Caveat =
-    " (Referência: benchmark v1 — recalibração v2 pendente. Use como sinal, não como decisão de verba isolada.)";
+    " (Referência: comparação v1, recalibração v2 pendente. Use como sinal, não como decisão de verba isolada.)";
 
   return {
     type: "engagement_collapse",
     severity: isRed ? "critical" : "warning",
     title: isRed
-      ? `Engajamento público crítico — só ${formatPtBr(input.engagementPublic, 2)}% das impressões viraram comentário ou compartilhamento`
-      : `Engajamento público abaixo do esperado — ${formatPtBr(input.engagementPublic, 2)}% das impressões viraram comentário ou compartilhamento`,
+      ? `Engajamento público crítico: só ${formatPtBr(input.engagementPublic, 2)}% das impressões viraram comentário ou compartilhamento`
+      : `Engajamento público abaixo do esperado: ${formatPtBr(input.engagementPublic, 2)}% das impressões viraram comentário ou compartilhamento`,
     description: withTranslation(
       `${classified.statusText}${v1Caveat}`,
       "engagement_public",
@@ -1445,7 +1445,7 @@ export async function resolveEngagementPublicAlert(
       ? "O conteúdo gera impressões mas não provoca reação pública (comentário ou compartilhamento). Pode ser tema fora do interesse real da audiência ou ausência de chamada para interação."
       : "O engajamento público está aquém do recorte de referência. Pode ser ritmo de publicação, tipo de assunto ou falta de CTA explícito.",
     immediateAction: isRed
-      ? "Nos próximos 3 posts, inclua uma pergunta ou provocação que peça resposta nos comentários. Não troque o produto — troque o convite."
+      ? "Nos próximos 3 posts, inclua uma pergunta ou provocação que peça resposta nos comentários. Não troque o produto. Troque o convite."
       : "Teste incluir uma pergunta direta em legendas. Meça em 14 dias antes de mudar formato ou frequência.",
     confidenceLevel: classified.confidenceLevel,
     dataSource: "real_snapshot",
@@ -1504,7 +1504,7 @@ export function resolveAlgoRiskScoreAlert(
   // Aviso de amostra curta: n_r entre 6 e 11 (mínimo aceito, mas não robusto).
   const lowSampleCaveat =
     input.nRecent !== null && input.nRecent < 12
-      ? ` Amostra recente curta (${input.nRecent} posts) — sinal real, mas inconclusivo: publique mais antes de mudar estratégia.`
+      ? ` Amostra recente curta (${input.nRecent} posts): sinal real, mas inconclusivo. Publique mais antes de mudar estratégia.`
       : "";
 
   const hasMedians =
@@ -1523,17 +1523,17 @@ export function resolveAlgoRiskScoreAlert(
     type: "engagement_collapse",
     severity: isRed ? "critical" : "warning",
     title: isRed
-      ? `Queda expressiva de engajamento vs. histórico da conta — mediana recente caiu ~${scorePct}%`
-      : `Engajamento recente abaixo do histórico da conta — queda de ~${scorePct}% na mediana`,
+      ? `Queda expressiva de engajamento em relação ao histórico da conta: mediana recente caiu ~${scorePct}%`
+      : `Engajamento recente abaixo do histórico da conta: queda de ~${scorePct}% na mediana`,
     description: hasMedians
       ? `Mediana de curtidas + comentários por post: ${fmtMedian(input.recentMedian as number)} nos ${input.nRecent ?? 12} posts mais recentes, contra ${fmtMedian(input.baselineMedian as number)} no histórico. Comparação da conta com ela mesma, não com o mercado.${lowSampleCaveat}`
-      : `Comparação da conta com ela mesma (últimos posts vs. período anterior), não com o mercado.${lowSampleCaveat}`,
+      : `Comparação da conta com ela mesma (últimos posts contra o período anterior), não com o mercado.${lowSampleCaveat}`,
     natureza: "tecnica",
     probableCause:
       zeroCheck +
       (isRed
-        ? "A mediana de engajamento dos posts recentes caiu de forma expressiva em relação ao histórico da mesma conta. Pode ser mudança de tema, de formato ou de frequência — ou limitação algorítmica."
-        : "O engajamento recente está abaixo do próprio histórico da conta. Pode ser variação natural ou início de queda — confirme com mais posts antes de agir."),
+        ? "A mediana de engajamento dos posts recentes caiu de forma expressiva em relação ao histórico da mesma conta. Pode ser mudança de tema, de formato ou de frequência, ou limitação algorítmica."
+        : "O engajamento recente está abaixo do próprio histórico da conta. Pode ser variação natural ou início de queda. Confirme com mais posts antes de agir."),
     immediateAction: isRed
       ? "Revise os últimos 12 posts: verificar se houve mudança de formato, tema ou frequência que coincide com a queda. Não mude oferta nem verba antes desse diagnóstico."
       : "Acompanhe por mais 14 dias. Se a queda persistir, compare os posts do período B com os do período R para identificar a diferença.",
@@ -1543,7 +1543,7 @@ export function resolveAlgoRiskScoreAlert(
     thresholdSource: null, // self-reference, não benchmark de mercado
     confidenceScore: null,
     ruleDeclaration:
-      "Comparação da conta com o próprio histórico (self-reference). Não é benchmark setorial.",
+      "Comparação da conta com o próprio histórico. Não é referência do setor.",
     snapshotId: input.snapshotId,
     metricName: "algo_risk_score",
     metricValue: score,
@@ -1618,7 +1618,7 @@ export async function resolveEngagementScoreAlert(
           thresholdSource: null,
           confidenceScore: null,
           ruleDeclaration:
-            "Sem posts com polemic_score_pct no período não existe mediana por post.",
+            "Sem posts com polêmica calculada no período, não existe mediana por post.",
           calibrationMethod: null,
           zeroInflated: null,
         }),
@@ -1656,7 +1656,7 @@ export async function resolveEngagementScoreAlert(
       description: vps.statusText,
       natureza: "tecnica",
       probableCause:
-        "Este indicador vem de um snapshot agregado da conta. Acima de 100% pode ser válido quando soma o alcance de vários conteúdos no período; não deve ser interpretado como alcance de um único post.",
+        "Este indicador vem de um registro agregado da conta. Acima de 100% pode ser válido quando soma o alcance de vários conteúdos no período; não deve ser interpretado como alcance de um único post.",
       immediateAction:
         "Compare este valor com o período selecionado e use-o apenas como alcance acumulado da conta.",
       confidenceLevel: vps.confidenceLevel,
@@ -1679,9 +1679,9 @@ export async function resolveEngagementScoreAlert(
       description: withTranslation(vps.statusText, "vps_pct", input.vpsPct),
       natureza: "tecnica",
       probableCause:
-        'Alcance na base é quantos dos seus seguidores viram o post — não é nota de qualidade nem de proposta de valor. Enquanto ele estiver baixo, "post ruim" e "post que não circulou" parecem a mesma coisa.',
+        'Alcance na base é quantos dos seus seguidores viram o post. Não é nota de qualidade nem de proposta de valor. Enquanto ele estiver baixo, "post ruim" e "post que não circulou" parecem a mesma coisa.',
       immediateAction:
-        "Mantenha o mesmo formato e mude só o horário nas próximas 4 publicações. Se o alcance na base continuar baixo, aí investigamos se a conta está sendo limitada — não comece por aí.",
+        "Mantenha o mesmo formato e mude só o horário nas próximas 4 publicações. Se o alcance na base continuar baixo, aí investigamos se a conta está sendo limitada. Não comece por aí.",
       confidenceLevel: vps.confidenceLevel,
       dataSource: "real_snapshot",
       thresholdSource: vps.thresholdSource,
@@ -1707,16 +1707,16 @@ export async function resolveEngagementScoreAlert(
       type: "polemic_score_high",
       severity: isRed ? "warning" : "info",
       title: isRed
-        ? `${typical} — acima do normal do seu segmento`
+        ? `${typical}: acima do normal do seu segmento`
         : isWithinNormalRange
-          ? `${typical} — dentro do normal do seu segmento`
-          : `${typical} — a comparação com o seu segmento ainda é curta`,
+          ? `${typical}: dentro do normal do seu segmento`
+          : `${typical}: a comparação com o seu segmento ainda é curta`,
       description: stripTranslation(polemic.statusText),
       natureza: "tecnica",
       probableCause: isRed
-        ? `Há mais comentários por curtida do que o normal do seu segmento. Pode ser dúvida útil ou ataque — o número sozinho não diferencia.${isLowConfidence ? " A comparação neste recorte ainda tem poucas contas: trate como pista." : ""}`
+        ? `Há mais comentários por curtida do que o normal do seu segmento. Pode ser dúvida útil ou ataque. O número sozinho não diferencia.${isLowConfidence ? " A comparação neste recorte ainda tem poucas contas: trate como pista." : ""}`
         : isWithinNormalRange
-          ? "O seu número está na faixa de quem tem esse tipo de comentário — não é sinal de crise nem convite para criar briga."
+          ? "O seu número está na faixa de quem tem esse tipo de comentário. Não é sinal de crise nem convite para criar briga."
           : "O número da conta é real; a base de comparação deste recorte é curta.",
       immediateAction: isRed
         ? "Leia os 20 comentários mais recentes. Se forem pergunta e opinião, mantenha o tom. Se forem ataque, feche a moderação desses posts."
@@ -1737,11 +1737,11 @@ export async function resolveEngagementScoreAlert(
     return {
       type: "polemic_score_high",
       severity: "warning",
-      title: `${capitalize(describePolemicTypicalPost(polemicPct))} — acima do normal do seu segmento`,
+      title: `${capitalize(describePolemicTypicalPost(polemicPct))}: acima do normal do seu segmento`,
       description: stripTranslation(polemic.statusText),
       natureza: "tecnica",
       probableCause:
-        "Há mais comentários por curtida do que o recorte costuma ver. Pode ser conversa útil ou briga — o número sozinho não diferencia. Não é meta para subir.",
+        "Há mais comentários por curtida do que o recorte costuma ver. Pode ser conversa útil ou briga. O número sozinho não diferencia. Não é meta para subir.",
       immediateAction:
         "Leia os 20 comentários mais recentes. Se forem pergunta e opinião, mantenha o tom. Se forem ataque, feche a moderação desses posts.",
       confidenceLevel: polemic.confidenceLevel,
@@ -1797,7 +1797,7 @@ export async function resolveEngagementScoreAlert(
     return {
       type: "engagement_collapse",
       severity: er.semaphore === "vermelho" ? "critical" : "warning",
-      title: `As pessoas veem o post e não fazem nada com ele — só ${formatPtBr(input.erRealPct)}% curtem, comentam, salvam ou compartilham`,
+      title: `As pessoas veem o post e não fazem nada com ele: só ${formatPtBr(input.erRealPct)}% curtem, comentam, salvam ou compartilham`,
       description: withTranslation(
         er.statusText,
         "er_real_pct",
@@ -1837,11 +1837,11 @@ export async function resolveEngagementScoreAlert(
     return {
       type: "engagement_collapse",
       severity: "info",
-      title: `Engajamento no período — ${formatPtBr(input.erRealPct)}% agem no post, ${formatVpsSegment(input.vpsPct)}`,
+      title: `Engajamento no período: ${formatPtBr(input.erRealPct)}% agem no post, ${formatVpsSegment(input.vpsPct)}`,
       description: `${er.statusText} ${vps.statusText}`.trim(),
       natureza: "tecnica",
       probableCause:
-        "n/a — sem régua de mercado calibrada para ER real/VPS hoje.",
+        "Ainda sem comparação de mercado calibrada para engajamento real e alcance na base.",
       immediateAction:
         "Acompanhe estes dois números na própria série, semana a semana. Não são comparáveis a mercado ainda.",
       confidenceLevel: "L2",
@@ -1859,7 +1859,7 @@ export async function resolveEngagementScoreAlert(
   return {
     type: "engagement_collapse",
     severity: "info",
-    title: `Engajamento saudável para o seu porte — ${formatPtBr(input.erRealPct)}% agem no post, ${formatVpsSegment(input.vpsPct)}`,
+    title: `Engajamento saudável para o seu porte: ${formatPtBr(input.erRealPct)}% agem no post, ${formatVpsSegment(input.vpsPct)}`,
     description: withTranslation(
       `${er.ruleDeclaration ?? ""} O formato que gerou isso é o seu ativo. Repita-o.`.trim(),
       "er_real_pct",
@@ -1939,11 +1939,11 @@ export async function resolvePolemicAlert(
   return {
     type: POLEMIC_ALERT_TYPE,
     severity: POLEMIC_RED_SEVERITY,
-    title: `${capitalize(describePolemicTypicalPost(polemicPct))} — acima do normal do seu segmento`,
+    title: `${capitalize(describePolemicTypicalPost(polemicPct))}: acima do normal do seu segmento`,
     description: stripTranslation(polemic.statusText),
     natureza: "tecnica",
     probableCause:
-      "Há mais comentários por curtida do que o recorte costuma ver. Pode ser conversa útil ou briga — o número sozinho não diferencia. Não é meta para subir.",
+      "Há mais comentários por curtida do que o recorte costuma ver. Pode ser conversa útil ou briga. O número sozinho não diferencia. Não é meta para subir.",
     immediateAction:
       "Leia os 20 comentários mais recentes. Se forem pergunta e opinião, mantenha o tom. Se forem ataque, feche a moderação desses posts.",
     confidenceLevel: polemic.confidenceLevel,
@@ -2000,14 +2000,14 @@ export async function resolveStalenessAlert(
     type: STALENESS_ALERT_TYPE,
     severity: isCritical ? "critical" : "warning",
     title: isCritical
-      ? `Os dados desta conta estão parados há ${ageDays} dias — última coleta em ${lastLabel}`
-      : `Os dados desta conta não são atualizados há ${ageDays} dias — última coleta em ${lastLabel}`,
+      ? `Os dados desta conta estão parados há ${ageDays} dias, última coleta em ${lastLabel}`
+      : `Os dados desta conta não são atualizados há ${ageDays} dias, última coleta em ${lastLabel}`,
     description: isCritical
       ? `Passaram mais de ${STALENESS_CRITICAL_DAYS} dias desde a última coleta. Qualquer número desta conta descreve um período que já ficou para trás.`
       : `Passaram mais de ${STALENESS_WARNING_DAYS} dias desde a última coleta. Os números ainda servem de referência, mas já não mostram a semana atual.`,
     natureza: "tecnica",
     probableCause:
-      "A coleta de dados desta conta não rodou no ritmo esperado. Pode ser exportação não enviada, permissão revogada ou conta desconectada — o número parado não diz qual.",
+      "A coleta de dados desta conta não rodou no ritmo esperado. Pode ser exportação não enviada, permissão revogada ou conta desconectada. O número parado não diz qual.",
     immediateAction: isCritical
       ? "Rode uma nova coleta desta conta hoje e confirme que a permissão de acesso continua ativa."
       : "Rode uma nova coleta desta conta nesta semana, antes de usar os números em decisão de verba.",

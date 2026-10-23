@@ -11,7 +11,7 @@ export interface FunnelData {
   alcance: number;
   visitas: number;
   // ✅ CORRIGIDO 09/09 (TICKETS item 7) — number | null pra distinguir
-  // "sem dado no período" (mostra "—") de "zero real" (mostra "0").
+  // "aguardando dado do período" (mostra "—") de "zero real" (mostra "0").
   cliques: number | null;
   vendas: number | null;
   taxaConv: number;
@@ -99,7 +99,7 @@ export default function FunnelChart({
       dropoffLabel:
         dropoffCliques != null
           ? `↓ ${formatPtBr(dropoffCliques, 1)}% queda`
-          : "sem dado no período",
+          : "aguardando dado do período",
     },
     {
       // A venda acontece fora do Instagram e é informada por alguém: não é estimativa nem medição nossa.
@@ -112,7 +112,7 @@ export default function FunnelChart({
         dropoffVendas != null
           ? `↓ ${formatPtBr(dropoffVendas, 1)}% queda`
           : (textoAusencia(ausenciaVendas(funnelType)) ??
-            "sem dado no período"),
+            "aguardando dado do período"),
     },
   ];
 

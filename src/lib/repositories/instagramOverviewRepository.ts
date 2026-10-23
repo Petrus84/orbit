@@ -174,7 +174,7 @@ const KPI_DISPLAY: Partial<
       source: "orbit.v_kpi_snapshots (metric_key = saldo-90-dias)",
       period: "snapshot",
       method:
-        "Última medição de seguidores menos a mais antiga nos 90 dias anteriores a ela (client_followers_history); pode cobrir bem menos que 90 dias e não segue o intervalo do cabeçalho.",
+        "Última medição de seguidores menos a mais antiga nos 90 dias anteriores a ela (histórico de seguidores); pode cobrir bem menos que 90 dias e não segue o intervalo do cabeçalho.",
     },
   },
 };
@@ -818,26 +818,26 @@ async function fetchKPIs(
 // RN-23: proveniência dos scores do Overview. Datas do snapshot entram em
 // periodLabel quando o score vem de v_quality_scores (snapshot).
 const ER_NO_SHARES_TEXT =
-  "Faltam compartilhamentos (interactions_shares) no snapshot. ER Real = (salvamentos + compartilhamentos + comentários) ÷ alcance.";
+  "Faltam dados de compartilhamentos no snapshot. ER Real = (salvamentos + compartilhamentos + comentários) ÷ alcance.";
 
 const QUALITY_PROVENANCE: Record<string, MetricProvenance> = {
   polemic_score_pct: {
     source: "cálculo por post (ig_posts) · classificação fn_classify_metric",
     period: "header_window",
     method:
-      "mediana por post de comentários ÷ curtidas × 100 (curtidas > 0); régua do setor em validação. Não é o agregado do snapshot da v_quality_scores",
+      "mediana por post de comentários ÷ curtidas × 100 (curtidas > 0); régua do setor em validação. Não é o número do painel de Qualidade, que vem de outro cálculo",
   },
   vps_pct: {
     source: "orbit.v_quality_scores (snapshot)",
     period: "snapshot",
     method:
-      "calculado na view; fórmula oficial (RN-20): (alcance × % do alcance em seguidores) ÷ seguidores × 100; meta de gestão L2, não é benchmark. Alinhamento da view pendente (D-18)",
+      "calculado na view; fórmula oficial (RN-20): (alcance × % do alcance em seguidores) ÷ seguidores × 100; meta de gestão (hipótese), não é referência de mercado. Alinhamento da view pendente (D-18)",
   },
   er_real_pct: {
     source: "orbit.v_quality_scores (snapshot)",
     period: "snapshot",
     method:
-      "(salvamentos + compartilhamentos + comentários) ÷ alcance × 100; exige interactions_shares; meta de gestão L2, não é benchmark",
+      "(salvamentos + compartilhamentos + comentários) ÷ alcance × 100; exige dado de compartilhamentos; meta de gestão (hipótese), não é referência de mercado",
   },
 };
 
@@ -1638,7 +1638,7 @@ const REF_PROVENANCE: Record<CommentReferenceItem["metric"], MetricProvenance> =
         "texto dos comentários (ig_post_comments) · régua orbit.ref_thresholds, run orbit_comments_v2",
       period: "header_window",
       method:
-        "(p_pos − p_neg) × 100 em posts com ≥ 3 comentários; não liberado para cor ou Ação",
+        "(% positivo − % negativo) × 100 em posts com ≥ 3 comentários; não liberado para cor ou Ação",
     },
   };
 

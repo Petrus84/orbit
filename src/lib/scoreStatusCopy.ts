@@ -95,12 +95,11 @@ const NO_DATA_TEXT =
 const NO_REFERENCE_TEXT =
   "Este é o número da sua conta no período. Ainda não há uma referência confiável para classificá-lo, então preferimos não dar nota.";
 
-const GESTAO_NOTE =
-  "Meta provisória de gestão: um guia de trabalho, não um benchmark de mercado.";
+const GESTAO_NOTE = "Meta provisória de gestão, não é referência de mercado.";
 
 // Sem célula de setor: a comparação é com o conjunto geral de contas.
 const NO_SECTOR_NOTE =
-  "Ainda não temos uma referência do seu setor para este indicador, então comparamos com o conjunto geral de contas — sem mediana do setor.";
+  "Ainda não temos referência do seu setor para este indicador. Por isso comparamos com o conjunto geral de contas.";
 
 const STALE_NOTE =
   "Esse número vem de uma coleta antiga e pode ter mudado. Atualize os dados antes de decidir com base nele.";

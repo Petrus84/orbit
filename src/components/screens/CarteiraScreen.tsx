@@ -65,9 +65,9 @@ function ErrorState({ message, onRetry }: ErrorStateProps): React.ReactElement {
 
 function EmptyState({ tab }: { tab: FilterTab }): React.ReactElement {
   const messages: Record<FilterTab, string> = {
-    all: "Nenhum cliente na carteira.",
-    critical: "Nenhum cliente crítico no momento.",
-    healthy: "Nenhum cliente saudável no momento.",
+    all: "Seus clientes aparecem aqui assim que forem cadastrados.",
+    critical: "Boa notícia: nenhum cliente em estado crítico agora.",
+    healthy: "Os clientes saudáveis aparecem aqui quando houver algum.",
   };
   return (
     <div className={styles.emptyState}>

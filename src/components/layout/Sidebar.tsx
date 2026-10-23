@@ -75,7 +75,7 @@ const NAV_ITEMS: NavItem[] = [
   // ── SEÇÃO: Instagram ───────────────────────────────────────────────────────
   {
     id: "visao-geral-ig",
-    label: "Visão geral IG",
+    label: "Visão geral do Instagram",
     href: "/instagram",
     icon: "📊",
     section: "instagram",
@@ -83,7 +83,7 @@ const NAV_ITEMS: NavItem[] = [
   },
   {
     id: "funil-simulador",
-    label: "Funil + Simulador",
+    label: "Funil de vendas + simulador",
     href: "/funil",
     icon: "🌀",
     section: "instagram",
@@ -154,7 +154,7 @@ export function Sidebar() {
   });
 
   return (
-    <aside className={styles.sidebar} aria-label="Navegação principal do ORBIT">
+    <aside className={styles.sidebar} aria-label="Navegação principal">
       {/* ── Logo ────────────────────────────────────────────────────────────── */}
       <div className={styles.logo}>
         <div className={styles.logoBadge} aria-hidden="true">
@@ -162,7 +162,7 @@ export function Sidebar() {
         </div>
         <div>
           <p className={styles.logoName}>ORBIT</p>
-          <p className={styles.logoSub}>SOCIAL INTELLIGENCE</p>
+          <p className={styles.logoSub}>INTELIGÊNCIA SOCIAL</p>
         </div>
       </div>
 
@@ -253,7 +253,7 @@ function NavItemRow({ item, isActive, onTabClick }: NavItemRowProps) {
     // Intercepta como troca de aba SOMENTE se:
     //   1. o item está no mapa de abas (visao-geral-ig → 'overview'), E
     //   2. o usuário já está fisicamente em /instagram.
-    // Sem o item 2, clicar em "Visão geral IG" a partir de QUALQUER outra
+    // Sem o item 2, clicar em "Visão geral do Instagram" a partir de QUALQUER outra
     // rota (Carteira, Alertas, Funil, Avatar, Onboarding) ficava sem efeito
     // visível: o preventDefault() bloqueava a navegação real do Next.js e
     // setActiveTab() mudava o estado do OrbitDashboardProvider errado (o

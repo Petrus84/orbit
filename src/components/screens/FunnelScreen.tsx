@@ -206,8 +206,8 @@ export default function FunnelScreen({
   );
   const tituloFunil =
     diasJanela == null
-      ? "Funil real"
-      : `Funil real · ${diasJanela} dias${igWindow ? ` (${formatDate(igWindow.start)} – ${formatDate(igWindow.end)})` : ""}`;
+      ? "Funil de vendas real"
+      : `Funil de vendas real · ${diasJanela} dias${igWindow ? ` (${formatDate(igWindow.start)} – ${formatDate(igWindow.end)})` : ""}`;
 
   const baseVendas = data?.vendas ?? 0;
   const baseCliques = data?.cliques ?? 0;
@@ -216,13 +216,15 @@ export default function FunnelScreen({
     <main className={styles.main}>
       <SectionHead
         title="Funil de conversão"
-        subtitle={`Dados reais vs. cenário simulado · ${formatDate(periodStart)} – ${formatDate(periodEnd)}`}
+        subtitle={`Dados reais e cenário simulado · ${formatDate(periodStart)} – ${formatDate(periodEnd)}`}
       />
 
       {status === "error" && error ? (
         <div className={styles.errorBox}>
           <p className={styles.errorText}>
-            {typeof error === "string" ? error : "Falha na requisição"}
+            {typeof error === "string"
+              ? error
+              : "Algo deu errado ao buscar os dados"}
           </p>
           <button
             type="button"

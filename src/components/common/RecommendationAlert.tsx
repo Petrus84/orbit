@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { GlassCard } from './GlassCard';
-import styles from './RecommendationAlert.module.css';
-import type { AlignmentStatus } from '@/types/avatar';
-import type { AvatarRecommendation, GlowColor } from '@/types/orbit';
+import React, { useState } from "react";
+import { GlassCard } from "./GlassCard";
+import styles from "./RecommendationAlert.module.css";
+import type { AlignmentStatus } from "@/types/avatar";
+import type { AvatarRecommendation, GlowColor } from "@/types/orbit";
 
 interface RecommendationAlertProps {
   status: AlignmentStatus;
@@ -18,9 +18,9 @@ interface RecommendationAlertProps {
 // ✅ FIX: efeito glass card no cartão inteiro, cor = diagnóstico real do
 // cliente (mesmo mapeamento de AvatarComparison/AlignmentBars).
 const STATUS_TO_GLOW: Record<AlignmentStatus, GlowColor> = {
-  critical: 'red',
-  warning: 'gold',
-  healthy: 'green',
+  critical: "red",
+  warning: "gold",
+  healthy: "green",
 };
 
 interface RecommendationItem {
@@ -41,58 +41,58 @@ interface StatusConfig {
 // de severidade de AlertCard/Semaphore).
 const STATUS_CONFIG: Record<AlignmentStatus, StatusConfig> = {
   critical: {
-    icon: '🚨',
-    title: 'Alinhamento Crítico — Ação Imediata Necessária',
-    badgeLabel: 'CRÍTICO',
+    icon: "🚨",
+    title: "Alinhamento crítico: vale agir agora",
+    badgeLabel: "CRÍTICO",
     recommendations: [
       {
-        icon: '🎯',
-        title: 'Revisar segmentação de anúncios',
-        desc: 'Ajuste os critérios de gênero nas campanhas pagas — o desvio de 31pp é o principal driver do score baixo.',
+        icon: "🎯",
+        title: "Revisar segmentação de anúncios",
+        desc: "Ajuste os critérios de gênero nas campanhas pagas. A diferença de 31 pontos percentuais é o principal motivo da nota baixa.",
       },
       {
-        icon: '📅',
-        title: 'Auditar faixa etária',
-        desc: 'A audiência real está 10 anos acima do avatar definido. Considere revisar o posicionamento de conteúdo.',
+        icon: "📅",
+        title: "Conferir a faixa etária",
+        desc: "A audiência real está 10 anos acima do avatar definido. Considere revisar o posicionamento de conteúdo.",
       },
       {
-        icon: '📍',
-        title: 'Verificar geotargeting',
-        desc: 'Concentração em RJ diverge do foco em SP. Ative exclusões geográficas ou crie campanhas regionais separadas.',
+        icon: "📍",
+        title: "Conferir a região dos anúncios",
+        desc: "A concentração no Rio de Janeiro é diferente do foco em São Paulo. Exclua regiões fora do foco ou crie campanhas separadas por região.",
       },
       {
-        icon: '🔄',
-        title: 'Redefinir avatar ou estratégia',
-        desc: 'Se a audiência real é recorrente e engajada, considere atualizar o avatar para refletir a realidade atual.',
+        icon: "🔄",
+        title: "Rever o avatar ou a estratégia",
+        desc: "Se a audiência real é recorrente e engajada, considere atualizar o avatar para refletir a realidade atual.",
       },
     ],
   },
   warning: {
-    icon: '⚠️',
-    title: 'Alinhamento com Desvios — Monitoramento Recomendado',
-    badgeLabel: 'ATENÇÃO',
+    icon: "⚠️",
+    title: "Alinhamento com diferenças: vale acompanhar de perto",
+    badgeLabel: "ATENÇÃO",
     recommendations: [
       {
-        icon: '📊',
-        title: 'Monitorar tendências',
-        desc: 'Acompanhe as métricas semanalmente para detectar desvios crescentes antes que se tornem críticos.',
+        icon: "📊",
+        title: "Monitorar tendências",
+        desc: "Acompanhe as métricas semanalmente para perceber diferenças crescentes antes que se tornem críticos.",
       },
       {
-        icon: '🎯',
-        title: 'Ajustes pontuais de segmentação',
-        desc: 'Pequenos ajustes nas variáveis com menor alinhamento podem elevar o score rapidamente.',
+        icon: "🎯",
+        title: "Ajustes pontuais de segmentação",
+        desc: "Pequenos ajustes nas variáveis com menor alinhamento podem elevar a nota rapidamente.",
       },
     ],
   },
   healthy: {
-    icon: '✅',
-    title: 'Alinhamento Saudável — Continue o Bom Trabalho',
-    badgeLabel: 'SAUDÁVEL',
+    icon: "✅",
+    title: "Alinhamento saudável: continue assim",
+    badgeLabel: "SAUDÁVEL",
     recommendations: [
       {
-        icon: '📈',
-        title: 'Manter a estratégia atual',
-        desc: 'O avatar está bem alinhado com a audiência real. Continue monitorando para manter esse nível.',
+        icon: "📈",
+        title: "Manter a estratégia atual",
+        desc: "O avatar está bem alinhado com a audiência real. Continue monitorando para manter esse nível.",
       },
     ],
   },
@@ -132,11 +132,17 @@ export const RecommendationAlert: React.FC<RecommendationAlertProps> = ({
 
   const cfg: StatusConfig = {
     ...fallbackCfg,
-    recommendations: realRecommendations.length > 0 ? realRecommendations : fallbackCfg.recommendations,
+    recommendations:
+      realRecommendations.length > 0
+        ? realRecommendations
+        : fallbackCfg.recommendations,
   };
 
   return (
-    <GlassCard glowColor={STATUS_TO_GLOW[status]} className={`${styles.wrapper} ${styles[status]}`}>
+    <GlassCard
+      glowColor={STATUS_TO_GLOW[status]}
+      className={`${styles.wrapper} ${styles[status]}`}
+    >
       <button
         type="button"
         onClick={() => setExpanded((v) => !v)}
@@ -150,13 +156,13 @@ export const RecommendationAlert: React.FC<RecommendationAlertProps> = ({
         <div className={styles.headerText}>
           <div className={styles.metaRow}>
             <span className={styles.badge}>{cfg.badgeLabel}</span>
-            <span className={styles.scoreText}>Score: {score}%</span>
+            <span className={styles.scoreText}>Nota: {score}%</span>
           </div>
           <p className={styles.headline}>{cfg.title}</p>
         </div>
 
         <span className={styles.chevron} aria-hidden="true">
-          {expanded ? '▲' : '▼'}
+          {expanded ? "▲" : "▼"}
         </span>
       </button>
 

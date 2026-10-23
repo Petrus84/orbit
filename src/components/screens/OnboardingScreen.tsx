@@ -1,9 +1,18 @@
-'use client'
+"use client";
 
-import React, { useState, useCallback } from 'react'
-import { ChevronRight, AlertCircle, HelpCircle, Loader, Lightbulb } from 'lucide-react'
-import { useOnboarding } from '@/hooks/useOnboarding'
-import { validateAudienceSum, validatePercentage } from '@/lib/onboarding/enums'
+import React, { useState, useCallback } from "react";
+import {
+  ChevronRight,
+  AlertCircle,
+  HelpCircle,
+  Loader,
+  Lightbulb,
+} from "lucide-react";
+import { useOnboarding } from "@/hooks/useOnboarding";
+import {
+  validateAudienceSum,
+  validatePercentage,
+} from "@/lib/onboarding/enums";
 import {
   ENUM_TOTAL_FOLLOWERS_SOURCE,
   ENUM_CTA_TYPE,
@@ -14,36 +23,35 @@ import {
   ENUM_CONFIDENCE,
   ENUM_GENDER_CATEGORY,
   CURIOSIDADES_POR_SETOR,
-} from '@/lib/onboarding/enums'
-import type { ClientOnboarding, SetorBenchmark } from '@/types/orbit'
-import styles from './OnboardingScreen.module.css'
+} from "@/lib/onboarding/enums";
+import type { ClientOnboarding, SetorBenchmark } from "@/types/orbit";
+import styles from "./OnboardingScreen.module.css";
 
 // ============================================================================
 // TIPOS
 // ============================================================================
 
 interface CampoConfig {
-  id: keyof FormAnswers
-  label: string
-  tipo: 'text' | 'number' | 'select' | 'checkbox' | 'textarea' | 'radio' | 'url'
-  placeholder?: string
-  tooltip?: string
-  insight?: string // Dado setorial contextual
-  step?: string
-  opcoes?: { valor: string; label: string }[]
-  validacao?: (valor: unknown) => { ok: boolean; erro?: string }
-  alerta?: boolean
-  obrigatorio?: boolean
+  id: keyof FormAnswers;
+  label: string;
+  tipo:
+    "text" | "number" | "select" | "checkbox" | "textarea" | "radio" | "url";
+  placeholder?: string;
+  tooltip?: string;
+  insight?: string; // Dado setorial contextual
+  step?: string;
+  opcoes?: { valor: string; label: string }[];
+  validacao?: (valor: unknown) => { ok: boolean; erro?: string };
+  alerta?: boolean;
+  obrigatorio?: boolean;
 }
 
 interface Fase {
-  id: string
-  titulo: string
-  descricao: string
-  campos: CampoConfig[]
-
+  id: string;
+  titulo: string;
+  descricao: string;
+  campos: CampoConfig[];
 }
-
 
 // ============================================================================
 // FASES DO ONBOARDING COM INSIGHTS
@@ -51,283 +59,310 @@ interface Fase {
 
 const FASES: Fase[] = [
   {
-    id: 'info_basica',
-    titulo: 'Informações Básicas',
-    descricao: 'Vamos começar com o essencial sobre sua conta',
+    id: "info_basica",
+    titulo: "Informações Básicas",
+    descricao: "Vamos começar com o essencial sobre sua conta",
     campos: [
       {
-        id: 'total_followers',
-        label: 'Total de seguidores',
-        tipo: 'number',
-        placeholder: '15000',
+        id: "total_followers",
+        label: "Total de seguidores",
+        tipo: "number",
+        placeholder: "15000",
         obrigatorio: true,
-        insight: 'O Brasil tem 150M usuários ativos em redes (70% da população). Seu tamanho ajuda a calibrar benchmarks.',
+        insight:
+          "O Brasil tem 150M usuários ativos em redes (70% da população). Seu tamanho ajuda a calibrar benchmarks.",
         validacao: (v) => {
-          if (!v) return { ok: false, erro: 'Campo obrigatório' }
-          const num = Number(v)
+          if (!v) return { ok: false, erro: "Campo obrigatório" };
+          const num = Number(v);
           if (!Number.isInteger(num) || num <= 0) {
-            return { ok: false, erro: 'Deve ser um número inteiro maior que 0' }
+            return { ok: false, erro: "Informe um número inteiro maior que 0" };
           }
-          return { ok: true }
+          return { ok: true };
         },
       },
       {
-        id: 'total_followers_source',
-        label: 'Fonte da informação',
-        tipo: 'select',
+        id: "total_followers_source",
+        label: "Fonte da informação",
+        tipo: "select",
         obrigatorio: true,
-        opcoes: ENUM_TOTAL_FOLLOWERS_SOURCE.map(([v, l]) => ({ valor: v, label: l })),
-        insight: 'Dados confirmados (print/scrape) são mais confiáveis que estimativas para benchmarking.',
+        opcoes: ENUM_TOTAL_FOLLOWERS_SOURCE.map(([v, l]) => ({
+          valor: v,
+          label: l,
+        })),
+        insight:
+          "Dados confirmados por print ou leitura do perfil são mais confiáveis que estimativas para comparar com o mercado.",
         validacao: (v) => ({
           ok: !!v,
-          erro: v ? undefined : 'Selecione uma fonte',
+          erro: v ? undefined : "Selecione uma fonte",
         }),
       },
     ],
   },
   {
-    id: 'negocio',
-    titulo: 'Seu Negócio',
-    descricao: 'Categoria e modelo de monetização',
+    id: "negocio",
+    titulo: "Seu Negócio",
+    descricao: "Categoria e modelo de monetização",
     campos: [
       {
-        id: 'setor_benchmark',
-        label: 'Setor / Benchmark',
-        tipo: 'select',
+        id: "setor_benchmark",
+        label: "Qual é o seu ramo?",
+        tipo: "select",
         obrigatorio: true,
         opcoes: ENUM_SETOR_BENCHMARK.map(([v, l]) => ({ valor: v, label: l })),
-        insight: 'Cada setor monetiza diferente. Comércio direto mede conversão; infoproduto mede lançamento; serviços medem lead.',
+        insight:
+          "Cada setor monetiza diferente. Comércio direto mede conversão; infoproduto mede lançamento; serviços medem lead.",
         validacao: (v) => ({
           ok: !!v,
-          erro: v ? undefined : 'Selecione um setor',
+          erro: v ? undefined : "Selecione um setor",
         }),
       },
       {
-        id: 'nicho',
-        label: 'Nicho específico',
-        tipo: 'text',
-        placeholder: 'Ex: Marketing digital, gestão de tráfego...',
-        tooltip: 'Nichos específicos convertem melhor que genéricos',
-        insight: 'Nichos específicos (ex: "gestão de tráfego para clínicas") tendem a funcionar melhor que temas genéricos.',
+        id: "nicho",
+        label: "Nicho específico",
+        tipo: "text",
+        placeholder: "Ex: Marketing digital, gestão de tráfego...",
+        tooltip: "Nichos específicos convertem melhor que genéricos",
+        insight:
+          'Nichos específicos (ex: "gestão de tráfego para clínicas") tendem a funcionar melhor que temas genéricos.',
       },
       {
-        id: 'cta_type',
-        label: 'Call-to-action principal',
-        tipo: 'select',
+        id: "cta_type",
+        label: "Call-to-action principal",
+        tipo: "select",
         opcoes: ENUM_CTA_TYPE.map(([v, l]) => ({ valor: v, label: l })),
-        insight: 'Link direto e WhatsApp são os CTAs mais comuns no Brasil para comércio direto.',
+        insight:
+          "Link direto e WhatsApp são os convites para agir mais comuns no Brasil na venda direta.",
       },
     ],
   },
   {
-    id: 'audiencia',
-    titulo: 'Sua Audiência',
-    descricao: 'Segmentação em % (soma deve ser ~100%)',
+    id: "audiencia",
+    titulo: "Sua Audiência",
+    descricao: "Divisão em % (a soma deve ficar perto de 100%)",
     campos: [
       {
-        id: 'audience_nucleo_fiel_pct',
-        label: 'Núcleo fiel (compra regularmente) %',
-        tipo: 'number',
-        placeholder: '30',
-        step: '0.1',
-        tooltip: 'Seu core de clientes leais',
-        insight: 'Núcleo fiel é o segmento mais valioso — gera receita recorrente e recomendações.',
+        id: "audience_nucleo_fiel_pct",
+        label: "Clientes fiéis (compram sempre) %",
+        tipo: "number",
+        placeholder: "30",
+        step: "0.1",
+        tooltip: "Seus clientes mais leais",
+        insight:
+          "Clientes fiéis são o grupo mais valioso: geram receita recorrente e indicações.",
         validacao: validatePercentage,
       },
       {
-        id: 'audience_consumo_passivo_pct',
-        label: 'Consumo passivo (vê, não compra) %',
-        tipo: 'number',
-        placeholder: '40',
-        step: '0.1',
-        tooltip: 'Inspiração, curiosidade',
-        insight: 'Consumo passivo é seu funil de topo — alimenta o núcleo fiel com conteúdo educativo.',
+        id: "audience_consumo_passivo_pct",
+        label: "Pessoas que só veem (não compram) %",
+        tipo: "number",
+        placeholder: "40",
+        step: "0.1",
+        tooltip: "Inspiração, curiosidade",
+        insight:
+          "Quem só vê é a porta de entrada do seu caminho de venda: com conteúdo útil, pode virar cliente fiel.",
         validacao: validatePercentage,
       },
       {
-        id: 'audience_curiosidade_externa_pct',
-        label: 'Curiosidade externa (descobriu recentemente) %',
-        tipo: 'number',
-        placeholder: '20',
-        step: '0.1',
-        tooltip: 'Potencial novo cliente',
-        insight: 'Curiosidade externa é tráfego novo — importante para crescimento, mas com conversão menor.',
+        id: "audience_curiosidade_externa_pct",
+        label: "Pessoas novas (descobriram há pouco) %",
+        tipo: "number",
+        placeholder: "20",
+        step: "0.1",
+        tooltip: "Potencial novo cliente",
+        insight:
+          "Pessoas novas trazem crescimento, mas costumam comprar menos no começo.",
         validacao: validatePercentage,
       },
       {
-        id: 'audience_alta_rotatividade_pct',
-        label: 'Alta rotatividade (segue/deixa) %',
-        tipo: 'number',
-        placeholder: '10',
-        step: '0.1',
-        tooltip: 'Viral, sem lealdade',
-        insight: 'Alta rotatividade é comum em conteúdo viral — útil para alcance, mas sem valor de cliente.',
+        id: "audience_alta_rotatividade_pct",
+        label: "Pessoas que somem (seguem e deixam de seguir) %",
+        tipo: "number",
+        placeholder: "10",
+        step: "0.1",
+        tooltip: "Viral, sem lealdade",
+        insight:
+          "Pessoas que somem são comuns em conteúdo viral: ajudam no alcance, mas não viram clientes.",
         validacao: validatePercentage,
       },
     ],
   },
   {
-    id: 'avatar',
-    titulo: 'Avatar do Cliente',
-    descricao: 'Descreva seu cliente ideal',
+    id: "avatar",
+    titulo: "Avatar do Cliente",
+    descricao: "Descreva seu cliente ideal",
     campos: [
       {
-        id: 'expected_age_range',
-        label: 'Faixa etária esperada',
-        tipo: 'text',
-        placeholder: '18-45',
-        insight: 'Formato: idade_mínima-idade_máxima (ex: 18-45)',
+        id: "expected_age_range",
+        label: "Faixa etária esperada",
+        tipo: "text",
+        placeholder: "18-45",
+        insight: "Formato: idade mínima-idade máxima (ex: 18-45)",
         validacao: (v) => {
-          if (!v) return { ok: true }
-          const match = String(v).match(/^(\d+)-(\d+)$/)
+          if (!v) return { ok: true };
+          const match = String(v).match(/^(\d+)-(\d+)$/);
           if (!match) {
-            return { ok: false, erro: 'Formato: 18-45' }
+            return { ok: false, erro: "Formato: 18-45" };
           }
-          const min = Number(match[1])
-          const max = Number(match[2])
+          const min = Number(match[1]);
+          const max = Number(match[2]);
           if (min < 13 || max > 120 || min >= max) {
-            return { ok: false, erro: 'Idade entre 13-120, mín < máx' }
+            return { ok: false, erro: "Idade entre 13-120, mín < máx" };
           }
-          return { ok: true }
+          return { ok: true };
         },
       },
       {
-        id: 'avatar_expected_gender',
-        label: 'Gênero predominante',
-        tipo: 'select',
+        id: "avatar_expected_gender",
+        label: "Gênero predominante",
+        tipo: "select",
         opcoes: ENUM_GENDER_CATEGORY.map(([v, l]) => ({ valor: v, label: l })),
-        insight: 'Gênero é uma dimensão importante para validar alinhamento de audiência.',
+        insight:
+          "Gênero é uma dimensão importante para validar alinhamento de audiência.",
       },
     ],
   },
   {
-    id: 'funil',
-    titulo: 'Seu Funil',
-    descricao: 'Estrutura de conversão',
+    id: "funil",
+    titulo: "Seu caminho de venda",
+    descricao: "Estrutura de conversão",
     campos: [
       {
-        id: 'funnel_maturity',
-        label: 'Maturidade do funil',
-        tipo: 'select',
+        id: "funnel_maturity",
+        label: "Como está o seu caminho de venda?",
+        tipo: "select",
         opcoes: ENUM_FUNNEL_MATURITY.map(([v, l]) => ({ valor: v, label: l })),
-        insight: 'Funil maduro (automação + sequência) escala sem atendimento manual. Sem funil, limite é ~50 vendas/mês.',
+        insight:
+          "Um caminho de venda bem montado (automação e sequência de mensagens) cresce sem atendimento manual. Sem ele, o limite é de cerca de 50 vendas por mês.",
       },
       {
-        id: 'bio_links',
-        label: 'Links na bio (separados por vírgula)',
-        tipo: 'textarea',
-        placeholder: 'https://link1.com, https://link2.com',
-        tooltip: 'URLs que você coloca na bio do Instagram',
-        insight: '64% dos consumidores checam preço antes de comprar. Links claros na bio aumentam conversão.',
+        id: "bio_links",
+        label: "Links na bio (separados por vírgula)",
+        tipo: "textarea",
+        placeholder: "https://link1.com, https://link2.com",
+        tooltip: "Endereços dos links que você coloca na bio do Instagram",
+        insight:
+          "64% dos consumidores checam preço antes de comprar. Links claros na bio aumentam conversão.",
         validacao: (v) => {
-          if (!v) return { ok: true }
-          const links = String(v).split(',').map(l => l.trim()).filter(Boolean)
+          if (!v) return { ok: true };
+          const links = String(v)
+            .split(",")
+            .map((l) => l.trim())
+            .filter(Boolean);
           const invalid = links.filter((link) => {
             try {
-              const url = new URL(link)
-              return url.protocol !== 'http:' && url.protocol !== 'https:'
+              const url = new URL(link);
+              return url.protocol !== "http:" && url.protocol !== "https:";
             } catch {
-              return true
+              return true;
             }
-          })
+          });
           if (invalid.length > 0) {
-            return { ok: false, erro: `URLs inválidas: ${invalid.join(', ')}` }
+            return {
+              ok: false,
+              erro: `Links inválidos: ${invalid.join(", ")}`,
+            };
           }
-          return { ok: true }
+          return { ok: true };
         },
       },
     ],
   },
   {
-    id: 'prova_social',
-    titulo: 'Confiança & Prova Social',
-    descricao: 'Como você prova que funciona',
+    id: "prova_social",
+    titulo: "Confiança & Prova Social",
+    descricao: "Como você prova que funciona",
     campos: [
       {
-        id: 'proof_mechanism',
-        label: 'Mecanismo de prova social',
-        tipo: 'select',
+        id: "proof_mechanism",
+        label: "Como você prova que funciona?",
+        tipo: "select",
         opcoes: ENUM_PROOF_MECHANISM.map(([v, l]) => ({ valor: v, label: l })),
-        tooltip: 'Selecione todos que se aplicam',
-        insight: '39% dos consumidores leem comentários antes de comprar. Prova social reduz devoluções em 60%.',
+        tooltip: "Selecione todos que se aplicam",
+        insight:
+          "39% dos consumidores leem comentários antes de comprar. Prova social reduz devoluções em 60%.",
       },
       {
-        id: 'values_affect_source',
-        label: 'Origem dos dados de confiança',
-        tipo: 'select',
-        opcoes: ENUM_VALUES_AFFECT_SOURCE.map(([v, l]) => ({ valor: v, label: l })),
-        insight: 'Dados confirmados (manual/feedback) são mais confiáveis que inferências para decisões.',
+        id: "values_affect_source",
+        label: "Origem dos dados de confiança",
+        tipo: "select",
+        opcoes: ENUM_VALUES_AFFECT_SOURCE.map(([v, l]) => ({
+          valor: v,
+          label: l,
+        })),
+        insight:
+          "Dados confirmados por você ou pelo cliente são mais confiáveis que suposições na hora de decidir.",
       },
       {
-        id: 'confidence_diagnostico',
-        label: 'Confiança do diagnóstico',
-        tipo: 'select',
+        id: "confidence_diagnostico",
+        label: "Confiança do diagnóstico",
+        tipo: "select",
         opcoes: ENUM_CONFIDENCE.map(([v, l]) => ({ valor: v, label: l })),
-        insight: 'L0 = confirmado; L1 = fundamentado; L2 = depende de dado ausente. Afeta recomendações.',
+        insight:
+          "Medido: dado confirmado. Estimado: baseado nos seus dados. Hipótese: falta um dado para afirmar. Isso muda as recomendações.",
       },
     ],
   },
-]
+];
 
 // ============================================================================
 // COMPONENTE DE CAMPO
 // ============================================================================
 
 interface CampoProps {
-  campo: CampoConfig
-  valor: unknown
-  erro?: string
-  onChange: (valor: unknown) => void
+  campo: CampoConfig;
+  valor: unknown;
+  erro?: string;
+  onChange: (valor: unknown) => void;
 }
 
 const toInputValue = (valor: unknown): string => {
-  if (typeof valor === 'string' || typeof valor === 'number') {
-    return String(valor)
+  if (typeof valor === "string" || typeof valor === "number") {
+    return String(valor);
   }
 
-  return ''
-}
+  return "";
+};
 
 const CampoInput: React.FC<CampoProps> = ({ campo, valor, erro, onChange }) => {
   switch (campo.tipo) {
-    case 'text':
-    case 'number':
-    case 'url':
+    case "text":
+    case "number":
+    case "url":
       return (
         <div>
           <input
-            type={campo.tipo === 'url' ? 'url' : campo.tipo}
+            type={campo.tipo === "url" ? "url" : campo.tipo}
             placeholder={campo.placeholder}
             value={toInputValue(valor)}
             onChange={(e) => onChange(e.target.value)}
             step={campo.step}
-            className={`${styles.input} ${erro ? styles.inputError : ''}`}
+            className={`${styles.input} ${erro ? styles.inputError : ""}`}
           />
           {erro && <p className={styles.errorText}>{erro}</p>}
         </div>
-      )
+      );
 
-    case 'textarea':
+    case "textarea":
       return (
         <div>
           <textarea
             placeholder={campo.placeholder}
             value={toInputValue(valor)}
             onChange={(e) => onChange(e.target.value)}
-            className={`${styles.textarea} ${erro ? styles.inputError : ''}`}
+            className={`${styles.textarea} ${erro ? styles.inputError : ""}`}
             rows={3}
           />
           {erro && <p className={styles.errorText}>{erro}</p>}
         </div>
-      )
+      );
 
-    case 'select':
+    case "select":
       return (
         <div>
           <select
             value={toInputValue(valor)}
             onChange={(e) => onChange(e.target.value)}
-            className={`${styles.input} ${erro ? styles.inputError : ''}`}
+            className={`${styles.input} ${erro ? styles.inputError : ""}`}
           >
             <option value="">Selecione uma opção</option>
             {campo.opcoes?.map((opt) => (
@@ -338,9 +373,9 @@ const CampoInput: React.FC<CampoProps> = ({ campo, valor, erro, onChange }) => {
           </select>
           {erro && <p className={styles.errorText}>{erro}</p>}
         </div>
-      )
+      );
 
-    case 'radio':
+    case "radio":
       return (
         <div className={styles.radioGroup}>
           {campo.opcoes?.map((opt) => (
@@ -358,9 +393,9 @@ const CampoInput: React.FC<CampoProps> = ({ campo, valor, erro, onChange }) => {
           ))}
           {erro && <p className={styles.errorText}>{erro}</p>}
         </div>
-      )
+      );
 
-    case 'checkbox':
+    case "checkbox":
       return (
         <div className={styles.checkboxGroup}>
           {campo.opcoes?.map((opt) => (
@@ -370,11 +405,11 @@ const CampoInput: React.FC<CampoProps> = ({ campo, valor, erro, onChange }) => {
                 value={opt.valor}
                 checked={Array.isArray(valor) && valor.includes(opt.valor)}
                 onChange={(e) => {
-                  const arr = Array.isArray(valor) ? valor : []
+                  const arr = Array.isArray(valor) ? valor : [];
                   if (e.target.checked) {
-                    onChange([...arr, opt.valor])
+                    onChange([...arr, opt.valor]);
                   } else {
-                    onChange(arr.filter((v) => v !== opt.valor))
+                    onChange(arr.filter((v) => v !== opt.valor));
                   }
                 }}
                 className={styles.checkboxInput}
@@ -384,25 +419,27 @@ const CampoInput: React.FC<CampoProps> = ({ campo, valor, erro, onChange }) => {
           ))}
           {erro && <p className={styles.errorText}>{erro}</p>}
         </div>
-      )
+      );
 
     default:
-      return null
+      return null;
   }
-}
+};
 
 // ============================================================================
 // COMPONENTE DE INSIGHT SETORIAL
 // ============================================================================
 
 interface InsightCardProps {
-  setor?: SetorBenchmark
+  setor?: SetorBenchmark;
 }
 
 const InsightCard: React.FC<InsightCardProps> = ({ setor }) => {
-  if (!setor || typeof setor !== 'string' || !(setor in CURIOSIDADES_POR_SETOR)) return null
+  if (!setor || typeof setor !== "string" || !(setor in CURIOSIDADES_POR_SETOR))
+    return null;
 
-  const curiosidade = CURIOSIDADES_POR_SETOR[setor as keyof typeof CURIOSIDADES_POR_SETOR]
+  const curiosidade =
+    CURIOSIDADES_POR_SETOR[setor as keyof typeof CURIOSIDADES_POR_SETOR];
 
   return (
     <div className={styles.insightCard}>
@@ -413,135 +450,174 @@ const InsightCard: React.FC<InsightCardProps> = ({ setor }) => {
       <p className={styles.insightText}>{curiosidade.texto}</p>
       <p className={styles.insightSource}>Fonte: {curiosidade.fonte}</p>
     </div>
-  )
-}
+  );
+};
 
 // ============================================================================
 // COMPONENTE PRINCIPAL
 // ============================================================================
 
 interface OnboardingScreenProps {
-  clientId: string
-  initialData?: ClientOnboarding | null
+  clientId: string;
+  initialData?: ClientOnboarding | null;
 }
 
 const toFormAnswers = (onboarding: ClientOnboarding | null): FormAnswers => {
-  if (!onboarding) return {}
+  if (!onboarding) return {};
 
-  const { bio_links: bioLinks, avatar_expected_age_min: ageMin, avatar_expected_age_max: ageMax, ...rest } = onboarding
+  const {
+    bio_links: bioLinks,
+    avatar_expected_age_min: ageMin,
+    avatar_expected_age_max: ageMax,
+    ...rest
+  } = onboarding;
 
   return {
     ...rest,
-    bio_links: bioLinks.map((link) => link.url).join(', '),
-    expected_age_range: ageMin !== null && ageMax !== null ? `${ageMin}-${ageMax}` : '',
-  }
-}
+    bio_links: bioLinks.map((link) => link.url).join(", "),
+    expected_age_range:
+      ageMin !== null && ageMax !== null ? `${ageMin}-${ageMax}` : "",
+  };
+};
 
 const toNullableNumber = (value: unknown): number | null => {
-  if (value === undefined || value === null || value === '') return null
-  const number = Number(value)
-  if (!Number.isFinite(number)) throw new Error('Há um valor numérico inválido no formulário')
-  return number
-}
+  if (value === undefined || value === null || value === "") return null;
+  const number = Number(value);
+  if (!Number.isFinite(number))
+    throw new Error("Há um valor numérico inválido no formulário");
+  return number;
+};
 
-export default function OnboardingScreen({ clientId, initialData = null }: OnboardingScreenProps): React.ReactElement {
-  const { data, status, error, save } = useOnboarding(clientId)
-  const [faseAtual, setFaseAtual] = useState(0)
-  const incomingData = data ?? (status === 'idle' || status === 'loading' ? initialData : null)
+export default function OnboardingScreen({
+  clientId,
+  initialData = null,
+}: OnboardingScreenProps): React.ReactElement {
+  const { data, status, error, save } = useOnboarding(clientId);
+  const [faseAtual, setFaseAtual] = useState(0);
+  const incomingData =
+    data ?? (status === "idle" || status === "loading" ? initialData : null);
   const [formState, setFormState] = useState<OnboardingFormState>(() => ({
     clientId,
     source: incomingData,
     answers: toFormAnswers(incomingData),
-  }))
+  }));
 
   if (formState.clientId !== clientId || formState.source !== incomingData) {
-    setFormState({ clientId, source: incomingData, answers: toFormAnswers(incomingData) })
+    setFormState({
+      clientId,
+      source: incomingData,
+      answers: toFormAnswers(incomingData),
+    });
   }
 
-  const respostas = formState.answers
-  const [erros, setErros] = useState<Record<string, string>>({})
-  const [savingError, setSavingError] = useState<string | null>(null)
-  const [isSaving, setIsSaving] = useState(false)
+  const respostas = formState.answers;
+  const [erros, setErros] = useState<Record<string, string>>({});
+  const [savingError, setSavingError] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
 
-  const fase = FASES[faseAtual] ?? FASES[0]
-  const totalFases = FASES.length
-  const progresso = totalFases > 0 ? ((faseAtual + 1) / totalFases) * 100 : 0
+  const fase = FASES[faseAtual] ?? FASES[0];
+  const totalFases = FASES.length;
+  const progresso = totalFases > 0 ? ((faseAtual + 1) / totalFases) * 100 : 0;
 
   // Insight setorial contextual
-  const setorSelecionado = respostas.setor_benchmark as SetorBenchmark | undefined
+  const setorSelecionado = respostas.setor_benchmark as
+    SetorBenchmark | undefined;
 
-  const handleResposta = useCallback((campoId: keyof FormAnswers, valor: unknown) => {
-    setFormState((prev) => ({
-      ...prev,
-      answers: { ...prev.answers, [campoId]: valor } as FormAnswers,
-    }))
-    setErros((prev) => {
-      const newErros = { ...prev }
-      delete newErros[String(campoId)]
-      return newErros
-    })
-  }, [])
+  const handleResposta = useCallback(
+    (campoId: keyof FormAnswers, valor: unknown) => {
+      setFormState((prev) => ({
+        ...prev,
+        answers: { ...prev.answers, [campoId]: valor } as FormAnswers,
+      }));
+      setErros((prev) => {
+        const newErros = { ...prev };
+        delete newErros[String(campoId)];
+        return newErros;
+      });
+    },
+    [],
+  );
 
   const validarFase = useCallback((): boolean => {
-    if (!fase) return false
+    if (!fase) return false;
 
-    const novosErros: Record<string, string> = {}
+    const novosErros: Record<string, string> = {};
 
     for (const campo of fase.campos) {
-      const campoKey = String(campo.id)
-      const valor = respostas[campo.id as keyof FormAnswers]
+      const campoKey = String(campo.id);
+      const valor = respostas[campo.id as keyof FormAnswers];
 
       if (campo.obrigatorio && !valor) {
-        novosErros[campoKey] = `${campo.label} é obrigatório`
-        continue
+        novosErros[campoKey] = `${campo.label} é obrigatório`;
+        continue;
       }
 
-      if (campo.validacao && valor !== undefined && valor !== null && valor !== '') {
-        const resultado = campo.validacao(valor)
+      if (
+        campo.validacao &&
+        valor !== undefined &&
+        valor !== null &&
+        valor !== ""
+      ) {
+        const resultado = campo.validacao(valor);
         if (!resultado.ok && resultado.erro) {
-          novosErros[campoKey] = resultado.erro
+          novosErros[campoKey] = resultado.erro;
         }
       }
     }
 
-    if (fase.id === 'audiencia') {
-      const audienceValidation = validateAudienceSum(respostas)
+    if (fase.id === "audiencia") {
+      const audienceValidation = validateAudienceSum(respostas);
       if (!audienceValidation.ok) {
-        const somaAtual = Number.isFinite(audienceValidation.sum) ? audienceValidation.sum : 0
-        novosErros.audience_sum = `A soma dos percentuais deve ficar próxima de 100% (atual: ${somaAtual.toFixed(1)}%)`
+        const somaAtual = Number.isFinite(audienceValidation.sum)
+          ? audienceValidation.sum
+          : 0;
+        novosErros.audience_sum = `Ajuste os percentuais para a soma ficar perto de 100% (agora: ${somaAtual.toFixed(1)}%)`;
       }
     }
 
-    setErros(novosErros)
-    return Object.keys(novosErros).length === 0
-  }, [fase, respostas])
+    setErros(novosErros);
+    return Object.keys(novosErros).length === 0;
+  }, [fase, respostas]);
 
   const handleSalvar = useCallback(async () => {
     try {
-      setIsSaving(true)
-      setSavingError(null)
+      setIsSaving(true);
+      setSavingError(null);
 
       if (!clientId) {
-        throw new Error('ID do cliente não fornecido')
+        throw new Error(
+          "Cliente não identificado. Volte à carteira e abra o onboarding de novo.",
+        );
       }
 
-      const totalFollowers = toNullableNumber(respostas.total_followers)
-      const followersSource = respostas.total_followers_source
+      const totalFollowers = toNullableNumber(respostas.total_followers);
+      const followersSource = respostas.total_followers_source;
       if (totalFollowers === null || totalFollowers <= 0 || !followersSource) {
-        throw new Error('Preencha total de seguidores e sua fonte antes de salvar')
+        throw new Error(
+          "Preencha total de seguidores e sua fonte antes de salvar",
+        );
       }
 
-      const ageRange = respostas.expected_age_range?.trim()
-      const ageMatch = ageRange ? ageRange.match(/^(\d+)-(\d+)$/) : null
-      if (ageRange && !ageMatch) throw new Error('Faixa etária inválida; use o formato 18-45')
+      const ageRange = respostas.expected_age_range?.trim();
+      const ageMatch = ageRange ? ageRange.match(/^(\d+)-(\d+)$/) : null;
+      if (ageRange && !ageMatch)
+        throw new Error("Faixa etária inválida; use o formato 18-45");
       const payload = {
         client_id: clientId,
         total_followers: totalFollowers,
         total_followers_source: followersSource,
-        audience_nucleo_fiel_pct: toNullableNumber(respostas.audience_nucleo_fiel_pct),
-        audience_consumo_passivo_pct: toNullableNumber(respostas.audience_consumo_passivo_pct),
-        audience_curiosidade_externa_pct: toNullableNumber(respostas.audience_curiosidade_externa_pct),
-        audience_alta_rotatividade_pct: toNullableNumber(respostas.audience_alta_rotatividade_pct),
+        audience_nucleo_fiel_pct: toNullableNumber(
+          respostas.audience_nucleo_fiel_pct,
+        ),
+        audience_consumo_passivo_pct: toNullableNumber(
+          respostas.audience_consumo_passivo_pct,
+        ),
+        audience_curiosidade_externa_pct: toNullableNumber(
+          respostas.audience_curiosidade_externa_pct,
+        ),
+        audience_alta_rotatividade_pct: toNullableNumber(
+          respostas.audience_alta_rotatividade_pct,
+        ),
         cta_type: respostas.cta_type,
         funnel_maturity: respostas.funnel_maturity,
         q1_engagement_period_notes: respostas.q1_engagement_period_notes,
@@ -561,31 +637,43 @@ export default function OnboardingScreen({ clientId, initialData = null }: Onboa
         avatar_expected_age_max: ageMatch ? Number(ageMatch[2]) : null,
         avatar_expected_gender: respostas.avatar_expected_gender,
         avatar_expected_gender_pct: respostas.avatar_expected_gender_pct,
-        bio_links: typeof respostas.bio_links === 'string'
-          ? respostas.bio_links.split(',').map((link) => link.trim()).filter(Boolean).map((url) => ({ url, label: url }))
-          : respostas.bio_links ?? [],
-      }
+        bio_links:
+          typeof respostas.bio_links === "string"
+            ? respostas.bio_links
+                .split(",")
+                .map((link) => link.trim())
+                .filter(Boolean)
+                .map((url) => ({ url, label: url }))
+            : (respostas.bio_links ?? []),
+      };
 
-      if (!(await save(payload))) throw new Error('Falha ao salvar os dados do onboarding')
+      if (!(await save(payload)))
+        throw new Error(
+          "Algo deu errado ao salvar o onboarding. Tente novamente.",
+        );
 
-      setSavingError(null)
+      setSavingError(null);
       setTimeout(() => {
-        setFaseAtual(0)
-        setFormState((prev) => ({ ...prev, answers: {} }))
-        setErros({})
-      }, 2000)
+        setFaseAtual(0);
+        setFormState((prev) => ({ ...prev, answers: {} }));
+        setErros({});
+      }, 2000);
     } catch (err) {
-      setSavingError(err instanceof Error ? err.message : 'Erro ao salvar')
+      setSavingError(
+        err instanceof Error
+          ? err.message
+          : "Algo deu errado ao salvar. Tente novamente.",
+      );
     } finally {
-      setIsSaving(false)
+      setIsSaving(false);
     }
-  }, [clientId, respostas, save])
+  }, [clientId, respostas, save]);
 
   const handleVoltar = useCallback(() => {
     if (faseAtual > 0) {
-      setFaseAtual(faseAtual - 1)
+      setFaseAtual(faseAtual - 1);
     }
-  }, [faseAtual])
+  }, [faseAtual]);
 
   if (!fase) {
     return (
@@ -594,10 +682,10 @@ export default function OnboardingScreen({ clientId, initialData = null }: Onboa
           <p>Carregando onboarding...</p>
         </div>
       </div>
-    )
+    );
   }
 
-  if (status === 'loading') {
+  if (status === "loading") {
     return (
       <div className={styles.container}>
         <div className={styles.loadingState}>
@@ -605,39 +693,40 @@ export default function OnboardingScreen({ clientId, initialData = null }: Onboa
           <p>Carregando dados...</p>
         </div>
       </div>
-    )
+    );
   }
 
-  if (status === 'error' && error) {
+  if (status === "error" && error) {
     return (
       <div className={styles.container}>
         <div className={styles.errorState}>
           <AlertCircle className={styles.errorIcon} />
-          <p>Erro ao carregar: {error}</p>
+          <p>Algo deu errado ao carregar: {error}</p>
         </div>
       </div>
-    )
+    );
   }
 
   function handleProximo(event: React.MouseEvent<HTMLButtonElement>): void {
-    event.preventDefault()
+    event.preventDefault();
 
-    if (isSaving || !validarFase()) return
+    if (isSaving || !validarFase()) return;
 
     if (faseAtual === totalFases - 1) {
-      void handleSalvar()
-      return
+      void handleSalvar();
+      return;
     }
 
-    setFaseAtual((atual) => Math.min(atual + 1, totalFases - 1))
+    setFaseAtual((atual) => Math.min(atual + 1, totalFases - 1));
   }
 
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        {status === 'not_found' && (
+        {status === "not_found" && (
           <div className={`${styles.message} ${styles.messageWarning}`}>
-            Nenhum onboarding cadastrado para este cliente.
+            Este cliente ainda está sem onboarding. Preencha as etapas abaixo
+            para começar.
           </div>
         )}
         {savingError && (
@@ -687,7 +776,9 @@ export default function OnboardingScreen({ clientId, initialData = null }: Onboa
                 <div className={styles.labelContainer}>
                   <label className={styles.label}>
                     {campo.label}
-                    {campo.obrigatorio && <span className={styles.required}>*</span>}
+                    {campo.obrigatorio && (
+                      <span className={styles.required}>*</span>
+                    )}
                   </label>
                   {campo.alerta && <AlertCircle className={styles.alertIcon} />}
                   {campo.tooltip && (
@@ -702,7 +793,9 @@ export default function OnboardingScreen({ clientId, initialData = null }: Onboa
                   campo={campo}
                   valor={respostas[campo.id as keyof FormAnswers]}
                   erro={erros[String(campo.id)]}
-                  onChange={(valor) => handleResposta(campo.id as keyof FormAnswers, valor)}
+                  onChange={(valor) =>
+                    handleResposta(campo.id as keyof FormAnswers, valor)
+                  }
                 />
 
                 {/* Insight contextual do campo */}
@@ -737,24 +830,26 @@ export default function OnboardingScreen({ clientId, initialData = null }: Onboa
               </>
             ) : (
               <>
-                {faseAtual === totalFases - 1 ? 'Finalizar' : 'Próximo'}
-                {faseAtual < totalFases - 1 && <ChevronRight className={styles.chevronIcon} />}
+                {faseAtual === totalFases - 1 ? "Finalizar" : "Próximo"}
+                {faseAtual < totalFases - 1 && (
+                  <ChevronRight className={styles.chevronIcon} />
+                )}
               </>
             )}
           </button>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-type FormAnswers = Partial<Omit<ClientOnboarding, 'bio_links'>> & {
-  bio_links?: string | ClientOnboarding['bio_links'] | null
-  expected_age_range?: string
-}
+type FormAnswers = Partial<Omit<ClientOnboarding, "bio_links">> & {
+  bio_links?: string | ClientOnboarding["bio_links"] | null;
+  expected_age_range?: string;
+};
 
 interface OnboardingFormState {
-  clientId: string
-  source: ClientOnboarding | null
-  answers: FormAnswers
+  clientId: string;
+  source: ClientOnboarding | null;
+  answers: FormAnswers;
 }

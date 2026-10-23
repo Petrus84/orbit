@@ -50,7 +50,7 @@ const FORMAT_LABEL: Record<string, string> = {
   story: "Stories",
   live: "Live",
   igtv: "IGTV",
-  sem_formato: "Sem formato",
+  sem_formato: "Formato não identificado",
 };
 
 // Decisão de produto: abaixo disso a referência aparece sem cor.
@@ -128,7 +128,7 @@ function recencyLine(c: PostingCadence): string | null {
   return `Último post em ${fmtIsoDate(c.lastPostOn)} — ${d} ${plural(d, "dia", "dias")} antes da coleta (${fmtIsoDate(c.collectedOn)}).`;
 }
 
-// Compara posts/semana (span ativo) da conta com a faixa P25–P75 da view.
+// Compara posts por semana (span ativo) da conta com a faixa P25–P75 da view.
 function classifyCadenceVsBenchmark(
   postsPerWeek: number,
   b: BenchmarkCadence,
@@ -178,7 +178,7 @@ export function PostingProfilePanel({
           data-testid="posting-level"
           title="Derivado por contagem dos posts coletados."
         >
-          L1
+          Estimado
         </span>
       </div>
 
@@ -209,7 +209,7 @@ export function PostingProfilePanel({
             </>
           ) : (
             <strong className={styles.headlineMuted}>
-              Sem dados no período
+              Os dados deste período ainda não chegaram
             </strong>
           )}
 
@@ -222,12 +222,12 @@ export function PostingProfilePanel({
               )}
               <p className={styles.referenceLine}>
                 Referência — {formatCategoryLabel(benchmark.segmentCategory)}:
-                média {ptBr(benchmark.meanPostsPerWeek, 2)} posts/semana ·
+                média {ptBr(benchmark.meanPostsPerWeek, 2)} posts por semana ·
                 mediana {ptBr(benchmark.medianPostsPerWeek, 2)}
               </p>
               <p className={styles.referenceMeta}>
                 Faixa típica (P25–P75): {ptBr(benchmark.p25PostsPerWeek, 2)} a{" "}
-                {ptBr(benchmark.p75PostsPerWeek, 2)} posts/semana ·{" "}
+                {ptBr(benchmark.p75PostsPerWeek, 2)} posts por semana ·{" "}
                 {benchmark.eligibleAccounts} de{" "}
                 {benchmark.benchmarkAccountsTotal} contas elegíveis ·{" "}
                 {fmtIsoDate(benchmark.periodStart)} a{" "}
@@ -246,13 +246,13 @@ export function PostingProfilePanel({
               </p>
               {benchmark.eligibleAccounts < MIN_BENCHMARK_ACCOUNTS && (
                 <p className={styles.referenceMeta}>
-                  Poucas contas na referência — exibida sem comparação.
+                  Poucas contas na referência. Mostramos o número sem comparar.
                 </p>
               )}
               {accountRate === null &&
                 benchmark.eligibleAccounts >= MIN_BENCHMARK_ACCOUNTS && (
                   <p className={styles.referenceMeta}>
-                    Conta sem base mínima (5 posts em 28 dias) — referência
+                    Conta sem base mínima (5 posts em 28 dias): referência
                     exibida sem comparação.
                   </p>
                 )}
@@ -262,7 +262,8 @@ export function PostingProfilePanel({
               className={styles.referenceMuted}
               data-testid="posting-benchmark-empty"
             >
-              Sem referência de segmento disponível para esta conta.
+              A referência do seu segmento ainda não está disponível para esta
+              conta.
             </p>
           )}
         </div>
@@ -302,7 +303,7 @@ export function PostingProfilePanel({
             </ul>
           ) : (
             <strong className={styles.headlineMuted}>
-              Sem posts no período
+              Os posts deste período aparecem aqui assim que forem publicados
             </strong>
           )}
         </div>

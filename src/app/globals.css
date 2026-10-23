@@ -8,10 +8,10 @@
    ========================================================================== */
 
 /* ─── Tailwind v4 (sintaxe única) ─── */
-@import 'tailwindcss';
+@import "tailwindcss";
 
 /* ─── Tokens legados (CSS Modules antigos) ─── */
-@import '../styles/ssot-design-tokens.css';
+@import "../styles/ssot-design-tokens.css";
 
 /* ─── Fundo absoluto do ORBIT (camada base #0C0C0F) ───
    Regra restaurada de ssot-globals.css (07/09/2026), que deixou de ser
@@ -23,7 +23,7 @@
   body {
     background-color: var(--bg);
     color: var(--t0);
-    font-family: 'DM Sans', sans-serif;
+    font-family: "DM Sans", sans-serif;
   }
 
   /* FIX a11y (15/09/2026): 27 dos 35 CSS Modules não tinham nenhum estado
@@ -52,4 +52,3 @@
     }
   }
 }
-

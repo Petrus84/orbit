@@ -292,7 +292,7 @@ export default function IGOverviewScreen({
       </section>
 
       <section className="flex flex-col gap-3">
-        <SectionLabel>Performance por formato</SectionLabel>
+        <SectionLabel>Desempenho por formato</SectionLabel>
         {isLoading ? (
           <TableSkeleton />
         ) : (
