@@ -10,6 +10,8 @@ import { GlassCard } from "@/components/common/GlassCard";
 import styles from "./AudienceSummaryPanel.module.css";
 import type { AudienceSummary } from "@/types/orbit";
 import type { Database } from "@/types/database.types";
+import { formatPtBr } from "@/lib/format";
+import { buildGapReading } from "@/lib/audienceGapCopy";
 
 export interface AudienceSummaryPanelProps {
   summary: AudienceSummary;
@@ -19,7 +21,7 @@ export interface AudienceSummaryPanelProps {
 }
 
 function formatPct(value: number | null): string {
-  return value != null ? `${value.toFixed(1)}%` : "—";
+  return value != null ? `${formatPtBr(value, 1)}%` : "—";
 }
 
 export function AudienceSummaryPanel({
@@ -44,17 +46,21 @@ export function AudienceSummaryPanel({
   }
 
   const hasGapData = realGenderPct != null && expectedGenderPct != null;
-  const gapValue = hasGapData ? realGenderPct! - expectedGenderPct! : 0;
-  const isPositiveGap = gapValue >= 0;
+  const gapReading = hasGapData
+    ? buildGapReading(realGenderPct!, expectedGenderPct!)
+    : null;
 
   return (
     <GlassCard glowColor="cyan" className={styles.panel}>
-      <p className={styles.panelTitle}>AUDIÊNCIA — {summary.periodLabel}</p>
+      <p className={styles.panelTitle}>SEU PÚBLICO — {summary.periodLabel}</p>
 
       {/* MÉTRICAS GERAIS (Mantido do original) */}
       <div className={styles.statsRow}>
-        <div className={styles.stat}>
-          <p className={styles.statLabel}>Alcance por seguidor</p>
+        <div
+          className={styles.stat}
+          title="Das contas que viram seu conteúdo, a parte que já te segue (reach_followers_pct da última coleta)"
+        >
+          <p className={styles.statLabel}>Alcance entre seguidores</p>
           <p className={styles.statValue}>
             {formatPct(summary.reachFollowersPct)}
           </p>
@@ -70,44 +76,38 @@ export function AudienceSummaryPanel({
       </div>
 
       {/* NOVA SESSÃO: GAP ANALYSIS (OPÇÃO C) */}
-      {hasGapData && (
+      {hasGapData && gapReading && (
         <div className={styles.gapSection}>
           <p className={styles.blockLabel}>
-            ANÁLISE DE ALINHAMENTO: {genderLabel.toUpperCase()}
+            PÚBLICO QUE VOCÊ DEFINIU: {genderLabel.toUpperCase()}
           </p>
 
           <div className={styles.gapCards}>
             <div className={styles.metricCardReal}>
               <span className={styles.metricValue}>
-                {realGenderPct?.toFixed(1)}%
+                {formatPct(realGenderPct)}
               </span>
-              <span className={styles.metricLabel}>REALIZADO</span>
+              <span className={styles.metricLabel}>DO SEU PÚBLICO HOJE</span>
             </div>
             <div className={styles.metricCardExpected}>
               <span className={styles.metricValue}>
-                {expectedGenderPct?.toFixed(1)}%
+                {formatPct(expectedGenderPct ?? null)}
               </span>
-              <span className={styles.metricLabel}>ESPERADO</span>
+              <span className={styles.metricLabel}>O QUE VOCÊ DEFINIU</span>
             </div>
           </div>
 
-          <div
-            className={styles.gapBadge}
-            data-status={isPositiveGap ? "positive" : "negative"}
-          >
-            GAP {gapValue > 0 ? "+" : ""}
-            {gapValue.toFixed(1)}% /{" "}
-            {isPositiveGap ? "Acima da Meta" : "Abaixo da Meta"}
+          <div className={styles.gapBadge} data-status={gapReading.status}>
+            {gapReading.headline}
           </div>
+          <p className={styles.gapHint}>{gapReading.hint}</p>
 
           <div className={styles.gapBarsContainer}>
             <div className={styles.barGroup}>
               <div className={styles.barLabels}>
-                <span className={styles.textReal}>
-                  Real: {realGenderPct?.toFixed(1)}%
-                </span>
+                <span className={styles.textReal}>Seu público hoje</span>
                 <span className={styles.textRest}>
-                  {(100 - realGenderPct!).toFixed(1)}% Restante
+                  {formatPct(realGenderPct)}
                 </span>
               </div>
               <div className={styles.barTrack}>
@@ -120,11 +120,9 @@ export function AudienceSummaryPanel({
 
             <div className={styles.barGroup}>
               <div className={styles.barLabels}>
-                <span className={styles.textExpected}>
-                  Esperado: {expectedGenderPct?.toFixed(1)}%
-                </span>
+                <span className={styles.textExpected}>O que você definiu</span>
                 <span className={styles.textRest}>
-                  {(100 - expectedGenderPct!).toFixed(1)}% Restante
+                  {formatPct(expectedGenderPct ?? null)}
                 </span>
               </div>
               <div className={styles.barTrack}>
@@ -143,7 +141,7 @@ export function AudienceSummaryPanel({
         <div className={styles.genderBlock}>
           {" "}
           {/* Correção aplicada aqui (faltava o '<') */}
-          <p className={styles.blockLabel}>GÊNERO</p>
+          <p className={styles.blockLabel}>GÊNERO DO SEU PÚBLICO</p>
           <div className={styles.genderBar}>
             {summary.genderFemalePct != null && (
               <div
@@ -176,12 +174,14 @@ export function AudienceSummaryPanel({
 
       {hasCities && (
         <div className={styles.citiesBlock}>
-          <p className={styles.blockLabel}>PRINCIPAIS CIDADES</p>
+          <p className={styles.blockLabel}>ONDE MORA SEU PÚBLICO</p>
           <div className={styles.citiesList}>
             {summary.topCities.slice(0, 5).map((city) => (
               <div key={city.name} className={styles.cityRow}>
                 <span className={styles.cityName}>{city.name}</span>
-                <span className={styles.cityPct}>{city.pct.toFixed(1)}%</span>
+                <span className={styles.cityPct}>
+                  {formatPtBr(city.pct, 1)}%
+                </span>
               </div>
             ))}
           </div>

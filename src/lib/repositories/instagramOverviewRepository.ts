@@ -74,6 +74,7 @@ import { supabase } from "@/lib/supabase";
 import { repairMojibake } from "@/lib/textRepair";
 import { polemicMedianOfPeriod } from "@/lib/stats/polemic";
 import { periodUpperExclusive } from "@/lib/stats/period";
+import { computeFormatTrend, trendCopy } from "@/lib/stats/formatTrend";
 import { z } from "zod";
 
 import type {
@@ -95,6 +96,7 @@ import type {
   SectorPositioning,
   CommentReferenceItem,
   AlgoRiskScore,
+  ConfidenceLevel,
 } from "@/types/orbit";
 
 import {
@@ -104,11 +106,7 @@ import {
 } from "@/lib/scoreStatusCopy";
 // FIX (reforma do vocabulário de cor): substitui o dicionário local
 // SEMAPHORE_UI e o `as GlowColor` por validadores centralizados em orbit.ts.
-import {
-  SEMAPHORE_TO_GLOW,
-  toSemaphoreColor,
-  toGlowColor,
-} from "@/types/orbit";
+import { SEMAPHORE_TO_GLOW, toSemaphoreColor } from "@/types/orbit";
 import {
   commentTextStateNote,
   percentilePosition,
@@ -129,6 +127,20 @@ import {
   computePostingCadence,
   computeFormatMix,
 } from "./contentContractEngine";
+import { buildFormatInsights } from "@/lib/formatInsights";
+import {
+  buildDataStatusNotices,
+  type ClientDataFacts,
+} from "@/lib/dataStatusCopy";
+import {
+  isKpiValueMissing,
+  kpiDisplayFor,
+  kpiHasComparison,
+} from "@/lib/kpiDisplay";
+import {
+  aggregatePostImpressions,
+  type PostImpressionsRow,
+} from "@/lib/impressionsKpi";
 
 type RawRow = Record<string, unknown>;
 
@@ -155,29 +167,10 @@ const KPI_ORDER = [
   "cliques-no-link",
 ];
 
-// Proveniência por métrica de KPI (fonte, período e método declarados).
-// "saldo-90-dias" é só a CHAVE no banco. Pela definição real de
-// orbit.v_kpi_snapshots (conferida no banco em 21/10/2026): saldo = última
-// medição de orbit.client_followers_history MENOS a medição mais antiga dentro
-// dos 90 dias anteriores a ela. A âncora é a última medição (não o fim do
-// snapshot nem o cabeçalho) e só a linha do snapshot mais recente recebe o
-// valor. Com poucas medições próximas (a.c_enxovais: 07/10 e 09/10, ambas
-// 1.804) o resultado é 0, sem comprovar variação de 90 dias. Também não é a
-// mesma medida de v_client_metrics.follower_balance (novos − perdidos no
-// snapshot), então o rótulo não pode sugerir equivalência com ela.
-const KPI_DISPLAY: Partial<
-  Record<string, { label: string; provenance: MetricProvenance }>
-> = {
-  "saldo-90-dias": {
-    label: "SALDO DE SEGUIDORES (ENTRE MEDIÇÕES)",
-    provenance: {
-      source: "orbit.v_kpi_snapshots (metric_key = saldo-90-dias)",
-      period: "snapshot",
-      method:
-        "Última medição de seguidores menos a mais antiga nos 90 dias anteriores a ela (histórico de seguidores); pode cobrir bem menos que 90 dias e não segue o intervalo do cabeçalho.",
-    },
-  },
-};
+// Rótulo e proveniência (fonte, período, método — RN-23) dos KPIs vivem em
+// lib/kpiDisplay.ts (kpiDisplayFor), junto das regras de "dado ausente". Nota sobre o
+// saldo: "saldo-90-dias" é só a CHAVE no banco; a definição real está no texto de
+// proveniência de lá e não é a mesma medida de v_client_metrics.follower_balance.
 
 const FORMAT_LABEL: Record<string, string> = {
   reel: "Reels",
@@ -353,19 +346,27 @@ async function fetchPostingProfile(
 
 // ── Funções de transformação ────────────────────────────────────────────
 
-function kpiRowToCardData(row: KpiRow): KPICardData {
+export function kpiRowToCardData(row: KpiRow): KPICardData {
   const key = row.metric_key ?? row.metric ?? "unknown";
-  const rawVal = row.metric_value ?? row.value ?? 0;
-  const numVal = toFiniteNumber(rawVal);
+  // Sem `?? 0`: nulo não pode virar o número 0 (RN-22d). `valueMissing` faz o
+  // card mostrar "—" em vez de "0" (ver kpiDisplay.isKpiValueMissing).
+  const rawVal = row.metric_value ?? row.value;
+  const valueMissing = isKpiValueMissing(key, rawVal);
+  const numVal = valueMissing ? 0 : toFiniteNumber(rawVal);
   const delta = toFiniteNumber(row.delta_pct);
   const semaphore: SemaphoreColor =
     (row.semaphore as SemaphoreColor) ?? "ambar";
-  const display = KPI_DISPLAY[key];
+  const display = kpiDisplayFor(key, {
+    start: row.period_start,
+    end: row.period_end,
+  });
 
   return {
     id: row.id,
     label: display?.label ?? key.toUpperCase().replace(/-/g, " "),
     value: numVal,
+    ...(valueMissing ? { valueMissing: true } : {}),
+    ...(key === "seguidores-totais" ? { valueFormat: "integer" as const } : {}),
     unit: null,
     delta,
     // PR-B / N11 ("Δ 0% 0%"): `delta` já é renderizado por <DeltaText> como
@@ -387,8 +388,11 @@ function kpiRowToCardData(row: KpiRow): KPICardData {
     sourceLevel: row.confidence_level ?? undefined,
     ...(display ? { provenance: display.provenance } : {}),
     // toFiniteNumber(null) vira 0: sem este flag um delta nulo aparecia como
-    // "0,0%". Nulo = sem comparação (SSOT v1.5, Seção 9).
-    ...(row.delta_pct == null ? { hasComparison: false } : {}),
+    // "0,0%". Nulo = sem comparação (SSOT v1.5, Seção 9). Também sem comparação:
+    // valor ausente e saldo 0 com delta 0 (0÷0) — ver kpiDisplay.kpiHasComparison.
+    ...(kpiHasComparison(key, numVal, row.delta_pct, valueMissing)
+      ? {}
+      : { hasComparison: false }),
   };
 }
 
@@ -482,6 +486,9 @@ export async function fetchInstagramOverview(
     fetchSectorPositioning(clientId, periodStart, periodEnd),
     fetchPostingProfile(clientId, periodStart, periodEnd),
     fetchOnboardingExpectations(clientId),
+    fetchAccountImpressionsKpi(clientId),
+    fetchPostImpressionsKpi(clientId, periodStart, periodEnd),
+    fetchDataStatusNotices(clientId, periodStart, periodEnd),
   ]);
 
   results.forEach((res, idx) => {
@@ -490,7 +497,21 @@ export async function fetchInstagramOverview(
     }
   });
 
-  const kpis = results[0].status === "fulfilled" ? results[0].value : [];
+  const accountImpressionsKpi =
+    results[9].status === "fulfilled"
+      ? results[9].value
+      : impressionsKpiData("impressions-account", null);
+  const postImpressionsKpi =
+    results[10].status === "fulfilled"
+      ? results[10].value
+      : impressionsKpiData("impressions-posts", null);
+  const dataStatusNotices =
+    results[11].status === "fulfilled" ? results[11].value : [];
+  const kpis = [
+    ...(results[0].status === "fulfilled" ? results[0].value : []),
+    accountImpressionsKpi,
+    postImpressionsKpi,
+  ];
   const qualityScores =
     results[1].status === "fulfilled" ? results[1].value : [];
   const formatPerformance =
@@ -615,6 +636,7 @@ export async function fetchInstagramOverview(
     mix: postingProfile?.mix ?? null,
     benchmarkCadence,
     onboarding,
+    dataStatusNotices,
   };
 }
 
@@ -810,6 +832,215 @@ async function fetchKPIs(
   return sortByCanonicalOrder(dedupeByMetric(parsedRows)).map(kpiRowToCardData);
 }
 
+interface AccountImpressionsSnapshotRow {
+  impressions_total: number | null;
+  impressions_confidence: ConfidenceLevel;
+  period_start: string;
+  period_end: string;
+}
+
+function impressionsKpiData(
+  key: "impressions-account" | "impressions-posts",
+  rawValue: number | null,
+  sourceLevel?: ConfidenceLevel,
+  period?: { start?: string | null; end?: string | null },
+): KPICardData {
+  const valueMissing = isKpiValueMissing(key, rawValue);
+  const display = kpiDisplayFor(key, period);
+
+  return {
+    id: key,
+    label: display?.label ?? key.toUpperCase().replace(/-/g, " "),
+    value: valueMissing ? 0 : toFiniteNumber(rawValue),
+    valueFormat: "integer",
+    unit: null,
+    delta: 0,
+    deltaLabel: "comparação indisponível",
+    semaphore: "neutro",
+    glowColor: "none",
+    subtitle: null,
+    ...(!valueMissing && sourceLevel ? { sourceLevel } : {}),
+    ...(display ? { provenance: display.provenance } : {}),
+    hasComparison: false,
+    ...(valueMissing ? { valueMissing: true } : {}),
+  };
+}
+
+async function fetchAccountImpressionsKpi(
+  clientId: string,
+): Promise<KPICardData> {
+  const { data, error } = await supabase
+    .schema("orbit")
+    .from("ig_account_snapshots")
+    .select(
+      "impressions_total, impressions_confidence, period_start, period_end",
+    )
+    .eq("client_id", clientId)
+    .not("impressions_total", "is", null)
+    .order("period_end", { ascending: false })
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle()
+    .overrideTypes<AccountImpressionsSnapshotRow, { merge: false }>();
+
+  if (error) {
+    console.error("[fetchAccountImpressionsKpi]", error.message);
+    return impressionsKpiData("impressions-account", null);
+  }
+
+  return impressionsKpiData(
+    "impressions-account",
+    data?.impressions_total ?? null,
+    data?.impressions_confidence,
+    data ? { start: data.period_start, end: data.period_end } : undefined,
+  );
+}
+
+async function fetchPostImpressionsKpi(
+  clientId: string,
+  start: string,
+  end: string,
+): Promise<KPICardData> {
+  const { data, error } = await supabase
+    .schema("orbit")
+    .from("ig_posts")
+    .select("impressions, confidence_level")
+    .eq("client_id", clientId)
+    .gte("published_at", start)
+    .lt("published_at", periodUpperExclusive(end))
+    .not("impressions", "is", null)
+    .neq("content_format", "story")
+    .in("confidence_level", CONFIDENCE_LEVELS)
+    .returns<PostImpressionsRow[]>();
+
+  if (error) {
+    console.error("[fetchPostImpressionsKpi]", error.message);
+    return impressionsKpiData("impressions-posts", null);
+  }
+
+  const aggregate = aggregatePostImpressions(data ?? []);
+  return impressionsKpiData(
+    "impressions-posts",
+    aggregate.total,
+    aggregate.sourceLevel,
+  );
+}
+
+async function fetchDataStatusNotices(
+  clientId: string,
+  start: string,
+  end: string,
+) {
+  const [
+    postsTotal,
+    postsFirst,
+    postsLast,
+    postsInPeriod,
+    postsEstimated,
+    postsL2Excluded,
+    snapshots,
+    latestSnapshot,
+  ] = await Promise.all([
+    supabase
+      .schema("orbit")
+      .from("ig_posts")
+      .select("id", { count: "exact", head: true })
+      .eq("client_id", clientId),
+    supabase
+      .schema("orbit")
+      .from("ig_posts")
+      .select("published_at")
+      .eq("client_id", clientId)
+      .order("published_at", { ascending: true })
+      .limit(1)
+      .maybeSingle()
+      .overrideTypes<{ published_at: string }, { merge: false }>(),
+    supabase
+      .schema("orbit")
+      .from("ig_posts")
+      .select("published_at")
+      .eq("client_id", clientId)
+      .order("published_at", { ascending: false })
+      .limit(1)
+      .maybeSingle()
+      .overrideTypes<{ published_at: string }, { merge: false }>(),
+    supabase
+      .schema("orbit")
+      .from("ig_posts")
+      .select("id", { count: "exact", head: true })
+      .eq("client_id", clientId)
+      .gte("published_at", start)
+      .lt("published_at", periodUpperExclusive(end)),
+    supabase
+      .schema("orbit")
+      .from("ig_posts")
+      .select("id", { count: "exact", head: true })
+      .eq("client_id", clientId)
+      .eq("is_estimated", true),
+    supabase
+      .schema("orbit")
+      .from("ig_posts")
+      .select("id", { count: "exact", head: true })
+      .eq("client_id", clientId)
+      .eq("confidence_level", "L2")
+      .gte("published_at", start)
+      .lt("published_at", periodUpperExclusive(end)),
+    supabase
+      .schema("orbit")
+      .from("ig_account_snapshots")
+      .select("id", { count: "exact", head: true })
+      .eq("client_id", clientId),
+    supabase
+      .schema("orbit")
+      .from("ig_account_snapshots")
+      .select("reach_total, impressions_total")
+      .eq("client_id", clientId)
+      .order("period_end", { ascending: false })
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle()
+      .overrideTypes<
+        { reach_total: number | null; impressions_total: number | null },
+        { merge: false }
+      >(),
+  ]);
+
+  const queryErrors: {
+    name: string;
+    error: { message: string } | null;
+  }[] = [
+    { name: "posts total", error: postsTotal.error },
+    { name: "oldest post", error: postsFirst.error },
+    { name: "newest post", error: postsLast.error },
+    { name: "posts in period", error: postsInPeriod.error },
+    { name: "estimated posts", error: postsEstimated.error },
+    { name: "L2 posts", error: postsL2Excluded.error },
+    { name: "snapshot count", error: snapshots.error },
+    { name: "latest snapshot", error: latestSnapshot.error },
+  ];
+  const failedQueries = queryErrors.flatMap(({ name, error }) =>
+    error ? [`${name}: ${error.message}`] : [],
+  );
+
+  if (failedQueries.length > 0) {
+    throw new Error(`[fetchDataStatusNotices] ${failedQueries.join("; ")}`);
+  }
+
+  const facts: ClientDataFacts = {
+    postsTotal: postsTotal.count ?? 0,
+    postsFirst: postsFirst.data?.published_at ?? null,
+    postsLast: postsLast.data?.published_at ?? null,
+    postsInPeriod: postsInPeriod.count ?? 0,
+    postsEstimated: postsEstimated.count ?? 0,
+    postsL2Excluded: postsL2Excluded.count ?? 0,
+    snapshotCount: snapshots.count ?? 0,
+    latestSnapshotReach: latestSnapshot.data?.reach_total ?? null,
+    latestSnapshotImpressions: latestSnapshot.data?.impressions_total ?? null,
+  };
+
+  return buildDataStatusNotices(facts);
+}
+
 // NOTA (19/09/2026): ER Real e VPS têm só régua global de gestão interna
 // (ref_thresholds ids 96/97, confiança 0.50, provisória); Utilidade não tem
 // régua alguma. A cor do semáforo vem da view; a origem da régua ainda não é
@@ -818,26 +1049,26 @@ async function fetchKPIs(
 // RN-23: proveniência dos scores do Overview. Datas do snapshot entram em
 // periodLabel quando o score vem de v_quality_scores (snapshot).
 const ER_NO_SHARES_TEXT =
-  "Faltam dados de compartilhamentos no snapshot. ER Real = (salvamentos + compartilhamentos + comentários) ÷ alcance.";
+  "ER Real = (salvamentos + compartilhamentos + comentários) ÷ alcance. Ele aparece assim que a coleta trouxer os compartilhamentos.";
 
 const QUALITY_PROVENANCE: Record<string, MetricProvenance> = {
   polemic_score_pct: {
-    source: "cálculo por post (ig_posts) · classificação fn_classify_metric",
+    source: "cálculo feito post a post",
     period: "header_window",
     method:
       "mediana por post de comentários ÷ curtidas × 100 (curtidas > 0); régua do setor em validação. Não é o número do painel de Qualidade, que vem de outro cálculo",
   },
   vps_pct: {
-    source: "orbit.v_quality_scores (snapshot)",
+    source: "última coleta de dados da conta",
     period: "snapshot",
     method:
-      "calculado na view; fórmula oficial (RN-20): (alcance × % do alcance em seguidores) ÷ seguidores × 100; meta de gestão (hipótese), não é referência de mercado. Alinhamento da view pendente (D-18)",
+      "fórmula oficial: (alcance × % do alcance em seguidores) ÷ seguidores × 100; referência de gestão do ORBIT (hipótese), ainda não é comparação de mercado",
   },
   er_real_pct: {
-    source: "orbit.v_quality_scores (snapshot)",
+    source: "última coleta de dados da conta",
     period: "snapshot",
     method:
-      "(salvamentos + compartilhamentos + comentários) ÷ alcance × 100; exige dado de compartilhamentos; meta de gestão (hipótese), não é referência de mercado",
+      "(salvamentos + compartilhamentos + comentários) ÷ alcance × 100; exige dado de compartilhamentos; referência de gestão do ORBIT (hipótese), ainda não é comparação de mercado",
   },
 };
 
@@ -978,7 +1209,7 @@ async function fetchQualityScores(
       ? baseProv.period === "snapshot"
         ? {
             ...baseProv,
-            periodLabel: `snapshot ${fmtDateBR(row.period_start)} a ${fmtDateBR(row.period_end)}`,
+            periodLabel: `coleta de ${fmtDateBR(row.period_start)} a ${fmtDateBR(row.period_end)}`,
           }
         : baseProv
       : undefined;
@@ -1028,7 +1259,9 @@ async function fetchQualityScores(
       statusText:
         sharesMissing && metricName === "er_real_pct" && value == null
           ? ER_NO_SHARES_TEXT
-          : copy.text || rawStatus || "Sem dados",
+          : copy.text ||
+            rawStatus ||
+            "Este indicador aparece quando o dado do período estiver disponível.",
       statusVariant: sem ? sem.variant : "neutral",
       glowColor: (sem ? sem.glow : "none") as GlowColor,
       actionText: copy.action,
@@ -1194,8 +1427,10 @@ async function fetchFormatPerformance(
     .gte("period_end", start)
     .returns<RawRow[]>();
 
-  // A view só fornece a TENDÊNCIA. Se ela falhar, a tabela continua existindo
-  // (a contagem vem de ig_posts) e a tendência fica como "sem tendência".
+  // A view fornece só o id/ordem das linhas. A TENDÊNCIA não vem mais dela
+  // (a view usava a nota de utilidade da legenda): é calculada dos posts do
+  // header por computeFormatTrend (curtidas + comentários). Se a view falhar,
+  // a tabela continua existindo (a contagem vem de ig_posts).
   if (orbitError) {
     console.error("[fetchFormatPerformance]", orbitError.message);
   }
@@ -1204,9 +1439,6 @@ async function fetchFormatPerformance(
     fetchPostsByFormat(clientId, start, end),
     fetchInteractionsByFormat(clientId, start, end),
   ]);
-
-  const headerStart = start.slice(0, 10);
-  const headerEnd = end.slice(0, 10);
 
   // Universo da tabela = formatos que têm post NO HEADER (ig_posts), na ordem
   // da view quando existe linha dela e, depois, os demais. Antes a tabela
@@ -1229,18 +1461,9 @@ async function fetchFormatPerformance(
     const row = viewByLabel.get(label);
     const inter = interactionsByFormat.get(label);
 
-    // v_format_performance agrega TODO o histórico do formato: period_start /
-    // period_end são o 1º e o último post, não o header. A tendência da view
-    // só vale para o header quando esse histórico inteiro cabe nele. Fora
-    // disso (ou sem linha na view) ela não é exibida — sem inventar regra.
-    const viewStart = String(row?.period_start ?? "").slice(0, 10);
-    const viewEnd = String(row?.period_end ?? "").slice(0, 10);
-    const trendInHeader =
-      row != null &&
-      viewStart !== "" &&
-      viewEnd !== "" &&
-      viewStart >= headerStart &&
-      viewEnd <= headerEnd;
+    // Tendência derivada das interações dos posts do header (VAL-7), na mesma
+    // população e janela da tabela. Não depende mais da janela da view.
+    const trend = trendCopy(computeFormatTrend(detail));
 
     return [
       {
@@ -1253,21 +1476,9 @@ async function fetchFormatPerformance(
         interactions: inter?.interactions ?? null,
         interactionsKnownPosts: inter?.knownPosts ?? 0,
         interactionsTotalPosts: inter?.totalPosts ?? 0,
-        // RN-15: menos de 5 posts no formato = amostra insuficiente.
-        trendLabel:
-          detail.length < 5
-            ? `Amostra insuficiente: ${detail.length} de 5 posts`
-            : trendInHeader
-              ? String(row?.trend_label ?? "Sem tendência calculada")
-              : "Sem tendência no período",
-        trendColor:
-          detail.length < 5
-            ? "gold"
-            : trendInHeader
-              ? toGlowColor(
-                  typeof row?.trend_color === "string" ? row.trend_color : null,
-                )
-              : "none",
+        // RN-15 (mínimo de 5 posts) e demais regras: ver lib/stats/formatTrend.
+        trendLabel: trend.label,
+        trendColor: trend.color,
         postsDetail: detail,
       },
     ];
@@ -1301,7 +1512,7 @@ async function fetchSharesSummary(
   if (error || !data || data.length === 0) {
     return {
       total: null,
-      periodLabel: "sem dado no período",
+      periodLabel: "período selecionado",
       source: "account_aggregate",
     };
   }
@@ -1310,7 +1521,7 @@ async function fetchSharesSummary(
   if (!row) {
     return {
       total: null,
-      periodLabel: "sem dado no período",
+      periodLabel: "período selecionado",
       source: "account_aggregate",
     };
   }
@@ -1393,35 +1604,15 @@ async function fetchAudienceSummary(
     profileVisits: toFiniteNumber(account?.profile_visits),
     linkClicks: toFiniteNumber(account?.link_clicks),
     periodLabel: audience
-      ? `${audience.period_start} – ${audience.period_end}`
-      : "sem dado no período",
+      ? `${fmtDateBR(audience.period_start)} a ${fmtDateBR(audience.period_end)}`
+      : "período selecionado",
   };
 }
 
 function generateInsights(formats: FormatPerformanceRow[]): InsightData[] {
-  // RWP-5: o insight cita INTERAÇÕES (likes + comentários + compartilhamentos +
-  // salvamentos) e só existe quando há post com dado completo. Antes citava a
-  // contagem de shares como se fosse "interações" e transformava null em 0.
-  return formats
-    .filter(
-      (f) =>
-        f.interactions !== null &&
-        f.interactions > 0 &&
-        f.interactionsKnownPosts > 0,
-    )
-    .map((f) => {
-      const known = f.interactionsKnownPosts;
-      const total = f.interactionsTotalPosts;
-      const postsText = known === 1 ? "1 publicação" : `${known} publicações`;
-      const partial =
-        total > known
-          ? ` (só ${known} de ${total} posts têm todos os números)`
-          : "";
-      return {
-        id: `insight-${f.id}`,
-        text: `O formato ${f.format} somou ${f.interactions} interações em ${postsText}${partial}.`,
-      };
-    });
+  // Leitura comparativa por post + próximo passo (regras em lib/formatInsights).
+  // Antes: uma frase por formato ("somou N interações"), sem comparação e sem ação.
+  return buildFormatInsights(formats);
 }
 
 // ── client_onboarding (SSOT único de setor/nicho/porte/audiência) ────────
@@ -1518,6 +1709,7 @@ async function fetchAlgoRiskScore(
     // Mesmo critério de fetchPostingProfile.
     .neq("content_format", "story")
     .eq("client_id", clientId)
+    .in("confidence_level", CONFIDENCE_LEVELS)
     .order("published_at", { ascending: false })
     .limit(80)
     .returns<
@@ -1607,35 +1799,31 @@ const COMMENT_REFERENCE_METRICS = [
 const REF_PROVENANCE: Record<CommentReferenceItem["metric"], MetricProvenance> =
   {
     resposta_da_base: {
-      source:
-        "cálculo por post (ig_posts) · régua orbit.ref_thresholds, run orbit_comments_v2",
+      source: "cálculo feito post a post · referência do setor",
       period: "header_window",
       method:
         "mediana por post de (curtidas + comentários) ÷ seguidores atuais × 100; mínimo 5 posts; seguidores ≥ 1.000; não é o ER Real",
     },
     views_por_seguidor: {
-      source:
-        "cálculo por post (ig_posts) · régua orbit.ref_thresholds, run orbit_comments_v2",
+      source: "cálculo feito post a post · referência do setor",
       period: "header_window",
       method:
         "mediana por post de visualizações de Reel ÷ seguidores atuais × 100; mínimo 5 posts; não é o VPS",
     },
     posts_com_comentario: {
-      source: "cálculo por post (ig_posts.comments)",
+      source: "contagem de comentários por post",
       period: "header_window",
       method:
         "posts com comentário ÷ posts com contagem de comentários; mínimo 5 posts; sem cor, régua ou Ação",
     },
     intencao_nos_comentarios: {
-      source:
-        "texto dos comentários (ig_post_comments) · régua orbit.ref_thresholds, run orbit_comments_v2",
+      source: "texto dos comentários coletados · referência do setor",
       period: "header_window",
       method:
         "% de comentários com intenção; mínimo 30 comentários; informativa, sem cor",
     },
     tom_dos_comentarios: {
-      source:
-        "texto dos comentários (ig_post_comments) · régua orbit.ref_thresholds, run orbit_comments_v2",
+      source: "texto dos comentários coletados · referência do setor",
       period: "header_window",
       method:
         "(% positivo − % negativo) × 100 em posts com ≥ 3 comentários; não liberado para cor ou Ação",

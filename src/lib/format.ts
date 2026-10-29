@@ -20,6 +20,13 @@ export function formatPtBr(value: number, decimals: number = 1): string {
   return value.toFixed(decimals).replace(".", ",");
 }
 
+/** Quantidade inteira com separador de milhar pt-BR. Ex.: 1745 -> "1.745" */
+export function formatIntegerPtBr(value: number): string {
+  return new Intl.NumberFormat("pt-BR", {
+    maximumFractionDigits: 0,
+  }).format(value);
+}
+
 /**
  * Número grande e compacto, em pt-BR. Substitui sufixos em inglês ("k", "M")
  * por "mil"/"mi" — nunca mistura "1.7k" com texto em português na mesma tela.

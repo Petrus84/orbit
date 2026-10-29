@@ -5,10 +5,18 @@
   align-items: flex-start;
   gap: var(--space-3);
   background: var(--bg-hover);
-  border: var(--border-width) solid rgba(0, 255, 255, 0.2);
-  border-radius: var(--border-radius-md);
+  border: var(--border-width) solid var(--border-default);
+  border-radius: var(--radius-lg);
   padding: var(--space-3) var(--space-4);
   margin-top: auto;
+  transition:
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
+}
+
+.card:hover {
+  border-color: var(--border-glow-cyan);
+  box-shadow: var(--shadow-fill-cyan);
 }
 
 .icon {
@@ -21,6 +29,29 @@
   font-size: var(--font-size-sm);
   color: var(--text-secondary);
   line-height: 1.5;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.basis {
+  margin: 0;
+  font-size: var(--font-size-xs);
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0 var(--space-2);
+  border: 1px solid color-mix(in srgb, var(--neon-gold) 50%, transparent);
+  border-radius: var(--radius-pill);
+  color: var(--neon-gold);
+  font-weight: var(--font-weight-medium);
 }
 
 .label {

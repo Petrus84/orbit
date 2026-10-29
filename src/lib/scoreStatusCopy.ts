@@ -90,16 +90,16 @@ const ACTION_COPY = {
 } as const;
 
 const NO_DATA_TEXT =
-  "Ainda não há posts suficientes neste período para calcular este indicador.";
+  "Este indicador aparece quando o período tiver posts suficientes. Amplie o período para ver.";
 
 const NO_REFERENCE_TEXT =
-  "Este é o número da sua conta no período. Ainda não há uma referência confiável para classificá-lo, então preferimos não dar nota.";
+  "Este é o número real da sua conta no período. Use-o para acompanhar a sua própria evolução.";
 
-const GESTAO_NOTE = "Meta provisória de gestão, não é referência de mercado.";
+const GESTAO_NOTE =
+  "Referência provisória de gestão, não é comparação de mercado.";
 
 // Sem célula de setor: a comparação é com o conjunto geral de contas.
-const NO_SECTOR_NOTE =
-  "Ainda não temos referência do seu setor para este indicador. Por isso comparamos com o conjunto geral de contas.";
+const NO_SECTOR_NOTE = "Comparado com o conjunto geral de contas do ORBIT.";
 
 const STALE_NOTE =
   "Esse número vem de uma coleta antiga e pode ter mudado. Atualize os dados antes de decidir com base nele.";
@@ -174,7 +174,8 @@ function baseCopy(
   const actionFor = (action: string | null): string | null =>
     isGestao || inValidation ? null : action;
 
-  // higher_is_better: meta = green_min, piso = red_max
+  // higher_is_better: início da faixa saudável = green_min, mínimo = red_max.
+  // (Na tela nunca aparece "meta": o cliente não definiu meta nenhuma.)
   if (
     ref.direction === "higher_is_better" &&
     ref.greenMin !== null &&
@@ -184,22 +185,22 @@ function baseCopy(
     const piso = ref.redMax;
     if (semaphore === "verde") {
       return {
-        text: `Na meta ${escopo} (≥ ${fmt(meta)}%).`,
+        text: `Dentro da faixa saudável ${escopo} (a partir de ${fmt(meta)}%).`,
         action: null,
         note,
       };
     }
     if (semaphore === "ambar") {
       return {
-        text: `Quase lá: faltam ${fmt(meta - value)} % para a meta ${escopo} (${fmt(meta)}%). Você já está acima do piso (${fmt(piso)}%).`,
+        text: `Quase lá: faltam ${fmt(meta - value)} pontos para a faixa saudável ${escopo} (${fmt(meta)}%). Você já está acima do mínimo (${fmt(piso)}%).`,
         action: actionFor(
-          ACTION_COPY.ambar(`cair abaixo do piso (${fmt(piso)}%)`),
+          ACTION_COPY.ambar(`cair abaixo do mínimo (${fmt(piso)}%)`),
         ),
         note,
       };
     }
     return {
-      text: `Abaixo do piso ${escopo} (${fmt(piso)}%). A meta é ${fmt(meta)}%.`,
+      text: `Abaixo do mínimo ${escopo} (${fmt(piso)}%). A faixa saudável começa em ${fmt(meta)}%.`,
       action: actionFor(ACTION_COPY.vermelho),
       note,
     };
@@ -216,7 +217,7 @@ function baseCopy(
       // o texto padrão abaixo (a frase fala de comentários).
       if (value === 0 && ref.metric === "polemic_score_pct") {
         return {
-          text: "A maioria dos posts do período não recebeu comentários. Não é classificação de setor.",
+          text: "A maioria dos posts do período não recebeu comentários, então ainda não há conversa para medir.",
           action: null,
           note,
         };

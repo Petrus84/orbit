@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-10-16T17:14:29.336Z",
+  "gerado_em": "2026-10-29T15:12:12.658Z",
   "kpis": [
     {
       "kpi_id": "followers_net_balance",
@@ -39,7 +39,7 @@
       "regra_recusada": null,
       "writer_declarado": null,
       "writer_check": "sem_writer_declarado",
-      "binding_check": "possível match de coluna: vermelho, ambar, verde"
+      "binding_check": "possível match de coluna: vermelho, delta, ambar, verde"
     },
     {
       "kpi_id": "cpr_vs_goal",
@@ -162,7 +162,7 @@
       "regra_calculo_vigente": "polemic_score_pct = (comentarios / curtidas) * 100",
       "regra_recusada": "ALERTA SE > 20%",
       "writer_declarado": "resolveEngagementScoreAlert ramo polemic",
-      "writer_check": "chamado em: C:\\Projetos\\orbit-dashboard\\src\\actions\\syncClientAlerts.ts, C:\\Projetos\\orbit-dashboard\\src\\hooks\\useSyncClientAlerts.ts, C:\\Projetos\\orbit-dashboard\\src\\lib\\repositories\\instagramOverviewRepository.ts",
+      "writer_check": "chamado em: C:\\Projetos\\orbit-dashboard\\src\\actions\\syncClientAlerts.ts, C:\\Projetos\\orbit-dashboard\\src\\lib\\repositories\\instagramOverviewRepository.ts",
       "binding_check": "possível match de coluna: polemic_score_pct, curtidas"
     },
     {
@@ -273,7 +273,7 @@
       "regra_recusada": null,
       "writer_declarado": null,
       "writer_check": "sem_writer_declarado",
-      "binding_check": "possível match de coluna: reach, reach_followers_pct, resto"
+      "binding_check": "possível match de coluna: reach, reach_followers_pct"
     },
     {
       "kpi_id": "save_rate",
@@ -343,7 +343,7 @@
       "regra_recusada": null,
       "writer_declarado": null,
       "writer_check": "sem_writer_declarado",
-      "binding_check": "possível match de coluna: mesmo"
+      "binding_check": "NÃO ENCONTRADO: nenhum token reconhecido no dump — confira manualmente"
     }
   ]
 }

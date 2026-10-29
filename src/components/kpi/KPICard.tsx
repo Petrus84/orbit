@@ -1,7 +1,8 @@
 import React from "react";
-import { formatPtBr, formatCompactPtBr } from "@/lib/format";
+import { formatIntegerPtBr, formatPtBr, formatCompactPtBr } from "@/lib/format";
 import { provenanceLine } from "@/lib/provenanceText";
 import type { MetricProvenance } from "@/types/orbit";
+import { GlassCard } from "@/components/common/GlassCard";
 
 export type FlagLevel = "L0" | "L1" | "L2";
 
@@ -11,6 +12,7 @@ export interface KPI {
   delta?: number;
   trend?: "up" | "down" | "neutral";
   flagLevel: FlagLevel;
+  valueFormat?: "compact" | "integer";
   unit?: string;
   sparkline?: number[]; // series of values for the mini chart
   /** false = delta nulo na view: exibe "Comparação ainda indisponível", nunca 0%. */
@@ -98,8 +100,12 @@ function Sparkline({ data, trend }: SparklineProps): React.ReactElement | null {
 
 // ─── Value formatter ──────────────────────────────────────────
 
-function formatValue(value: number | string): string {
+function formatValue(
+  value: number | string,
+  valueFormat: KPI["valueFormat"],
+): string {
   if (typeof value === "string") return value;
+  if (valueFormat === "integer") return formatIntegerPtBr(value);
   return formatCompactPtBr(value);
 }
 
@@ -117,10 +123,10 @@ export default function KPICard({ kpi }: KPICardProps): React.ReactElement {
   // com dado real, ele passa a aparecer automaticamente.
 
   return (
-    <div className="flex flex-col gap-3 rounded-2xl bg-[var(--bg-card)] p-4">
+    <GlassCard glowColor="cyan" className="flex flex-col gap-3">
       {/* Header row: label + flag */}
       <div className="flex items-center justify-between gap-2">
-        <span className="font-sans text-xs font-medium uppercase tracking-widest text-[var(--text-dim)]">
+        <span className="font-sans text-[length:var(--font-size-xs)] font-medium uppercase tracking-[0.03em] text-[var(--text-dim)]">
           {kpi.label}
         </span>
         <span
@@ -133,10 +139,10 @@ export default function KPICard({ kpi }: KPICardProps): React.ReactElement {
       {/* Value row */}
       <div className="flex items-end justify-between gap-2">
         <div className="flex flex-col gap-0.5">
-          <span className="font-mono text-2xl font-bold tabular-nums text-white leading-none">
-            {formatValue(kpi.value)}
+          <span className="font-mono text-[length:var(--font-size-metric)] font-bold tabular-nums text-[var(--t0)] leading-none">
+            {formatValue(kpi.value, kpi.valueFormat)}
             {kpi.unit && (
-              <span className="ml-0.5 font-sans text-sm font-normal text-[var(--text-dim)]">
+              <span className="ml-0.5 font-sans text-[length:var(--font-size-base)] font-normal text-[var(--text-dim)]">
                 {kpi.unit}
               </span>
             )}
@@ -144,17 +150,17 @@ export default function KPICard({ kpi }: KPICardProps): React.ReactElement {
 
           {/* Delta */}
           {kpi.hasComparison === false ? (
-            <span className="font-sans text-xs font-medium text-zinc-500">
+            <span className="font-sans text-[length:var(--font-size-sm)] font-normal text-[var(--text-muted)]">
               Comparação ainda indisponível
             </span>
           ) : (
             kpi.delta !== undefined &&
             deltaTokens && (
               <span
-                className={`font-sans text-xs font-medium ${deltaTokens.color}`}
+                className={`font-sans text-[length:var(--font-size-sm)] font-normal ${deltaTokens.color}`}
               >
                 {deltaTokens.arrow} {formatPtBr(Math.abs(kpi.delta), 1)}%{" "}
-                <span className="text-zinc-600">
+                <span className="text-[var(--text-muted)]">
                   em relação ao período anterior
                 </span>
               </span>
@@ -170,12 +176,12 @@ export default function KPICard({ kpi }: KPICardProps): React.ReactElement {
 
       {kpi.provenance && (
         <p
-          className="font-sans text-[10px] leading-snug text-zinc-500"
+          className="font-sans text-[10px] leading-snug text-[var(--text-muted)]"
           title={kpi.provenance.method}
         >
           {provenanceLine(kpi.provenance)}
         </p>
       )}
-    </div>
+    </GlassCard>
   );
 }

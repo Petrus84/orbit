@@ -1,3 +1,4 @@
+import { userErrorMessage } from "@/lib/userErrorMessage";
 import React, { useEffect, useState } from "react";
 
 export interface QualityScore {
@@ -48,7 +49,7 @@ export default function QualityScoreCard({
 }: QualityScoreCardProps): React.ReactElement {
   const tokens = STATUS_TOKENS[score.status];
   const displayValue =
-    score.value === null ? "Aguardando" : `${score.value.toFixed(2)}%`;
+    score.value === null ? "Aguardando" : `${score.value.toFixed(1)}%`;
 
   return (
     <div
@@ -158,7 +159,11 @@ export function InstagramOverviewScreen(): React.ReactElement {
   }
 
   if (error) {
-    return <div className="p-4 text-red-400">❌ Algo deu errado: {error}</div>;
+    return (
+      <div className="p-4 text-red-400">
+        ❌ Algo deu errado: {userErrorMessage(error)}
+      </div>
+    );
   }
 
   if (!data?.qualityScores) {

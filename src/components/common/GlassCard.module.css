@@ -1,59 +1,62 @@
-/* GlassCard.module.css */
+/* GlassCard.module.css
+   v2 — REGRA ÚNICA: nenhum card fica aceso em repouso. Ao passar o mouse, o card
+   INTEIRO acende: borda colorida + brilho por fora + preenchimento por dentro.
+   Variantes semânticas (red/gold/green) mantêm só a BORDA colorida em repouso
+   (é o sinal de severidade); o brilho e o preenchimento também só no hover. */
 
 .card {
-  background:    var(--bg-card);
-  border:        var(--border-width) solid var(--border-default);
-  border-radius: var(--border-radius-lg);
-  padding:       var(--space-6);
-  box-shadow:    var(--shadow-outer-md);
-  transition:    background var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
-  position:      relative;
-  overflow:      hidden;
+  background: var(--bg-card);
+  border: var(--border-width) solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-outer-sm);
+  transition:
+    background-color var(--transition-base),
+    box-shadow var(--transition-base),
+    border-color var(--transition-base);
+  position: relative;
+  overflow: hidden;
 }
 
 .card:hover {
-  background: var(--bg-hover);
-}
-
-/* Variantes de glow */
-
-.glowCyan {
+  background-color: var(--bg-hover);
+  background-image: var(--gradient-cyan-hover);
   border-color: var(--border-glow-cyan);
-  box-shadow:   var(--shadow-outer-md), var(--shadow-inner-cyan);
+  box-shadow: var(--shadow-fill-cyan);
 }
 
-.glowCyan:hover {
-  box-shadow: var(--shadow-outer-lg), var(--shadow-inner-cyan);
-}
+/* Variantes: glowCyan e glowNone usam o padrão acima (cyan no hover). */
 
 .glowRed {
   border-color: var(--border-glow-red);
-  box-shadow:   var(--shadow-outer-md), var(--shadow-inner-red);
+}
+.glowGold {
+  border-color: var(--border-glow-gold);
+}
+.glowGreen {
+  border-color: var(--border-glow-green);
 }
 
 .glowRed:hover {
-  box-shadow: var(--shadow-outer-lg), var(--shadow-inner-red);
-}
-
-.glowGold {
-  border-color: var(--border-glow-gold);
-  box-shadow:   var(--shadow-outer-md), var(--shadow-inner-gold);
+  border-color: var(--border-glow-red);
+  background-image: var(--gradient-red-hover);
+  box-shadow: var(--shadow-fill-red);
 }
 
 .glowGold:hover {
-  box-shadow: var(--shadow-outer-lg), var(--shadow-inner-gold);
-}
-
-.glowGreen {
-  border-color: var(--border-glow-green);
-  box-shadow:   var(--shadow-outer-md), var(--shadow-inner-green);
+  border-color: var(--border-glow-gold);
+  background-image: var(--gradient-gold-hover);
+  box-shadow: var(--shadow-fill-gold);
 }
 
 .glowGreen:hover {
-  box-shadow: var(--shadow-outer-lg), var(--shadow-inner-green);
+  border-color: var(--border-glow-green);
+  background-image: var(--gradient-green-hover);
+  box-shadow: var(--shadow-fill-green);
 }
 
-.glowNone {
-  border-color: var(--border-default);
-  box-shadow:   var(--shadow-outer-sm);
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
 }

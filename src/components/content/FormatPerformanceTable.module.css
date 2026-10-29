@@ -1,18 +1,23 @@
 /* FormatPerformanceTable.module.css */
 
+/* v2: sem caixa/borda/hover próprios — o card (GlassCard) acende inteiro. */
 .wrapper {
   display: flex;
   flex-direction: column;
   overflow-x: auto; /* mobile: rola em vez de estourar o card */
 }
 
+/* Título do painel — mesmo padrão do QualityScoresPanel (nível 1) */
 .title {
-  font-size: var(--font-size-xs);
-  letter-spacing: 2px;
-  color: var(--text-dim);
-  font-weight: var(--font-weight-bold);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base); /* 12px */
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.05em;
+  color: var(--t0);
   text-transform: uppercase;
-  margin-bottom: var(--space-4);
+  margin: 0 0 var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--line);
 }
 
 .table {
@@ -22,13 +27,13 @@
 }
 
 .th {
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-xs); /* nível 2 — rótulo, 10px */
   color: var(--text-dim);
-  letter-spacing: 2px;
+  letter-spacing: 0.03em;
   text-align: left;
   padding: 0 0 var(--space-3);
   border-bottom: var(--border-width) solid var(--border-default);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-medium);
   text-transform: uppercase;
 }
 
@@ -40,9 +45,12 @@
   border-bottom: none;
 }
 
+/* ── Mantendo os números em 10px (var(--font-size-xs)) ───────────────── */
 .td {
-  font-size: var(--font-size-sm);
-  color: var(--text-secondary);
+  font-size: var(
+    --font-size-xs
+  ); /* Ajustado para 10px para os dados tabulares */
+  color: var(--text-secondary); /* #B8B6B0 mantido via token */
   padding: var(--space-3) 0;
   font-family: var(--font-mono);
 }
@@ -50,7 +58,9 @@
 .tdFormat {
   font-family: var(--font-family);
   color: var(--text-primary);
-  font-size: var(--font-size-base);
+  font-size: var(
+    --font-size-xs
+  ); /* Textos de formato (Reels, Carrossel) também em 10px para manter coerência visual */
 }
 
 /* ── Expansão por posts individuais (v2.0.0) ────────────────────────────── */
@@ -127,7 +137,7 @@
   grid-template-columns: 56px 136px minmax(0, 1fr) 64px 104px;
   align-items: center;
   column-gap: var(--space-3);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-xs); /* Mantém 10px */
   font-family: var(--font-mono);
   padding: 4px 0;
 }
@@ -223,12 +233,15 @@
   color: var(--text-primary);
   font-weight: var(--font-weight-semibold);
   font-variant-numeric: tabular-nums;
+  font-size: var(
+    --font-size-xs
+  ); /* Força 10px para consistência dos números tabulares */
 }
 
 .interactionsCoverage {
   display: block;
   color: var(--text-secondary);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-xs); /* Mantém 10px */
   margin-top: var(--space-1);
   font-style: italic;
 }
@@ -244,11 +257,23 @@
   border: var(--border-width) solid rgba(var(--color-cyan-rgb), 0.2);
   border-radius: var(--radius-sm);
   color: var(--text-secondary);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-xs); /* Mantém 10px */
   font-variant-numeric: tabular-nums;
 }
 
 .postPlayRatio:hover {
   background: rgba(var(--color-cyan-rgb), 0.12);
   border-color: rgba(var(--color-cyan-rgb), 0.3);
+}
+
+/* Nível 6 — fonte/metadado (antes: <p style="fontSize:11; opacity:.7">) */
+.metadataSource {
+  margin: var(--space-1) 0 0;
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-tight);
+  color: var(--text-dim);
+}
+
+.table + .metadataSource {
+  margin-top: var(--space-2);
 }

@@ -32,6 +32,7 @@ import type {
   ConfidenceLevel,
 } from "@/types/orbit";
 import type { AlertDraft } from "./contentContractEngine";
+import { RESOLVED_ALERTS_LIMIT } from "@/lib/alertResolvedCopy";
 
 // ── Guard de AlertType (validação em tempo de execução) ──────────────────
 const ALERT_TYPES: readonly AlertType[] = [
@@ -44,6 +45,7 @@ const ALERT_TYPES: readonly AlertType[] = [
   "polemic_score_high",
   "boost_opportunity",
   "budget_pace",
+  "data_outdated",
 ];
 
 export function isAlertType(value: string): value is AlertType {
@@ -205,6 +207,41 @@ export async function fetchAlerts(filter?: AlertSeverity): Promise<Alert[]> {
  */
 export async function fetchCriticalAlerts(): Promise<Alert[]> {
   return fetchAlerts("critical");
+}
+
+// ── fetchResolvedAlerts ───────────────────────────────────────────────────
+/**
+ * Histórico de alertas já resolvidos (is_resolved=true), mais recentes
+ * primeiro. Sem filtro de snooze — alerta resolvido não é adiado.
+ *
+ * Não é dado novo: metric_value/threshold_value/resolved_at/resolved_by já
+ * são gravados a cada ciclo (syncClientAlerts, trigger check_churn_alert,
+ * e a função refresh_alerts quando rodada manualmente) — só não existia
+ * nenhuma leitura deles em lugar nenhum do projeto, porque orbitBaseQuery()
+ * sempre filtra is_resolved=false. Reaproveita ALERT_SELECT_FIELDS e
+ * fromOrbitRow sem alteração.
+ */
+export async function fetchResolvedAlerts(
+  limit = RESOLVED_ALERTS_LIMIT,
+): Promise<Alert[]> {
+  const { data, error } = await supabase
+    .schema("orbit")
+    .from("alerts")
+    .select(ALERT_SELECT_FIELDS)
+    .eq("is_resolved", true)
+    // Postgres põe NULL primeiro em DESC: linha fechada sem resolved_at
+    // (trigger/legado) subiria ao topo do histórico. Vai para o fim.
+    .order("resolved_at", { ascending: false, nullsFirst: false })
+    .limit(limit)
+    .returns<OrbitAlertRow[]>();
+
+  if (error) {
+    throw new Error(
+      `[alertsRepository] falha ao buscar alertas resolvidos: ${error.message}`,
+    );
+  }
+
+  return (data ?? []).map(fromOrbitRow);
 }
 
 // ── fetchAlertById ────────────────────────────────────────────────────────

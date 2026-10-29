@@ -1,41 +1,30 @@
 /* ==========================================================================
    ORBIT · Component — PostingProfilePanel.module.css (RWP-3)
-   Versão: 1.2.0  |  Data: 2026-10-06
+   Versão: 2.0.0  |  Data: 2026-10-23
 
-   v1.2.0: o TSX passou a usar 5 classes que não existiam aqui (reference,
-   referenceHead, referenceLine, referenceMeta, referenceMuted — bloco de
-   referência do segmento). Sem elas, CSS Modules devolve `undefined` e o
-   bloco renderizava sem estilo nenhum. Adicionadas abaixo, mesmo glasscard
-   do QualityScoresPanel (gradiente cyan sutil + borda cyan translúcida +
-   glow inset), aninhado dentro de .block com raio menor (--r6) e SEM
-   hover/lift próprio, para não competir com o .block pai.
-
-   Mesmo vocabulário do QualityScoresPanel.module.css:
-   painel = .panel; bloco interno = .scoreBox + .boxCyan; sem estado de
-   alerta (cadência e mix são contagem, nunca semáforo). 100% tokens SSOT.
-   A cor da posição (gold/cyan) vem do StatusPill — o container da
-   referência fica sempre cyan, neutro.
+   v2.0.0 — alinhado ao QualityScoresPanel (SSOT) e ao GlassCard v2:
+   - O painel passa a ser <GlassCard>: borda, fundo, brilho e hover do card
+     inteiro vêm de lá. Aqui só o layout. Nenhum card fica aceso em repouso.
+   - .block e .reference seguem a receita do .scoreBox: em repouso neutros
+     (borda --line, véu cyan sutil); no hover acendem (borda cyan 50% + brilho
+     interno). A .reference é um degrau mais quieta: sem hover, sem lift.
+   - Hierarquia de letras (6 níveis do QualityScoresPanel):
+       1 título 12px --t0 · 2 rótulo 10px --text-dim · 3 número 24px --t0
+       (nunca colorido; a cor da posição vem do StatusPill) · 4 status 11px ·
+       5 aviso 11px itálico --text-secondary · 6 fonte 10px --text-dim
+   - Zero valor de cor cru: tudo via tokens SSOT (--color-*-rgb, --gradient-*,
+     --shadow-*).
    ========================================================================== */
 
 /* ═══════════════════════════════════════════════════════════════
-   PAINEL PRINCIPAL
+   PAINEL PRINCIPAL — só layout (casca vem do GlassCard)
    ═══════════════════════════════════════════════════════════════ */
 
 .panel {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  padding: var(--space-4);
-  background-color: var(--bg2);
-  border: 1px solid var(--line);
-  border-radius: var(--r12);
-  box-shadow: var(--shadow-glow-cyan);
-  transition: all var(--transition-base);
-}
-
-.panel:hover {
-  border-color: var(--border-glow-cyan);
-  box-shadow: var(--shadow-glow-cyan-30);
+  padding: var(--space-5);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -47,16 +36,17 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-3);
-  padding-bottom: var(--space-2);
+  padding-bottom: var(--space-3);
   border-bottom: 1px solid var(--line);
 }
 
+/* nível 1 — mesmo padrão do .panelTitle do QualityScoresPanel */
 .title {
-  font-family: var(--font);
-  font-size: var(--font-size-xs);
-  font-weight: 600;
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
   letter-spacing: 0.05em;
-  color: var(--neon-cyan);
+  color: var(--t0);
   text-transform: uppercase;
   margin: 0;
 }
@@ -70,7 +60,7 @@
   font-weight: var(--font-weight-medium);
   letter-spacing: 0.02em;
   text-transform: uppercase;
-  color: var(--t1);
+  color: var(--text-dim);
   background-color: var(--bg3);
   border: 1px solid var(--line2);
 }
@@ -92,7 +82,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   BLOCO — mesma receita de .scoreBox + .boxCyan
+   BLOCO — mesma receita do .scoreBox (neutro em repouso, acende no hover)
    ═══════════════════════════════════════════════════════════════ */
 
 .block {
@@ -101,9 +91,8 @@
   gap: var(--space-2);
   padding: var(--space-3) var(--space-4);
   background: var(--gradient-cyan-subtle);
-  border: 1px solid rgba(var(--color-cyan-rgb), var(--opacity-30));
+  border: 1px solid var(--line);
   border-radius: var(--r8);
-  box-shadow: var(--shadow-glow-cyan-inset);
   transition:
     transform var(--transition-fast),
     box-shadow var(--transition-fast),
@@ -123,27 +112,29 @@
    CONTEÚDO DO BLOCO
    ═══════════════════════════════════════════════════════════════ */
 
+/* nível 2 — rótulo: 10px, cinza */
 .label {
   font-family: var(--font);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
   letter-spacing: 0.03em;
-  color: var(--text-muted);
+  color: var(--text-dim);
   text-transform: uppercase;
   margin: 0;
 }
 
+/* nível 3 — número: 24px, branco, nunca colorido */
 .headline {
   font-family: var(--mono);
-  font-size: var(--font-size-3xl);
+  font-size: var(--font-size-metric);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
-  color: var(--neon-cyan);
-  /* "1 post a cada 12,3 semanas" é longo p/ meia coluna em 22px mono */
+  color: var(--t0);
+  /* "1 post a cada 12,3 semanas" é longo p/ meia coluna em 24px mono */
   overflow-wrap: anywhere;
 }
 
-/* sem base: neutro, nunca vermelho/âmbar (ausência de dado não é alerta) */
+/* sem base: tamanho menor, tom secundário (ausência de dado não é alerta) */
 .headlineMuted {
   composes: headline;
   font-size: var(--font-size-2xl);
@@ -154,14 +145,13 @@
   font-family: var(--font);
   font-size: var(--font-size-xs);
   line-height: var(--line-height-base);
-  color: var(--text-muted);
+  color: var(--text-dim);
   margin: 0;
 }
 
 /* ═══════════════════════════════════════════════════════════════
    REFERÊNCIA DO SEGMENTO (dentro do bloco Cadência)
-   Glasscard aninhado: mesmo gradiente/borda/glow cyan do .block, um
-   degrau mais quieto (raio menor, borda mais fraca, sem hover/lift).
+   Um degrau mais quieta que o .block: neutra em repouso, sem hover/lift.
    A cor de posição (gold/cyan) NÃO vem daqui — vem do StatusPill.
    ═══════════════════════════════════════════════════════════════ */
 
@@ -172,11 +162,8 @@
   margin-top: var(--space-2);
   padding: var(--space-3);
   background: var(--gradient-cyan-subtle);
-  border: 1px solid rgba(var(--color-cyan-rgb), 0.2);
+  border: 1px solid var(--line);
   border-radius: var(--r6);
-  box-shadow: var(--shadow-glow-cyan-inset);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
 }
 
 .referenceHead {
@@ -199,23 +186,23 @@
   overflow-wrap: anywhere;
 }
 
-/* faixa P25–P75, contas, período fixo (contexto, não destaque) */
+/* nível 6 — faixa P25–P75, contas, período fixo (contexto, não destaque) */
 .referenceMeta {
   font-family: var(--font);
   font-size: var(--font-size-xs);
   line-height: var(--line-height-relaxed);
-  color: var(--text-muted);
+  color: var(--text-dim);
   margin: 0;
   overflow-wrap: anywhere;
 }
 
-/* sem referência: neutro, sem borda/glow — ausência não é alerta */
+/* nível 5 — sem referência: aviso neutro, ausência não é alerta */
 .referenceMuted {
   font-family: var(--font);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-sm);
   font-style: italic;
   line-height: var(--line-height-base);
-  color: var(--text-muted);
+  color: var(--text-secondary);
   margin: var(--space-2) 0 0;
 }
 
@@ -246,7 +233,7 @@
 .mixCount {
   font-family: var(--mono);
   font-size: var(--font-size-xs);
-  color: var(--t1);
+  color: var(--text-dim);
 }
 
 /* largura da barra vem de --pct, definida inline no TSX */
@@ -267,20 +254,27 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   NOTA DE RODAPÉ
+   RODAPÉ — fonte (nível 6) e aviso (nível 5)
    ═══════════════════════════════════════════════════════════════ */
 
-.note {
+/* nível 6 — fonte/metadado: 10px, cinza apagado, sem itálico */
+.provenanceNote {
   font-family: var(--font);
   font-size: var(--font-size-xs);
-  font-style: italic;
-  line-height: var(--line-height-relaxed);
-  color: var(--text-muted);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-tight);
+  color: var(--text-dim);
   margin: 0;
-  padding: var(--space-3) var(--space-4);
-  border-left: 3px solid var(--neon-cyan);
-  background-color: rgba(var(--color-cyan-rgb), 0.05);
-  border-radius: var(--r8);
+}
+
+/* nível 5 — aviso: 11px, itálico, cinza secundário */
+.note {
+  font-family: var(--font);
+  font-size: var(--font-size-sm);
+  font-style: italic;
+  line-height: var(--line-height-base);
+  color: var(--text-secondary);
+  margin: 0;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -288,7 +282,6 @@
    ═══════════════════════════════════════════════════════════════ */
 
 @media (prefers-reduced-motion: reduce) {
-  .panel,
   .block {
     transition: none;
   }

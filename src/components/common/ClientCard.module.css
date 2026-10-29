@@ -1,4 +1,18 @@
-/* ClientCard.module.css */
+/* ClientCard.module.css
+   v3 — padrão único de card + vocabulário de cores do SSOT.
+
+   O ClientCard continua com CSS próprio (e não <GlassCard>) porque é um
+   <button> clicável: GlassCard renderiza <div>, e simular botão com role +
+   tabIndex perde teclado/semântica nativos. O comportamento visual, porém,
+   é o do GlassCard v2:
+   - repouso: neutro (borda --line, sombra suave). A severidade aparece só no
+     filete de 3px do topo;
+   - hover: o card INTEIRO acende na cor da severidade — borda + brilho por
+     fora + preenchimento por dentro (--shadow-fill-*, --gradient-*-hover).
+     Sem elevação (translateY).
+   Texto de status usa o vocabulário do QualityScoresPanel: --amber (atenção),
+   --red-text (crítico). 'healthy' segue cyan (decisão de 22/07/2026 do
+   protótipo SSOT: saudável = cyan, não verde). */
 
 .card {
   position: relative;
@@ -7,20 +21,27 @@
   flex-direction: column;
   gap: var(--space-4);
   border: var(--border-width) solid var(--line);
-  border-radius: var(--r16);
-  background: linear-gradient(180deg, var(--bg2) 0%, rgba(12, 12, 15, 0.94) 100%);
-  padding: var(--space-4);
+  border-radius: var(--radius-xl);
+  background-color: var(--bg2);
+  background-image: linear-gradient(
+    180deg,
+    var(--bg2) 0%,
+    color-mix(in srgb, var(--bg) 94%, transparent) 100%
+  );
+  padding: var(--space-5);
   text-align: left;
-  transition: transform var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
+  transition:
+    border-color var(--transition-base),
+    background-color var(--transition-base),
+    box-shadow var(--transition-base);
   cursor: pointer;
   box-shadow: var(--shadow-soft);
   overflow: hidden;
 }
 
-/* ✅ ADICIONADO 08/09 — filete de topo por severidade (paridade com
-   .client-card::before / .cc-cyan/.cc-gold/.cc-red do protótipo). */
+/* filete de topo por severidade (paridade com .client-card::before do protótipo) */
 .card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -28,19 +49,46 @@
   height: 3px;
 }
 
-.accentHealthy::before { background: var(--neon-cyan); }
-.accentWarning::before { background: var(--neon-gold); }
-.accentCritical::before { background: var(--neon-red); }
-.accentUnknown::before { background: var(--line2); }
+.accentHealthy::before {
+  background: var(--neon-cyan);
+}
+.accentWarning::before {
+  background: var(--neon-gold);
+}
+.accentCritical::before {
+  background: var(--neon-red);
+}
+.accentUnknown::before {
+  background: var(--line2);
+}
 
+/* Hover base (severidade desconhecida): neutro, sem cor de status. */
 .card:hover {
-  transform: translateY(-2px);
   border-color: var(--line2);
-  background: var(--bg3);
+  background-color: var(--bg3);
+  background-image: var(--gradient-gray-hover);
+}
+
+.accentHealthy:hover {
+  border-color: var(--border-glow-cyan);
+  background-image: var(--gradient-cyan-hover);
+  box-shadow: var(--shadow-fill-cyan);
+}
+
+.accentWarning:hover {
+  border-color: var(--border-glow-gold);
+  background-image: var(--gradient-gold-hover);
+  box-shadow: var(--shadow-fill-gold);
+}
+
+.accentCritical:hover {
+  border-color: var(--border-glow-red);
+  background-image: var(--gradient-red-hover);
+  box-shadow: var(--shadow-fill-red);
 }
 
 .card:focus-visible {
-  outline: 2px solid var(--acc);
+  outline: 2px solid var(--neon-cyan);
   outline-offset: 2px;
 }
 
@@ -95,7 +143,7 @@
   white-space: nowrap;
   font-family: var(--font);
   font-size: var(--font-size-xs);
-  color: var(--t1);
+  color: var(--text-dim);
 }
 
 .divider {
@@ -114,33 +162,30 @@
   font-weight: var(--font-weight-bold);
 }
 
-/* FIX 09/09/2026 — cores eram Tailwind (emerald/amber/rose), fora da
-   paleta Orbit. Corrigido pra paleta neon única (healthy=cyan, não verde
-   — ver decisão de 22/07/2026 documentada no protótipo SSOT, mesmo
-   vocabulário do .accentHealthy/.accentWarning/.accentCritical acima). */
+/* Fundo tingido via --color-*-rgb; texto na variante legível sobre tinta
+   (--amber / --red-text), igual ao statusWarn/statusDanger do
+   QualityScoresPanel. */
 .statusHealthy {
-  background-color: rgba(0, 255, 255, 0.1);
+  background-color: rgba(var(--color-cyan-rgb), 0.1);
   color: var(--neon-cyan);
 }
 
 .statusWarning {
-  background-color: rgba(255, 195, 0, 0.1);
-  color: var(--neon-gold);
+  background-color: rgba(var(--color-gold-rgb), 0.1);
+  color: var(--amber);
 }
 
 .statusCritical {
-  background-color: rgba(255, 68, 68, 0.1);
-  color: var(--neon-red);
+  background-color: rgba(var(--color-red-rgb), 0.1);
+  color: var(--red-text);
 }
 
 .statusUnknown {
   background-color: var(--bg4);
-  color: var(--t1);
+  color: var(--text-dim);
 }
 
-/* ✅ AJUSTADO 07/09 — passa a empilhar semáforo + badge de status (antes
-   só continha o semáforo; badge era classe morta). Alinhado ao
-   client-card do protótipo (dot + badge de texto, alinhados à direita). */
+/* empilha semáforo + badge de status, alinhados à direita */
 .semaphoreWrap {
   display: inline-flex;
   flex-direction: column;
@@ -165,7 +210,7 @@
   font-family: var(--font);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-normal);
-  color: var(--t1);
+  color: var(--text-dim);
 }
 
 .snapshotValue {
@@ -188,13 +233,14 @@
   gap: 2px;
 }
 
+/* rótulo — nível 2: 10px, cinza, 0.03em */
 .metricLabel {
   font-family: var(--font);
   font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-normal);
+  font-weight: var(--font-weight-medium);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--t1);
+  letter-spacing: 0.03em;
+  color: var(--text-dim);
 }
 
 .metricValue {
@@ -206,14 +252,20 @@
 }
 
 .metricValueDimmed {
-  color: var(--t1);
+  color: var(--text-dim);
 }
 
-/* ✅ ADICIONADO 08/09 — linha-resumo do alerta mais urgente do cliente,
-   paridade com a linha "⚠ ..." no rodapé do .client-card do protótipo. */
+/* linha-resumo do alerta mais urgente — status, nível 4: 11px, única linha
+   do card com cor de status */
 .topAlertText {
   font-family: var(--font);
-  font-size: var(--font-size-xs);
-  color: var(--neon-red);
-  line-height: 1.4;
+  font-size: var(--font-size-sm);
+  color: var(--red-text);
+  line-height: var(--line-height-base);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
 }

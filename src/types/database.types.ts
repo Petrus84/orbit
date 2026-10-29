@@ -173,6 +173,13 @@ export type Database = {
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
           },
+          {
+            foreignKeyName: "ads_ga4_landing_pages_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
+          },
         ];
       };
       ads_google_campaigns: {
@@ -267,6 +274,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ads_google_campaigns_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
           },
         ];
       };
@@ -378,6 +392,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ads_google_search_terms_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
           },
         ];
       };
@@ -501,6 +522,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ads_google_snapshots_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
           },
         ];
       };
@@ -644,6 +672,13 @@ export type Database = {
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
           },
+          {
+            foreignKeyName: "ads_meta_campaigns_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
+          },
         ];
       };
       ads_meta_creatives: {
@@ -760,6 +795,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ads_meta_creatives_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
           },
           {
             foreignKeyName: "ads_meta_creatives_ig_post_id_fkey";
@@ -921,6 +963,13 @@ export type Database = {
             referencedColumns: ["id"];
           },
           {
+            foreignKeyName: "ads_meta_snapshots_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
+          },
+          {
             foreignKeyName: "ads_meta_snapshots_creative_id_fkey";
             columns: ["creative_id"];
             isOneToOne: false;
@@ -1075,6 +1124,13 @@ export type Database = {
             referencedColumns: ["id"];
           },
           {
+            foreignKeyName: "alerts_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
+          },
+          {
             foreignKeyName: "alerts_google_campaign_id_fkey";
             columns: ["google_campaign_id"];
             isOneToOne: false;
@@ -1224,6 +1280,13 @@ export type Database = {
             referencedColumns: ["id"];
           },
           {
+            foreignKeyName: "avatar_alignment_snapshot_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
+          },
+          {
             foreignKeyName: "avatar_alignment_snapshot_snapshot_id_fkey";
             columns: ["snapshot_id"];
             isOneToOne: false;
@@ -1325,6 +1388,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "avatar_validations_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
           },
         ];
       };
@@ -1503,6 +1573,13 @@ export type Database = {
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
           },
+          {
+            foreignKeyName: "client_followers_history_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
+          },
         ];
       };
       client_onboarding: {
@@ -1655,6 +1732,13 @@ export type Database = {
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
           },
+          {
+            foreignKeyName: "client_onboarding_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: true;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
+          },
         ];
       };
       client_reports: {
@@ -1756,6 +1840,13 @@ export type Database = {
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
           },
+          {
+            foreignKeyName: "client_reports_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
+          },
         ];
       };
       client_users: {
@@ -1823,6 +1914,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "client_users_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
           },
         ];
       };
@@ -2041,7 +2139,56 @@ export type Database = {
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
           },
+          {
+            foreignKeyName: "content_insights_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
+          },
         ];
+      };
+      funnel_conversion_benchmark: {
+        Row: {
+          caveat: string | null;
+          confidence_level: string;
+          event_measured: string;
+          is_proxy: boolean;
+          segment: string;
+          source_grade: string;
+          source_name: string | null;
+          source_url: string | null;
+          source_year: string | null;
+          updated_at: string;
+          value_pct: number | null;
+        };
+        Insert: {
+          caveat?: string | null;
+          confidence_level?: string;
+          event_measured: string;
+          is_proxy?: boolean;
+          segment: string;
+          source_grade: string;
+          source_name?: string | null;
+          source_url?: string | null;
+          source_year?: string | null;
+          updated_at?: string;
+          value_pct?: number | null;
+        };
+        Update: {
+          caveat?: string | null;
+          confidence_level?: string;
+          event_measured?: string;
+          is_proxy?: boolean;
+          segment?: string;
+          source_grade?: string;
+          source_name?: string | null;
+          source_url?: string | null;
+          source_year?: string | null;
+          updated_at?: string;
+          value_pct?: number | null;
+        };
+        Relationships: [];
       };
       funnel_data: {
         Row: {
@@ -2135,6 +2282,57 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "funnel_data_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
+          },
+        ];
+      };
+      funnel_stage_registry: {
+        Row: {
+          absence_what: string | null;
+          absence_why: string | null;
+          default_confidence: string;
+          funnel_type: string;
+          label: string;
+          parent_key: string | null;
+          source: string;
+          stage_key: string;
+          stage_order: number;
+        };
+        Insert: {
+          absence_what?: string | null;
+          absence_why?: string | null;
+          default_confidence: string;
+          funnel_type: string;
+          label: string;
+          parent_key?: string | null;
+          source: string;
+          stage_key: string;
+          stage_order: number;
+        };
+        Update: {
+          absence_what?: string | null;
+          absence_why?: string | null;
+          default_confidence?: string;
+          funnel_type?: string;
+          label?: string;
+          parent_key?: string | null;
+          source?: string;
+          stage_key?: string;
+          stage_order?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "funnel_stage_registry_funnel_type_parent_key_fkey";
+            columns: ["funnel_type", "parent_key"];
+            isOneToOne: false;
+            referencedRelation: "funnel_stage_registry";
+            referencedColumns: ["funnel_type", "stage_key"];
           },
         ];
       };
@@ -2292,6 +2490,13 @@ export type Database = {
             referencedColumns: ["id"];
           },
           {
+            foreignKeyName: "ig_account_snapshots_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
+          },
+          {
             foreignKeyName: "ig_account_snapshots_import_session_fkey";
             columns: ["import_session"];
             isOneToOne: false;
@@ -2424,11 +2629,123 @@ export type Database = {
             referencedColumns: ["id"];
           },
           {
+            foreignKeyName: "ig_audience_snapshots_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
+          },
+          {
             foreignKeyName: "ig_audience_snapshots_import_session_fkey";
             columns: ["import_session"];
             isOneToOne: false;
             referencedRelation: "ig_import_sessions";
             referencedColumns: ["id"];
+          },
+        ];
+      };
+      ig_dm_funnel_snapshot: {
+        Row: {
+          client_id: string;
+          confidence_level: string;
+          created_at: string;
+          followups_pending: number;
+          grade_a: number;
+          grade_b: number;
+          grade_c: number;
+          grade_d: number;
+          grade_e: number;
+          id: string;
+          period_end: string;
+          period_start: string;
+          source_note: string | null;
+        };
+        Insert: {
+          client_id: string;
+          confidence_level?: string;
+          created_at?: string;
+          followups_pending?: number;
+          grade_a?: number;
+          grade_b?: number;
+          grade_c?: number;
+          grade_d?: number;
+          grade_e?: number;
+          id?: string;
+          period_end: string;
+          period_start: string;
+          source_note?: string | null;
+        };
+        Update: {
+          client_id?: string;
+          confidence_level?: string;
+          created_at?: string;
+          followups_pending?: number;
+          grade_a?: number;
+          grade_b?: number;
+          grade_c?: number;
+          grade_d?: number;
+          grade_e?: number;
+          id?: string;
+          period_end?: string;
+          period_start?: string;
+          source_note?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "ig_dm_funnel_snapshot_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "clients";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ig_dm_funnel_snapshot_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_avatar_alignment";
+            referencedColumns: ["client_id"];
+          },
+          {
+            foreignKeyName: "ig_dm_funnel_snapshot_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_avatar_alignment";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ig_dm_funnel_snapshot_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_avatar_alignment_latest";
+            referencedColumns: ["client_id"];
+          },
+          {
+            foreignKeyName: "ig_dm_funnel_snapshot_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_carteira_clients";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ig_dm_funnel_snapshot_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_client_health";
+            referencedColumns: ["client_id"];
+          },
+          {
+            foreignKeyName: "ig_dm_funnel_snapshot_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_client_metrics";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ig_dm_funnel_snapshot_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
           },
         ];
       };
@@ -2528,6 +2845,13 @@ export type Database = {
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
           },
+          {
+            foreignKeyName: "ig_import_sessions_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
+          },
         ];
       };
       ig_post_comments: {
@@ -2625,6 +2949,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ig_post_comments_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
           },
           {
             foreignKeyName: "ig_post_comments_post_id_fkey";
@@ -2787,6 +3118,13 @@ export type Database = {
             referencedColumns: ["id"];
           },
           {
+            foreignKeyName: "ig_posts_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
+          },
+          {
             foreignKeyName: "ig_posts_import_session_fkey";
             columns: ["import_session"];
             isOneToOne: false;
@@ -2878,6 +3216,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "metric_history_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
           },
         ];
       };
@@ -2983,6 +3328,13 @@ export type Database = {
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
           },
+          {
+            foreignKeyName: "projections_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
+          },
         ];
       };
       raw_ig_ingest: {
@@ -3077,6 +3429,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "raw_ig_ingest_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
           },
           {
             foreignKeyName: "raw_ig_ingest_import_session_fkey";
@@ -3740,6 +4099,13 @@ export type Database = {
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
           },
+          {
+            foreignKeyName: "alerts_client_id_fkey";
+            columns: ["clientId"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
+          },
         ];
       };
       v_algo_risk_score: {
@@ -3803,6 +4169,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ig_posts_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
           },
         ];
       };
@@ -3881,6 +4254,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ig_audience_snapshots_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
           },
         ];
       };
@@ -4045,6 +4425,13 @@ export type Database = {
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
           },
+          {
+            foreignKeyName: "ig_posts_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
+          },
         ];
       };
       v_carteira_clients: {
@@ -4205,6 +4592,13 @@ export type Database = {
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
           },
+          {
+            foreignKeyName: "ads_meta_creatives_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
+          },
         ];
       };
       v_format_performance: {
@@ -4273,7 +4667,31 @@ export type Database = {
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
           },
+          {
+            foreignKeyName: "ig_posts_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
+          },
         ];
+      };
+      v_funnel_context: {
+        Row: {
+          benchmark_caveat: string | null;
+          benchmark_confidence: string | null;
+          benchmark_event_measured: string | null;
+          benchmark_is_proxy: boolean | null;
+          benchmark_source_grade: string | null;
+          benchmark_source_name: string | null;
+          benchmark_source_url: string | null;
+          benchmark_source_year: string | null;
+          client_id: string | null;
+          conversion_benchmark_pct: number | null;
+          funnel_type: string | null;
+          segment: string | null;
+        };
+        Relationships: [];
       };
       v_funnel_data: {
         Row: {
@@ -4364,6 +4782,112 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "funnel_data_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
+          },
+        ];
+      };
+      v_ig_dm_funnel: {
+        Row: {
+          client_id: string | null;
+          confidence_level: string | null;
+          conversas_comerciais: number | null;
+          fechamento_provavel: number | null;
+          followups_pending: number | null;
+          intencao_compra: number | null;
+          pediu_preco: number | null;
+          period_end: string | null;
+          period_start: string | null;
+          source_note: string | null;
+          venda_evidencia_forte: number | null;
+        };
+        Insert: {
+          client_id?: string | null;
+          confidence_level?: string | null;
+          conversas_comerciais?: never;
+          fechamento_provavel?: never;
+          followups_pending?: number | null;
+          intencao_compra?: never;
+          pediu_preco?: never;
+          period_end?: string | null;
+          period_start?: string | null;
+          source_note?: string | null;
+          venda_evidencia_forte?: number | null;
+        };
+        Update: {
+          client_id?: string | null;
+          confidence_level?: string | null;
+          conversas_comerciais?: never;
+          fechamento_provavel?: never;
+          followups_pending?: number | null;
+          intencao_compra?: never;
+          pediu_preco?: never;
+          period_end?: string | null;
+          period_start?: string | null;
+          source_note?: string | null;
+          venda_evidencia_forte?: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "ig_dm_funnel_snapshot_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "clients";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ig_dm_funnel_snapshot_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_avatar_alignment";
+            referencedColumns: ["client_id"];
+          },
+          {
+            foreignKeyName: "ig_dm_funnel_snapshot_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_avatar_alignment";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ig_dm_funnel_snapshot_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_avatar_alignment_latest";
+            referencedColumns: ["client_id"];
+          },
+          {
+            foreignKeyName: "ig_dm_funnel_snapshot_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_carteira_clients";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ig_dm_funnel_snapshot_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_client_health";
+            referencedColumns: ["client_id"];
+          },
+          {
+            foreignKeyName: "ig_dm_funnel_snapshot_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_client_metrics";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ig_dm_funnel_snapshot_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
           },
         ];
       };
@@ -4483,6 +5007,13 @@ export type Database = {
             referencedColumns: ["id"];
           },
           {
+            foreignKeyName: "ads_meta_snapshots_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
+          },
+          {
             foreignKeyName: "ads_meta_snapshots_creative_id_fkey";
             columns: ["creative_id"];
             isOneToOne: false;
@@ -4555,6 +5086,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "projections_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
           },
         ];
       };
@@ -4637,6 +5175,13 @@ export type Database = {
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
           },
+          {
+            foreignKeyName: "ig_account_snapshots_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
+          },
         ];
       };
       v_ref_thresholds_provenance: {
@@ -4717,6 +5262,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "v_client_metrics";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ads_meta_snapshots_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "v_funnel_context";
+            referencedColumns: ["client_id"];
           },
         ];
       };

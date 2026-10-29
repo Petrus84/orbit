@@ -14,35 +14,27 @@
    ═══════════════════════════════════════════════════════════════ */
 
 .panel {
+  /* Borda, fundo, brilho e hover vêm do GlassCard — aqui só o layout. */
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  padding: var(--space-4);
-  background-color: var(--bg2);
-  border: 1px solid var(--line);
-  border-radius: var(--r12);
-  box-shadow: var(--shadow-glow-cyan);
-  transition: all var(--transition-base);
-}
-
-.panel:hover {
-  border-color: var(--border-glow-cyan);
-  box-shadow: var(--shadow-glow-cyan-30);  /* ✅ Token em vez de hardcoded */
+  padding: var(--space-5);
 }
 
 /* ═══════════════════════════════════════════════════════════════
    TÍTULO DO PAINEL
    ═══════════════════════════════════════════════════════════════ */
 
+/* ── PADRÃO ÚNICO PARA TÍTULOS DE PAINEL (SSOT V2) ── */
 .panelTitle {
-  font-family: var(--font);
-  font-size: var(--font-size-xs);
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  color: var(--neon-cyan);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base); /* 12px — nível 1 */
+  font-weight: var(--font-weight-semibold);
+  color: var(--t0);
   text-transform: uppercase;
+  letter-spacing: 0.05em;
   margin: 0;
-  padding-bottom: var(--space-2);
+  padding-bottom: var(--space-3);
   border-bottom: 1px solid var(--line);
 }
 
@@ -68,10 +60,10 @@
 
 .scoreBox {
   padding: var(--space-3) var(--space-4);
-  background: var(--gradient-cyan-subtle);  /* ✅ Token em vez de hardcoded */
+  background: var(--gradient-cyan-subtle); /* ✅ Token em vez de hardcoded */
   border: 1px solid var(--line);
   border-radius: var(--r8);
-  transition: 
+  transition:
     transform var(--transition-fast),
     box-shadow var(--transition-fast),
     border-color var(--transition-fast),
@@ -83,42 +75,39 @@
 }
 
 .scoreBox:hover {
-  background: var(--gradient-cyan-hover);  /* ✅ Token em vez de hardcoded */
+  background: var(--gradient-cyan-hover); /* ✅ Token em vez de hardcoded */
   transform: translateY(-2px);
 }
 
 /* ═══════════════════════════════════════════════════════════════
    SCORE BOX — VARIANTES DE COR (Glow)
+   v1.0.4: em repouso o box é neutro (borda --line, sem brilho), igual ao
+   KPICard. A cor do status só acende no hover. O estado de repouso das
+   variantes foi removido; os :hover abaixo continuam.
    ═══════════════════════════════════════════════════════════════ */
 
-.boxCyan {
-  border-color: rgba(var(--color-cyan-rgb), var(--opacity-30));  /* ✅ RGB + opacity tokens */
-  box-shadow: var(--shadow-glow-cyan-inset);  /* ✅ Token */
-}
-
 .boxCyan:hover {
-  border-color: rgba(var(--color-cyan-rgb), var(--opacity-50));  /* ✅ RGB + opacity tokens */
-  box-shadow: var(--shadow-glow-cyan-inset-hover);  /* ✅ Token */
-}
-
-.boxRed {
-  border-color: rgba(var(--color-red-rgb), var(--opacity-30));  /* ✅ RGB + opacity tokens */
-  box-shadow: var(--shadow-glow-red-inset);  /* ✅ Token */
+  border-color: rgba(
+    var(--color-cyan-rgb),
+    var(--opacity-50)
+  ); /* ✅ RGB + opacity tokens */
+  box-shadow: var(--shadow-glow-cyan-inset-hover); /* ✅ Token */
 }
 
 .boxRed:hover {
-  border-color: rgba(var(--color-red-rgb), var(--opacity-50));  /* ✅ RGB + opacity tokens */
-  box-shadow: var(--shadow-glow-red-inset-hover);  /* ✅ Token */
-}
-
-.boxGold {
-  border-color: rgba(var(--color-gold-rgb), var(--opacity-30));  /* ✅ RGB + opacity tokens */
-  box-shadow: var(--shadow-glow-gold-inset);  /* ✅ Token */
+  border-color: rgba(
+    var(--color-red-rgb),
+    var(--opacity-50)
+  ); /* ✅ RGB + opacity tokens */
+  box-shadow: var(--shadow-glow-red-inset-hover); /* ✅ Token */
 }
 
 .boxGold:hover {
-  border-color: rgba(var(--color-gold-rgb), var(--opacity-50));  /* ✅ RGB + opacity tokens */
-  box-shadow: var(--shadow-glow-gold-inset-hover);  /* ✅ Token */
+  border-color: rgba(
+    var(--color-gold-rgb),
+    var(--opacity-50)
+  ); /* ✅ RGB + opacity tokens */
+  box-shadow: var(--shadow-glow-gold-inset-hover); /* ✅ Token */
 }
 
 .boxNeutral {
@@ -128,12 +117,7 @@
 
 .boxNeutral:hover {
   border-color: var(--line2);
-  background: var(--gradient-gray-hover);  /* ✅ Token em vez de hardcoded */
-}
-
-.boxGreen {
-  border-color: rgba(var(--color-green-rgb), var(--opacity-30));
-  box-shadow: var(--shadow-glow-green-inset);
+  background: var(--gradient-gray-hover); /* ✅ Token em vez de hardcoded */
 }
 
 .boxGreen:hover {
@@ -152,9 +136,9 @@
 .scoreLabel {
   font-family: var(--font);
   font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);  /* ✅ Token em vez de hardcoded 500 */
+  font-weight: var(--font-weight-medium); /* ✅ Token em vez de hardcoded 500 */
   letter-spacing: 0.03em;
-  color: var(--text-muted);
+  color: var(--text-dim); /* nível 2 — 10px */
   text-transform: uppercase;
   margin: 0 0 var(--space-2) 0;
 }
@@ -170,7 +154,7 @@
 .naValue {
   font-family: var(--mono);
   font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);  /* ✅ Token em vez de hardcoded 700 */
+  font-weight: var(--font-weight-bold); /* ✅ Token em vez de hardcoded 700 */
   color: var(--t1);
   line-height: 1;
 }
@@ -181,13 +165,15 @@
 
 .statusText {
   font-family: var(--font);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);  /* ✅ Token */
+  font-size: var(
+    --font-size-sm
+  ); /* 11px — nível 4 (única linha com cor de status) */
+  font-weight: var(--font-weight-normal);
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: var(--space-1);
   margin: 0;
-  line-height: var(--line-height-base);  /* ✅ Token em vez de hardcoded 1.4 */
+  line-height: var(--line-height-base); /* ✅ Token em vez de hardcoded 1.4 */
 }
 
 .statusOk {
@@ -232,16 +218,26 @@
 }
 
 .actionText {
-  margin-top: var(--space-1);  /* ✅ Removido fallback manual */
-  font-size: var(--font-size-xs);
-  line-height: var(--line-height-base);  /* ✅ Token */
+  margin-top: var(--space-1); /* ✅ Removido fallback manual */
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-base); /* ✅ Token */
   color: var(--text-primary);
 }
 
 .referenceNote {
-  margin-top: var(--space-1);  /* ✅ Removido fallback manual */
-  font-size: var(--font-size-xs);
-  line-height: var(--line-height-base);  /* ✅ Token */
+  /* nível 5 — aviso: 11px, itálico, cinza secundário */
+  margin-top: var(--space-1);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-base);
   font-style: italic;
-  color: var(--text-muted);
+  color: var(--text-secondary);
+}
+
+.provenanceNote {
+  /* nível 6 — fonte/metadado: 10px, cinza apagado, sem itálico */
+  margin-top: var(--space-1);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-tight);
+  font-weight: var(--font-weight-normal);
+  color: var(--text-dim);
 }

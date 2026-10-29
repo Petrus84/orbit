@@ -1,5 +1,5 @@
-import React from 'react'
-import type { AlertType } from '@/types/alert'
+import React from "react";
+import type { AlertType } from "@/types/alert";
 
 /**
  * 🐛 CORRIGIDO: este arquivo declarava seu PRÓPRIO `AlertType` local, com
@@ -12,26 +12,34 @@ import type { AlertType } from '@/types/alert'
  */
 
 interface AlertIconProps {
-  type: AlertType
-  className?: string
+  type: AlertType;
+  className?: string;
 }
 
 const ICON_MAP: Record<AlertType, string> = {
-  ctr_below_threshold: '⚡',
-  engagement_collapse: '📉',
-  avatar_misalignment: '🎯',
-  creative_fatigue: '😴',
-  roas_below_minimum: '💸',
-  follower_churn_high: '👋',
-  polemic_score_high: '🔥',
-  boost_opportunity: '🚀',
-  budget_pace: '⏱️',
-}
+  ctr_below_threshold: "⚡",
+  engagement_collapse: "📉",
+  avatar_misalignment: "🎯",
+  creative_fatigue: "😴",
+  roas_below_minimum: "💸",
+  follower_churn_high: "👋",
+  polemic_score_high: "🔥",
+  boost_opportunity: "🚀",
+  budget_pace: "⏱️",
+  data_outdated: "🕒",
+};
 
-export default function AlertIcon({ type, className = '' }: AlertIconProps): React.ReactElement {
+export default function AlertIcon({
+  type,
+  className = "",
+}: AlertIconProps): React.ReactElement {
   return (
-    <span role="img" aria-label={type} className={`text-base leading-none select-none ${className}`}>
+    <span
+      role="img"
+      aria-label={type}
+      className={`text-base leading-none select-none ${className}`}
+    >
       {ICON_MAP[type]}
     </span>
-  )
+  );
 }

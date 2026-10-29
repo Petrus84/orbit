@@ -47,27 +47,25 @@ const PROOF_LABEL: Record<string, string> = {
   escassez_urgencia: "Vagas limitadas e prazo curto",
   associacao_marca: "Associação de marca",
   resultado_documentado: "Resultado documentado",
-  nenhum_observavel: "Nada que prove o resultado",
+  nenhum_observavel: "Ainda não mostro prova do resultado",
 };
 
 // RN-23: proveniência dos cards de Benchmarking (ER Real, VPS, Polêmica).
 const BENCH_PROVENANCE: Record<"er" | "vps" | "pol", MetricProvenance> = {
   er: {
-    source:
-      "ig_account_snapshots (snapshot mais recente do período) · classificação fn_classify_metric",
+    source: "última coleta de dados da conta no período",
     period: "snapshot",
     method:
-      "(salvamentos + compartilhamentos + comentários) ÷ alcance × 100; sem referência de mercado medida, só meta de gestão (hipótese)",
+      "(salvamentos + compartilhamentos + comentários) ÷ alcance × 100; sem referência de mercado medida, só referência de gestão do ORBIT (hipótese)",
   },
   vps: {
-    source:
-      "ig_account_snapshots (snapshot mais recente do período) · classificação fn_classify_metric",
+    source: "última coleta de dados da conta no período",
     period: "snapshot",
     method:
-      "(alcance × % do alcance em seguidores) ÷ seguidores × 100 (RN-20); sem referência de mercado medida, só meta de gestão (hipótese)",
+      "(alcance × % do alcance em seguidores) ÷ seguidores × 100; sem referência de mercado medida, só referência de gestão do ORBIT (hipótese)",
   },
   pol: {
-    source: "cálculo por post (ig_posts) · classificação fn_classify_metric",
+    source: "cálculo feito post a post",
     period: "header_window",
     method:
       "mediana por post de comentários ÷ curtidas × 100 (curtidas > 0); régua do setor em validação",
@@ -102,7 +100,7 @@ function metricCard(
       </p>
       {hasVerdict && <span className={badgeCls}>{metric.statusText}</span>}
       {provenance && (
-        <p className={styles.refNote} title={provenance.method}>
+        <p className={styles.provenanceNote} title={provenance.method}>
           {provenanceLine(provenance)}
         </p>
       )}
@@ -160,11 +158,11 @@ function commentReferenceCard(item: CommentReferenceItem) {
       )}
       <p className={styles.refNote}>{item.note}</p>
       {item.provenance && (
-        <p className={styles.refNote} title={item.provenance.method}>
+        <p className={styles.provenanceNote} title={item.provenance.method}>
           Fonte: {item.provenance.source} · Período:{" "}
           {item.provenance.period === "snapshot"
-            ? "snapshot (não segue o cabeçalho)"
-            : "janela do cabeçalho"}{" "}
+            ? "última coleta (não muda com o período escolhido)"
+            : "período escolhido"}{" "}
           · Método: {item.provenance.method}
         </p>
       )}
@@ -178,7 +176,7 @@ export function SectorPositioningPanel({
   const setorLabel = positioning.setorBenchmark
     ? (SETOR_LABEL[positioning.setorBenchmark] ??
       humanizeSlug(positioning.setorBenchmark))
-    : "Não classificado";
+    : "Informe seu ramo no cadastro";
 
   const funnelLabel = positioning.funnelMaturity
     ? (FUNNEL_LABEL[positioning.funnelMaturity] ??
@@ -205,7 +203,7 @@ export function SectorPositioningPanel({
   if (positioning.vps && positioning.vps.thresholdSource === null)
     noMarket.push(term("vps"));
   const noMarketNote = noMarket.length
-    ? `${noMarket.join(" e ")}. ${AUSENCIA.regua_metrica} Acompanhe a evolução da própria conta.`
+    ? `${noMarket.join(" e ")}: ${AUSENCIA.regua_metrica}`
     : null;
 
   return (
@@ -271,9 +269,9 @@ export function SectorPositioningPanel({
               {positioning.commentReference.map(commentReferenceCard)}
             </div>
             <p className={styles.ruleText}>
-              Percentis globais de um levantamento próprio, ainda em validação.
-              Seguidores atuais, não os da data do post. Mostra onde a conta
-              está, sem nota de bom ou ruim.
+              Mostra onde a sua conta está frente a um levantamento próprio do
+              ORBIT, ainda em validação. Considera os seguidores de hoje, não os
+              da data do post.
             </p>
           </>
         )}

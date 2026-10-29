@@ -1,64 +1,73 @@
-'use client'
+"use client";
 
-import { useState, useEffect, FormEvent } from 'react'
-import { useRouter } from 'next/navigation'
-import { supabase } from '@/lib/supabase'
+import { userErrorMessage } from "@/lib/userErrorMessage";
+import { useState, useEffect, FormEvent } from "react";
+import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase";
 
 export default function RootPage() {
-  const router = useRouter()
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
-  const [loading, setLoading] = useState<boolean>(false)
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
-  const [checkingSession, setCheckingSession] = useState<boolean>(true)
+  const router = useRouter();
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [checkingSession, setCheckingSession] = useState<boolean>(true);
 
   // 🛡️ VERIFICAÇÃO AUTOMÁTICA DE SESSÃO ATIVA (GATILHO DE NEGÓCIO)
   useEffect(() => {
     async function checkUser() {
-      const { data: { session } } = await supabase.auth.getSession()
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (session) {
-        router.push('/instagram')
+        router.push("/instagram");
       } else {
-        setCheckingSession(false)
+        setCheckingSession(false);
       }
     }
-    checkUser()
-  }, [router])
+    checkUser();
+  }, [router]);
 
   // 🔐 DISPARO DO FLUXO DE LOGIN COMPATÍVEL COM O AUTH.USERS
   async function handleLogin(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    setLoading(true)
-    setErrorMessage(null)
+    e.preventDefault();
+    setLoading(true);
+    setErrorMessage(null);
 
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
-    })
+    });
 
     if (error) {
-      setErrorMessage(error.message)
-      setLoading(false)
+      setErrorMessage(error.message);
+      setLoading(false);
     } else if (data.session) {
       // Login bem-sucedido! Encaminha o usuário para o dashboard pintado
-      router.push('/instagram')
+      router.push("/instagram");
     }
   }
 
   if (checkingSession) {
     return (
       <div className="flex h-screen w-screen items-center justify-center bg-slate-950 text-slate-200 font-sans">
-        <p className="text-sm tracking-wide animate-pulse">Autenticando sessão Orbit...</p>
+        <p className="text-sm tracking-wide animate-pulse">
+          Autenticando sessão Orbit...
+        </p>
       </div>
-    )
+    );
   }
 
   return (
     <div className="flex h-screen w-screen items-center justify-center bg-slate-950 font-sans">
       <div className="w-full max-w-md rounded-xl border border-slate-800 bg-slate-900/50 p-8 shadow-2xl backdrop-blur-sm">
         <div className="mb-8 text-center">
-          <h1 className="text-2xl font-bold tracking-tight text-slate-100">ORBIT <span className="text-blue-500">S</span></h1>
-          <p className="mt-2 text-sm text-slate-400">Entre com suas credenciais de analista</p>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-100">
+            ORBIT <span className="text-blue-500">S</span>
+          </h1>
+          <p className="mt-2 text-sm text-slate-400">
+            Entre com suas credenciais de analista
+          </p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-5">
@@ -92,7 +101,11 @@ export default function RootPage() {
 
           {errorMessage && (
             <div className="rounded-lg bg-red-950/30 border border-red-900/50 p-3 text-xs text-red-400">
-              ⚠️ {errorMessage}
+              ⚠️{" "}
+              {userErrorMessage(
+                errorMessage,
+                "Não foi possível entrar agora. Tente de novo em instantes.",
+              )}
             </div>
           )}
 
@@ -101,10 +114,10 @@ export default function RootPage() {
             disabled={loading}
             className="w-full rounded-lg bg-blue-600 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-blue-500 active:bg-blue-700 disabled:opacity-50"
           >
-            {loading ? 'Validando credenciais...' : 'Acessar Dashboard'}
+            {loading ? "Validando credenciais..." : "Acessar Dashboard"}
           </button>
         </form>
       </div>
     </div>
-  )
+  );
 }

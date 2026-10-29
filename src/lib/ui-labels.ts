@@ -93,7 +93,7 @@ export function textoReferenciaConversao(
   ref: ReferenciaConversao | null | undefined,
 ): string {
   if (!ref || ref.valuePct === null) {
-    return "Taxa de conversão: sem referência de mercado para o seu ramo e sem venda informada no período";
+    return "Informe as vendas do período para calcular a taxa de conversão real do seu funil";
   }
   const valor = ref.valuePct.toLocaleString("pt-BR", {
     maximumFractionDigits: 2,
@@ -133,11 +133,11 @@ export function textoAusencia(a: Ausencia | null | undefined): string | null {
 
 /** Dado ausente: diga o que falta, nunca o nome do campo nem o código da dívida. */
 export const AUSENCIA = {
-  vps: "Alcance entre seus seguidores ainda indisponível: esse dado não veio no arquivo importado.",
-  regua:
-    "Ainda não temos comparação para o seu tipo de conta. Confira o ramo marcado no cadastro.",
-  regua_metrica: "Ainda não temos comparação de mercado para este indicador.",
-  sem_causa: "A comparação de mercado ainda não está disponível.", // no lugar de "n/a — sem régua…"
+  vps: "O alcance entre seus seguidores aparece quando o arquivo importado trouxer esse dado.",
+  regua: "Para comparar com contas do seu tipo, confirme o ramo no cadastro.",
+  regua_metrica:
+    "Para este indicador, a melhor referência é a evolução da sua própria conta.",
+  sem_causa: "Compare com o seu próprio histórico para ler este indicador.", // no lugar de "n/a — sem régua…"
 } as const;
 
 /**

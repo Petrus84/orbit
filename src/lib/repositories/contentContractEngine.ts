@@ -47,6 +47,11 @@ import type {
 import { supabase } from "@/lib/supabase";
 import { AUSENCIA } from "@/lib/ui-labels";
 import { formatPtBr } from "@/lib/format";
+import {
+  buildManagerMessage,
+  deriveSuccessCriteria,
+  type SuccessRules,
+} from "@/lib/alertSuccess";
 
 export interface AlertContractFields {
   natureza: AlertNatureza;
@@ -657,7 +662,7 @@ function buildRuleDeclaration(
       return `Comparamos com ${setor}, sem separar por tamanho de conta.`;
     case "global":
     default:
-      return "Sem recorte para o seu tipo de negócio: comparamos com o conjunto geral de contas.";
+      return "Comparamos com o conjunto geral de contas. Confirme o ramo no cadastro para uma comparação mais justa.";
   }
 }
 
@@ -721,12 +726,12 @@ function buildZeroInflatedText(
 
 function buildUnavailableMetricText(metricName: string): string {
   const label = METRIC_LABEL[metricName] ?? metricName;
-  return `Não classificamos o ${label} agora. O número pode aparecer na tela; o veredito bom/ruim, não. Não decida oferta nem verba por este cartão.`;
+  return `Este é o número real do ${label} no período. Sem referência para o seu ramo, a leitura mais útil é compará-lo com o seu próprio histórico.`;
 }
 
 function buildTechnicalErrorText(metricName: string): string {
   const label = METRIC_LABEL[metricName] ?? "esta métrica";
-  return `A avaliação de ${label} falhou. Recarregue. Se o cartão voltar assim, ignore o veredito e use só o número bruto.`;
+  return `O número de ${label} está aí, mas a leitura não carregou. Recarregue a página para ver a avaliação completa.`;
 }
 
 // ✅ NOVO (PR-A): texto para métrica fora de MARKET_RPC_METRICS. Mesmo
@@ -942,7 +947,7 @@ function applyConfidenceGate(
     return {
       semaphore: semaphore === "verde" ? "ambar" : semaphore,
       caveat:
-        "Ainda há poucas contas neste recorte. Serve para olhar, não para mudar oferta, bio ou anúncio.",
+        "Comparação feita com poucas contas parecidas com a sua: use como direção e confirme no seu histórico antes de mudar oferta, bio ou anúncio.",
     };
   }
   if (confidenceScore < 0.9) {
@@ -1294,7 +1299,7 @@ export function resolveCreativeFatigueAlert(
         probableCause:
           "Repetição de exposição e retorno financeiro medem coisas diferentes. Um pode subir sem o outro ter quebrado.",
         immediateAction:
-          "Não troque ainda. Se o retorno cair antes de bater o limite combinado, investigue outra causa. Não troque só por repetição.",
+          "Mantenha este anúncio por ora. Se o retorno cair antes de bater o limite combinado, investigue outra causa: repetição sozinha não é motivo para trocar.",
       };
     },
   );
@@ -1348,7 +1353,7 @@ export function resolveRoasBelowMinimumAlert(
           probableCause:
             "O custo da sua conta subiu no mesmo ritmo do mercado inteiro. Não é o criativo que piorou; é o preço do anúncio no período.",
           immediateAction:
-            "Não troque o anúncio. Ajuste o valor do lance ou espere o preço do anúncio baixar.",
+            "Mantenha o anúncio e ajuste o valor do lance, ou espere o preço do anúncio baixar.",
         };
       }
 
@@ -1427,7 +1432,7 @@ export async function resolveEngagementPublicAlert(
 
   const isRed = classified.semaphore === "vermelho";
   const v1Caveat =
-    " (Referência: comparação v1, recalibração v2 pendente. Use como sinal, não como decisão de verba isolada.)";
+    " (Referência preliminar, ainda em ajuste. Use como sinal, não como decisão de verba isolada.)";
 
   return {
     type: "engagement_collapse",
@@ -1443,9 +1448,9 @@ export async function resolveEngagementPublicAlert(
     natureza: "tecnica",
     probableCause: isRed
       ? "O conteúdo gera impressões mas não provoca reação pública (comentário ou compartilhamento). Pode ser tema fora do interesse real da audiência ou ausência de chamada para interação."
-      : "O engajamento público está aquém do recorte de referência. Pode ser ritmo de publicação, tipo de assunto ou falta de CTA explícito.",
+      : "O engajamento público está aquém do recorte de referência. Pode ser ritmo de publicação, tipo de assunto ou falta de um convite claro para interagir.",
     immediateAction: isRed
-      ? "Nos próximos 3 posts, inclua uma pergunta ou provocação que peça resposta nos comentários. Não troque o produto. Troque o convite."
+      ? "Nos próximos 3 posts, inclua uma pergunta ou provocação que peça resposta nos comentários. Mantenha o produto e mude o convite."
       : "Teste incluir uma pergunta direta em legendas. Meça em 14 dias antes de mudar formato ou frequência.",
     confidenceLevel: classified.confidenceLevel,
     dataSource: "real_snapshot",
@@ -1613,12 +1618,12 @@ export async function resolveEngagementScoreAlert(
           value: 0,
           semaphore: "neutro",
           statusText:
-            "Polêmica indisponível: nenhum post do período tem o campo calculado. Não é classificada com dado ausente.",
+            "Polêmica indisponível: nenhum post do período tem essa nota calculada. Sem dado, não classificamos.",
           confidenceLevel: "L0",
           thresholdSource: null,
           confidenceScore: null,
           ruleDeclaration:
-            "Sem posts com polêmica calculada no período, não existe mediana por post.",
+            "Sem posts com nota de polêmica no período, não há mediana por post.",
           calibrationMethod: null,
           zeroInflated: null,
         }),
@@ -1679,9 +1684,9 @@ export async function resolveEngagementScoreAlert(
       description: withTranslation(vps.statusText, "vps_pct", input.vpsPct),
       natureza: "tecnica",
       probableCause:
-        'Alcance na base é quantos dos seus seguidores viram o post. Não é nota de qualidade nem de proposta de valor. Enquanto ele estiver baixo, "post ruim" e "post que não circulou" parecem a mesma coisa.',
+        "Alcance na base é quantos dos seus seguidores viram o post. Ele mede circulação, não qualidade: com alcance baixo, ainda não dá para saber se o post é bom.",
       immediateAction:
-        "Mantenha o mesmo formato e mude só o horário nas próximas 4 publicações. Se o alcance na base continuar baixo, aí investigamos se a conta está sendo limitada. Não comece por aí.",
+        "Mantenha o mesmo formato e mude só o horário nas próximas 4 publicações. Se o alcance na base continuar baixo, o próximo passo é checar se a conta está sendo limitada.",
       confidenceLevel: vps.confidenceLevel,
       dataSource: "real_snapshot",
       thresholdSource: vps.thresholdSource,
@@ -1741,7 +1746,7 @@ export async function resolveEngagementScoreAlert(
       description: stripTranslation(polemic.statusText),
       natureza: "tecnica",
       probableCause:
-        "Há mais comentários por curtida do que o recorte costuma ver. Pode ser conversa útil ou briga. O número sozinho não diferencia. Não é meta para subir.",
+        "Há mais comentários por curtida do que o recorte costuma ver. Pode ser conversa útil ou briga. O número sozinho não diferencia: o objetivo não é subi-lo, é ter conversa útil.",
       immediateAction:
         "Leia os 20 comentários mais recentes. Se forem pergunta e opinião, mantenha o tom. Se forem ataque, feche a moderação desses posts.",
       confidenceLevel: polemic.confidenceLevel,
@@ -1943,7 +1948,7 @@ export async function resolvePolemicAlert(
     description: stripTranslation(polemic.statusText),
     natureza: "tecnica",
     probableCause:
-      "Há mais comentários por curtida do que o recorte costuma ver. Pode ser conversa útil ou briga. O número sozinho não diferencia. Não é meta para subir.",
+      "Há mais comentários por curtida do que o recorte costuma ver. Pode ser conversa útil ou briga. O número sozinho não diferencia: o objetivo não é subi-lo, é ter conversa útil.",
     immediateAction:
       "Leia os 20 comentários mais recentes. Se forem pergunta e opinião, mantenha o tom. Se forem ataque, feche a moderação desses posts.",
     confidenceLevel: polemic.confidenceLevel,
@@ -2024,6 +2029,20 @@ export async function resolveStalenessAlert(
 }
 
 /* -------------------------------------------------------------------------- */
+/*  Critério de sucesso + mensagem do gestor                                  */
+/* -------------------------------------------------------------------------- */
+
+// Números do engine de que lib/alertSuccess.ts depende. Montado aqui porque
+// as constantes vivem neste arquivo; lib/alertSuccess.ts é puro e não as copia.
+const SUCCESS_RULES: SuccessRules = {
+  algoRiskAmber: ALGO_RISK_AMBER_THRESHOLD,
+  algoRiskRecentPosts: ALGO_RISK_N_RECENT,
+  algoRiskBaselinePosts: ALGO_RISK_BASELINE_MAX_POSTS,
+  stalenessWarnDays: STALENESS_WARNING_DAYS,
+  stalenessMetricName: STALENESS_METRIC_NAME,
+};
+
+/* -------------------------------------------------------------------------- */
 /*  Exportação                                                                */
 /* -------------------------------------------------------------------------- */
 
@@ -2050,5 +2069,10 @@ export function toCriticalAlert(draft: AlertDraft): CriticalAlertData {
     probableCause: draft.probableCause,
     immediateAction: draft.immediateAction,
     dataSource: draft.dataSource,
+    // BUG corrigido: o nível de confiança era calculado e descartado aqui, então
+    // CriticalAlert/DiagnosticAlert nunca podiam mostrar Medido/Estimado/Hipótese.
+    confidenceLevel: draft.confidenceLevel,
+    successCriteria: deriveSuccessCriteria(draft, SUCCESS_RULES),
+    managerMessage: buildManagerMessage(draft),
   };
 }

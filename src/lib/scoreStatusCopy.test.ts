@@ -51,7 +51,7 @@ describe("proveniência da régua não muda o que já está na tela", () => {
     });
     expect(com).toEqual(sem);
     expect(com.action).toBeNull();
-    expect(com.note).toContain("Meta provisória de gestão");
+    expect(com.note).toContain("Referência provisória de gestão");
   });
 
   it("polêmica com execução legacy 'nao_verificado': saída idêntica à de hoje", () => {
@@ -81,7 +81,7 @@ describe("régua em validação", () => {
 
   it("junta com a nota de gestão sem perder nenhuma das duas", () => {
     const c = buildScoreCopy({ ...erGestao, validationStatus: "em_validacao" });
-    expect(c.note).toContain("Meta provisória de gestão");
+    expect(c.note).toContain("Referência provisória de gestão");
     expect(c.note).toContain("método em validação");
   });
 });

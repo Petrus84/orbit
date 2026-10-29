@@ -27,46 +27,54 @@
  *
  * ============================================================================
  */
-import React from 'react'
-import type { CriticalAlertData, AlertSeverity } from '@/types/orbit'
-import styles from './CriticalAlert.module.css'
+import React from "react";
+import type { CriticalAlertData, AlertSeverity } from "@/types/orbit";
+import { successCriteriaText } from "@/lib/alertSuccess";
+import { CONFIANCA } from "@/lib/ui-labels";
+import styles from "./CriticalAlert.module.css";
 
 export interface CriticalAlertProps {
-  alert: CriticalAlertData
-  className?: string
+  alert: CriticalAlertData;
+  className?: string;
   /** Se omitido, abre `alert.actionUrl` em nova aba. */
-  onActionClick?: (actionUrl: string) => void
+  onActionClick?: (actionUrl: string) => void;
 }
 
 const SEVERITY_ICON: Record<AlertSeverity, React.ReactNode> = {
-  critical: '⚠️',
-  warning: '⚠️',
-  info: 'ℹ️',
-  success: '✅',
-} as const
+  critical: "⚠️",
+  warning: "⚠️",
+  info: "ℹ️",
+  success: "✅",
+} as const;
 
 // Ponte puramente de apresentação (severidade → classe CSS local). Não é
 // um mapeamento para ClientHealthStatus — ver header.
 const SEVERITY_CLASS: Record<AlertSeverity, string> = {
-  critical: styles.critical ?? '',
-  warning: styles.warning ?? '',
-  info: styles.info ?? '',
-  success: styles.success ?? '',
-}
+  critical: styles.critical ?? "",
+  warning: styles.warning ?? "",
+  info: styles.info ?? "",
+  success: styles.success ?? "",
+};
 
-export function CriticalAlert({ alert, className, onActionClick }: CriticalAlertProps) {
+export function CriticalAlert({
+  alert,
+  className,
+  onActionClick,
+}: CriticalAlertProps) {
   const handleActionClick = () => {
-    if (!alert.actionUrl) return
+    if (!alert.actionUrl) return;
     if (onActionClick) {
-      onActionClick(alert.actionUrl)
-      return
+      onActionClick(alert.actionUrl);
+      return;
     }
-    window.open(alert.actionUrl, '_blank', 'noopener,noreferrer')
-  }
+    window.open(alert.actionUrl, "_blank", "noopener,noreferrer");
+  };
 
   return (
     <div
-      className={[styles.card, SEVERITY_CLASS[alert.severity], className].filter(Boolean).join(' ')}
+      className={[styles.card, SEVERITY_CLASS[alert.severity], className]
+        .filter(Boolean)
+        .join(" ")}
       role="alert"
       aria-live="polite"
     >
@@ -81,22 +89,47 @@ export function CriticalAlert({ alert, className, onActionClick }: CriticalAlert
         )}
         {alert.probableCause && (
           <p className={styles.body}>
-            <strong className={styles.label}>Causa provável:</strong> {alert.probableCause}
+            <strong className={styles.label}>Causa provável:</strong>{" "}
+            {alert.probableCause}
           </p>
         )}
         {alert.immediateAction && (
           <p className={styles.actionText}>
-            <strong className={styles.label}>Ação:</strong> {alert.immediateAction}
+            <strong className={styles.label}>Ação:</strong>{" "}
+            {alert.immediateAction}
           </p>
         )}
+        {alert.successCriteria && (
+          <p className={styles.body}>
+            {successCriteriaText(alert.successCriteria)}
+          </p>
+        )}
+        {alert.confidenceLevel && (
+          <p className={styles.body}>
+            <strong className={styles.label}>Confiança:</strong>{" "}
+            {CONFIANCA[alert.confidenceLevel]}
+          </p>
+        )}
+        {alert.managerMessage && (
+          <details>
+            <summary className={styles.managerSummary}>
+              Texto para levar ao cliente
+            </summary>
+            <p className={styles.body}>{alert.managerMessage}</p>
+          </details>
+        )}
         {alert.actionUrl && (
-          <button type="button" className={styles.action} onClick={handleActionClick}>
+          <button
+            type="button"
+            className={styles.action}
+            onClick={handleActionClick}
+          >
             Ver detalhes
           </button>
         )}
       </div>
     </div>
-  )
+  );
 }
 
-export default CriticalAlert
+export default CriticalAlert;

@@ -147,8 +147,8 @@ export function QualityScoresPanel({ scores }: QualityScoresPanelProps) {
                 <GlowingNumber
                   value={score.value}
                   unit={score.unit}
-                  color={score.glowColor}
-                  size="md"
+                  color="plain"
+                  size="metric"
                 />
               ) : (
                 <span className={styles.naValue}>{score.value}</span>
@@ -174,7 +174,7 @@ export function QualityScoresPanel({ scores }: QualityScoresPanelProps) {
 
             {score.provenance && (
               <p
-                className={styles.referenceNote}
+                className={styles.provenanceNote}
                 title={score.provenance.method}
               >
                 {provenanceLine(score.provenance)}

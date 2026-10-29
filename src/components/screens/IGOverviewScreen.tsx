@@ -1,5 +1,8 @@
 "use client";
 
+import { CONFIANCA } from "@/lib/ui-labels";
+import { successCriteriaText } from "@/lib/alertSuccess";
+import { userErrorMessage } from "@/lib/userErrorMessage";
 import React from "react";
 import { useParams } from "next/navigation";
 import SectionHead from "@/components/common/SectionHead";
@@ -74,8 +77,8 @@ function KPICard({ kpi }: { kpi: KPI }): React.ReactElement {
         >
           Fonte: {kpi.provenance.source} ·{" "}
           {kpi.provenance.period === "snapshot"
-            ? "período: snapshot (não recalcula pelo cabeçalho)"
-            : "período: janela do cabeçalho"}{" "}
+            ? "período: última coleta (não muda com o período escolhido)"
+            : "período: o escolhido"}{" "}
           · Método: {kpi.provenance.method}
         </p>
       )}
@@ -86,7 +89,7 @@ function KPICard({ kpi }: { kpi: KPI }): React.ReactElement {
 function mapKPICardDataToKPI(data: KPICardData): KPI {
   return {
     label: data.label,
-    value: data.value,
+    value: data.valueMissing ? "—" : data.value,
     delta: data.delta,
     trend: data.delta > 0 ? "up" : data.delta < 0 ? "down" : "neutral",
     flagLevel: (data.sourceLevel as "L0" | "L1" | "L2") || "L2",
@@ -135,11 +138,24 @@ function mapCriticalAlertToDiagnostic(
   data: CriticalAlertData,
 ): DiagnosticAlertData | null {
   if (data.severity === "success" || data.severity === "info") return null;
+  // `body` é `description ?? immediateAction` (toCriticalAlert): quando a
+  // descrição falta, body já É a ação — não repetir a ação logo abaixo.
+  const showAction = data.immediateAction && data.immediateAction !== data.body;
+  const showCause = data.probableCause && data.probableCause !== "n/a";
   return {
     id: data.id,
     title: data.title,
     body: data.body,
     severity: data.severity as "critical" | "warning",
+    ...(showCause ? { probableCause: data.probableCause as string } : {}),
+    ...(showAction ? { immediateAction: data.immediateAction as string } : {}),
+    ...(data.confidenceLevel
+      ? { confidenceLabel: CONFIANCA[data.confidenceLevel] }
+      : {}),
+    ...(data.successCriteria
+      ? { successText: successCriteriaText(data.successCriteria) }
+      : {}),
+    ...(data.managerMessage ? { managerMessage: data.managerMessage } : {}),
   };
 }
 
@@ -260,14 +276,14 @@ export default function IGOverviewScreen({
       />
 
       {status === "error" && error && (
-        <ErrorState message={error} onRetry={refetch} />
+        <ErrorState message={userErrorMessage(error)} onRetry={refetch} />
       )}
 
       <section className="flex flex-col gap-3">
         <SectionLabel>Indicadores principais</SectionLabel>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {isLoading
-            ? [0, 1, 2, 3].map((i) => <KPISkeleton key={i} />)
+            ? [0, 1, 2, 3, 4, 5].map((i) => <KPISkeleton key={i} />)
             : (data?.kpis ?? []).map((kpiData: KPICardData) => (
                 <KPICard
                   key={kpiData.label}
@@ -324,7 +340,7 @@ export default function IGOverviewScreen({
 
       {(isLoading || (data?.insights ?? []).length > 0) && (
         <section className="flex flex-col gap-3">
-          <SectionLabel>Insights</SectionLabel>
+          <SectionLabel>Leitura dos seus posts</SectionLabel>
           <div className="flex flex-col gap-2">
             {isLoading
               ? [0, 1, 2].map((i) => (
@@ -338,7 +354,20 @@ export default function IGOverviewScreen({
                     key={insight.id}
                     className="rounded-2xl border border-blue-500/30 bg-blue-900/20 p-4 text-sm text-blue-200"
                   >
-                    {insight.text}
+                    <p>{insight.text}</p>
+                    {insight.action && (
+                      <p className="mt-2 text-blue-100">
+                        <strong>Próximo passo:</strong> {insight.action}
+                      </p>
+                    )}
+                    {insight.basis && (
+                      <p className="mt-2 text-xs text-blue-300/80">
+                        {insight.confidenceLevel
+                          ? `${CONFIANCA[insight.confidenceLevel]} · `
+                          : ""}
+                        {insight.basis}
+                      </p>
+                    )}
                   </div>
                 ))}
           </div>

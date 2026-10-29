@@ -10,7 +10,7 @@
     "lint": "eslint . --ext .ts,.tsx",
     "format": "prettier --write .",
     "check:drift": "ts-node src/types/check-schema-drift.ts",
-    "test": "tsx --test src/lib/funnel/registry.test.ts src/lib/repositories/funnelMath.test.ts",
+    "test": "tsx --test src/lib/funnel/registry.test.ts src/lib/repositories/funnelMath.test.ts src/lib/mappers/avatarAlignment/avatarAlignment.mapper.test.ts",
     "test:bloco-a": "vitest run e2e/blocoA.e2e.test.ts",
     "prepare": "husky",
     "ingest:zip": "tsx scripts/ingest/ingest-from-zip.ts",

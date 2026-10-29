@@ -229,7 +229,7 @@ export const ENUM_PROOF_MECHANISM: [ProofMechanism, string][] = [
   ["associacao_marca", "Associação com marca"],
   ["clientes_ativos_gestao", "Clientes atendidos hoje"],
   ["resultado_documentado", "Resultado documentado"],
-  ["nenhum_observavel", "Nada que prove o resultado"],
+  ["nenhum_observavel", "Ainda não mostro prova do resultado"],
 ];
 
 export const ENUM_VALUES_AFFECT_SOURCE: [ValuesAffectSource, string][] = [

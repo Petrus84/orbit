@@ -16,21 +16,30 @@
   padding: 0 !important;
 }
 
-.critical { --sev-color: var(--red); }
-.warning  { --sev-color: var(--amber); }
-.healthy  { --sev-color: var(--green); }
+.critical {
+  --sev-color: var(--red);
+}
+.warning {
+  --sev-color: var(--amber);
+}
+.healthy {
+  --sev-color: var(--green);
+}
+.unknown {
+  --sev-color: var(--text-muted);
+}
 
 .headerBtn {
-  display:      flex;
-  align-items:  center;
-  gap:          var(--space-3);
-  width:        100%;
-  padding:      var(--space-4);
-  text-align:   left;
-  background:   transparent;
-  border:       none;
-  cursor:       pointer;
-  transition:   background var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-4);
+  text-align: left;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background var(--transition-fast);
 }
 
 .headerBtn:hover {
@@ -38,102 +47,103 @@
 }
 
 .iconBadge {
-  display:         flex;
-  align-items:     center;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  flex-shrink:     0;
-  width:           36px;
-  height:          36px;
-  border-radius:   var(--radius-md);
-  background:      color-mix(in srgb, var(--sev-color) 20%, transparent);
-  font-size:       var(--font-size-lg);
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--sev-color) 20%, transparent);
+  font-size: var(--font-size-lg);
 }
 
 .headerText {
-  flex:      1;
+  flex: 1;
   min-width: 0;
 }
 
 .metaRow {
-  display:      flex;
-  align-items:  center;
-  gap:          var(--space-2);
-  flex-wrap:    wrap;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
   margin-bottom: 2px;
 }
 
 .badge {
-  font-family:    var(--font-family);
-  font-size:      10px;
-  font-weight:    700;
+  font-family: var(--font-family);
+  font-size: 10px;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  padding:        1px 8px;
-  border:         var(--border-width) solid color-mix(in srgb, var(--sev-color) 30%, transparent);
-  border-radius:  var(--radius-sm);
-  background:     color-mix(in srgb, var(--sev-color) 20%, transparent);
-  color:          var(--sev-color);
+  padding: 1px 8px;
+  border: var(--border-width) solid
+    color-mix(in srgb, var(--sev-color) 30%, transparent);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--sev-color) 20%, transparent);
+  color: var(--sev-color);
 }
 
 .scoreText {
   font-family: var(--font-family);
-  font-size:   var(--font-size-xs);
-  color:       var(--text-muted);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
 }
 
 .headline {
   font-family: var(--font-family);
-  font-size:   var(--font-size-sm);
+  font-size: var(--font-size-sm);
   font-weight: 600;
-  color:       var(--sev-color);
+  color: var(--sev-color);
 }
 
 .chevron {
   flex-shrink: 0;
   font-family: var(--font-family);
-  font-size:   10px;
-  color:       var(--text-muted);
+  font-size: 10px;
+  color: var(--text-muted);
 }
 
 .body {
-  display:        flex;
+  display: flex;
   flex-direction: column;
-  gap:            var(--space-2);
-  padding:        0 var(--space-4) var(--space-4);
+  gap: var(--space-2);
+  padding: 0 var(--space-4) var(--space-4);
 }
 
 .divider {
-  height:     1px;
+  height: 1px;
   background: var(--border-default);
   margin-bottom: var(--space-1);
 }
 
 .item {
-  display:        flex;
-  gap:            var(--space-3);
-  padding:        var(--space-3);
-  border:         var(--border-width) solid var(--border-default);
-  border-radius:  var(--radius-md);
-  background:     var(--bg-hover);
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: var(--border-width) solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg-hover);
 }
 
 .itemIcon {
   flex-shrink: 0;
-  font-size:   var(--font-size-base);
-  margin-top:  1px;
+  font-size: var(--font-size-base);
+  margin-top: 1px;
 }
 
 .itemTitle {
   font-family: var(--font-family);
-  font-size:   var(--font-size-sm);
+  font-size: var(--font-size-sm);
   font-weight: 600;
-  color:       var(--text-secondary);
+  color: var(--text-secondary);
 }
 
 .itemDesc {
   font-family: var(--font-family);
-  font-size:   var(--font-size-xs);
+  font-size: var(--font-size-xs);
   line-height: 1.6;
-  color:       var(--text-muted);
-  margin-top:  2px;
+  color: var(--text-muted);
+  margin-top: 2px;
 }

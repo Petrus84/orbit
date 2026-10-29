@@ -45,6 +45,9 @@ output/
 
 # dumps / pacotes / scrape
 *.sql
+!supabase/migrations/20261029093600_funnel_registry_ddl.sql
+!supabase/migrations/20261029093700_funnel_registry_seed.sql
+!supabase/migrations/20261029093800_ig_dm_funnel_ac_enxovais.sql
 *.tar.gz
 *.zip
 dataset_instagram-scraper_*.json
@@ -96,3 +99,4 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+repomix-output.xml

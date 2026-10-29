@@ -289,7 +289,7 @@
 
 .metricValue {
   font-family: var(--font-mono);
-  font-size: var(--font-size-4xl);
+  font-size: var(--font-size-metric);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-tight);
 }
@@ -332,6 +332,21 @@
   border: 1px solid color-mix(in srgb, var(--neon-red) 50%, transparent);
   box-shadow: var(--shadow-glow-red-inset);
   background: color-mix(in srgb, var(--neon-red) 5%, transparent);
+}
+
+.gapBadge[data-status="attention"] {
+  color: var(--neon-gold);
+  border: 1px solid color-mix(in srgb, var(--neon-gold) 50%, transparent);
+  box-shadow: var(--shadow-glow-gold-inset);
+  background: color-mix(in srgb, var(--neon-gold) 5%, transparent);
+}
+
+.gapHint {
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  color: var(--text-dim);
+  text-align: center;
 }
 
 /* -- Barras de Progresso Desacopladas (Translúcidas) -- */

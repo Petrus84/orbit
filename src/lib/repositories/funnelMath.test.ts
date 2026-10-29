@@ -44,7 +44,7 @@ test("vendas = alcance × visita × clique × conversão sem saturação", () =>
 test("registry TS == seed SQL (mesmas etapas, ordem, origem e confiança)", () => {
   const sql = readFileSync(
     new URL(
-      "../../../supabase/migrations/20261011120100_funnel_registry_seed.sql",
+      "../../../supabase/migrations/20261029093700_funnel_registry_seed.sql",
       import.meta.url,
     ),
     "utf8",

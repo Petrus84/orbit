@@ -94,12 +94,12 @@ export function postsComComentarioText(r: PostsComComentario): {
   if (r.state === "not_collected")
     return {
       valueText: "—",
-      note: "Não calculado: sem contagem de comentários",
+      note: "Aparece quando a contagem de comentários dos posts for coletada",
     };
   if (r.state === "insufficient")
     return {
       valueText: "—",
-      note: `Amostra insuficiente: ${r.valid} de ${N_MIN} posts`,
+      note: `Aparece com ${N_MIN} posts; hoje são ${r.valid}`,
     };
   const valueText = `${r.withComment} de ${r.valid}`;
   return {
@@ -117,13 +117,14 @@ export function commentTextStateNote(
   textCount: number | null,
 ): string {
   if (textCount == null)
-    return "Não calculado: contagem de comentários indisponível";
+    return "Aparece quando a contagem de comentários for coletada";
   if (textCount === 0)
-    return "Não calculado: sem texto de comentários coletado";
-  if (metric === "tom_dos_comentarios") return "Não liberado para cor ou Ação";
+    return "Aparece quando o texto dos comentários for coletado";
+  if (metric === "tom_dos_comentarios")
+    return "Informativo: mostra o clima dos comentários, sem cor nem ação";
   if (textCount < INTENT_MIN_COMMENTS)
-    return `Amostra insuficiente: ${textCount} de ${INTENT_MIN_COMMENTS} comentários`;
-  return "Não calculado: sem classificação de intenção";
+    return `Aparece com ${INTENT_MIN_COMMENTS} comentários; hoje são ${textCount}`;
+  return "Aparece quando a intenção dos comentários for classificada";
 }
 
 /** Motivo do "—" de resposta_da_base / views_por_seguidor (RN-22). */
@@ -133,13 +134,13 @@ export function refNullReason(
   kind: "er" | "views",
 ): string {
   if (!validFollowers(followers))
-    return "Não calculado: seguidores indisponíveis ou abaixo de 1.000";
+    return "Aparece para contas com 1.000 seguidores ou mais";
   const n = posts.filter((p) =>
     kind === "er"
       ? p.likes != null && p.comments != null
       : p.views != null && p.views >= 0,
   ).length;
-  return `Amostra insuficiente: ${n} de ${N_MIN} posts`;
+  return `Aparece com ${N_MIN} posts; hoje são ${n}`;
 }
 
 export interface PercentileRef {

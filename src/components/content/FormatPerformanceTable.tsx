@@ -9,21 +9,19 @@ import { formatPtBr } from "@/lib/format";
 import { provenanceLine } from "@/lib/provenanceText";
 import type { MetricProvenance } from "@/types/orbit";
 
-// RN-23: proveniência da tabela. Posts e interações vêm de ig_posts no
-// cabeçalho; a tendência vem da view, com janela própria (todo o histórico).
+// RN-23: proveniência da tabela. Posts, interações e tendência vêm de ig_posts
+// no cabeçalho (mesma população e janela).
 const COUNTS_PROVENANCE: MetricProvenance = {
-  source: "cálculo por post (ig_posts)",
+  source: "cálculo feito post a post",
   period: "header_window",
   method:
-    "posts por formato no cabeçalho; interações = curtidas + comentários + compartilhamentos + salvamentos nos posts com os quatro valores; mínimo 5 posts por formato",
+    "posts por formato no período escolhido; interações = curtidas + comentários + compartilhamentos + salvamentos nos posts com os quatro valores; mínimo 5 posts por formato",
 };
 const TREND_PROVENANCE: MetricProvenance = {
-  source: "orbit.v_format_performance",
-  period: "snapshot",
-  periodLabel:
-    "todo o histórico do formato (exibida só quando ele cabe no cabeçalho)",
+  source: "cálculo feito post a post",
+  period: "header_window",
   method:
-    "média de utility_score_pct na 2ª metade cronológica contra a 1ª; ±15%; mínimo 2 posts com score por metade. a tendência usa a nota de utilidade do post, não as interações",
+    "compara a mediana de curtidas + comentários da metade mais recente dos posts do formato com a da metade mais antiga; a seta muda quando a diferença passa de 15%; exige 3 posts com os dois valores em cada metade e mínimo de 5 posts no formato. Não usa a nota de utilidade",
 };
 
 export interface FormatPerformanceTableProps {
@@ -372,10 +370,10 @@ export function FormatPerformanceTable({
           })}
         </tbody>
       </table>
-      <p style={{ fontSize: 11, opacity: 0.7, marginTop: 8 }}>
+      <p className={styles.metadataSource}>
         Posts e interações: {provenanceLine(COUNTS_PROVENANCE)}
       </p>
-      <p style={{ fontSize: 11, opacity: 0.7, marginTop: 4 }}>
+      <p className={styles.metadataSource}>
         Tendência: {provenanceLine(TREND_PROVENANCE)}
       </p>
     </div>

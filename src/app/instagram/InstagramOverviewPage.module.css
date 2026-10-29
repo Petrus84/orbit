@@ -29,7 +29,7 @@
   gap: var(--space-4);
 }
 
-/* ── Linha 1: 4 KPI Cards ───────────────────────────────────────────────── */
+/* ── Linha 1: KPIs principais ───────────────────────────────────────────── */
 
 .kpiRow {
   display: grid;
@@ -37,14 +37,20 @@
   gap: var(--space-4);
 }
 
+.kpiRowExpanded {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 @media (max-width: 1200px) {
-  .kpiRow {
+  .kpiRow,
+  .kpiRowExpanded {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 720px) {
-  .kpiRow {
+  .kpiRow,
+  .kpiRowExpanded {
     grid-template-columns: 1fr;
   }
 }

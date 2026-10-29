@@ -20,6 +20,7 @@
    ========================================================================== */
 
 import type { CSSProperties } from "react";
+import { GlassCard } from "@/components/common/GlassCard";
 import { StatusPill } from "@/components/common/StatusPill";
 import { formatCategoryLabel } from "@/lib/repositories/contentContractEngine";
 import type {
@@ -35,12 +36,11 @@ import type { MetricProvenance } from "@/types/orbit";
 // RN-23 / D-21: cadência = posts do cabeçalho; referência = view com período
 // fixo. A view não expõe benchmark_run_id (proveniência de run pendente).
 const CADENCE_PROVENANCE: MetricProvenance = {
-  source:
-    "cálculo por post (ig_posts) · referência orbit.v_benchmark_cadence_by_segment",
+  source: "cálculo feito post a post · referência de ritmo do segmento",
   period: "header_window",
   periodLabel: "posts do cabeçalho; referência em período fixo informado acima",
   method:
-    "posts ÷ semanas do período; ritmo ativo = do primeiro ao último post; compara com P25–P75 do segmento (mínimo 5 posts); run da referência ainda não exposto pela view (D-21)",
+    "posts ÷ semanas do período; ritmo ativo = do primeiro ao último post; compara com a faixa em que ficam as contas do mesmo segmento (do 25º ao 75º percentil; mínimo 5 posts)",
 };
 
 const FORMAT_LABEL: Record<string, string> = {
@@ -166,8 +166,10 @@ export function PostingProfilePanel({
   const recency = cadence ? recencyLine(cadence) : null;
 
   return (
-    <section
+    <GlassCard
+      glowColor="cyan"
       className={styles.panel}
+      role="region"
       aria-label="Ritmo e mix de publicação"
       data-testid="posting-profile"
     >
@@ -309,13 +311,15 @@ export function PostingProfilePanel({
         </div>
       </div>
 
-      <p className={styles.note}>{provenanceLine(CADENCE_PROVENANCE)}</p>
+      <p className={styles.provenanceNote}>
+        {provenanceLine(CADENCE_PROVENANCE)}
+      </p>
 
       <p className={styles.note}>
         {benchmark
           ? "A cadência principal reflete o período selecionado. A comparação de segmento exige base mínima e avalia o ritmo ativo (do primeiro ao último post). A referência usa um período fixo e descreve o ritmo observado — não indica efeito sobre resultado. A recência é medida até a coleta."
           : "Contagem dos posts coletados no período selecionado, sem comparação de mercado."}
       </p>
-    </section>
+    </GlassCard>
   );
 }

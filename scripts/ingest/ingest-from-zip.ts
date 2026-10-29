@@ -1,4 +1,5 @@
 // ingest-from-zip.ts — orbit v2.3.0
+// coomo rodar:  npx tsx scripts/ingest/ingest-from-zip.ts --zip="C:/Projetos/Export_clients/CPImportstore/instagram-cpimportstore-2026-10-27-7kaGLOrd.zip" --client=cpimportstore
 // v2.3.0: datas pt-BR no DATE_RANGE, faixas etárias "13 a 17", insights de Reels (reels.json), seguidores novos/perdidos/líquido.
 import dotenv from "dotenv";
 import * as fs from "fs";

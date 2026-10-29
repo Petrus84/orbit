@@ -1,8 +1,10 @@
+import { userErrorMessage } from "@/lib/userErrorMessage";
 import React, { useState } from "react";
 import styles from "./CarteiraScreen.module.css";
 import SectionHead from "@/components/common/SectionHead";
 import ClientCard from "@/components/common/ClientCard";
 import AlertCard from "@/components/common/AlertCard";
+import { GlassCard } from "@/components/common/GlassCard";
 import type { Client } from "@/types/client";
 import type { UseAlertsReturn } from "@/hooks/useAlerts";
 import type { UseClientsResult } from "@/types/orbit";
@@ -170,26 +172,22 @@ function CarteiraScreen({
       </div>
 
       <div className={styles.kpiGrid}>
-        <div className={`${styles.kpiCard} ${styles.kpiCardNeutral}`}>
+        <GlassCard glowColor="cyan">
           <p className={styles.kpiLabel}>Clientes ativos</p>
           <p className={styles.kpiValue}>{allClients.length}</p>
-        </div>
-        <div className={`${styles.kpiCard} ${styles.kpiCardWarning}`}>
+        </GlassCard>
+        <GlassCard glowColor="gold">
           <p className={styles.kpiLabel}>Com alerta</p>
-          <p className={`${styles.kpiValue} ${styles.kpiValueWarning}`}>
-            {clientsWithAlerts}
-          </p>
-        </div>
-        <div className={`${styles.kpiCard} ${styles.kpiCardCritical}`}>
+          <p className={styles.kpiValue}>{clientsWithAlerts}</p>
+        </GlassCard>
+        <GlassCard glowColor="red">
           <p className={styles.kpiLabel}>Clientes críticos</p>
-          <p className={`${styles.kpiValue} ${styles.kpiValueError}`}>
-            {criticalClients}
-          </p>
-        </div>
+          <p className={styles.kpiValue}>{criticalClients}</p>
+        </GlassCard>
       </div>
 
       {status === "error" && error ? (
-        <ErrorState message={error} onRetry={refetch} />
+        <ErrorState message={userErrorMessage(error)} onRetry={refetch} />
       ) : isLoading ? (
         <div
           className={styles.skeletonsGrid}

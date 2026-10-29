@@ -21,55 +21,52 @@
 //   ✅ Realtime não depende mais de usePrototypeData
 //   ✅ Retry, polling, refetch, lastUpdated mantidos intactos
 
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { RealtimeChannel } from '@supabase/supabase-js'
-import { supabase } from '@/lib/supabase'
-import { fetchInstagramOverview } from '@/lib/repositories/instagramOverviewRepository'
-import type { AsyncState, FetchStatus, IGOverviewData } from '@/types/orbit'
+import { useCallback, useEffect, useRef, useState } from "react";
+import { RealtimeChannel } from "@supabase/supabase-js";
+import { supabase } from "@/lib/supabase";
+import { fetchInstagramOverview } from "@/lib/repositories/instagramOverviewRepository";
+import type { AsyncState, FetchStatus, IGOverviewData } from "@/types/orbit";
 
 // ─────────────────────────────────────────────
 // Configuração
 // ─────────────────────────────────────────────
 
-const MAX_RETRIES     = 3
-const BACKOFF_BASE_MS = 800   // 800ms → 1.6s → 3.2s
+const MAX_RETRIES = 3;
+const BACKOFF_BASE_MS = 800; // 800ms → 1.6s → 3.2s
 
 // ─────────────────────────────────────────────
 // Tipos do hook
 // ─────────────────────────────────────────────
 
 export interface UseInstagramOverviewParams {
-  clientId:           string
-  periodStart:        Date
-  periodEnd:          Date
-  pollingIntervalMs?: number | null
-  enableRealtime?:    boolean
+  clientId: string;
+  periodStart: Date;
+  periodEnd: Date;
+  pollingIntervalMs?: number | null;
+  enableRealtime?: boolean;
 }
 
 export interface UseInstagramOverviewReturn extends AsyncState<IGOverviewData | null> {
-  refetch:     () => void
-  lastUpdated: Date | null
+  refetch: () => void;
+  lastUpdated: Date | null;
 }
-
 
 // ─────────────────────────────────────────────
 // Utilitários
 // ─────────────────────────────────────────────
 
 function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms))
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 function backoffDelay(attempt: number): number {
-  return BACKOFF_BASE_MS * Math.pow(2, attempt) + Math.random() * 200
+  return BACKOFF_BASE_MS * Math.pow(2, attempt) + Math.random() * 200;
 }
 
 /** Converte Date para string 'YYYY-MM-DD' esperada pelo repositório */
 function toISODate(date: Date): string {
-  return date.toISOString().slice(0, 10)
+  return date.toISOString().slice(0, 10);
 }
-
-
 
 // ─────────────────────────────────────────────
 // Hook principal
@@ -80,141 +77,162 @@ export function useInstagramOverview({
   periodStart,
   periodEnd,
   pollingIntervalMs = null,
-  enableRealtime    = false,
+  enableRealtime = false,
 }: UseInstagramOverviewParams): UseInstagramOverviewReturn {
+  const [data, setData] = useState<IGOverviewData | null>(null);
+  const [status, setStatus] = useState<FetchStatus>("idle");
+  const [error, setError] = useState<string | null>(null);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
-  const [data,        setData]        = useState<IGOverviewData | null>(null)
-  const [status,      setStatus]      = useState<FetchStatus>('idle')
-  const [error,       setError]       = useState<string | null>(null)
-  const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
-
-  const isMountedRef    = useRef(true)
-  const pollingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const realtimeRef     = useRef<RealtimeChannel | null>(null)
-  const [fetchTick, setFetchTick] = useState(0)
+  const isMountedRef = useRef(true);
+  const requestIdRef = useRef(0);
+  const initialFetchTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null,
+  );
+  const pollingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const realtimeRef = useRef<RealtimeChannel | null>(null);
+  const [fetchTick, setFetchTick] = useState(0);
 
   // ── fetch com retry ────────────────────────────────────────────────────────
 
   const fetchWithRetry = useCallback(async (): Promise<void> => {
-    if (!isMountedRef.current) return
+    const myRequestId = ++requestIdRef.current;
+    if (!isMountedRef.current || myRequestId !== requestIdRef.current) return;
 
-    setStatus('loading')
-    setError(null)
+    setStatus("loading");
+    setError(null);
 
-    let attempt = 0
+    let attempt = 0;
 
     while (attempt <= MAX_RETRIES) {
       try {
         const result = await fetchInstagramOverview({
           clientId,
           periodStart: toISODate(periodStart),
-          periodEnd:   toISODate(periodEnd),
-        })
+          periodEnd: toISODate(periodEnd),
+        });
 
-        if (!isMountedRef.current) return
+        if (!isMountedRef.current || myRequestId !== requestIdRef.current)
+          return;
 
-        setData(result)
-        setStatus('success')
-        setLastUpdated(new Date())
-        return
-
+        setData(result);
+        setStatus("success");
+        setLastUpdated(new Date());
+        return;
       } catch (err: unknown) {
-        attempt++
+        attempt++;
 
         if (attempt > MAX_RETRIES) {
-          if (!isMountedRef.current) return
+          if (!isMountedRef.current || myRequestId !== requestIdRef.current)
+            return;
 
-          const message = err instanceof Error
-            ? err.message
-            : 'Erro desconhecido ao buscar dados do Instagram.'
+          const message =
+            err instanceof Error
+              ? err.message
+              : "Erro desconhecido ao buscar dados do Instagram.";
 
           console.error(
             `[useInstagramOverview] Falhou após ${MAX_RETRIES} tentativas:`,
-            message
-          )
+            message,
+          );
 
-          setStatus('error')
-          setError(message)
-          return
+          setStatus("error");
+          setError(message);
+          return;
         }
 
-        const delay = backoffDelay(attempt - 1)
+        const delay = backoffDelay(attempt - 1);
         console.warn(
-          `[useInstagramOverview] Tentativa ${attempt}/${MAX_RETRIES} falhou. Retry em ${Math.round(delay)}ms.`
-        )
-        await sleep(delay)
+          `[useInstagramOverview] Tentativa ${attempt}/${MAX_RETRIES} falhou. Retry em ${Math.round(delay)}ms.`,
+        );
+        await sleep(delay);
+        if (!isMountedRef.current || myRequestId !== requestIdRef.current)
+          return;
       }
     }
-  }, [clientId, periodStart, periodEnd])
+  }, [clientId, periodStart, periodEnd]);
 
   // ── efeito principal — fetch + polling ────────────────────────────────────
 
   useEffect(() => {
-    isMountedRef.current = true
+    isMountedRef.current = true;
 
-    setTimeout(() => { void fetchWithRetry() }, 0)
+    initialFetchTimerRef.current = setTimeout(() => {
+      initialFetchTimerRef.current = null;
+      void fetchWithRetry();
+    }, 0);
 
     if (pollingIntervalMs && pollingIntervalMs > 0) {
       const schedule = (): void => {
         pollingTimerRef.current = setTimeout(async () => {
-          if (!isMountedRef.current) return
-          await fetchWithRetry()
-          if (isMountedRef.current) schedule()
-        }, pollingIntervalMs)
-      }
-      schedule()
+          if (!isMountedRef.current) return;
+          await fetchWithRetry();
+          if (isMountedRef.current) schedule();
+        }, pollingIntervalMs);
+      };
+      schedule();
     }
 
     return () => {
-      isMountedRef.current = false
-      if (pollingTimerRef.current !== null) {
-        clearTimeout(pollingTimerRef.current)
-        pollingTimerRef.current = null
+      isMountedRef.current = false;
+      // Invalida requisições em voo antes que o próximo efeito comece.
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      requestIdRef.current++;
+      if (initialFetchTimerRef.current !== null) {
+        clearTimeout(initialFetchTimerRef.current);
+        initialFetchTimerRef.current = null;
       }
-    }
-  }, [fetchWithRetry, pollingIntervalMs, fetchTick])
+      if (pollingTimerRef.current !== null) {
+        clearTimeout(pollingTimerRef.current);
+        pollingTimerRef.current = null;
+      }
+    };
+  }, [fetchWithRetry, pollingIntervalMs, fetchTick]);
 
   // ── Realtime Supabase ─────────────────────────────────────────────────────
 
   useEffect(() => {
-    if (!enableRealtime) return
+    if (!enableRealtime) return;
 
     const channel = supabase
       .channel(`ig-overview:${clientId}`)
       .on(
-        'postgres_changes',
+        "postgres_changes",
         {
-          event:  '*',
-          schema: 'orbit',
-          table:  'orbit.kpi_snapshots',
+          event: "*",
+          schema: "orbit",
+          table: "orbit.kpi_snapshots",
           filter: `client_id=eq.${clientId}`,
         },
         (payload) => {
-          console.log('[useInstagramOverview] Realtime update:', payload.eventType)
-          if (isMountedRef.current) void fetchWithRetry()
-        }
+          console.log(
+            "[useInstagramOverview] Realtime update:",
+            payload.eventType,
+          );
+          if (isMountedRef.current) void fetchWithRetry();
+        },
       )
       .subscribe((subscriptionStatus) => {
-        if (subscriptionStatus === 'CHANNEL_ERROR') {
-          console.error('[useInstagramOverview] Realtime subscription error.')
+        if (subscriptionStatus === "CHANNEL_ERROR") {
+          console.error("[useInstagramOverview] Realtime subscription error.");
         }
-      })
+      });
 
-    realtimeRef.current = channel
+    realtimeRef.current = channel;
 
     return () => {
       if (realtimeRef.current) {
-        void supabase.removeChannel(realtimeRef.current)
-        realtimeRef.current = null
+        void supabase.removeChannel(realtimeRef.current);
+        realtimeRef.current = null;
       }
-    }
-  }, [clientId, enableRealtime, fetchWithRetry])
+    };
+  }, [clientId, enableRealtime, fetchWithRetry]);
 
   // ── refetch manual ────────────────────────────────────────────────────────
 
   const refetch = useCallback((): void => {
-    setFetchTick((t) => t + 1)
-  }, [])
+    setFetchTick((t) => t + 1);
+  }, []);
 
-  return { data, status, error, refetch, lastUpdated }
+  return { data, status, error, refetch, lastUpdated };
 }

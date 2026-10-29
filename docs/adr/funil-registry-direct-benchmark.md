@@ -1,6 +1,6 @@
 # ADR-012 — Funil real: tipo de funil, direct (DM) e benchmark de conversão
 
-**Data:** 2026-10-11 · **Status:** `PROPOSED` (migrations ainda não aplicadas no projeto `smifhuvzroznlmbrvhaj`)
+**Data:** 2026-10-11 · **Status:** `PROPOSED` (aguardando aplicação e validação no projeto Alpha)
 
 ## Contexto
 
@@ -20,23 +20,28 @@ não tinham onde mostrar as conversas, e a venda acontece fora do Instagram.
   Leitura por `orbit.can_read_client(client_id)` (staff ou dono), no padrão `sel_<tabela>` +
   `svc_<tabela>_all` vigente no banco em 11/10/2026. As tabelas de referência usam
   `orbit.has_workspace_access()`, como `ref_thresholds`. `authenticated` não escreve em nenhuma.
+  O DDL concede `INSERT`, `UPDATE` e `DELETE` explicitamente a `service_role`; RLS bypass não
+  substitui esses privilégios SQL.
 - Sem venda informada, o simulador parte do benchmark do segmento (rotulado) ou de "sem referência".
 - Tipos de domínio em `orbit.ts` (REGRA-01); sem `any` (REGRA-07).
 
 ## Pendências
 
-- Aplicar as 3 migrations via MCP e conferir `pg_policies` e `security_invoker` (REGRA-10).
-- Regenerar `database.types.ts` e trocar `orbitViews()` por `supabase.schema('orbit')`.
+- Aplicar as 3 migrations via CLI, na ordem dos timestamps, e conferir `pg_policies`,
+  privilégios SQL e `security_invoker` (REGRA-10).
+- Regenerar `database.types.ts` contra o projeto validado e comparar as views tipadas com o banco.
 - Segmento `membership_assinatura_comunidade` (1 cliente, onboarding preenchido) não tem linha de
   benchmark: a tela mostra "sem referência". Os 7 benchmarks cobrem os 5 segmentos operacionais + 2 legados.
-- `cta_type = 'dm_comentario'` da A.C. Enxovais é passo manual (comentado na migration 120200).
+- `cta_type = 'dm_comentario'` da A.C. Enxovais é passo manual (comentado na migration
+  `20261029093800_ig_dm_funnel_ac_enxovais.sql`).
 
 ## Verificação no banco vivo (11/10/2026, somente leitura — nada foi aplicado)
 
 - Nenhum objeto novo existe ainda (`funnel_*`, `ig_dm_funnel_snapshot`, `v_funnel_context`, `v_ig_dm_funnel`).
 - `client_onboarding_cta_type_check` aceita `link_direto | linktree_multilink | dm_comentario | nenhum | link_bio`.
 - `orbit.can_read_client(uuid)`, `has_workspace_access()` e `user_owns_client(uuid)` existem.
-- Privilégios padrão do schema dão SELECT só a `service_role`: por isso o DDL concede `select` a `authenticated`.
+- Privilégios padrão do schema concedem SELECT, mas não DML a `service_role`: por isso o DDL
+  concede escrita explicitamente, além de SELECT para `authenticated`.
 - `funnel_data.vendas_channel` e `vendas_reported_at` ainda não existem (o DDL as cria).
 - `funnel_data.period_start/period_end` são `timestamptz` gravados à meia-noite UTC; o filtro atual
   funciona porque os limites também são meia-noite UTC. Não é o bug do RWP-6, mas depende dessa convenção.

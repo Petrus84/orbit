@@ -22,11 +22,16 @@
      arquivo sem os outros dois reintroduz os bugs já documentados.
    ========================================================================== */
 
-'use client'
+"use client";
 
-import AlertasScreen from '@/components/screens/AlertasScreen'
-import { useAlerts } from '@/hooks/useAlerts'
+import AlertasScreen from "@/components/screens/AlertasScreen";
+import { useAlerts, useResolvedAlerts } from "@/hooks/useAlerts";
 
 export default function AlertasPage() {
-  return <AlertasScreen useAlerts={useAlerts} />
+  return (
+    <AlertasScreen
+      useAlerts={useAlerts}
+      useResolvedAlerts={useResolvedAlerts}
+    />
+  );
 }

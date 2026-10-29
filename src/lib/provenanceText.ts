@@ -8,7 +8,7 @@ export function provenanceLine(p: MetricProvenance): string {
   const periodo =
     p.periodLabel ??
     (p.period === "snapshot"
-      ? "snapshot (não segue o cabeçalho)"
-      : "janela do cabeçalho");
+      ? "última coleta (não muda com o período escolhido)"
+      : "período escolhido");
   return `Fonte: ${p.source} · Período: ${periodo} · Método: ${p.method}`;
 }

@@ -97,6 +97,13 @@
   color: var(--t0);
 }
 
+.managerSummary {
+  cursor: pointer;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--t0);
+}
+
 .actionText {
   margin-top: var(--space-1);
   font-size: var(--font-size-xs);

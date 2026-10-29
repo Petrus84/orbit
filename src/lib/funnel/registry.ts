@@ -1,7 +1,7 @@
 /* ==========================================================================
    ORBIT · funnel/registry.ts
    Registry do funil por tipo (link | dm). Espelha orbit.funnel_stage_registry
-   (migration 20261011120000_funnel_registry_ddl.sql) — se mudar um, mude o outro.
+   (migration 20261029093600_funnel_registry_ddl.sql) — se mudar um, mude o outro.
 
    Regra de origem (o que o Instagram enxerga e o que só chega por informe):
    - instagram_export: alcance, visitas, cliques no link. Medido pelo Instagram.

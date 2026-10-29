@@ -1,5 +1,6 @@
 "use client";
 
+import { userErrorMessage } from "@/lib/userErrorMessage";
 import React, { useState, useCallback } from "react";
 import {
   ChevronRight,
@@ -701,7 +702,7 @@ export default function OnboardingScreen({
       <div className={styles.container}>
         <div className={styles.errorState}>
           <AlertCircle className={styles.errorIcon} />
-          <p>Algo deu errado ao carregar: {error}</p>
+          <p>Algo deu errado ao carregar: {userErrorMessage(error)}</p>
         </div>
       </div>
     );

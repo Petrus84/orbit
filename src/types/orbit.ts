@@ -128,7 +128,8 @@ export type AlertType =
   | "follower_churn_high"
   | "polemic_score_high"
   | "boost_opportunity"
-  | "budget_pace";
+  | "budget_pace"
+  | "data_outdated";
 
 /**
  * ✅ PATCH (perícia enums 14/08): consolida `confidence_level` (que já
@@ -617,6 +618,7 @@ export interface KPICardData {
   id: string;
   label: string;
   value: number;
+  valueFormat?: "compact" | "integer";
   unit: string | null;
   delta: number;
   deltaLabel: string;
@@ -631,6 +633,8 @@ export interface KPICardData {
   provenance?: MetricProvenance;
   /** false = a view não trouxe delta (nulo); a tela diz "Sem comparação", nunca 0%. */
   hasComparison?: boolean;
+  /** true = o banco não trouxe o número (nulo, ou alcance 0 = falta do dado): a tela mostra "—", nunca "0". */
+  valueMissing?: boolean;
 }
 
 export interface QualityScoreItem {
@@ -688,7 +692,33 @@ export interface PostSummary {
 export interface InsightData {
   id: string;
   text: string;
+  /** Próximo passo concreto. Leitura sem ação só repete a tabela. */
+  action?: string;
+  /** Em que dado a leitura se apoia (quantos posts, o que ficou de fora). */
+  basis?: string;
+  /** Como o produto rotula a confiança: L2 = Hipótese. */
+  confidenceLevel?: "L0" | "L1" | "L2";
 }
+/**
+ * Critério de sucesso de um alerta: como saber, depois da ação, que deu certo.
+ * Derivado em lib/alertSuccess.ts (deriveSuccessCriteria); nunca escrito à mão na UI.
+ * baseline/target já vêm na unidade de exibição (ex.: algo_risk em %, não em razão).
+ * Sem critério honesto, o alerta carrega `null` — não existe meta inventada.
+ */
+export interface AlertSuccessCriteria {
+  metricName: string;
+  label: string;
+  unit: "%" | "dias";
+  baseline: number | null;
+  target: number;
+  /** true: o próprio valor da meta já conta como sucesso ("até 14 dias"). */
+  targetInclusive: boolean;
+  direction: "higher_is_better" | "lower_is_better";
+  /** Janela de leitura. Em posts quando a métrica só muda com post novo. */
+  window: { amount: number; unit: "dias" | "posts" };
+  measureHow: string;
+}
+
 // APENAS A SEÇÃO QUE PRECISA MUDAR - copie e substitua em orbit.ts
 
 export interface CriticalAlertData {
@@ -721,6 +751,10 @@ export interface CriticalAlertData {
     | "empty_database"
     | "error"
     | "estimate";
+  /** Como medir que a ação funcionou. null = a métrica não tem critério honesto. */
+  successCriteria?: AlertSuccessCriteria | null;
+  /** Segunda voz: texto pronto para o gestor levar ao cliente. */
+  managerMessage?: string | null;
 }
 export interface IGOverviewData {
   meta: DashboardHeaderMeta;
@@ -738,6 +772,7 @@ export interface IGOverviewData {
   benchmarkCadence?: BenchmarkCadence | null | undefined;
   /** Meta de gênero do avatar (orbit.client_onboarding). null = sem onboarding. */
   onboarding: OnboardingGenderExpectation | null;
+  dataStatusNotices?: { id: string; text: string }[];
 }
 
 /** Subconjunto de orbit.client_onboarding usado pelo gap de gênero (AudienceSummaryPanel). */
@@ -1197,19 +1232,19 @@ export interface AvatarAlignmentRow {
   client_id: string;
   handle: string;
   name: string;
-  expected_gender_male: number;
-  expected_gender_female: number;
+  expected_gender_male: number | null;
+  expected_gender_female: number | null;
   expected_age_range: string;
   expected_interest: string | null;
   expected_geo: string;
-  expected_geo_pct: number;
-  real_gender_male: number;
-  real_gender_female: number;
+  expected_geo_pct: number | null;
+  real_gender_male: number | null;
+  real_gender_female: number | null;
   real_age_range: string;
   real_interest: string | null;
   real_geo: string;
-  real_geo_pct: number;
-  alignment_score: number;
+  real_geo_pct: number | null;
+  alignment_score: number | null;
   alignment_status: string;
 }
 
@@ -1222,19 +1257,22 @@ export function validateAvatarAlignmentRow(
     typeof r.client_id === "string" &&
     typeof r.handle === "string" &&
     typeof r.name === "string" &&
-    typeof r.expected_gender_male === "number" &&
-    typeof r.expected_gender_female === "number" &&
+    (r.expected_gender_male === null ||
+      typeof r.expected_gender_male === "number") &&
+    (r.expected_gender_female === null ||
+      typeof r.expected_gender_female === "number") &&
     typeof r.expected_age_range === "string" &&
     (r.expected_interest === null || typeof r.expected_interest === "string") &&
     typeof r.expected_geo === "string" &&
-    typeof r.expected_geo_pct === "number" &&
-    typeof r.real_gender_male === "number" &&
-    typeof r.real_gender_female === "number" &&
+    (r.expected_geo_pct === null || typeof r.expected_geo_pct === "number") &&
+    (r.real_gender_male === null || typeof r.real_gender_male === "number") &&
+    (r.real_gender_female === null ||
+      typeof r.real_gender_female === "number") &&
     typeof r.real_age_range === "string" &&
     (r.real_interest === null || typeof r.real_interest === "string") &&
     typeof r.real_geo === "string" &&
-    typeof r.real_geo_pct === "number" &&
-    typeof r.alignment_score === "number" &&
+    (r.real_geo_pct === null || typeof r.real_geo_pct === "number") &&
+    (r.alignment_score === null || typeof r.alignment_score === "number") &&
     typeof r.alignment_status === "string"
   );
 }
@@ -1485,10 +1523,10 @@ export function validateMetaCampaignRow(row: unknown): row is MetaCampaignRow {
 // SEÇÃO 3: TIPOS DE AVATAR
 // ============================================================================
 
-export type AlignmentStatus = "healthy" | "warning" | "critical";
+export type AlignmentStatus = "healthy" | "warning" | "critical" | "unknown";
 // ⚠️ OBSERVAÇÃO (4): vocabulário de cor #3 — palavras em EN diferentes de
 // GlowColor e SemaphoreColor, para o mesmo conceito de severidade.
-export type AlignmentColor = "success" | "warning" | "danger";
+export type AlignmentColor = "success" | "warning" | "danger" | "neutral";
 // ⚠️ OBSERVAÇÃO (12): shape idêntico a FetchStatus — duplicata sem motivo
 // de forma diferente.
 export type FetchStatusLegacy = "idle" | "loading" | "success" | "error";
@@ -1504,7 +1542,7 @@ export interface AvatarProfile {
   ageRange: string;
   interest: string;
   geo: string;
-  gender: { male: number; female: number };
+  gender: { male: number | null; female: number | null };
   interestSource?: "instagram_insights" | "client_feedback" | "manual" | null;
   interestConfidence?: "L0" | "L1" | "L2" | null;
 }
@@ -1519,9 +1557,9 @@ export interface AvatarRecommendation {
 
 export interface AlignmentBar {
   label: string;
-  expected: number;
-  real: number;
-  variance: number;
+  expected: number | null;
+  real: number | null;
+  variance: number | null;
   status: AlignmentStatus;
   color: AlignmentColor;
 }
@@ -1531,7 +1569,7 @@ export interface AvatarAlignment {
   clientId: string;
   expected: AvatarProfile;
   real: AvatarProfile;
-  score: number;
+  score: number | null;
   status: AlignmentStatus;
   bars: AlignmentBar[];
   recommendations: AvatarRecommendation[];
@@ -1566,12 +1604,14 @@ export const ALIGNMENT_STATUS_LABEL: Record<AlignmentStatus, string> = {
   healthy: "Bem Alinhado",
   warning: "Atenção",
   critical: "Crítico",
+  unknown: "Indisponível",
 } as const;
 
 export const ALIGNMENT_STATUS_COLOR: Record<AlignmentStatus, AlignmentColor> = {
   healthy: "success",
   warning: "warning",
   critical: "danger",
+  unknown: "neutral",
 } as const;
 
 export const ALIGNMENT_THRESHOLDS = {

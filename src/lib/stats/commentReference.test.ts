@@ -87,7 +87,7 @@ describe("postsComComentario (RN-21)", () => {
   it("menos de 5 posts válidos => amostra insuficiente", () => {
     const r = postsComComentario([c(1), c(0), c(null)]);
     expect(postsComComentarioText(r).note).toBe(
-      "Amostra insuficiente: 2 de 5 posts",
+      "Aparece com 5 posts; hoje são 2",
     );
   });
   it("todos nulos => não calculado, nunca zero", () => {
@@ -99,22 +99,22 @@ describe("postsComComentario (RN-21)", () => {
 
 describe("textos de estado (RN-22)", () => {
   it("Intenção e Tom sem texto coletado", () => {
-    const t = "Não calculado: sem texto de comentários coletado";
+    const t = "Aparece quando o texto dos comentários for coletado";
     expect(commentTextStateNote("intencao_nos_comentarios", 0)).toBe(t);
     expect(commentTextStateNote("tom_dos_comentarios", 0)).toBe(t);
   });
   it("Intenção com menos de 30 comentários; Tom não liberado", () => {
     expect(commentTextStateNote("intencao_nos_comentarios", 12)).toBe(
-      "Amostra insuficiente: 12 de 30 comentários",
+      "Aparece com 30 comentários; hoje são 12",
     );
     expect(commentTextStateNote("tom_dos_comentarios", 12)).toBe(
-      "Não liberado para cor ou Ação",
+      "Informativo: mostra o clima dos comentários, sem cor nem ação",
     );
   });
   it("views por seguidor com 3 Reels => amostra insuficiente", () => {
     const posts = [1, 2, 3].map((v) => ({ likes: 1, comments: 0, views: v }));
     expect(refNullReason(posts, 1804, "views")).toBe(
-      "Amostra insuficiente: 3 de 5 posts",
+      "Aparece com 5 posts; hoje são 3",
     );
   });
 });

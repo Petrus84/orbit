@@ -1,41 +1,43 @@
 /* ==========================================================================
    ORBIT · Component — SectorPositioningPanel.module.css
    Bloco 1 da aba Audiência: setor/nicho/funil + benchmarking
-   Versão: 1.0.0  |  Data: 2026-08-31
-   
-   Alinhado 100% com TOKENS SSOT (src/lib/tokens.ts)
+   Versão: 2.0.0  |  Data: 2026-10-23
+
+   v2.0.0 — alinhado ao QualityScoresPanel (SSOT) e ao GlassCard v2:
+   - .panel é só layout: borda, fundo, brilho e hover do card inteiro vêm do
+     <GlassCard> (que já envolve o painel no TSX). Nenhum card aceso em repouso.
+   - .infoCard e .metricCard seguem a receita do .scoreBox: neutros em repouso
+     (borda --line, véu cyan sutil), acendem no hover.
+   - Número da métrica em --t0 (nunca colorido). Roxo (139,92,246) fora da
+     paleta removido.
+   - Badges: fundo tingido por --color-*-rgb, borda --border-glow-*, texto na
+     variante legível (--amber / --red-text). Sem glow em repouso.
+   - Hierarquia de letras: 1 título 12px --t0 · 2 rótulo 10px --text-dim ·
+     3 número 24px --t0 · 5 aviso 11px itálico --text-secondary ·
+     6 fonte 10px --text-dim.
+   Alinhado com TOKENS SSOT (src/lib/tokens.ts)
    ========================================================================== */
 
 .panel {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  padding: var(--space-4);
-  background-color: var(--bg2);
-  border: 1px solid var(--line);
-  border-radius: var(--r12);
-  box-shadow: var(--shadow-glow-cyan);
-  transition: all var(--transition-base);
-}
-
-.panel:hover {
-  border-color: var(--border-glow-cyan);
-  box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+  padding: var(--space-5);
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   TÍTULO DO PAINEL
+   TÍTULO DO PAINEL — nível 1
    ═══════════════════════════════════════════════════════════════ */
 
 .panelTitle {
-  font-family: var(--font);
-  font-size: var(--font-size-sm);
-  font-weight: 600;
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
   letter-spacing: 0.05em;
-  color: var(--neon-cyan);
+  color: var(--t0);
   text-transform: uppercase;
   margin: 0;
-  padding-bottom: var(--space-2);
+  padding-bottom: var(--space-3);
   border-bottom: 1px solid var(--line);
 }
 
@@ -56,34 +58,34 @@
   }
 }
 
-.infoCard {
-  padding: var(--space-3);
-  background: linear-gradient(
-    135deg,
-    rgba(0, 255, 255, 0.08) 0%,
-    rgba(0, 255, 255, 0.04) 100%
-  );
-  border: 1px solid rgba(0, 255, 255, 0.15);
+/* Caixa interna — mesma receita do .scoreBox do QualityScoresPanel */
+.infoCard,
+.metricCard {
+  padding: var(--space-3) var(--space-4);
+  background: var(--gradient-cyan-subtle);
+  border: 1px solid var(--line);
   border-radius: var(--r8);
-  transition: all var(--transition-fast);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    border-color var(--transition-fast),
+    background var(--transition-fast);
 }
 
-.infoCard:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(0, 255, 255, 0.12) 0%,
-    rgba(0, 255, 255, 0.08) 100%
-  );
-  border-color: rgba(0, 255, 255, 0.3);
+.infoCard:hover,
+.metricCard:hover {
+  background: var(--gradient-cyan-hover);
+  border-color: rgba(var(--color-cyan-rgb), var(--opacity-50));
+  box-shadow: var(--shadow-glow-cyan-inset-hover);
+  transform: translateY(-2px);
 }
 
+/* nível 2 — rótulo: 10px, cinza */
 .infoLabel {
   font-family: var(--font);
   font-size: var(--font-size-xs);
-  font-weight: 500;
-  color: var(
-    --text-muted
-  ); /* FIX WCAG: era var(--t2), 3.21:1 sobre hover — falha AA. --text-muted já resolve para --t1 (8:1+) */
+  font-weight: var(--font-weight-medium);
+  color: var(--text-dim);
   text-transform: uppercase;
   letter-spacing: 0.03em;
   margin: 0 0 var(--space-2) 0;
@@ -92,30 +94,30 @@
 .infoValue {
   font-family: var(--font);
   font-size: var(--font-size-xl);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   color: var(--t0);
   margin: 0 0 var(--space-1) 0;
-  line-height: 1.3;
+  line-height: var(--line-height-tight);
 }
 
 .infoSub {
   font-family: var(--font);
   font-size: var(--font-size-xs);
-  color: var(--t1);
+  color: var(--text-dim);
   margin: var(--space-1) 0 0 0;
-  line-height: 1.4;
+  line-height: var(--line-height-base);
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   LABEL DE BLOCO (BENCHMARKING)
+   LABEL DE BLOCO (BENCHMARKING / SÉRIE PRÓPRIA)
    ═══════════════════════════════════════════════════════════════ */
 
 .blockLabel {
   font-family: var(--font);
   font-size: var(--font-size-xs);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   letter-spacing: 0.05em;
-  color: var(--neon-cyan);
+  color: var(--text-dim);
   text-transform: uppercase;
   margin: var(--space-4) 0 var(--space-3) 0;
   padding-top: var(--space-3);
@@ -146,112 +148,83 @@
 }
 
 .metricCard {
-  padding: var(--space-3);
-  background: linear-gradient(
-    135deg,
-    rgba(0, 255, 255, 0.05) 0%,
-    rgba(139, 92, 246, 0.05) 100%
-  );
-  border: 1px solid var(--line);
-  border-radius: var(--r8);
   text-align: center;
-  transition: all var(--transition-fast);
-}
-
-.metricCard:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(0, 255, 255, 0.1) 0%,
-    rgba(139, 92, 246, 0.1) 100%
-  );
-  border-color: rgba(0, 255, 255, 0.3);
-  transform: translateY(-2px);
 }
 
 .metricLabel {
   font-family: var(--font);
   font-size: var(--font-size-xs);
-  font-weight: 500;
-  color: var(
-    --text-muted
-  ); /* FIX WCAG: era var(--t2), 3.21:1 sobre hover — falha AA. --text-muted já resolve para --t1 (8:1+) */
+  font-weight: var(--font-weight-medium);
+  color: var(--text-dim);
   text-transform: uppercase;
   letter-spacing: 0.03em;
   margin: 0 0 var(--space-2) 0;
 }
 
+/* nível 3 — número: 24px, branco, nunca colorido (a gravidade vai no badge) */
 .metricValue {
   font-family: var(--mono);
-  font-size: var(--font-size-2xl);
-  font-weight: 700;
-  color: var(--neon-cyan);
+  font-size: var(--font-size-metric);
+  font-weight: var(--font-weight-bold);
+  color: var(--t0);
   margin: 0 0 var(--space-2) 0;
-  line-height: 1.2;
+  line-height: var(--line-height-tight);
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   BADGES DE STATUS (Verde, Amarelo, Vermelho)
+   BADGES DE STATUS (neutro, atenção, crítico)
+   Fundo tingido por --color-*-rgb · borda --border-glow-* · texto na
+   variante legível sobre tinta. Sem brilho: a borda já sinaliza.
    ═══════════════════════════════════════════════════════════════ */
 
-.badgeNeutral {
-  display: inline-block;
-  padding: var(--space-1) var(--space-2);
-  border-radius: var(--r4);
-  font-family: var(--font);
-  font-size: var(--font-size-xs);
-  font-weight: 500;
-  background-color: rgba(112, 110, 106, 0.2);
-  color: var(--t1);
-  border: 1px solid rgba(112, 110, 106, 0.3);
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-}
-
-.badgeWarning {
-  display: inline-block;
-  padding: var(--space-1) var(--space-2);
-  border-radius: var(--r4);
-  font-family: var(--font);
-  font-size: var(--font-size-xs);
-  font-weight: 600;
-  background-color: rgba(255, 176, 32, 0.15);
-  color: var(--amber);
-  border: 1px solid var(--amber);
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  box-shadow: 0 0 10px rgba(255, 176, 32, 0.2);
-}
-
+.badgeNeutral,
+.badgeWarning,
 .badgeDanger {
   display: inline-block;
   padding: var(--space-1) var(--space-2);
   border-radius: var(--r4);
   font-family: var(--font);
   font-size: var(--font-size-xs);
-  font-weight: 600;
-  background-color: rgba(255, 68, 68, 0.15);
-  color: var(--red);
-  border: 1px solid var(--red);
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  box-shadow: 0 0 10px rgba(255, 68, 68, 0.2);
+}
+
+.badgeNeutral {
+  font-weight: var(--font-weight-medium);
+  background-color: var(--bg4);
+  color: var(--text-dim);
+  border: 1px solid var(--line2);
+}
+
+.badgeWarning {
+  font-weight: var(--font-weight-semibold);
+  background-color: rgba(var(--color-gold-rgb), 0.15);
+  color: var(--amber);
+  border: 1px solid var(--border-glow-gold);
+}
+
+.badgeDanger {
+  font-weight: var(--font-weight-semibold);
+  background-color: rgba(var(--color-red-rgb), 0.15);
+  color: var(--red-text);
+  border: 1px solid var(--border-glow-red);
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   TEXTO DE REGRA (Declaração de regra / threshold)
+   TEXTO DE REGRA (declaração de regra / threshold) — nível 5
    ═══════════════════════════════════════════════════════════════ */
 
 .ruleText {
   font-family: var(--font);
-  font-size: var(--font-size-xs);
-  color: var(--t1);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
   padding: var(--space-3);
   padding-left: var(--space-4);
   border-left: 3px solid var(--neon-cyan);
-  background-color: rgba(0, 255, 255, 0.05);
+  background-color: rgba(var(--color-cyan-rgb), 0.05);
   border-radius: var(--r8);
   margin-top: var(--space-3);
-  line-height: 1.6;
+  line-height: var(--line-height-relaxed);
   font-style: italic;
 }
 
@@ -260,8 +233,41 @@
   display: inline-block;
   margin-right: var(--space-2);
   color: var(--neon-cyan);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   font-style: normal;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   REFERÊNCIA EM VALIDAÇÃO (faixa, aviso, fonte)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* faixa P25 · mediana · P75 — contexto, nível 6 */
+.refRange {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  color: var(--text-dim);
+  margin: var(--space-2) 0 0 0;
+  line-height: var(--line-height-base);
+}
+
+/* nível 5 — aviso: 11px, itálico, cinza secundário */
+.refNote {
+  font-family: var(--font);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin: var(--space-1) 0 0 0;
+  line-height: var(--line-height-base);
+  font-style: italic;
+}
+
+/* nível 6 — fonte/metadado: 10px, cinza apagado, sem itálico, sem opacity */
+.provenanceNote {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal);
+  color: var(--text-dim);
+  margin: var(--space-1) 0 0 0;
+  line-height: var(--line-height-tight);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -269,14 +275,17 @@
    ═══════════════════════════════════════════════════════════════ */
 
 @media (prefers-reduced-motion: reduce) {
-  .panel,
   .infoCard,
   .metricCard {
     transition: none;
   }
+
+  .infoCard:hover,
+  .metricCard:hover {
+    transform: none;
+  }
 }
 
-/* Focus visible para acessibilidade */
 .panel:focus-visible {
   outline: 2px solid var(--neon-cyan);
   outline-offset: 2px;
@@ -285,22 +294,4 @@
 .metricCard:focus-visible {
   outline: 2px solid var(--neon-cyan);
   outline-offset: 1px;
-}
-/* Referência em validação (comentários e alcance) */
-.refRange {
-  font-family: var(--font);
-  font-size: var(--font-size-xs);
-  color: var(--t1);
-  margin: var(--space-2) 0 0 0;
-  line-height: 1.5;
-}
-
-.refNote {
-  font-family: var(--font);
-  font-size: var(--font-size-xs);
-  color: var(--t1);
-  opacity: 0.75;
-  margin: var(--space-1) 0 0 0;
-  line-height: 1.5;
-  font-style: italic;
 }

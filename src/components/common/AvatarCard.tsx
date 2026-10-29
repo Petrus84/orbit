@@ -1,36 +1,40 @@
 // src/components/common/AvatarCard.tsx
 
-import React from 'react'
-import type { AvatarProfile, AlignmentStatus } from '@/types/avatar'
-import styles from './AvatarCard.module.css'
+import React from "react";
+import type { AvatarProfile, AlignmentStatus } from "@/types/avatar";
+import styles from "./AvatarCard.module.css";
 
 export interface AvatarCardProps {
-  profile: AvatarProfile
-  title: string
-  variant: 'expected' | 'real'
-  status: AlignmentStatus
-  insightLabel: string
-  insightText: string
+  profile: AvatarProfile;
+  title: string;
+  variant: "expected" | "real";
+  status: AlignmentStatus;
+  insightLabel: string;
+  insightText: string;
 }
 
-const STATUS_GLOW_MAP: Record<AlignmentStatus, 'cyan' | 'gold' | 'red' | 'green' | 'none'> = {
-  healthy: 'green',
-  warning: 'gold',
-  critical: 'red',
-}
+const STATUS_GLOW_MAP: Record<
+  AlignmentStatus,
+  "cyan" | "gold" | "red" | "green" | "none"
+> = {
+  healthy: "green",
+  warning: "gold",
+  critical: "red",
+  unknown: "none",
+};
 
-const VARIANT_ICON_MAP: Record<'expected' | 'real', string> = {
-  expected: '👤',
-  real: '📊',
-}
+const VARIANT_ICON_MAP: Record<"expected" | "real", string> = {
+  expected: "👤",
+  real: "📊",
+};
 
 // AvatarProfile.ageRange já é a faixa etária dominante calculada (string,
 // ex.: "18-24"), não uma distribuição por faixa — não há o que reduzir aqui.
 // (Achado novo: a versão anterior chamava Object.entries(ageRange) sobre
 // uma string, o que não quebra a compilação — TS aceita string em Object.
 // entries({}) — mas nunca calculava nada útil em runtime.)
-function getMostCommonAgeRange(ageRange: AvatarProfile['ageRange']): string {
-  return ageRange || 'Não especificado'
+function getMostCommonAgeRange(ageRange: AvatarProfile["ageRange"]): string {
+  return ageRange || "Não especificado";
 }
 
 // AvatarProfile real (orbit.ts) não tem topCities/topCountries — o campo
@@ -42,11 +46,13 @@ function getMostCommonAgeRange(ageRange: AvatarProfile['ageRange']): string {
 // avatarRepository já normaliza "", "null", "undefined" antes de montar o
 // profile, mas este componente não deve depender só disso — defesa em
 // profundidade contra o mesmo dado sentinela, sem `String(null)`.
-const EMPTY_GEO_SENTINELS = new Set(['', 'null', 'undefined'])
+const EMPTY_GEO_SENTINELS = new Set(["", "null", "undefined"]);
 
-function getTopLocation(geo: AvatarProfile['geo']): string {
-  const trimmed = (geo ?? '').trim()
-  return EMPTY_GEO_SENTINELS.has(trimmed.toLowerCase()) ? 'Não especificado' : trimmed
+function getTopLocation(geo: AvatarProfile["geo"]): string {
+  const trimmed = (geo ?? "").trim();
+  return EMPTY_GEO_SENTINELS.has(trimmed.toLowerCase())
+    ? "Não especificado"
+    : trimmed;
 }
 
 export function AvatarCard({
@@ -57,18 +63,20 @@ export function AvatarCard({
   insightLabel,
   insightText,
 }: AvatarCardProps): React.ReactElement {
-  const glowColor = STATUS_GLOW_MAP[status]
-  const icon = VARIANT_ICON_MAP[variant]
-  
+  const glowColor = STATUS_GLOW_MAP[status];
+  const icon = VARIANT_ICON_MAP[variant];
+
   // ✅ Mapear glow color para classe CSS
-  const fillClass = styles[`fill${glowColor.charAt(0).toUpperCase()}${glowColor.slice(1)}`]
-  const textClass = styles[`text${glowColor.charAt(0).toUpperCase()}${glowColor.slice(1)}`]
-  
+  const fillClass =
+    styles[`fill${glowColor.charAt(0).toUpperCase()}${glowColor.slice(1)}`];
+  const textClass =
+    styles[`text${glowColor.charAt(0).toUpperCase()}${glowColor.slice(1)}`];
+
   // ✅ Extrair dados do perfil
-  const topAgeRange = getMostCommonAgeRange(profile.ageRange)
-  const topLocation = getTopLocation(profile.geo)
-  const femalePercentage = profile.gender.female
-  const malePercentage = profile.gender.male
+  const topAgeRange = getMostCommonAgeRange(profile.ageRange);
+  const topLocation = getTopLocation(profile.geo);
+  const femalePercentage = profile.gender.female;
+  const malePercentage = profile.gender.male;
 
   return (
     <div className={styles.card}>
@@ -81,27 +89,32 @@ export function AvatarCard({
       {/* Bloco: Gênero */}
       <div className={styles.block}>
         <p className={styles.blockLabel}>Gênero</p>
-        
+
         {/* Trilho de progresso */}
         <div className={styles.genderTrack}>
           <div
             className={`${styles.genderFill} ${fillClass}`}
-            style={{ width: `${femalePercentage}%` }}
+            style={{
+              width:
+                femalePercentage === null ? undefined : `${femalePercentage}%`,
+            }}
           />
         </div>
 
         {/* Legenda */}
         <div className={styles.genderLegend}>
           <span>
-            ♀ Feminino{' '}
+            ♀ Feminino{" "}
             <span className={`${styles.genderValue} ${textClass}`}>
-              {femalePercentage.toFixed(0)}%
+              {femalePercentage === null
+                ? "—"
+                : `${femalePercentage.toFixed(0)}%`}
             </span>
           </span>
           <span>
-            ♂ Masculino{' '}
+            ♂ Masculino{" "}
             <span className={`${styles.genderValue} ${textClass}`}>
-              {malePercentage.toFixed(0)}%
+              {malePercentage === null ? "—" : `${malePercentage.toFixed(0)}%`}
             </span>
           </span>
         </div>
@@ -130,5 +143,5 @@ export function AvatarCard({
         </div>
       )}
     </div>
-  )
+  );
 }

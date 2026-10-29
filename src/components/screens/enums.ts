@@ -54,7 +54,7 @@ export const ENUM_PROOF: Array<[ProofMechanism, string]> = [
   ["associacao_marca", "Associação de marca"],
   ["resultado_documentado", "Resultado documentado"],
   ["clientes_ativos_gestao", "Clientes atendidos hoje"],
-  ["nenhum_observavel", "Nada que prove o resultado"],
+  ["nenhum_observavel", "Ainda não mostro prova do resultado"],
 ];
 
 export const ENUM_AFFECT_SOURCE: Array<[ValuesAffectSource, string]> = [

@@ -138,6 +138,9 @@
   --font-size-2xl: 16px;
   --font-size-3xl: 22px;
   --font-size-4xl: 26px;
+  /* Número-métrica de card (KPICard, scores, painéis): 24px, igual ao KPICard.
+     Use este token em TODO número grande de métrica para a tela ficar uniforme. */
+  --font-size-metric: 24px;
 
   /* ═══════════════════════════════════════════════════════════════
      BORDER RADIUS (SSOT)
@@ -263,6 +266,37 @@
   --gradient-gray-hover: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.04),
+    transparent
+  );
+
+  /* ── Efeito "card aceso" (hover) — UM padrão para todo card ──────────────
+     Brilho por fora + preenchimento por dentro (inset) + véu de cor no fundo.
+     Usado pelo GlassCard. Nenhum card fica aceso em repouso. */
+  --shadow-fill-cyan:
+    0 0 24px rgba(var(--color-cyan-rgb), 0.3),
+    inset 0 0 40px rgba(var(--color-cyan-rgb), 0.1);
+  --shadow-fill-red:
+    0 0 24px rgba(var(--color-red-rgb), 0.3),
+    inset 0 0 40px rgba(var(--color-red-rgb), 0.1);
+  --shadow-fill-gold:
+    0 0 24px rgba(var(--color-gold-rgb), 0.3),
+    inset 0 0 40px rgba(var(--color-gold-rgb), 0.1);
+  --shadow-fill-green:
+    0 0 24px rgba(var(--color-green-rgb), 0.3),
+    inset 0 0 40px rgba(var(--color-green-rgb), 0.1);
+  --gradient-red-hover: linear-gradient(
+    180deg,
+    rgba(var(--color-red-rgb), 0.08),
+    transparent
+  );
+  --gradient-gold-hover: linear-gradient(
+    180deg,
+    rgba(var(--color-gold-rgb), 0.08),
+    transparent
+  );
+  --gradient-green-hover: linear-gradient(
+    180deg,
+    rgba(var(--color-green-rgb), 0.08),
     transparent
   );
 }

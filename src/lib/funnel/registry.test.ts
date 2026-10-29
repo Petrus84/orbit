@@ -41,7 +41,7 @@ test("registry: venda é a única etapa informada e fecha cada funil", () => {
 
 test("DDL: o cta_type que escolhe o funil de DM existe em CTAType (CHECK real da coluna)", () => {
   const ddl = read(
-    "../../../supabase/migrations/20261011120000_funnel_registry_ddl.sql",
+    "../../../supabase/migrations/20261029093600_funnel_registry_ddl.sql",
   );
   const usado = [...ddl.matchAll(/o\.cta_type\s*=\s*'(\w+)'/g)].map(
     (m) => m[1],
@@ -57,7 +57,7 @@ test("DDL: o cta_type que escolhe o funil de DM existe em CTAType (CHECK real da
 
 test("DDL: leitura do direct é por cliente (can_read_client), nunca using (true)", () => {
   const ddl = read(
-    "../../../supabase/migrations/20261011120000_funnel_registry_ddl.sql",
+    "../../../supabase/migrations/20261029093600_funnel_registry_ddl.sql",
   );
   const policy =
     /create policy sel_ig_dm_funnel_snapshot on orbit\.ig_dm_funnel_snapshot[\s\S]*?;/.exec(
@@ -70,7 +70,7 @@ test("DDL: leitura do direct é por cliente (can_read_client), nunca using (true
 
 test("DDL: tabelas de referência exigem has_workspace_access; authenticated nunca escreve", () => {
   const ddl = read(
-    "../../../supabase/migrations/20261011120000_funnel_registry_ddl.sql",
+    "../../../supabase/migrations/20261029093600_funnel_registry_ddl.sql",
   );
   for (const t of ["funnel_stage_registry", "funnel_conversion_benchmark"]) {
     const policy =
@@ -89,4 +89,14 @@ test("DDL: tabelas de referência exigem has_workspace_access; authenticated nun
       paraAuthenticated.every((c) => c === "select"),
     paraAuthenticated.join(","),
   );
+});
+
+test("DDL: service_role recebe GRANT de escrita nas tabelas do funil", () => {
+  const ddl = read(
+    "../../../supabase/migrations/20261029093600_funnel_registry_ddl.sql",
+  );
+  const serviceGrant =
+    /grant\s+insert,\s*update,\s*delete\s+on\s+orbit\.funnel_stage_registry,\s*orbit\.funnel_conversion_benchmark,\s*orbit\.ig_dm_funnel_snapshot\s+to\s+service_role\s*;/i;
+
+  assert.match(ddl, serviceGrant);
 });

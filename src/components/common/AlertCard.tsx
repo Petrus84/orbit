@@ -47,6 +47,11 @@ import {
   markAlertAsRead,
   isAlertType,
 } from "@/lib/repositories/alertsRepository";
+import { formatPtBr } from "@/lib/format";
+import {
+  describeResolution,
+  resolvedBadgeLabel,
+} from "@/lib/alertResolvedCopy";
 import AlertIcon from "./AlertIcon";
 import styles from "./AlertCard.module.css";
 
@@ -133,6 +138,8 @@ export default function AlertCard({
   // que o enum `AlertType` que `AlertIcon` exige. Narrowing explícito em
   // vez de cast: um valor fora do enum vira fallback genérico, não erro.
   const iconType = isAlertType(alert.type) ? alert.type : null;
+  // Texto do histórico: só afirma o que o dado prova (ver alertResolvedCopy.ts).
+  const resolutionText = alert.isResolved ? describeResolution(alert) : null;
 
   return (
     <div className={`${styles.card} ${severityClass}`} aria-live="polite">
@@ -160,11 +167,15 @@ export default function AlertCard({
 
         {alert.metricName && alert.metricValue !== null && (
           <p className={styles.text}>
-            {alert.metricName}: <strong>{alert.metricValue.toFixed(2)}</strong>
+            {/* Resolvido: o valor gravado é o da última leitura com o alerta
+                aberto, não o do fechamento — o rótulo não pode sugerir o contrário. */}
+            {alert.isResolved ? "Último valor registrado · " : ""}
+            {alert.metricName}:{" "}
+            <strong>{formatPtBr(alert.metricValue, 2)}</strong>
             {alert.thresholdValue !== null && (
               <>
                 {" "}
-                contra <strong>{alert.thresholdValue.toFixed(2)}</strong>
+                contra <strong>{formatPtBr(alert.thresholdValue, 2)}</strong>
               </>
             )}
           </p>
@@ -196,12 +207,24 @@ export default function AlertCard({
         )}
 
         {alert.suggestedAction && (
-          <p className={styles.text}>💡 {alert.suggestedAction}</p>
+          <p className={styles.text}>
+            {alert.isResolved
+              ? `Ação recomendada na época: ${alert.suggestedAction}`
+              : `💡 ${alert.suggestedAction}`}
+          </p>
         )}
+
+        {/* Prova de resultado: resolved_at/resolved_by já são gravados a
+            cada sync e a cada trigger (check_churn_alert), mas nenhuma tela
+            lia isso até agora. system:* = fechado automaticamente porque a
+            métrica voltou ao normal, não um clique de "Resolver". */}
+        {resolutionText && <p className={styles.text}>✅ {resolutionText}</p>}
 
         <div className={styles.action}>
           <span className={`${styles.severityBadge} ${severityClass}`}>
-            {severityLabel}
+            {alert.isResolved
+              ? resolvedBadgeLabel(severityLabel)
+              : severityLabel}
           </span>
 
           {alert.clientName && (

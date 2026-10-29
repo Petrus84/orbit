@@ -23,6 +23,7 @@
 
 "use client";
 
+import { userErrorMessage } from "@/lib/userErrorMessage";
 import React from "react";
 import { useOrbitDashboard } from "@/context/OrbitDashboardContext";
 import { useAvatar } from "@/hooks/useAvatar";
@@ -239,9 +240,7 @@ export const AvatarScreen: React.FC<AvatarScreenProps> = ({
         <CenterState
           icon="⚠️"
           title="Dados inválidos recebidos"
-          body="O servidor retornou dados que não passaram na validação."
-          detailTitle="Detalhes do erro:"
-          detailRaw={error ?? undefined}
+          body="Os dados do avatar chegaram num formato que não conseguimos ler."
           primaryAction={{ label: "🔄 Tentar Novamente", onClick: refetch }}
           hint="Se o problema persistir, entre em contato com o suporte."
         />
@@ -256,12 +255,10 @@ export const AvatarScreen: React.FC<AvatarScreenProps> = ({
       <div className={styles.page}>
         <CenterState
           icon="❌"
-          title="Erro desconhecido"
+          title="Algo deu errado"
           body="Ocorreu um erro inesperado ao carregar o alinhamento de avatar."
-          detailTitle="Mensagem:"
-          detailRaw={error ?? undefined}
           primaryAction={{ label: "🔄 Tentar Novamente", onClick: refetch }}
-          hint="Verifique o console do navegador para mais detalhes."
+          hint="Se o problema persistir, entre em contato com o suporte."
         />
       </div>
     );
@@ -283,9 +280,7 @@ export const AvatarScreen: React.FC<AvatarScreenProps> = ({
             <p className={styles.genericErrorTitle}>
               Algo deu errado ao carregar os dados
             </p>
-            <p className={styles.genericErrorBody}>
-              {error || "Erro desconhecido"}
-            </p>
+            <p className={styles.genericErrorBody}>{userErrorMessage(error)}</p>
           </div>
         </div>
       </div>

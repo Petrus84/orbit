@@ -129,39 +129,7 @@ const EMPTY_FUNNEL_METRICS: FunnelMetrics = {
 
 // ============================================================================
 // Contexto do funil (tipo + benchmark de conversão) e resumo de DMs
-// ⚠ v_funnel_context / v_ig_dm_funnel nascem na migration 20261011120000 e
-// ainda não estão em database.types.ts. Depois de aplicar a migration:
-//   supabase gen types typescript --schema orbit,public > src/types/database.types.ts
-// e trocar `orbitViews()` por `supabase.schema('orbit')`. Enquanto isso, falha
-// de leitura NÃO derruba a tela: devolve null e o funil segue como "link".
 // ============================================================================
-
-// REGRA-07 (sem `any`): descreve só o que estas duas leituras usam. Some quando
-// database.types.ts for regenerado e orbitViews() virar supabase.schema('orbit').
-type LooseRow = Record<string, unknown>;
-interface LooseResult<T> {
-  data: T | null;
-  error: { message: string } | null;
-}
-interface LooseBuilder extends PromiseLike<LooseResult<LooseRow[]>> {
-  select(columns: string): LooseBuilder;
-  eq(column: string, value: string): LooseBuilder;
-  lte(column: string, value: string): LooseBuilder;
-  gte(column: string, value: string): LooseBuilder;
-  maybeSingle(): PromiseLike<LooseResult<LooseRow>>;
-}
-const orbitViews = () =>
-  supabase.schema("orbit") as unknown as { from(name: string): LooseBuilder };
-
-const str = (v: unknown): string | null => (typeof v === "string" ? v : null);
-const num = (v: unknown): number | null => {
-  if (typeof v === "number") return Number.isFinite(v) ? v : null;
-  if (typeof v === "string" && v.trim() !== "") {
-    const n = Number(v);
-    return Number.isFinite(n) ? n : null;
-  }
-  return null;
-};
 
 const CONFIDENCE_RANK: Record<ConfidenceLevel, number> = {
   L0: 0,
@@ -172,7 +140,8 @@ const CONFIDENCE_RANK: Record<ConfidenceLevel, number> = {
 async function fetchFunnelContext(
   clientId: string,
 ): Promise<FunnelContext | null> {
-  const { data, error } = await orbitViews()
+  const { data, error } = await supabase
+    .schema("orbit")
     .from("v_funnel_context")
     .select("*")
     .eq("client_id", clientId)
@@ -185,25 +154,25 @@ async function fetchFunnelContext(
     return null;
   }
   if (!data) return null;
-  const eventMeasured = str(data.benchmark_event_measured);
+  const eventMeasured = data.benchmark_event_measured;
   const funnelType: FunnelKind = data.funnel_type === "dm" ? "dm" : "link";
   return {
     funnelType,
-    segment: str(data.segment),
+    segment: data.segment,
     benchmark:
       eventMeasured !== null
         ? {
-            valuePct: num(data.conversion_benchmark_pct),
+            valuePct: data.conversion_benchmark_pct,
             eventMeasured,
-            sourceGrade: (str(data.benchmark_source_grade) ??
+            sourceGrade: (data.benchmark_source_grade ??
               "n/a") as ConversionSourceGrade,
-            confidenceLevel: (str(data.benchmark_confidence) ??
+            confidenceLevel: (data.benchmark_confidence ??
               "L2") as ConfidenceLevel,
             isProxy: data.benchmark_is_proxy !== false,
-            sourceName: str(data.benchmark_source_name),
-            sourceUrl: str(data.benchmark_source_url),
-            sourceYear: str(data.benchmark_source_year),
-            caveat: str(data.benchmark_caveat),
+            sourceName: data.benchmark_source_name,
+            sourceUrl: data.benchmark_source_url,
+            sourceYear: data.benchmark_source_year,
+            caveat: data.benchmark_caveat,
           }
         : null,
   };
@@ -214,7 +183,8 @@ async function fetchDmFunnel(
   start: string,
   end: string,
 ): Promise<DmFunnelSummary | null> {
-  const { data, error } = await orbitViews()
+  const { data, error } = await supabase
+    .schema("orbit")
     .from("v_ig_dm_funnel")
     .select("*")
     .eq("client_id", clientId)
@@ -227,35 +197,44 @@ async function fetchDmFunnel(
     );
     return null;
   }
-  const rows: LooseRow[] = data ?? [];
+  const rows = data ?? [];
   if (rows.length === 0) return null;
-  const sum = (k: string) =>
-    rows.reduce((acc, r) => acc + Number(r[k] ?? 0), 0);
+  const sum = (values: (number | null)[]) =>
+    values.reduce<number>((acc, value) => acc + (value ?? 0), 0);
   const startDate = start.slice(0, 10);
   const endDate = end.slice(0, 10);
   const worst = rows
-    .map((r) => (str(r.confidence_level) ?? "L2") as ConfidenceLevel)
+    .map((r) => (r.confidence_level ?? "L2") as ConfidenceLevel)
     .reduce(
       (a, b) => (CONFIDENCE_RANK[b] > CONFIDENCE_RANK[a] ? b : a),
       "L0" as ConfidenceLevel,
     );
+  const periodStarts = rows
+    .map((row) => row.period_start)
+    .filter((value): value is string => value !== null)
+    .sort();
+  const periodEnds = rows
+    .map((row) => row.period_end)
+    .filter((value): value is string => value !== null)
+    .sort();
+  const periodStart = periodStarts[0];
+  const periodEnd = periodEnds[periodEnds.length - 1];
+  if (!periodStart || !periodEnd) return null;
   return {
-    conversasComerciais: sum("conversas_comerciais"),
-    pediuPreco: sum("pediu_preco"),
-    intencaoCompra: sum("intencao_compra"),
-    fechamentoProvavel: sum("fechamento_provavel"),
-    vendaEvidenciaForte: sum("venda_evidencia_forte"),
-    followupsPending: sum("followups_pending"),
-    periodStart: rows.map((r) => String(r.period_start)).sort()[0] as string,
-    periodEnd: rows
-      .map((r) => String(r.period_end))
-      .sort()
-      .slice(-1)[0] as string,
+    conversasComerciais: sum(rows.map((row) => row.conversas_comerciais)),
+    pediuPreco: sum(rows.map((row) => row.pediu_preco)),
+    intencaoCompra: sum(rows.map((row) => row.intencao_compra)),
+    fechamentoProvavel: sum(rows.map((row) => row.fechamento_provavel)),
+    vendaEvidenciaForte: sum(rows.map((row) => row.venda_evidencia_forte)),
+    followupsPending: sum(rows.map((row) => row.followups_pending)),
+    periodStart,
+    periodEnd,
     confidenceLevel: worst,
-    sourceNote: str(rows[0]?.source_note),
+    sourceNote: rows[0]?.source_note ?? null,
     partialPeriods: rows.some(
       (r) =>
-        String(r.period_start) < startDate || String(r.period_end) > endDate,
+        (r.period_start !== null && r.period_start < startDate) ||
+        (r.period_end !== null && r.period_end > endDate),
     ),
   };
 }

@@ -6,7 +6,7 @@ import type { AvatarRecommendation, GlowColor } from "@/types/orbit";
 
 interface RecommendationAlertProps {
   status: AlignmentStatus;
-  score: number;
+  score: number | null;
   // ✅ FIX: dado real por cliente, calculado em avatarRepository.ts a partir
   // das barras reais de alinhamento. Opcionais para não quebrar nenhum outro
   // caller existente que ainda não os passa — nesse caso cai no fallback
@@ -21,6 +21,7 @@ const STATUS_TO_GLOW: Record<AlignmentStatus, GlowColor> = {
   critical: "red",
   warning: "gold",
   healthy: "green",
+  unknown: "none",
 };
 
 interface RecommendationItem {
@@ -96,6 +97,12 @@ const STATUS_CONFIG: Record<AlignmentStatus, StatusConfig> = {
       },
     ],
   },
+  unknown: {
+    icon: "ℹ️",
+    title: "Alinhamento indisponível",
+    badgeLabel: "SEM DADOS",
+    recommendations: [],
+  },
 };
 
 export const RecommendationAlert: React.FC<RecommendationAlertProps> = ({
@@ -156,7 +163,9 @@ export const RecommendationAlert: React.FC<RecommendationAlertProps> = ({
         <div className={styles.headerText}>
           <div className={styles.metaRow}>
             <span className={styles.badge}>{cfg.badgeLabel}</span>
-            <span className={styles.scoreText}>Nota: {score}%</span>
+            <span className={styles.scoreText}>
+              Nota: {score === null ? "—" : `${score}%`}
+            </span>
           </div>
           <p className={styles.headline}>{cfg.title}</p>
         </div>

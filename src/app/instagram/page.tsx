@@ -1,4 +1,5 @@
 "use client";
+import { userErrorMessage } from "@/lib/userErrorMessage";
 import { useState } from "react";
 import {
   OrbitDashboardProvider,
@@ -15,6 +16,7 @@ import { FormatPerformanceTable } from "@/components/content/FormatPerformanceTa
 import { InsightCard } from "@/components/content/InsightCard";
 import { CriticalAlert } from "@/components/content/CriticalAlert";
 import { AudienceSummaryPanel } from "@/components/content/AudienceSummaryPanel";
+import { DataStatusNotice } from "@/components/content/DataStatusNotice";
 import { SectorPositioningPanel } from "@/components/panels/SectorPositioningPanel";
 import { PostingProfilePanel } from "@/components/panels/PostingProfilePanel";
 import { GlassCard } from "@/components/common/GlassCard";
@@ -33,7 +35,9 @@ import type {
 function mapKPICardDataToKPI(data: KPICardData): KPI {
   return {
     label: data.label,
-    value: data.value,
+    // Dado ausente aparece como "—", nunca como 0 (KPICard.formatValue repassa string).
+    value: data.valueMissing ? "—" : data.value,
+    ...(data.valueFormat ? { valueFormat: data.valueFormat } : {}),
     delta: data.delta,
     trend: data.delta > 0 ? "up" : data.delta < 0 ? "down" : "neutral",
     // FIX (19/09/2026): fallback era 'L0' — mostrava badge verde "Medido"
@@ -128,7 +132,7 @@ function InstagramOverviewLayout() {
         {status === "error" && error && (
           <div className={styles.stateCenter} role="alert">
             <p className={styles.errorText}>
-              Erro ao carregar dados: ⚠️ {error}
+              Não foi possível carregar: ⚠️ {userErrorMessage(error)}
             </p>
           </div>
         )}
@@ -136,10 +140,15 @@ function InstagramOverviewLayout() {
         {/* SUCESSO */}
         {status === "success" && data && (
           <>
+            <DataStatusNotice notices={data.dataStatusNotices ?? []} />
+
             {/* TELA 1 — Visão Geral */}
             {activeTab === "overview" && (
               <>
-                <section className={styles.kpiRow} aria-label="KPIs principais">
+                <section
+                  className={`${styles.kpiRow} ${data.kpis.length > 4 ? styles.kpiRowExpanded : ""}`}
+                  aria-label="KPIs principais"
+                >
                   {data.kpis.map((kpi: KPICardData) => (
                     <KPICard key={kpi.id} kpi={mapKPICardDataToKPI(kpi)} />
                   ))}
@@ -150,7 +159,7 @@ function InstagramOverviewLayout() {
                   aria-label="Análise de conteúdo"
                 >
                   <QualityScoresPanel scores={data.qualityScores} />
-                  <GlassCard glowColor="cyan" className={styles.rightPanel}>
+                  <GlassCard glowColor="none" className={styles.rightPanel}>
                     <FormatPerformanceTable
                       rows={data.formatPerformance}
                       expandable={false}
