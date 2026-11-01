@@ -1,6 +1,5 @@
 {
   "kpis": [
-
     {
       "kpi_id": "polemic_score_pct",
       "nome": "Score de Polêmica / Discussão nos comentários",
@@ -9,12 +8,25 @@
       "camada": "C2",
       "formula": "comments / likes * 100",
       "inputs": [
-        { "source": "orbit.ig_posts", "column": "likes", "null_policy": "skip" },
-        { "source": "orbit.ig_posts", "column": "comments", "null_policy": "skip" }
+        {
+          "source": "orbit.ig_posts",
+          "column": "likes",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.ig_posts",
+          "column": "comments",
+          "null_policy": "skip"
+        }
       ],
       "output": { "type": "numeric", "unit": "pct" },
       "confidence": "L1",
-      "semaphore": { "green": "percentil rpc", "amber": "faixa", "red": "percentil rpc", "source": "rpc" },
+      "semaphore": {
+        "green": "percentil rpc",
+        "amber": "faixa",
+        "red": "percentil rpc",
+        "source": "rpc"
+      },
       "guards": ["likes<=0 -> NULL", "mediana_conta, não média_post"],
       "screens": ["components/panels/SectorPositioningPanel.tsx"],
       "writer": "resolveEngagementScoreAlert (ramo polemic) via syncClientAlerts.ts",
@@ -23,7 +35,9 @@
       "call_site": "contentContractEngine.ts:1338; instagramOverviewRepository.ts:836",
       "fase": 4,
       "enquadramento": "exige_benchmark_category",
-      "n_ref_thresholds": [{ "dataset_id": "benchmark_58_v2_real_schema", "linhas": 26 }]
+      "n_ref_thresholds": [
+        { "dataset_id": "benchmark_58_v2_real_schema", "linhas": 26 }
+      ]
     },
     {
       "kpi_id": "utility_score_pct",
@@ -33,9 +47,21 @@
       "camada": "C2",
       "formula": "(interactions_saves + interactions_shares) / reach_total * 100",
       "inputs": [
-        { "source": "orbit.ig_account_snapshots", "column": "interactions_saves", "null_policy": "skip" },
-        { "source": "orbit.ig_account_snapshots", "column": "interactions_shares", "null_policy": "skip" },
-        { "source": "orbit.ig_account_snapshots", "column": "reach_total", "null_policy": "skip" }
+        {
+          "source": "orbit.ig_account_snapshots",
+          "column": "interactions_saves",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.ig_account_snapshots",
+          "column": "interactions_shares",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.ig_account_snapshots",
+          "column": "reach_total",
+          "null_policy": "skip"
+        }
       ],
       "output": { "type": "numeric", "unit": "pct" },
       "confidence": "L2",
@@ -63,7 +89,11 @@
       "camada": "C2",
       "formula": "LEAST(100, n_keywords * 25) via orbit.calc_utility_score_pct(caption)",
       "inputs": [
-        { "source": "orbit.ig_posts", "column": "caption", "null_policy": "skip" }
+        {
+          "source": "orbit.ig_posts",
+          "column": "caption",
+          "null_policy": "skip"
+        }
       ],
       "output": { "type": "numeric", "unit": "score_0_100" },
       "confidence": "L2",
@@ -91,14 +121,34 @@
       "camada": "C2",
       "formula": "((reach_total * reach_followers_pct / 100) / followers_total) * 100",
       "inputs": [
-        { "source": "orbit.ig_account_snapshots", "column": "reach_total", "null_policy": "skip" },
-        { "source": "orbit.ig_account_snapshots", "column": "reach_followers_pct", "null_policy": "skip" },
-        { "source": "orbit.ig_account_snapshots", "column": "followers_total", "null_policy": "skip" }
+        {
+          "source": "orbit.ig_account_snapshots",
+          "column": "reach_total",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.ig_account_snapshots",
+          "column": "reach_followers_pct",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.ig_account_snapshots",
+          "column": "followers_total",
+          "null_policy": "skip"
+        }
       ],
       "output": { "type": "numeric", "unit": "pct" },
       "confidence": "L2",
-      "semaphore": { "green": ">=10", "amber": "3-10", "red": "<3", "source": "gestao" },
-      "guards": ["sample_count=0 — semáforo provisório, não RPC de mercado", "não classificar via MARKET_RPC"],
+      "semaphore": {
+        "green": ">=10",
+        "amber": "3-10",
+        "red": "<3",
+        "source": "gestao"
+      },
+      "guards": [
+        "sample_count=0 — semáforo provisório, não RPC de mercado",
+        "não classificar via MARKET_RPC"
+      ],
       "screens": ["components/panels/SectorPositioningPanel.tsx"],
       "writer": null,
       "adr": "",
@@ -106,7 +156,9 @@
       "call_site": "coluna vps_pct; classifyMetric ausente",
       "fase": 3,
       "enquadramento": "exige_benchmark_category",
-      "n_ref_thresholds": [{ "dataset_id": "internal_management_thresholds_v1", "linhas": 1 }]
+      "n_ref_thresholds": [
+        { "dataset_id": "internal_management_thresholds_v1", "linhas": 1 }
+      ]
     },
     {
       "kpi_id": "er_real_pct",
@@ -116,15 +168,39 @@
       "camada": "C2",
       "formula": "(saves + shares + comments) / reach * 100",
       "inputs": [
-        { "source": "orbit.ig_account_snapshots", "column": "interactions_saves", "null_policy": "skip" },
-        { "source": "orbit.ig_account_snapshots", "column": "interactions_shares", "null_policy": "skip" },
-        { "source": "orbit.ig_account_snapshots", "column": "interactions_comments", "null_policy": "skip" },
-        { "source": "orbit.ig_account_snapshots", "column": "reach_total", "null_policy": "skip" }
+        {
+          "source": "orbit.ig_account_snapshots",
+          "column": "interactions_saves",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.ig_account_snapshots",
+          "column": "interactions_shares",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.ig_account_snapshots",
+          "column": "interactions_comments",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.ig_account_snapshots",
+          "column": "reach_total",
+          "null_policy": "skip"
+        }
       ],
       "output": { "type": "numeric", "unit": "pct" },
       "confidence": "L2",
-      "semaphore": { "green": ">=2", "amber": "0.5-2", "red": "<0.5", "source": "gestao" },
-      "guards": ["sample_count=0", "não confundir com engagement_public nem com likes+comments/followers"],
+      "semaphore": {
+        "green": ">=2",
+        "amber": "0.5-2",
+        "red": "<0.5",
+        "source": "gestao"
+      },
+      "guards": [
+        "sample_count=0",
+        "não confundir com engagement_public nem com likes+comments/followers"
+      ],
       "screens": ["components/panels/SectorPositioningPanel.tsx"],
       "writer": null,
       "adr": "",
@@ -132,7 +208,9 @@
       "call_site": "instagramOverviewRepository.ts:933,975",
       "fase": 3,
       "enquadramento": "exige_benchmark_category",
-      "n_ref_thresholds": [{ "dataset_id": "internal_management_thresholds_v1", "linhas": 1 }]
+      "n_ref_thresholds": [
+        { "dataset_id": "internal_management_thresholds_v1", "linhas": 1 }
+      ]
     },
     {
       "kpi_id": "play_to_view_ratio",
@@ -142,13 +220,30 @@
       "camada": "C2",
       "formula": "reel_plays / reel_views",
       "inputs": [
-        { "source": "orbit.ig_posts", "column": "content_format", "null_policy": "skip" },
-        { "source": "orbit.ig_posts", "column": "reel_plays", "null_policy": "skip" },
-        { "source": "orbit.ig_posts", "column": "reel_views", "null_policy": "skip" }
+        {
+          "source": "orbit.ig_posts",
+          "column": "content_format",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.ig_posts",
+          "column": "reel_plays",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.ig_posts",
+          "column": "reel_views",
+          "null_policy": "skip"
+        }
       ],
       "output": { "type": "numeric", "unit": "razao" },
       "confidence": "L1",
-      "semaphore": { "green": "percentil rpc", "amber": "faixa", "red": "percentil rpc", "source": "rpc" },
+      "semaphore": {
+        "green": "percentil rpc",
+        "amber": "faixa",
+        "red": "percentil rpc",
+        "source": "rpc"
+      },
       "guards": [
         "só content_format=reel e reel_views>0",
         "C5-adj: na classificação/agregação, reel_views<50 -> NULL (outliers 200x com 1–11 views)",
@@ -165,7 +260,9 @@
       "call_site": "instagramOverviewRepository.ts:570",
       "fase": 4,
       "enquadramento": "exige_benchmark_category",
-      "n_ref_thresholds": [{ "dataset_id": "benchmark_orphan_v1_rescate", "linhas": 5 }]
+      "n_ref_thresholds": [
+        { "dataset_id": "benchmark_orphan_v1_rescate", "linhas": 5 }
+      ]
     },
     {
       "kpi_id": "engagement_public",
@@ -175,12 +272,25 @@
       "camada": "C2",
       "formula": "likes + comments",
       "inputs": [
-        { "source": "orbit.ig_posts", "column": "likes", "null_policy": "skip" },
-        { "source": "orbit.ig_posts", "column": "comments", "null_policy": "skip" }
+        {
+          "source": "orbit.ig_posts",
+          "column": "likes",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.ig_posts",
+          "column": "comments",
+          "null_policy": "skip"
+        }
       ],
       "output": { "type": "integer", "unit": "count" },
       "confidence": "L1",
-      "semaphore": { "green": "rpc", "amber": "faixa", "red": "rpc", "source": "rpc" },
+      "semaphore": {
+        "green": "rpc",
+        "amber": "faixa",
+        "red": "rpc",
+        "source": "rpc"
+      },
       "guards": [
         "não é percentual",
         "não é card próprio — insumo de algo_risk_score",
@@ -193,7 +303,9 @@
       "call_site": "contentContractEngine.ts:266",
       "fase": 4,
       "enquadramento": "exige_benchmark_category",
-      "n_ref_thresholds": [{ "dataset_id": "benchmark_orphan_v1_rescate", "linhas": 12 }]
+      "n_ref_thresholds": [
+        { "dataset_id": "benchmark_orphan_v1_rescate", "linhas": 12 }
+      ]
     },
     {
       "kpi_id": "algo_risk_score",
@@ -203,14 +315,30 @@
       "camada": "C2",
       "formula": "mediana_IQR(engagement_public, 12 recentes) / mediana_IQR(engagement_public, até 30 seguintes)",
       "inputs": [
-        { "source": "orbit.ig_posts", "column": "published_at", "null_policy": "fail" },
-        { "source": "orbit.ig_posts", "column": "likes", "null_policy": "skip" },
-        { "source": "orbit.ig_posts", "column": "comments", "null_policy": "skip" }
+        {
+          "source": "orbit.ig_posts",
+          "column": "published_at",
+          "null_policy": "fail"
+        },
+        {
+          "source": "orbit.ig_posts",
+          "column": "likes",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.ig_posts",
+          "column": "comments",
+          "null_policy": "skip"
+        }
       ],
       "output": { "type": "numeric", "unit": "razao" },
       "confidence": "L1",
       "semaphore": null,
-      "guards": ["recent<6 ou baseline vazio -> NULL", "nunca 0 por ausência", "fora de MARKET_RPC"],
+      "guards": [
+        "recent<6 ou baseline vazio -> NULL",
+        "nunca 0 por ausência",
+        "fora de MARKET_RPC"
+      ],
       "screens": [],
       "writer": "computeAlgoRiskScore; resolveAlgoRiskScoreAlert NÃO ENCONTRADO no grep",
       "adr": "",
@@ -228,13 +356,29 @@
       "camada": "C2",
       "formula": "link_clicks / profile_visits * 100",
       "inputs": [
-        { "source": "orbit.ig_account_snapshots", "column": "link_clicks", "null_policy": "skip" },
-        { "source": "orbit.ig_account_snapshots", "column": "profile_visits", "null_policy": "skip" }
+        {
+          "source": "orbit.ig_account_snapshots",
+          "column": "link_clicks",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.ig_account_snapshots",
+          "column": "profile_visits",
+          "null_policy": "skip"
+        }
       ],
       "output": { "type": "numeric", "unit": "pct" },
       "confidence": "L0",
-      "semaphore": { "green": "clients.threshold_ctr_bio_min", "amber": "—", "red": "—", "source": "gestao" },
-      "guards": ["profile_visits<=0 -> NULL", "funnelMath.ctrBio é slider C5, não este KPI"],
+      "semaphore": {
+        "green": "clients.threshold_ctr_bio_min",
+        "amber": "—",
+        "red": "—",
+        "source": "gestao"
+      },
+      "guards": [
+        "profile_visits<=0 -> NULL",
+        "funnelMath.ctrBio é slider C5, não este KPI"
+      ],
       "screens": ["components/screens/FunnelScreen.tsx"],
       "writer": null,
       "adr": "",
@@ -252,8 +396,16 @@
       "camada": "C2",
       "formula": "reach_non_followers = reach_total * (1 - reach_followers_pct/100)",
       "inputs": [
-        { "source": "orbit.ig_account_snapshots", "column": "reach_total", "null_policy": "skip" },
-        { "source": "orbit.ig_account_snapshots", "column": "reach_followers_pct", "null_policy": "skip" }
+        {
+          "source": "orbit.ig_account_snapshots",
+          "column": "reach_total",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.ig_account_snapshots",
+          "column": "reach_followers_pct",
+          "null_policy": "skip"
+        }
       ],
       "output": { "type": "integer", "unit": "contagem" },
       "confidence": "L0",
@@ -276,13 +428,28 @@
       "camada": "C2",
       "formula": "COALESCE(followers_new,0) - COALESCE(followers_lost,0)",
       "inputs": [
-        { "source": "orbit.ig_account_snapshots", "column": "followers_new", "null_policy": "l2" },
-        { "source": "orbit.ig_account_snapshots", "column": "followers_lost", "null_policy": "l2" }
+        {
+          "source": "orbit.ig_account_snapshots",
+          "column": "followers_new",
+          "null_policy": "l2"
+        },
+        {
+          "source": "orbit.ig_account_snapshots",
+          "column": "followers_lost",
+          "null_policy": "l2"
+        }
       ],
       "output": { "type": "integer", "unit": "contagem" },
       "confidence": "L1",
-      "semaphore": { "green": ">=0", "amber": "1 semana <0", "red": "2 semanas <0", "source": "gestao" },
-      "guards": ["COALESCE nos dois lados: um NULL vira 0 — decisão em aberto (não é o mesmo 0 do mapper de avatar)"],
+      "semaphore": {
+        "green": ">=0",
+        "amber": "1 semana <0",
+        "red": "2 semanas <0",
+        "source": "gestao"
+      },
+      "guards": [
+        "COALESCE nos dois lados: um NULL vira 0 — decisão em aberto (não é o mesmo 0 do mapper de avatar)"
+      ],
       "screens": ["components/common/ClientCard.tsx"],
       "writer": "followerBalanceTrend em contentContractEngine.ts:971",
       "adr": "",
@@ -300,9 +467,21 @@
       "camada": "C1",
       "formula": "GREATEST(0, ROUND((1 - ABS(real_dom - expected_gender_pct)/100)*100, 2))",
       "inputs": [
-        { "source": "orbit.clients", "column": "avatar_expected_gender", "null_policy": "skip" },
-        { "source": "orbit.clients", "column": "avatar_expected_gender_pct", "null_policy": "skip" },
-        { "source": "orbit.ig_audience_snapshots", "column": "gender_male_pct", "null_policy": "skip" }
+        {
+          "source": "orbit.clients",
+          "column": "avatar_expected_gender",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.clients",
+          "column": "avatar_expected_gender_pct",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.ig_audience_snapshots",
+          "column": "gender_male_pct",
+          "null_policy": "skip"
+        }
       ],
       "output": { "type": "numeric", "unit": "score_0_100" },
       "confidence": "L1",
@@ -312,7 +491,10 @@
         "BUG: avatarAlignment.mapper.ts FALLBACK_PCT=0 — corrigir antes de confiar no card",
         "≠ genero_declarado_bio"
       ],
-      "screens": ["components/common/AvatarComparison.tsx", "components/screens/AvatarScreen.tsx"],
+      "screens": [
+        "components/common/AvatarComparison.tsx",
+        "components/screens/AvatarScreen.tsx"
+      ],
       "writer": "orbit.compute_avatar_alignment",
       "adr": "",
       "papel": "valor",
@@ -329,14 +511,28 @@
       "camada": "C1",
       "formula": "soma dos buckets etários dentro de [age_min, age_max], cap 0-100",
       "inputs": [
-        { "source": "orbit.clients", "column": "avatar_expected_age_min", "null_policy": "skip" },
-        { "source": "orbit.ig_audience_snapshots", "column": "age_13_17_pct", "null_policy": "skip" }
+        {
+          "source": "orbit.clients",
+          "column": "avatar_expected_age_min",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.ig_audience_snapshots",
+          "column": "age_13_17_pct",
+          "null_policy": "skip"
+        }
       ],
       "output": { "type": "numeric", "unit": "score_0_100" },
       "confidence": "L1",
       "semaphore": null,
-      "guards": ["6 buckets todos NULL -> score NULL", "mesmo FALLBACK_PCT no mapper"],
-      "screens": ["components/common/AvatarComparison.tsx", "components/screens/AvatarScreen.tsx"],
+      "guards": [
+        "6 buckets todos NULL -> score NULL",
+        "mesmo FALLBACK_PCT no mapper"
+      ],
+      "screens": [
+        "components/common/AvatarComparison.tsx",
+        "components/screens/AvatarScreen.tsx"
+      ],
       "writer": "orbit.compute_avatar_alignment",
       "adr": "",
       "papel": "valor",
@@ -353,8 +549,16 @@
       "camada": "C1",
       "formula": "GREATEST(0, ROUND((1 - ABS(geo_pct_real - expected_geo_pct)/100)*100, 2))",
       "inputs": [
-        { "source": "orbit.clients", "column": "avatar_expected_geo_primary", "null_policy": "skip" },
-        { "source": "orbit.ig_audience_snapshots", "column": "top_cities", "null_policy": "skip" }
+        {
+          "source": "orbit.clients",
+          "column": "avatar_expected_geo_primary",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.ig_audience_snapshots",
+          "column": "top_cities",
+          "null_policy": "skip"
+        }
       ],
       "output": { "type": "numeric", "unit": "score_0_100" },
       "confidence": "L1",
@@ -364,7 +568,10 @@
         "0% no top_cities é observação (legítimo)",
         "FALLBACK_PCT=0 no mapper TS não é o mesmo 0"
       ],
-      "screens": ["components/common/AvatarComparison.tsx", "components/screens/AvatarScreen.tsx"],
+      "screens": [
+        "components/common/AvatarComparison.tsx",
+        "components/screens/AvatarScreen.tsx"
+      ],
       "writer": "orbit.compute_avatar_alignment",
       "adr": "",
       "papel": "valor",
@@ -381,8 +588,16 @@
       "camada": "transversal",
       "formula": "rótulo; mapSegmentToCategory devolve o setor se estiver nos 5 eixos, senão null/global",
       "inputs": [
-        { "source": "orbit.clients", "column": "benchmark_category", "null_policy": "fail" },
-        { "source": "orbit.clients", "column": "is_benchmark", "null_policy": "skip" }
+        {
+          "source": "orbit.clients",
+          "column": "benchmark_category",
+          "null_policy": "fail"
+        },
+        {
+          "source": "orbit.clients",
+          "column": "is_benchmark",
+          "null_policy": "skip"
+        }
       ],
       "output": { "type": "enum", "unit": "category" },
       "confidence": "L0",
@@ -409,12 +624,20 @@
       "camada": "C2",
       "formula": "n_posts_janela / (span_dias/7)  [posts/semana]; opcional: dias_desde_ultimo = now - max(published_at)",
       "inputs": [
-        { "source": "orbit.ig_posts", "column": "published_at", "null_policy": "fail" }
+        {
+          "source": "orbit.ig_posts",
+          "column": "published_at",
+          "null_policy": "fail"
+        }
       ],
       "output": { "type": "numeric", "unit": "posts_por_semana" },
       "confidence": "L1",
       "semaphore": null,
-      "guards": ["mínimo 3 posts", "mediana de gaps se for série; sem ALTER", "screens=[] até C5 de cadência"],
+      "guards": [
+        "mínimo 3 posts",
+        "mediana de gaps se for série; sem ALTER",
+        "screens=[] até C5 de cadência"
+      ],
       "screens": [],
       "writer": null,
       "adr": "",
@@ -432,7 +655,11 @@
       "camada": "C2",
       "formula": "count(content_format=X) / count(*) * 100 por formato na janela",
       "inputs": [
-        { "source": "orbit.ig_posts", "column": "content_format", "null_policy": "skip" }
+        {
+          "source": "orbit.ig_posts",
+          "column": "content_format",
+          "null_policy": "skip"
+        }
       ],
       "output": { "type": "numeric", "unit": "pct_por_formato" },
       "confidence": "L1",
@@ -459,7 +686,11 @@
       "camada": "C1",
       "formula": "parser de biography — NÃO ENCONTRADO",
       "inputs": [
-        { "source": "orbit.raw_ig_ingest.raw_payload", "column": "biography", "null_policy": "l2" }
+        {
+          "source": "orbit.raw_ig_ingest.raw_payload",
+          "column": "biography",
+          "null_policy": "l2"
+        }
       ],
       "output": { "type": "enum", "unit": "categoria" },
       "confidence": "L2",
@@ -482,7 +713,11 @@
       "camada": "C1",
       "formula": "parser de biography — NÃO ENCONTRADO",
       "inputs": [
-        { "source": "orbit.raw_ig_ingest.raw_payload", "column": "biography", "null_policy": "l2" }
+        {
+          "source": "orbit.raw_ig_ingest.raw_payload",
+          "column": "biography",
+          "null_policy": "l2"
+        }
       ],
       "output": { "type": "string", "unit": "texto" },
       "confidence": "L2",
@@ -505,9 +740,21 @@
       "camada": "C2",
       "formula": "(likes + comments) / reel_plays * 100",
       "inputs": [
-        { "source": "orbit.ig_posts", "column": "likes", "null_policy": "skip" },
-        { "source": "orbit.ig_posts", "column": "comments", "null_policy": "skip" },
-        { "source": "orbit.ig_posts", "column": "reel_plays", "null_policy": "skip" }
+        {
+          "source": "orbit.ig_posts",
+          "column": "likes",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.ig_posts",
+          "column": "comments",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.ig_posts",
+          "column": "reel_plays",
+          "null_policy": "skip"
+        }
       ],
       "output": { "type": "numeric", "unit": "pct" },
       "confidence": "L1",
@@ -530,14 +777,30 @@
       "camada": "C2",
       "formula": "(likes + comments) / followers_total * 100",
       "inputs": [
-        { "source": "orbit.ig_posts", "column": "likes", "null_policy": "skip" },
-        { "source": "orbit.ig_posts", "column": "comments", "null_policy": "skip" },
-        { "source": "orbit.ig_account_snapshots", "column": "followers_total", "null_policy": "skip" }
+        {
+          "source": "orbit.ig_posts",
+          "column": "likes",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.ig_posts",
+          "column": "comments",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.ig_account_snapshots",
+          "column": "followers_total",
+          "null_policy": "skip"
+        }
       ],
       "output": { "type": "numeric", "unit": "pct" },
       "confidence": "L1",
       "semaphore": null,
-      "guards": ["≠ er_real_pct", "followers no post não existe — cruzar snapshot", "screens=[]"],
+      "guards": [
+        "≠ er_real_pct",
+        "followers no post não existe — cruzar snapshot",
+        "screens=[]"
+      ],
       "screens": [],
       "writer": null,
       "adr": "",
@@ -555,13 +818,24 @@
       "camada": "C2",
       "formula": "interactions_saves / reach_total * 100",
       "inputs": [
-        { "source": "orbit.ig_account_snapshots", "column": "interactions_saves", "null_policy": "skip" },
-        { "source": "orbit.ig_account_snapshots", "column": "reach_total", "null_policy": "skip" }
+        {
+          "source": "orbit.ig_account_snapshots",
+          "column": "interactions_saves",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.ig_account_snapshots",
+          "column": "reach_total",
+          "null_policy": "skip"
+        }
       ],
       "output": { "type": "numeric", "unit": "pct" },
       "confidence": "L2",
       "semaphore": null,
-      "guards": ["hoje só vive dentro de er_real e utility_score_pct", "screens=[]"],
+      "guards": [
+        "hoje só vive dentro de er_real e utility_score_pct",
+        "screens=[]"
+      ],
       "screens": [],
       "writer": null,
       "adr": "",
@@ -570,6 +844,88 @@
       "fase": 1,
       "enquadramento": "nao_aplica",
       "n_ref_thresholds": []
+    },
+    {
+      "kpi_id": "reel_avg_watch_time",
+      "nome": "Tempo médio assistido por Reel",
+      "formula": "mediana(reel_avg_watch_sec) por Reel no período",
+      "inputs": [
+        {
+          "source": "orbit.ig_posts",
+          "column": "content_format",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.ig_posts",
+          "column": "reel_avg_watch_sec",
+          "null_policy": "skip"
+        }
+      ],
+      "output": {
+        "type": "numeric",
+        "unit": "s"
+      },
+      "confidence": "L0",
+      "guards": [
+        "null != 0 (0 s é valor válido)",
+        "n < 3 Reels -> sem card",
+        "a Meta informa segundos inteiros",
+        "sem referência de setor/porte: ref_thresholds não tem watch time (Apify não coleta)",
+        "tela prevista: components/content/WatchTimePanel.tsx; só vira vigente com aval da regra 'tile novo' do board"
+      ],
+      "supersede": [],
+      "camada": "C2",
+      "semaphore": null,
+      "writer": null,
+      "adr": "",
+      "papel": "valor",
+      "call_site": "instagramOverviewRepository.ts:1391 (fetchWatchTime) -> lib/stats/watchTime.ts",
+      "fase": 4,
+      "enquadramento": "nao_aplica",
+      "n_ref_thresholds": [],
+      "status": "proposta",
+      "screens": []
+    },
+    {
+      "kpi_id": "reel_retention_pct",
+      "nome": "Retenção do Reel (tempo médio ÷ duração)",
+      "formula": "mediana(reel_avg_watch_sec / reel_duration_sec * 100) por Reel no período",
+      "inputs": [
+        {
+          "source": "orbit.ig_posts",
+          "column": "reel_avg_watch_sec",
+          "null_policy": "skip"
+        },
+        {
+          "source": "orbit.ig_posts",
+          "column": "reel_duration_sec",
+          "null_policy": "skip"
+        }
+      ],
+      "output": {
+        "type": "numeric",
+        "unit": "pct"
+      },
+      "confidence": "L1",
+      "guards": [
+        "só com reel_duration_sec > 0",
+        "avg > duração = inconsistente: fora da conta e contado à parte",
+        "n < 3 Reels com duração -> retenção não aparece (nunca 0%)",
+        "derivada, não é métrica da Meta",
+        "sem referência de setor/porte"
+      ],
+      "supersede": [],
+      "camada": "C2",
+      "semaphore": null,
+      "writer": null,
+      "adr": "",
+      "papel": "valor",
+      "call_site": "instagramOverviewRepository.ts:1391 (fetchWatchTime) -> lib/stats/watchTime.ts",
+      "fase": 4,
+      "enquadramento": "nao_aplica",
+      "n_ref_thresholds": [],
+      "status": "proposta",
+      "screens": []
     }
   ]
 }

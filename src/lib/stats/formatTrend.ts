@@ -74,8 +74,11 @@ export function computeFormatTrend(posts: readonly TrendPost[]): FormatTrend {
   const newer = withData
     .slice(withData.length - half)
     .map((p) => p.interactions);
-  const olderMedian = medianOf(older) as number;
-  const newerMedian = medianOf(newer) as number;
+  const olderMedian = medianOf(older);
+  const newerMedian = medianOf(newer);
+  if (olderMedian === null || newerMedian === null) {
+    return { status: "no_data", postsWithData: withData.length };
+  }
 
   let change: number | null;
   let direction: TrendDirection;

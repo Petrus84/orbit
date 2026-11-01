@@ -1,16 +1,21 @@
-/* FormatPerformanceTable.module.css */
+/* FormatPerformanceTable.module.css — v3.0.0 (redesenho da lista por post)
+   Só tokens do SSOT. Princípios:
+   1. Um rótulo por coluna (cabeçalho), nunca repetido em cada linha.
+   2. Cada linha respira: 12px de padding, divisória, hover; legenda em 2 linhas
+      com "ver mais" (sem sublinhado pontilhado / cursor:help).
+   3. Número é número: mono, tabular, alinhado à direita, zero esmaecido.
+   4. Polêmica e retenção ganham mini-barra: dá pra comparar linhas de relance.
+   5. Estreito (container < 640px): a linha vira cartão com rótulos inline. */
 
-/* v2: sem caixa/borda/hover próprios — o card (GlassCard) acende inteiro. */
 .wrapper {
   display: flex;
   flex-direction: column;
-  overflow-x: auto; /* mobile: rola em vez de estourar o card */
+  overflow-x: auto;
 }
 
-/* Título do painel — mesmo padrão do QualityScoresPanel (nível 1) */
 .title {
   font-family: var(--font-family);
-  font-size: var(--font-size-base); /* 12px */
+  font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
   letter-spacing: 0.05em;
   color: var(--t0);
@@ -20,6 +25,7 @@
   border-bottom: 1px solid var(--line);
 }
 
+/* ── Tabela de formatos (nível 1) ─────────────────────────────────────── */
 .table {
   width: 100%;
   min-width: 30rem;
@@ -27,67 +33,57 @@
 }
 
 .th {
-  font-size: var(--font-size-xs); /* nível 2 — rótulo, 10px */
+  font-size: var(--font-size-xs);
   color: var(--text-dim);
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
   text-align: left;
-  padding: 0 0 var(--space-3);
+  padding: 0 var(--space-2) var(--space-3);
   border-bottom: var(--border-width) solid var(--border-default);
   font-weight: var(--font-weight-medium);
   text-transform: uppercase;
 }
 
 .tr {
-  border-bottom: var(--border-width) solid rgba(31, 41, 55, 0.5);
+  border-bottom: var(--border-width) solid var(--line);
+  transition: background var(--transition-fast);
 }
-
-.tr:last-child {
-  border-bottom: none;
-}
-
-/* ── Mantendo os números em 10px (var(--font-size-xs)) ───────────────── */
-.td {
-  font-size: var(
-    --font-size-xs
-  ); /* Ajustado para 10px para os dados tabulares */
-  color: var(--text-secondary); /* #B8B6B0 mantido via token */
-  padding: var(--space-3) 0;
-  font-family: var(--font-mono);
-}
-
-.tdFormat {
-  font-family: var(--font-family);
-  color: var(--text-primary);
-  font-size: var(
-    --font-size-xs
-  ); /* Textos de formato (Reels, Carrossel) também em 10px para manter coerência visual */
-}
-
-/* ── Expansão por posts individuais (v2.0.0) ────────────────────────────── */
-
-.tdChevron {
-  width: 20px;
-  padding: var(--space-3) 0;
-}
-
 .trClickable {
   cursor: pointer;
 }
-
-.trClickable:hover {
-  background: rgba(255, 255, 255, 0.02);
+.trClickable:hover,
+.trOpen {
+  background: rgba(255, 255, 255, 0.03);
+}
+.trClickable:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: -2px;
 }
 
+.td {
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+  padding: var(--space-4) var(--space-2);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+.tdFormat {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+.tdChevron {
+  width: 28px;
+  padding: var(--space-4) 0 var(--space-4) var(--space-2);
+}
 .chevron,
 .chevronOpen {
   color: var(--text-dim);
   transition: transform var(--transition-fast);
 }
-
 .chevronOpen {
   transform: rotate(90deg);
+  color: var(--text-primary);
 }
-
 .formatIcon {
   display: inline-flex;
   align-items: center;
@@ -96,120 +92,265 @@
   vertical-align: -3px;
 }
 
+.interactionsEmpty {
+  color: var(--text-dim);
+  font-size: var(--font-size-sm);
+}
+.interactionsValue {
+  color: var(--text-primary);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-md);
+}
+.interactionsCoverage {
+  display: block;
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+  margin-top: var(--space-1);
+  font-style: italic;
+}
+
+/* ── Lista de posts (nível 2) ─────────────────────────────────────────── */
 .tdDetail {
-  padding: 0 0 var(--space-3);
-  border-bottom: var(--border-width) solid rgba(31, 41, 55, 0.5);
+  padding: 0 0 var(--space-4);
+  border-bottom: var(--border-width) solid var(--line);
 }
 
 .postList {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: var(--space-2) 0 0 26px;
+  /* data · post · curtidas · comentários · polêmica · repr./visual. · tempo */
+  --cols: 48px minmax(0, 1fr) 64px 88px 96px 84px 176px;
+  container-type: inline-size;
+  margin: var(--space-2) var(--space-2) 0;
+  background: rgba(0, 0, 0, 0.18);
+  border: var(--border-width) solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.noRatio {
+  --cols: 48px minmax(0, 1fr) 64px 88px 96px 176px;
+}
+.noWatch {
+  --cols: 48px minmax(0, 1fr) 64px 88px 96px 84px;
+}
+.noRatio.noWatch {
+  --cols: 48px minmax(0, 1fr) 64px 88px 96px;
 }
 
-/* ✅ v2.3.0 (grid — corrige 3 bugs reportados em runtime pelo cliente):
-   Antes era `display:flex` com .postCaption em `flex: 0 1 480px` — uma
-   caixa de largura FIXA (480px) reservada pra um texto que já vinha
-   pré-cortado em 60 caracteres via truncateCaption() (FormatPerformance-
-   Table.tsx). Duas truncagens independentes, dimensionadas pra suposições
-   diferentes, empilhadas: a caixa CSS quase nunca enchia (sobrava vão em
-   branco à direita do texto) e o corte em 60 caracteres acontecia mesmo
-   quando a tela tinha espaço de sobra pra mostrar mais legenda.
-
-   Grid com `minmax(0, 1fr)` na coluna de legenda resolve isso na raiz:
-   a coluna PREENCHE exatamente o espaço realmente disponível (não um
-   chute de 480px) e só corta via `text-overflow: ellipsis` quando o
-   texto de fato não cabe — o corte passa a refletir a largura real da
-   tela, não um número de caracteres arbitrário. `truncateCaption()`
-   continua existindo como teto de segurança (ver default em
-   FormatPerformanceTable.tsx), não mais como truncagem primária.
-
-   Grid também dá ao Boost uma coluna própria de largura FIXA, sempre
-   reservada (presente ou não o badge) — antes, por ser um item
-   condicional dentro de um flex row, sua ausência/presença deslocava
-   .postScore horizontalmente entre linhas; "Polêmica: X%" não ficava
-   alinhado na coluna entre um post com Boost e um sem. */
-
+.postHead,
 .postRow {
   display: grid;
-  min-width: 26rem;
-  grid-template-columns: 56px 136px minmax(0, 1fr) 64px 104px;
+  grid-template-columns: var(--cols);
+  column-gap: var(--space-4);
   align-items: center;
-  column-gap: var(--space-3);
-  font-size: var(--font-size-xs); /* Mantém 10px */
+  padding-inline: var(--space-4);
+}
+
+.postHead {
+  padding-block: var(--space-2);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: var(--border-width) solid var(--line);
+}
+.hNum {
+  text-align: right;
+}
+.hWatch {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-1);
+}
+.seal {
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: var(--font-weight-normal);
+  font-style: italic;
+  opacity: 0.8;
+}
+.sealSep {
+  opacity: 0.5;
+}
+
+.postRow {
+  min-height: 56px;
+  padding-block: var(--space-4);
+  border-bottom: var(--border-width) solid var(--line);
+  transition: background var(--transition-fast);
+}
+.postRow:last-child {
+  border-bottom: none;
+}
+.postRow:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+/* Boost: filete de acento na borda esquerda — acha-se de longe. */
+.postRowBoost {
+  box-shadow: inset 3px 0 0 var(--acc);
+}
+
+/* Data empilhada: dia grande, mês pequeno */
+.cDate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: var(--line-height-tight);
+}
+.dateDay {
   font-family: var(--font-mono);
-  padding: 4px 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
 }
-
-.postDate {
-  color: var(--text-secondary);
-  white-space: nowrap;
-}
-
-.postMetrics {
+.dateMonth {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   color: var(--text-dim);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-/* ✅ Caption ocupa exatamente a coluna que sobra (minmax(0,1fr) no grid
-   acima) — `min-width: 0` é obrigatório aqui: sem ele, um item de grid
-   nunca encolhe abaixo do tamanho intrínseco do conteúdo, e o ellipsis
-   simplesmente não dispara. */
-
-.postCaption {
+/* Post: badge + legenda em até 2 linhas */
+.cPost {
   min-width: 0;
-  color: var(--text-dim);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+}
+.caption {
+  min-width: 0;
+  max-width: 100%;
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--text-primary);
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+.captionClamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  cursor: help;
-  border-bottom: 1px dotted rgba(0, 255, 200, 0.2);
-  padding-bottom: 2px;
-  transition: color var(--transition-fast);
+}
+.moreBtn {
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  color: var(--neon-cyan);
+}
+.moreBtn:hover {
+  text-decoration: underline;
+}
+.moreBtn:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
 }
 
-.postCaption:hover {
-  color: var(
-    --neon-cyan
-  ); /* removido fallback #00c8ff — terceiro tom de cyan fora da paleta; --neon-cyan já está sempre definido */
-  border-bottom-color: rgba(0, 255, 200, 0.5);
+/* Números */
+.cNum,
+.cPolemic {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-1);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+.num {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+.numZero {
+  font-size: var(--font-size-md);
+  color: var(--text-dim);
+}
+.numNone {
+  font-size: var(--font-size-md);
+  color: var(--text-dim);
+}
+.polWarning {
+  color: var(--neon-gold);
+}
+.polCritical {
+  color: var(--red-text);
 }
 
-/* ✅ Slot de largura fixa pro badge de Boost — SEMPRE ocupa a coluna do
-   grid, com ou sem o badge dentro. É isso que garante que .postScore
-   nunca se desloque entre uma linha com Boost e outra sem. */
+/* Mini-barra (polêmica e retenção) */
+.meter {
+  display: block;
+  width: 100%;
+  max-width: 64px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--line);
+  overflow: hidden;
+}
+.meterFill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--line2);
+}
+.meterOk {
+  background: var(--green);
+}
+.meterWarning {
+  background: var(--neon-gold);
+}
+.meterCritical {
+  background: var(--red);
+}
+.meterRet {
+  background: var(--acc2);
+}
 
-.postBoostSlot {
+/* Tempo assistido: "4 s de 20 s" + barra de retenção */
+.cWatch {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-variant-numeric: tabular-nums;
+}
+.watchTime {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+.watchOf {
+  font-weight: var(--font-weight-normal);
+  color: var(--text-dim);
+}
+.watchRet {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  gap: var(--space-2);
 }
-
-.postScore {
+.watchRet .meter {
+  max-width: 96px;
+}
+.watchRetText {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
   color: var(--text-secondary);
-  white-space: nowrap;
-  text-align: right;
 }
 
-.postScoreMuted {
-  color: var(--text-dim);
-  white-space: nowrap;
-  text-align: right;
-}
-
-/* ✅ v2.2.0: badge de boost candidate — reusa --acc, o acento único do
-   design (ssot-design-tokens.css), em vez de introduzir uma terceira cor
-   de "destaque positivo" no vocabulário já fragmentado do projeto. */
-
+/* Badge Boost (reusa --acc, acento único) */
 .postBoostBadge {
   display: inline-flex;
   align-items: center;
   gap: 3px;
   padding: 1px 6px;
-  border-radius: var(--radius-pill, 9999px);
+  border-radius: var(--radius-pill);
   border: var(--border-width) solid var(--acc);
   color: var(--acc);
   font-family: var(--font-family);
@@ -219,61 +360,62 @@
   text-transform: uppercase;
   white-space: nowrap;
 }
-/* ─────────────────────────────────────────────────────────────────────────
-   RWP-5: Interações (novo)
-   ───────────────────────────────────────────────────────────────────────── */
 
-.interactionsEmpty {
-  color: var(--text-dim);
-  font-size: var(--font-size-sm);
+/* ── Estreito: a linha vira cartão, rótulo volta inline ───────────────── */
+@container (max-width: 640px) {
+  .postHead {
+    display: none;
+  }
+  .postRow {
+    grid-template-columns: 44px repeat(4, minmax(0, 1fr));
+    row-gap: var(--space-3);
+    grid-template-areas:
+      "date post post post post"
+      ". lk cm pol ratio"
+      ". watch watch watch watch";
+  }
+  .cDate {
+    grid-area: date;
+  }
+  .cPost {
+    grid-area: post;
+  }
+  .cLikes {
+    grid-area: lk;
+  }
+  .cComments {
+    grid-area: cm;
+  }
+  .cPolemic {
+    grid-area: pol;
+  }
+  .cRatio {
+    grid-area: ratio;
+  }
+  .cWatch {
+    grid-area: watch;
+  }
+  .cNum,
+  .cPolemic {
+    align-items: flex-start;
+  }
+  [data-label]::before {
+    content: attr(data-label);
+    font-family: var(--font-family);
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-dim);
+  }
 }
 
-.interactionsValue {
-  display: inline;
-  color: var(--text-primary);
-  font-weight: var(--font-weight-semibold);
-  font-variant-numeric: tabular-nums;
-  font-size: var(
-    --font-size-xs
-  ); /* Força 10px para consistência dos números tabulares */
-}
-
-.interactionsCoverage {
-  display: block;
-  color: var(--text-secondary);
-  font-size: var(--font-size-xs); /* Mantém 10px */
-  margin-top: var(--space-1);
-  font-style: italic;
-}
-
-/* ─────────────────────────────────────────────────────────────────────────
-   PostDetailRow: Play/View Ratio (Reels)
-   ───────────────────────────────────────────────────────────────────────── */
-
-.postPlayRatio {
-  display: inline-block;
-  padding: var(--space-1) var(--space-2);
-  background: rgba(var(--color-cyan-rgb), 0.08);
-  border: var(--border-width) solid rgba(var(--color-cyan-rgb), 0.2);
-  border-radius: var(--radius-sm);
-  color: var(--text-secondary);
-  font-size: var(--font-size-xs); /* Mantém 10px */
-  font-variant-numeric: tabular-nums;
-}
-
-.postPlayRatio:hover {
-  background: rgba(var(--color-cyan-rgb), 0.12);
-  border-color: rgba(var(--color-cyan-rgb), 0.3);
-}
-
-/* Nível 6 — fonte/metadado (antes: <p style="fontSize:11; opacity:.7">) */
+/* ── Metadados ────────────────────────────────────────────────────────── */
 .metadataSource {
   margin: var(--space-1) 0 0;
   font-size: var(--font-size-xs);
   line-height: var(--line-height-tight);
   color: var(--text-dim);
 }
-
 .table + .metadataSource {
   margin-top: var(--space-2);
 }

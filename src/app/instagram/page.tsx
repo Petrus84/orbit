@@ -16,6 +16,7 @@ import { FormatPerformanceTable } from "@/components/content/FormatPerformanceTa
 import { InsightCard } from "@/components/content/InsightCard";
 import { CriticalAlert } from "@/components/content/CriticalAlert";
 import { AudienceSummaryPanel } from "@/components/content/AudienceSummaryPanel";
+import { WatchTimePanel } from "@/components/content/WatchTimePanel";
 import { DataStatusNotice } from "@/components/content/DataStatusNotice";
 import { SectorPositioningPanel } from "@/components/panels/SectorPositioningPanel";
 import { PostingProfilePanel } from "@/components/panels/PostingProfilePanel";
@@ -173,6 +174,17 @@ function InstagramOverviewLayout() {
                     )}
                   </GlassCard>
                 </section>
+
+                {/* Tempo assistido por Reel: só aparece com dado suficiente
+                    (≥ 3 Reels com tempo médio informado). */}
+                {data.watchTime && (
+                  <section
+                    className={styles.tabContent}
+                    aria-label="Tempo assistido por Reel"
+                  >
+                    <WatchTimePanel watchTime={data.watchTime} />
+                  </section>
+                )}
               </>
             )}
 

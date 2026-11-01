@@ -1,0 +1,101 @@
+/* ==========================================================================
+   ORBIT · Component — WatchTimePanel.module.css
+   Só tokens do SSOT (sem rgba/hex hardcoded). Mesmo padrão do
+   QualityScoresPanel: painel, título, caixas e notas.
+   ========================================================================== */
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5);
+}
+
+.panelTitle {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--t0);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--line);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.grid > .box:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+.box {
+  padding: var(--space-3) var(--space-4);
+  background: var(--gradient-cyan-subtle);
+  border: 1px solid var(--line);
+  border-radius: var(--r8);
+}
+
+.label {
+  font-family: var(--font);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.03em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin: 0 0 var(--space-2) 0;
+}
+
+.value {
+  font-family: var(--mono);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--t1);
+  line-height: 1;
+  margin: 0 0 var(--space-2) 0;
+}
+
+.meta {
+  font-family: var(--font);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-base);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.sealMeasured {
+  font-weight: var(--font-weight-semibold);
+  color: var(--green);
+}
+
+.sealEstimated {
+  font-weight: var(--font-weight-semibold);
+  color: var(--amber);
+}
+
+.referenceNote {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-base);
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+.provenanceNote {
+  margin: 0;
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-tight);
+  font-weight: var(--font-weight-normal);
+  color: var(--text-dim);
+}

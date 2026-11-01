@@ -720,8 +720,10 @@ async function fetchClientProfile(clientId: string): Promise<ClientProfile> {
   const history = historyRes.data;
   const boundaries = tiersRes.data ?? [];
 
+  // C3/V6: client_onboarding é a AUTORIDADE do valor corrente; a série
+  // (client_followers_history) é mantida e só entra como fallback e para a data.
   const followers: number | null =
-    history?.total_followers ?? onboarding?.total_followers ?? null;
+    onboarding?.total_followers ?? history?.total_followers ?? null;
 
   const tier =
     followers == null
@@ -741,12 +743,16 @@ async function fetchClientProfile(clientId: string): Promise<ClientProfile> {
     funnelSegment: onboarding?.setor_benchmark ?? null,
     followers,
     followersSource:
-      history?.total_followers != null
-        ? "client_followers_history"
-        : onboarding?.total_followers != null
-          ? `client_onboarding:${onboarding.total_followers_source ?? "?"}`
+      onboarding?.total_followers != null
+        ? `client_onboarding:${onboarding.total_followers_source ?? "?"}`
+        : history?.total_followers != null
+          ? "client_followers_history"
           : null,
-    followersAsOf: history?.measured_at ?? null,
+    // Data da série só descreve o valor quando ele veio da série.
+    followersAsOf:
+      onboarding?.total_followers == null
+        ? (history?.measured_at ?? null)
+        : null,
     tierScheme: TIER_SCHEME,
     tier,
   };

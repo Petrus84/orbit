@@ -75,6 +75,16 @@ import { repairMojibake } from "@/lib/textRepair";
 import { polemicMedianOfPeriod } from "@/lib/stats/polemic";
 import { periodUpperExclusive } from "@/lib/stats/period";
 import { computeFormatTrend, trendCopy } from "@/lib/stats/formatTrend";
+import {
+  reelWatchOf,
+  summarizeWatchTime,
+  type ReelWatchRow,
+} from "@/lib/stats/watchTime";
+import {
+  summarizeInteractionsByFormat,
+  type FormatInteractions,
+  type InteractionPostRow,
+} from "@/lib/stats/interactions";
 import { z } from "zod";
 
 import type {
@@ -83,6 +93,7 @@ import type {
   KPICardData,
   MetricProvenance,
   FormatPerformanceRow,
+  WatchTimeSummary,
   QualityScoreItem,
   InsightData,
   SemaphoreColor,
@@ -237,6 +248,9 @@ const PostRowRawSchema = z.object({
   // Ausente em posts não-Reel; a coluna pode não existir em rows antigas →
   // optional().nullable() para não rejeitar snapshots sem a coluna.
   play_to_view_ratio: z.number().optional().nullable(),
+  // Tempo assistido do Reel (numeric: pode chegar como número ou texto).
+  reel_avg_watch_sec: z.union([z.number(), z.string()]).optional().nullable(),
+  reel_duration_sec: z.union([z.number(), z.string()]).optional().nullable(),
 });
 
 // ✅ 09/09 — cópia local duplicada removida; usa repairMojibake de
@@ -489,6 +503,7 @@ export async function fetchInstagramOverview(
     fetchAccountImpressionsKpi(clientId),
     fetchPostImpressionsKpi(clientId, periodStart, periodEnd),
     fetchDataStatusNotices(clientId, periodStart, periodEnd),
+    fetchWatchTime(clientId, periodStart, periodEnd),
   ]);
 
   results.forEach((res, idx) => {
@@ -507,6 +522,8 @@ export async function fetchInstagramOverview(
       : impressionsKpiData("impressions-posts", null);
   const dataStatusNotices =
     results[11].status === "fulfilled" ? results[11].value : [];
+  const watchTime =
+    results[12].status === "fulfilled" ? results[12].value : null;
   const kpis = [
     ...(results[0].status === "fulfilled" ? results[0].value : []),
     accountImpressionsKpi,
@@ -627,6 +644,7 @@ export async function fetchInstagramOverview(
     kpis,
     qualityScores,
     formatPerformance,
+    watchTime,
     sharesSummary,
     audienceSummary,
     insights: generateInsights(formatPerformance),
@@ -1271,6 +1289,21 @@ async function fetchQualityScores(
   });
 }
 
+function watchFields(post: {
+  reel_avg_watch_sec?: unknown;
+  reel_duration_sec?: unknown;
+}): Pick<PostSummary, "avgWatchSec" | "durationSec" | "retentionPct"> {
+  const w = reelWatchOf({
+    reel_avg_watch_sec: post.reel_avg_watch_sec,
+    reel_duration_sec: post.reel_duration_sec,
+  });
+  return {
+    avgWatchSec: w.avgSec,
+    durationSec: w.durationSec,
+    retentionPct: w.retentionPct,
+  };
+}
+
 export async function fetchPostsByFormat(
   clientId: string,
   start: string,
@@ -1283,7 +1316,7 @@ export async function fetchPostsByFormat(
     .schema("orbit")
     .from("ig_posts")
     .select(
-      "id, content_format, published_at, likes, comments, caption, polemic_score_pct, is_boost_candidate",
+      "id, content_format, published_at, likes, comments, caption, polemic_score_pct, is_boost_candidate, reel_avg_watch_sec, reel_duration_sec",
     )
     .eq("client_id", clientId)
     .gte("published_at", start)
@@ -1324,6 +1357,7 @@ export async function fetchPostsByFormat(
       // ainda não ingerida). Zod declara optional().nullable() — nunca
       // substituir por 0: ausência é distinta de ratio zero.
       playToViewRatio: post.play_to_view_ratio ?? null,
+      ...(post.content_format === "reel" ? watchFields(post) : {}),
     };
 
     const list = byFormat.get(label) ?? [];
@@ -1342,26 +1376,14 @@ export async function fetchPostsByFormat(
 //   - formato sem nenhum post completo => interactions = null (a tela mostra "—");
 //   - cobertura parcial (knownPosts < totalPosts) fica explícita no contrato.
 // Mesmo recorte de fetchPostsByFormat: cliente, período selecionado, L0/L1.
-interface FormatInteractions {
-  interactions: number | null;
-  knownPosts: number;
-  totalPosts: number;
-}
-
-type InteractionPostRow = {
-  content_format: string;
-  likes: number | null;
-  comments: number | null;
-  shares: number | null;
-  saves: number | null;
-};
-
+// P0 (D2): a leitura compara a MEDIANA por post, não a média; o cálculo puro
+// vive em lib/stats/interactions.ts (testável, sem supabase).
 async function fetchInteractionsByFormat(
   clientId: string,
   start: string,
   end: string,
 ): Promise<Map<string, FormatInteractions>> {
-  const byFormat = new Map<string, FormatInteractions>();
+  const empty = new Map<string, FormatInteractions>();
 
   const { data, error } = await supabase
     .schema("orbit")
@@ -1376,38 +1398,43 @@ async function fetchInteractionsByFormat(
 
   if (error) {
     console.error("[fetchInteractionsByFormat]", error.message);
-    return byFormat;
+    return empty;
   }
 
-  const isNum = (v: unknown): v is number =>
-    typeof v === "number" && Number.isFinite(v);
+  return summarizeInteractionsByFormat(
+    data ?? [],
+    (format) => FORMAT_LABEL[format] ?? format,
+  );
+}
 
-  for (const row of data ?? []) {
-    const label = FORMAT_LABEL[row.content_format] ?? row.content_format;
-    const acc = byFormat.get(label) ?? {
-      interactions: null,
-      knownPosts: 0,
-      totalPosts: 0,
-    };
-    acc.totalPosts += 1;
-    if (
-      isNum(row.likes) &&
-      isNum(row.comments) &&
-      isNum(row.shares) &&
-      isNum(row.saves)
-    ) {
-      acc.knownPosts += 1;
-      acc.interactions =
-        (acc.interactions ?? 0) +
-        row.likes +
-        row.comments +
-        row.shares +
-        row.saves;
-    }
-    byFormat.set(label, acc);
+// Tempo assistido por Reel: tempo médio de reprodução (Meta) e duração, só de
+// Reels do período selecionado, com tempo médio informado (null ≠ 0: Reel sem
+// o campo nem entra na consulta). O cálculo puro vive em lib/stats/watchTime.ts.
+// Mesmo recorte de cliente/período/L0-L1 das demais consultas de posts.
+async function fetchWatchTime(
+  clientId: string,
+  start: string,
+  end: string,
+): Promise<WatchTimeSummary | null> {
+  const { data, error } = await supabase
+    .schema("orbit")
+    .schema("orbit")
+    .from("ig_posts")
+    .select("reel_avg_watch_sec, reel_duration_sec")
+    .eq("client_id", clientId)
+    .eq("content_format", "reel")
+    .not("reel_avg_watch_sec", "is", null)
+    .gte("published_at", start)
+    .lt("published_at", periodUpperExclusive(end))
+    .in("confidence_level", CONFIDENCE_LEVELS)
+    .returns<ReelWatchRow[]>();
+
+  if (error) {
+    console.error("[fetchWatchTime]", error.message);
+    return null;
   }
 
-  return byFormat;
+  return summarizeWatchTime(data ?? []);
 }
 
 async function fetchFormatPerformance(
@@ -1474,6 +1501,7 @@ async function fetchFormatPerformance(
         shares: toFiniteNumber(row?.share_count),
         // RWP-5: o que a tabela mostra. null = sem dado (a tela exibe "—").
         interactions: inter?.interactions ?? null,
+        interactionsMedian: inter?.interactionsMedian ?? null,
         interactionsKnownPosts: inter?.knownPosts ?? 0,
         interactionsTotalPosts: inter?.totalPosts ?? 0,
         // RN-15 (mínimo de 5 posts) e demais regras: ver lib/stats/formatTrend.

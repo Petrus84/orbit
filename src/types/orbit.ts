@@ -614,6 +614,24 @@ export interface MetricProvenance {
   method: string;
 }
 
+/**
+ * Tempo assistido por Reel (cálculo em lib/stats/watchTime.ts).
+ * `avgWatchMedianSec`: mediana do tempo médio de reprodução informado pela
+ * Meta (Medido, segundos inteiros). `retentionMedianPct`: mediana de
+ * tempo médio ÷ duração (Estimado: derivada). null = dado insuficiente
+ * (menos de 3 Reels); nunca 0 por falta de dado.
+ */
+export interface WatchTimeSummary {
+  knownReels: number;
+  avgWatchMedianSec: number;
+  band: "insuficiente" | "leve" | "robusta";
+  retentionKnownReels: number;
+  retentionMedianPct: number | null;
+  retentionBand: "insuficiente" | "leve" | "robusta";
+  /** Reels com tempo médio maior que a duração: fora da retenção. */
+  inconsistentReels: number;
+}
+
 export interface KPICardData {
   id: string;
   label: string;
@@ -660,6 +678,8 @@ export interface FormatPerformanceRow {
   trendColor: GlowColor;
   postsDetail: PostSummary[];
   interactions: number | null;
+  /** Mediana das interações por post (só posts com os 4 campos). null = sem dado. */
+  interactionsMedian: number | null;
   interactionsKnownPosts: number;
   interactionsTotalPosts: number;
 }
@@ -687,6 +707,12 @@ export interface PostSummary {
   // com views). Fonte: orbit.ig_posts.play_to_view_ratio (coluna calculada
   // no banco). Renderizado em PostDetailRow apenas quando não-null.
   playToViewRatio: number | null;
+  // Tempo assistido do Reel (Meta, importado). Só Reels; null quando ausente.
+  // avgWatchSec = Medido (segundos inteiros); retentionPct = Estimado
+  // (tempo médio ÷ duração, derivada). Nunca 0 por ausência.
+  avgWatchSec?: number | null | undefined;
+  durationSec?: number | null | undefined;
+  retentionPct?: number | null | undefined;
 }
 
 export interface InsightData {
@@ -761,6 +787,8 @@ export interface IGOverviewData {
   kpis: KPICardData[];
   qualityScores: QualityScoreItem[];
   formatPerformance: FormatPerformanceRow[];
+  /** Tempo assistido por Reel. null/ausente = sem dado suficiente: sem card. */
+  watchTime?: WatchTimeSummary | null | undefined;
   sharesSummary: SharesSummary;
   insights: InsightData[];
   criticalAlerts: CriticalAlertData[];
